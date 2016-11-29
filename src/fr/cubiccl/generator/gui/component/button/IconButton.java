@@ -8,7 +8,7 @@ public class IconButton extends CGButton
 
 	public IconButton(ImageIcon icon)
 	{
-		super(null);
+		super("");
 		this.setIcon(icon);
 	}
 

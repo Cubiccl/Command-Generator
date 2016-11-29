@@ -286,7 +286,7 @@ public class ObjectRegistry
 		{
 			case "string":
 			default:
-				new TemplateString(data[0], tagType);
+				new TemplateString(data[0], tagType, data[2].split(":"));
 				break;
 		}
 	}
@@ -527,7 +527,7 @@ public class ObjectRegistry
 				return o1.id.compareTo(o2.id);
 			}
 		});
-		
+
 		return a.toArray(new TemplateTag[a.size()]);
 	}
 

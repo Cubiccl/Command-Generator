@@ -648,5 +648,5 @@ step.cloth,step.grass,step.gravel,step.ladder,step.sand,step.snow,step.stone,ste
 tile.piston.in,tile.piston.out
 
 [BLOCKTAGS]
-CustomName,string
-Lock,string
+CustomName,string,brewing_stand:chest:command_block:dispenser:dropper:enchanting_table:furnace:hopper:lit_furnace:trapped_chest
+Lock,string,beacon:brewing_stand:chest:dispenser:dropper:furnace:hopper:lit_furnace:trapped_chest

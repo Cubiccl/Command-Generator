@@ -31,6 +31,13 @@ public abstract class TemplateTag implements IStateListener<CGPanel>, NamedObjec
 		CommandGenerator.stateManager.setState(this.createPanel(), this);
 	}
 
+	public boolean canApplyTo(String id)
+	{
+		for (String app : this.applicable)
+			if (app.equals(id)) return true;
+		return false;
+	}
+
 	protected abstract CGPanel createPanel();
 
 	public String description()

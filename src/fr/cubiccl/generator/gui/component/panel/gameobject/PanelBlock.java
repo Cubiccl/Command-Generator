@@ -63,7 +63,11 @@ public class PanelBlock extends CGPanel implements ActionListener, ListSelection
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.comboboxBlock) this.spinnerData.setValues(this.selectedBlock().damage);
+		if (e.getSource() == this.comboboxBlock)
+		{
+			this.spinnerData.setValues(this.selectedBlock().damage);
+			this.panelTags.setObjectForTags(this.selectedBlock().idString);
+		}
 		this.updateDisplay();
 	}
 

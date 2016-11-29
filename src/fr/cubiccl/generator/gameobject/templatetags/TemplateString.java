@@ -9,9 +9,9 @@ import fr.cubiccl.generator.utils.Text;
 public class TemplateString extends TemplateTag
 {
 
-	public TemplateString(String id, int tagType)
+	public TemplateString(String id, int tagType, String... applicable)
 	{
-		super(id, tagType);
+		super(id, tagType, applicable);
 	}
 
 	@Override
