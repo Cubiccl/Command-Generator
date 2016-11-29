@@ -13,7 +13,9 @@ import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.target.TargetArgument;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.utils.FileUtils;
@@ -282,11 +284,17 @@ public class ObjectRegistry
 
 	private static void createTag(int tagType, String[] data)
 	{
+		String id = data[0];
+		String[] applicable = data[2].split(":");
 		switch (data[1])
 		{
+			case "int":
+				new TemplateNumber(id, tagType, TagNumber.INTEGER, applicable);
+				break;
+
 			case "string":
 			default:
-				new TemplateString(data[0], tagType, data[2].split(":"));
+				new TemplateString(id, tagType, applicable);
 				break;
 		}
 	}

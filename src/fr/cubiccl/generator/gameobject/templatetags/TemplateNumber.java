@@ -3,6 +3,8 @@ package fr.cubiccl.generator.gameobject.templatetags;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
+import fr.cubiccl.generator.utils.Text;
 
 public class TemplateNumber extends TemplateTag
 {
@@ -24,22 +26,30 @@ public class TemplateNumber extends TemplateTag
 	@Override
 	protected CGPanel createPanel()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		EntryPanel p = new EntryPanel(new Text(this.id + ".desciption"));
+		p.entry.addIntFilter();
+		p.entry.setText("0");
+		return p;
 	}
 
 	@Override
 	public Tag generateTag(CGPanel panel)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new TagNumber(this, ((EntryPanel) panel).entry.getText());
 	}
 
 	@Override
 	public boolean shouldStateClose(CGPanel panel)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		try
+		{
+			Integer.parseInt(((EntryPanel) panel).entry.getText());
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+		return true;
 	}
 
 }
