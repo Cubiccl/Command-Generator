@@ -3,7 +3,7 @@ package fr.cubiccl.generator.gui.component.combobox;
 import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.utils.Lang;
 
-public class OptionCombobox extends CComboBox implements ITranslated
+public class OptionCombobox extends CGComboBox implements ITranslated
 {
 	private static final long serialVersionUID = -1238384939092751435L;
 

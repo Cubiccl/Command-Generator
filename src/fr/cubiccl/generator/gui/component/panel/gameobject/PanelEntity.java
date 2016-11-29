@@ -9,9 +9,9 @@ import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
-public class PanelEntity extends CPanel implements ActionListener
+public class PanelEntity extends CGPanel implements ActionListener
 {
 	private static final long serialVersionUID = -7130115756741628375L;
 

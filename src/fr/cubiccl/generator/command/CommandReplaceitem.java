@@ -5,11 +5,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
-import fr.cubiccl.generator.gui.component.textfield.CSpinner;
+import fr.cubiccl.generator.gui.component.textfield.CGSpinner;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Utils;
 
@@ -30,7 +30,7 @@ public class CommandReplaceitem extends Command implements ActionListener
 	private PanelCoordinates panelCoordinates;
 	private PanelItem panelItem;
 	private PanelTarget panelTarget;
-	private CSpinner spinnerSlotNumber;
+	private CGSpinner spinnerSlotNumber;
 
 	public CommandReplaceitem()
 	{
@@ -65,9 +65,9 @@ public class CommandReplaceitem extends Command implements ActionListener
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		++gbc.gridwidth;
@@ -81,7 +81,7 @@ public class CommandReplaceitem extends Command implements ActionListener
 		--gbc.gridwidth;
 		panel.add(this.comboboxSlotType = new OptionCombobox("replaceitem.slot", SLOTS_BLOCK), gbc);
 		++gbc.gridx;
-		panel.add((this.spinnerSlotNumber = new CSpinner("replaceitem.slot_number", Utils.generateArray(26))).container, gbc);
+		panel.add((this.spinnerSlotNumber = new CGSpinner("replaceitem.slot_number", Utils.generateArray(26))).container, gbc);
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;

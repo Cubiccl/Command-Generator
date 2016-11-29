@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -29,9 +29,9 @@ public class CommandFill extends Command implements ActionListener
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		panel.add(this.labelDescription(), gbc);

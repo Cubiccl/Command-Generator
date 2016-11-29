@@ -2,10 +2,10 @@ package fr.cubiccl.generator;
 
 import java.util.ArrayList;
 
+import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
-import fr.cubiccl.generator.gui.DisplayUtils;
 import fr.cubiccl.generator.gui.Window;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.FileUtils;
@@ -44,7 +44,7 @@ public class CommandGenerator
 				if (executeCommand.equals("")) executeCommand += command;
 				else executeCommand += command.substring(1);
 				window.showCommand(executeCommand);
-				if (command.startsWith("/execute ")) DisplayUtils.showMessage(Lang.translate("general.success"), Lang.translate("general.success_execute"));
+				if (command.startsWith("/execute ")) DisplayUtils.showMessage(window, Lang.translate("general.success"), Lang.translate("general.success_execute"));
 				else executeCommand = "";
 				window.setExecuteCommand(command.startsWith("/execute "));
 			}
@@ -77,7 +77,7 @@ public class CommandGenerator
 
 	public static void report(CommandGenerationException e)
 	{
-		DisplayUtils.showMessage(Lang.translate("error.title"), e.getMessage());
+		DisplayUtils.showMessage(window, Lang.translate("error.title"), e.getMessage());
 		log("Error : " + e.getMessage());
 	}
 

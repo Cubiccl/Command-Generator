@@ -646,3 +646,7 @@ random.anvil_break,random.anvil_land,random.anvil_use,random.bow,random.bowhit,r
 records.11,records.13,records.blocks,records.cat,records.chirp,records.far,records.mall,records.mellohi,records.stal,records.strad,records.wait,records.ward
 step.cloth,step.grass,step.gravel,step.ladder,step.sand,step.snow,step.stone,step.wood
 tile.piston.in,tile.piston.out
+
+[BLOCKTAGS]
+CustomName,string
+Lock,string

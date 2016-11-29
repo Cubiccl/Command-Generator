@@ -2,7 +2,7 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
@@ -16,9 +16,9 @@ public class CommandSetworldspawn extends Command
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		panel.add(this.labelDescription(), gbc);

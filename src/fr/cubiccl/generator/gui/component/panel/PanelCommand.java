@@ -10,34 +10,34 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 
-import fr.cubiccl.generator.gui.component.button.CButton;
-import fr.cubiccl.generator.gui.component.button.CCheckBox;
-import fr.cubiccl.generator.gui.component.label.CLabel;
+import fr.cubiccl.generator.gui.component.button.CGButton;
+import fr.cubiccl.generator.gui.component.button.CGCheckBox;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.textfield.CTextField;
 
-public class PanelCommand extends CPanel implements ActionListener
+public class PanelCommand extends CGPanel implements ActionListener
 {
 	public static final int HEIGHT = 60;
 	private static final long serialVersionUID = -5645072079663496893L;
 
-	private CButton buttonCopy;
-	private CCheckBox checkboxEdit;
-	private CLabel labelCommand;
+	private CGButton buttonCopy;
+	private CGCheckBox checkboxEdit;
+	private CGLabel labelCommand;
 	public final CTextField textfieldCommand;
 
 	public PanelCommand()
 	{
 		this.setBorder(BorderFactory.createRaisedBevelBorder());
 
-		this.labelCommand = new CLabel("command.label").setHasColumn(true);
+		this.labelCommand = new CGLabel("command.label").setHasColumn(true);
 
 		this.textfieldCommand = new CTextField();
 		this.textfieldCommand.setEditable(false);
 
-		this.checkboxEdit = new CCheckBox("command.edit");
+		this.checkboxEdit = new CGCheckBox("command.edit");
 		this.checkboxEdit.addActionListener(this);
 
-		this.buttonCopy = new CButton("command.copy");
+		this.buttonCopy = new CGButton("command.copy");
 		this.buttonCopy.addActionListener(this);
 
 		this.createLayout();

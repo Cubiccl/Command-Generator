@@ -1,17 +1,19 @@
 package fr.cubiccl.generator.gameobject.tags;
 
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+
 public class TagCompound extends TagList
 {
 
-	public TagCompound(String id, Tag... tags)
+	public TagCompound(TemplateCompound template, Tag... tags)
 	{
-		super(id, tags);
+		super(template, tags);
 	}
 
 	public Tag getTagFromId(String id)
 	{
 		for (Tag tag : this.tags)
-			if (tag.id.equals(id)) return tag;
+			if (tag.id().equals(id)) return tag;
 		return null;
 	}
 

@@ -5,15 +5,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.ItemStack;
-import fr.cubiccl.generator.gui.component.button.CCheckBox;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.button.CGCheckBox;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
 public class CommandClear extends Command implements ActionListener
 {
-	private CCheckBox checkboxAllItem, checkboxIgnoreData, checkboxAll;
+	private CGCheckBox checkboxAllItem, checkboxIgnoreData, checkboxAll;
 	private PanelItem panelItem;
 	private PanelTarget panelTarget;
 
@@ -36,22 +36,22 @@ public class CommandClear extends Command implements ActionListener
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.PLAYERS_ONLY), gbc);
 		++gbc.gridy;
+		panel.add(this.checkboxAllItem = new CGCheckBox("clear.all_items"), gbc);
+		++gbc.gridy;
+		panel.add(this.checkboxIgnoreData = new CGCheckBox("clear.ignore_data"), gbc);
+		++gbc.gridy;
+		panel.add(this.checkboxAll = new CGCheckBox("clear.no_limit"), gbc);
+		++gbc.gridy;
 		panel.add(this.panelItem = new PanelItem("clear.item"), gbc);
-		++gbc.gridy;
-		panel.add(this.checkboxAllItem = new CCheckBox("clear.all_items"), gbc);
-		++gbc.gridy;
-		panel.add(this.checkboxIgnoreData = new CCheckBox("clear.ignore_data"), gbc);
-		++gbc.gridy;
-		panel.add(this.checkboxAll = new CCheckBox("clear.no_limit"), gbc);
 
 		this.checkboxAllItem.addActionListener(this);
 		this.checkboxIgnoreData.addActionListener(this);

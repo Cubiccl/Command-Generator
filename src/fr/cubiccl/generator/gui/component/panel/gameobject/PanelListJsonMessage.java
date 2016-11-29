@@ -13,14 +13,15 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.JsonMessage;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
-import fr.cubiccl.generator.gui.component.button.CButton;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.button.IconButton;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.IStateListener;
 
-public class PanelListJsonMessage extends CPanel implements ActionListener, IStateListener<ConfirmPanel>
+public class PanelListJsonMessage extends CGPanel implements ActionListener, IStateListener<ConfirmPanel>
 {
 	class PanelSingleMessage extends JPanel implements ActionListener
 	{
@@ -50,7 +51,7 @@ public class PanelListJsonMessage extends CPanel implements ActionListener, ISta
 	}
 
 	private static final long serialVersionUID = -2937152202773615069L;
-	private CButton buttonAdd;
+	private CGButton buttonAdd;
 	private boolean hasEvents;
 	private ArrayList<JsonMessage> messages;
 	private ArrayList<PanelSingleMessage> messagesPanels;
@@ -77,7 +78,7 @@ public class PanelListJsonMessage extends CPanel implements ActionListener, ISta
 		GridBagConstraints gbc = this.createGridBagLayout();
 		this.add(this.panelMessages = new JPanel(), gbc);
 		++gbc.gridy;
-		this.add(this.buttonAdd = new CButton("json.add"), gbc);
+		this.add(this.buttonAdd = new CGButton("json.add"), gbc);
 
 		this.panelMessages.setLayout(new BoxLayout(this.panelMessages, BoxLayout.Y_AXIS));
 		this.buttonAdd.addActionListener(this);
@@ -102,9 +103,9 @@ public class PanelListJsonMessage extends CPanel implements ActionListener, ISta
 	{
 		TagCompound[] values = new TagCompound[this.messages.size()];
 		for (int i = 0; i < values.length; ++i)
-			values[i] = this.messages.get(i).toTag("");
+			values[i] = this.messages.get(i).toTag(Tags.JSON_CONTAINER);
 
-		return new TagList("", values);
+		return new TagList(Tags.JSON_LIST, values);
 	}
 
 	@Override

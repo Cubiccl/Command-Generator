@@ -19,9 +19,10 @@ Creating Particles...
 Successfully created 40 particles.
 Creating Sounds...
 Successfully created 225 sounds.
+Creating Block Tags...
+Successfully created 2 Block NBT Tags.
 Successfully created 3 object lists.
 ---- Creating window ----
 Selected Command : achievement
-Generating !
-Successfully generated : /achievement give acquireIron @a
+Selected Command : setblock
 Exit Command Generator... Bye bye !

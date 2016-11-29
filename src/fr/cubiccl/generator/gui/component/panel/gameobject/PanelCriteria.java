@@ -7,9 +7,9 @@ import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
-public class PanelCriteria extends CPanel implements ActionListener
+public class PanelCriteria extends CGPanel implements ActionListener
 {
 	public static final String[] BASE =
 	{ "achievement", "air", "armor", "deathCount", "dummy", "food", "health", "killedByTeam", "level", "playerKillCount", "stat", "stat.breakItem",

@@ -6,14 +6,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.CommandGenerator;
-import fr.cubiccl.generator.gui.component.button.CButton;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.button.CGButton;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
-public class ConfirmPanel extends CPanel implements ActionListener
+public class ConfirmPanel extends CGPanel implements ActionListener
 {
 	private static final long serialVersionUID = -7457797405576343429L;
 
-	private CButton buttonOK, buttonCancel;
+	private CGButton buttonOK, buttonCancel;
 	public Component component;
 	private GridBagConstraints gbc;
 
@@ -26,9 +26,9 @@ public class ConfirmPanel extends CPanel implements ActionListener
 	{
 		this.gbc = this.createGridBagLayout();
 		++gbc.gridy;
-		this.add(this.buttonOK = new CButton("general.confirm"), gbc);
+		this.add(this.buttonOK = new CGButton("general.confirm"), gbc);
 		++gbc.gridx;
-		this.add(this.buttonCancel = new CButton("general.cancel"), gbc);
+		this.add(this.buttonCancel = new CGButton("general.cancel"), gbc);
 		++gbc.gridwidth;
 		--gbc.gridx;
 		--gbc.gridy;

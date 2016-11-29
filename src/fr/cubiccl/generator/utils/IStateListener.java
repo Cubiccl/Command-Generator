@@ -1,9 +1,9 @@
 package fr.cubiccl.generator.utils;
 
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
 
-public interface IStateListener<T extends CPanel>
+public interface IStateListener<T extends CGPanel>
 {
 
 	/** Called when the state is asked to close.

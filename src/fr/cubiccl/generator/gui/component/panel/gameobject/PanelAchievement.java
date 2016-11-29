@@ -8,9 +8,9 @@ import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Achievement;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
-public class PanelAchievement extends CPanel implements ActionListener
+public class PanelAchievement extends CGPanel implements ActionListener
 {
 	private static final long serialVersionUID = 6778070675272037343L;
 

@@ -5,17 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.label.CLabel;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandTime extends Command implements ActionListener
 {
 	private OptionCombobox comboboxMode, comboboxQuery;
-	private CEntry entryValue;
+	private CGEntry entryValue;
 
 	public CommandTime()
 	{
@@ -31,22 +31,22 @@ public class CommandTime extends Command implements ActionListener
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		++gbc.gridwidth;
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
-		panel.add(new CLabel("general.mode").setHasColumn(true), gbc);
+		panel.add(new CGLabel("general.mode").setHasColumn(true), gbc);
 		++gbc.gridx;
 		panel.add(this.comboboxMode = new OptionCombobox("time", "add", "set", "query"), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		panel.add((this.entryValue = new CEntry("score.value", "0")).container, gbc);
+		panel.add((this.entryValue = new CGEntry("score.value", "0")).container, gbc);
 		panel.add(this.comboboxQuery = new OptionCombobox("time.query", "daytime", "gametime", "day"), gbc);
 
 		this.comboboxMode.addActionListener(this);
@@ -66,10 +66,10 @@ public class CommandTime extends Command implements ActionListener
 		try
 		{
 			int i = Integer.parseInt(this.entryValue.getText());
-			if (i < 0) throw new WrongValueException(this.entryValue.label.getAbsoluteText(), Lang.translate("error.integer.positive"), this.entryValue.getText());
+			if (i < 0) throw new WrongValueException(this.entryValue.label.getAbsoluteText(), new Text("error.integer.positive"), this.entryValue.getText());
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(this.entryValue.label.getAbsoluteText(), Lang.translate("error.integer.positive"), this.entryValue.getText());
+			throw new WrongValueException(this.entryValue.label.getAbsoluteText(), new Text("error.integer.positive"), this.entryValue.getText());
 		}
 
 		return command + " " + this.entryValue.getText();

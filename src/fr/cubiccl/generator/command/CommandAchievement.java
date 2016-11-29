@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelAchievement;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -22,23 +22,25 @@ public class CommandAchievement extends Command implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0)
+	public void actionPerformed(ActionEvent e)
 	{
-		this.panelAchievement.setEnabled(this.comboboxMode.getValue().equals("all"));
+		this.panelAchievement.setVisible(!this.comboboxNumber.getValue().equals("all"));
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		++gbc.gridwidth;
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
+		gbc.anchor = GridBagConstraints.EAST;
 		panel.add(this.comboboxMode = new OptionCombobox("achievement", "give", "take"), gbc);
 		++gbc.gridx;
+		gbc.anchor = GridBagConstraints.NORTH;
 		panel.add(this.comboboxNumber = new OptionCombobox("achievement", "one", "all"), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
@@ -47,7 +49,7 @@ public class CommandAchievement extends Command implements ActionListener
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget("target.title.player", PanelTarget.PLAYERS_ONLY), gbc);
 
-		this.comboboxMode.addActionListener(this);
+		this.comboboxNumber.addActionListener(this);
 
 		return panel;
 	}

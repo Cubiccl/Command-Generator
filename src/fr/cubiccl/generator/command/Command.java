@@ -2,8 +2,8 @@ package fr.cubiccl.generator.command;
 
 import javax.swing.BorderFactory;
 
-import fr.cubiccl.generator.gui.component.label.CLabel;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
 public abstract class Command
@@ -16,13 +16,13 @@ public abstract class Command
 		Commands.registerCommand(this);
 	}
 
-	public abstract CPanel createGUI();
+	public abstract CGPanel createGUI();
 
 	public abstract String generate() throws CommandGenerationException;
 
-	protected CLabel labelDescription()
+	protected CGLabel labelDescription()
 	{
-		CLabel l = new CLabel("command." + this.id);
+		CGLabel l = new CGLabel("command." + this.id);
 		l.setBorder(BorderFactory.createRaisedBevelBorder());
 		return l;
 	}

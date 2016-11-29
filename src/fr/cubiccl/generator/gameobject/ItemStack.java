@@ -5,6 +5,7 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
 
 public class ItemStack
 {
@@ -27,8 +28,8 @@ public class ItemStack
 
 	public Tag toTag()
 	{
-		return new TagCompound("item", new TagString("id", this.item.idString), new TagNumber("Damage", Integer.toString(this.data), TagNumber.SHORT),
-				new TagNumber("Count", Integer.toString(this.amount), TagNumber.BYTE));
+		return new TagCompound(Tags.ITEM, new TagString(Tags.ITEM_ID, this.item.idString), new TagNumber(Tags.ITEM_DAMAGE, Integer.toString(this.data)),
+				new TagNumber(Tags.ITEM_COUNT, Integer.toString(this.amount)));
 	}
 
 }

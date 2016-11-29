@@ -6,14 +6,16 @@ import java.util.Comparator;
 
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
-import fr.cubiccl.generator.gui.component.button.CCheckBox;
+import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.label.CLabel;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Replacement;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.WrongValueException;
 
 public class TargetArgument
@@ -97,86 +99,84 @@ public class TargetArgument
 		arguments.add(this);
 	}
 
-	public String checkValue(CPanel panel) throws CommandGenerationException
+	public String checkValue(CGPanel panel) throws CommandGenerationException
 	{
 		if (this == M || this == TYPE)
 		{
-			String value = ((OptionCombobox) ((CPanel) ((ConfirmPanel) panel).component).getComponent(1)).getValue();
-			if (((CCheckBox) ((CPanel) ((ConfirmPanel) panel).component).getComponent(2)).isSelected()) return "!" + (value.equals("all") ? "-1" : value);
+			String value = ((OptionCombobox) ((CGPanel) ((ConfirmPanel) panel).component).getComponent(1)).getValue();
+			if (((CGCheckBox) ((CGPanel) ((ConfirmPanel) panel).component).getComponent(2)).isSelected()) return "!" + (value.equals("all") ? "-1" : value);
 			return value.equals("all") ? "-1" : value;
 		}
 
-		CEntry entry = (CEntry) ((CPanel) ((CPanel) ((ConfirmPanel) panel).component).getComponent(0)).getComponent(1);
+		CGEntry entry = (CGEntry) ((CGPanel) ((CGPanel) ((ConfirmPanel) panel).component).getComponent(0)).getComponent(1);
 		String value = entry.getText();
-		String name = entry.label.getAbsoluteText();
+		Text name = entry.label.getAbsoluteText();
 
 		if (this == SCORE || this == SCORE_MIN)
 		{
 			// Do u like dat code lel | WTF is that srsly
-			String value2 = ((CEntry) ((CPanel) ((CPanel) ((ConfirmPanel) panel).component).getComponent(1)).getComponent(1)).getText();
-			if (value.equals("")) throw new CommandGenerationException(Lang.translate("error.value"));
-			if (value.contains(" ")) throw new WrongValueException(name, Lang.translate("error.space"), value);
+			String value2 = ((CGEntry) ((CGPanel) ((CGPanel) ((ConfirmPanel) panel).component).getComponent(1)).getComponent(1)).getText();
+			if (value.equals("")) throw new CommandGenerationException(new Text("error.value"));
+			if (value.contains(" ")) throw new WrongValueException(name, new Text("error.space"), value);
 			try
 			{
 				Integer.parseInt(value2);
 			} catch (NumberFormatException e)
 			{
-				throw new WrongValueException(name, Lang.translate("error.integer"), value2);
+				throw new WrongValueException(name, new Text("error.integer"), value2);
 			}
 			return value + " " + value2;
 		}
 
 		boolean reversed = false;
-		if (this.canReverse) reversed = ((CCheckBox) ((CPanel) ((ConfirmPanel) panel).component).getComponent(1)).isSelected();
+		if (this.canReverse) reversed = ((CGCheckBox) ((CGPanel) ((ConfirmPanel) panel).component).getComponent(1)).isSelected();
 
 		if (this.valueInteger()) try
 		{
 			int i = Integer.parseInt(value);
 			if (this == R || this == RM || this == DX || this == DY || this == DZ || this == C || this == L || this == LM)
 			{
-				if (i < 0) throw new WrongValueException(name, Lang.translate("error.integer.positive"), value);
+				if (i < 0) throw new WrongValueException(name, new Text("error.integer.positive"), value);
 			}
-			if (this == RX || this == RXM) if (i < -90 || i > 90) throw new WrongValueException(name, Lang.translate("error.number.bounds")
-					.replace("<min>", "-90").replace("<max>", "90"), value);
-			if (this == RY || this == RYM) if (i < -180 || i > 180) throw new WrongValueException(name, Lang.translate("error.number.bounds")
-					.replace("<min>", "-180").replace("<max>", "180"), value);
+			if (this == RX || this == RXM) if (i < -90 || i > 90) throw new WrongValueException(name, new Text("error.number.bounds", new Replacement("<min>",
+					"-90"), new Replacement("<max>", "90"), new Replacement("<max>", "180")), value);
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(name, Lang.translate("error.integer"), value);
+			throw new WrongValueException(name, new Text("error.integer"), value);
 		}
 		else
 		{
-			if (value.equals("") && this != TAG && this != TEAM) throw new CommandGenerationException(Lang.translate("error.value"));
-			if (value.contains(" ")) throw new WrongValueException(name, Lang.translate("error.space"), value);
+			if (value.equals("") && this != TAG && this != TEAM) throw new CommandGenerationException(new Text("error.value"));
+			if (value.contains(" ")) throw new WrongValueException(name, new Text("error.space"), value);
 		}
 
 		if (reversed) return "!" + value;
 		return value;
 	}
 
-	public CPanel createGui()
+	public CGPanel createGui()
 	{
 
 		if (this == SCORE || this == SCORE_MIN)
 		{
-			CPanel panel = new CPanel();
+			CGPanel panel = new CGPanel();
 			GridBagConstraints gbc = panel.createGridBagLayout();
 			gbc.gridx = 0;
 			gbc.gridy = 0;
-			panel.add(new CEntry("score.name").container, gbc);
+			panel.add(new CGEntry(new Text("score.name")).container, gbc);
 			++gbc.gridy;
-			panel.add(new CEntry("score.value").container, gbc);
+			panel.add(new CGEntry("score.value", "0").container, gbc);
 			return new ConfirmPanel(panel);
 		}
 
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 		gbc.gridx = 0;
 		gbc.gridy = 0;
 
 		if (this == M || this == TYPE)
 		{
-			panel.add(new CLabel("argument.description." + this.id), gbc);
+			panel.add(new CGLabel("argument.description." + this.id), gbc);
 			++gbc.gridx;
 			if (this == M)
 			{
@@ -193,12 +193,12 @@ public class TargetArgument
 			--gbc.gridx;
 			++gbc.gridy;
 			++gbc.gridwidth;
-		} else panel.add(new CEntry("argument.description." + this.id).container, gbc);
+		} else panel.add(new CGEntry(new Text("argument.description." + this.id)).container, gbc);
 
 		if (this.canReverse)
 		{
 			++gbc.gridy;
-			panel.add(new CCheckBox("target.argument.reverse"), gbc);
+			panel.add(new CGCheckBox("target.argument.reverse"), gbc);
 		}
 		return new ConfirmPanel(panel);
 	}

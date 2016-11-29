@@ -4,9 +4,9 @@ public class CommandGenerationException extends Exception
 {
 	private static final long serialVersionUID = -7627633010587931222L;
 
-	private final String message;
+	protected final Text message;
 
-	public CommandGenerationException(String message)
+	public CommandGenerationException(Text message)
 	{
 		this.message = message;
 	}
@@ -14,7 +14,7 @@ public class CommandGenerationException extends Exception
 	@Override
 	public String getMessage()
 	{
-		return this.message;
+		return this.message.toString();
 	}
 
 }

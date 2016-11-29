@@ -5,17 +5,17 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelListJsonMessage;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Utils;
 
 public class CommandTitle extends Command implements ActionListener
 {
 	private OptionCombobox comboboxMode;
-	private CEntry entryFadeIn, entryStay, entryFadeOut;
+	private CGEntry entryFadeIn, entryStay, entryFadeOut;
 	private PanelListJsonMessage panelJson;
 	private PanelTarget panelTarget;
 
@@ -35,9 +35,9 @@ public class CommandTitle extends Command implements ActionListener
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		panel.add(this.labelDescription(), gbc);
@@ -47,11 +47,11 @@ public class CommandTitle extends Command implements ActionListener
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.PLAYERS_ONLY), gbc);
 		++gbc.gridy;
 		panel.add(this.panelJson = new PanelListJsonMessage(), gbc);
-		panel.add((this.entryFadeIn = new CEntry("title.fade_in")).container, gbc);
+		panel.add((this.entryFadeIn = new CGEntry("title.fade_in", "0")).container, gbc);
 		++gbc.gridy;
-		panel.add((this.entryStay = new CEntry("title.stay")).container, gbc);
+		panel.add((this.entryStay = new CGEntry("title.stay", "0")).container, gbc);
 		++gbc.gridy;
-		panel.add((this.entryFadeOut = new CEntry("title.fade_out")).container, gbc);
+		panel.add((this.entryFadeOut = new CGEntry("title.fade_out", "0")).container, gbc);
 
 		this.entryFadeIn.container.setVisible(false);
 		this.entryStay.container.setVisible(false);

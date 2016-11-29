@@ -15,7 +15,7 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.menubar.CMenuBar;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.PanelCommand;
 import fr.cubiccl.generator.gui.component.panel.PanelCommandSelection;
 
@@ -26,7 +26,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	private CMenuBar menubar;
 	private PanelCommand panelCommand;
 	private PanelCommandSelection panelCommandSelection;
-	private CPanel panelGui;
+	private CGPanel panelGui;
 	private JScrollPane scrollpane;
 
 	public Window()
@@ -67,14 +67,15 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		contentPane.setLayout(null);
 		contentPane.add(this.panelCommand = new PanelCommand());
 		contentPane.add(this.panelCommandSelection = new PanelCommandSelection());
-		contentPane.add(this.scrollpane = new CScrollPane());
+		contentPane.add(this.scrollpane = new CScrollPane(null));
 		this.scrollpane.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 		this.scrollpane.getVerticalScrollBar().setUnitIncrement(20);
+		this.scrollpane.getHorizontalScrollBar().setUnitIncrement(20);
 
 		this.setJMenuBar(this.menubar = new CMenuBar());
 	}
 
-	public CPanel getCommandPanel()
+	public CGPanel getCommandPanel()
 	{
 		return this.panelGui;
 	}
@@ -94,7 +95,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.panelCommandSelection.buttonCancelExecute.setVisible(executeCommand);
 	}
 
-	public void setMainPanel(CPanel gui)
+	public void setMainPanel(CGPanel gui)
 	{
 		this.panelGui = gui;
 		this.scrollpane.setViewportView(this.panelGui);

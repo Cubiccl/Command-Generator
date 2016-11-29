@@ -3,19 +3,19 @@ package fr.cubiccl.generator.gui.component.panel.gameobject;
 import java.awt.GridBagConstraints;
 
 import fr.cubiccl.generator.gameobject.Coordinates;
-import fr.cubiccl.generator.gui.component.button.CCheckBox;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
-import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.gui.component.button.CGCheckBox;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.WrongValueException;
 
-public class PanelCoordinates extends CPanel
+public class PanelCoordinates extends CGPanel
 {
 	private static final long serialVersionUID = -6721007750575550659L;
 
 	private boolean canBeRelative;
-	private CCheckBox checkboxX, checkboxY, checkboxZ;
-	private CEntry entryX, entryY, entryZ;
+	private CGCheckBox checkboxX, checkboxY, checkboxZ;
+	private CGEntry entryX, entryY, entryZ;
 
 	public PanelCoordinates(String titleID)
 	{
@@ -28,19 +28,19 @@ public class PanelCoordinates extends CPanel
 		this.canBeRelative = canBeRelative;
 
 		GridBagConstraints gbc = this.createGridBagLayout();
-		this.add((this.entryX = new CEntry("coordinate.x", "0")).container, gbc);
+		this.add((this.entryX = new CGEntry("coordinate.x", "0")).container, gbc);
 		++gbc.gridy;
-		this.add((this.entryY = new CEntry("coordinate.y", "0")).container, gbc);
+		this.add((this.entryY = new CGEntry("coordinate.y", "0")).container, gbc);
 		++gbc.gridy;
-		this.add((this.entryZ = new CEntry("coordinate.z", "0")).container, gbc);
+		this.add((this.entryZ = new CGEntry("coordinate.z", "0")).container, gbc);
 
 		++gbc.gridx;
 		gbc.gridy = 0;
-		this.add(this.checkboxX = new CCheckBox("coordinate.relative"), gbc);
+		this.add(this.checkboxX = new CGCheckBox("coordinate.relative"), gbc);
 		++gbc.gridy;
-		this.add(this.checkboxY = new CCheckBox("coordinate.relative"), gbc);
+		this.add(this.checkboxY = new CGCheckBox("coordinate.relative"), gbc);
 		++gbc.gridy;
-		this.add(this.checkboxZ = new CCheckBox("coordinate.relative"), gbc);
+		this.add(this.checkboxZ = new CGCheckBox("coordinate.relative"), gbc);
 
 		this.entryX.addNumberFilter();
 		this.entryY.addNumberFilter();
@@ -66,32 +66,32 @@ public class PanelCoordinates extends CPanel
 			x = Float.parseFloat(this.entryX.getText());
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(this.entryX.label.getAbsoluteText(), Lang.translate("error.number"), this.entryX.getText());
+			throw new WrongValueException(this.entryX.label.getAbsoluteText(), new Text("error.number"), this.entryX.getText());
 		}
 		try
 		{
 			y = Float.parseFloat(this.entryY.getText());
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(this.entryY.label.getAbsoluteText(), Lang.translate("error.number"), this.entryY.getText());
+			throw new WrongValueException(this.entryY.label.getAbsoluteText(), new Text("error.number"), this.entryY.getText());
 		}
 		try
 		{
 			z = Float.parseFloat(this.entryZ.getText());
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(this.entryZ.label.getAbsoluteText(), Lang.translate("error.number"), this.entryZ.getText());
+			throw new WrongValueException(this.entryZ.label.getAbsoluteText(), new Text("error.number"), this.entryZ.getText());
 		}
 
 		return new Coordinates(x, y, z, this.checkboxX.isSelected(), this.checkboxY.isSelected(), this.checkboxZ.isSelected());
 	}
 
-	/** Changes the text ID of the "relative" checkboxes. */
-	public void setRelativeText(String textID)
+	/** Changes the text of the "relative" checkboxes. */
+	public void setRelativeText(Text text)
 	{
-		this.checkboxX.setTextID(textID);
-		this.checkboxY.setTextID(textID);
-		this.checkboxZ.setTextID(textID);
+		this.checkboxX.setTextID(text);
+		this.checkboxY.setTextID(text);
+		this.checkboxZ.setTextID(text);
 	}
 
 }

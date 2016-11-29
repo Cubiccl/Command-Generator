@@ -5,21 +5,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.label.CLabel;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.MissingValueException;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandStats extends Command implements ActionListener
 {
 	private OptionCombobox comboboxSourceMode, comboboxMode, comboboxStat;
-	private CEntry entryObjective;
-	private CLabel labelStat;
+	private CGEntry entryObjective;
+	private CGLabel labelStat;
 	private PanelCoordinates panelCoordinates;
 	private PanelTarget panelTarget, panelSource;
 
@@ -36,7 +36,7 @@ public class CommandStats extends Command implements ActionListener
 			boolean set = this.comboboxMode.getValue().equals("set");
 			this.entryObjective.container.setVisible(set);
 			this.panelTarget.setVisible(set);
-			this.labelStat.setTextID("stats.stat." + this.comboboxMode.getValue());
+			this.labelStat.setTextID(new Text("stats.stat." + this.comboboxMode.getValue()));
 		} else if (e.getSource() == this.comboboxSourceMode)
 		{
 			boolean block = this.comboboxSourceMode.getValue().equals("block");
@@ -46,9 +46,9 @@ public class CommandStats extends Command implements ActionListener
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		++gbc.gridwidth;
@@ -62,7 +62,7 @@ public class CommandStats extends Command implements ActionListener
 		panel.add(this.comboboxMode = new OptionCombobox("stats.mode", "set", "clear"), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
-		panel.add(this.labelStat = new CLabel("stats.stat.set"), gbc);
+		panel.add(this.labelStat = new CGLabel("stats.stat.set"), gbc);
 		++gbc.gridx;
 		panel.add(this.comboboxStat = new OptionCombobox("stats.stat", "AffectedBlocks", "AffectedEntities", "AffectedItems", "QueryResult", "SuccessCount"),
 				gbc);
@@ -71,7 +71,7 @@ public class CommandStats extends Command implements ActionListener
 		++gbc.gridwidth;
 		panel.add(this.panelTarget = new PanelTarget("stats.target", PanelTarget.ALL_ENTITIES), gbc);
 		++gbc.gridy;
-		panel.add((this.entryObjective = new CEntry("stats.objective")).container, gbc);
+		panel.add((this.entryObjective = new CGEntry(new Text("stats.objective"))).container, gbc);
 
 		this.panelSource.setVisible(false);
 		this.comboboxSourceMode.addActionListener(this);
@@ -93,7 +93,7 @@ public class CommandStats extends Command implements ActionListener
 		{
 			String objective = this.entryObjective.getText();
 			if (objective.equals("")) throw new MissingValueException(this.entryObjective.label.getAbsoluteText());
-			if (objective.contains(" ")) throw new WrongValueException(this.entryObjective.label.getAbsoluteText(), Lang.translate("error.space"), objective);
+			if (objective.contains(" ")) throw new WrongValueException(this.entryObjective.label.getAbsoluteText(), new Text("error.space"), objective);
 			command += " " + this.panelTarget.generateTarget().toCommand() + " " + objective;
 		}
 

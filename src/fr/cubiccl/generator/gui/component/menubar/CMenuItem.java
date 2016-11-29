@@ -4,8 +4,8 @@ import java.awt.Font;
 
 import javax.swing.JMenuItem;
 
-import fr.cubiccl.generator.gui.DisplayUtils;
-import fr.cubiccl.generator.gui.component.ui.CButtonUI;
+import fr.cubi.cubigui.DisplayUtils;
+import fr.cubi.cubigui.ui.CButtonUI;
 
 public class CMenuItem extends JMenuItem
 {

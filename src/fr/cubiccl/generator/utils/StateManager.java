@@ -3,12 +3,12 @@ package fr.cubiccl.generator.utils;
 import java.util.Stack;
 
 import fr.cubiccl.generator.CommandGenerator;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
 @SuppressWarnings("rawtypes")
 public class StateManager
 {
-	public class State<T extends CPanel>
+	public class State<T extends CGPanel>
 	{
 		public final T panel;
 		private final IStateListener<T> stateListener;
@@ -33,7 +33,7 @@ public class StateManager
 	}
 
 	@SuppressWarnings("unchecked")
-	public <T extends CPanel> T clearState(boolean shouldCheck)
+	public <T extends CGPanel> T clearState(boolean shouldCheck)
 	{
 		if (this.states.isEmpty()) return null;
 		if (shouldCheck && this.states.peek().stateListener != null && !this.states.peek().stateListener.shouldStateClose(this.states.peek().panel)) return null;
@@ -48,7 +48,7 @@ public class StateManager
 		return this.states.peek();
 	}
 
-	public <T extends CPanel> void setState(T panel, IStateListener<T> stateListener)
+	public <T extends CGPanel> void setState(T panel, IStateListener<T> stateListener)
 	{
 		this.states.add(new State<T>(panel, stateListener));
 		this.updatePanel();

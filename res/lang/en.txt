@@ -6,6 +6,7 @@ achievement.take=Remove
 
 block.data=Data value
 block.id=Block ID
+block.tags=NBT Tags
 
 clear.all_items=Empty target's inventory
 clear.ignore_data=Ignore Item data
@@ -341,6 +342,8 @@ stats.target=Entity whose scoreboard will be updated
 
 summon.coordinates=Coordinates of the Entity
 summon.entity=Entity to summon
+
+tag.no_value=No value has been set for this NBT Tag.
 
 target.argument.reverse=Target Entities should NOT match this.
 target.arguments=Arguments
@@ -2364,3 +2367,9 @@ stat.tradedWithVillager=Increments for each Villager traded with
 stat.trappedChestTriggered=Increments for each Trapped chest triggered
 stat.treasureFished=Increments for each Treasure fished
 stat.walkOneCm=Increments for each centimeter traveled walking
+
+// BLOCK TAGS
+tag.block.CustomName=Custom Name
+tag.block.CustomName.description=The name of this Container.
+tag.block.Lock=Lock
+tag.block.Lock.description=If this is set, players will not be able to open this Container unless they hold an Item with this name.

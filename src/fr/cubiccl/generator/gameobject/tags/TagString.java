@@ -1,11 +1,13 @@
 package fr.cubiccl.generator.gameobject.tags;
 
+import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
+
 public class TagString extends TagValue
 {
 
-	public TagString(String id, String value)
+	public TagString(TemplateString template, String value)
 	{
-		super(id, value);
+		super(template, value);
 	}
 
 	@Override

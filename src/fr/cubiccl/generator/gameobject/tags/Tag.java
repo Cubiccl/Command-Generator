@@ -1,13 +1,21 @@
 package fr.cubiccl.generator.gameobject.tags;
 
+import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
+
 public abstract class Tag
 {
-	public final String id;
+	public static final int BLOCK = 0, ITEM = 1, ENTITY = 2;
 	protected boolean isJson;
+	public final TemplateTag template;
 
-	public Tag(String id)
+	public Tag(TemplateTag template)
 	{
-		this.id = id;
+		this.template = template;
+	}
+
+	public String id()
+	{
+		return this.template.id;
 	}
 
 	public void setJson(boolean isJson)
@@ -19,10 +27,15 @@ public abstract class Tag
 	{
 		if (this.isJson)
 		{
-			if (this instanceof TagCompound || this instanceof TagList || this instanceof TagString) return "\"" + this.id + "\":" + this.value();
-			return "\"" + this.id + "\":\"" + this.value() + "\"";
+			if (this instanceof TagCompound || this instanceof TagList || this instanceof TagString) return "\"" + this.id() + "\":" + this.value();
+			return "\"" + this.id() + "\":\"" + this.value() + "\"";
 		}
-		return this.id + ":" + this.value();
+		return this.id() + ":" + this.value();
+	}
+
+	public int type()
+	{
+		return this.template.type;
 	}
 
 	public abstract String value();

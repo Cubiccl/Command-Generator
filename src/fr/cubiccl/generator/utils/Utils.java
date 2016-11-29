@@ -6,108 +6,109 @@ public final class Utils
 	{ "white", "aqua", "black", "blue", "dark_aqua", "dark_blue", "dark_gray", "dark_green", "dark_purple", "dark_red", "gold", "gray", "green",
 			"light_purple", "red", "yellow" };
 
-	public static void checkFloatSuperior(String name, String value, float minValue) throws CommandGenerationException
+	public static void checkFloatSuperior(Text name, String value, float minValue) throws CommandGenerationException
 	{
 		try
 		{
 			float f = Float.parseFloat(value);
-			if (f < minValue) throw new WrongValueException(name, Lang.translate("error.number.greater").replaceAll("<min>", Float.toString(minValue)), value);
+			if (f < minValue) throw new WrongValueException(name, new Text("error.number.greater", new Replacement("<min>", new Text(Float.toString(minValue),
+					false))), value);
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(name, Lang.translate("error.number.greater").replaceAll("<min>", Float.toString(minValue)), value);
+			throw new WrongValueException(name, new Text("error.number.greater", new Replacement("<min>", new Text(Float.toString(minValue), false))), value);
 		}
 	}
 
-	public static void checkInteger(String name, String value) throws CommandGenerationException
+	public static void checkInteger(Text name, String value) throws CommandGenerationException
 	{
 		try
 		{
 			Integer.parseInt(value);
 		} catch (Exception e)
 		{
-			throw new WrongValueException(name, Lang.translate("error.integer"), value);
+			throw new WrongValueException(name, new Text("error.integer"), value);
 		}
 	}
 
-	public static void checkIntegerInBounds(String name, String value, int minValue, int maxValue) throws CommandGenerationException
+	public static void checkIntegerInBounds(Text name, String value, int minValue, int maxValue) throws CommandGenerationException
 	{
 		try
 		{
 			int i = Integer.parseInt(value);
-			if (i < minValue || i > maxValue) throw new WrongValueException(name, Lang.translate("error.integer.bounds")
-					.replaceAll("<min>", Integer.toString(minValue)).replaceAll("<max>", Integer.toString(maxValue)), value);
+			if (i < minValue || i > maxValue) throw new WrongValueException(name, new Text("error.integer.bounds", new Replacement("<min>", new Text(
+					Integer.toString(minValue), false)), new Replacement("<max>", new Text(Integer.toString(maxValue), false))), value);
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(name, Lang.translate("error.integer.bounds").replaceAll("<min>", Integer.toString(minValue))
-					.replaceAll("<max>", Integer.toString(maxValue)), value);
+			throw new WrongValueException(name, new Text("error.integer.bounds", new Replacement("<min>", new Text(Integer.toString(minValue), false)),
+					new Replacement("<max>", new Text(Integer.toString(maxValue), false))), value);
 		}
 	}
 
-	public static void checkIntegerSuperior(String name, String value, int minValue) throws CommandGenerationException
+	public static void checkIntegerSuperior(Text name, String value, int minValue) throws CommandGenerationException
 	{
 		try
 		{
 			int i = Integer.parseInt(value);
-			if (i < minValue) throw new WrongValueException(name, Lang.translate("error.integer.greater").replaceAll("<min>", Integer.toString(minValue)),
-					value);
+			if (i < minValue) throw new WrongValueException(name, new Text("error.integer.greater", new Replacement("<min>", new Text(
+					Integer.toString(minValue), false))), value);
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(name, Lang.translate("error.integer.greater").replaceAll("<min>", Integer.toString(minValue)), value);
+			throw new WrongValueException(name, new Text("error.integer.greater", new Replacement("<min>", new Text(Integer.toString(minValue), false))), value);
 		}
 	}
 
-	public static void checkNumber(String name, String value) throws CommandGenerationException
+	public static void checkNumber(Text name, String value) throws CommandGenerationException
 	{
 		try
 		{
 			Float.parseFloat(value);
 		} catch (Exception e)
 		{
-			throw new WrongValueException(name, Lang.translate("error.number"), value);
+			throw new WrongValueException(name, new Text("error.number"), value);
 		}
 	}
 
-	public static void checkNumberInBounds(String name, String value, float minValue, float maxValue) throws CommandGenerationException
+	public static void checkNumberInBounds(Text name, String value, float minValue, float maxValue) throws CommandGenerationException
 	{
 		try
 		{
 			float f = Float.parseFloat(value);
-			if (f < minValue || f > maxValue) throw new WrongValueException(name, Lang.translate("error.number.bounds")
-					.replaceAll("<min>", Float.toString(minValue)).replaceAll("<max>", Float.toString(maxValue)), value);
+			if (f < minValue || f > maxValue) throw new WrongValueException(name, new Text("error.number.bounds", new Replacement("<min>", new Text(
+					Float.toString(minValue), false)), new Replacement("<max>", new Text(Float.toString(maxValue), false))), value);
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(name, Lang.translate("error.number.bounds").replaceAll("<min>", Float.toString(minValue))
-					.replaceAll("<max>", Float.toString(maxValue)), value);
+			throw new WrongValueException(name, new Text("error.number.bounds", new Replacement("<min>", new Text(Float.toString(minValue), false)),
+					new Replacement("<max>", new Text(Float.toString(maxValue), false))), value);
 		}
 	}
 
-	public static void checkPositiveInteger(String name, String value) throws CommandGenerationException
+	public static void checkPositiveInteger(Text name, String value) throws CommandGenerationException
 	{
 		try
 		{
 			int i = Integer.parseInt(value);
-			if (i < 0) throw new WrongValueException(name, Lang.translate("error.integer.positive"), value);
+			if (i < 0) throw new WrongValueException(name, new Text("error.integer.positive"), value);
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(name, Lang.translate("error.integer.positive"), value);
+			throw new WrongValueException(name, new Text("error.integer.positive"), value);
 		}
 	}
 
-	public static void checkPositiveNumber(String name, String value) throws CommandGenerationException
+	public static void checkPositiveNumber(Text name, String value) throws CommandGenerationException
 	{
 		try
 		{
 			float f = Float.parseFloat(value);
-			if (f < 0) throw new WrongValueException(name, Lang.translate("error.number.positive"), value);
+			if (f < 0) throw new WrongValueException(name, new Text("error.number.positive"), value);
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(name, Lang.translate("error.number.positive"), value);
+			throw new WrongValueException(name, new Text("error.number.positive"), value);
 		}
 	}
 
-	public static void checkStringId(String name, String value) throws CommandGenerationException
+	public static void checkStringId(Text name, String value) throws CommandGenerationException
 	{
-		if (value.contains(" ")) throw new WrongValueException(name, Lang.translate("error.space"), value);
+		if (value.contains(" ")) throw new WrongValueException(name, new Text("error.space"), value);
 		if (value.equals("")) throw new MissingValueException(name);
 	}
 

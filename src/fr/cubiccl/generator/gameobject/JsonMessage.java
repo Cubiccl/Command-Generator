@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
+import static fr.cubiccl.generator.gameobject.templatetags.Tags.*;
+
 import java.awt.Color;
 import java.util.ArrayList;
 
@@ -8,6 +10,8 @@ import javax.swing.JLabel;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.utils.Utils;
 
 public class JsonMessage
@@ -64,42 +68,42 @@ public class JsonMessage
 		this.hoverValue = hoverValue;
 	}
 
-	public TagCompound toTag(String id)
+	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
 		switch (this.mode)
 		{
 			case TRANSLATE:
-				tags.add(new TagString("translate", this.text));
+				tags.add(new TagString(JSON_TRANSLATE, this.text));
 				break;
 
 			case SCORE:
-				tags.add(new TagCompound("score", new TagString("objective", this.text), new TagString("name", this.target)));
+				tags.add(new TagCompound(JSON_SCORE, new TagString(SCORE_OBJECTIVE, this.text), new TagString(SCORE_TARGET, this.target)));
 				break;
 
 			case SELECTOR:
-				tags.add(new TagString("selector", this.text));
+				tags.add(new TagString(JSON_SELECTOR, this.text));
 				break;
 
 			default:
-				tags.add(new TagString("text", this.text));
+				tags.add(new TagString(JSON_TEXT, this.text));
 				break;
 		}
 
-		tags.add(new TagString("color", Utils.COLORS[this.color]));
-		if (this.bold) tags.add(new TagString("bold", "true"));
-		if (this.underlined) tags.add(new TagString("underlined", "true"));
-		if (this.italic) tags.add(new TagString("italic", "true"));
-		if (this.strikethrough) tags.add(new TagString("strikethrough", "true"));
-		if (this.obfuscated) tags.add(new TagString("obfuscated", "true"));
-		if (this.insertion != null) tags.add(new TagString("insertion", this.insertion));
-		if (this.clickAction != null) tags
-				.add(new TagCompound("ClickEvent", new TagString("action", this.clickAction), new TagString("value", this.clickValue)));
-		if (this.hoverAction != null) tags
-				.add(new TagCompound("HoverEvent", new TagString("action", this.hoverAction), new TagString("value", this.hoverValue)));
+		tags.add(new TagString(Tags.TEXT_COLOR, Utils.COLORS[this.color]));
+		if (this.bold) tags.add(new TagString(TEXT_BOLD, "true"));
+		if (this.underlined) tags.add(new TagString(TEXT_UNDERLINED, "true"));
+		if (this.italic) tags.add(new TagString(TEXT_ITALIC, "true"));
+		if (this.strikethrough) tags.add(new TagString(TEXT_STRIKETHROUGH, "true"));
+		if (this.obfuscated) tags.add(new TagString(TEXT_OBFUSCATED, "true"));
+		if (this.insertion != null) tags.add(new TagString(TEXT_INSERTION, this.insertion));
+		if (this.clickAction != null) tags.add(new TagCompound(EVENT_CLICK, new TagString(EVENT_ACTION, this.clickAction), new TagString(EVENT_VALUE,
+				this.clickValue)));
+		if (this.hoverAction != null) tags.add(new TagCompound(EVENT_HOVER, new TagString(EVENT_ACTION, this.hoverAction), new TagString(EVENT_VALUE,
+				this.hoverValue)));
 
-		TagCompound tag = new TagCompound(id, tags.toArray(new Tag[tags.size()]));
+		TagCompound tag = new TagCompound(container, tags.toArray(new Tag[tags.size()]));
 		tag.setJson(true);
 		return tag;
 	}

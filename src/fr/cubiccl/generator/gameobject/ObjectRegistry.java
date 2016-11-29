@@ -12,25 +12,28 @@ import fr.cubiccl.generator.gameobject.baseobjects.EffectType;
 import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
+import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.target.TargetArgument;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Settings;
 
 public class ObjectRegistry
 {
-
-	public static final HashMap<String, Achievement> achievements = new HashMap<String, Achievement>();
-	public static final HashMap<String, Attribute> attributes = new HashMap<String, Attribute>();
-	public static final HashMap<String, Block> blocks = new HashMap<String, Block>();
-	public static final HashMap<String, EffectType> effects = new HashMap<String, EffectType>();
-	public static final HashMap<String, EnchantmentType> enchantments = new HashMap<String, EnchantmentType>();
-	public static final HashMap<String, Entity> entities = new HashMap<String, Entity>();
+	private static final HashMap<String, Achievement> achievements = new HashMap<String, Achievement>();
+	private static final HashMap<String, Attribute> attributes = new HashMap<String, Attribute>();
+	private static final HashMap<String, Block> blocks = new HashMap<String, Block>();
+	private static final HashMap<String, TemplateTag> blockTags = new HashMap<String, TemplateTag>();
+	private static final HashMap<String, EffectType> effects = new HashMap<String, EffectType>();
+	private static final HashMap<String, EnchantmentType> enchantments = new HashMap<String, EnchantmentType>();
+	private static final HashMap<String, Entity> entities = new HashMap<String, Entity>();
 	private static final HashMap<Integer, String> itemIDs = new HashMap<Integer, String>(), blockIDs = new HashMap<Integer, String>(),
 			effectIDs = new HashMap<Integer, String>(), enchantmentIDs = new HashMap<Integer, String>();
-	public static final HashMap<String, Item> items = new HashMap<String, Item>();
-	public static final HashMap<String, ArrayList<String>> objectLists = new HashMap<String, ArrayList<String>>();
-	public static final HashMap<String, Particle> particles = new HashMap<String, Particle>();
-	public static final HashMap<String, Sound> sounds = new HashMap<String, Sound>();
+	private static final HashMap<String, Item> items = new HashMap<String, Item>();
+	private static final HashMap<String, ArrayList<String>> objectLists = new HashMap<String, ArrayList<String>>();
+	private static final HashMap<String, Particle> particles = new HashMap<String, Particle>();
+	private static final HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 
 	private static void addToLists(String objectId, String[] lists)
 	{
@@ -183,7 +186,7 @@ public class ObjectRegistry
 	public static void createObjects()
 	{
 		String[] data = FileUtils.readFileAsArray("data/" + Settings.getVersion().name + ".txt");
-		ArrayList<String> blocks = new ArrayList<String>(), items = new ArrayList<String>(), entities = new ArrayList<String>(), effects = new ArrayList<String>(), enchantments = new ArrayList<String>(), achievements = new ArrayList<String>(), attributes = new ArrayList<String>(), particles = new ArrayList<String>(), sounds = new ArrayList<String>();
+		ArrayList<String> blocks = new ArrayList<String>(), items = new ArrayList<String>(), entities = new ArrayList<String>(), effects = new ArrayList<String>(), enchantments = new ArrayList<String>(), achievements = new ArrayList<String>(), attributes = new ArrayList<String>(), particles = new ArrayList<String>(), sounds = new ArrayList<String>(), blocktags = new ArrayList<String>();
 
 		int current = -1;
 		for (String line : data)
@@ -238,6 +241,10 @@ public class ObjectRegistry
 					for (String sound : s)
 						sounds.add(sound);
 					break;
+
+				case 9:
+					blocktags.add(line);
+					break;
 			}
 		}
 
@@ -250,6 +257,7 @@ public class ObjectRegistry
 		createAttributes(attributes.toArray(new String[attributes.size()]));
 		createParticles(particles.toArray(new String[particles.size()]));
 		createSounds(sounds.toArray(new String[sounds.size()]));
+		createTags(blocktags.toArray(new String[blocktags.size()]), Tag.BLOCK);
 		CommandGenerator.log("Successfully created " + objectLists.size() + " object lists.");
 		TargetArgument.createArguments();
 	}
@@ -270,6 +278,26 @@ public class ObjectRegistry
 		for (String id : data)
 			new Sound(id);
 		CommandGenerator.log("Successfully created " + sounds.size() + " sounds.");
+	}
+
+	private static void createTag(int tagType, String[] data)
+	{
+		switch (data[1])
+		{
+			case "string":
+			default:
+				new TemplateString(data[0], tagType);
+				break;
+		}
+	}
+
+	public static void createTags(String[] data, int tagType)
+	{
+		CommandGenerator.log("Creating Block Tags...");
+		blockTags.clear();
+		for (String tag : data)
+			createTag(tagType, tag.split(","));
+		CommandGenerator.log("Successfully created " + blockTags.size() + " Block NBT Tags.");
 	}
 
 	public static Achievement getAchievementFromID(String id)
@@ -487,6 +515,22 @@ public class ObjectRegistry
 		return a.toArray(new Sound[a.size()]);
 	}
 
+	public static TemplateTag[] getTags(int tagType)
+	{
+		ArrayList<TemplateTag> a = new ArrayList<TemplateTag>();
+		a.addAll(blockTags.values());
+		a.sort(new Comparator<TemplateTag>()
+		{
+			@Override
+			public int compare(TemplateTag o1, TemplateTag o2)
+			{
+				return o1.id.compareTo(o2.id);
+			}
+		});
+		
+		return a.toArray(new TemplateTag[a.size()]);
+	}
+
 	public static void registerAchievement(Achievement achievement)
 	{
 		achievements.put(achievement.id, achievement);
@@ -534,6 +578,11 @@ public class ObjectRegistry
 	public static void registerSound(Sound sound)
 	{
 		sounds.put(sound.id, sound);
+	}
+
+	public static void registerTag(TemplateTag tag, int tagType)
+	{
+		if (tagType == Tag.BLOCK) blockTags.put(tag.id, tag);
 	}
 
 	private ObjectRegistry()

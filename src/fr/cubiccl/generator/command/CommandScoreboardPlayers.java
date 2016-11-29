@@ -4,12 +4,13 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.cubiccl.generator.gui.component.button.CCheckBox;
+import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Utils;
 
 public class CommandScoreboardPlayers extends Command implements ActionListener
@@ -17,9 +18,9 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 	public static final String[] OPERATIONS =
 	{ "+#", "-#", "*#", "/#", "%#", "#", "<", ">", "><" };
 
-	private CCheckBox checkbox;
+	private CGCheckBox checkbox;
 	private OptionCombobox comboboxMode, comboboxMode2;
-	private CEntry entryObjective, entryObjective2, entryScore, entryScore2;
+	private CGEntry entryObjective, entryObjective2, entryScore, entryScore2;
 	private PanelTarget panelTarget, panelTarget2;
 
 	public CommandScoreboardPlayers()
@@ -43,22 +44,22 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 			this.comboboxMode2.setVisible(operation || tag);
 			if (test)
 			{
-				this.checkbox.setTextID("scoreboard.test.max");
-				this.entryObjective.label.setTextID("score.name");
-				this.entryScore.label.setTextID("score.value.min");
+				this.checkbox.setTextID(new Text("scoreboard.test.max"));
+				this.entryObjective.label.setTextID(new Text("score.name"));
+				this.entryScore.label.setTextID(new Text("score.value.min"));
 			} else if (operation)
 			{
-				this.entryObjective.label.setTextID("score.name1");
+				this.entryObjective.label.setTextID(new Text("score.name1"));
 				this.comboboxMode2.setOptions("scoreboard.operation", OPERATIONS);
 			} else if (tag)
 			{
-				this.entryObjective.label.setTextID("scoreboard.tag.value");
+				this.entryObjective.label.setTextID(new Text("scoreboard.tag.value"));
 				this.comboboxMode2.setOptions("scoreboard.tag", "add", "remove");
 			} else
 			{
-				this.checkbox.setTextID("scoreboard.reset.all");
-				this.entryObjective.label.setTextID("score.name");
-				this.entryScore.label.setTextID("score.value");
+				this.checkbox.setTextID(new Text("scoreboard.reset.all"));
+				this.entryObjective.label.setTextID(new Text("score.name"));
+				this.entryScore.label.setTextID(new Text("score.value"));
 			}
 		}
 
@@ -67,9 +68,9 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		++gbc.gridwidth;
@@ -79,20 +80,20 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.ALL_ENTITIES), gbc);
 		++gbc.gridy;
-		panel.add((this.entryObjective = new CEntry("score.name")).container, gbc);
+		panel.add((this.entryObjective = new CGEntry(new Text("score.name"))).container, gbc);
 		++gbc.gridy;
-		panel.add((this.entryScore = new CEntry("score.value", "0")).container, gbc);
+		panel.add((this.entryScore = new CGEntry("score.value", "0")).container, gbc);
 		++gbc.gridy;
 		panel.add(this.comboboxMode2 = new OptionCombobox("scoreboard.operation", OPERATIONS), gbc);
 		++gbc.gridy;
 		panel.add(this.panelTarget2 = new PanelTarget("target.title.any2", PanelTarget.ALL_ENTITIES), gbc);
 		++gbc.gridy;
-		panel.add((this.entryObjective2 = new CEntry("score.name2")).container, gbc);
+		panel.add((this.entryObjective2 = new CGEntry(new Text("score.name2"))).container, gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
-		panel.add(this.checkbox = new CCheckBox("scoreboard.reset.all"), gbc);
+		panel.add(this.checkbox = new CGCheckBox("scoreboard.reset.all"), gbc);
 		++gbc.gridx;
-		panel.add((this.entryScore2 = new CEntry(null, "0")).container, gbc);
+		panel.add((this.entryScore2 = new CGEntry("", "0")).container, gbc);
 
 		this.comboboxMode.addActionListener(this);
 		this.entryScore.addIntFilter();
@@ -112,7 +113,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		String command = "/scoreboard players " + this.comboboxMode.getValue() + " " + this.panelTarget.generateTarget().toCommand() + " ";
 		String mode = this.comboboxMode.getValue();
 		String objective = this.entryObjective.getText();
-		if (!mode.equals("reset")) Utils.checkStringId(this.entryObjective.label.getText(), objective);
+		if (!mode.equals("reset")) Utils.checkStringId(this.entryObjective.label.getAbsoluteText(), objective);
 		if (mode.equals("set") || mode.equals("add") || mode.equals("remove")) return command + objective + " " + this.entryScore.getText();
 
 		if (mode.equals("reset"))
@@ -133,7 +134,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 
 		if (mode.equals("tag"))
 		{
-			Utils.checkStringId(this.entryScore.label.getText(), this.entryScore.getText());
+			Utils.checkStringId(this.entryScore.label.getAbsoluteText(), this.entryScore.getText());
 			return command + this.panelTarget.generateTarget().toCommand() + " " + this.comboboxMode2.getValue() + " " + this.entryObjective.getText();
 		}
 

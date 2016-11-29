@@ -15,19 +15,19 @@ import fr.cubiccl.generator.gameobject.target.Argument;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gameobject.target.Target.TargetType;
 import fr.cubiccl.generator.gameobject.target.TargetArgument;
-import fr.cubiccl.generator.gui.component.CList;
-import fr.cubiccl.generator.gui.component.button.CButton;
+import fr.cubiccl.generator.gui.component.CGList;
+import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.label.CLabel;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.IStateListener;
-import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.MissingValueException;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.WrongValueException;
 
-public class PanelTarget extends CPanel implements ActionListener, IStateListener<CPanel>, ListSelectionListener
+public class PanelTarget extends CGPanel implements ActionListener, IStateListener<CGPanel>, ListSelectionListener
 {
 	public static final int ALL_ENTITIES = 0, PLAYERS_ONLY = 1, ENTITIES_ONLY = 2;
 	private static final long serialVersionUID = 4720702579772411649L;
@@ -40,11 +40,11 @@ public class PanelTarget extends CPanel implements ActionListener, IStateListene
 	{ "target.title.any", "target.title.player", "target.title.entity" };
 
 	private ArrayList<Argument> arguments;
-	private CButton buttonAddArgument, buttonRemoveArgument;
+	private CGButton buttonAddArgument, buttonRemoveArgument;
 	private OptionCombobox comboboxType, comboboxArgument;
-	private CEntry entryName;
-	private CLabel labelType, labelArguments;
-	private CList listArguments;
+	private CGEntry entryName;
+	private CGLabel labelType, labelArguments;
+	private CGList listArguments;
 	private int mode;
 
 	public PanelTarget(int mode)
@@ -60,21 +60,21 @@ public class PanelTarget extends CPanel implements ActionListener, IStateListene
 		this.arguments = new ArrayList<Argument>();
 		this.setPreferredSize(new Dimension(450, 300));
 
-		this.labelArguments = new CLabel("target.arguments").setHasColumn(true);
-		this.labelType = new CLabel("target.type").setHasColumn(true);
+		this.labelArguments = new CGLabel("target.arguments").setHasColumn(true);
+		this.labelType = new CGLabel("target.type").setHasColumn(true);
 
-		this.entryName = new CEntry("target.name");
+		this.entryName = new CGEntry(new Text("target.name"));
 		this.entryName.container.setVisible(false);
 
 		this.comboboxType = new OptionCombobox("target.type", TARGETS[this.mode]);
 		this.comboboxArgument = new OptionCombobox("argument", TargetArgument.names());
 		this.comboboxArgument.addActionListener(this);
 
-		this.buttonAddArgument = new CButton("general.add");
-		this.buttonRemoveArgument = new CButton("general.remove");
+		this.buttonAddArgument = new CGButton("general.add");
+		this.buttonRemoveArgument = new CGButton("general.remove");
 		this.buttonRemoveArgument.setEnabled(false);
 
-		this.listArguments = new CList();
+		this.listArguments = new CGList();
 		this.listArguments.scrollPane.setPreferredSize(new Dimension(200, 120));
 		this.listArguments.addListSelectionListener(this);
 
@@ -156,7 +156,7 @@ public class PanelTarget extends CPanel implements ActionListener, IStateListene
 		{
 			String name = this.entryName.getText();
 			if (name.equals("")) throw new MissingValueException(this.entryName.label.getAbsoluteText());
-			if (name.contains(" ")) throw new WrongValueException(this.entryName.label.getAbsoluteText(), Lang.translate("error.space"), name);
+			if (name.contains(" ")) throw new WrongValueException(this.entryName.label.getAbsoluteText(), new Text("error.space"), name);
 			return new Target(name);
 		}
 		return new Target(Target.typeFromID(this.comboboxType.getValue()), this.arguments.toArray(new Argument[this.arguments.size()]));
@@ -192,7 +192,7 @@ public class PanelTarget extends CPanel implements ActionListener, IStateListene
 	}
 
 	@Override
-	public boolean shouldStateClose(CPanel panel)
+	public boolean shouldStateClose(CGPanel panel)
 	{
 		try
 		{

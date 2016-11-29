@@ -2,7 +2,7 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEnchantment;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -18,9 +18,9 @@ public class CommandEnchant extends Command
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		panel.add(this.labelDescription(), gbc);

@@ -5,17 +5,18 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Utils;
 
 public class CommandScoreboardTeams extends Command implements ActionListener
 {
 
 	private OptionCombobox comboboxMode, comboboxOptionName, comboboxOptionValue;
-	private CEntry entryTeam, entryDisplayName;
+	private CGEntry entryTeam, entryDisplayName;
 	private PanelTarget panelTarget;
 
 	public CommandScoreboardTeams()
@@ -45,18 +46,18 @@ public class CommandScoreboardTeams extends Command implements ActionListener
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		panel.add(this.comboboxMode = new OptionCombobox("scoreboard.teams.mode", "add", "remove", "join", "leave", "empty", "option"), gbc);
 		++gbc.gridy;
-		panel.add((this.entryTeam = new CEntry("score.team")).container, gbc);
+		panel.add((this.entryTeam = new CGEntry(new Text("score.team"))).container, gbc);
 		++gbc.gridy;
-		panel.add((this.entryDisplayName = new CEntry("score.add.display")).container, gbc);
+		panel.add((this.entryDisplayName = new CGEntry(new Text("score.add.display"))).container, gbc);
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.ALL_ENTITIES), gbc);
 		panel.add(this.comboboxOptionName = new OptionCombobox("scoreboard.team.option", "color", "friendlyfire", "seeFriendlyInvisibles", "nametagVisibility",
 				"deathMessageVisibility", "collisionRule"), gbc);
@@ -79,7 +80,7 @@ public class CommandScoreboardTeams extends Command implements ActionListener
 		String command = "/scoreboard teams " + this.comboboxMode.getValue();
 		String mode = this.comboboxMode.getValue();
 		String team = this.entryTeam.getText();
-		Utils.checkStringId(this.entryTeam.label.getText(), team);
+		Utils.checkStringId(this.entryTeam.label.getAbsoluteText(), team);
 		command += " " + team;
 		if (mode.equals("empty")) return command;
 		if (mode.equals("add") && !this.entryDisplayName.getText().equals("")) command += " " + this.entryDisplayName.getText();

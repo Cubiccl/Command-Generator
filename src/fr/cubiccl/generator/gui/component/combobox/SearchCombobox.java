@@ -7,15 +7,15 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CTextField;
 
-public class SearchCombobox extends CComboBox implements KeyListener
+public class SearchCombobox extends CGComboBox implements KeyListener
 {
 
 	private static final long serialVersionUID = 5018870150343109671L;
 
-	public final CPanel container;
+	public final CGPanel container;
 	public final CTextField searchbar;
 	private String[] values;
 
@@ -26,7 +26,7 @@ public class SearchCombobox extends CComboBox implements KeyListener
 		this.searchbar = new CTextField();
 		this.searchbar.addKeyListener(this);
 
-		this.container = new CPanel();
+		this.container = new CGPanel();
 		this.container.setLayout(new GridLayout(2, 1));
 		this.container.add(this.searchbar);
 		this.container.add(this);

@@ -5,13 +5,13 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.CommandGenerator;
-import fr.cubiccl.generator.gui.component.button.CButton;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.button.CGButton;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ComboboxPanel;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.IStateListener;
-import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandGamerule extends Command implements ActionListener, IStateListener<ComboboxPanel>
@@ -20,8 +20,8 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	{ "commandBlockOutput", "disableElytraMovementCheck", "doDaylightCycle", "doEntityDrops", "doFireTick", "doMobLoot", "doMobSpawning", "doTileDrops",
 			"keepInventory", "logAdminCommands", "mobGriefing", "naturalRegeneration", "randomTickSpeed", "reducedDebugInfo", "sendCommandFeedback",
 			"showDeathMessages", "spawnRadius", "spectatorsGenerateChunks" };
-	private CButton buttonPredefined;
-	private CEntry entryGamerule, entryValue;
+	private CGButton buttonPredefined;
+	private CGEntry entryGamerule, entryValue;
 
 	public CommandGamerule()
 	{
@@ -35,22 +35,22 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		++gbc.gridwidth;
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
-		panel.add((this.entryGamerule = new CEntry("gamerule.entry")).container, gbc);
+		panel.add((this.entryGamerule = new CGEntry(new Text("gamerule.entry"))).container, gbc);
 		++gbc.gridx;
-		panel.add(this.buttonPredefined = new CButton("gamerule.predefined"), gbc);
+		panel.add(this.buttonPredefined = new CGButton("gamerule.predefined"), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		panel.add((this.entryValue = new CEntry("score.value", "0")).container, gbc);
+		panel.add((this.entryValue = new CGEntry("score.value", "0")).container, gbc);
 
 		this.entryValue.addIntFilter();
 
@@ -77,13 +77,13 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 			if (gamerule.equals("randomTickSpeed") || gamerule.equals("spawnRadius")) try
 			{
 				int i = Integer.parseInt(value);
-				if (i < 0) throw new WrongValueException(this.entryValue.label.getAbsoluteText(), Lang.translate("error.integer.positive"), value);
+				if (i < 0) throw new WrongValueException(this.entryValue.label.getAbsoluteText(), new Text("error.integer.positive"), value);
 			} catch (NumberFormatException e)
 			{
-				throw new WrongValueException(this.entryValue.label.getAbsoluteText(), Lang.translate("error.integer.positive"), value);
+				throw new WrongValueException(this.entryValue.label.getAbsoluteText(), new Text("error.integer.positive"), value);
 			}
-			else if (!value.equals("true") && !value.equals("false")) throw new WrongValueException(this.entryValue.label.getAbsoluteText(),
-					Lang.translate("error.value.truefalse"), value);
+			else if (!value.equals("true") && !value.equals("false")) throw new WrongValueException(this.entryValue.label.getAbsoluteText(), new Text(
+					"error.value.truefalse"), value);
 		}
 
 		return command + " " + this.entryValue.getText();

@@ -2,19 +2,20 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
-import fr.cubiccl.generator.gui.component.button.CCheckBox;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.button.CGCheckBox;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Replacement;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandTeleport extends Command
 {
-	private CCheckBox checkboxXRot, checkboxYRot;
-	private CEntry entryYRot, entryXRot;
+	private CGCheckBox checkboxXRot, checkboxYRot;
+	private CGEntry entryYRot, entryXRot;
 	private PanelCoordinates panelCoordinates;
 	private PanelTarget panelTarget;
 
@@ -24,21 +25,21 @@ public class CommandTeleport extends Command
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
-		CPanel rotation = new CPanel("tp.rotation");
+		CGPanel rotation = new CGPanel("tp.rotation");
 		GridBagConstraints gbc2 = rotation.createGridBagLayout();
-		rotation.add((this.entryYRot = new CEntry("tp.rotation.y")).container, gbc2);
+		rotation.add((this.entryYRot = new CGEntry("tp.rotation.y", "0")).container, gbc2);
 		++gbc2.gridy;
-		rotation.add((this.entryXRot = new CEntry("tp.rotation.x")).container, gbc2);
+		rotation.add((this.entryXRot = new CGEntry("tp.rotation.x", "0")).container, gbc2);
 		++gbc2.gridx;
 		--gbc2.gridy;
-		rotation.add(this.checkboxYRot = new CCheckBox("tp.rotation.relative"), gbc2);
+		rotation.add(this.checkboxYRot = new CGCheckBox("tp.rotation.relative"), gbc2);
 		++gbc2.gridy;
-		rotation.add(this.checkboxXRot = new CCheckBox("tp.rotation.relative"), gbc2);
+		rotation.add(this.checkboxXRot = new CGCheckBox("tp.rotation.relative"), gbc2);
 
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
@@ -63,22 +64,22 @@ public class CommandTeleport extends Command
 			try
 			{
 				float f = Float.parseFloat(y);
-				if (f < -180 || f > 180) throw new WrongValueException(this.entryYRot.label.getAbsoluteText(), Lang.translate("error.number.bounds")
-						.replace("<min>", "-180").replace("<max>", "180"), y);
+				if (f < -180 || f > 180) throw new WrongValueException(this.entryYRot.label.getAbsoluteText(), new Text("error.number.bounds", new Replacement(
+						"<min>", "-180"), new Replacement("<max>", "180")), y);
 			} catch (NumberFormatException e)
 			{
-				throw new WrongValueException(this.entryYRot.label.getAbsoluteText(), Lang.translate("error.number.bounds").replace("<min>", "-180")
-						.replace("<max>", "180"), y);
+				throw new WrongValueException(this.entryYRot.label.getAbsoluteText(), new Text("error.number.bounds", new Replacement("<min>", "-180"),
+						new Replacement("<max>", "180")), y);
 			}
 			try
 			{
 				float f = Float.parseFloat(x);
-				if (f < -90 || f > 90) throw new WrongValueException(this.entryXRot.label.getAbsoluteText(), Lang.translate("error.number.bounds")
-						.replace("<min>", "-90").replace("<max>", "90"), x);
+				if (f < -90 || f > 90) throw new WrongValueException(this.entryXRot.label.getAbsoluteText(), new Text("error.number.bounds", new Replacement(
+						"<min>", "-90"), new Replacement("<max>", "90")), x);
 			} catch (NumberFormatException e)
 			{
-				throw new WrongValueException(this.entryXRot.label.getAbsoluteText(), Lang.translate("error.number.bounds").replace("<min>", "-90")
-						.replace("<max>", "90"), x);
+				throw new WrongValueException(this.entryXRot.label.getAbsoluteText(), new Text("error.number.bounds", new Replacement("<min>", "-90"),
+						new Replacement("<max>", "90")), x);
 			}
 		}
 

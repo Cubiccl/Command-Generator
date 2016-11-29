@@ -2,18 +2,18 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
-import fr.cubiccl.generator.gui.component.button.CCheckBox;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.button.CGCheckBox;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandXp extends Command
 {
-	private CCheckBox checkboxLevel;
-	private CEntry entryAmount;
+	private CGCheckBox checkboxLevel;
+	private CGEntry entryAmount;
 	private PanelTarget panelTarget;
 
 	public CommandXp()
@@ -22,16 +22,16 @@ public class CommandXp extends Command
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
-		panel.add((this.entryAmount = new CEntry("xp.amount", "0")).container, gbc);
+		panel.add((this.entryAmount = new CGEntry("xp.amount", "0")).container, gbc);
 		++gbc.gridy;
-		panel.add(this.checkboxLevel = new CCheckBox("xp.level"), gbc);
+		panel.add(this.checkboxLevel = new CGCheckBox("xp.level"), gbc);
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.PLAYERS_ONLY), gbc);
 
@@ -50,7 +50,7 @@ public class CommandXp extends Command
 			Integer.parseInt(this.entryAmount.getText());
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(this.entryAmount.label.getAbsoluteText(), Lang.translate("error.integer"), this.entryAmount.getText());
+			throw new WrongValueException(this.entryAmount.label.getAbsoluteText(), new Text("error.integer"), this.entryAmount.getText());
 		}
 		return "/xp " + this.entryAmount.getText() + (this.checkboxLevel.isSelected() ? "L " : " ") + this.panelTarget.generateTarget().toCommand();
 	}

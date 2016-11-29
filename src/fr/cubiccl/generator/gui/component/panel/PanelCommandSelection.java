@@ -10,36 +10,37 @@ import java.awt.event.ActionListener;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
-import fr.cubiccl.generator.gui.component.button.CButton;
-import fr.cubiccl.generator.gui.component.combobox.CComboBox;
-import fr.cubiccl.generator.gui.component.label.CLabel;
+import fr.cubiccl.generator.gui.component.button.CGButton;
+import fr.cubiccl.generator.gui.component.combobox.CGComboBox;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.utils.Text;
 
-public class PanelCommandSelection extends CPanel implements ActionListener
+public class PanelCommandSelection extends CGPanel implements ActionListener
 {
 	public static final int HEIGHT = 60;
 	private static final long serialVersionUID = 9144607045203777459L;
 
-	private CButton buttonGenerate;
-	private CComboBox comboboxCommands;
-	private CLabel labelCommand;
-	public CButton buttonCancelExecute;
+	private CGButton buttonGenerate;
+	private CGComboBox comboboxCommands;
+	private CGLabel labelCommand;
+	public CGButton buttonCancelExecute;
 
 	public PanelCommandSelection()
 	{
 
-		this.labelCommand = new CLabel("command.select").setHasColumn(true);
+		this.labelCommand = new CGLabel(new Text("command.select")).setHasColumn(true);
 
 		Command[] commands = Commands.getCommands();
 		String[] names = new String[commands.length];
 		for (int i = 0; i < names.length; ++i)
 			names[i] = commands[i].id;
-		this.comboboxCommands = new CComboBox(names);
+		this.comboboxCommands = new CGComboBox(names);
 		this.comboboxCommands.addActionListener(this);
 
-		this.buttonGenerate = new CButton("command.generate");
+		this.buttonGenerate = new CGButton("command.generate");
 		this.buttonGenerate.addActionListener(this);
 		this.buttonGenerate.setFont(this.buttonGenerate.getFont().deriveFont(Font.BOLD, 20));
-		this.buttonCancelExecute = new CButton("command.cancel_execute");
+		this.buttonCancelExecute = new CGButton("command.cancel_execute");
 		this.buttonCancelExecute.addActionListener(this);
 		this.buttonCancelExecute.setVisible(false);
 		this.createLayout();

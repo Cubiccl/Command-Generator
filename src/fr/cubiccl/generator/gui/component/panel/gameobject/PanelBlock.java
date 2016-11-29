@@ -10,20 +10,22 @@ import javax.swing.event.ListSelectionListener;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
+import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
-import fr.cubiccl.generator.gui.component.label.CLabel;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
-import fr.cubiccl.generator.gui.component.textfield.CSpinner;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.textfield.CGSpinner;
 
-public class PanelBlock extends CPanel implements ActionListener, ListSelectionListener
+public class PanelBlock extends CGPanel implements ActionListener, ListSelectionListener
 {
 	private static final long serialVersionUID = -8600189753659710473L;
 
 	private ObjectCombobox<Block> comboboxBlock;
-	private CLabel labelName;
+	private CGLabel labelName;
 	private ImageLabel labelTexture;
-	private CSpinner spinnerData;
+	private PanelTags panelTags;
+	private CGSpinner spinnerData;
 
 	public PanelBlock(String titleID)
 	{
@@ -37,18 +39,20 @@ public class PanelBlock extends CPanel implements ActionListener, ListSelectionL
 
 		GridBagConstraints gbc = this.createGridBagLayout();
 		++gbc.gridheight;
-		this.add(new CLabel("block.id").setHasColumn(true), gbc);
+		this.add(new CGLabel("block.id").setHasColumn(true), gbc);
 		++gbc.gridx;
 		this.add((this.comboboxBlock = new ObjectCombobox<Block>(blocks)).container, gbc);
 		++gbc.gridx;
 		--gbc.gridheight;
 		this.add(this.labelTexture = new ImageLabel(), gbc);
 		++gbc.gridy;
-		this.add(this.labelName = new CLabel(null), gbc);
+		this.add(this.labelName = new CGLabel(""), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
 		gbc.gridwidth = 3;
-		this.add((this.spinnerData = new CSpinner("block.data", blocks[0].damage)).container, gbc);
+		this.add((this.spinnerData = new CGSpinner("block.data", blocks[0].damage)).container, gbc);
+		++gbc.gridy;
+		this.add(this.panelTags = new PanelTags("block.tags", Tag.BLOCK), gbc);
 
 		this.spinnerData.container.setVisible(hasData);
 		this.comboboxBlock.addActionListener(this);

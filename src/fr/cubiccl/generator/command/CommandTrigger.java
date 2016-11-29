@@ -3,17 +3,17 @@ package fr.cubiccl.generator.command;
 import java.awt.GridBagConstraints;
 
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.MissingValueException;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandTrigger extends Command
 {
 	private OptionCombobox comboboxMode;
-	private CEntry entryObjective, entryValue;
+	private CGEntry entryObjective, entryValue;
 
 	public CommandTrigger()
 	{
@@ -21,19 +21,19 @@ public class CommandTrigger extends Command
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		++gbc.gridwidth;
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
-		panel.add((this.entryObjective = new CEntry("score.name")).container, gbc);
+		panel.add((this.entryObjective = new CGEntry(new Text("score.name"))).container, gbc);
 		++gbc.gridy;
 		panel.add(this.comboboxMode = new OptionCombobox("general.value", "add", "set"), gbc);
 		++gbc.gridy;
-		panel.add((this.entryValue = new CEntry("score.value", "0")).container, gbc);
+		panel.add((this.entryValue = new CGEntry("score.value", "0")).container, gbc);
 
 		this.entryValue.addIntFilter();
 
@@ -44,14 +44,14 @@ public class CommandTrigger extends Command
 	public String generate() throws CommandGenerationException
 	{
 		if (this.entryObjective.getText().equals("")) throw new MissingValueException(this.entryObjective.label.getAbsoluteText());
-		if (this.entryObjective.getText().contains(" ")) throw new WrongValueException(this.entryObjective.label.getAbsoluteText(), Lang.translate("error.space"),
+		if (this.entryObjective.getText().contains(" ")) throw new WrongValueException(this.entryObjective.label.getAbsoluteText(), new Text("error.space"),
 				this.entryObjective.getText());
 		try
 		{
 			Integer.parseInt(this.entryValue.getText());
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(this.entryValue.label.getAbsoluteText(), Lang.translate("error.integer"), this.entryValue.getText());
+			throw new WrongValueException(this.entryValue.label.getAbsoluteText(), new Text("error.integer"), this.entryValue.getText());
 		}
 		return "/trigger " + this.entryObjective.getText() + " " + this.comboboxMode.getValue() + " " + this.entryValue.getText();
 	}

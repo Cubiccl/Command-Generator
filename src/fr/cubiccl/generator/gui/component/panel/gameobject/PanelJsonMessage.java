@@ -5,22 +5,23 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.JsonMessage;
-import fr.cubiccl.generator.gui.component.button.CCheckBox;
+import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.label.CLabel;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Utils;
 
-public class PanelJsonMessage extends CPanel implements ActionListener
+public class PanelJsonMessage extends CGPanel implements ActionListener
 {
-	class PanelClickEvent extends CPanel implements ActionListener
+	class PanelClickEvent extends CGPanel implements ActionListener
 	{
 		private static final long serialVersionUID = -3177207292056026877L;
 
 		private OptionCombobox comboboxMode;
-		private CEntry entryValue;
+		private CGEntry entryValue;
 
 		public PanelClickEvent()
 		{
@@ -29,7 +30,7 @@ public class PanelJsonMessage extends CPanel implements ActionListener
 			GridBagConstraints gbc = this.createGridBagLayout();
 			this.add(this.comboboxMode = new OptionCombobox("json.click.mode", "open_url", "run_command", "change_page"), gbc);
 			++gbc.gridy;
-			this.add((this.entryValue = new CEntry("json.url")).container, gbc);
+			this.add((this.entryValue = new CGEntry(new Text("json.url"))).container, gbc);
 
 			this.comboboxMode.addActionListener(this);
 		}
@@ -40,22 +41,22 @@ public class PanelJsonMessage extends CPanel implements ActionListener
 			switch (this.comboboxMode.getValue())
 			{
 				case "run_command":
-					this.entryValue.label.setTextID("json.command");
+					this.entryValue.label.setTextID(new Text("json.command"));
 					break;
 
 				case "change_page":
-					this.entryValue.label.setTextID("json.page");
+					this.entryValue.label.setTextID(new Text("json.page"));
 					break;
 
 				default:
-					this.entryValue.label.setTextID("json.url");
+					this.entryValue.label.setTextID(new Text("json.url"));
 					break;
 			}
 		}
 
 	}
 
-	class PanelHoverEvent extends CPanel implements ActionListener
+	class PanelHoverEvent extends CGPanel implements ActionListener
 	{
 		private static final long serialVersionUID = 367164758149085273L;
 
@@ -116,9 +117,9 @@ public class PanelJsonMessage extends CPanel implements ActionListener
 
 	private static final long serialVersionUID = -6195765844988257240L;
 
-	private CCheckBox checkboxBold, checkboxUnderlined, checkboxItalic, checkboxStrikethrough, checkboxObfuscated, checkboxClickEvent, checkboxHoverEvent;
+	private CGCheckBox checkboxBold, checkboxUnderlined, checkboxItalic, checkboxStrikethrough, checkboxObfuscated, checkboxClickEvent, checkboxHoverEvent;
 	private OptionCombobox comboboxMode, comboboxColor;
-	private CEntry entryMain, entryInsertion;
+	private CGEntry entryMain, entryInsertion;
 	private boolean hasEvents;
 	private PanelClickEvent panelClickEvent;
 	private PanelHoverEvent panelHoverEvent;
@@ -138,37 +139,37 @@ public class PanelJsonMessage extends CPanel implements ActionListener
 		gbc.gridwidth = 4;
 		this.add(this.comboboxMode = new OptionCombobox("json.mode", "text", "translate", "score", "selector"), gbc);
 		++gbc.gridy;
-		this.add((this.entryMain = new CEntry("json.text")).container, gbc);
+		this.add((this.entryMain = new CGEntry(new Text("json.text"))).container, gbc);
 		++gbc.gridy;
 		this.add(this.panelTarget = new PanelTarget(PanelTarget.ALL_ENTITIES), gbc);
 		++gbc.gridy;
-		this.add((this.entryInsertion = new CEntry("json.insertion")).container, gbc);
+		this.add((this.entryInsertion = new CGEntry(new Text("json.insertion"))).container, gbc);
 		++gbc.gridy;
 		gbc.gridwidth = 1;
-		this.add(new CLabel("json.color"), gbc);
+		this.add(new CGLabel("json.color"), gbc);
 		++gbc.gridx;
 		this.add(this.comboboxColor = new OptionCombobox("color", Utils.COLORS), gbc);
 		++gbc.gridx;
 		++gbc.gridwidth;
-		this.add(this.checkboxBold = new CCheckBox("json.bold"), gbc);
+		this.add(this.checkboxBold = new CGCheckBox("json.bold"), gbc);
 		gbc.gridx = 0;
 		++gbc.gridy;
-		this.add(this.checkboxUnderlined = new CCheckBox("json.underlined"), gbc);
+		this.add(this.checkboxUnderlined = new CGCheckBox("json.underlined"), gbc);
 		gbc.gridx += 2;
-		this.add(this.checkboxItalic = new CCheckBox("json.italic"), gbc);
+		this.add(this.checkboxItalic = new CGCheckBox("json.italic"), gbc);
 		gbc.gridx = 0;
 		++gbc.gridy;
-		this.add(this.checkboxStrikethrough = new CCheckBox("json.strikethrough"), gbc);
+		this.add(this.checkboxStrikethrough = new CGCheckBox("json.strikethrough"), gbc);
 		gbc.gridx += 2;
-		this.add(this.checkboxObfuscated = new CCheckBox("json.obfuscated"), gbc);
+		this.add(this.checkboxObfuscated = new CGCheckBox("json.obfuscated"), gbc);
 		gbc.gridx = 0;
 		++gbc.gridy;
-		this.add(this.checkboxClickEvent = new CCheckBox("json.click"), gbc);
+		this.add(this.checkboxClickEvent = new CGCheckBox("json.click"), gbc);
 		gbc.gridx += 2;
-		this.add(this.checkboxHoverEvent = new CCheckBox("json.hover"), gbc);
+		this.add(this.checkboxHoverEvent = new CGCheckBox("json.hover"), gbc);
 		gbc.gridx = 0;
 		++gbc.gridy;
-		gbc.gridwidth=4;
+		gbc.gridwidth = 4;
 		this.add(this.panelClickEvent = new PanelClickEvent(), gbc);
 		++gbc.gridy;
 		this.add(this.panelHoverEvent = new PanelHoverEvent(), gbc);
@@ -199,15 +200,15 @@ public class PanelJsonMessage extends CPanel implements ActionListener
 			switch (mode)
 			{
 				case "text":
-					this.entryMain.label.setTextID("json.text");
+					this.entryMain.label.setTextID(new Text("json.text"));
 					break;
 
 				case "translate":
-					this.entryMain.label.setTextID("json.translation");
+					this.entryMain.label.setTextID(new Text("json.translation"));
 					break;
 
 				case "score":
-					this.entryMain.label.setTextID("score.name");
+					this.entryMain.label.setTextID(new Text("score.name"));
 					break;
 
 				default:
@@ -222,7 +223,7 @@ public class PanelJsonMessage extends CPanel implements ActionListener
 	{
 		String text = this.entryMain.getText();
 		if (this.comboboxMode.getValue().equals("selector")) text = this.panelTarget.generateTarget().toCommand();
-		else if (!this.comboboxMode.getValue().equals("text")) Utils.checkStringId(this.entryMain.label.getText(), text);
+		else if (!this.comboboxMode.getValue().equals("text")) Utils.checkStringId(this.entryMain.label.getAbsoluteText(), text);
 
 		JsonMessage message = new JsonMessage(this.comboboxMode.getSelectedIndex(), text, this.comboboxColor.getSelectedIndex());
 		if (this.comboboxMode.getValue().equals("score")) message.target = this.panelTarget.generateTarget().toCommand();

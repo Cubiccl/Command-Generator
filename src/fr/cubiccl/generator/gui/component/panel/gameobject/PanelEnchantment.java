@@ -6,20 +6,21 @@ import fr.cubiccl.generator.gameobject.Enchantment;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
-import fr.cubiccl.generator.gui.component.label.CLabel;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Replacement;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.WrongValueException;
 
-public class PanelEnchantment extends CPanel
+public class PanelEnchantment extends CGPanel
 {
 	private static final long serialVersionUID = 1904430278915127658L;
 
 	private boolean checkMaximum;
 	private ObjectCombobox<EnchantmentType> comboboxEnchant;
-	private CEntry entryLevel;
+	private CGEntry entryLevel;
 
 	public PanelEnchantment(boolean checkMaximum)
 	{
@@ -28,13 +29,13 @@ public class PanelEnchantment extends CPanel
 		EnchantmentType[] enchants = ObjectRegistry.getEnchantmentTypes();
 
 		GridBagConstraints gbc = this.createGridBagLayout();
-		this.add(new CLabel("enchant.select").setHasColumn(true), gbc);
+		this.add(new CGLabel("enchant.select").setHasColumn(true), gbc);
 		++gbc.gridx;
 		this.add(this.comboboxEnchant = new ObjectCombobox<EnchantmentType>(enchants), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		this.add((this.entryLevel = new CEntry("enchant.level", "1")).container, gbc);
+		this.add((this.entryLevel = new CGEntry(new Text("enchant.level"), "1")).container, gbc);
 
 		this.entryLevel.addIntFilter();
 
@@ -50,12 +51,13 @@ public class PanelEnchantment extends CPanel
 		try
 		{
 			level = Integer.parseInt(l);
-			if (level < 1) throw new WrongValueException(this.entryLevel.label.getAbsoluteText(), Lang.translate("error.integer.greater").replace("<min>", "1"), l);
-			if (this.checkMaximum && level > enchant.maxLevel) throw new WrongValueException(this.entryLevel.label.getAbsoluteText(), Lang
-					.translate("error.integer.bounds").replace("<min>", "1").replace("<max>", Integer.toString(enchant.maxLevel)), l);
+			if (level < 1) throw new WrongValueException(this.entryLevel.label.getAbsoluteText(), new Text("error.integer.greater", new Replacement("<min>",
+					"1")), l);
+			if (this.checkMaximum && level > enchant.maxLevel) throw new WrongValueException(this.entryLevel.label.getAbsoluteText(), new Text(
+					"error.integer.bounds", new Replacement("<min>", "1"), new Replacement("<max>", Integer.toString(enchant.maxLevel))), l);
 		} catch (NumberFormatException e)
 		{
-			throw new WrongValueException(this.entryLevel.label.getAbsoluteText(), Lang.translate("error.integer.greater").replace("<min>", "1"), l);
+			throw new WrongValueException(this.entryLevel.label.getAbsoluteText(), new Text("error.integer.greater", new Replacement("<min>", "1")), l);
 		}
 
 		return new Enchantment(enchant, level);

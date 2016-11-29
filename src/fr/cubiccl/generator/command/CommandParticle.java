@@ -6,24 +6,25 @@ import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.Particle;
-import fr.cubiccl.generator.gui.component.button.CCheckBox;
+import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
-import fr.cubiccl.generator.gui.component.label.CLabel;
-import fr.cubiccl.generator.gui.component.panel.CPanel;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
-import fr.cubiccl.generator.gui.component.textfield.CEntry;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Utils;
 
 public class CommandParticle extends Command implements ActionListener
 {
-	private CCheckBox checkboxForce;
+	private CGCheckBox checkboxForce;
 	private ObjectCombobox<Particle> comboboxParticle;
-	private CEntry entryXd, entryYd, entryZd, entrySpeed, entryCount;
-	private CLabel labelParticle;
+	private CGEntry entryXd, entryYd, entryZd, entrySpeed, entryCount;
+	private CGLabel labelParticle;
 	private PanelBlock panelBlockParticle;
 	private PanelCoordinates panelCoordinates;
 	private PanelItem panelItemParticle;
@@ -40,13 +41,13 @@ public class CommandParticle extends Command implements ActionListener
 		Particle particle = this.comboboxParticle.getSelectedObject();
 		this.panelBlockParticle.setVisible(particle.id.equals("blockcrack") || particle.id.equals("blockdust") || particle.id.equals("fallingdust"));
 		this.panelItemParticle.setVisible(particle.id.equals("iconcrack"));
-		this.labelParticle.setTextID("particle." + particle.id);
+		this.labelParticle.setTextID(new Text("particle." + particle.id));
 	}
 
 	@Override
-	public CPanel createGUI()
+	public CGPanel createGUI()
 	{
-		CPanel panel = new CPanel();
+		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		++gbc.gridwidth;
@@ -54,24 +55,24 @@ public class CommandParticle extends Command implements ActionListener
 		++gbc.gridy;
 		panel.add((this.comboboxParticle = new ObjectCombobox<Particle>(ObjectRegistry.getParticles())).container, gbc);
 		++gbc.gridy;
-		panel.add(this.labelParticle = new CLabel("particle." + this.comboboxParticle.getSelectedObject().id), gbc);
+		panel.add(this.labelParticle = new CGLabel("particle." + this.comboboxParticle.getSelectedObject().id), gbc);
 		++gbc.gridy;
 		panel.add(this.panelCoordinates = new PanelCoordinates("particle.coordinates"), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
-		panel.add((this.entryXd = new CEntry("particle.xd", "0")).container, gbc);
+		panel.add((this.entryXd = new CGEntry("particle.xd", "0")).container, gbc);
 		++gbc.gridx;
-		panel.add((this.entrySpeed = new CEntry("particle.speed", "0")).container, gbc);
+		panel.add((this.entrySpeed = new CGEntry("particle.speed", "0")).container, gbc);
 		--gbc.gridx;
 		++gbc.gridy;
-		panel.add((this.entryYd = new CEntry("particle.yd", "0")).container, gbc);
+		panel.add((this.entryYd = new CGEntry("particle.yd", "0")).container, gbc);
 		++gbc.gridx;
-		panel.add((this.entryCount = new CEntry("particle.count", "1")).container, gbc);
+		panel.add((this.entryCount = new CGEntry("particle.count", "1")).container, gbc);
 		--gbc.gridx;
 		++gbc.gridy;
-		panel.add((this.entryZd = new CEntry("particle.zd", "0")).container, gbc);
+		panel.add((this.entryZd = new CGEntry("particle.zd", "0")).container, gbc);
 		++gbc.gridx;
-		panel.add(this.checkboxForce = new CCheckBox("particle.force"), gbc);
+		panel.add(this.checkboxForce = new CGCheckBox("particle.force"), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;

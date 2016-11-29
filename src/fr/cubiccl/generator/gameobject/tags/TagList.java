@@ -1,12 +1,14 @@
 package fr.cubiccl.generator.gameobject.tags;
 
+import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
+
 public class TagList extends Tag
 {
 	protected final Tag[] tags;
 
-	public TagList(String id, Tag... tags)
+	public TagList(TemplateTag template, Tag... tags)
 	{
-		super(id);
+		super(template);
 		this.tags = tags;
 	}
 
