@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject;
 
+import fr.cubiccl.generator.utils.Text;
 
 public class Particle implements NamedObject
 {
@@ -14,9 +15,9 @@ public class Particle implements NamedObject
 	}
 
 	@Override
-	public String name()
+	public Text name()
 	{
-		return this.id;
+		return new Text(this.id, false);
 	}
 
 }

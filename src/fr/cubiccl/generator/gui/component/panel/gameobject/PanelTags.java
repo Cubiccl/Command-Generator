@@ -13,7 +13,9 @@ import fr.cubi.cubigui.CTextArea;
 import fr.cubi.cubigui.RoundedCornerBorder;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.ITagCreationListener;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.CScrollPane;
@@ -90,11 +92,19 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		this.updateDisplay();
 	}
 
+	public TagCompound generateTags(TemplateCompound container)
+	{
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		for (Tag tag : this.values)
+			if (tag != null) tags.add(tag);
+		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
+	}
+
 	public TemplateTag getSelectedTag()
 	{
 		TemplateTag tag = this.tags.length == 0 ? null : this.tags[0];
 		for (TemplateTag templateTag : this.tags)
-			if (templateTag.name().equals(this.listTags.getValue())) tag = templateTag;
+			if (templateTag.name().toString().equals(this.listTags.getValue())) tag = templateTag;
 		return tag;
 	}
 
@@ -139,7 +149,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 			int selected = this.listTags.getSelectedIndex();
 			String[] names = new String[this.shownTags.size()];
 			for (int i = 0; i < names.length; ++i)
-				names[i] = this.shownTags.get(i).name();
+				names[i] = this.shownTags.get(i).name().toString();
 			this.listTags.setValues(names);
 			this.listTags.setSelectedIndex(selected == -1 ? 0 : selected);
 		}

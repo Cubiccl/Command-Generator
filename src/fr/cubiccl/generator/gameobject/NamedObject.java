@@ -1,8 +1,10 @@
 package fr.cubiccl.generator.gameobject;
 
+import fr.cubiccl.generator.utils.Text;
+
 public interface NamedObject
 {
 	
-	public String name();
+	public Text name();
 
 }

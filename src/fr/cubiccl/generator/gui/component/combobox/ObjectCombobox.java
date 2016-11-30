@@ -20,7 +20,7 @@ public class ObjectCombobox<T extends NamedObject> extends SearchCombobox implem
 	{
 		String name = super.getValue();
 		for (T object : this.objects)
-			if (object.name().equals(name)) return object;
+			if (object.name().toString().equals(name)) return object;
 		return this.objects[0];
 	}
 
@@ -35,7 +35,7 @@ public class ObjectCombobox<T extends NamedObject> extends SearchCombobox implem
 	{
 		String[] names = new String[this.objects.length];
 		for (int i = 0; i < names.length; ++i)
-			names[i] = this.objects[i].name();
+			names[i] = this.objects[i].name().toString();
 		super.setValues(names);
 	}
 

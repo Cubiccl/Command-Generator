@@ -2369,6 +2369,8 @@ stat.treasureFished=Increments for each Treasure fished
 stat.walkOneCm=Increments for each centimeter traveled walking
 
 // BLOCK TAGS
+tag.block.Base=Base
+tag.block.Base.description=Base color of this Banner.
 tag.block.CustomName=Custom Name
 tag.block.CustomName.description=The name of this Container.
 tag.block.Lock=Lock

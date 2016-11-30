@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import fr.cubiccl.generator.gameobject.NamedObject;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
-import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
 
 public class EnchantmentType implements NamedObject
@@ -26,9 +26,9 @@ public class EnchantmentType implements NamedObject
 	}
 
 	@Override
-	public String name()
+	public Text name()
 	{
-		return Lang.translate("enchantment." + this.idString);
+		return new Text("enchantment." + this.idString);
 	}
 
 	public BufferedImage texture()

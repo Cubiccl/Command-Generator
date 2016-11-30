@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import fr.cubiccl.generator.gameobject.NamedObject;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
-import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
 
 public class Entity implements NamedObject
@@ -20,9 +20,9 @@ public class Entity implements NamedObject
 	}
 
 	@Override
-	public String name()
+	public Text name()
 	{
-		return Lang.translate("entity." + this.id);
+		return new Text("entity." + this.id);
 	}
 
 	public BufferedImage texture()

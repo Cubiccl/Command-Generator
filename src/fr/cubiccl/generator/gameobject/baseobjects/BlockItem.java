@@ -6,6 +6,7 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.NamedObject;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
 import fr.cubiccl.generator.utils.Utils;
 
@@ -48,35 +49,35 @@ public class BlockItem implements NamedObject
 		else ObjectRegistry.registerBlock((Block) this);
 	}
 
-	private String getName(String nameID)
+	private Text getName(String nameID)
 	{
-		if (this.type == BLOCK) return Lang.translate("block." + nameID);
-		if (Lang.keyExists("item." + nameID)) return Lang.translate("item." + nameID);
-		if (Lang.keyExists("block." + nameID)) return Lang.translate("block." + nameID);
+		if (this.type == BLOCK) return new Text("block." + nameID);
+		if (Lang.keyExists("item." + nameID)) return new Text("item." + nameID);
+		if (Lang.keyExists("block." + nameID)) return new Text("block." + nameID);
 		CommandGenerator.log("Couldn't find translation for : item." + nameID);
-		return "item." + nameID;
+		return new Text("item." + nameID);
 	}
 
 	/** @return The name of the general Block/Item (no damage) */
-	public String mainName()
+	public Text mainName()
 	{
 		String nameID = this.idString;
-		if (this.type == BLOCK && Lang.keyExists("block." + nameID)) return Lang.translate("block." + nameID);
-		if (Lang.keyExists("item." + nameID)) return Lang.translate("item." + nameID);
-		if (this.type == ITEM && Lang.keyExists("block." + nameID)) return Lang.translate("block." + nameID);
+		if (this.type == BLOCK && Lang.keyExists("block." + nameID)) return new Text("block." + nameID);
+		if (Lang.keyExists("item." + nameID)) return new Text("item." + nameID);
+		if (this.type == ITEM && Lang.keyExists("block." + nameID)) return new Text("block." + nameID);
 		CommandGenerator.log("Couldn't find translation for : block." + nameID);
-		return "block." + nameID;
+		return new Text("block." + nameID);
 	}
 
 	@Override
-	public String name()
+	public Text name()
 	{
-		return this.idString;
+		return new Text(this.idString, false);
 	}
 
 	/** @param damage - A damage value.
 	 * @return The name of this Block/Item for the given damage value. */
-	public String name(int damage)
+	public Text name(int damage)
 	{
 		if (this.damage.length == 1 || this.langType == -1) return this.getName(this.idString);
 		if (this.langType == 0) return this.getName(this.idString + "." + damage);

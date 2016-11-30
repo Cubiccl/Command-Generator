@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import fr.cubiccl.generator.gameobject.NamedObject;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
-import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
 
 public class EffectType implements NamedObject
@@ -23,9 +23,9 @@ public class EffectType implements NamedObject
 	}
 
 	@Override
-	public String name()
+	public Text name()
 	{
-		return Lang.translate("effect." + this.idString);
+		return new Text("effect." + this.idString);
 	}
 
 	public BufferedImage texture()

@@ -103,8 +103,8 @@ public class PanelItem extends CGPanel implements ActionListener, ListSelectionL
 
 	private void updateDisplay()
 	{
-		if (this.spinnerData.container.isVisible()) this.labelName.setText(this.selectedItem().name(this.spinnerData.getValue()));
-		else this.labelName.setText(this.selectedItem().mainName());
+		if (this.spinnerData.container.isVisible()) this.labelName.setText(this.selectedItem().name(this.spinnerData.getValue()).toString());
+		else this.labelName.setText(this.selectedItem().mainName().toString());
 		this.labelTexture.setImage(this.selectedItem().texture(this.spinnerData.getValue()));
 	}
 

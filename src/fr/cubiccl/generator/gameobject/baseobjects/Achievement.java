@@ -4,7 +4,7 @@ import java.awt.image.BufferedImage;
 
 import fr.cubiccl.generator.gameobject.NamedObject;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
-import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Text;
 
 public class Achievement implements NamedObject
 {
@@ -22,9 +22,9 @@ public class Achievement implements NamedObject
 	}
 
 	@Override
-	public String name()
+	public Text name()
 	{
-		return Lang.translate("achievement." + this.id);
+		return new Text("achievement." + this.id);
 	}
 
 	public BufferedImage texture()

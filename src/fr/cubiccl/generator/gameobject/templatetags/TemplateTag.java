@@ -8,7 +8,7 @@ import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.IStateListener;
-import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Text;
 
 public abstract class TemplateTag implements IStateListener<CGPanel>, NamedObject
 {
@@ -46,9 +46,9 @@ public abstract class TemplateTag implements IStateListener<CGPanel>, NamedObjec
 
 	protected abstract CGPanel createPanel();
 
-	public String description()
+	public Text description()
 	{
-		return Lang.translate("tag." + TYPE_NAMES[this.type] + "." + this.id + ".description");
+		return new Text("tag." + TYPE_NAMES[this.type] + "." + this.id + ".description");
 	}
 
 	public abstract Tag generateTag(CGPanel panel);
@@ -56,9 +56,9 @@ public abstract class TemplateTag implements IStateListener<CGPanel>, NamedObjec
 	protected abstract boolean isInputValid(CGPanel panel);
 
 	@Override
-	public String name()
+	public Text name()
 	{
-		return Lang.translate("tag." + TYPE_NAMES[this.type] + "." + this.id);
+		return new Text("tag." + TYPE_NAMES[this.type] + "." + this.id);
 	}
 
 	@Override

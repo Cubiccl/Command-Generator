@@ -11,6 +11,9 @@ import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
@@ -73,7 +76,17 @@ public class PanelBlock extends CGPanel implements ActionListener, ListSelection
 
 	public PlacedBlock generateBlock()
 	{
-		return new PlacedBlock(this.selectedBlock(), this.spinnerData.getValue());
+		return this.generateBlock(Tags.BLOCK);
+	}
+
+	public PlacedBlock generateBlock(TemplateCompound container)
+	{
+		return new PlacedBlock(this.selectedBlock(), this.spinnerData.getValue(), this.getNBT(container));
+	}
+
+	public TagCompound getNBT(TemplateCompound container)
+	{
+		return this.panelTags.generateTags(container);
 	}
 
 	public Block selectedBlock()
@@ -94,8 +107,8 @@ public class PanelBlock extends CGPanel implements ActionListener, ListSelection
 
 	private void updateDisplay()
 	{
-		if (this.spinnerData.container.isVisible()) this.labelName.setText(this.selectedBlock().name(this.spinnerData.getValue()));
-		else this.labelName.setText(this.selectedBlock().mainName());
+		if (this.spinnerData.container.isVisible()) this.labelName.setText(this.selectedBlock().name(this.spinnerData.getValue()).toString());
+		else this.labelName.setText(this.selectedBlock().mainName().toString());
 		this.labelTexture.setImage(this.selectedBlock().texture(this.spinnerData.getValue()));
 	}
 

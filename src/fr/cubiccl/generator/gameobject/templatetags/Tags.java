@@ -6,6 +6,7 @@ import fr.cubiccl.generator.gameobject.tags.TagNumber;
 /** Contains unique and constant NBT Tags. */
 public final class Tags
 {
+	public static final TemplateCompound BLOCK = new TemplateCompound("block", Tag.ITEM);
 
 	public static final TemplateCompound ENTITY = new TemplateCompound("entity", Tag.ENTITY);
 	public static final TemplateString ENTITY_TYPE = new TemplateString("type", Tag.ENTITY);

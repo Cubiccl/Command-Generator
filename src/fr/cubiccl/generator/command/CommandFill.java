@@ -58,7 +58,13 @@ public class CommandFill extends Command implements ActionListener
 		PlacedBlock block = this.panelBlockFill.generateBlock();
 		String command = "/fill " + this.panelCoordinatesStart.generateCoordinates().toCommand() + " "
 				+ this.panelCoordinatesEnd.generateCoordinates().toCommand() + " " + block.block.idString + " " + block.data + " ";
-		if (!this.comboboxMode.getValue().equals("filter")) return command + this.comboboxMode.getValue();
+
+		if (!this.comboboxMode.getValue().equals("filter"))
+		{
+			String nbt = block.nbt.value();
+			return command + this.comboboxMode.getValue() + (nbt.equals("{}") ? "" : " " + nbt);
+		}
+		
 		PlacedBlock block2 = this.panelBlockReplace.generateBlock();
 		return command + " replace " + block2.block.idString + " " + block2.data;
 	}

@@ -2,7 +2,7 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 
 import fr.cubiccl.generator.gameobject.NamedObject;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
-import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Text;
 
 public class Attribute implements NamedObject
 {
@@ -17,9 +17,9 @@ public class Attribute implements NamedObject
 	}
 
 	@Override
-	public String name()
+	public Text name()
 	{
-		return Lang.translate("attribute." + this.id);
+		return new Text("attribute." + this.id);
 	}
 
 }
