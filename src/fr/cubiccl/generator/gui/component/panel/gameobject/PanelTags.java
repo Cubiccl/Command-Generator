@@ -13,6 +13,7 @@ import fr.cubi.cubigui.CTextArea;
 import fr.cubi.cubigui.RoundedCornerBorder;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.templatetags.ITagCreationListener;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.CScrollPane;
@@ -21,7 +22,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Text;
 
-public class PanelTags extends CGPanel implements ListSelectionListener, ActionListener
+public class PanelTags extends CGPanel implements ListSelectionListener, ActionListener, ITagCreationListener
 {
 	private static final long serialVersionUID = -6946195818692262924L;
 
@@ -74,17 +75,19 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonAdd) this.getSelectedTag().askValue();
+		if (e.getSource() == this.buttonAdd) this.getSelectedTag().askValue(this);
 		else if (e.getSource() == this.buttonRemove)
 		{
-			TemplateTag tag = this.getSelectedTag();
-			for (int i = 0; i < this.tags.length; ++i)
-				if (tag == this.tags[i])
-				{
-					this.values[i] = null;
-					break;
-				}
+			this.values[this.indexOf(this.getSelectedTag())] = null;
+			this.updateDisplay();
 		}
+	}
+
+	@Override
+	public void createTag(TemplateTag template, Tag value)
+	{
+		this.values[this.indexOf(template)] = value;
+		this.updateDisplay();
 	}
 
 	public TemplateTag getSelectedTag()
@@ -93,6 +96,14 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		for (TemplateTag templateTag : this.tags)
 			if (templateTag.name().equals(this.listTags.getValue())) tag = templateTag;
 		return tag;
+	}
+
+	private int indexOf(TemplateTag template)
+	{
+		TemplateTag tag = this.getSelectedTag();
+		for (int i = 0; i < this.tags.length; ++i)
+			if (tag == this.tags[i]) return i;
+		return -1;
 	}
 
 	public Tag selectedValue()
@@ -107,6 +118,14 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		for (TemplateTag tag : this.tags)
 			if (tag.canApplyTo(this.currentObject)) this.shownTags.add(tag);
 		this.updateTranslations();
+	}
+
+	private void updateDisplay()
+	{
+		if (this.listTags.getSelectedIndex() == -1) return;
+		Tag value = this.selectedValue();
+		if (value == null) this.areaValue.setText(this.getSelectedTag().description() + "\n" + Lang.translate("tag.no_value"));
+		else this.areaValue.setText(value.template.description() + "\n" + value.toCommand());
 	}
 
 	@Override
@@ -129,10 +148,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	@Override
 	public void valueChanged(ListSelectionEvent e)
 	{
-		if (this.listTags.getSelectedIndex() == -1) return;
-		Tag value = this.selectedValue();
-		if (value == null) this.areaValue.setText(this.getSelectedTag().description() + "\n" + Lang.translate("tag.no_value"));
-		else this.areaValue.setText(value.template.description() + "\n" + value.toCommand());
+		this.updateDisplay();
 	}
 
 	private Tag valueFor(TemplateTag template)
