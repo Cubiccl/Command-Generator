@@ -13,7 +13,6 @@ import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.target.TargetArgument;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
@@ -286,13 +285,30 @@ public class ObjectRegistry
 	{
 		String id = data[0];
 		String[] applicable = data[2].split(":");
-		switch (data[1])
+		switch (data[1].substring(0, 3))
 		{
-			case "int":
-				new TemplateNumber(id, tagType, TagNumber.INTEGER, applicable);
+			case "num":
+				TemplateNumber number = new TemplateNumber(id, tagType, Integer.parseInt(data[1].substring(3, 4)), applicable);
+				for (int i = 3; i < data.length; ++i)
+				{
+					if (data[i].startsWith("bounds="))
+					{
+						String[] bounds = data[i].substring("bounds=".length()).split(":");
+						number.setBounds(Double.parseDouble(bounds[0]), Double.parseDouble(bounds[1]));
+					} else if (data[i].startsWith("values="))
+					{
+						String[] v = data[i].substring("values=".length()).split(":");
+						int[] values = new int[v.length];
+						for (int j = 0; j < values.length; ++j)
+							values[j] = Integer.parseInt(v[j]);
+						number.setValues(values);
+					} else if (data[i].startsWith("named=")) number.setNames(data[i].substring("named=".length(), data[i].indexOf('^')),
+							data[i].substring(data[i].indexOf('^') + 1).split(":"));
+
+				}
 				break;
 
-			case "string":
+			case "str":
 			default:
 				new TemplateString(id, tagType, applicable);
 				break;

@@ -31,7 +31,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	@Override
 	public void actionPerformed(ActionEvent arg0)
 	{
-		CommandGenerator.stateManager.setState(new ComboboxPanel("gamerule.predefined.select", "gamerule", GAMERULES), this);
+		CommandGenerator.stateManager.setState(new ComboboxPanel(new Text("gamerule.predefined.select"), "gamerule", GAMERULES), this);
 	}
 
 	@Override
