@@ -27,7 +27,7 @@ public class TemplateString extends TemplateTag
 	}
 
 	@Override
-	public boolean shouldStateClose(CGPanel panel)
+	protected boolean isInputValid(CGPanel panel)
 	{
 		return true;
 	}

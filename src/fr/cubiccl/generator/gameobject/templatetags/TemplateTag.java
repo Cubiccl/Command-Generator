@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags;
 
+import java.util.Stack;
+
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.NamedObject;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
@@ -14,6 +16,8 @@ public abstract class TemplateTag implements IStateListener<CGPanel>, NamedObjec
 	{ "block", "item", "entity" };
 
 	private String[] applicable;
+	/** Need several in case of chest-like recursion */
+	private Stack<ITagCreationListener> creationListeners;
 	public final String id;
 	public final int type;
 
@@ -23,11 +27,13 @@ public abstract class TemplateTag implements IStateListener<CGPanel>, NamedObjec
 		this.id = id;
 		this.type = tagType;
 		this.applicable = applicable;
+		this.creationListeners = new Stack<ITagCreationListener>();
 		ObjectRegistry.registerTag(this, tagType);
 	}
 
-	public void askValue()
+	public void askValue(ITagCreationListener panelTags)
 	{
+		this.creationListeners.push(panelTags);
 		CommandGenerator.stateManager.setState(this.createPanel(), this);
 	}
 
@@ -47,9 +53,22 @@ public abstract class TemplateTag implements IStateListener<CGPanel>, NamedObjec
 
 	public abstract Tag generateTag(CGPanel panel);
 
+	protected abstract boolean isInputValid(CGPanel panel);
+
 	@Override
 	public String name()
 	{
 		return Lang.translate("tag." + TYPE_NAMES[this.type] + "." + this.id);
+	}
+
+	@Override
+	public boolean shouldStateClose(CGPanel panel)
+	{
+		if (this.isInputValid(panel))
+		{
+			this.creationListeners.pop().createTag(this, this.generateTag(panel));
+			return true;
+		}
+		return false;
 	}
 }

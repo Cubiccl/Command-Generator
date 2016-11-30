@@ -26,7 +26,7 @@ public class TemplateCompound extends TemplateTag
 	}
 
 	@Override
-	public boolean shouldStateClose(CGPanel panel)
+	protected boolean isInputValid(CGPanel panel)
 	{
 		// TODO Auto-generated method stub
 		return false;
