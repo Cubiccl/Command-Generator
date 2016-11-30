@@ -4,7 +4,6 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
-import fr.cubiccl.generator.utils.Text;
 
 public class TemplateString extends TemplateTag
 {
@@ -17,7 +16,7 @@ public class TemplateString extends TemplateTag
 	@Override
 	protected CGPanel createPanel()
 	{
-		return new EntryPanel(new Text(this.id + ".desciption"));
+		return new EntryPanel(this.description());
 	}
 
 	@Override

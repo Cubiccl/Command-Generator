@@ -2,28 +2,30 @@ package fr.cubiccl.generator.gameobject.templatetags;
 
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateList.DefaultList;
 
 /** Contains unique and constant NBT Tags. */
 public final class Tags
 {
-	public static final TemplateCompound BLOCK = new TemplateCompound("block", Tag.ITEM);
+	public static final DefaultCompound BLOCK = new DefaultCompound("block", Tag.ITEM);
 
-	public static final TemplateCompound ENTITY = new TemplateCompound("entity", Tag.ENTITY);
+	public static final DefaultCompound ENTITY = new DefaultCompound("entity", Tag.ENTITY);
 	public static final TemplateString ENTITY_TYPE = new TemplateString("type", Tag.ENTITY);
 
 	public static final TemplateString EVENT_ACTION = new TemplateString("action", Tag.ENTITY);
-	public static final TemplateCompound EVENT_CLICK = new TemplateCompound("ClickEvent", Tag.ENTITY);
-	public static final TemplateCompound EVENT_HOVER = new TemplateCompound("HoverEvent", Tag.ENTITY);
+	public static final DefaultCompound EVENT_CLICK = new DefaultCompound("ClickEvent", Tag.ENTITY);
+	public static final DefaultCompound EVENT_HOVER = new DefaultCompound("HoverEvent", Tag.ENTITY);
 	public static final TemplateString EVENT_VALUE = new TemplateString("value", Tag.ENTITY);
 
-	public static final TemplateCompound ITEM = new TemplateCompound("item", Tag.ITEM);
+	public static final DefaultCompound ITEM = new DefaultCompound("item", Tag.ITEM);
 	public static final TemplateNumber ITEM_COUNT = new TemplateNumber("Count", Tag.ITEM, TagNumber.BYTE);
 	public static final TemplateNumber ITEM_DAMAGE = new TemplateNumber("Damage", Tag.ITEM, TagNumber.SHORT);
 	public static final TemplateString ITEM_ID = new TemplateString("id", Tag.ITEM);
 
-	public static final TemplateCompound JSON_CONTAINER = new TemplateCompound("json", Tag.ITEM);
-	public static final TemplateList JSON_LIST = new TemplateList("json", Tag.ITEM);
-	public static final TemplateCompound JSON_SCORE = new TemplateCompound("score", Tag.ITEM);
+	public static final DefaultCompound JSON_CONTAINER = new DefaultCompound("json", Tag.ITEM);
+	public static final DefaultList JSON_LIST = new DefaultList("json", Tag.ITEM);
+	public static final DefaultCompound JSON_SCORE = new DefaultCompound("score", Tag.ITEM);
 	public static final TemplateString JSON_SELECTOR = new TemplateString("selector", Tag.ITEM);
 	public static final TemplateString JSON_TEXT = new TemplateString("text", Tag.ITEM);
 	public static final TemplateString JSON_TRANSLATE = new TemplateString("translate", Tag.ITEM);
