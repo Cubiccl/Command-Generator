@@ -648,7 +648,7 @@ step.cloth,step.grass,step.gravel,step.ladder,step.sand,step.snow,step.stone,ste
 tile.piston.in,tile.piston.out
 
 [BLOCKTAGS]
-// 0 = INTEGER
-Base,num0,wall_banner:standing_banner,named=color^white:orange:magenta:light_blue:yellow:lime:pink:gray:ligh_gray:cyan:purple:blue:brown:green:red:black
+// INTEGER = 0, BYTE = 1, SHORT = 2, FLOAT = 3, DOUBLE = 4, BYTE_BOOLEAN = 5
+Base,num0,wall_banner:standing_banner,named=color^white:orange:magenta:light_blue:yellow:lime:pink:gray:light_gray:cyan:purple:blue:brown:green:red:black
 CustomName,string,brewing_stand:chest:command_block:dispenser:dropper:enchanting_table:furnace:hopper:lit_furnace:trapped_chest
 Lock,string,beacon:brewing_stand:chest:dispenser:dropper:furnace:hopper:lit_furnace:trapped_chest
