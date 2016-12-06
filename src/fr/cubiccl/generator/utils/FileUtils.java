@@ -6,7 +6,9 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.PrintWriter;
+import java.net.URISyntaxException;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
@@ -15,15 +17,23 @@ import fr.cubiccl.generator.CommandGenerator;
 
 public class FileUtils
 {
-	public static final String folder = "res/";
+	public static final String folder = "resources/";
 
 	/** @param path - The path to the File.
 	 * @return Each line of the File in a String Array. */
 	public static String[] readFileAsArray(String path)
 	{
+		File file = null;
+		try
+		{
+			file = new File(FileUtils.class.getResource("/" + path).toURI());
+		} catch (URISyntaxException e1)
+		{
+			e1.printStackTrace();
+		}
+
 		ArrayList<String> lines = new ArrayList<String>();
-		File file = new File(folder + path);
-		if (file.exists())
+		if (file != null && file.exists())
 		{
 			try
 			{
@@ -37,22 +47,24 @@ public class FileUtils
 				e.printStackTrace();
 			}
 		} else CommandGenerator.log("File not found : " + path);
+
 		return lines.toArray(new String[lines.size()]);
+
 	}
 
 	/** @param path - The path to the File.
 	 * @return The Image located at <code>path</code>. */
 	public static BufferedImage readImage(String path)
 	{
-		File file = new File(folder + path + ".png");
-		if (!file.exists())
+		InputStream input = FileUtils.class.getResourceAsStream("/" + path + ".png");
+		if (input == null)
 		{
 			CommandGenerator.log("Couldn't find Image: " + path);
 			return null;
 		}
 		try
 		{
-			return ImageIO.read(file);
+			return ImageIO.read(input);
 		} catch (IOException e)
 		{
 			e.printStackTrace();
@@ -64,7 +76,17 @@ public class FileUtils
 	 * @param data - Each line to write. */
 	public static void writeToFile(String path, String[] data)
 	{
-		File file = new File(folder + path);
+		File file = null;
+		try
+		{
+			file = new File(FileUtils.class.getResource("/" + path).toURI());
+		} catch (URISyntaxException e1)
+		{
+			e1.printStackTrace();
+		}
+		
+		if (file == null) return;
+		
 		if (file.exists()) file.delete();
 		try
 		{
