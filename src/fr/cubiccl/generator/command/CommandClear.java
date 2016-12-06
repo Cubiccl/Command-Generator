@@ -43,6 +43,7 @@ public class CommandClear extends Command implements ActionListener
 
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.PLAYERS_ONLY), gbc);
 		++gbc.gridy;
 		panel.add(this.checkboxAllItem = new CGCheckBox("clear.all_items"), gbc);

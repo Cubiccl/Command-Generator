@@ -60,6 +60,7 @@ public class CommandParticle extends Command implements ActionListener
 		panel.add(this.panelCoordinates = new PanelCoordinates("particle.coordinates"), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		panel.add((this.entryXd = new CGEntry("particle.xd", "0")).container, gbc);
 		++gbc.gridx;
 		panel.add((this.entrySpeed = new CGEntry("particle.speed", "0")).container, gbc);
@@ -76,6 +77,7 @@ public class CommandParticle extends Command implements ActionListener
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
+		gbc.fill = GridBagConstraints.NONE;
 		panel.add(this.panelTarget = new PanelTarget("particle.target", PanelTarget.PLAYERS_ONLY), gbc);
 		++gbc.gridy;
 		panel.add(this.panelBlockParticle = new PanelBlock("particle.block"), gbc);

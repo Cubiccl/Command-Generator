@@ -35,6 +35,8 @@ public class CommandClone extends Command implements ActionListener
 
 		CGPanel panelModes = new CGPanel();
 		GridBagConstraints gbc2 = panelModes.createGridBagLayout();
+		gbc2.anchor = GridBagConstraints.NORTH;
+		gbc2.fill = GridBagConstraints.HORIZONTAL;
 		panelModes.add(this.comboboxCloneMode = new OptionCombobox("clone.mode", "normal", "force", "move"), gbc2);
 		++gbc2.gridy;
 		panelModes.add(this.comboboxMaskMode = new OptionCombobox("clone.mode", "replace", "masked", "filtered"), gbc2);
@@ -50,6 +52,7 @@ public class CommandClone extends Command implements ActionListener
 		++gbc.gridy;
 		panel.add(this.panelCoordinatesDestination = new PanelCoordinates("testforblocks.destination"), gbc);
 		++gbc.gridx;
+		gbc.anchor = GridBagConstraints.NORTH;
 		panel.add(panelModes, gbc);
 		--gbc.gridx;
 		++gbc.gridy;

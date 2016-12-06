@@ -31,6 +31,7 @@ public class PanelEnchantment extends CGPanel
 		GridBagConstraints gbc = this.createGridBagLayout();
 		this.add(new CGLabel("enchant.select").setHasColumn(true), gbc);
 		++gbc.gridx;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(this.comboboxEnchant = new ObjectCombobox<EnchantmentType>(enchants), gbc);
 		--gbc.gridx;
 		++gbc.gridy;

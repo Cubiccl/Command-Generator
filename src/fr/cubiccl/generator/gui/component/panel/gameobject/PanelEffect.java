@@ -37,6 +37,7 @@ public class PanelEffect extends CGPanel implements ActionListener
 		++gbc.gridx;
 		this.add(this.comboboxEffect = new ObjectCombobox<EffectType>(effects), gbc);
 		++gbc.gridx;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(this.labelTexture = new ImageLabel(effects[0].texture()), gbc);
 		gbc.gridx = 0;
 		++gbc.gridy;
