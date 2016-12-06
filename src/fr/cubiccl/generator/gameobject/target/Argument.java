@@ -26,14 +26,21 @@ public class Argument
 		this.reversed = reversed;
 	}
 
-	private String separator()
-	{
-		return this.reversed ? " not " : ": ";
-	}
-
 	private String displayValue()
 	{
 		return this.value.equals("") ? Lang.translate("general.none") : this.value;
+	}
+
+	private String separator()
+	{
+		return this.reversed ? ": " + Lang.translate("general.not") + " " : ": ";
+	}
+
+	public String toCommand()
+	{
+		if (this.argument == TargetArgument.SCORE) return "score_" + this.value + "=" + (this.reversed ? "!" : "") + this.value2;
+		if (this.argument == TargetArgument.SCORE_MIN) return "score_" + this.value + "_min=" + (this.reversed ? "!" : "") + this.value2;
+		return this.argument.id + "=" + (this.reversed ? "!" : "") + value;
 	}
 
 	@Override
@@ -46,12 +53,5 @@ public class Argument
 				+ this.displayValue() + "=" + this.value2;
 
 		return this.argument.name() + this.separator() + this.displayValue();
-	}
-
-	public String toCommand()
-	{
-		if (this.argument == TargetArgument.SCORE) return "score_" + this.value + "=" + this.value2;
-		if (this.argument == TargetArgument.SCORE_MIN) return "score_" + this.value + "_min=" + this.value2;
-		return this.argument.id + "=" + value;
 	}
 }

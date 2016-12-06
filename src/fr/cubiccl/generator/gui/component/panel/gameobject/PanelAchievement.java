@@ -22,6 +22,7 @@ public class PanelAchievement extends CGPanel implements ActionListener
 		Achievement[] achievements = ObjectRegistry.getAchievements();
 		GridBagConstraints gbc = this.createGridBagLayout();
 		this.comboboxAchievement = new ObjectCombobox<Achievement>(achievements);
+
 		this.add(this.comboboxAchievement.container, gbc);
 		++gbc.gridx;
 		this.add(this.labelImage = new ImageLabel(achievements[0].texture()), gbc);

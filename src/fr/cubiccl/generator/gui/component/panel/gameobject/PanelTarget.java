@@ -125,6 +125,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 	{
 		GridBagConstraints gbc = this.createGridBagLayout();
 
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(this.labelType, gbc);
 		++gbc.gridx;
 		this.add(this.comboboxType, gbc);
@@ -140,13 +141,14 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 
 		--gbc.gridx;
 		++gbc.gridy;
-		this.add(this.buttonAddArgument, gbc);
-		++gbc.gridx;
 		this.add(this.buttonRemoveArgument, gbc);
+		++gbc.gridx;
+		this.add(this.buttonAddArgument, gbc);
 
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
+		gbc.fill = GridBagConstraints.BOTH;
 		this.add(this.listArguments.scrollPane, gbc);
 	}
 
@@ -201,7 +203,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 			boolean reversed = value.startsWith("!");
 			if (reversed) value = value.substring(1);
 
-			Argument a = new Argument(argument, value);
+			Argument a = new Argument(argument, value, reversed);
 			if (argument == TargetArgument.SCORE || argument == TargetArgument.SCORE_MIN) a = new Argument(argument, value.split(" ")[0], value.split(" ")[1],
 					reversed);
 			this.arguments.add(a);

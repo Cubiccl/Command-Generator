@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import fr.cubi.cubigui.CPanel;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
@@ -103,19 +104,19 @@ public class TargetArgument
 	{
 		if (this == M || this == TYPE)
 		{
-			String value = ((OptionCombobox) ((CGPanel) ((ConfirmPanel) panel).component).getComponent(1)).getValue();
-			if (((CGCheckBox) ((CGPanel) ((ConfirmPanel) panel).component).getComponent(2)).isSelected()) return "!" + (value.equals("all") ? "-1" : value);
+			String value = ((OptionCombobox) ((CPanel) ((ConfirmPanel) panel).component).getComponent(1)).getValue();
+			if (((CGCheckBox) ((CPanel) ((ConfirmPanel) panel).component).getComponent(2)).isSelected()) return "!" + (value.equals("all") ? "-1" : value);
 			return value.equals("all") ? "-1" : value;
 		}
 
-		CGEntry entry = (CGEntry) ((CGPanel) ((CGPanel) ((ConfirmPanel) panel).component).getComponent(0)).getComponent(1);
+		CGEntry entry = (CGEntry) ((CPanel) ((CPanel) ((ConfirmPanel) panel).component).getComponent(0)).getComponent(1);
 		String value = entry.getText();
 		Text name = entry.label.getAbsoluteText();
 
 		if (this == SCORE || this == SCORE_MIN)
 		{
 			// Do u like dat code lel | WTF is that srsly
-			String value2 = ((CGEntry) ((CGPanel) ((CGPanel) ((ConfirmPanel) panel).component).getComponent(1)).getComponent(1)).getText();
+			String value2 = ((CGEntry) ((CPanel) ((CPanel) ((ConfirmPanel) panel).component).getComponent(1)).getComponent(1)).getText();
 			if (value.equals("")) throw new CommandGenerationException(new Text("error.value"));
 			if (value.contains(" ")) throw new WrongValueException(name, new Text("error.space"), value);
 			try
@@ -129,8 +130,8 @@ public class TargetArgument
 		}
 
 		boolean reversed = false;
-		if (this.canReverse) reversed = ((CGCheckBox) ((CGPanel) ((ConfirmPanel) panel).component).getComponent(1)).isSelected();
-
+		if (this.canReverse) reversed = ((CGCheckBox) ((CPanel) ((ConfirmPanel) panel).component).getComponent(1)).isSelected();
+		
 		if (this.valueInteger()) try
 		{
 			int i = Integer.parseInt(value);

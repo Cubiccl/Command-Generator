@@ -26,9 +26,10 @@ public class ConfirmPanel extends CGPanel implements ActionListener
 	{
 		this.gbc = this.createGridBagLayout();
 		++gbc.gridy;
-		this.add(this.buttonOK = new CGButton("general.confirm"), gbc);
-		++gbc.gridx;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(this.buttonCancel = new CGButton("general.cancel"), gbc);
+		++gbc.gridx;
+		this.add(this.buttonOK = new CGButton("general.confirm"), gbc);
 		++gbc.gridwidth;
 		--gbc.gridx;
 		--gbc.gridy;

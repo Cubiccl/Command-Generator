@@ -34,6 +34,7 @@ public class CommandAchievement extends Command implements ActionListener
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		++gbc.gridwidth;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
