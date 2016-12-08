@@ -20,10 +20,12 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
 import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Settings;
+import fr.cubiccl.generator.utils.Utils;
 
 public class ObjectRegistry
 {
 	private static final HashMap<String, Achievement> achievements = new HashMap<String, Achievement>();
+
 	private static final HashMap<String, Attribute> attributes = new HashMap<String, Attribute>();
 	private static final HashMap<String, Block> blocks = new HashMap<String, Block>();
 	private static final HashMap<String, TemplateTag> blockTags = new HashMap<String, TemplateTag>();
@@ -35,6 +37,7 @@ public class ObjectRegistry
 	private static final HashMap<String, Item> items = new HashMap<String, Item>();
 	private static final HashMap<String, ArrayList<String>> objectLists = new HashMap<String, ArrayList<String>>();
 	private static final HashMap<String, Particle> particles = new HashMap<String, Particle>();
+	public static final byte SORT_ALPHABETICALLY = 0, SORT_NUMERICALLY = 1;
 	private static final HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 
 	private static void addToLists(String objectId, String[] lists)
@@ -109,9 +112,22 @@ public class ObjectRegistry
 		CommandGenerator.log("Successfully created " + blocks.size() + " blocks.");
 	}
 
-	private static void createCustomTag(String id, int tagType, String[] applicable, String[] data)
+	private static void createCustomTag(String id, int tagType, String[] applicable, String customTagType, String[] data)
 	{
-		if (id.equals("Patterns")) new TemplatePatterns(id, tagType, applicable);
+		if (customTagType.equals("patterns")) new TemplatePatterns(id, tagType, applicable);
+		else if (customTagType.equals("effect"))
+		{
+			TemplateNumber tag = new TemplateNumber(id, tagType, applicable);
+			EffectType[] effects = getEffectTypes(SORT_NUMERICALLY);
+			String[] ids = new String[effects.length];
+			for (int i = 0; i < ids.length; ++i)
+				ids[i] = effects[i].idString;
+			tag.setNames("effect", ids);
+		} else if (customTagType.equals("color"))
+		{
+			TemplateNumber tag = new TemplateNumber(id, tagType, applicable);
+			tag.setNames("color", Utils.WOOL_COLORS);
+		}
 	}
 
 	private static int[] createDamage(String damageList)
@@ -315,7 +331,7 @@ public class ObjectRegistry
 				break;
 
 			case "cus":
-				createCustomTag(id, tagType, applicable, data);
+				createCustomTag(id, tagType, applicable, data[1].split(":")[1], data);
 				break;
 
 			case "str":
@@ -411,9 +427,15 @@ public class ObjectRegistry
 
 	public static EffectType[] getEffectTypes()
 	{
+		return getEffectTypes(SORT_ALPHABETICALLY);
+	}
+
+	public static EffectType[] getEffectTypes(int sortType)
+	{
 		ArrayList<EffectType> a = new ArrayList<EffectType>();
 		a.addAll(effects.values());
-		a.sort(new Comparator<EffectType>()
+
+		if (sortType == SORT_ALPHABETICALLY) a.sort(new Comparator<EffectType>()
 		{
 			@Override
 			public int compare(EffectType o1, EffectType o2)
@@ -421,6 +443,15 @@ public class ObjectRegistry
 				return o1.idString.compareTo(o2.idString);
 			}
 		});
+		else a.sort(new Comparator<EffectType>()
+		{
+			@Override
+			public int compare(EffectType o1, EffectType o2)
+			{
+				return o1.idInt - o2.idInt;
+			}
+		});
+
 		return a.toArray(new EffectType[a.size()]);
 	}
 
