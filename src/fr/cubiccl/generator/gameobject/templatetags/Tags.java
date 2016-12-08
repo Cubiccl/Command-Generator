@@ -29,6 +29,10 @@ public final class Tags
 	public static final TemplateString JSON_SELECTOR = new TemplateString("selector", Tag.ITEM);
 	public static final TemplateString JSON_TEXT = new TemplateString("text", Tag.ITEM);
 	public static final TemplateString JSON_TRANSLATE = new TemplateString("translate", Tag.ITEM);
+	
+	public static final DefaultCompound PATTERN = new DefaultCompound("Pattern", Tag.BLOCK);
+	public static final TemplateString PATTERN_SHAPE = new TemplateString("Pattern", Tag.BLOCK);
+	public static final TemplateNumber PATTERN_COLOR = new TemplateNumber("Color", Tag.BLOCK, TagNumber.INTEGER);
 
 	public static final TemplateString SCORE_OBJECTIVE = new TemplateString("objective", Tag.ITEM);
 	public static final TemplateString SCORE_TARGET = new TemplateString("name", Tag.ITEM);

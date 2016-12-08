@@ -17,6 +17,7 @@ import fr.cubiccl.generator.gameobject.target.TargetArgument;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
 import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Settings;
 
@@ -106,6 +107,11 @@ public class ObjectRegistry
 			}
 		}
 		CommandGenerator.log("Successfully created " + blocks.size() + " blocks.");
+	}
+
+	private static void createCustomTag(String id, int tagType, String[] applicable, String[] data)
+	{
+		if (id.equals("Patterns")) new TemplatePatterns(id, tagType, applicable);
 	}
 
 	private static int[] createDamage(String damageList)
@@ -306,6 +312,10 @@ public class ObjectRegistry
 							data[i].substring(data[i].indexOf('^') + 1).split(":"));
 
 				}
+				break;
+
+			case "cus":
+				createCustomTag(id, tagType, applicable, data);
 				break;
 
 			case "str":

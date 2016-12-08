@@ -14,9 +14,12 @@ import fr.cubi.cubigui.RoundedCornerBorder;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.ITagCreationListener;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.button.CGButton;
@@ -64,6 +67,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 
 		this.areaValue.setBackground(Color.WHITE);
 		this.areaValue.setBorder(new RoundedCornerBorder(true));
+		this.areaValue.setLineWrap(true);
 		scrollpane.setPreferredSize(this.listTags.scrollPane.getPreferredSize());
 		this.listTags.scrollPane.setPreferredSize(scrollpane.getPreferredSize());
 
@@ -89,6 +93,15 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	public void createTag(TemplateTag template, Tag value)
 	{
 		this.values[this.indexOf(template)] = value;
+		if (template.id.equals("Patterns"))
+		{
+			for (int i = 0; i < this.tags.length; ++i)
+				if (this.tags[i].id.equals("Base"))
+				{
+					this.values[i] = new TagNumber((TemplateNumber) this.tags[i], Integer.toString(((TemplatePatterns) template).getBaseColor()));
+					break;
+				}
+		}
 		this.updateDisplay();
 	}
 
@@ -104,7 +117,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	{
 		TemplateTag tag = this.tags.length == 0 ? null : this.tags[0];
 		for (TemplateTag templateTag : this.tags)
-			if (templateTag.name().toString().equals(this.listTags.getValue())) tag = templateTag;
+			if (templateTag.id.equals(this.listTags.getValue())) tag = templateTag;
 		return tag;
 	}
 
@@ -149,7 +162,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 			int selected = this.listTags.getSelectedIndex();
 			String[] names = new String[this.shownTags.size()];
 			for (int i = 0; i < names.length; ++i)
-				names[i] = this.shownTags.get(i).name().toString();
+				names[i] = this.shownTags.get(i).id;
 			this.listTags.setValues(names);
 			this.listTags.setSelectedIndex(selected == -1 ? 0 : selected);
 		}

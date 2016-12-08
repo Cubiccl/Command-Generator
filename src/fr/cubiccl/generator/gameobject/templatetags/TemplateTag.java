@@ -3,14 +3,13 @@ package fr.cubiccl.generator.gameobject.templatetags;
 import java.util.Stack;
 
 import fr.cubiccl.generator.CommandGenerator;
-import fr.cubiccl.generator.gameobject.NamedObject;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.IStateListener;
 import fr.cubiccl.generator.utils.Text;
 
-public abstract class TemplateTag implements IStateListener<CGPanel>, NamedObject
+public abstract class TemplateTag implements IStateListener<CGPanel>
 {
 	public static final String[] TYPE_NAMES =
 	{ "block", "item", "entity" };
@@ -54,12 +53,6 @@ public abstract class TemplateTag implements IStateListener<CGPanel>, NamedObjec
 	public abstract Tag generateTag(CGPanel panel);
 
 	protected abstract boolean isInputValid(CGPanel panel);
-
-	@Override
-	public Text name()
-	{
-		return new Text("tag." + TYPE_NAMES[this.type] + "." + this.id);
-	}
 
 	@Override
 	public boolean shouldStateClose(CGPanel panel)

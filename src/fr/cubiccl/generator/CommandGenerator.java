@@ -30,7 +30,7 @@ public class CommandGenerator
 
 	public static void finishLog()
 	{
-		log("Exit Command Generator... Bye bye !");
+		log("Exiting Command Generator... Bye bye !");
 		FileUtils.writeToFile("log.txt", log.toArray(new String[log.size()]));
 	}
 
@@ -88,7 +88,6 @@ public class CommandGenerator
 
 	public static void setSelected(Command command)
 	{
-		log("Selected Command : " + command.id);
 		if (command == selected) return;
 		selected = command;
 		stateManager.clear();
