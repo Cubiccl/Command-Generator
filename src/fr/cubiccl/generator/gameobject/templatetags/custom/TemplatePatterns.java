@@ -19,7 +19,7 @@ public class TemplatePatterns extends TemplateList
 	@Override
 	protected CGPanel createPanel()
 	{
-		return new ConfirmPanel(new PatternsPanel());
+		return new ConfirmPanel("banner.title", new PatternsPanel());
 	}
 
 	@Override

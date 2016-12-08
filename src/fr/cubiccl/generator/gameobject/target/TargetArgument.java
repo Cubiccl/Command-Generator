@@ -14,7 +14,6 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.WrongValueException;
@@ -131,7 +130,7 @@ public class TargetArgument
 
 		boolean reversed = false;
 		if (this.canReverse) reversed = ((CGCheckBox) ((CPanel) ((ConfirmPanel) panel).component).getComponent(1)).isSelected();
-		
+
 		if (this.valueInteger()) try
 		{
 			int i = Integer.parseInt(value);
@@ -167,7 +166,7 @@ public class TargetArgument
 			panel.add(new CGEntry(new Text("score.name")).container, gbc);
 			++gbc.gridy;
 			panel.add(new CGEntry("score.value", "0").container, gbc);
-			return new ConfirmPanel(panel);
+			return new ConfirmPanel(this.name(), panel);
 		}
 
 		CGPanel panel = new CGPanel();
@@ -177,7 +176,7 @@ public class TargetArgument
 
 		if (this == M || this == TYPE)
 		{
-			panel.add(new CGLabel("argument.description." + this.id), gbc);
+			panel.add(new CGLabel(this.description()), gbc);
 			++gbc.gridx;
 			if (this == M)
 			{
@@ -194,24 +193,24 @@ public class TargetArgument
 			--gbc.gridx;
 			++gbc.gridy;
 			++gbc.gridwidth;
-		} else panel.add(new CGEntry(new Text("argument.description." + this.id)).container, gbc);
+		} else panel.add(new CGEntry(this.description()).container, gbc);
 
 		if (this.canReverse)
 		{
 			++gbc.gridy;
 			panel.add(new CGCheckBox("target.argument.reverse"), gbc);
 		}
-		return new ConfirmPanel(panel);
+		return new ConfirmPanel(this.name(), panel);
 	}
 
-	public String description()
+	public Text description()
 	{
-		return Lang.translate("argument.description." + this.id);
+		return new Text("argument.description." + this.id);
 	}
 
-	public String name()
+	public Text name()
 	{
-		return Lang.translate("argument." + this.id);
+		return new Text("argument." + this.id);
 	}
 
 	private boolean valueInteger()

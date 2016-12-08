@@ -87,7 +87,7 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		CommandGenerator.stateManager.setState(new ConfirmPanel(new PanelJsonMessage(this.hasEvents)), this);
+		CommandGenerator.stateManager.setState(new ConfirmPanel("json.title", new PanelJsonMessage(this.hasEvents)), this);
 	}
 
 	public void deleteMessage(JsonMessage message)
