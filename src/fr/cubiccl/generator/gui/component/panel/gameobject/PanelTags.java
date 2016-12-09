@@ -68,6 +68,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		this.areaValue.setBackground(Color.WHITE);
 		this.areaValue.setBorder(new RoundedCornerBorder(true));
 		this.areaValue.setLineWrap(true);
+		this.areaValue.setWrapStyleWord(true);
 		scrollpane.setPreferredSize(this.listTags.scrollPane.getPreferredSize());
 		this.listTags.scrollPane.setPreferredSize(scrollpane.getPreferredSize());
 

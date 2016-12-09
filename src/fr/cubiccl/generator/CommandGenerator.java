@@ -44,7 +44,8 @@ public class CommandGenerator
 				if (executeCommand.equals("")) executeCommand += command;
 				else executeCommand += command.substring(1);
 				window.showCommand(executeCommand);
-				if (command.startsWith("/execute ")) DisplayUtils.showMessage(window, Lang.translate("general.success"), Lang.translate("general.success_execute"));
+				if (command.startsWith("/execute ")) DisplayUtils.showMessage(window, Lang.translate("general.success"),
+						Lang.translate("general.success_execute"));
 				else executeCommand = "";
 				window.setExecuteCommand(command.startsWith("/execute "));
 			}
@@ -71,7 +72,7 @@ public class CommandGenerator
 		stateManager = new StateManager();
 		window = new Window();
 		window.updateTranslations();
-		setSelected(Commands.getCommandFromID("achievement"));
+		setSelected(Commands.getCommandFromID("setblock")); // TODO change back to achievement
 		window.setVisible(true);
 	}
 

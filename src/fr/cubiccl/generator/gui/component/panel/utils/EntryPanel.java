@@ -1,19 +1,34 @@
 package fr.cubiccl.generator.gui.component.panel.utils;
 
-import fr.cubiccl.generator.gui.component.textfield.CGEntry;
+import java.awt.Font;
+import java.awt.GridBagConstraints;
+
+import fr.cubi.cubigui.CPanel;
+import fr.cubi.cubigui.CTextArea;
+import fr.cubi.cubigui.CTextField;
 import fr.cubiccl.generator.utils.Text;
 
 public class EntryPanel extends ConfirmPanel
 {
 	private static final long serialVersionUID = -3957744287487251022L;
 
-	public final CGEntry entry;
+	public final CTextField entry;
 
 	public EntryPanel(Text descriptionTextID)
 	{
 		super();
-		this.entry = new CGEntry(descriptionTextID);
-		this.setMainComponent(this.entry.container);
+		CTextArea area = new CTextArea(descriptionTextID.toString());
+		area.setLineWrap(true);
+		area.setWrapStyleWord(true);
+		area.setFont(new Font(area.getFont().getFontName(), Font.BOLD, area.getFont().getSize()));
+
+		CPanel p = new CPanel();
+		GridBagConstraints gbc = p.createGridBagLayout();
+		gbc.fill = GridBagConstraints.HORIZONTAL;
+		p.add(area, gbc);
+		++gbc.gridy;
+		p.add(this.entry = new CTextField(), gbc);
+		this.setMainComponent(p);
 	}
 
 }
