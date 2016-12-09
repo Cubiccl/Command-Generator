@@ -12,11 +12,13 @@ import fr.cubiccl.generator.gameobject.baseobjects.EffectType;
 import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
+import fr.cubiccl.generator.gameobject.baseobjects.Slot;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.target.TargetArgument;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
 import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Settings;
@@ -25,10 +27,10 @@ import fr.cubiccl.generator.utils.Utils;
 public class ObjectRegistry
 {
 	private static final HashMap<String, Achievement> achievements = new HashMap<String, Achievement>();
-
 	private static final HashMap<String, Attribute> attributes = new HashMap<String, Attribute>();
 	private static final HashMap<String, Block> blocks = new HashMap<String, Block>();
 	private static final HashMap<String, TemplateTag> blockTags = new HashMap<String, TemplateTag>();
+	private static final HashMap<String, Container> containers = new HashMap<String, Container>();
 	private static final HashMap<String, EffectType> effects = new HashMap<String, EffectType>();
 	private static final HashMap<String, EnchantmentType> enchantments = new HashMap<String, EnchantmentType>();
 	private static final HashMap<String, Entity> entities = new HashMap<String, Entity>();
@@ -110,6 +112,24 @@ public class ObjectRegistry
 			}
 		}
 		CommandGenerator.log("Successfully created " + blocks.size() + " blocks.");
+	}
+
+	private static void createContainers(String[] data)
+	{
+		CommandGenerator.log("Creating Containers...");
+		containers.clear();
+		for (String a : data)
+		{
+			String[] values = a.split(",");
+			Slot[] slots = new Slot[values.length - 2];
+			for (int i = 2; i < values.length; ++i)
+			{
+				String[] slot = values[i].split(":");
+				slots[i - 2] = new Slot(i - 2, Integer.parseInt(slot[0]), Integer.parseInt(slot[1]));
+			}
+			new Container(values[0], values[1], slots);
+		}
+		CommandGenerator.log("Successfully created " + containers.size() + " containers.");
 	}
 
 	private static void createCustomTag(String id, int tagType, String[] applicable, String customTagType, String[] data)
@@ -209,7 +229,7 @@ public class ObjectRegistry
 	public static void createObjects()
 	{
 		String[] data = FileUtils.readFileAsArray("data/" + Settings.getVersion().name + ".txt");
-		ArrayList<String> blocks = new ArrayList<String>(), items = new ArrayList<String>(), entities = new ArrayList<String>(), effects = new ArrayList<String>(), enchantments = new ArrayList<String>(), achievements = new ArrayList<String>(), attributes = new ArrayList<String>(), particles = new ArrayList<String>(), sounds = new ArrayList<String>(), blocktags = new ArrayList<String>();
+		ArrayList<String> blocks = new ArrayList<String>(), items = new ArrayList<String>(), entities = new ArrayList<String>(), effects = new ArrayList<String>(), enchantments = new ArrayList<String>(), achievements = new ArrayList<String>(), attributes = new ArrayList<String>(), particles = new ArrayList<String>(), sounds = new ArrayList<String>(), containers = new ArrayList<String>(), blocktags = new ArrayList<String>();
 
 		int current = -1;
 		for (String line : data)
@@ -266,6 +286,10 @@ public class ObjectRegistry
 					break;
 
 				case 9:
+					containers.add(line);
+					break;
+
+				case 10:
 					blocktags.add(line);
 					break;
 			}
@@ -280,6 +304,7 @@ public class ObjectRegistry
 		createAttributes(attributes.toArray(new String[attributes.size()]));
 		createParticles(particles.toArray(new String[particles.size()]));
 		createSounds(sounds.toArray(new String[sounds.size()]));
+		createContainers(containers.toArray(new String[containers.size()]));
 		createTags(blocktags.toArray(new String[blocktags.size()]), Tag.BLOCK);
 		CommandGenerator.log("Successfully created " + objectLists.size() + " object lists.");
 		TargetArgument.createArguments();
@@ -328,6 +353,10 @@ public class ObjectRegistry
 							data[i].substring(data[i].indexOf('^') + 1).split(":"));
 
 				}
+				break;
+
+			case "ite":
+				new TemplateItems(id, tagType, applicable);
 				break;
 
 			case "cus":
@@ -413,6 +442,11 @@ public class ObjectRegistry
 			}
 		});
 		return a.toArray(new Block[a.size()]);
+	}
+
+	public static Container getContainerFromID(String id)
+	{
+		return containers.get(id);
 	}
 
 	public static EffectType getEffectFromID(int id)
@@ -610,6 +644,11 @@ public class ObjectRegistry
 	{
 		blocks.put(block.idString, block);
 		blockIDs.put(block.idInt, block.idString);
+	}
+
+	public static void registerContainer(Container container)
+	{
+		containers.put(container.id, container);
 	}
 
 	public static void registerEffect(EffectType effect)

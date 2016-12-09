@@ -14,7 +14,7 @@ public class TemplateString extends TemplateTag
 	}
 
 	@Override
-	protected CGPanel createPanel()
+	protected CGPanel createPanel(String objectId)
 	{
 		return new EntryPanel(this.description());
 	}
@@ -23,12 +23,6 @@ public class TemplateString extends TemplateTag
 	public Tag generateTag(CGPanel panel)
 	{
 		return new TagString(this, ((EntryPanel) panel).entry.getText());
-	}
-
-	@Override
-	protected boolean isInputValid(CGPanel panel)
-	{
-		return true;
 	}
 
 }

@@ -33,7 +33,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	protected CGPanel createPanel()
+	protected CGPanel createPanel(String objectId)
 	{
 		if (this.names == null)
 		{

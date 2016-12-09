@@ -30,10 +30,10 @@ public abstract class TemplateTag implements IStateListener<CGPanel>
 		ObjectRegistry.registerTag(this, tagType);
 	}
 
-	public void askValue(ITagCreationListener panelTags)
+	public void askValue(String objectId, ITagCreationListener panelTags)
 	{
 		this.creationListeners.push(panelTags);
-		CommandGenerator.stateManager.setState(this.createPanel(), this);
+		CommandGenerator.stateManager.setState(this.createPanel(objectId), this);
 	}
 
 	public boolean canApplyTo(String id)
@@ -43,7 +43,7 @@ public abstract class TemplateTag implements IStateListener<CGPanel>
 		return false;
 	}
 
-	protected abstract CGPanel createPanel();
+	protected abstract CGPanel createPanel(String objectId);
 
 	public Text description()
 	{
@@ -52,7 +52,10 @@ public abstract class TemplateTag implements IStateListener<CGPanel>
 
 	public abstract Tag generateTag(CGPanel panel);
 
-	protected abstract boolean isInputValid(CGPanel panel);
+	protected boolean isInputValid(CGPanel panel)
+	{
+		return true;
+	}
 
 	@Override
 	public boolean shouldStateClose(CGPanel panel)

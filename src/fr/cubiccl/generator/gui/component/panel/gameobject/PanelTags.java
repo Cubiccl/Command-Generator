@@ -82,7 +82,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonAdd) this.getSelectedTag().askValue(this);
+		if (e.getSource() == this.buttonAdd) this.getSelectedTag().askValue(this.currentObject, this);
 		else if (e.getSource() == this.buttonRemove)
 		{
 			this.values[this.indexOf(this.getSelectedTag())] = null;

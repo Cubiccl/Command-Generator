@@ -17,7 +17,7 @@ public class TemplatePatterns extends TemplateList
 	}
 
 	@Override
-	protected CGPanel createPanel()
+	protected CGPanel createPanel(String objectId)
 	{
 		return new ConfirmPanel("banner.title", new PatternsPanel());
 	}
@@ -32,12 +32,6 @@ public class TemplatePatterns extends TemplateList
 	public int getBaseColor()
 	{
 		return this.base;
-	}
-
-	@Override
-	protected boolean isInputValid(CGPanel panel)
-	{
-		return true;
 	}
 
 }

@@ -14,7 +14,7 @@ public abstract class TemplateList extends TemplateTag
 		}
 
 		@Override
-		protected CGPanel createPanel()
+		protected CGPanel createPanel(String objectId)
 		{
 			return null;
 		}
@@ -23,12 +23,6 @@ public abstract class TemplateList extends TemplateTag
 		public Tag generateTag(CGPanel panel)
 		{
 			return null;
-		}
-
-		@Override
-		protected boolean isInputValid(CGPanel panel)
-		{
-			return true;
 		}
 
 	}
