@@ -4,8 +4,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
@@ -17,19 +15,22 @@ import fr.cubiccl.generator.gameobject.baseobjects.Slot;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
+import fr.cubiccl.generator.gui.component.interfaces.MCInventory;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.gameobject.MCInventoryDrawer;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.IStateListener;
 
-public class ItemsPanel extends CGPanel implements IStateListener<ConfirmPanel>
+public class ItemsPanel extends CGPanel implements IStateListener<ConfirmPanel>, MCInventory
 {
 	public static final int MULTIPLIER = 5;
 	private static final long serialVersionUID = -3136971123392536978L;
 
 	public final Container container;
 	private int currentSlot;
+	private MCInventoryDrawer drawer;
 	private BufferedImage img;
 	private ItemStack[] items;
 
@@ -43,24 +44,8 @@ public class ItemsPanel extends CGPanel implements IStateListener<ConfirmPanel>
 			this.setPreferredSize(new Dimension(this.img.getWidth() * MULTIPLIER, this.img.getHeight() * MULTIPLIER));
 			this.setMinimumSize(new Dimension(this.img.getWidth() * MULTIPLIER, this.img.getHeight() * MULTIPLIER));
 		}
-		this.addMouseListener(new MouseAdapter()
-		{
-			@Override
-			public void mouseClicked(MouseEvent e)
-			{
-				super.mouseClicked(e);
-				onClick();
-			}
-		});
-		this.addMouseMotionListener(new MouseAdapter()
-		{
-			@Override
-			public void mouseMoved(MouseEvent e)
-			{
-				super.mouseMoved(e);
-				onMoveTo(e.getX(), e.getY());
-			}
-		});
+		this.addMouseListener(this.drawer = new MCInventoryDrawer(this));
+		this.addMouseMotionListener(this.drawer);
 	}
 
 	public TagList generateItems(TemplateItems template)
@@ -71,12 +56,21 @@ public class ItemsPanel extends CGPanel implements IStateListener<ConfirmPanel>
 		return new TagList(template, tags.toArray(new Tag[tags.size()]));
 	}
 
-	private void onClick()
+	@Override
+	public void onClick()
 	{
 		if (this.currentSlot != -1) CommandGenerator.stateManager.setState(new ConfirmPanel((String) null, new PanelItem("general.item")), this);
 	}
 
-	private void onMoveTo(int x, int y)
+	@Override
+	public void onExit()
+	{
+		this.currentSlot = -1;
+		this.repaint();
+	}
+
+	@Override
+	public void onMove(int x, int y)
 	{
 		int previous = this.currentSlot;
 		this.currentSlot = -1;
@@ -97,28 +91,27 @@ public class ItemsPanel extends CGPanel implements IStateListener<ConfirmPanel>
 		if (this.img == null) return;
 		g.drawImage(this.img, 0, 0, this.getWidth(), this.getHeight(), null);
 
-		if (this.currentSlot != -1)
-		{
-			g.setColor(new Color(255, 255, 255, 100));
-			Slot slot = this.container.slots[this.currentSlot];
-			g.fillRect(slot.x * MULTIPLIER, slot.y * MULTIPLIER, Slot.SIZE * MULTIPLIER, Slot.SIZE * MULTIPLIER);
-		}
-
 		for (int i = 0; i < this.items.length; ++i)
 		{
 			ItemStack item = this.items[i];
 			if (item != null)
 			{
-				g.drawImage(item.item.texture(item.data), this.container.slots[i].x * MULTIPLIER, this.container.slots[i].y * MULTIPLIER, Slot.SIZE
-						* MULTIPLIER, Slot.SIZE * MULTIPLIER, null);
+				int x = this.container.slots[i].x * MULTIPLIER, y = this.container.slots[i].y * MULTIPLIER, size = Slot.SIZE * MULTIPLIER;
+				g.drawImage(item.item.texture(item.data), x, y, size, size, null);
 				if (item.amount > 1)
 				{
 					g.setFont(DisplayUtils.FONT.deriveFont(Font.BOLD, 25));
 					g.setColor(Color.WHITE);
-					g.drawString(Integer.toString(item.amount), this.container.slots[i].x * MULTIPLIER + Slot.SIZE * MULTIPLIER - g.getFont().getSize()
-							- MULTIPLIER, this.container.slots[i].y * MULTIPLIER + Slot.SIZE * MULTIPLIER - g.getFont().getSize() / 4);
+					g.drawString(Integer.toString(item.amount), x + Slot.SIZE * MULTIPLIER - g.getFont().getSize() - MULTIPLIER, y + Slot.SIZE * MULTIPLIER
+							- g.getFont().getSize() / 4);
 				}
 			}
+		}
+
+		if (this.currentSlot != -1)
+		{
+			Slot slot = this.container.slots[this.currentSlot];
+			this.drawer.drawHovering(g, slot.x * MULTIPLIER, slot.y * MULTIPLIER, Slot.SIZE * MULTIPLIER);
 		}
 	}
 

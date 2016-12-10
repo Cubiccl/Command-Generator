@@ -1,9 +1,11 @@
-package fr.cubiccl.generator.gui;
+package fr.cubiccl.generator.gui.component.panel.gameobject;
 
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+
+import fr.cubiccl.generator.gui.component.interfaces.MCInventory;
 
 public class MCInventoryDrawer extends MouseAdapter
 {

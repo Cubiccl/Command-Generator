@@ -1,21 +1,18 @@
 package fr.cubiccl.generator.gui.component.panel.gameobject;
 
 import java.awt.Dimension;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
-
-import javax.swing.JPanel;
+import java.awt.image.BufferedImage;
 
 import fr.cubi.cubigui.CPanel;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
-import fr.cubiccl.generator.gui.MCInventory;
-import fr.cubiccl.generator.gui.MCInventoryDrawer;
 import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
+import fr.cubiccl.generator.gui.component.interfaces.IImageSelectionListener;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
@@ -23,146 +20,12 @@ import fr.cubiccl.generator.gui.component.textfield.CGSpinner;
 
 public class PanelBlockSelection extends ConfirmPanel implements ComponentListener
 {
-	private static class BlockSelector extends JPanel implements MCInventory
-	{
-		private static final long serialVersionUID = 2195482097558117484L;
-
-		private Block[] blocks;
-		private MCInventoryDrawer drawer;
-		private int hovering;
-		private int objectsPerLine;
-		private PanelBlockSelection parent;
-
-		public BlockSelector(PanelBlockSelection parent)
-		{
-			this.parent = parent;
-			this.blocks = this.parent.blocks;
-			this.hovering = -1;
-			this.setObjectsPerLine(20);
-			this.addMouseListener(this.drawer = new MCInventoryDrawer(this));
-			this.addMouseMotionListener(this.drawer);
-		}
-
-		@Override
-		public void onClick()
-		{
-			if (this.hovering != -1)
-			{
-				this.parent.setSelected(this.hovering, true);
-				this.repaint();
-			}
-		}
-
-		@Override
-		public void onExit()
-		{
-			this.hovering = -1;
-			this.repaint();
-		}
-
-		@Override
-		public void onMove(int x, int y)
-		{
-			int previous = this.hovering;
-			this.hovering = x / (BLOCK_SIZE + GAP) + y / (BLOCK_SIZE + GAP) * this.objectsPerLine;
-			if (previous != this.hovering) this.repaint();
-		}
-
-		@Override
-		public void paint(Graphics g)
-		{
-			super.paint(g);
-			for (int i = 0; i < this.blocks.length; ++i)
-			{
-				int x = (i % this.objectsPerLine) * (BLOCK_SIZE + GAP) + 1;
-				int y = i / this.objectsPerLine * (BLOCK_SIZE + GAP) + 1;
-				this.drawer.drawBox(g, x, y, BLOCK_SIZE);
-				if (i == this.parent.selected) this.drawer.drawSelection(g, x, y, BLOCK_SIZE);
-				g.drawImage(this.blocks[i].texture(0), x, y, BLOCK_SIZE, BLOCK_SIZE, null);
-				if (i == this.hovering && i != this.parent.selected) this.drawer.drawHovering(g, x, y, BLOCK_SIZE);
-			}
-		}
-
-		public void setObjectsPerLine(int objectsPerLine)
-		{
-			this.objectsPerLine = Math.min(20, objectsPerLine);
-			int width = this.objectsPerLine * (BLOCK_SIZE + GAP) - GAP, height = (this.blocks.length / this.objectsPerLine + 1) * (BLOCK_SIZE + GAP);
-			this.setSize(width, height);
-			this.setPreferredSize(new Dimension(width, height));
-		}
-
-	}
-
-	private static class DamageSelector extends JPanel implements MCInventory
-	{
-		private static final long serialVersionUID = -3118157489090883128L;
-
-		private Block block;
-		private MCInventoryDrawer drawer;
-		private int hovering;
-		private PanelBlockSelection parent;
-
-		public DamageSelector(PanelBlockSelection parent)
-		{
-			this.parent = parent;
-			this.hovering = -1;
-			this.setBlock(this.parent.selectedBlock());
-			this.addMouseListener(this.drawer = new MCInventoryDrawer(this));
-			this.addMouseMotionListener(this.drawer);
-		}
-
-		@Override
-		public void onClick()
-		{
-			if (this.hovering != -1 && this.hovering < this.block.damage.length) this.parent.setDamage(this.hovering);
-		}
-
-		@Override
-		public void onExit()
-		{
-			this.hovering = -1;
-			this.repaint();
-		}
-
-		@Override
-		public void onMove(int x, int y)
-		{
-			int previous = this.hovering;
-			this.hovering = x / (BLOCK_SIZE + GAP);
-			if (previous != this.hovering) this.repaint();
-		}
-
-		@Override
-		public void paint(Graphics g)
-		{
-			super.paint(g);
-			for (int i = 0; i < this.block.damage.length; ++i)
-			{
-				int x = i * (BLOCK_SIZE + GAP) + 1;
-				int y = 1;
-				this.drawer.drawBox(g, x, y, BLOCK_SIZE);
-				if (i == this.parent.damage) this.drawer.drawSelection(g, x, y, BLOCK_SIZE);
-				g.drawImage(this.block.texture(this.block.damage[i]), x, y, BLOCK_SIZE, BLOCK_SIZE, null);
-				if (i == this.hovering && i != this.parent.damage) this.drawer.drawHovering(g, x, y, BLOCK_SIZE);
-			}
-		}
-
-		public void setBlock(Block block)
-		{
-			this.block = block;
-			this.setPreferredSize(new Dimension(this.block.damage.length * (BLOCK_SIZE + GAP), BLOCK_SIZE + 3));
-			this.repaint();
-		}
-
-	}
-
-	private static final int BLOCK_SIZE = 64, GAP = 5;
+	public static final int BLOCK_SIZE = 64, GAP = 5;
 	private static final long serialVersionUID = -3259302480348824205L;
 
 	private Block[] blocks;
-	private BlockSelector blockSelector;
 	private ObjectCombobox<Block> comboboxBlock;
-	private DamageSelector damageSelector;
+	private PanelImageList damageSelector, blockSelector;
 	private ImageLabel labelImage;
 	private CGLabel labelName;
 	private CScrollPane scrollpane;
@@ -191,11 +54,44 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		gbc.gridx = 0;
 		++gbc.gridy;
 		gbc.gridwidth = 5;
-		p.add(this.scrollpane = new CScrollPane(this.blockSelector = new BlockSelector(this)), gbc);
+		p.add(this.scrollpane = new CScrollPane(this.blockSelector = new PanelImageList(new IImageSelectionListener()
+		{
+
+			@Override
+			public int currentSelection()
+			{
+				return selected;
+			}
+
+			@Override
+			public void selectObject(int objectIndex)
+			{
+				setSelected(objectIndex, true);
+			}
+		})), gbc);
 		++gbc.gridy;
 		p.add(new CGLabel("block.data").setHasColumn(true), gbc);
 		++gbc.gridy;
-		p.add(this.damageSelector = new DamageSelector(this), gbc);
+		p.add(this.damageSelector = new PanelImageList(new IImageSelectionListener()
+		{
+
+			@Override
+			public int currentSelection()
+			{
+				return damage;
+			}
+
+			@Override
+			public void selectObject(int objectIndex)
+			{
+				setDamage(objectIndex);
+			}
+		}), gbc);
+
+		BufferedImage[] images = new BufferedImage[this.blocks.length];
+		for (int i = 0; i < images.length; ++i)
+			images[i] = this.blocks[i].texture(0);
+		this.blockSelector.setImages(images);
 
 		this.comboboxBlock.addActionListener(this);
 		this.spinnerDamage.addActionListener(this);
@@ -249,6 +145,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 	{
 		this.damage = damage;
 		this.damageSelector.repaint();
+		this.spinnerDamage.setText(Integer.toString(damage));
 		this.updateDisplay();
 	}
 
@@ -258,7 +155,11 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		if (sendUpdates) this.comboboxBlock.setSelectedItem(this.selectedBlock().name().toString());
 		this.spinnerDamage.setValues(this.selectedBlock().damage);
 		this.blockSelector.repaint();
-		this.damageSelector.setBlock(this.selectedBlock());
+
+		BufferedImage[] images = new BufferedImage[this.selectedBlock().damage.length];
+		for (int i = 0; i < images.length; i++)
+			images[i] = this.selectedBlock().texture(this.selectedBlock().damage[i]);
+		this.damageSelector.setImages(images);
 		this.setDamage(Math.min(this.damage, this.selectedBlock().damage.length - 1));
 		this.updateDisplay();
 	}

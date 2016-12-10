@@ -1,4 +1,4 @@
-package fr.cubiccl.generator.gui;
+package fr.cubiccl.generator.gui.component.interfaces;
 
 public interface MCInventory
 {
