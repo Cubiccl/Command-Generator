@@ -105,6 +105,7 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		this.block = panel.selectedBlock();
 		this.damage = panel.selectedDamage();
 		this.updateDisplay();
+		this.panelTags.setObjectForTags(this.block.idString);
 		return true;
 	}
 

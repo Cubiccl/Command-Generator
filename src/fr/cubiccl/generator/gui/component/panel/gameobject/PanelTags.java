@@ -25,7 +25,6 @@ import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.Lang;
-import fr.cubiccl.generator.utils.Text;
 
 public class PanelTags extends CGPanel implements ListSelectionListener, ActionListener, ITagCreationListener
 {
@@ -82,8 +81,8 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonAdd) this.getSelectedTag().askValue(this.currentObject, this);
-		else if (e.getSource() == this.buttonRemove)
+		if (e.getSource() == this.buttonAdd && this.getSelectedTag() != null) this.getSelectedTag().askValue(this.currentObject, this);
+		else if (e.getSource() == this.buttonRemove && this.getSelectedTag() != null)
 		{
 			this.values[this.indexOf(this.getSelectedTag())] = null;
 			this.updateDisplay();
@@ -116,10 +115,8 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 
 	public TemplateTag getSelectedTag()
 	{
-		TemplateTag tag = this.tags.length == 0 ? null : this.tags[0];
-		for (TemplateTag templateTag : this.tags)
-			if (templateTag.id.equals(this.listTags.getValue())) tag = templateTag;
-		return tag;
+		if (this.shownTags.size() == 0 || this.listTags.getSelectedIndex() == -1) return null;
+		return this.shownTags.get(this.listTags.getSelectedIndex());
 	}
 
 	private int indexOf(TemplateTag template)
@@ -139,8 +136,10 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	{
 		this.currentObject = objectID;
 		this.shownTags.clear();
-		for (TemplateTag tag : this.tags)
-			if (tag.canApplyTo(this.currentObject)) this.shownTags.add(tag);
+		for (int i = 0; i < this.tags.length; ++i)
+			if (this.tags[i].canApplyTo(this.currentObject)) this.shownTags.add(this.tags[i]);
+			else this.values[i] = null;
+
 		this.updateTranslations();
 	}
 
@@ -157,7 +156,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	{
 		super.updateTranslations();
 		if (this.tags == null) return;
-		if (this.tags.length == 0) this.areaValue.setText(new Text("tags.none").toString());
+		if (this.shownTags.size() == 0) this.areaValue.setText("");
 		else
 		{
 			int selected = this.listTags.getSelectedIndex();
@@ -177,6 +176,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 
 	private Tag valueFor(TemplateTag template)
 	{
+		if (template == null) return null;
 		for (Tag tag : this.values)
 			if (tag != null && tag.template == template) return tag;
 		return null;
