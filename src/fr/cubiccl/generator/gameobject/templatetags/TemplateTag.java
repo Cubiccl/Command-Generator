@@ -5,11 +5,11 @@ import java.util.Stack;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.utils.IStateListener;
 import fr.cubiccl.generator.utils.Text;
 
-public abstract class TemplateTag implements IStateListener<CGPanel>
+public abstract class TemplateTag implements IStateListener<ConfirmPanel>
 {
 	public static final String[] TYPE_NAMES =
 	{ "block", "item", "entity" };
@@ -43,22 +43,22 @@ public abstract class TemplateTag implements IStateListener<CGPanel>
 		return false;
 	}
 
-	protected abstract CGPanel createPanel(String objectId);
+	protected abstract ConfirmPanel createPanel(String objectId);
 
 	public Text description()
 	{
 		return new Text("tag." + TYPE_NAMES[this.type] + "." + this.id + ".description");
 	}
 
-	public abstract Tag generateTag(CGPanel panel);
+	public abstract Tag generateTag(ConfirmPanel panel);
 
-	protected boolean isInputValid(CGPanel panel)
+	protected boolean isInputValid(ConfirmPanel panel)
 	{
 		return true;
 	}
 
 	@Override
-	public boolean shouldStateClose(CGPanel panel)
+	public boolean shouldStateClose(ConfirmPanel panel)
 	{
 		if (this.isInputValid(panel))
 		{

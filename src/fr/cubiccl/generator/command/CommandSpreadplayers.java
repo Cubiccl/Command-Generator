@@ -32,6 +32,7 @@ public class CommandSpreadplayers extends Command
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.ALL_ENTITIES), gbc);
 		++gbc.gridy;
+		--gbc.gridwidth;
 		panel.add((this.entryX = new CGEntry("spread.x", "0")).container, gbc);
 		++gbc.gridx;
 		panel.add(this.checkboxX = new CGCheckBox("coordinate.relative"), gbc);
@@ -42,7 +43,7 @@ public class CommandSpreadplayers extends Command
 		panel.add(this.checkboxZ = new CGCheckBox("coordinate.relative"), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
-		--gbc.gridwidth;
+		++gbc.gridwidth;
 		panel.add((this.entryDistance = new CGEntry("spread.distance", "0")).container, gbc);
 		++gbc.gridy;
 		panel.add((this.entryRange = new CGEntry("spread.range", "1")).container, gbc);

@@ -2,8 +2,8 @@ package fr.cubiccl.generator.gameobject.templatetags;
 
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
-import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ComboboxPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
 
 public class TemplateNumber extends TemplateTag
@@ -33,7 +33,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId)
+	protected ConfirmPanel createPanel(String objectId)
 	{
 		if (this.names == null)
 		{
@@ -46,7 +46,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	public Tag generateTag(CGPanel panel)
+	public Tag generateTag(ConfirmPanel panel)
 	{
 		if (this.names == null) return new TagNumber(this, ((EntryPanel) panel).entry.getText());
 
@@ -72,7 +72,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	protected boolean isInputValid(CGPanel panel)
+	protected boolean isInputValid(ConfirmPanel panel)
 	{
 		try
 		{

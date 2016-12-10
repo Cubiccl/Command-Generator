@@ -73,6 +73,7 @@ public class CommandStats extends Command implements ActionListener
 		++gbc.gridy;
 		panel.add((this.entryObjective = new CGEntry(new Text("stats.objective"))).container, gbc);
 
+		this.labelStat.setHasColumn(true);
 		this.panelSource.setVisible(false);
 		this.comboboxSourceMode.addActionListener(this);
 		this.comboboxMode.addActionListener(this);

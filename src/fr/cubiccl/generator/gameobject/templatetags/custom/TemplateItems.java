@@ -4,7 +4,6 @@ import fr.cubiccl.generator.gameobject.Container;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
-import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.tag.ItemsPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 
@@ -17,16 +16,16 @@ public class TemplateItems extends TemplateList
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId)
+	protected ConfirmPanel createPanel(String objectId)
 	{
 		Container container = ObjectRegistry.getContainerFromID(objectId);
 		return new ConfirmPanel(container.name(), new ItemsPanel(container));
 	}
 
 	@Override
-	public Tag generateTag(CGPanel panel)
+	public Tag generateTag(ConfirmPanel panel)
 	{
-		return ((ItemsPanel) ((ConfirmPanel) panel).component).generateItems(this);
+		return ((ItemsPanel) panel.component).generateItems(this);
 	}
 
 }

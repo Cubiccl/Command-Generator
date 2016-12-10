@@ -3,8 +3,12 @@ package fr.cubiccl.generator.gui.component.panel.utils;
 import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gui.component.button.CGButton;
@@ -27,7 +31,7 @@ public class ConfirmPanel extends CGPanel implements ActionListener
 
 	public ConfirmPanel(String titleID, Component component)
 	{
-		this(new Text(titleID), component);
+		this(titleID == null ? null : new Text(titleID), component);
 	}
 
 	public ConfirmPanel(Text title, Component component)
@@ -35,20 +39,21 @@ public class ConfirmPanel extends CGPanel implements ActionListener
 		this.gbc = this.createGridBagLayout();
 		if (title != null)
 		{
-			++gbc.gridwidth;
 			CGLabel label = new CGLabel(title);
 			label.setFont(new Font(label.getFont().getFontName(), Font.BOLD, 28));
+			label.setHorizontalAlignment(SwingConstants.CENTER);
 			this.add(label, gbc);
 			++gbc.gridy;
-			--gbc.gridwidth;
 		}
 		++gbc.gridy;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
-		this.add(this.buttonCancel = new CGButton("general.cancel"), gbc);
-		++gbc.gridx;
-		this.add(this.buttonOK = new CGButton("general.confirm"), gbc);
-		++gbc.gridwidth;
-		--gbc.gridx;
+
+		JPanel p = new JPanel(new GridLayout(1, 2));
+		((GridLayout) p.getLayout()).setVgap(10);
+		p.add(this.buttonCancel = new CGButton("general.cancel"));
+		p.add(this.buttonOK = new CGButton("general.confirm"));
+		this.add(p, gbc);
+
 		--gbc.gridy;
 		if (component != null) this.setMainComponent(component);
 

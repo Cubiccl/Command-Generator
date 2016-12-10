@@ -146,7 +146,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 		this.add((this.entryInsertion = new CGEntry(new Text("json.insertion"))).container, gbc);
 		++gbc.gridy;
 		gbc.gridwidth = 1;
-		this.add(new CGLabel("json.color"), gbc);
+		this.add(new CGLabel("json.color").setHasColumn(true), gbc);
 		++gbc.gridx;
 		this.add(this.comboboxColor = new OptionCombobox("color", Utils.COLORS), gbc);
 		++gbc.gridx;

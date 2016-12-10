@@ -35,7 +35,9 @@ public class CommandPlaysound extends Command
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
+		++gbc.gridwidth;
 		panel.add(this.labelDescription(), gbc);
+		--gbc.gridwidth;
 		++gbc.gridy;
 		panel.add(new CGLabel("playsound.sound").setHasColumn(true), gbc);
 		++gbc.gridx;

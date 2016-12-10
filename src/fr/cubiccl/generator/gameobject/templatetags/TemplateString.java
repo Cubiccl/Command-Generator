@@ -2,7 +2,7 @@ package fr.cubiccl.generator.gameobject.templatetags;
 
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagString;
-import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
 
 public class TemplateString extends TemplateTag
@@ -14,13 +14,13 @@ public class TemplateString extends TemplateTag
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId)
+	protected ConfirmPanel createPanel(String objectId)
 	{
 		return new EntryPanel(this.description());
 	}
 
 	@Override
-	public Tag generateTag(CGPanel panel)
+	public Tag generateTag(ConfirmPanel panel)
 	{
 		return new TagString(this, ((EntryPanel) panel).entry.getText());
 	}

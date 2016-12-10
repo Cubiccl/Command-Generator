@@ -51,6 +51,7 @@ public class CommandParticle extends Command implements ActionListener
 		GridBagConstraints gbc = panel.createGridBagLayout();
 
 		++gbc.gridwidth;
+		gbc.fill = GridBagConstraints.NONE;
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		panel.add((this.comboboxParticle = new ObjectCombobox<Particle>(ObjectRegistry.getParticles())).container, gbc);
