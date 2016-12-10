@@ -64,7 +64,7 @@ public class ConfirmPanel extends CGPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		CommandGenerator.stateManager.clearState(e.getSource() == this.buttonOK);
+		if (e.getSource() == this.buttonOK || e.getSource() == this.buttonCancel) CommandGenerator.stateManager.clearState(e.getSource() == this.buttonOK);
 	}
 
 	public void setMainComponent(Component component)

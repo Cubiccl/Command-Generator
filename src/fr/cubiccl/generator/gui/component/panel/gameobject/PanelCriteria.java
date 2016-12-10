@@ -75,7 +75,7 @@ public class PanelCriteria extends CGPanel implements ActionListener
 			} else if (base.equals("stat.mineBlock"))
 			{
 				this.setCurrentDetail(this.panelBlock = new PanelBlock(null));
-				this.panelBlock.setEnabledContent(false);
+				this.panelBlock.setHasData(false);
 			} else if (base.equals("killedByTeam") || base.equals("teamKill")) this.setCurrentDetail(this.comboboxDetail = new OptionCombobox("color", COLORS));
 			else if (base.toLowerCase().contains("entity")) this.setCurrentDetail(this.panelEntity = new PanelEntity(null));
 			else this.setCurrentDetail(null);

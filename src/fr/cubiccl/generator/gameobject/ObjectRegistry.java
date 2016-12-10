@@ -431,9 +431,15 @@ public class ObjectRegistry
 
 	public static Block[] getBlocks()
 	{
+		return getBlocks(SORT_ALPHABETICALLY);
+	}
+
+	public static Block[] getBlocks(int sortType)
+	{
 		ArrayList<Block> a = new ArrayList<Block>();
 		a.addAll(blocks.values());
-		a.sort(new Comparator<Block>()
+
+		if (sortType == SORT_ALPHABETICALLY) a.sort(new Comparator<Block>()
 		{
 			@Override
 			public int compare(Block o1, Block o2)
@@ -441,6 +447,15 @@ public class ObjectRegistry
 				return o1.idString.compareTo(o2.idString);
 			}
 		});
+		else a.sort(new Comparator<Block>()
+		{
+			@Override
+			public int compare(Block o1, Block o2)
+			{
+				return o1.idInt - o2.idInt;
+			}
+		});
+
 		return a.toArray(new Block[a.size()]);
 	}
 
