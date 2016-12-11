@@ -20,7 +20,7 @@ public class ItemStack
 		return is;
 	}
 
-	public final int amount, data;
+	public final int amount, damage;
 	public final Item item;
 	public final TagCompound nbt;
 	public int slot;
@@ -29,7 +29,7 @@ public class ItemStack
 	{
 		super();
 		this.item = item;
-		this.data = data;
+		this.damage = data;
 		this.amount = amount;
 		this.slot = 0;
 		this.nbt = nbt;
@@ -37,12 +37,12 @@ public class ItemStack
 
 	public String toCommand()
 	{
-		return this.item.idString + " " + this.amount + " " + this.data + " " + this.nbt.toCommand();
+		return this.item.idString + " " + this.amount + " " + this.damage + " " + this.nbt.toCommand();
 	}
 
 	public TagCompound toTag()
 	{
-		return new TagCompound(Tags.ITEM, new TagString(Tags.ITEM_ID, this.item.idString), new TagNumber(Tags.ITEM_DAMAGE, this.data), new TagNumber(
+		return new TagCompound(Tags.ITEM, new TagString(Tags.ITEM_ID, this.item.idString), new TagNumber(Tags.ITEM_DAMAGE, this.damage), new TagNumber(
 				Tags.ITEM_COUNT, this.amount), new TagNumber(Tags.ITEM_SLOT, this.slot));
 	}
 

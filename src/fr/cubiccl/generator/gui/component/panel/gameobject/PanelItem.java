@@ -83,7 +83,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 
 	public ItemStack generateItem(TemplateCompound container)
 	{
-		return new ItemStack(this.selectedItem(), this.selectedAmount(), this.selectedDamage(), this.getNBT(container));
+		return new ItemStack(this.selectedItem(), this.selectedDamage(), this.selectedAmount(), this.getNBT(container));
 	}
 
 	public TagCompound getNBT(TemplateCompound container)
@@ -121,6 +121,17 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 			this.spinnerDurability.setText("0");
 			this.updateDisplay();
 		}
+	}
+
+	public void setupFrom(ItemStack itemStack)
+	{
+		this.item = itemStack.item;
+		this.damage = itemStack.damage;
+		this.updateDisplay();
+		this.spinnerAmount.setText(Integer.toString(itemStack.amount));
+		this.spinnerDurability.setValues(this.item.damage);
+		this.spinnerDurability.setText(Integer.toString(itemStack.damage));
+		this.panelTags.setObjectForTags(this.item.idString);
 	}
 
 	@Override

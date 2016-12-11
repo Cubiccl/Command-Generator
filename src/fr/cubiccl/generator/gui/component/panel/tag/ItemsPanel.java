@@ -59,7 +59,12 @@ public class ItemsPanel extends CGPanel implements IStateListener<ConfirmPanel>,
 	@Override
 	public void onClick()
 	{
-		if (this.currentSlot != -1) CommandGenerator.stateManager.setState(new ConfirmPanel((String) null, new PanelItem("general.item")), this);
+		if (this.currentSlot != -1)
+		{
+			PanelItem p = new PanelItem("general.item");
+			if (this.items[this.currentSlot] != null) p.setupFrom(this.items[this.currentSlot]);
+			CommandGenerator.stateManager.setState(new ConfirmPanel((String) null, p), this);
+		}
 	}
 
 	@Override
@@ -97,7 +102,7 @@ public class ItemsPanel extends CGPanel implements IStateListener<ConfirmPanel>,
 			if (item != null)
 			{
 				int x = this.container.slots[i].x * MULTIPLIER, y = this.container.slots[i].y * MULTIPLIER, size = Slot.SIZE * MULTIPLIER;
-				g.drawImage(item.item.texture(item.data), x, y, size, size, null);
+				g.drawImage(item.item.texture(item.damage), x, y, size, size, null);
 				if (item.amount > 1)
 				{
 					g.setFont(DisplayUtils.FONT.deriveFont(Font.BOLD, 25));
