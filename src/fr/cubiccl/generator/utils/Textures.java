@@ -14,6 +14,8 @@ public class Textures
 
 	public static void createTextures()
 	{
+		paths.clear();
+		textures.clear();
 		String[] pathArray = FileUtils.readFileAsArray("textures.txt");
 		for (String path : pathArray)
 		{

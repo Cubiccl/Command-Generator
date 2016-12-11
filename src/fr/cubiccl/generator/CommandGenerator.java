@@ -6,13 +6,13 @@ import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
+import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.gui.Window;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Settings;
 import fr.cubiccl.generator.utils.StateManager;
-import fr.cubiccl.generator.utils.Textures;
 
 public class CommandGenerator
 {
@@ -65,8 +65,6 @@ public class CommandGenerator
 	public static void main(String[] args)
 	{
 		log("Welcome to the Command Generator vIndev by Cubi !");
-		log("Charging textures...");
-		Textures.createTextures();
 		Settings.createSettings();
 		log("---- Creating window ----");
 		stateManager = new StateManager();
@@ -98,8 +96,12 @@ public class CommandGenerator
 	public static void updateData()
 	{
 		log("---- Creating objects ----");
-		ObjectRegistry.createObjects();
-		Commands.createCommands();
+
+		LoadingFrame frame = new LoadingFrame(5);
+		ObjectRegistry.createObjects(frame);
+		ObjectRegistry.loadTextures(frame);
+		Commands.createCommands(frame);
+		frame.dispose();
 	}
 
 	public static void updateLanguage()

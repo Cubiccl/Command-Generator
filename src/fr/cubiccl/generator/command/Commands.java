@@ -4,13 +4,16 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import fr.cubiccl.generator.gui.LoadingFrame;
+
 public class Commands
 {
 
 	private static final HashMap<String, Command> commands = new HashMap<String, Command>();
 
-	public static void createCommands()
+	public static void createCommands(LoadingFrame frame)
 	{
+		frame.setText("loading.commands");
 		new CommandAchievement();
 		new CommandClear();
 		new CommandClone();

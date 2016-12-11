@@ -37,8 +37,8 @@ public class Settings
 
 	public static void createSettings()
 	{
-		setVersion(Version.v110);
 		setLanguage(Language.ENGLISH);
+		setVersion(Version.v110);
 	}
 
 	public static Language getLanguage()

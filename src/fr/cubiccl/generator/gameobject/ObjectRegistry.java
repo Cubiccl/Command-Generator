@@ -20,8 +20,10 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
+import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Settings;
+import fr.cubiccl.generator.utils.Textures;
 import fr.cubiccl.generator.utils.Utils;
 
 public class ObjectRegistry
@@ -229,8 +231,9 @@ public class ObjectRegistry
 		CommandGenerator.log("Successfully created " + items.size() + " items.");
 	}
 
-	public static void createObjects()
+	public static void createObjects(LoadingFrame frame)
 	{
+		frame.setText("loading.objects");
 		String[] data = FileUtils.readFileAsArray("data/" + Settings.getVersion().name + ".txt");
 		ArrayList<String> blocks = new ArrayList<String>(), items = new ArrayList<String>(), entities = new ArrayList<String>(), effects = new ArrayList<String>(), enchantments = new ArrayList<String>(), achievements = new ArrayList<String>(), attributes = new ArrayList<String>(), particles = new ArrayList<String>(), sounds = new ArrayList<String>(), containers = new ArrayList<String>(), blocktags = new ArrayList<String>();
 
@@ -661,6 +664,26 @@ public class ObjectRegistry
 		});
 
 		return a.toArray(new TemplateTag[a.size()]);
+	}
+
+	public static void loadTextures(LoadingFrame frame)
+	{
+		CommandGenerator.log("Loading textures...");
+		Textures.createTextures();
+
+		frame.setText("loading.textures.block");
+		for (Block block : blocks.values())
+			for (int d : block.damage)
+				block.texture(d);
+
+		frame.setText("loading.textures.item");
+		for (Item item : items.values())
+			for (int d : item.damage)
+				item.texture(d);
+
+		frame.setText("loading.textures.other");
+		for (EffectType effect : effects.values())
+			effect.texture();
 	}
 
 	public static void registerAchievement(Achievement achievement)
