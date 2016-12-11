@@ -61,7 +61,7 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonSelectBlock) CommandGenerator.stateManager.setState(new PanelBlockSelection(), this);
+		if (e.getSource() == this.buttonSelectBlock) CommandGenerator.stateManager.setState(new PanelBlockSelection(this.hasData), this);
 	}
 
 	public PlacedBlock generateBlock()
