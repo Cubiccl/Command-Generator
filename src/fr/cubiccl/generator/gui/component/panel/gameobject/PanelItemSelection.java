@@ -9,7 +9,7 @@ import java.awt.image.BufferedImage;
 
 import fr.cubi.cubigui.CPanel;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.baseobjects.Block;
+import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.interfaces.IImageSelectionListener;
@@ -18,42 +18,42 @@ import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGSpinner;
 
-public class PanelBlockSelection extends ConfirmPanel implements ComponentListener
+public class PanelItemSelection extends ConfirmPanel implements ComponentListener
 {
 	public static final int BLOCK_SIZE = 64, GAP = 5;
 	private static final long serialVersionUID = -3259302480348824205L;
 
-	private Block[] blocks;
-	private ObjectCombobox<Block> comboboxBlock;
-	private PanelImageList damageSelector, blockSelector;
+	private ObjectCombobox<Item> comboboxItem;
+	private PanelImageList damageSelector, itemSelector;
 	private boolean hasData;
+	private Item[] items;
 	private ImageLabel labelImage;
 	private CGLabel labelName;
 	private CScrollPane scrollpane;
 	private int selected, damage;
 	private CGSpinner spinnerDamage;
 
-	public PanelBlockSelection()
+	public PanelItemSelection()
 	{
 		this(true);
 	}
 
-	public PanelBlockSelection(boolean hasData)
+	public PanelItemSelection(boolean hasData)
 	{
-		super("block.select", null);
+		super("item.select", null);
 		this.hasData = hasData;
 		this.selected = 0;
 		this.damage = 0;
-		this.blocks = ObjectRegistry.getBlocks(ObjectRegistry.SORT_NUMERICALLY);
+		this.items = ObjectRegistry.getItems(ObjectRegistry.SORT_NUMERICALLY);
 
 		CPanel p = new CPanel();
 		GridBagConstraints gbc = p.createGridBagLayout();
 		gbc.anchor = GridBagConstraints.CENTER;
 		p.add(new CGLabel("block.id").setHasColumn(true), gbc);
 		++gbc.gridx;
-		p.add((this.comboboxBlock = new ObjectCombobox<Block>(this.blocks)).container, gbc);
+		p.add((this.comboboxItem = new ObjectCombobox<Item>(this.items)).container, gbc);
 		++gbc.gridx;
-		p.add((this.spinnerDamage = new CGSpinner("block.data", this.blocks[0].damage)).container, gbc);
+		p.add((this.spinnerDamage = new CGSpinner("item.data", this.items[0].damage)).container, gbc);
 		++gbc.gridx;
 		p.add(this.labelImage = new ImageLabel(), gbc);
 		++gbc.gridx;
@@ -61,7 +61,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		gbc.gridx = 0;
 		++gbc.gridy;
 		gbc.gridwidth = 5;
-		p.add(this.scrollpane = new CScrollPane(this.blockSelector = new PanelImageList(new IImageSelectionListener()
+		p.add(this.scrollpane = new CScrollPane(this.itemSelector = new PanelImageList(new IImageSelectionListener()
 		{
 
 			@Override
@@ -79,7 +79,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		++gbc.gridy;
 		if (this.hasData)
 		{
-			p.add(new CGLabel("block.data").setHasColumn(true), gbc);
+			p.add(new CGLabel("item.data").setHasColumn(true), gbc);
 			++gbc.gridy;
 		}
 		p.add(this.damageSelector = new PanelImageList(new IImageSelectionListener()
@@ -98,17 +98,17 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 			}
 		}), gbc);
 
-		BufferedImage[] images = new BufferedImage[this.blocks.length];
+		BufferedImage[] images = new BufferedImage[this.items.length];
 		for (int i = 0; i < images.length; ++i)
-			images[i] = this.blocks[i].texture(0);
-		this.blockSelector.setImages(images);
+			images[i] = this.items[i].texture(0);
+		this.itemSelector.setImages(images);
 
 		if (!this.hasData)
 		{
 			this.damageSelector.setVisible(false);
 			this.spinnerDamage.container.setVisible(false);
 		}
-		this.comboboxBlock.addActionListener(this);
+		this.comboboxItem.addActionListener(this);
 		this.spinnerDamage.addActionListener(this);
 		this.setMainComponent(p);
 		this.addComponentListener(this);
@@ -119,12 +119,12 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 	public void actionPerformed(ActionEvent e)
 	{
 		super.actionPerformed(e);
-		if (e.getSource() == this.comboboxBlock)
+		if (e.getSource() == this.comboboxItem)
 		{
 			int index = 0;
-			String value = this.comboboxBlock.getValue();
-			for (int i = 0; i < this.blocks.length; ++i)
-				if (this.blocks[i].idString.equals(value))
+			String value = this.comboboxItem.getValue();
+			for (int i = 0; i < this.items.length; ++i)
+				if (this.items[i].idString.equals(value))
 				{
 					index = i;
 					break;
@@ -150,22 +150,22 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		width -= width % (BLOCK_SIZE + GAP);
 		height -= height % (BLOCK_SIZE + GAP);
 		this.scrollpane.setPreferredSize(new Dimension(width + 15, height));
-		this.blockSelector.setObjectsPerLine(width / (BLOCK_SIZE + GAP));
+		this.itemSelector.setObjectsPerLine(width / (BLOCK_SIZE + GAP));
 	}
 
 	@Override
 	public void componentShown(ComponentEvent e)
 	{}
 
-	public Block selectedBlock()
-	{
-		return this.blocks[this.selected];
-	}
-
 	public int selectedDamage()
 	{
-		if (!this.hasData) return this.selectedBlock().damage[0];
-		return this.selectedBlock().damage[this.damage];
+		if (!this.hasData) return this.selectedItem().damage[0];
+		return this.selectedItem().damage[this.damage];
+	}
+
+	public Item selectedItem()
+	{
+		return this.items[this.selected];
 	}
 
 	public void setDamage(int damage)
@@ -179,23 +179,23 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 	public void setSelected(int selected, boolean sendUpdates)
 	{
 		this.selected = selected;
-		if (sendUpdates) this.comboboxBlock.setSelectedItem(this.selectedBlock().name().toString());
-		this.spinnerDamage.setValues(this.selectedBlock().damage);
-		this.blockSelector.repaint();
+		if (sendUpdates) this.comboboxItem.setSelectedItem(this.selectedItem().name().toString());
+		this.spinnerDamage.setValues(this.selectedItem().damage);
+		this.itemSelector.repaint();
 
-		BufferedImage[] images = new BufferedImage[this.selectedBlock().damage.length];
+		BufferedImage[] images = new BufferedImage[this.selectedItem().hasDurability ? 1 : this.selectedItem().damage.length];
 		for (int i = 0; i < images.length; i++)
-			images[i] = this.selectedBlock().texture(this.selectedBlock().damage[i]);
+			images[i] = this.selectedItem().texture(this.selectedItem().damage[i]);
 		this.damageSelector.setImages(images);
-		this.setDamage(Math.min(this.damage, this.selectedBlock().damage.length - 1));
+		this.setDamage(Math.min(this.damage, this.selectedItem().damage.length - 1));
 		this.updateDisplay();
 	}
 
 	private void updateDisplay()
 	{
-		if (this.hasData) this.labelName.setTextID(this.selectedBlock().name(this.selectedDamage()));
-		else this.labelName.setTextID(this.selectedBlock().mainName());
-		this.labelImage.setImage(this.selectedBlock().texture(this.selectedDamage()));
+		if (this.hasData) this.labelName.setTextID(this.selectedItem().name(this.selectedDamage()));
+		else this.labelName.setTextID(this.selectedItem().mainName());
+		this.labelImage.setImage(this.selectedItem().texture(this.selectedDamage()));
 	}
 
 }

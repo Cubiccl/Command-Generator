@@ -202,6 +202,7 @@ public class ObjectRegistry
 			String[] values = item.split(",");
 			String idString = values[1], damage = null;
 			int idInt = Integer.parseInt(values[0]), maxDamage = 0, langType = 0, textureType = 0;
+			boolean durability = false;
 
 			for (String a : values)
 			{
@@ -210,6 +211,7 @@ public class ObjectRegistry
 					langType = -1;
 					textureType = -1;
 					maxDamage = Integer.parseInt(a.substring("durability=".length()));
+					durability = true;
 				} else if (a.startsWith("damage=")) maxDamage = Integer.parseInt(a.substring("damage=".length()));
 				else if (a.startsWith("lang=")) langType = Integer.parseInt(a.substring("lang=".length()));
 				else if (a.startsWith("texture=")) textureType = Integer.parseInt(a.substring("texture=".length()));
@@ -222,6 +224,7 @@ public class ObjectRegistry
 			else i = new Item(idInt, idString, createDamage(damage));
 			i.langType = langType;
 			i.textureType = textureType;
+			i.hasDurability = durability;
 		}
 		CommandGenerator.log("Successfully created " + items.size() + " items.");
 	}
@@ -570,9 +573,15 @@ public class ObjectRegistry
 
 	public static Item[] getItems()
 	{
+		return getItems(SORT_ALPHABETICALLY);
+	}
+
+	public static Item[] getItems(int sortType)
+	{
 		ArrayList<Item> a = new ArrayList<Item>();
 		a.addAll(items.values());
-		a.sort(new Comparator<Item>()
+
+		if (sortType == SORT_ALPHABETICALLY) a.sort(new Comparator<Item>()
 		{
 			@Override
 			public int compare(Item o1, Item o2)
@@ -580,6 +589,15 @@ public class ObjectRegistry
 				return o1.idString.compareTo(o2.idString);
 			}
 		});
+		else a.sort(new Comparator<Item>()
+		{
+			@Override
+			public int compare(Item o1, Item o2)
+			{
+				return o1.idInt - o2.idInt;
+			}
+		});
+
 		return a.toArray(new Item[a.size()]);
 	}
 

@@ -12,18 +12,20 @@ public class ItemStack
 
 	public final int amount, data;
 	public final Item item;
+	public final TagCompound nbt;
 
-	public ItemStack(Item item, int data, int amount)
+	public ItemStack(Item item, int data, int amount, TagCompound nbt)
 	{
 		super();
 		this.item = item;
 		this.data = data;
 		this.amount = amount;
+		this.nbt = nbt;
 	}
 
 	public String toCommand()
 	{
-		return this.item.idString + " " + this.amount + " " + this.data;
+		return this.item.idString + " " + this.amount + " " + this.data + " " + this.nbt.toCommand();
 	}
 
 	public Tag toTag()

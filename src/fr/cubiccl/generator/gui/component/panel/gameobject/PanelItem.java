@@ -4,114 +4,143 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.event.ListSelectionEvent;
-import javax.swing.event.ListSelectionListener;
-
+import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
-import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
+import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.gui.component.textfield.CGSpinner;
-import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
+import fr.cubiccl.generator.utils.IStateListener;
+import fr.cubiccl.generator.utils.Utils;
 
-public class PanelItem extends CGPanel implements ActionListener, ListSelectionListener
+public class PanelItem extends CGPanel implements ActionListener, IStateListener<PanelItemSelection>
 {
 	private static final long serialVersionUID = -8600189753659710473L;
 
-	private ObjectCombobox<Item> comboboxItem;
-	private CGEntry entryAmount;
+	private CGButton buttonSelectItem;
+	private int damage;
+	private boolean hasData;
+	private Item item;
 	private CGLabel labelName;
 	private ImageLabel labelTexture;
-	private CGSpinner spinnerData;
+	private PanelTags panelTags;
+	private CGSpinner spinnerAmount, spinnerDurability;
 
 	public PanelItem(String titleID)
 	{
-		this(titleID, ObjectRegistry.getItems());
+		this(titleID, ObjectRegistry.getItems(ObjectRegistry.SORT_NUMERICALLY));
+	}
+
+	public PanelItem(String titleID, boolean hasData, Item[] items)
+	{
+		super(titleID);
+		this.hasData = hasData;
+		this.item = items[1];
+		this.damage = 0;
+
+		GridBagConstraints gbc = this.createGridBagLayout();
+		gbc.anchor = GridBagConstraints.CENTER;
+		this.add(this.labelTexture = new ImageLabel(), gbc);
+		++gbc.gridx;
+		this.add(this.labelName = new CGLabel(""), gbc);
+		++gbc.gridx;
+		this.add(this.buttonSelectItem = new CGButton("item.select"), gbc);
+		gbc.gridx = 0;
+		++gbc.gridy;
+		gbc.gridwidth = 3;
+		this.add((this.spinnerAmount = new CGSpinner("item.amount", Utils.generateArray(64))).container, gbc);
+		++gbc.gridy;
+		this.add((this.spinnerDurability = new CGSpinner("item.durability", this.item.damage)).container, gbc);
+		++gbc.gridy;
+		this.add(this.panelTags = new PanelTags("item.tags", Tag.BLOCK), gbc);
+
+		this.buttonSelectItem.addActionListener(this);
+		this.updateDisplay();
 	}
 
 	public PanelItem(String titleID, Item[] items)
 	{
-		super(titleID);
-
-		GridBagConstraints gbc = this.createGridBagLayout();
-		++gbc.gridheight;
-		this.add(new CGLabel("item.id").setHasColumn(true), gbc);
-		++gbc.gridx;
-		this.add((this.comboboxItem = new ObjectCombobox<Item>(items)).container, gbc);
-		++gbc.gridx;
-		--gbc.gridheight;
-		this.add(this.labelTexture = new ImageLabel(), gbc);
-		++gbc.gridy;
-		this.add(this.labelName = new CGLabel(""), gbc);
-		--gbc.gridx;
-		++gbc.gridy;
-		gbc.gridwidth = 3;
-		this.add((this.spinnerData = new CGSpinner(new Text("block.data"), items[0].damage)).container, gbc);
-		++gbc.gridy;
-		this.add((this.entryAmount = new CGEntry(new Text("item.amount"), "1")).container, gbc);
-
-		this.comboboxItem.addActionListener(this);
-		this.spinnerData.addActionListener(this);
-		this.entryAmount.addIntFilter();
-		this.updateDisplay();
+		this(titleID, true, items);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.comboboxItem) this.spinnerData.setValues(this.selectedItem().damage);
-		this.updateDisplay();
+		if (e.getSource() == this.buttonSelectItem) CommandGenerator.stateManager.setState(new PanelItemSelection(this.hasData), this);
 	}
 
-	public ItemStack generateItem() throws CommandGenerationException
+	public ItemStack generateItem()
 	{
-		try
-		{
-			int amount = Integer.parseInt(this.entryAmount.getText());
-			if (amount < 0) throw new WrongValueException(this.entryAmount.label.getAbsoluteText(), new Text("error.integer.positive"),
-					this.entryAmount.getText());
-			return new ItemStack(this.selectedItem(), this.spinnerData.getValue(), amount);
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryAmount.label.getAbsoluteText(), new Text("error.integer.positive"), this.entryAmount.getText());
-		}
+		return this.generateItem(Tags.ITEM);
+	}
+
+	public ItemStack generateItem(TemplateCompound container)
+	{
+		return new ItemStack(this.selectedItem(), this.selectedAmount(), this.selectedDamage(), this.getNBT(container));
+	}
+
+	public TagCompound getNBT(TemplateCompound container)
+	{
+		return this.panelTags.generateTags(container);
+	}
+
+	public int selectedAmount()
+	{
+		return this.spinnerAmount.getValue();
 	}
 
 	public int selectedDamage()
 	{
-		return this.spinnerData.getValue();
+		return (this.hasData && this.selectedItem().hasDurability) ? this.spinnerDurability.getValue() : this.damage;
 	}
 
 	public Item selectedItem()
 	{
-		return this.comboboxItem.getSelectedObject();
+		return this.item;
 	}
 
 	public void setEnabledContent(boolean data, boolean amount)
 	{
-		this.spinnerData.container.setVisible(data);
-		if (!data) this.spinnerData.setText(Integer.toString(this.selectedItem().damage[0]));
-		this.entryAmount.container.setVisible(amount);
+		this.setHasData(data);
+		this.spinnerAmount.container.setVisible(amount);
+	}
+
+	public void setHasData(boolean hasData)
+	{
+		this.hasData = hasData;
+		if (!this.hasData)
+		{
+			this.damage = 0;
+			this.spinnerDurability.setText("0");
+			this.updateDisplay();
+		}
+	}
+
+	@Override
+	public boolean shouldStateClose(PanelItemSelection panel)
+	{
+		this.item = panel.selectedItem();
+		this.damage = panel.selectedDamage();
 		this.updateDisplay();
+		this.spinnerDurability.setValues(this.item.damage);
+		this.panelTags.setObjectForTags(this.item.idString);
+		return true;
 	}
 
 	private void updateDisplay()
 	{
-		if (this.spinnerData.container.isVisible()) this.labelName.setText(this.selectedItem().name(this.spinnerData.getValue()).toString());
+		if (this.hasData) this.labelName.setText(this.selectedItem().name(this.damage).toString());
 		else this.labelName.setText(this.selectedItem().mainName().toString());
-		this.labelTexture.setImage(this.selectedItem().texture(this.spinnerData.getValue()));
-	}
+		this.labelTexture.setImage(this.selectedItem().texture(this.damage));
 
-	@Override
-	public void valueChanged(ListSelectionEvent e)
-	{
-		this.updateDisplay();
+		this.spinnerDurability.container.setVisible(this.hasData && this.item.hasDurability);
 	}
 
 }

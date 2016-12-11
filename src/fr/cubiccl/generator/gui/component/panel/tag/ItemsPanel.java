@@ -20,7 +20,6 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.MCInventoryDrawer;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
-import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.IStateListener;
 
 public class ItemsPanel extends CGPanel implements IStateListener<ConfirmPanel>, MCInventory
@@ -118,14 +117,7 @@ public class ItemsPanel extends CGPanel implements IStateListener<ConfirmPanel>,
 	@Override
 	public boolean shouldStateClose(ConfirmPanel panel)
 	{
-		try
-		{
-			this.items[this.currentSlot] = ((PanelItem) panel.component).generateItem();
-		} catch (CommandGenerationException e)
-		{
-			CommandGenerator.report(e);
-			return false;
-		}
+		this.items[this.currentSlot] = ((PanelItem) panel.component).generateItem();
 		return true;
 	}
 

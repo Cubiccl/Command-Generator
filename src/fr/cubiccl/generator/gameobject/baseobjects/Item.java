@@ -1,8 +1,8 @@
 package fr.cubiccl.generator.gameobject.baseobjects;
 
-
 public class Item extends BlockItem
 {
+	public boolean hasDurability = false;
 
 	public Item(int idInt, String idString)
 	{
