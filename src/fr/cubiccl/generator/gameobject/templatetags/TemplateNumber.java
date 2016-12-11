@@ -1,6 +1,9 @@
 package fr.cubiccl.generator.gameobject.templatetags;
 
+import java.text.DecimalFormat;
+
 import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gui.component.panel.utils.ComboboxPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
@@ -38,9 +41,13 @@ public class TemplateNumber extends TemplateTag
 		if (this.names == null)
 		{
 			EntryPanel p = new EntryPanel(this.description());
-			p.entry.addIntFilter();
-			if (previousValue != null) p.entry.setText(Integer.toString(((TagNumber) previousValue).value()));
-			else p.entry.setText("0");
+			if (this.isBigNumber()) p.entry.addNumberFilter();
+			else p.entry.addIntFilter();
+			if (previousValue != null)
+			{
+				if (this.isBigNumber()) p.entry.setText(new DecimalFormat("#").format(((TagBigNumber) previousValue).value()));
+				else p.entry.setText(Integer.toString(((TagNumber) previousValue).value()));
+			} else p.entry.setText("0");
 			return p;
 		}
 		ComboboxPanel p = new ComboboxPanel(this.description(), this.prefix, this.names);
@@ -61,7 +68,11 @@ public class TemplateNumber extends TemplateTag
 	@Override
 	public Tag generateTag(ConfirmPanel panel)
 	{
-		if (this.names == null) return new TagNumber(this, Integer.parseInt(((EntryPanel) panel).entry.getText()));
+		if (this.names == null)
+		{
+			if (this.isBigNumber()) return new TagBigNumber(this, Double.parseDouble(((EntryPanel) panel).entry.getText()));
+			return new TagNumber(this, Integer.parseInt(((EntryPanel) panel).entry.getText()));
+		}
 
 		int index = ((ComboboxPanel) panel).combobox.getSelectedIndex();
 		if (this.values == null) return new TagNumber(this, index);
@@ -84,12 +95,21 @@ public class TemplateNumber extends TemplateTag
 		return this.values;
 	}
 
+	private boolean isBigNumber()
+	{
+		return this.numberType == TagNumber.LONG || this.numberType == TagNumber.FLOAT || this.numberType == TagNumber.FLOAT;
+	}
+
 	@Override
 	protected boolean isInputValid(ConfirmPanel panel)
 	{
 		try
 		{
-			if (this.names == null) Integer.parseInt(((EntryPanel) panel).entry.getText());
+			if (this.names == null)
+			{
+				if (this.isBigNumber()) Double.parseDouble(((EntryPanel) panel).entry.getText());
+				else Integer.parseInt(((EntryPanel) panel).entry.getText());
+			}
 		} catch (Exception e)
 		{
 			e.printStackTrace();

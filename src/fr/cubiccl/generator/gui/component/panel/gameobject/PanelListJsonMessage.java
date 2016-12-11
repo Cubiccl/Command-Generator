@@ -37,7 +37,7 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 			this.message = message;
 			this.parent = parent;
 			this.add(this.message.displayInLabel());
-			this.add(this.buttonRemove = new IconButton(new ImageIcon("res/textures/gui/delete.png")));
+			this.add(this.buttonRemove = new IconButton(new ImageIcon("resources/textures/gui/delete.png")));
 
 			this.buttonRemove.addActionListener(this);
 		}

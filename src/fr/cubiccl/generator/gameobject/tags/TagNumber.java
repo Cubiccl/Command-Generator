@@ -4,9 +4,9 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 
 public class TagNumber extends Tag
 {
-	public static final byte INTEGER = 0, BYTE = 1, SHORT = 2, FLOAT = 3, DOUBLE = 4, BYTE_BOOLEAN = 5;
-	private static final String[] SUFFIX =
-	{ "", "b", "s", "f", "d", "b" };
+	public static final byte INTEGER = 0, BYTE = 1, SHORT = 2, BYTE_BOOLEAN = 3, LONG = 4, FLOAT = 5, DOUBLE = 6;
+	public static final String[] SUFFIX =
+	{ "", "b", "s", "b", "l", "f", "d" };
 
 	public final int value;
 
@@ -25,7 +25,7 @@ public class TagNumber extends Tag
 	@Override
 	public String valueForCommand()
 	{
-		return this.value() + SUFFIX[((TemplateNumber) this.template).numberType];
+		return Integer.toString(this.value()) + SUFFIX[((TemplateNumber) this.template).numberType];
 	}
 
 }
