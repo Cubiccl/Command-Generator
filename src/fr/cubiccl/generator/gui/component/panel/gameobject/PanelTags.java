@@ -81,8 +81,10 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonAdd && this.getSelectedTag() != null) this.getSelectedTag().askValue(this.currentObject, this);
-		else if (e.getSource() == this.buttonRemove && this.getSelectedTag() != null)
+		if (e.getSource() == this.buttonAdd && this.getSelectedTag() != null)
+		{
+			this.getSelectedTag().askValue(this.currentObject, this.selectedValue(), this);
+		} else if (e.getSource() == this.buttonRemove && this.getSelectedTag() != null)
 		{
 			this.values[this.indexOf(this.getSelectedTag())] = null;
 			this.updateDisplay();
@@ -98,7 +100,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 			for (int i = 0; i < this.tags.length; ++i)
 				if (this.tags[i].id.equals("Base"))
 				{
-					this.values[i] = new TagNumber((TemplateNumber) this.tags[i], Integer.toString(((TemplatePatterns) template).getBaseColor()));
+					this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplatePatterns) template).getBaseColor());
 					break;
 				}
 		}

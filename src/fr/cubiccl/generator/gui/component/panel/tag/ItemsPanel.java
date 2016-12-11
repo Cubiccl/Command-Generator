@@ -13,6 +13,7 @@ import fr.cubiccl.generator.gameobject.Container;
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.baseobjects.Slot;
 import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
 import fr.cubiccl.generator.gui.component.interfaces.MCInventory;
@@ -114,10 +115,20 @@ public class ItemsPanel extends CGPanel implements IStateListener<ConfirmPanel>,
 		}
 	}
 
+	public void setupFrom(TagList previousValue)
+	{
+		for (int i = 0; i < previousValue.size(); ++i)
+		{
+			ItemStack stack = ItemStack.createFrom((TagCompound) previousValue.getTag(i));
+			this.items[stack.slot] = stack;
+		}
+	}
+
 	@Override
 	public boolean shouldStateClose(ConfirmPanel panel)
 	{
 		this.items[this.currentSlot] = ((PanelItem) panel.component).generateItem();
+		this.items[this.currentSlot].slot = this.currentSlot;
 		return true;
 	}
 

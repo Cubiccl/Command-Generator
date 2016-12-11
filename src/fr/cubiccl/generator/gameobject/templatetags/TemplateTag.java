@@ -18,9 +18,9 @@ public abstract class TemplateTag implements IStateListener<ConfirmPanel>
 	/** Need several in case of chest-like recursion */
 	private Stack<ITagCreationListener> creationListeners;
 	public final String id;
-	public final int type;
+	public final byte type;
 
-	public TemplateTag(String id, int tagType, String... applicable)
+	public TemplateTag(String id, byte tagType, String... applicable)
 	{
 		super();
 		this.id = id;
@@ -30,10 +30,10 @@ public abstract class TemplateTag implements IStateListener<ConfirmPanel>
 		ObjectRegistry.registerTag(this, tagType);
 	}
 
-	public void askValue(String objectId, ITagCreationListener panelTags)
+	public void askValue(String objectId, Tag previousValue, ITagCreationListener panelTags)
 	{
 		this.creationListeners.push(panelTags);
-		CommandGenerator.stateManager.setState(this.createPanel(objectId), this);
+		CommandGenerator.stateManager.setState(this.createPanel(objectId, previousValue), this);
 	}
 
 	public boolean canApplyTo(String id)
@@ -43,7 +43,7 @@ public abstract class TemplateTag implements IStateListener<ConfirmPanel>
 		return false;
 	}
 
-	protected abstract ConfirmPanel createPanel(String objectId);
+	protected abstract ConfirmPanel createPanel(String objectId, Tag previousValue);
 
 	public Text description()
 	{

@@ -8,41 +8,43 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateList.DefaultList;
 /** Contains unique and constant NBT Tags. */
 public final class Tags
 {
-	public static final DefaultCompound BLOCK = new DefaultCompound("block", Tag.ITEM);
+	public static final DefaultCompound BLOCK = new DefaultCompound("block");
 
-	public static final DefaultCompound ENTITY = new DefaultCompound("entity", Tag.ENTITY);
-	public static final TemplateString ENTITY_TYPE = new TemplateString("type", Tag.ENTITY);
+	public static final DefaultCompound ENTITY = new DefaultCompound("entity");
+	public static final TemplateString ENTITY_TYPE = new TemplateString("type", Tag.UNAVAILABLE);
 
-	public static final TemplateString EVENT_ACTION = new TemplateString("action", Tag.ENTITY);
-	public static final DefaultCompound EVENT_CLICK = new DefaultCompound("ClickEvent", Tag.ENTITY);
-	public static final DefaultCompound EVENT_HOVER = new DefaultCompound("HoverEvent", Tag.ENTITY);
-	public static final TemplateString EVENT_VALUE = new TemplateString("value", Tag.ENTITY);
+	public static final TemplateString EVENT_ACTION = new TemplateString("action", Tag.UNAVAILABLE);
+	public static final DefaultCompound EVENT_CLICK = new DefaultCompound("ClickEvent");
+	public static final DefaultCompound EVENT_HOVER = new DefaultCompound("HoverEvent");
+	public static final TemplateString EVENT_VALUE = new TemplateString("value", Tag.UNAVAILABLE);
 
-	public static final DefaultCompound ITEM = new DefaultCompound("item", Tag.ITEM);
-	public static final TemplateNumber ITEM_COUNT = new TemplateNumber("Count", Tag.ITEM, TagNumber.BYTE);
-	public static final TemplateNumber ITEM_DAMAGE = new TemplateNumber("Damage", Tag.ITEM, TagNumber.SHORT);
+	public static final DefaultCompound ITEM = new DefaultCompound("item");
+	public static final TemplateNumber ITEM_COUNT = new TemplateNumber("Count", Tag.UNAVAILABLE, TagNumber.BYTE);
+	public static final TemplateNumber ITEM_DAMAGE = new TemplateNumber("Damage", Tag.UNAVAILABLE, TagNumber.SHORT);
 	public static final TemplateString ITEM_ID = new TemplateString("id", Tag.ITEM);
+	public static final DefaultCompound ITEM_NBT = new DefaultCompound("tags");
+	public static final TemplateNumber ITEM_SLOT = new TemplateNumber("Slot", Tag.UNAVAILABLE, TagNumber.SHORT);
 
-	public static final DefaultCompound JSON_CONTAINER = new DefaultCompound("json", Tag.ITEM);
-	public static final DefaultList JSON_LIST = new DefaultList("json", Tag.ITEM);
-	public static final DefaultCompound JSON_SCORE = new DefaultCompound("score", Tag.ITEM);
-	public static final TemplateString JSON_SELECTOR = new TemplateString("selector", Tag.ITEM);
-	public static final TemplateString JSON_TEXT = new TemplateString("text", Tag.ITEM);
-	public static final TemplateString JSON_TRANSLATE = new TemplateString("translate", Tag.ITEM);
-	
-	public static final DefaultCompound PATTERN = new DefaultCompound("Pattern", Tag.BLOCK);
-	public static final TemplateString PATTERN_SHAPE = new TemplateString("Pattern", Tag.BLOCK);
-	public static final TemplateNumber PATTERN_COLOR = new TemplateNumber("Color", Tag.BLOCK, TagNumber.INTEGER);
+	public static final DefaultCompound JSON_CONTAINER = new DefaultCompound("json");
+	public static final DefaultList JSON_LIST = new DefaultList("json");
+	public static final DefaultCompound JSON_SCORE = new DefaultCompound("score");
+	public static final TemplateString JSON_SELECTOR = new TemplateString("selector", Tag.UNAVAILABLE);
+	public static final TemplateString JSON_TEXT = new TemplateString("text", Tag.UNAVAILABLE);
+	public static final TemplateString JSON_TRANSLATE = new TemplateString("translate", Tag.UNAVAILABLE);
 
-	public static final TemplateString SCORE_OBJECTIVE = new TemplateString("objective", Tag.ITEM);
-	public static final TemplateString SCORE_TARGET = new TemplateString("name", Tag.ITEM);
+	public static final DefaultCompound PATTERN = new DefaultCompound("Pattern");
+	public static final TemplateNumber PATTERN_COLOR = new TemplateNumber("Color", Tag.UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateString PATTERN_SHAPE = new TemplateString("Pattern", Tag.UNAVAILABLE);
 
-	public static final TemplateString TEXT_BOLD = new TemplateString("bold", Tag.ITEM);
-	public static final TemplateString TEXT_COLOR = new TemplateString("color", Tag.ITEM);
-	public static final TemplateString TEXT_INSERTION = new TemplateString("insertion", Tag.ITEM);
-	public static final TemplateString TEXT_ITALIC = new TemplateString("italic", Tag.ITEM);
-	public static final TemplateString TEXT_OBFUSCATED = new TemplateString("obfuscated", Tag.ITEM);
-	public static final TemplateString TEXT_STRIKETHROUGH = new TemplateString("strikethrough", Tag.ITEM);
-	public static final TemplateString TEXT_UNDERLINED = new TemplateString("underlined", Tag.ITEM);
+	public static final TemplateString SCORE_OBJECTIVE = new TemplateString("objective", Tag.UNAVAILABLE);
+	public static final TemplateString SCORE_TARGET = new TemplateString("name", Tag.UNAVAILABLE);
+
+	public static final TemplateString TEXT_BOLD = new TemplateString("bold", Tag.UNAVAILABLE);
+	public static final TemplateString TEXT_COLOR = new TemplateString("color", Tag.UNAVAILABLE);
+	public static final TemplateString TEXT_INSERTION = new TemplateString("insertion", Tag.UNAVAILABLE);
+	public static final TemplateString TEXT_ITALIC = new TemplateString("italic", Tag.UNAVAILABLE);
+	public static final TemplateString TEXT_OBFUSCATED = new TemplateString("obfuscated", Tag.UNAVAILABLE);
+	public static final TemplateString TEXT_STRIKETHROUGH = new TemplateString("strikethrough", Tag.UNAVAILABLE);
+	public static final TemplateString TEXT_UNDERLINED = new TemplateString("underlined", Tag.UNAVAILABLE);
 
 }

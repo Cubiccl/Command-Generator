@@ -132,7 +132,7 @@ public class ObjectRegistry
 		CommandGenerator.log("Successfully created " + containers.size() + " containers.");
 	}
 
-	private static void createCustomTag(String id, int tagType, String[] applicable, String customTagType, String[] data)
+	private static void createCustomTag(String id, byte tagType, String[] applicable, String customTagType, String[] data)
 	{
 		if (customTagType.equals("patterns")) new TemplatePatterns(id, tagType, applicable);
 		else if (customTagType.equals("effect"))
@@ -331,14 +331,14 @@ public class ObjectRegistry
 		CommandGenerator.log("Successfully created " + sounds.size() + " sounds.");
 	}
 
-	private static void createTag(int tagType, String[] data)
+	private static void createTag(byte tagType, String[] data)
 	{
 		String id = data[0];
 		String[] applicable = data[2].split(":");
 		switch (data[1].substring(0, 3))
 		{
 			case "num":
-				TemplateNumber number = new TemplateNumber(id, tagType, Integer.parseInt(data[1].substring(3, 4)), applicable);
+				TemplateNumber number = new TemplateNumber(id, tagType, Byte.parseByte(data[1].substring(3, 4)), applicable);
 				for (int i = 3; i < data.length; ++i)
 				{
 					if (data[i].startsWith("bounds="))
@@ -373,7 +373,7 @@ public class ObjectRegistry
 		}
 	}
 
-	public static void createTags(String[] data, int tagType)
+	public static void createTags(String[] data, byte tagType)
 	{
 		CommandGenerator.log("Creating Block Tags...");
 		blockTags.clear();

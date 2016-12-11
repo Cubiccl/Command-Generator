@@ -8,13 +8,13 @@ public abstract class TemplateList extends TemplateTag
 	public static class DefaultList extends TemplateList
 	{
 
-		public DefaultList(String id, int tagType, String... applicable)
+		public DefaultList(String id)
 		{
-			super(id, tagType, applicable);
+			super(id, Tag.UNAVAILABLE);
 		}
 
 		@Override
-		protected ConfirmPanel createPanel(String objectId)
+		protected ConfirmPanel createPanel(String objectId, Tag previousValue)
 		{
 			return null;
 		}
@@ -27,7 +27,7 @@ public abstract class TemplateList extends TemplateTag
 
 	}
 
-	public TemplateList(String id, int tagType, String... applicable)
+	public TemplateList(String id, byte tagType, String... applicable)
 	{
 		super(id, tagType, applicable);
 	}

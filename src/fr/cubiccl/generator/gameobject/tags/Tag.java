@@ -4,7 +4,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 
 public abstract class Tag
 {
-	public static final int BLOCK = 0, ITEM = 1, ENTITY = 2;
+	public static final byte BLOCK = 0, ITEM = 1, ENTITY = 2, UNAVAILABLE = 3;
 	protected boolean isJson;
 	public final TemplateTag template;
 
@@ -27,10 +27,11 @@ public abstract class Tag
 	{
 		if (this.isJson)
 		{
-			if (this instanceof TagCompound || this instanceof TagList || this instanceof TagString) return "\"" + this.id() + "\":" + this.value();
-			return "\"" + this.id() + "\":\"" + this.value() + "\"";
+			if (this instanceof TagCompound || this instanceof TagList) return "\"" + this.id() + "\":" + this.valueForCommand();
+			return "\"" + this.id() + "\":\"" + this.valueForCommand() + "\"";
 		}
-		return this.id() + ":" + this.value();
+		if (this instanceof TagString) return this.id() + ":\"" + this.valueForCommand() + "\"";
+		return this.id() + ":" + this.valueForCommand();
 	}
 
 	public int type()
@@ -38,6 +39,8 @@ public abstract class Tag
 		return this.template.type;
 	}
 
-	public abstract String value();
+	public abstract Object value();
+
+	public abstract String valueForCommand();
 
 }

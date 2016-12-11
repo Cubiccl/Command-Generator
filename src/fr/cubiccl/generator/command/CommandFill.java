@@ -61,7 +61,7 @@ public class CommandFill extends Command implements ActionListener
 
 		if (!this.comboboxMode.getValue().equals("filter"))
 		{
-			String nbt = block.nbt.value();
+			String nbt = block.nbt.valueForCommand();
 			return command + this.comboboxMode.getValue() + (nbt.equals("{}") ? "" : " " + nbt);
 		}
 		

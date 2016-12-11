@@ -41,7 +41,7 @@ public class CommandSetblock extends Command
 	public String generate() throws CommandGenerationException
 	{
 		PlacedBlock block = this.panelBlock.generateBlock();
-		String nbt = block.nbt.value();
+		String nbt = block.nbt.valueForCommand();
 		return "/setblock " + this.panelCoordinates.generateCoordinates().toCommand() + " " + block.block.idString + " " + block.data + " "
 				+ this.comboboxMode.getValue() + (nbt.equals("{}") ? "" : " " + nbt);
 	}

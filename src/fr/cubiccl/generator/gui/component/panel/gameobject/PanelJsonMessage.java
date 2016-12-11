@@ -104,13 +104,13 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 					return this.panelAchievement.getCriteria();
 
 				case "show_entity":
-					return this.panelEntity.generateEntity().toTag().value();
+					return this.panelEntity.generateEntity().toTag().valueForCommand();
 
 				case "show_item":
-					return this.panelItem.generateItem().toTag().value();
+					return this.panelItem.generateItem().toTag().valueForCommand();
 
 				default:
-					return this.panelJson.generateMessage().value();
+					return this.panelJson.generateMessage().valueForCommand();
 			}
 		}
 	}

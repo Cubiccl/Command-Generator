@@ -8,19 +8,21 @@ import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
 public class TemplateString extends TemplateTag
 {
 
-	public TemplateString(String id, int tagType, String... applicable)
+	public TemplateString(String id, byte tagType, String... applicable)
 	{
 		super(id, tagType, applicable);
 	}
 
 	@Override
-	protected ConfirmPanel createPanel(String objectId)
+	protected ConfirmPanel createPanel(String objectId, Tag previousValue)
 	{
-		return new EntryPanel(this.description());
+		EntryPanel p = new EntryPanel(this.description());
+		if (previousValue != null) p.entry.setText(((TagString) previousValue).value());
+		return p;
 	}
 
 	@Override
-	public Tag generateTag(ConfirmPanel panel)
+	public TagString generateTag(ConfirmPanel panel)
 	{
 		return new TagString(this, ((EntryPanel) panel).entry.getText());
 	}

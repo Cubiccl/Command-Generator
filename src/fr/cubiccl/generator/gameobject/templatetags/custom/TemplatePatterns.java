@@ -10,15 +10,17 @@ public class TemplatePatterns extends TemplateList
 {
 	private int base;
 
-	public TemplatePatterns(String id, int tagType, String[] applicable)
+	public TemplatePatterns(String id, byte tagType, String[] applicable)
 	{
 		super(id, tagType, applicable);
 	}
 
 	@Override
-	protected ConfirmPanel createPanel(String objectId)
+	protected ConfirmPanel createPanel(String objectId, Tag previousValue)
 	{
-		return new ConfirmPanel("banner.title", new PatternsPanel());
+		PatternsPanel p = new PatternsPanel();
+		if (previousValue != null) p.setupFrom((TagList) previousValue);
+		return new ConfirmPanel("banner.title", p);
 	}
 
 	@Override

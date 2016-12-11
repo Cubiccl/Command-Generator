@@ -26,8 +26,19 @@ public class TagList extends Tag
 			tag.setJson(isJson);
 	}
 
+	public int size()
+	{
+		return this.tags.length;
+	}
+
 	@Override
-	public String value()
+	public Tag[] value()
+	{
+		return this.tags;
+	}
+
+	@Override
+	public String valueForCommand()
 	{
 		String value = "[";
 		for (int i = 0; i < this.tags.length; ++i)
@@ -35,9 +46,9 @@ public class TagList extends Tag
 			if (i != 0) value += ",";
 			if (this.isJson)
 			{
-				if (this.tags[i] instanceof TagCompound || this.tags[i] instanceof TagList || this.tags[i] instanceof TagString) value += this.tags[i].value();
-				value += "\"" + this.tags[i].value() + "\"";
-			} else value += this.tags[i].value();
+				if (this.tags[i] instanceof TagCompound || this.tags[i] instanceof TagList || this.tags[i] instanceof TagString) value += this.tags[i].valueForCommand();
+				value += "\"" + this.tags[i].valueForCommand() + "\"";
+			} else value += this.tags[i].valueForCommand();
 		}
 		return value + "]";
 	}

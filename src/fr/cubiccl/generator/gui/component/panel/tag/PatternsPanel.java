@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import fr.cubi.cubigui.CButton;
 import fr.cubiccl.generator.gameobject.Pattern;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
@@ -143,6 +144,16 @@ public class PatternsPanel extends CGPanel implements ActionListener
 		for (int i = 0; i < tags.length; ++i)
 			tags[i] = this.patterns.get(i).toTag();
 		return tags;
+	}
+
+	public void setupFrom(TagList value)
+	{
+		TagCompound[] ps = new TagCompound[value.size()];
+		for (int i = 0; i < ps.length; ++i)
+			ps[i] = (TagCompound) value.getTag(i);
+
+		for (TagCompound tag : ps)
+			this.patterns.add(Pattern.createFrom(tag));
 	}
 
 	private void updateDisplay()

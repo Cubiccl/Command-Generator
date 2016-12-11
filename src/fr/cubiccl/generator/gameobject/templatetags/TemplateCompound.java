@@ -8,13 +8,13 @@ public abstract class TemplateCompound extends TemplateTag
 	public static class DefaultCompound extends TemplateCompound
 	{
 
-		public DefaultCompound(String id, int tagType, String... applicable)
+		public DefaultCompound(String id)
 		{
-			super(id, tagType, applicable);
+			super(id, Tag.UNAVAILABLE);
 		}
 
 		@Override
-		protected ConfirmPanel createPanel(String objectId)
+		protected ConfirmPanel createPanel(String objectId, Tag previousValue)
 		{
 			return null;
 		}
@@ -27,7 +27,7 @@ public abstract class TemplateCompound extends TemplateTag
 
 	}
 
-	public TemplateCompound(String id, int tagType, String... applicable)
+	public TemplateCompound(String id, byte tagType, String... applicable)
 	{
 		super(id, tagType, applicable);
 	}

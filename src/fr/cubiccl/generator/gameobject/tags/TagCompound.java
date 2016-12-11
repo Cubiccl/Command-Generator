@@ -18,7 +18,7 @@ public class TagCompound extends TagList
 	}
 
 	@Override
-	public String value()
+	public String valueForCommand()
 	{
 		String value = "{";
 		for (int i = 0; i < this.tags.length; ++i)
