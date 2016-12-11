@@ -23,7 +23,7 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.utils.IStateListener;
 
-public class ItemsPanel extends CGPanel implements IStateListener<ConfirmPanel>, MCInventory
+public class ContainerPanel extends CGPanel implements IStateListener<ConfirmPanel>, MCInventory
 {
 	public static final int MULTIPLIER = 5;
 	private static final long serialVersionUID = -3136971123392536978L;
@@ -34,7 +34,7 @@ public class ItemsPanel extends CGPanel implements IStateListener<ConfirmPanel>,
 	private BufferedImage img;
 	private ItemStack[] items;
 
-	public ItemsPanel(Container container)
+	public ContainerPanel(Container container)
 	{
 		this.container = container;
 		this.img = this.container.texture();

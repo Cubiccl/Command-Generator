@@ -123,11 +123,32 @@ public class ObjectRegistry
 		for (String a : data)
 		{
 			String[] values = a.split(",");
-			Slot[] slots = new Slot[values.length - 2];
-			for (int i = 2; i < values.length; ++i)
+			Slot[] slots;
+			if (values.length == 3)
 			{
-				String[] slot = values[i].split(":");
-				slots[i - 2] = new Slot(i - 2, Integer.parseInt(slot[0]), Integer.parseInt(slot[1]));
+				String[] slotData = values[2].split(":");
+				slots = new Slot[Integer.parseInt(slotData[0])];
+
+				int slotsPerLine = Integer.parseInt(slotData[1]), startX = Integer.parseInt(slotData[2]), y = Integer.parseInt(slotData[3]), x = startX;
+				for (int i = 0; i < slots.length; ++i)
+				{
+					slots[i] = new Slot(i, x, y);
+					x += Slot.SIZE + 2;
+					if ((i + 1) % slotsPerLine == 0)
+					{
+						x = startX;
+						y += Slot.SIZE + 2;
+					}
+
+				}
+			} else
+			{
+				slots = new Slot[values.length - 2];
+				for (int i = 2; i < values.length; ++i)
+				{
+					String[] slot = values[i].split(":");
+					slots[i - 2] = new Slot(i - 2, Integer.parseInt(slot[0]), Integer.parseInt(slot[1]));
+				}
 			}
 			new Container(values[0], values[1], slots);
 		}
@@ -684,6 +705,9 @@ public class ObjectRegistry
 		frame.setText("loading.textures.other");
 		for (EffectType effect : effects.values())
 			effect.texture();
+
+		for (Container container : containers.values())
+			container.texture();
 	}
 
 	public static void registerAchievement(Achievement achievement)
