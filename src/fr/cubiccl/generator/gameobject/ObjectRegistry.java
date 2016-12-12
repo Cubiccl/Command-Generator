@@ -680,7 +680,7 @@ public class ObjectRegistry
 			@Override
 			public int compare(TemplateTag o1, TemplateTag o2)
 			{
-				return o1.id.compareTo(o2.id);
+				return o1.id.toLowerCase().compareTo(o2.id.toLowerCase());
 			}
 		});
 
