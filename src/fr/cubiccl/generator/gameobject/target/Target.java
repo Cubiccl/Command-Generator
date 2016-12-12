@@ -1,9 +1,11 @@
 package fr.cubiccl.generator.gameobject.target;
 
+import java.util.ArrayList;
+
 public class Target
 {
 
-	public enum TargetType
+	public static enum TargetType
 	{
 		ALL_ENTITIES("@e"),
 		ALL_PLAYERS("@a"),
@@ -17,6 +19,23 @@ public class Target
 		{
 			this.id = id;
 		}
+	}
+
+	public static Target createFrom(String value)
+	{
+		if (!value.startsWith("@")) return new Target(value);
+		TargetType type = TargetType.ALL_ENTITIES;
+		if (value.charAt(1) == 'a') type = TargetType.ALL_PLAYERS;
+		else if (value.charAt(1) == 'p') type = TargetType.CLOSEST_PLAYER;
+		else if (value.charAt(1) == 'r') type = TargetType.RANDOM_PLAYER;
+		if (value.length() == 2) return new Target(type);
+
+		String[] args = value.substring(3, value.length() - 1).split(",");
+		ArrayList<Argument> arguments = new ArrayList<Argument>();
+		for (String arg : args)
+			arguments.add(Argument.createFrom(arg.split("=")[0], arg.split("=")[1]));
+
+		return new Target(type, arguments.toArray(new Argument[arguments.size()]));
 	}
 
 	public static TargetType typeFromID(String id)
@@ -38,6 +57,7 @@ public class Target
 
 	public final Argument[] arguments;
 	public final String playerName;
+
 	public final TargetType type;
 
 	public Target(String playerName)

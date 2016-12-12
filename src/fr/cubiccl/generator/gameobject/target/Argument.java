@@ -4,6 +4,28 @@ import fr.cubiccl.generator.utils.Lang;
 
 public class Argument
 {
+	public static Argument createFrom(String id, String value)
+	{
+		boolean reversed = false;
+		if (value.startsWith("!"))
+		{
+			reversed = true;
+			value = value.substring(1);
+		}
+		TargetArgument a = null;
+		for (TargetArgument arg : TargetArgument.arguments())
+			if (id.equals(arg.id))
+			{
+				a = arg;
+				break;
+			}
+
+		if (a != null) return new Argument(a, value, reversed);
+
+		if (id.contains("_min")) return new Argument(TargetArgument.SCORE, id.substring("score_".length(), id.length() - "_min".length()), value, reversed);
+		else return new Argument(TargetArgument.SCORE, id.substring("score_".length()), value, reversed);
+	}
+
 	public final TargetArgument argument;
 	public final boolean reversed;
 	public final String value, value2;

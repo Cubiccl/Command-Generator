@@ -39,6 +39,17 @@ public final class Tags
 	public static final TemplateString SCORE_OBJECTIVE = new TemplateString("objective", Tag.UNAVAILABLE);
 	public static final TemplateString SCORE_TARGET = new TemplateString("name", Tag.UNAVAILABLE);
 
+	public static final TemplateString STATS_BLOCKS_NAME = new TemplateString("AffectedBlocksName", Tag.UNAVAILABLE);
+	public static final TemplateString STATS_BLOCKS_OBJECTIVE = new TemplateString("AffectedBlocksObjective", Tag.UNAVAILABLE);
+	public static final TemplateString STATS_ENTITIES_NAME = new TemplateString("AffectedItemsName", Tag.UNAVAILABLE);
+	public static final TemplateString STATS_ENTITIES_OBJECTIVE = new TemplateString("AffectedEntitiesObjective", Tag.UNAVAILABLE);
+	public static final TemplateString STATS_ITEMS_NAME = new TemplateString("AffectedEntitiesName", Tag.UNAVAILABLE);
+	public static final TemplateString STATS_ITEMS_OBJECTIVE = new TemplateString("AffectedItemsObjective", Tag.UNAVAILABLE);
+	public static final TemplateString STATS_QUERY_NAME = new TemplateString("QueryResultName", Tag.UNAVAILABLE);
+	public static final TemplateString STATS_QUERY_OBJECTIVE = new TemplateString("QueryResultObjective", Tag.UNAVAILABLE);
+	public static final TemplateString STATS_SUCCESS_NAME = new TemplateString("SuccessCountName", Tag.UNAVAILABLE);
+	public static final TemplateString STATS_SUCCESS_OBJECTIVE = new TemplateString("SuccessCountObjective", Tag.UNAVAILABLE);
+
 	public static final TemplateString TEXT_BOLD = new TemplateString("bold", Tag.UNAVAILABLE);
 	public static final TemplateString TEXT_COLOR = new TemplateString("color", Tag.UNAVAILABLE);
 	public static final TemplateString TEXT_INSERTION = new TemplateString("insertion", Tag.UNAVAILABLE);
