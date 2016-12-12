@@ -94,4 +94,15 @@ public class PanelCoordinates extends CGPanel
 		this.checkboxZ.setTextID(text);
 	}
 
+	public void setupFrom(Coordinates coordinates)
+	{
+		this.entryX.setText(Float.toString(coordinates.x));
+		this.entryY.setText(Float.toString(coordinates.y));
+		this.entryZ.setText(Float.toString(coordinates.z));
+
+		this.checkboxX.setSelected(coordinates.xRelative);
+		this.checkboxY.setSelected(coordinates.yRelative);
+		this.checkboxZ.setSelected(coordinates.zRelative);
+	}
+
 }

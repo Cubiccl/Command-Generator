@@ -10,6 +10,10 @@ public final class Tags
 {
 	public static final DefaultCompound BLOCK = new DefaultCompound("block");
 
+	public static final TemplateNumber COORD_X = new TemplateNumber("X", Tag.UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateNumber COORD_Y = new TemplateNumber("Y", Tag.UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", Tag.UNAVAILABLE, TagNumber.INTEGER);
+
 	public static final DefaultCompound ENTITY = new DefaultCompound("entity");
 	public static final TemplateString ENTITY_TYPE = new TemplateString("type", Tag.UNAVAILABLE);
 
