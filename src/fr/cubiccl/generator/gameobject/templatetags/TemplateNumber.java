@@ -38,6 +38,13 @@ public class TemplateNumber extends TemplateTag
 	@Override
 	protected ConfirmPanel createPanel(String objectId, Tag previousValue)
 	{
+		if (this.numberType == TagNumber.BYTE_BOOLEAN)
+		{
+			ComboboxPanel p = new ComboboxPanel(this.description(), "value", "true", "false");
+			if (previousValue != null && (int) previousValue.value() == 0) p.combobox.setSelectedIndex(1);
+			return p;
+		}
+
 		if (this.names == null)
 		{
 			EntryPanel p = new EntryPanel(this.description());
@@ -68,6 +75,8 @@ public class TemplateNumber extends TemplateTag
 	@Override
 	public Tag generateTag(ConfirmPanel panel)
 	{
+		if (this.numberType == TagNumber.BYTE_BOOLEAN) return new TagNumber(this, 1 - ((ComboboxPanel) panel).combobox.getSelectedIndex());
+
 		if (this.names == null)
 		{
 			if (this.isBigNumber()) return new TagBigNumber(this, Double.parseDouble(((EntryPanel) panel).entry.getText()));
@@ -103,6 +112,7 @@ public class TemplateNumber extends TemplateTag
 	@Override
 	protected boolean isInputValid(ConfirmPanel panel)
 	{
+		if (this.numberType == TagNumber.BYTE_BOOLEAN) return true;
 		try
 		{
 			if (this.names == null)
