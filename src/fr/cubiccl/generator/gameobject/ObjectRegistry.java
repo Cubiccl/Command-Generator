@@ -183,7 +183,11 @@ public class ObjectRegistry
 		} else if (customTagType.equals("item"))
 		{
 			TemplateItem t = new TemplateItem(id, tagType, applicable);
-			if (data.length == 4) t.setLimited(data[3].substring("limited=".length()).split(":"));
+			for (int i = 3; i < data.length; ++i)
+			{
+				if (data[i].startsWith("limited=")) t.setLimited(data[i].substring("limited=".length()).split(":"));
+				if (data[i].startsWith("autoselect=")) t.setAutoselect(data[i].substring("autoselect=".length()));
+			}
 		}
 	}
 

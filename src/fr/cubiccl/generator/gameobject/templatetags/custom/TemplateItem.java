@@ -11,12 +11,14 @@ import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 
 public class TemplateItem extends TemplateCompound
 {
+	private String autoselect;
 	private String[] ids;
 
 	public TemplateItem(String id, byte tagType, String[] applicable)
 	{
 		super(id, tagType, applicable);
 		this.ids = null;
+		this.autoselect = null;
 	}
 
 	@Override
@@ -27,6 +29,7 @@ public class TemplateItem extends TemplateCompound
 
 		PanelItem p = new PanelItem(null, items);
 
+		if (this.autoselect != null) p.setupFrom(new ItemStack(ObjectRegistry.getItemFromID(this.autoselect), 0, 1));
 		if (previousValue != null) p.setupFrom(ItemStack.createFrom((TagCompound) previousValue));
 		return new ConfirmPanel("tag.title." + this.id, p);
 	}
@@ -35,6 +38,11 @@ public class TemplateItem extends TemplateCompound
 	public Tag generateTag(ConfirmPanel panel)
 	{
 		return ((PanelItem) panel.component).generateItem().toTag(this);
+	}
+
+	public void setAutoselect(String id)
+	{
+		this.autoselect = id;
 	}
 
 	public void setLimited(String[] ids)

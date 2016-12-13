@@ -26,6 +26,11 @@ public class ItemStack
 	public final TagCompound nbt;
 	public int slot;
 
+	public ItemStack(Item item, int data, int amount)
+	{
+		this(item, data, amount, new TagCompound(Tags.ITEM_NBT));
+	}
+
 	public ItemStack(Item item, int data, int amount, TagCompound nbt)
 	{
 		super();
