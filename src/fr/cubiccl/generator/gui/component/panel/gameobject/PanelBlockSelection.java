@@ -168,12 +168,35 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		return this.selectedBlock().damage[this.damage];
 	}
 
+	public void setBlocks(Block[] blocks)
+	{
+		this.blocks = blocks;
+		this.comboboxBlock.setValues(this.blocks);
+		BufferedImage[] images = new BufferedImage[this.blocks.length];
+		for (int i = 0; i < images.length; ++i)
+			images[i] = this.blocks[i].texture(0);
+		this.blockSelector.setImages(images);
+		this.blockSelector.repaint();
+		this.damageSelector.repaint();
+		this.updateDisplay();
+	}
+
 	public void setDamage(int damage)
 	{
 		this.damage = damage;
 		this.damageSelector.repaint();
 		this.spinnerDamage.setText(Integer.toString(damage));
 		this.updateDisplay();
+	}
+
+	public void setSelected(Block block)
+	{
+		for (int i = 0; i < this.blocks.length; ++i)
+			if (this.blocks[i].idString.equals(block.idString))
+			{
+				this.setSelected(i, true);
+				break;
+			}
 	}
 
 	public void setSelected(int selected, boolean sendUpdates)

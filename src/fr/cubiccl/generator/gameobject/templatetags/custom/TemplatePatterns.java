@@ -8,7 +8,7 @@ import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 
 public class TemplatePatterns extends TemplateList
 {
-	private int base;
+	public int base;
 
 	public TemplatePatterns(String id, byte tagType, String[] applicable)
 	{
@@ -20,6 +20,7 @@ public class TemplatePatterns extends TemplateList
 	{
 		PatternsPanel p = new PatternsPanel();
 		if (previousValue != null) p.setupFrom((TagList) previousValue);
+		if (this.base != -1) p.setBaseColor(this.base);
 		return new ConfirmPanel("banner.title", p);
 	}
 
@@ -28,11 +29,6 @@ public class TemplatePatterns extends TemplateList
 	{
 		this.base = ((PatternsPanel) panel.component).getBaseColor();
 		return new TagList(this, ((PatternsPanel) panel.component).getPatterns());
-	}
-
-	public int getBaseColor()
-	{
-		return this.base;
 	}
 
 }

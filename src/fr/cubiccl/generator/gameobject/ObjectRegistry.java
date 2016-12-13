@@ -20,6 +20,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCommandStats;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCoordinates;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
 import fr.cubiccl.generator.gui.LoadingFrame;
@@ -174,6 +175,11 @@ public class ObjectRegistry
 			tag.setNames("color", Utils.WOOL_COLORS);
 		} else if (customTagType.equals("command_stats")) new TemplateCommandStats(id, tagType, applicable);
 		else if (customTagType.equals("coordinates")) new TemplateCoordinates(id, tagType, applicable);
+		else if (customTagType.equals("item"))
+		{
+			TemplateItem t = new TemplateItem(id, tagType, applicable);
+			if (data.length == 4) t.setLimited(data[3].substring("limited=".length()).split(":"));
+		}
 	}
 
 	private static int[] createDamage(String damageList)

@@ -130,7 +130,7 @@ public class PatternsPanel extends CGPanel implements ActionListener
 			this.patterns.add(++index, p);
 			this.list.setSelectedIndex(index);
 			this.updateDisplay();
-		} else if (e.getSource() == this.comboboxBackground) this.banner.setBackground(Pattern.COLORS[this.comboboxBackground.getSelectedIndex()]);
+		} else if (e.getSource() == this.comboboxBackground) this.setBaseColor(this.comboboxBackground.getSelectedIndex());
 	}
 
 	public int getBaseColor()
@@ -144,6 +144,11 @@ public class PatternsPanel extends CGPanel implements ActionListener
 		for (int i = 0; i < tags.length; ++i)
 			tags[i] = this.patterns.get(i).toTag();
 		return tags;
+	}
+
+	public void setBaseColor(int colorIndex)
+	{
+		this.banner.setBackground(Pattern.COLORS[colorIndex]);
 	}
 
 	public void setupFrom(TagList value)

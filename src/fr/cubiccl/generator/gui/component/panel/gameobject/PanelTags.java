@@ -19,6 +19,7 @@ import fr.cubiccl.generator.gameobject.templatetags.ITagCreationListener;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.CScrollPane;
@@ -83,7 +84,16 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	{
 		if (e.getSource() == this.buttonAdd && this.getSelectedTag() != null)
 		{
-			this.getSelectedTag().askValue(this.currentObject, this.selectedValue(), this);
+			TemplateTag tag = this.getSelectedTag();
+			for (TemplateTag t : this.shownTags)
+			{
+				if (t.id.equals("Data") && tag instanceof TemplateItem && this.valueFor(t) != null) ((TemplateItem) tag).damage = (int) this.valueFor(t)
+						.value();
+				if (t.id.equals("Base") && tag instanceof TemplatePatterns && this.valueFor(t) != null) ((TemplatePatterns) tag).base = (int) this.valueFor(t)
+						.value();
+			}
+
+			tag.askValue(this.currentObject, this.selectedValue(), this);
 		} else if (e.getSource() == this.buttonRemove && this.getSelectedTag() != null)
 		{
 			this.values[this.indexOf(this.getSelectedTag())] = null;
@@ -95,14 +105,19 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	public void createTag(TemplateTag template, Tag value)
 	{
 		this.values[this.indexOf(template)] = value;
-		if (template.id.equals("Patterns"))
+		for (int i = 0; i < this.tags.length; ++i)
 		{
-			for (int i = 0; i < this.tags.length; ++i)
-				if (this.tags[i].id.equals("Base"))
-				{
-					this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplatePatterns) template).getBaseColor());
-					break;
-				}
+			if (this.tags[i].id.equals("Base") && template.id.equals("Patterns"))
+			{
+				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplatePatterns) template).base);
+				((TemplatePatterns) template).base = -1;
+				break;
+			} else if (this.tags[i].id.equals("Data") && template.id.equals("Item"))
+			{
+				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateItem) template).damage);
+				((TemplateItem) template).damage = -1;
+				break;
+			}
 		}
 		this.updateDisplay();
 	}
