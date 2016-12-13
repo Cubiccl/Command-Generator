@@ -106,7 +106,7 @@ public class TemplateNumber extends TemplateTag
 
 	private boolean isBigNumber()
 	{
-		return this.numberType == TagNumber.LONG || this.numberType == TagNumber.FLOAT || this.numberType == TagNumber.FLOAT;
+		return this.numberType == TagNumber.LONG || this.numberType == TagNumber.FLOAT || this.numberType == TagNumber.DOUBLE;
 	}
 
 	@Override
