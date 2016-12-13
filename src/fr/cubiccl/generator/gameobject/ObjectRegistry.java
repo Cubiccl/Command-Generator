@@ -21,6 +21,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCommandStats;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCoordinates;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItemId;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
 import fr.cubiccl.generator.gui.LoadingFrame;
@@ -175,7 +176,11 @@ public class ObjectRegistry
 			tag.setNames("color", Utils.WOOL_COLORS);
 		} else if (customTagType.equals("command_stats")) new TemplateCommandStats(id, tagType, applicable);
 		else if (customTagType.equals("coordinates")) new TemplateCoordinates(id, tagType, applicable);
-		else if (customTagType.equals("item"))
+		else if (customTagType.equals("item_id"))
+		{
+			TemplateItemId t = new TemplateItemId(id, tagType, applicable);
+			if (data.length == 4) t.setLimited(data[3].substring("limited=".length()).split(":"));
+		} else if (customTagType.equals("item"))
 		{
 			TemplateItem t = new TemplateItem(id, tagType, applicable);
 			if (data.length == 4) t.setLimited(data[3].substring("limited=".length()).split(":"));
@@ -495,6 +500,14 @@ public class ObjectRegistry
 		return a.toArray(new Block[a.size()]);
 	}
 
+	public static Block[] getBlocks(String... ids)
+	{
+		Block[] blocks = new Block[ids.length];
+		for (int i = 0; i < blocks.length; ++i)
+			blocks[i] = getBlockFromID(ids[i]);
+		return blocks;
+	}
+
 	public static Container getContainerFromID(String id)
 	{
 		return containers.get(id);
@@ -632,6 +645,14 @@ public class ObjectRegistry
 		});
 
 		return a.toArray(new Item[a.size()]);
+	}
+
+	public static Item[] getItems(String... ids)
+	{
+		Item[] items = new Item[ids.length];
+		for (int i = 0; i < items.length; ++i)
+			items[i] = getItemFromID(ids[i]);
+		return items;
 	}
 
 	public static String[] getList(String listId)

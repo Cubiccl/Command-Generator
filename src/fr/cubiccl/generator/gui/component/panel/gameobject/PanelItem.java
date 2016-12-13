@@ -24,6 +24,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 {
 	private static final long serialVersionUID = -8600189753659710473L;
 
+	private Item[] availableItems;
 	private CGButton buttonSelectItem;
 	private int damage;
 	private boolean hasData;
@@ -42,7 +43,8 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 	{
 		super(titleID);
 		this.hasData = hasData;
-		this.item = items[1];
+		this.availableItems = items;
+		this.item = this.availableItems[0];
 		this.damage = 0;
 
 		GridBagConstraints gbc = this.createGridBagLayout();
@@ -73,7 +75,19 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonSelectItem) CommandGenerator.stateManager.setState(new PanelItemSelection(this.hasData), this);
+		if (e.getSource() == this.buttonSelectItem)
+		{
+			PanelItemSelection p = new PanelItemSelection(this.hasData);
+			p.setItems(this.availableItems);
+			p.setSelected(this.item);
+			for (int i = 0; i < this.item.damage.length; ++i)
+				if (this.item.damage[i] == this.damage)
+				{
+					p.setDamage(i);
+					break;
+				}
+			CommandGenerator.stateManager.setState(p, this);
+		}
 	}
 
 	public ItemStack generateItem()

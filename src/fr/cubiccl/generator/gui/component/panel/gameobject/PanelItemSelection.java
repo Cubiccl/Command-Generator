@@ -176,6 +176,19 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 		this.updateDisplay();
 	}
 
+	public void setItems(Item... items)
+	{
+		this.items = items;
+		this.comboboxItem.setValues(this.items);
+		BufferedImage[] images = new BufferedImage[this.items.length];
+		for (int i = 0; i < images.length; ++i)
+			images[i] = this.items[i].texture(0);
+		this.itemSelector.setImages(images);
+		this.itemSelector.repaint();
+		this.damageSelector.repaint();
+		this.updateDisplay();
+	}
+
 	public void setSelected(int selected, boolean sendUpdates)
 	{
 		this.selected = selected;
@@ -189,6 +202,16 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 		this.damageSelector.setImages(images);
 		this.setDamage(Math.min(this.damage, this.selectedItem().damage.length - 1));
 		this.updateDisplay();
+	}
+
+	public void setSelected(Item item)
+	{
+		for (int i = 0; i < this.items.length; ++i)
+			if (this.items[i].idString.equals(item.idString))
+			{
+				this.setSelected(i, true);
+				break;
+			}
 	}
 
 	private void updateDisplay()

@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.JsonMessage;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -107,7 +108,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 					return this.panelEntity.generateEntity().toTag().valueForCommand();
 
 				case "show_item":
-					return this.panelItem.generateItem().toTag().valueForCommand();
+					return this.panelItem.generateItem().toTag(Tags.ITEM).valueForCommand();
 
 				default:
 					return this.panelJson.generateMessage().valueForCommand();

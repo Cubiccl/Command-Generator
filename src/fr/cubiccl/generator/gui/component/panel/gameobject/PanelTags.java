@@ -19,7 +19,7 @@ import fr.cubiccl.generator.gameobject.templatetags.ITagCreationListener;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
-import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItemId;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.CScrollPane;
@@ -87,7 +87,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 			TemplateTag tag = this.getSelectedTag();
 			for (TemplateTag t : this.shownTags)
 			{
-				if (t.id.equals("Data") && tag instanceof TemplateItem && this.valueFor(t) != null) ((TemplateItem) tag).damage = (int) this.valueFor(t)
+				if (t.id.equals("Data") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this.valueFor(t)
 						.value();
 				if (t.id.equals("Base") && tag instanceof TemplatePatterns && this.valueFor(t) != null) ((TemplatePatterns) tag).base = (int) this.valueFor(t)
 						.value();
@@ -114,8 +114,8 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 				break;
 			} else if (this.tags[i].id.equals("Data") && template.id.equals("Item"))
 			{
-				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateItem) template).damage);
-				((TemplateItem) template).damage = -1;
+				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateItemId) template).damage);
+				((TemplateItemId) template).damage = -1;
 				break;
 			}
 		}

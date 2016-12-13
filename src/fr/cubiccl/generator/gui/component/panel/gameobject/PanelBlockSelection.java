@@ -168,7 +168,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		return this.selectedBlock().damage[this.damage];
 	}
 
-	public void setBlocks(Block[] blocks)
+	public void setBlocks(Block... blocks)
 	{
 		this.blocks = blocks;
 		this.comboboxBlock.setValues(this.blocks);

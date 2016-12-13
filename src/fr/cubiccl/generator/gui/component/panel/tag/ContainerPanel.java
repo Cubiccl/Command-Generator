@@ -15,6 +15,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.Slot;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
 import fr.cubiccl.generator.gui.component.interfaces.MCInventory;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -52,7 +53,7 @@ public class ContainerPanel extends CGPanel implements IStateListener<ConfirmPan
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (ItemStack item : this.items)
-			if (item != null) tags.add(item.toTag());
+			if (item != null) tags.add(item.toTag(Tags.ITEM));
 		return new TagList(template, tags.toArray(new Tag[tags.size()]));
 	}
 
