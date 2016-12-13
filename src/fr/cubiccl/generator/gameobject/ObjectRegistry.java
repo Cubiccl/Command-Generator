@@ -410,7 +410,11 @@ public class ObjectRegistry
 
 			case "str":
 			default:
-				new TemplateString(id, tagType, applicable);
+				TemplateString t = new TemplateString(id, tagType, applicable);
+				for (int i = 3; i < data.length; ++i)
+				{
+					if (data[i].startsWith("custom=")) t.setValues(data[i].substring("custom=".length()).split(":"));
+				}
 				break;
 		}
 	}
