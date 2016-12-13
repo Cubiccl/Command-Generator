@@ -8,6 +8,7 @@ import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gui.component.panel.utils.ComboboxPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelRadio;
 
 public class TemplateNumber extends TemplateTag
 {
@@ -40,8 +41,8 @@ public class TemplateNumber extends TemplateTag
 	{
 		if (this.numberType == TagNumber.BYTE_BOOLEAN)
 		{
-			ComboboxPanel p = new ComboboxPanel(this.description(), "value", "true", "false");
-			if (previousValue != null && (int) previousValue.value() == 0) p.combobox.setSelectedIndex(1);
+			PanelRadio p = new PanelRadio(this.description(), "value", "true", "false");
+			if (previousValue != null && (int) previousValue.value() == 0) p.setSelected(1);
 			return p;
 		}
 
@@ -75,7 +76,7 @@ public class TemplateNumber extends TemplateTag
 	@Override
 	public Tag generateTag(ConfirmPanel panel)
 	{
-		if (this.numberType == TagNumber.BYTE_BOOLEAN) return new TagNumber(this, 1 - ((ComboboxPanel) panel).combobox.getSelectedIndex());
+		if (this.numberType == TagNumber.BYTE_BOOLEAN) return new TagNumber(this, 1 - ((PanelRadio) panel).getSelected());
 
 		if (this.names == null)
 		{

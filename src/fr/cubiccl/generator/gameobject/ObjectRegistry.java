@@ -24,6 +24,7 @@ import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItemId;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateText;
 import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Settings;
@@ -188,7 +189,7 @@ public class ObjectRegistry
 				if (data[i].startsWith("limited=")) t.setLimited(data[i].substring("limited=".length()).split(":"));
 				if (data[i].startsWith("autoselect=")) t.setAutoselect(data[i].substring("autoselect=".length()));
 			}
-		}
+		} else if (customTagType.equals("text")) new TemplateText(id, tagType, applicable);
 	}
 
 	private static int[] createDamage(String damageList)
