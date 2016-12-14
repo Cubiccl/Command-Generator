@@ -26,7 +26,7 @@ public final class Tags
 	public static final TemplateNumber ITEM_COUNT = new TemplateNumber("Count", Tag.UNAVAILABLE, TagNumber.BYTE);
 	public static final TemplateNumber ITEM_DAMAGE = new TemplateNumber("Damage", Tag.UNAVAILABLE, TagNumber.SHORT);
 	public static final TemplateString ITEM_ID = new TemplateString("id", Tag.ITEM);
-	public static final DefaultCompound ITEM_NBT = new DefaultCompound("tags");
+	public static final DefaultCompound ITEM_NBT = new DefaultCompound("tag");
 	public static final TemplateNumber ITEM_SLOT = new TemplateNumber("Slot", Tag.UNAVAILABLE, TagNumber.SHORT);
 
 	public static final DefaultCompound JSON_CONTAINER = new DefaultCompound("json");

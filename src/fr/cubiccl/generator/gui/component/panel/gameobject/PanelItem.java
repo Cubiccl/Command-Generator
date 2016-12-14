@@ -61,7 +61,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		++gbc.gridy;
 		this.add((this.spinnerDurability = new CGSpinner("item.durability", this.item.damage)).container, gbc);
 		++gbc.gridy;
-		this.add(this.panelTags = new PanelTags("item.tags", Tag.BLOCK), gbc);
+		this.add(this.panelTags = new PanelTags("item.tags", Tag.ITEM), gbc);
 
 		this.buttonSelectItem.addActionListener(this);
 		this.updateDisplay();
@@ -92,12 +92,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 
 	public ItemStack generateItem()
 	{
-		return this.generateItem(Tags.ITEM);
-	}
-
-	public ItemStack generateItem(TemplateCompound container)
-	{
-		return new ItemStack(this.selectedItem(), this.selectedDamage(), this.selectedAmount(), this.getNBT(container));
+		return new ItemStack(this.selectedItem(), this.selectedDamage(), this.selectedAmount(), this.getNBT(Tags.ITEM_NBT));
 	}
 
 	public TagCompound getNBT(TemplateCompound container)

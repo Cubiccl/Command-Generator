@@ -10,8 +10,8 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 
 public class CommandGive extends Command
 {
-	private PanelTarget panelTarget;
 	private PanelItem panelItem;
+	private PanelTarget panelTarget;
 
 	public CommandGive()
 	{
@@ -37,7 +37,8 @@ public class CommandGive extends Command
 	public String generate() throws CommandGenerationException
 	{
 		ItemStack item = this.panelItem.generateItem();
-		return "/give " + this.panelTarget.generateTarget().toCommand() + " " + item.item.idString + " " + item.amount + " " + item.damage;
+		return "/give " + this.panelTarget.generateTarget().toCommand() + " " + item.item.idString + " " + item.amount + " " + item.damage + " "
+				+ item.nbt.toCommand();
 	}
 
 }

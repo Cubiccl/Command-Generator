@@ -18,6 +18,7 @@ import fr.cubiccl.generator.gameobject.target.TargetArgument;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockEntity;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCommandStats;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCoordinates;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
@@ -36,7 +37,8 @@ public class ObjectRegistry
 	private static final HashMap<String, Achievement> achievements = new HashMap<String, Achievement>();
 	private static final HashMap<String, Attribute> attributes = new HashMap<String, Attribute>();
 	private static final HashMap<String, Block> blocks = new HashMap<String, Block>();
-	private static final HashMap<String, TemplateTag> blockTags = new HashMap<String, TemplateTag>();
+	private static final HashMap<String, TemplateTag> blockTags = new HashMap<String, TemplateTag>(), entityTags = new HashMap<String, TemplateTag>(),
+			itemTags = new HashMap<String, TemplateTag>();
 	private static final HashMap<String, Container> containers = new HashMap<String, Container>();
 	private static final HashMap<String, EffectType> effects = new HashMap<String, EffectType>();
 	private static final HashMap<String, EnchantmentType> enchantments = new HashMap<String, EnchantmentType>();
@@ -190,6 +192,7 @@ public class ObjectRegistry
 				if (data[i].startsWith("autoselect=")) t.setAutoselect(data[i].substring("autoselect=".length()));
 			}
 		} else if (customTagType.equals("text")) new TemplateText(id, tagType, applicable);
+		else if (customTagType.equals("block_entity")) new TemplateBlockEntity(id, tagType, applicable);
 	}
 
 	private static int[] createDamage(String damageList)
@@ -275,7 +278,7 @@ public class ObjectRegistry
 	{
 		frame.setText("loading.objects");
 		String[] data = FileUtils.readFileAsArray("data/" + Settings.getVersion().name + ".txt");
-		ArrayList<String> blocks = new ArrayList<String>(), items = new ArrayList<String>(), entities = new ArrayList<String>(), effects = new ArrayList<String>(), enchantments = new ArrayList<String>(), achievements = new ArrayList<String>(), attributes = new ArrayList<String>(), particles = new ArrayList<String>(), sounds = new ArrayList<String>(), containers = new ArrayList<String>(), blocktags = new ArrayList<String>();
+		ArrayList<String> blocks = new ArrayList<String>(), items = new ArrayList<String>(), entities = new ArrayList<String>(), effects = new ArrayList<String>(), enchantments = new ArrayList<String>(), achievements = new ArrayList<String>(), attributes = new ArrayList<String>(), particles = new ArrayList<String>(), sounds = new ArrayList<String>(), containers = new ArrayList<String>(), blocktags = new ArrayList<String>(), itemtags = new ArrayList<String>(), entitytags = new ArrayList<String>();
 
 		int current = -1;
 		for (String line : data)
@@ -338,6 +341,14 @@ public class ObjectRegistry
 				case 10:
 					blocktags.add(line);
 					break;
+
+				case 11:
+					itemtags.add(line);
+					break;
+
+				case 12:
+					entitytags.add(line);
+					break;
 			}
 		}
 
@@ -352,6 +363,8 @@ public class ObjectRegistry
 		createSounds(sounds.toArray(new String[sounds.size()]));
 		createContainers(containers.toArray(new String[containers.size()]));
 		createTags(blocktags.toArray(new String[blocktags.size()]), Tag.BLOCK);
+		createTags(itemtags.toArray(new String[itemtags.size()]), Tag.ITEM);
+		createTags(entitytags.toArray(new String[entitytags.size()]), Tag.ENTITY);
 		CommandGenerator.log("Successfully created " + objectLists.size() + " object lists.");
 		TargetArgument.createArguments();
 	}
@@ -422,11 +435,16 @@ public class ObjectRegistry
 
 	public static void createTags(String[] data, byte tagType)
 	{
-		CommandGenerator.log("Creating Block Tags...");
-		blockTags.clear();
+		CommandGenerator.log("Creating NBT Tags...");
+		if (tagType == Tag.BLOCK) blockTags.clear();
+		else if (tagType == Tag.ITEM) itemTags.clear();
+		else if (tagType == Tag.ENTITY) entityTags.clear();
 		for (String tag : data)
 			createTag(tagType, tag.split(","));
-		CommandGenerator.log("Successfully created " + blockTags.size() + " Block NBT Tags.");
+
+		if (tagType == Tag.BLOCK) CommandGenerator.log("Successfully created " + blockTags.size() + " Block NBT Tags.");
+		else if (tagType == Tag.ITEM) CommandGenerator.log("Successfully created " + itemTags.size() + " Item NBT Tags.");
+		else if (tagType == Tag.ENTITY) CommandGenerator.log("Successfully created " + entityTags.size() + " Entity NBT Tags.");
 	}
 
 	public static Achievement getAchievementFromID(String id)
@@ -713,7 +731,11 @@ public class ObjectRegistry
 	public static TemplateTag[] getTags(int tagType)
 	{
 		ArrayList<TemplateTag> a = new ArrayList<TemplateTag>();
-		a.addAll(blockTags.values());
+
+		if (tagType == Tag.BLOCK) a.addAll(blockTags.values());
+		if (tagType == Tag.ITEM) a.addAll(itemTags.values());
+		if (tagType == Tag.ENTITY) a.addAll(entityTags.values());
+
 		a.sort(new Comparator<TemplateTag>()
 		{
 			@Override
@@ -806,6 +828,8 @@ public class ObjectRegistry
 	public static void registerTag(TemplateTag tag, int tagType)
 	{
 		if (tagType == Tag.BLOCK) blockTags.put(tag.id, tag);
+		else if (tagType == Tag.ITEM) itemTags.put(tag.id, tag);
+		else if (tagType == Tag.ENTITY) entityTags.put(tag.id, tag);
 	}
 
 	private ObjectRegistry()

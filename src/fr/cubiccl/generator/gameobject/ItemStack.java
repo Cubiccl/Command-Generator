@@ -49,7 +49,7 @@ public class ItemStack
 	public TagCompound toTag(TemplateCompound container)
 	{
 		return new TagCompound(container, new TagString(Tags.ITEM_ID, this.item.idString), new TagNumber(Tags.ITEM_DAMAGE, this.damage), new TagNumber(
-				Tags.ITEM_COUNT, this.amount), new TagNumber(Tags.ITEM_SLOT, this.slot));
+				Tags.ITEM_COUNT, this.amount), new TagNumber(Tags.ITEM_SLOT, this.slot), this.nbt);
 	}
 
 }
