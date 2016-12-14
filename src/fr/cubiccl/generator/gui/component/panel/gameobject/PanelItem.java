@@ -64,6 +64,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this.add(this.panelTags = new PanelTags("item.tags", Tag.ITEM), gbc);
 
 		this.buttonSelectItem.addActionListener(this);
+		this.panelTags.setObjectForTags(this.item.idString);
 		this.updateDisplay();
 	}
 

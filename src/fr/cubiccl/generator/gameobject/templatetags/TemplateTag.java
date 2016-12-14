@@ -39,7 +39,10 @@ public abstract class TemplateTag implements IStateListener<ConfirmPanel>
 	public boolean canApplyTo(String id)
 	{
 		for (String app : this.applicable)
+		{
+			if (app.equals("ANY")) return true;
 			if (app.equals(id)) return true;
+		}
 		return false;
 	}
 

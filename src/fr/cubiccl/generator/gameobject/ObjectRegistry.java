@@ -51,7 +51,7 @@ public class ObjectRegistry
 	public static final byte SORT_ALPHABETICALLY = 0, SORT_NUMERICALLY = 1;
 	private static final HashMap<String, Sound> sounds = new HashMap<String, Sound>();
 
-	private static void addToLists(String objectId, String[] lists)
+	private static void addToLists(String objectId, String... lists)
 	{
 		for (String list : lists)
 		{
@@ -257,6 +257,7 @@ public class ObjectRegistry
 					textureType = -1;
 					maxDamage = Integer.parseInt(a.substring("durability=".length()));
 					durability = true;
+					addToLists(idString, "durability");
 				} else if (a.startsWith("damage=")) maxDamage = Integer.parseInt(a.substring("damage=".length()));
 				else if (a.startsWith("lang=")) langType = Integer.parseInt(a.substring("lang=".length()));
 				else if (a.startsWith("texture=")) textureType = Integer.parseInt(a.substring("texture=".length()));
@@ -391,6 +392,7 @@ public class ObjectRegistry
 	{
 		String id = data[0];
 		String[] applicable = data[2].split(":");
+		if (applicable.length == 1 && applicable[0].startsWith("list=")) applicable = getList(applicable[0].substring("list=".length()));
 		switch (data[1].substring(0, 3))
 		{
 			case "num":
