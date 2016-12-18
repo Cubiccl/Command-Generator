@@ -19,6 +19,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockEntity;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCanDestroy;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCommandStats;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCoordinates;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
@@ -31,6 +32,7 @@ import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Settings;
 import fr.cubiccl.generator.utils.Textures;
 import fr.cubiccl.generator.utils.Utils;
+import fr.cubiccl.generator.utils.Utils.BlockComparator;
 
 public class ObjectRegistry
 {
@@ -193,6 +195,7 @@ public class ObjectRegistry
 			}
 		} else if (customTagType.equals("text")) new TemplateText(id, tagType, applicable);
 		else if (customTagType.equals("block_entity")) new TemplateBlockEntity(id, tagType, applicable);
+		else if (customTagType.equals("destroy")) new TemplateCanDestroy(id, tagType, applicable);
 	}
 
 	private static int[] createDamage(String damageList)
@@ -517,14 +520,7 @@ public class ObjectRegistry
 				return o1.idString.compareTo(o2.idString);
 			}
 		});
-		else a.sort(new Comparator<Block>()
-		{
-			@Override
-			public int compare(Block o1, Block o2)
-			{
-				return o1.idInt - o2.idInt;
-			}
-		});
+		else a.sort(new BlockComparator());
 
 		return a.toArray(new Block[a.size()]);
 	}

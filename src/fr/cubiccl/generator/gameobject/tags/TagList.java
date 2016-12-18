@@ -46,7 +46,8 @@ public class TagList extends Tag
 			if (i != 0) value += ",";
 			if (this.isJson)
 			{
-				if (this.tags[i] instanceof TagCompound || this.tags[i] instanceof TagList || this.tags[i] instanceof TagString) value += this.tags[i].valueForCommand();
+				if (this.tags[i] instanceof TagCompound || this.tags[i] instanceof TagList || this.tags[i] instanceof TagString) value += this.tags[i]
+						.valueForCommand();
 				value += "\"" + this.tags[i].valueForCommand() + "\"";
 			} else value += this.tags[i].valueForCommand();
 		}
