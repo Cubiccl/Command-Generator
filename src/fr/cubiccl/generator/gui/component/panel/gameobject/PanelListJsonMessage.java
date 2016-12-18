@@ -17,11 +17,11 @@ import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.button.IconButton;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.IStateListener;
+import fr.cubiccl.generator.utils.Text;
 
-public class PanelListJsonMessage extends CGPanel implements ActionListener, IStateListener<ConfirmPanel>
+public class PanelListJsonMessage extends CGPanel implements ActionListener, IStateListener<PanelJsonMessage>
 {
 	class PanelSingleMessage extends JPanel implements ActionListener
 	{
@@ -87,7 +87,9 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		CommandGenerator.stateManager.setState(new ConfirmPanel("json.title", new PanelJsonMessage(this.hasEvents)), this);
+		PanelJsonMessage p = new PanelJsonMessage(this.hasEvents);
+		p.setName(new Text("json.title").toString());
+		CommandGenerator.stateManager.setState(p, this);
 	}
 
 	public void deleteMessage(JsonMessage message)
@@ -109,13 +111,13 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 	}
 
 	@Override
-	public boolean shouldStateClose(ConfirmPanel panel)
+	public boolean shouldStateClose(PanelJsonMessage panel)
 	{
 		JsonMessage message;
 
 		try
 		{
-			message = ((PanelJsonMessage) panel.component).generateMessage();
+			message = panel.generateMessage();
 		} catch (CommandGenerationException e)
 		{
 			CommandGenerator.report(e);

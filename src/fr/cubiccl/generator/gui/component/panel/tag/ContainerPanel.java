@@ -21,10 +21,9 @@ import fr.cubiccl.generator.gui.component.interfaces.MCInventory;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.MCInventoryDrawer;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
-import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.utils.IStateListener;
 
-public class ContainerPanel extends CGPanel implements IStateListener<ConfirmPanel>, MCInventory
+public class ContainerPanel extends CGPanel implements IStateListener<PanelItem>, MCInventory
 {
 	public static final int MULTIPLIER = 5;
 	private static final long serialVersionUID = -3136971123392536978L;
@@ -64,7 +63,7 @@ public class ContainerPanel extends CGPanel implements IStateListener<ConfirmPan
 		{
 			PanelItem p = new PanelItem("general.item");
 			if (this.items[this.currentSlot] != null) p.setupFrom(this.items[this.currentSlot]);
-			CommandGenerator.stateManager.setState(new ConfirmPanel((String) null, p), this);
+			CommandGenerator.stateManager.setState(p, this);
 		}
 	}
 
@@ -131,9 +130,9 @@ public class ContainerPanel extends CGPanel implements IStateListener<ConfirmPan
 	}
 
 	@Override
-	public boolean shouldStateClose(ConfirmPanel panel)
+	public boolean shouldStateClose(PanelItem panel)
 	{
-		this.items[this.currentSlot] = ((PanelItem) panel.component).generateItem();
+		this.items[this.currentSlot] = panel.generateItem();
 		this.items[this.currentSlot].slot = this.currentSlot;
 		return true;
 	}

@@ -6,8 +6,8 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
-import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.utils.WrongValueException;
 
 public class TemplateCoordinates extends TemplateCompound
@@ -19,7 +19,7 @@ public class TemplateCoordinates extends TemplateCompound
 	}
 
 	@Override
-	protected ConfirmPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
 		PanelCoordinates p = new PanelCoordinates(null);
 		if (previousValue != null)
@@ -29,15 +29,16 @@ public class TemplateCoordinates extends TemplateCompound
 					.value(), (float) (int) coord.getTagFromId(Tags.COORD_Z.id).value());
 			p.setupFrom(c);
 		}
-		return new ConfirmPanel("tag.title." + this.id, p);
+		p.setName("tag.title." + this.id);
+		return p;
 	}
 
 	@Override
-	public TagCompound generateTag(ConfirmPanel panel)
+	public TagCompound generateTag(CGPanel panel)
 	{
 		try
 		{
-			return ((PanelCoordinates) panel.component).generateCoordinates().toTag(this);
+			return ((PanelCoordinates) panel).generateCoordinates().toTag(this);
 		} catch (WrongValueException e)
 		{
 			CommandGenerator.report(e);
@@ -46,11 +47,11 @@ public class TemplateCoordinates extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(ConfirmPanel panel)
+	protected boolean isInputValid(CGPanel panel)
 	{
 		try
 		{
-			((PanelCoordinates) panel.component).generateCoordinates();
+			((PanelCoordinates) panel).generateCoordinates();
 		} catch (WrongValueException e)
 		{
 			CommandGenerator.report(e);

@@ -13,7 +13,6 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlockSelection;
-import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Utils.BlockComparator;
@@ -84,7 +83,7 @@ public class TemplateBlockList extends TemplateList
 	}
 
 	@Override
-	protected ConfirmPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
 		Block[] blocks = new Block[0];
 		if (previousValue != null)
@@ -95,13 +94,14 @@ public class TemplateBlockList extends TemplateList
 				blocks[i] = ObjectRegistry.getBlockFromID((String) t.getTag(i).value());
 		}
 		PanelObjectList p = new PanelObjectList(new BlockList(blocks));
-		return new ConfirmPanel("tag.title." + this.id, p);
+		p.setName("tag.title." + this.id);
+		return p;
 	}
 
 	@Override
-	public TagList generateTag(ConfirmPanel panel)
+	public TagList generateTag(CGPanel panel)
 	{
-		String[] values = ((PanelObjectList) panel.component).objectList.getValues();
+		String[] values = ((PanelObjectList) panel).objectList.getValues();
 		TagString[] tags = new TagString[values.length];
 		for (int i = 0; i < tags.length; ++i)
 			tags[i] = new TagString(Tags.DEFAULT_STRING, values[i]);

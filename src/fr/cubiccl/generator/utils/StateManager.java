@@ -4,12 +4,14 @@ import java.util.Stack;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 
 @SuppressWarnings("rawtypes")
 public class StateManager
 {
 	public class State<T extends CGPanel>
 	{
+		public final boolean isConfirmIncluded;
 		public final T panel;
 		private final IStateListener<T> stateListener;
 
@@ -17,6 +19,7 @@ public class StateManager
 		{
 			this.panel = panel;
 			this.stateListener = stateListener;
+			this.isConfirmIncluded = this.panel instanceof ConfirmPanel;
 		}
 	}
 
@@ -60,7 +63,8 @@ public class StateManager
 		if (state != null)
 		{
 			state.panel.updateTranslations();
-			CommandGenerator.window.setMainPanel(state.panel);
+			if (this.states.size() == 1 || state.isConfirmIncluded) CommandGenerator.window.setMainPanel(state.panel);
+			else CommandGenerator.window.setMainPanel(new ConfirmPanel(state.panel.getStateName(), state.panel));
 		}
 	}
 

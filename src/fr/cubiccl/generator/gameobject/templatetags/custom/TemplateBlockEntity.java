@@ -1,9 +1,11 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
 import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTags;
-import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
+import fr.cubiccl.generator.utils.Text;
 
 public class TemplateBlockEntity extends TemplateCompound
 {
@@ -14,17 +16,18 @@ public class TemplateBlockEntity extends TemplateCompound
 	}
 
 	@Override
-	protected ConfirmPanel createPanel(String objectId, Tag previousValue)
+	protected PanelTags createPanel(String objectId, Tag previousValue)
 	{
 		PanelTags p = new PanelTags(null, Tag.BLOCK);
 		p.setObjectForTags(objectId);
-		return new ConfirmPanel("tag.title." + this.id, p);
+		p.setName(new Text("tag.title." + this.id).toString());
+		return p;
 	}
 
 	@Override
-	public Tag generateTag(ConfirmPanel panel)
+	public TagCompound generateTag(CGPanel panel)
 	{
-		return ((PanelTags) panel.component).generateTags(this);
+		return ((PanelTags) panel).generateTags(this);
 	}
 
 }

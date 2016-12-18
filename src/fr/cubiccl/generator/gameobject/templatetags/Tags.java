@@ -15,7 +15,11 @@ public final class Tags
 	public static final TemplateNumber COORD_Y = new TemplateNumber("Y", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", UNAVAILABLE, TagNumber.INTEGER);
 
+	public static final TemplateCompound DEFAULT_COMPOUND = new DefaultCompound("");
 	public static final TemplateString DEFAULT_STRING = new TemplateString("", UNAVAILABLE);
+
+	public static final TemplateNumber ENCHANTMENT_ID = new TemplateNumber("id", UNAVAILABLE, TagNumber.SHORT);
+	public static final TemplateNumber ENCHANTMENT_LVL = new TemplateNumber("lvl", UNAVAILABLE, TagNumber.SHORT);
 
 	public static final DefaultCompound ENTITY = new DefaultCompound("entity");
 	public static final TemplateString ENTITY_TYPE = new TemplateString("type", UNAVAILABLE);

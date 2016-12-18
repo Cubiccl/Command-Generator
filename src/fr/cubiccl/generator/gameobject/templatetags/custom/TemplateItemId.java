@@ -5,8 +5,8 @@ import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlockSelection;
-import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 
 public class TemplateItemId extends TemplateString
 {
@@ -21,7 +21,7 @@ public class TemplateItemId extends TemplateString
 	}
 
 	@Override
-	protected ConfirmPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
 		PanelBlockSelection p = new PanelBlockSelection();
 		if (this.ids != null) p.setBlocks(ObjectRegistry.getBlocks(this.ids));
@@ -45,7 +45,7 @@ public class TemplateItemId extends TemplateString
 	}
 
 	@Override
-	public TagString generateTag(ConfirmPanel panel)
+	public TagString generateTag(CGPanel panel)
 	{
 		this.damage = ((PanelBlockSelection) panel).selectedDamage();
 		return new TagString(this, ((PanelBlockSelection) panel).selectedBlock().idString);

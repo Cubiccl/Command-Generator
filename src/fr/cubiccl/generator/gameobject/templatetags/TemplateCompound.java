@@ -1,7 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags;
 
 import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
 public abstract class TemplateCompound extends TemplateTag
 {
@@ -14,13 +14,13 @@ public abstract class TemplateCompound extends TemplateTag
 		}
 
 		@Override
-		protected ConfirmPanel createPanel(String objectId, Tag previousValue)
+		protected CGPanel createPanel(String objectId, Tag previousValue)
 		{
 			return null;
 		}
 
 		@Override
-		public Tag generateTag(ConfirmPanel panel)
+		public Tag generateTag(CGPanel panel)
 		{
 			return null;
 		}

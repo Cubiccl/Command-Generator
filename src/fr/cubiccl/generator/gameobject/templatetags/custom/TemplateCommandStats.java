@@ -9,8 +9,8 @@ import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.tag.PanelCommandStats;
-import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
 public class TemplateCommandStats extends TemplateCompound
@@ -22,7 +22,7 @@ public class TemplateCommandStats extends TemplateCompound
 	}
 
 	@Override
-	protected ConfirmPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
 		TagCompound previous = (TagCompound) previousValue;
 		PanelCommandStats p = new PanelCommandStats();
@@ -47,13 +47,14 @@ public class TemplateCommandStats extends TemplateCompound
 					Target.createFrom((String) previous.getTagFromId(Tags.STATS_QUERY_NAME.id).value()));
 		}
 
-		return new ConfirmPanel("tag.title." + this.id, p);
+		p.setName("tag.title." + this.id);
+		return p;
 	}
 
 	@Override
-	public Tag generateTag(ConfirmPanel panel)
+	public Tag generateTag(CGPanel panel)
 	{
-		PanelCommandStats p = (PanelCommandStats) panel.component;
+		PanelCommandStats p = (PanelCommandStats) panel;
 		ArrayList<TagString> tags = new ArrayList<TagString>();
 
 		tags.add(new TagString(Tags.STATS_SUCCESS_OBJECTIVE, p.getObjective(PanelCommandStats.SUCCESS_COUNT)));
@@ -77,11 +78,11 @@ public class TemplateCommandStats extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(ConfirmPanel panel)
+	protected boolean isInputValid(CGPanel panel)
 	{
 		try
 		{
-			((PanelCommandStats) panel.component).saveCurrent();
+			((PanelCommandStats) panel).saveCurrent();
 		} catch (CommandGenerationException e)
 		{
 			CommandGenerator.report(e);

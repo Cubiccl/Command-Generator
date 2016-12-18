@@ -5,8 +5,8 @@ import java.text.DecimalFormat;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ComboboxPanel;
-import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelRadio;
 
@@ -37,7 +37,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	protected ConfirmPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
 		if (this.numberType == TagNumber.BYTE_BOOLEAN)
 		{
@@ -74,7 +74,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	public Tag generateTag(ConfirmPanel panel)
+	public Tag generateTag(CGPanel panel)
 	{
 		if (this.numberType == TagNumber.BYTE_BOOLEAN) return new TagNumber(this, 1 - ((PanelRadio) panel).getSelected());
 
@@ -111,7 +111,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	protected boolean isInputValid(ConfirmPanel panel)
+	protected boolean isInputValid(CGPanel panel)
 	{
 		if (this.numberType == TagNumber.BYTE_BOOLEAN) return true;
 		try

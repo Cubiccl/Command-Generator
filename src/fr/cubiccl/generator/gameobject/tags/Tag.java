@@ -33,6 +33,12 @@ public abstract class Tag
 		return this.id() + ":" + this.valueForCommand();
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.toCommand();
+	}
+
 	public int type()
 	{
 		return this.template.type;

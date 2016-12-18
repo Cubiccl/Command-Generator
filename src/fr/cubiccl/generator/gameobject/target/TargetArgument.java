@@ -11,7 +11,6 @@ import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Replacement;
@@ -103,19 +102,19 @@ public class TargetArgument
 	{
 		if (this == M || this == TYPE)
 		{
-			String value = ((OptionCombobox) ((CPanel) ((ConfirmPanel) panel).component).getComponent(1)).getValue();
-			if (((CGCheckBox) ((CPanel) ((ConfirmPanel) panel).component).getComponent(2)).isSelected()) return "!" + (value.equals("all") ? "-1" : value);
+			String value = ((OptionCombobox) panel.getComponent(1)).getValue();
+			if (((CGCheckBox) panel.getComponent(2)).isSelected()) return "!" + (value.equals("all") ? "-1" : value);
 			return value.equals("all") ? "-1" : value;
 		}
 
-		CGEntry entry = (CGEntry) ((CPanel) ((CPanel) ((ConfirmPanel) panel).component).getComponent(0)).getComponent(1);
+		CGEntry entry = (CGEntry) ((CPanel) panel.getComponent(0)).getComponent(1);
 		String value = entry.getText();
 		Text name = entry.label.getAbsoluteText();
 
 		if (this == SCORE || this == SCORE_MIN)
 		{
 			// Do u like dat code lel | WTF is that srsly
-			String value2 = ((CGEntry) ((CPanel) ((CPanel) ((ConfirmPanel) panel).component).getComponent(1)).getComponent(1)).getText();
+			String value2 = ((CGEntry) ((CPanel) panel.getComponent(1)).getComponent(1)).getText();
 			if (value.equals("")) throw new CommandGenerationException(new Text("error.value"));
 			if (value.contains(" ")) throw new WrongValueException(name, new Text("error.space"), value);
 			try
@@ -129,7 +128,7 @@ public class TargetArgument
 		}
 
 		boolean reversed = false;
-		if (this.canReverse) reversed = ((CGCheckBox) ((CPanel) ((ConfirmPanel) panel).component).getComponent(1)).isSelected();
+		if (this.canReverse) reversed = ((CGCheckBox) panel.getComponent(1)).isSelected();
 
 		if (this.valueInteger()) try
 		{
@@ -166,7 +165,8 @@ public class TargetArgument
 			panel.add(new CGEntry(new Text("score.name")).container, gbc);
 			++gbc.gridy;
 			panel.add(new CGEntry("score.value", "0").container, gbc);
-			return new ConfirmPanel(this.name(), panel);
+			panel.setName(this.name().toString());
+			return panel;
 		}
 
 		CGPanel panel = new CGPanel();
@@ -200,7 +200,8 @@ public class TargetArgument
 			++gbc.gridy;
 			panel.add(new CGCheckBox("target.argument.reverse"), gbc);
 		}
-		return new ConfirmPanel(this.name(), panel);
+		panel.setName(this.name().toString());
+		return panel;
 	}
 
 	public Text description()

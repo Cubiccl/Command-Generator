@@ -7,11 +7,13 @@ import javax.swing.BorderFactory;
 import fr.cubi.cubigui.CPanel;
 import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Text;
 
 public class CGPanel extends CPanel implements ITranslated
 {
 	private static final long serialVersionUID = 1L;
 
+	private Text title;
 	private String titleID;
 
 	public CGPanel()
@@ -23,6 +25,21 @@ public class CGPanel extends CPanel implements ITranslated
 	{
 		this.titleID = titleID;
 		this.updateTranslations();
+	}
+
+	public Text getStateName()
+	{
+		return this.title;
+	}
+
+	public void setName(String nameID)
+	{
+		this.setName(new Text(nameID));
+	}
+
+	public void setName(Text name)
+	{
+		this.title = name;
 	}
 
 	@Override

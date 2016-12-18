@@ -22,6 +22,7 @@ import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockEntity;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockList;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCommandStats;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCoordinates;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateEnchantmentList;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItemId;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
@@ -197,6 +198,7 @@ public class ObjectRegistry
 		} else if (customTagType.equals("text")) new TemplateText(id, tagType, applicable);
 		else if (customTagType.equals("block_entity")) new TemplateBlockEntity(id, tagType, applicable);
 		else if (customTagType.equals("blockList")) new TemplateBlockList(id, tagType, applicable);
+		else if (customTagType.equals("enchantmentList")) new TemplateEnchantmentList(id, tagType, applicable);
 	}
 
 	private static int[] createDamage(String damageList)
