@@ -19,7 +19,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockEntity;
-import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCanDestroy;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockList;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCommandStats;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCoordinates;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
@@ -120,6 +120,7 @@ public class ObjectRegistry
 				else i = new Item(idInt, idString, createDamage(damage));
 				i.langType = langType;
 				i.textureType = textureType;
+				addToLists(idString, "placeable");
 			}
 		}
 		CommandGenerator.log("Successfully created " + blocks.size() + " blocks.");
@@ -195,7 +196,7 @@ public class ObjectRegistry
 			}
 		} else if (customTagType.equals("text")) new TemplateText(id, tagType, applicable);
 		else if (customTagType.equals("block_entity")) new TemplateBlockEntity(id, tagType, applicable);
-		else if (customTagType.equals("destroy")) new TemplateCanDestroy(id, tagType, applicable);
+		else if (customTagType.equals("blockList")) new TemplateBlockList(id, tagType, applicable);
 	}
 
 	private static int[] createDamage(String damageList)

@@ -113,7 +113,7 @@ public class PanelBlockList extends CGPanel implements ActionListener, IStateLis
 		int index = this.selectedIndex();
 		String[] values = new String[this.blocks.size()];
 		for (int i = 0; i < values.length; ++i)
-			values[i] = this.blocks.get(i).mainName().toString();
+			values[i] = this.blocks.get(i).idString;
 		this.listBlocks.setValues(values);
 		if (values.length > 0) this.listBlocks.setSelectedIndex(index);
 

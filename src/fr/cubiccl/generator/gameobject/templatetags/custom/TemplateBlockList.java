@@ -10,10 +10,10 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.panel.tag.PanelBlockList;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 
-public class TemplateCanDestroy extends TemplateList
+public class TemplateBlockList extends TemplateList
 {
 
-	public TemplateCanDestroy(String id, byte tagType, String[] applicable)
+	public TemplateBlockList(String id, byte tagType, String[] applicable)
 	{
 		super(id, tagType, applicable);
 	}
