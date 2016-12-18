@@ -61,8 +61,10 @@ public class PanelCommand extends CGPanel implements ActionListener
 
 		this.add(this.labelCommand, gbc);
 		++gbc.gridx;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(this.textfieldCommand, gbc);
 		++gbc.gridx;
+		gbc.fill = GridBagConstraints.NONE;
 		this.add(this.checkboxEdit, gbc);
 		++gbc.gridx;
 		this.add(this.buttonCopy, gbc);

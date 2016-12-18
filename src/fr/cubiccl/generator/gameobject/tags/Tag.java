@@ -27,10 +27,9 @@ public abstract class Tag
 	{
 		if (this.isJson)
 		{
-			if (this instanceof TagCompound || this instanceof TagList) return "\"" + this.id() + "\":" + this.valueForCommand();
+			if (this instanceof TagCompound || this instanceof TagList || this instanceof TagString) return "\"" + this.id() + "\":" + this.valueForCommand();
 			return "\"" + this.id() + "\":\"" + this.valueForCommand() + "\"";
 		}
-		if (this instanceof TagString) return this.id() + ":\"" + this.valueForCommand() + "\"";
 		return this.id() + ":" + this.valueForCommand();
 	}
 

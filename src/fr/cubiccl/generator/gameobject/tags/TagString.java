@@ -21,7 +21,7 @@ public class TagString extends Tag
 	@Override
 	public String valueForCommand()
 	{
-		return this.value().replace("\"", "\\\"");
+		return "\"" + this.value().replace("\"", "\\\"") + "\"";
 	}
 
 }
