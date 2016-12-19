@@ -5,7 +5,6 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTags;
-import fr.cubiccl.generator.utils.Text;
 
 public class TemplateBlockEntity extends TemplateCompound
 {
@@ -20,7 +19,7 @@ public class TemplateBlockEntity extends TemplateCompound
 	{
 		PanelTags p = new PanelTags(null, Tag.BLOCK);
 		p.setObjectForTags(objectId);
-		p.setName(new Text("tag.title." + this.id).toString());
+		p.setName(this.title());
 		return p;
 	}
 

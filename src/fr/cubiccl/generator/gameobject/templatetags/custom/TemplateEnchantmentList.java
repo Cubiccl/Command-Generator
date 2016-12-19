@@ -105,7 +105,7 @@ public class TemplateEnchantmentList extends TemplateList
 		Enchantment[] ench = new Enchantment[0];
 		// TODO from value
 		PanelObjectList p = new PanelObjectList(new EnchantmentList(ench));
-		p.setName("tag.title." + this.id);
+		p.setName(this.title());
 		return p;
 	}
 

@@ -50,7 +50,7 @@ public abstract class TemplateTag implements IStateListener<CGPanel>
 
 	public Text description()
 	{
-		return new Text("tag." + TYPE_NAMES[this.type] + "." + this.id + ".description");
+		return new Text("tag." + TYPE_NAMES[this.type] + "." + this.id);
 	}
 
 	public abstract Tag generateTag(CGPanel panel);
@@ -69,5 +69,10 @@ public abstract class TemplateTag implements IStateListener<CGPanel>
 			return true;
 		}
 		return false;
+	}
+
+	public Text title()
+	{
+		return new Text("tag.title." + this.id);
 	}
 }

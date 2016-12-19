@@ -94,7 +94,7 @@ public class TemplateBlockList extends TemplateList
 				blocks[i] = ObjectRegistry.getBlockFromID((String) t.getTag(i).value());
 		}
 		PanelObjectList p = new PanelObjectList(new BlockList(blocks));
-		p.setName("tag.title." + this.id);
+		p.setName(this.title());
 		return p;
 	}
 

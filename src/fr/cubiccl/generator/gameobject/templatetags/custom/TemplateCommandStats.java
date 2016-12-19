@@ -47,7 +47,7 @@ public class TemplateCommandStats extends TemplateCompound
 					Target.createFrom((String) previous.getTagFromId(Tags.STATS_QUERY_NAME.id).value()));
 		}
 
-		p.setName("tag.title." + this.id);
+		p.setName(this.title());
 		return p;
 	}
 

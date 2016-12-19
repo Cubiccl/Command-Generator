@@ -29,7 +29,7 @@ public class TemplateCoordinates extends TemplateCompound
 					.value(), (float) (int) coord.getTagFromId(Tags.COORD_Z.id).value());
 			p.setupFrom(c);
 		}
-		p.setName("tag.title." + this.id);
+		p.setName(this.title());
 		return p;
 	}
 

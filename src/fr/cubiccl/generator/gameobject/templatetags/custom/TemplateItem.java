@@ -31,7 +31,7 @@ public class TemplateItem extends TemplateCompound
 
 		if (this.autoselect != null) p.setupFrom(new ItemStack(ObjectRegistry.getItemFromID(this.autoselect), 0, 1));
 		if (previousValue != null) p.setupFrom(ItemStack.createFrom((TagCompound) previousValue));
-		p.setName("tag.title." + this.id);
+		p.setName(this.title());
 		return p;
 	}
 
