@@ -26,6 +26,7 @@ import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateEnchantmentLi
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItemId;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateJson;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateText;
 import fr.cubiccl.generator.gui.LoadingFrame;
@@ -199,6 +200,7 @@ public class ObjectRegistry
 		else if (customTagType.equals("block_entity")) new TemplateBlockEntity(id, tagType, applicable);
 		else if (customTagType.equals("blockList")) new TemplateBlockList(id, tagType, applicable);
 		else if (customTagType.equals("enchantmentList")) new TemplateEnchantmentList(id, tagType, applicable);
+		else if (customTagType.equals("json")) new TemplateJson(id, tagType, applicable);
 	}
 
 	private static int[] createDamage(String damageList)

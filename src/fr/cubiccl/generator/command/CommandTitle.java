@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelListJsonMessage;
@@ -66,7 +67,7 @@ public class CommandTitle extends Command implements ActionListener
 	{
 		String mode = this.comboboxMode.getValue();
 		String command = "/title " + this.panelTarget.generateTarget().toCommand() + " " + mode;
-		if (mode.equals("title") || mode.equals("subtitle")) return command + " " + this.panelJson.generateMessage().value();
+		if (mode.equals("title") || mode.equals("subtitle")) return command + " " + this.panelJson.generateMessage(Tags.JSON_LIST).value();
 		if (mode.equals("times"))
 		{
 			Utils.checkIntegerSuperior(this.entryFadeIn.label.getAbsoluteText(), this.entryFadeIn.getText(), 0);

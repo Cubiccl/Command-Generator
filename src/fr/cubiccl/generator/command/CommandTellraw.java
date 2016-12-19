@@ -2,6 +2,7 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelListJsonMessage;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
@@ -35,7 +36,7 @@ public class CommandTellraw extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/tellraw " + this.panelTarget.generateTarget().toCommand() + " " + this.panelJson.generateMessage().value();
+		return "/tellraw " + this.panelTarget.generateTarget().toCommand() + " " + this.panelJson.generateMessage(Tags.JSON_LIST).value();
 	}
 
 }

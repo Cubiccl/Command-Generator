@@ -73,7 +73,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 			GridBagConstraints gbc = this.createGridBagLayout();
 			this.add(this.comboboxMode = new OptionCombobox("json.hover.mode", "show_text", "show_item", "show_achievement", "show_entity"), gbc);
 			++gbc.gridy;
-			this.add(this.panelJson = new PanelListJsonMessage(false), gbc);
+			this.add(this.panelJson = new PanelListJsonMessage(null, false), gbc);
 
 			this.comboboxMode.addActionListener(this);
 		}
@@ -111,7 +111,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 					return this.panelItem.generateItem().toTag(Tags.ITEM).valueForCommand();
 
 				default:
-					return this.panelJson.generateMessage().valueForCommand();
+					return this.panelJson.generateMessage(Tags.JSON_LIST).valueForCommand();
 			}
 		}
 	}

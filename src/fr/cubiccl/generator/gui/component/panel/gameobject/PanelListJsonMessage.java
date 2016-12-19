@@ -14,6 +14,7 @@ import fr.cubiccl.generator.gameobject.JsonMessage;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.button.IconButton;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -60,20 +61,21 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 
 	public PanelListJsonMessage()
 	{
-		this(true);
-	}
-
-	public PanelListJsonMessage(boolean hasEvents)
-	{
 		this("json.title");
-		this.hasEvents = hasEvents;
-		this.messages = new ArrayList<JsonMessage>();
-		this.messagesPanels = new ArrayList<PanelSingleMessage>();
 	}
 
 	public PanelListJsonMessage(String titleID)
 	{
+		this(titleID, true);
+	}
+
+	public PanelListJsonMessage(String titleID, boolean hasEvents)
+	{
 		super(titleID);
+
+		this.hasEvents = hasEvents;
+		this.messages = new ArrayList<JsonMessage>();
+		this.messagesPanels = new ArrayList<PanelSingleMessage>();
 
 		GridBagConstraints gbc = this.createGridBagLayout();
 		this.add(this.panelMessages = new JPanel(), gbc);
@@ -101,13 +103,13 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 		this.messagesPanels.remove(index);
 	}
 
-	public TagList generateMessage()
+	public TagList generateMessage(TemplateList container)
 	{
 		TagCompound[] values = new TagCompound[this.messages.size()];
 		for (int i = 0; i < values.length; ++i)
 			values[i] = this.messages.get(i).toTag(Tags.JSON_CONTAINER);
 
-		return new TagList(Tags.JSON_LIST, values);
+		return new TagList(container, values);
 	}
 
 	@Override
