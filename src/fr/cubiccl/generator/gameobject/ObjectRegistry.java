@@ -20,6 +20,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockEntity;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockList;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateColor;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCommandStats;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCoordinates;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateDisplay;
@@ -171,8 +172,8 @@ public class ObjectRegistry
 
 	private static void createCustomTag(String id, byte tagType, String[] applicable, String customTagType, String[] data)
 	{
-
-		if (customTagType.equals("command_stats")) new TemplateCommandStats(id, tagType, applicable);
+		if (customTagType.equals("armorColor")) new TemplateColor(id, tagType, applicable);
+		else if (customTagType.equals("command_stats")) new TemplateCommandStats(id, tagType, applicable);
 		else if (customTagType.equals("coordinates")) new TemplateCoordinates(id, tagType, applicable);
 		else if (customTagType.equals("block_entity")) new TemplateBlockEntity(id, tagType, applicable);
 		else if (customTagType.equals("blockList")) new TemplateBlockList(id, tagType, applicable);
