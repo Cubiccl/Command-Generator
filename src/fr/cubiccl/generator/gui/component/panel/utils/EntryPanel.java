@@ -14,10 +14,15 @@ public class EntryPanel extends ConfirmPanel
 
 	public final CTextField entry;
 
-	public EntryPanel(Text descriptionTextID)
+	public EntryPanel(String descriptionTextID)
+	{
+		this(new Text(descriptionTextID));
+	}
+
+	public EntryPanel(Text descriptionText)
 	{
 		super();
-		CTextArea area = new CTextArea(descriptionTextID.toString());
+		CTextArea area = new CTextArea(descriptionText.toString());
 		area.setLineWrap(true);
 		area.setWrapStyleWord(true);
 		area.setFont(new Font(area.getFont().getFontName(), Font.BOLD, area.getFont().getSize()));

@@ -87,7 +87,7 @@ public class TemplateEnchantmentList extends TemplateList
 		}
 
 		@Override
-		public void remove(int index)
+		public void removeObject(int index)
 		{
 			this.enchantments.remove(index);
 		}

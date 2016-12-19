@@ -64,7 +64,7 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		int index = this.selectedIndex();
 		if (index != -1)
 		{
-			this.objectList.remove(index);
+			this.objectList.removeObject(index);
 			this.updateList();
 		}
 	}

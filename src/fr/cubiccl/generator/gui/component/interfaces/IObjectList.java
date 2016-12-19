@@ -18,6 +18,6 @@ public interface IObjectList
 
 	public String[] getValues();
 
-	public void remove(int index);
+	public void removeObject(int index);
 
 }

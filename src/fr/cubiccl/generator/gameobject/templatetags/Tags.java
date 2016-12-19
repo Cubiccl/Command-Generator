@@ -18,6 +18,11 @@ public final class Tags
 	public static final TemplateCompound DEFAULT_COMPOUND = new DefaultCompound("");
 	public static final TemplateString DEFAULT_STRING = new TemplateString("", UNAVAILABLE);
 
+	public static final TemplateNumber DISPLAY_COLOR = new TemplateNumber("color", UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateString DISPLAY_LOCAL = new TemplateString("LocName", UNAVAILABLE);
+	public static final DefaultList DISPLAY_LORE = new DefaultList("Lore");
+	public static final TemplateString DISPLAY_NAME = new TemplateString("Name", UNAVAILABLE);
+
 	public static final TemplateNumber ENCHANTMENT_ID = new TemplateNumber("id", UNAVAILABLE, TagNumber.SHORT);
 	public static final TemplateNumber ENCHANTMENT_LVL = new TemplateNumber("lvl", UNAVAILABLE, TagNumber.SHORT);
 

@@ -70,7 +70,7 @@ public class TemplateBlockList extends TemplateList
 		}
 
 		@Override
-		public void remove(int index)
+		public void removeObject(int index)
 		{
 			this.blocks.remove(index);
 		}

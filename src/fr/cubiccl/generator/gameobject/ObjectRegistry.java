@@ -22,6 +22,7 @@ import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockEntity;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockList;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCommandStats;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCoordinates;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateDisplay;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateEnchantmentList;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateHideFlags;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
@@ -170,7 +171,17 @@ public class ObjectRegistry
 
 	private static void createCustomTag(String id, byte tagType, String[] applicable, String customTagType, String[] data)
 	{
-		if (customTagType.equals("patterns")) new TemplatePatterns(id, tagType, applicable);
+
+		if (customTagType.equals("command_stats")) new TemplateCommandStats(id, tagType, applicable);
+		else if (customTagType.equals("coordinates")) new TemplateCoordinates(id, tagType, applicable);
+		else if (customTagType.equals("block_entity")) new TemplateBlockEntity(id, tagType, applicable);
+		else if (customTagType.equals("blockList")) new TemplateBlockList(id, tagType, applicable);
+		else if (customTagType.equals("color"))
+		{
+			TemplateNumber tag = new TemplateNumber(id, tagType, applicable);
+			tag.setNames("color", Utils.WOOL_COLORS);
+		} else if (customTagType.equals("display")) new TemplateDisplay(id, tagType, applicable);
+		else if (customTagType.equals("enchantmentList")) new TemplateEnchantmentList(id, tagType, applicable);
 		else if (customTagType.equals("effect"))
 		{
 			TemplateNumber tag = new TemplateNumber(id, tagType, applicable);
@@ -179,17 +190,8 @@ public class ObjectRegistry
 			for (int i = 0; i < ids.length; ++i)
 				ids[i] = effects[i].idString;
 			tag.setNames("effect", ids);
-		} else if (customTagType.equals("color"))
-		{
-			TemplateNumber tag = new TemplateNumber(id, tagType, applicable);
-			tag.setNames("color", Utils.WOOL_COLORS);
-		} else if (customTagType.equals("command_stats")) new TemplateCommandStats(id, tagType, applicable);
-		else if (customTagType.equals("coordinates")) new TemplateCoordinates(id, tagType, applicable);
-		else if (customTagType.equals("item_id"))
-		{
-			TemplateItemId t = new TemplateItemId(id, tagType, applicable);
-			if (data.length == 4) t.setLimited(data[3].substring("limited=".length()).split(":"));
-		} else if (customTagType.equals("item"))
+		} else if (customTagType.equals("hideFlags")) new TemplateHideFlags(id, tagType, applicable);
+		else if (customTagType.equals("item"))
 		{
 			TemplateItem t = new TemplateItem(id, tagType, applicable);
 			for (int i = 3; i < data.length; ++i)
@@ -197,12 +199,13 @@ public class ObjectRegistry
 				if (data[i].startsWith("limited=")) t.setLimited(data[i].substring("limited=".length()).split(":"));
 				if (data[i].startsWith("autoselect=")) t.setAutoselect(data[i].substring("autoselect=".length()));
 			}
-		} else if (customTagType.equals("text")) new TemplateText(id, tagType, applicable);
-		else if (customTagType.equals("block_entity")) new TemplateBlockEntity(id, tagType, applicable);
-		else if (customTagType.equals("blockList")) new TemplateBlockList(id, tagType, applicable);
-		else if (customTagType.equals("enchantmentList")) new TemplateEnchantmentList(id, tagType, applicable);
-		else if (customTagType.equals("json")) new TemplateJson(id, tagType, applicable);
-		else if (customTagType.equals("hideFlags")) new TemplateHideFlags(id, tagType, applicable);
+		} else if (customTagType.equals("item_id"))
+		{
+			TemplateItemId t = new TemplateItemId(id, tagType, applicable);
+			if (data.length == 4) t.setLimited(data[3].substring("limited=".length()).split(":"));
+		} else if (customTagType.equals("json")) new TemplateJson(id, tagType, applicable);
+		else if (customTagType.equals("patterns")) new TemplatePatterns(id, tagType, applicable);
+		else if (customTagType.equals("text")) new TemplateText(id, tagType, applicable);
 	}
 
 	private static int[] createDamage(String damageList)
