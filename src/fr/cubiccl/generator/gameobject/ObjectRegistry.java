@@ -24,6 +24,7 @@ import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateColor;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCommandStats;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateCoordinates;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateDisplay;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateEffectList;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateEnchantmentList;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateHideFlags;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
@@ -191,7 +192,8 @@ public class ObjectRegistry
 			for (int i = 0; i < ids.length; ++i)
 				ids[i] = effects[i].idString;
 			tag.setNames("effect", ids);
-		} else if (customTagType.equals("hideFlags")) new TemplateHideFlags(id, tagType, applicable);
+		} else if (customTagType.equals("effectList")) new TemplateEffectList(id, tagType, applicable);
+		else if (customTagType.equals("hideFlags")) new TemplateHideFlags(id, tagType, applicable);
 		else if (customTagType.equals("item"))
 		{
 			TemplateItem t = new TemplateItem(id, tagType, applicable);

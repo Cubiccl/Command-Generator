@@ -23,6 +23,11 @@ public final class Tags
 	public static final DefaultList DISPLAY_LORE = new DefaultList("Lore");
 	public static final TemplateString DISPLAY_NAME = new TemplateString("Name", UNAVAILABLE);
 
+	public static final TemplateNumber EFFECT_AMPLIFIER = new TemplateNumber("Amplifier", UNAVAILABLE, TagNumber.BYTE);
+	public static final TemplateNumber EFFECT_DURATION = new TemplateNumber("Duration", UNAVAILABLE, TagNumber.BYTE);
+	public static final TemplateNumber EFFECT_ID = new TemplateNumber("Id", UNAVAILABLE, TagNumber.BYTE);
+	public static final TemplateNumber EFFECT_PARTICLES = new TemplateNumber("ShowParticles", UNAVAILABLE, TagNumber.BYTE);
+
 	public static final TemplateNumber ENCHANTMENT_ID = new TemplateNumber("id", UNAVAILABLE, TagNumber.SHORT);
 	public static final TemplateNumber ENCHANTMENT_LVL = new TemplateNumber("lvl", UNAVAILABLE, TagNumber.SHORT);
 
