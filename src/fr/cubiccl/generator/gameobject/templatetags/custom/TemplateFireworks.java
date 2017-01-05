@@ -89,6 +89,8 @@ public class TemplateFireworks extends TemplateCompound
 			this.add((this.entryFlight = new CGEntry("firework.flight", "1")).container, gbc);
 			++gbc.gridy;
 			this.add(this.panelExplosions = new PanelObjectList(this.explosions), gbc);
+			
+			this.entryFlight.addIntFilter();
 		}
 
 		public TagCompound generateFireworks(TemplateCompound container) throws CommandGenerationException

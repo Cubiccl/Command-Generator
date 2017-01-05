@@ -12,7 +12,10 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 public class AttributeModifier
 {
 	public static final byte OP_ADD = 0, OP_MULTIPLY = 1, OP_MULTIPLY_ALL = 2;
-	
+
+	public static final String[] SLOTS =
+	{ "mainhand", "offhand", "feet", "legs", "chest", "head" };
+
 	public final double amount;
 	public final Attribute attribute;
 	public final String name, slot;
