@@ -16,6 +16,7 @@ public final class Tags
 	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", UNAVAILABLE, TagNumber.INTEGER);
 
 	public static final TemplateCompound DEFAULT_COMPOUND = new DefaultCompound("");
+	public static final TemplateNumber DEFAULT_INTEGER = new TemplateNumber("", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateString DEFAULT_STRING = new TemplateString("", UNAVAILABLE);
 
 	public static final TemplateNumber DISPLAY_COLOR = new TemplateNumber("color", UNAVAILABLE, TagNumber.INTEGER);
@@ -38,6 +39,12 @@ public final class Tags
 	public static final DefaultCompound EVENT_CLICK = new DefaultCompound("ClickEvent");
 	public static final DefaultCompound EVENT_HOVER = new DefaultCompound("HoverEvent");
 	public static final TemplateString EVENT_VALUE = new TemplateString("value", UNAVAILABLE);
+
+	public static final DefaultList FIREWORK_COLORS = new DefaultList("Colors");
+	public static final DefaultList FIREWORK_FADE_COLORS = new DefaultList("FadeColors");
+	public static final TemplateNumber FIREWORK_FLICKER = new TemplateNumber("Flicker", UNAVAILABLE, TagNumber.BYTE_BOOLEAN);
+	public static final TemplateNumber FIREWORK_TRAIL = new TemplateNumber("Trail", UNAVAILABLE, TagNumber.BYTE_BOOLEAN);
+	public static final TemplateNumber FIREWORK_TYPE = new TemplateNumber("Type", UNAVAILABLE, TagNumber.BYTE);
 
 	public static final DefaultCompound ITEM = new DefaultCompound("item");
 	public static final TemplateNumber ITEM_COUNT = new TemplateNumber("Count", UNAVAILABLE, TagNumber.BYTE);

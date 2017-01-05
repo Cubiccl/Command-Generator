@@ -185,18 +185,7 @@ public class ObjectRegistry
 		{
 			TemplateItemId t = new TemplateItemId(id, tagType, applicable);
 			if (data.length == 4) t.setLimited(data[3].substring("limited=".length()).split(":"));
-		} 
-		/*else if (customTagType.equals("armorColor")) new TemplateColor(id, tagType, applicable);
-		else if (customTagType.equals("command_stats")) new TemplateCommandStats(id, tagType, applicable);
-		else if (customTagType.equals("coordinates")) new TemplateCoordinates(id, tagType, applicable);
-		else if (customTagType.equals("block_entity")) new TemplateBlockEntity(id, tagType, applicable);
-		else if (customTagType.equals("blockList")) new TemplateBlockList(id, tagType, applicable);
-		else if (customTagType.equals("display")) new TemplateDisplay(id, tagType, applicable);
-		else if (customTagType.equals("enchantmentList")) new TemplateEnchantmentList(id, tagType, applicable);
-		else if (customTagType.equals("effectList")) new TemplateEffectList(id, tagType, applicable);
-		else if (customTagType.equals("hideFlags")) new TemplateHideFlags(id, tagType, applicable);
-		else if (customTagType.equals("json")) new TemplateJson(id, tagType, applicable);
-		else if (customTagType.equals("patterns")) new TemplatePatterns(id, tagType, applicable);*/
+		}
 		else try
 		{
 			Class<?> c = Class.forName("fr.cubiccl.generator.gameobject.templatetags.custom.Template" + customTagType);
