@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gui.component.panel.utils;
 
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -49,6 +50,8 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		this.buttonAdd.addActionListener(this);
 		this.buttonRemove.addActionListener(this);
 		this.list.addListSelectionListener(this);
+		this.list.scrollPane.setPreferredSize(new Dimension(200, 100));
+		
 		this.updateList();
 	}
 

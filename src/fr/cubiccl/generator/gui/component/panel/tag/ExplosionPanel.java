@@ -112,6 +112,8 @@ public class ExplosionPanel extends CGPanel
 		this.add(this.panelPrimaryColors = new PanelObjectList(this.primaryColors = new ColorList("firework.colors.primary")), gbc);
 		++gbc.gridy;
 		this.add(this.panelFadeColors = new PanelObjectList(this.fadeColors = new ColorList("firework.colors.fade")), gbc);
+		
+		this.setName("tag.title.Explosion");
 	}
 
 	public TagCompound generateExplosion(TemplateCompound container)

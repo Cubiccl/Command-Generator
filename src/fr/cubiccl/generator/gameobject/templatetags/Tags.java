@@ -41,8 +41,10 @@ public final class Tags
 	public static final TemplateString EVENT_VALUE = new TemplateString("value", UNAVAILABLE);
 
 	public static final DefaultList FIREWORK_COLORS = new DefaultList("Colors");
+	public static final DefaultList FIREWORK_EXPLOSIONS = new DefaultList("Explosions");
 	public static final DefaultList FIREWORK_FADE_COLORS = new DefaultList("FadeColors");
 	public static final TemplateNumber FIREWORK_FLICKER = new TemplateNumber("Flicker", UNAVAILABLE, TagNumber.BYTE_BOOLEAN);
+	public static final TemplateNumber FIREWORK_FLIGHT = new TemplateNumber("Flight", UNAVAILABLE, TagNumber.BYTE);
 	public static final TemplateNumber FIREWORK_TRAIL = new TemplateNumber("Trail", UNAVAILABLE, TagNumber.BYTE_BOOLEAN);
 	public static final TemplateNumber FIREWORK_TYPE = new TemplateNumber("Type", UNAVAILABLE, TagNumber.BYTE);
 
