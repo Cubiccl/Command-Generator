@@ -9,6 +9,14 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateList.DefaultList;
 /** Contains unique and constant NBT Tags. */
 public final class Tags
 {
+	public static final TemplateNumber ATTRIBUTE_AMOUNT = new TemplateNumber("Amount", UNAVAILABLE, TagNumber.DOUBLE);
+	public static final TemplateString ATTRIBUTE_ATTRIBUTE_NAME = new TemplateString("AttributeName", UNAVAILABLE);
+	public static final TemplateString ATTRIBUTE_MODIFIER_NAME = new TemplateString("Name", UNAVAILABLE);
+	public static final TemplateNumber ATTRIBUTE_OPERATION = new TemplateNumber("Operation", UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateString ATTRIBUTE_SLOT = new TemplateString("Slot", UNAVAILABLE);
+	public static final TemplateNumber ATTRIBUTE_UUIDLEAST = new TemplateNumber("UUIDLeast", UNAVAILABLE, TagNumber.LONG);
+	public static final TemplateNumber ATTRIBUTE_UUIDMOST = new TemplateNumber("UUIDMost", UNAVAILABLE, TagNumber.LONG);
+
 	public static final DefaultCompound BLOCK = new DefaultCompound("block");
 
 	public static final TemplateNumber COORD_X = new TemplateNumber("X", UNAVAILABLE, TagNumber.INTEGER);
