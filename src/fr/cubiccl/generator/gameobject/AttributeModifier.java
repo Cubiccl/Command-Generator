@@ -16,6 +16,28 @@ public class AttributeModifier
 	public static final String[] SLOTS =
 	{ "mainhand", "offhand", "feet", "legs", "chest", "head" };
 
+	public static AttributeModifier createFrom(TagCompound tag)
+	{
+		Attribute a = ObjectRegistry.getAttributes()[0];
+		String n = "", s = SLOTS[0];
+		byte o = OP_ADD;
+		double am = 0;
+		long um = 0, ul = 0;
+
+		for (Tag t : tag.value())
+		{
+			if (t.id().equals(Tags.ATTRIBUTE_ATTRIBUTE_NAME.id)) a = ObjectRegistry.getAttributeFromID(((TagString) t).value());
+			if (t.id().equals(Tags.ATTRIBUTE_MODIFIER_NAME.id)) n = ((TagString) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_SLOT.id)) s = ((TagString) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_OPERATION.id)) o = (byte) (int) ((TagNumber) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_AMOUNT.id)) am = ((TagBigNumber) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_UUIDMOST.id)) um = (long) (double) ((TagBigNumber) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_UUIDLEAST.id)) ul = (long) (double) ((TagBigNumber) t).value();
+		}
+
+		return new AttributeModifier(a, n, s, o, am, um, ul);
+	}
+
 	public final double amount;
 	public final Attribute attribute;
 	public final String name, slot;

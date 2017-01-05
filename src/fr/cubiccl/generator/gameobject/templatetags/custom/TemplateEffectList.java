@@ -22,14 +22,7 @@ public class TemplateEffectList extends TemplateList
 {
 	private static class EffectList implements IObjectList
 	{
-		private ArrayList<Effect> effects;
-
-		public EffectList(Effect[] effects)
-		{
-			this.effects = new ArrayList<Effect>();
-			for (Effect effect : effects)
-				this.effects.add(effect);
-		}
+		private ArrayList<Effect> effects = new ArrayList<Effect>();
 
 		@Override
 		public boolean addObject(CGPanel panel)
@@ -102,9 +95,10 @@ public class TemplateEffectList extends TemplateList
 	@Override
 	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
-		Effect[] ench = new Effect[0];
-		// TODO from value
-		PanelObjectList p = new PanelObjectList(new EffectList(ench));
+		EffectList list = new EffectList();
+		if (previousValue != null) for (Tag t : ((TagList) previousValue).value())
+			list.effects.add(Effect.createFrom((TagCompound) t));
+		PanelObjectList p = new PanelObjectList(list);
 		p.setName(this.title());
 		return p;
 	}

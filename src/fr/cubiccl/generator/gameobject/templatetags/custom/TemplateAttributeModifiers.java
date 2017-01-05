@@ -74,10 +74,11 @@ public class TemplateAttributeModifiers extends TemplateList
 	@Override
 	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
-		PanelObjectList p = new PanelObjectList(new AttributeModifierList());
+		AttributeModifierList list = new AttributeModifierList();
+		if (previousValue != null) for (Tag t : ((TagList) previousValue).value())
+			list.modifiers.add(AttributeModifier.createFrom((TagCompound) t));
+		PanelObjectList p = new PanelObjectList(list);
 		p.setName(this.title());
-		AttributeModifier[] ench = new AttributeModifier[0];
-		// TODO from value
 		return p;
 	}
 

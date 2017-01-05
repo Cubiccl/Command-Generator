@@ -22,14 +22,7 @@ public class TemplateEnchantmentList extends TemplateList
 {
 	private static class EnchantmentList implements IObjectList
 	{
-		private ArrayList<Enchantment> enchantments;
-
-		public EnchantmentList(Enchantment[] blocks)
-		{
-			this.enchantments = new ArrayList<Enchantment>();
-			for (Enchantment block : blocks)
-				this.enchantments.add(block);
-		}
+		private ArrayList<Enchantment> enchantments = new ArrayList<Enchantment>();
 
 		@Override
 		public boolean addObject(CGPanel panel)
@@ -102,9 +95,10 @@ public class TemplateEnchantmentList extends TemplateList
 	@Override
 	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
-		Enchantment[] ench = new Enchantment[0];
-		// TODO from value
-		PanelObjectList p = new PanelObjectList(new EnchantmentList(ench));
+		EnchantmentList list = new EnchantmentList();
+		if (previousValue != null) for (Tag t : ((TagList) previousValue).value())
+			list.enchantments.add(Enchantment.createFrom((TagCompound) t));
+		PanelObjectList p = new PanelObjectList(list);
 		p.setName(this.title());
 		return p;
 	}

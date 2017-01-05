@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
 import fr.cubiccl.generator.gameobject.baseobjects.EffectType;
+import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -8,6 +9,21 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
 public class Effect
 {
+
+	public static Effect createFrom(TagCompound tag)
+	{
+		int a = 0, d = 0;
+		boolean h = false;
+		EffectType e = ObjectRegistry.getEffectTypes()[0];
+		for (Tag t : tag.value())
+		{
+			if (t.id().equals(Tags.EFFECT_ID.id)) e = ObjectRegistry.getEffectFromID(((TagNumber) t).value());
+			if (t.id().equals(Tags.EFFECT_DURATION.id)) d = ((TagNumber) t).value();
+			if (t.id().equals(Tags.EFFECT_AMPLIFIER.id)) a = ((TagNumber) t).value();
+			if (t.id().equals(Tags.EFFECT_PARTICLES.id)) h = ((TagNumber) t).value() == 1;
+		}
+		return new Effect(e, d, a, h);
+	}
 
 	/** Level of Effect (0 = Level 1) */
 	public final int amplifier;
