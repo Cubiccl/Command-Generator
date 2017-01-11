@@ -25,9 +25,9 @@ public class CommandSummon extends Command
 
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
-		panel.add(this.panelEntity = new PanelEntity("summon.entity"), gbc);
-		++gbc.gridy;
 		panel.add(this.panelCoordinates = new PanelCoordinates("summon.coordinates"), gbc);
+		++gbc.gridy;
+		panel.add(this.panelEntity = new PanelEntity("summon.entity"), gbc);
 
 		return panel;
 	}
