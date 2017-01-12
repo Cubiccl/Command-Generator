@@ -86,10 +86,10 @@ public class TemplateFireworks extends TemplateCompound
 		{
 			this.explosions = new ExplosionList();
 			GridBagConstraints gbc = this.createGridBagLayout();
-			this.add((this.entryFlight = new CGEntry("firework.flight", "1")).container, gbc);
+			this.add((this.entryFlight = new CGEntry(new Text("firework.flight"), "1", Text.INTEGER)).container, gbc);
 			++gbc.gridy;
 			this.add(this.panelExplosions = new PanelObjectList(this.explosions), gbc);
-			
+
 			this.entryFlight.addIntFilter();
 		}
 

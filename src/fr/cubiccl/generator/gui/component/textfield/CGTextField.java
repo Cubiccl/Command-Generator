@@ -1,20 +1,34 @@
 package fr.cubiccl.generator.gui.component.textfield;
 
-import javax.swing.JTextField;
 import javax.swing.text.DocumentFilter;
 import javax.swing.text.PlainDocument;
 
-import fr.cubiccl.generator.gui.RoundedCornerBorder;
+import fr.cubi.cubigui.CTextField;
+import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
+import fr.cubiccl.generator.utils.Text;
 
-public class CTextField extends JTextField
+public class CGTextField extends CTextField implements ITranslated
 {
 
 	private static final long serialVersionUID = -6329458551850787942L;
 
-	public CTextField()
+	private Text suggestedText;
+
+	public CGTextField()
 	{
-		super(20);
-		this.setBorder(new RoundedCornerBorder());
+		this("");
+	}
+
+	public CGTextField(String suggestedTextID)
+	{
+		this(suggestedTextID == null ? null : new Text(suggestedTextID));
+	}
+
+	public CGTextField(Text suggestedText)
+	{
+		super();
+		this.suggestedText = suggestedText;
+		this.updateTranslations();
 	}
 
 	public void addFilter(DocumentFilter filter)
@@ -30,6 +44,7 @@ public class CTextField extends JTextField
 			@Override
 			protected boolean isStringValid(String string)
 			{
+				if (string.equals("")) return true;
 				try
 				{
 					Integer.parseInt(string);
@@ -50,6 +65,7 @@ public class CTextField extends JTextField
 			@Override
 			protected boolean isStringValid(String string)
 			{
+				if (string.equals("")) return true;
 				try
 				{
 					Float.parseFloat(string);
@@ -65,6 +81,12 @@ public class CTextField extends JTextField
 	public void removeFilter()
 	{
 		this.addFilter(null);
+	}
+
+	@Override
+	public void updateTranslations()
+	{
+		if (this.suggestedText != null) this.setSuggestedText(this.suggestedText.toString() + "...");
 	}
 
 }

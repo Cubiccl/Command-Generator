@@ -26,7 +26,7 @@ public class CommandTell extends Command
 
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
-		panel.add((this.entryMessage = new CGEntry(new Text("say.message"))).container, gbc);
+		panel.add((this.entryMessage = new CGEntry(new Text("say.message"), new Text("say.message"))).container, gbc);
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.PLAYERS_ONLY), gbc);
 

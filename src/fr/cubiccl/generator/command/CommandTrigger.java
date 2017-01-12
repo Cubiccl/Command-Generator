@@ -29,11 +29,11 @@ public class CommandTrigger extends Command
 		++gbc.gridwidth;
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
-		panel.add((this.entryObjective = new CGEntry(new Text("score.name"))).container, gbc);
+		panel.add((this.entryObjective = new CGEntry(Text.OBJECTIVE, Text.OBJECTIVE)).container, gbc);
 		++gbc.gridy;
 		panel.add(this.comboboxMode = new OptionCombobox("general.value", "add", "set"), gbc);
 		++gbc.gridy;
-		panel.add((this.entryValue = new CGEntry("score.value", "0")).container, gbc);
+		panel.add((this.entryValue = new CGEntry(Text.VALUE, "0", Text.INTEGER)).container, gbc);
 
 		this.entryValue.addIntFilter();
 

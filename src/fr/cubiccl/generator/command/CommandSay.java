@@ -21,10 +21,10 @@ public class CommandSay extends Command
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
-		
+
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
-		panel.add((this.entryMessage = new CGEntry(new Text("say.message"))).container, gbc);
+		panel.add((this.entryMessage = new CGEntry(new Text("say.message"), new Text("say.message"))).container, gbc);
 
 		return panel;
 	}

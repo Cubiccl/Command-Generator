@@ -27,7 +27,7 @@ public class PanelAttributeModifier extends CGPanel
 	{
 		GridBagConstraints gbc = this.createGridBagLayout();
 		++gbc.gridwidth;
-		this.add((this.entryName = new CGEntry("attribute.modifier.name", "")).container, gbc);
+		this.add((this.entryName = new CGEntry(new Text("attribute.modifier.name"), new Text("attribute.modifier.name"))).container, gbc);
 
 		++gbc.gridy;
 		--gbc.gridwidth;
@@ -50,11 +50,14 @@ public class PanelAttributeModifier extends CGPanel
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		this.add((this.entryAmount = new CGEntry("attribute.modifier.amount", "0")).container, gbc);
+		this.add((this.entryAmount = new CGEntry(new Text("attribute.modifier.amount"), "0", Text.NUMBER)).container, gbc);
 		++gbc.gridy;
-		this.add((this.entryUUIDMost = new CGEntry("attribute.modifier.uuidmost", Long.toString(ThreadLocalRandom.current().nextLong()))).container, gbc);
+		this.add(
+				(this.entryUUIDMost = new CGEntry(new Text("attribute.modifier.uuidmost"), Long.toString(ThreadLocalRandom.current().nextLong()), Text.INTEGER)).container,
+				gbc);
 		++gbc.gridy;
-		this.add((this.entryUUIDLeast = new CGEntry("attribute.modifier.uuidleast", Long.toString(ThreadLocalRandom.current().nextLong()))).container, gbc);
+		this.add((this.entryUUIDLeast = new CGEntry(new Text("attribute.modifier.uuidleast"), Long.toString(ThreadLocalRandom.current().nextLong()),
+				Text.INTEGER)).container, gbc);
 		++gbc.gridy;
 		this.add(new CGLabel("attribute.modifier.uuid.details"), gbc);
 

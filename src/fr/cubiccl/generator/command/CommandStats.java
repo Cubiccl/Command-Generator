@@ -71,7 +71,7 @@ public class CommandStats extends Command implements ActionListener
 		++gbc.gridwidth;
 		panel.add(this.panelTarget = new PanelTarget("stats.target", PanelTarget.ALL_ENTITIES), gbc);
 		++gbc.gridy;
-		panel.add((this.entryObjective = new CGEntry(new Text("stats.objective"))).container, gbc);
+		panel.add((this.entryObjective = new CGEntry(new Text("stats.objective"), Text.OBJECTIVE)).container, gbc);
 
 		this.labelStat.setHasColumn(true);
 		this.panelSource.setVisible(false);

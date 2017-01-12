@@ -63,7 +63,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		this.labelArguments = new CGLabel("target.arguments").setHasColumn(true);
 		this.labelType = new CGLabel("target.type").setHasColumn(true);
 
-		this.entryName = new CGEntry(new Text("target.name"));
+		this.entryName = new CGEntry(new Text("target.name"), new Text("target.name"));
 		this.entryName.container.setVisible(false);
 
 		this.comboboxType = new OptionCombobox("target.type", TARGETS[this.mode]);

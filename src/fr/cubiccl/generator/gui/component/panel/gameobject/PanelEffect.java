@@ -42,9 +42,9 @@ public class PanelEffect extends CGPanel implements ActionListener
 		gbc.gridx = 0;
 		++gbc.gridy;
 		gbc.gridwidth = 3;
-		this.add((this.entryDuration = new CGEntry(new Text("effect.duration"), "0")).container, gbc);
+		this.add((this.entryDuration = new CGEntry(new Text("effect.duration"), "0", Text.INTEGER)).container, gbc);
 		++gbc.gridy;
-		this.add((this.entryLevel = new CGEntry(new Text("effect.level"), "0")).container, gbc);
+		this.add((this.entryLevel = new CGEntry(new Text("effect.level"), "0", Text.INTEGER)).container, gbc);
 		++gbc.gridy;
 		this.add(this.checkboxHideParticles = new CGCheckBox("effect.hide_particles"), gbc);
 

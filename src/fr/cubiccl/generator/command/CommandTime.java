@@ -46,7 +46,7 @@ public class CommandTime extends Command implements ActionListener
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		panel.add((this.entryValue = new CGEntry("score.value", "0")).container, gbc);
+		panel.add((this.entryValue = new CGEntry(Text.VALUE, "0", Text.INTEGER)).container, gbc);
 		panel.add(this.comboboxQuery = new OptionCombobox("time.query", "daytime", "gametime", "day"), gbc);
 
 		this.comboboxMode.addActionListener(this);

@@ -36,7 +36,7 @@ public class PanelEnchantment extends CGPanel
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		this.add((this.entryLevel = new CGEntry(new Text("enchant.level"), "1")).container, gbc);
+		this.add((this.entryLevel = new CGEntry(new Text("enchant.level"), "1", Text.INTEGER)).container, gbc);
 
 		this.entryLevel.addIntFilter();
 

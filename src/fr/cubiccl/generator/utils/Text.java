@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 public class Text
 {
+	public static final Text INTEGER = new Text("general.integer"), NUMBER = new Text("general.number"), OBJECTIVE = new Text("score.name"), VALUE = new Text(
+			"score.value");
 
 	public final boolean doTranslate;
 	public final String id;

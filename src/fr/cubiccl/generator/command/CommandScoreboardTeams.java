@@ -55,9 +55,9 @@ public class CommandScoreboardTeams extends Command implements ActionListener
 		++gbc.gridy;
 		panel.add(this.comboboxMode = new OptionCombobox("scoreboard.teams.mode", "add", "remove", "join", "leave", "empty", "option"), gbc);
 		++gbc.gridy;
-		panel.add((this.entryTeam = new CGEntry(new Text("score.team"))).container, gbc);
+		panel.add((this.entryTeam = new CGEntry(new Text("score.team"), new Text("score.team"))).container, gbc);
 		++gbc.gridy;
-		panel.add((this.entryDisplayName = new CGEntry(new Text("score.add.display"))).container, gbc);
+		panel.add((this.entryDisplayName = new CGEntry(new Text("score.add.display"), new Text("display.name"))).container, gbc);
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.ALL_ENTITIES), gbc);
 		panel.add(this.comboboxOptionName = new OptionCombobox("scoreboard.team.option", "color", "friendlyfire", "seeFriendlyInvisibles", "nametagVisibility",
 				"deathMessageVisibility", "collisionRule"), gbc);

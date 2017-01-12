@@ -8,7 +8,7 @@ import java.awt.event.KeyListener;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.textfield.CTextField;
+import fr.cubiccl.generator.gui.component.textfield.CGTextField;
 
 public class SearchCombobox extends CGComboBox implements KeyListener
 {
@@ -16,14 +16,14 @@ public class SearchCombobox extends CGComboBox implements KeyListener
 	private static final long serialVersionUID = 5018870150343109671L;
 
 	public final CGPanel container;
-	public final CTextField searchbar;
+	public final CGTextField searchbar;
 	private String[] values;
 
 	public SearchCombobox(String... values)
 	{
 		super(values);
 		this.values = values;
-		this.searchbar = new CTextField();
+		this.searchbar = new CGTextField("general.search");
 		this.searchbar.addKeyListener(this);
 
 		this.container = new CGPanel();

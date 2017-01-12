@@ -162,9 +162,9 @@ public class TargetArgument
 			GridBagConstraints gbc = panel.createGridBagLayout();
 			gbc.gridx = 0;
 			gbc.gridy = 0;
-			panel.add(new CGEntry(new Text("score.name")).container, gbc);
+			panel.add(new CGEntry(Text.OBJECTIVE, Text.OBJECTIVE).container, gbc);
 			++gbc.gridy;
-			panel.add(new CGEntry("score.value", "0").container, gbc);
+			panel.add(new CGEntry(Text.VALUE, "0", Text.INTEGER).container, gbc);
 			panel.setName(this.name().toString());
 			return panel;
 		}
@@ -193,7 +193,7 @@ public class TargetArgument
 			--gbc.gridx;
 			++gbc.gridy;
 			++gbc.gridwidth;
-		} else panel.add(new CGEntry(this.description()).container, gbc);
+		} else panel.add(new CGEntry(this.description(), this.name()).container, gbc);
 
 		if (this.canReverse)
 		{

@@ -11,6 +11,7 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelListJsonMessage;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Utils;
 
 public class CommandTitle extends Command implements ActionListener
@@ -48,16 +49,20 @@ public class CommandTitle extends Command implements ActionListener
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.PLAYERS_ONLY), gbc);
 		++gbc.gridy;
 		panel.add(this.panelJson = new PanelListJsonMessage(), gbc);
-		panel.add((this.entryFadeIn = new CGEntry("title.fade_in", "0")).container, gbc);
+		panel.add((this.entryFadeIn = new CGEntry(new Text("title.fade_in"), "0", Text.INTEGER)).container, gbc);
 		++gbc.gridy;
-		panel.add((this.entryStay = new CGEntry("title.stay", "0")).container, gbc);
+		panel.add((this.entryStay = new CGEntry(new Text("title.stay"), "0", Text.INTEGER)).container, gbc);
 		++gbc.gridy;
-		panel.add((this.entryFadeOut = new CGEntry("title.fade_out", "0")).container, gbc);
+		panel.add((this.entryFadeOut = new CGEntry(new Text("title.fade_out"), "0", Text.INTEGER)).container, gbc);
 
 		this.entryFadeIn.container.setVisible(false);
 		this.entryStay.container.setVisible(false);
 		this.entryFadeOut.container.setVisible(false);
 		this.comboboxMode.addActionListener(this);
+
+		this.entryFadeIn.addIntFilter();
+		this.entryStay.addIntFilter();
+		this.entryFadeOut.addIntFilter();
 
 		return panel;
 	}

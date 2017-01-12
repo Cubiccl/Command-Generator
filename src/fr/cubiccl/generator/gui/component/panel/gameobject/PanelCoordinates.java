@@ -28,11 +28,11 @@ public class PanelCoordinates extends CGPanel
 		this.canBeRelative = canBeRelative;
 
 		GridBagConstraints gbc = this.createGridBagLayout();
-		this.add((this.entryX = new CGEntry("coordinate.x", "0")).container, gbc);
+		this.add((this.entryX = new CGEntry(new Text("coordinate.x"), "0", Text.NUMBER)).container, gbc);
 		++gbc.gridy;
-		this.add((this.entryY = new CGEntry("coordinate.y", "0")).container, gbc);
+		this.add((this.entryY = new CGEntry(new Text("coordinate.y"), "0", Text.NUMBER)).container, gbc);
 		++gbc.gridy;
-		this.add((this.entryZ = new CGEntry("coordinate.z", "0")).container, gbc);
+		this.add((this.entryZ = new CGEntry(new Text("coordinate.z"), "0", Text.NUMBER)).container, gbc);
 
 		++gbc.gridx;
 		gbc.gridy = 0;

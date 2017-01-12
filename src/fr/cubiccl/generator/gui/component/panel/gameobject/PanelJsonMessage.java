@@ -31,7 +31,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 			GridBagConstraints gbc = this.createGridBagLayout();
 			this.add(this.comboboxMode = new OptionCombobox("json.click.mode", "open_url", "run_command", "change_page"), gbc);
 			++gbc.gridy;
-			this.add((this.entryValue = new CGEntry(new Text("json.url"))).container, gbc);
+			this.add((this.entryValue = new CGEntry(new Text("json.url"), Text.VALUE)).container, gbc);
 
 			this.comboboxMode.addActionListener(this);
 		}
@@ -140,11 +140,11 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 		gbc.gridwidth = 4;
 		this.add(this.comboboxMode = new OptionCombobox("json.mode", "text", "translate", "score", "selector"), gbc);
 		++gbc.gridy;
-		this.add((this.entryMain = new CGEntry(new Text("json.text"))).container, gbc);
+		this.add((this.entryMain = new CGEntry("json.text")).container, gbc);
 		++gbc.gridy;
 		this.add(this.panelTarget = new PanelTarget(PanelTarget.ALL_ENTITIES), gbc);
 		++gbc.gridy;
-		this.add((this.entryInsertion = new CGEntry(new Text("json.insertion"))).container, gbc);
+		this.add((this.entryInsertion = new CGEntry(new Text("json.insertion"), new Text("json.insertion"))).container, gbc);
 		++gbc.gridy;
 		gbc.gridwidth = 1;
 		this.add(new CGLabel("json.color").setHasColumn(true), gbc);
@@ -209,7 +209,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 					break;
 
 				case "score":
-					this.entryMain.label.setTextID(new Text("score.name"));
+					this.entryMain.label.setTextID(Text.OBJECTIVE);
 					break;
 
 				default:

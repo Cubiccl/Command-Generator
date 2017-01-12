@@ -40,7 +40,7 @@ public class PanelCommandStats extends CGPanel implements ActionListener
 		++gbc.gridy;
 		this.add(new CTextArea(new Text("stats.description").toString()), gbc);
 		++gbc.gridy;
-		this.add((this.entryObjective = new CGEntry("stats.objective", "")).container, gbc);
+		this.add((this.entryObjective = new CGEntry(new Text("stats.objective"), Text.OBJECTIVE)).container, gbc);
 		++gbc.gridy;
 		this.add(this.panelTarget = new PanelTarget("stats.target", PanelTarget.ALL_ENTITIES), gbc);
 

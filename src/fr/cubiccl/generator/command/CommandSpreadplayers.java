@@ -33,20 +33,20 @@ public class CommandSpreadplayers extends Command
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.ALL_ENTITIES), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
-		panel.add((this.entryX = new CGEntry("spread.x", "0")).container, gbc);
+		panel.add((this.entryX = new CGEntry(new Text("spread.x"), "0", Text.INTEGER)).container, gbc);
 		++gbc.gridx;
 		panel.add(this.checkboxX = new CGCheckBox("coordinate.relative"), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
-		panel.add((this.entryZ = new CGEntry("spread.z", "0")).container, gbc);
+		panel.add((this.entryZ = new CGEntry(new Text("spread.z"), "0", Text.INTEGER)).container, gbc);
 		++gbc.gridx;
 		panel.add(this.checkboxZ = new CGCheckBox("coordinate.relative"), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		panel.add((this.entryDistance = new CGEntry("spread.distance", "0")).container, gbc);
+		panel.add((this.entryDistance = new CGEntry(new Text("spread.distance"), "0", Text.INTEGER)).container, gbc);
 		++gbc.gridy;
-		panel.add((this.entryRange = new CGEntry("spread.range", "1")).container, gbc);
+		panel.add((this.entryRange = new CGEntry(new Text("spread.range"), "1", Text.INTEGER)).container, gbc);
 		++gbc.gridy;
 		panel.add(this.checkboxTeams = new CGCheckBox("spread.teams"), gbc);
 

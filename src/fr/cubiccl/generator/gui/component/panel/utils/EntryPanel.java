@@ -5,14 +5,14 @@ import java.awt.GridBagConstraints;
 
 import fr.cubi.cubigui.CPanel;
 import fr.cubi.cubigui.CTextArea;
-import fr.cubi.cubigui.CTextField;
+import fr.cubiccl.generator.gui.component.textfield.CGTextField;
 import fr.cubiccl.generator.utils.Text;
 
 public class EntryPanel extends ConfirmPanel
 {
 	private static final long serialVersionUID = -3957744287487251022L;
 
-	public final CTextField entry;
+	public final CGTextField entry;
 
 	public EntryPanel(String descriptionTextID)
 	{
@@ -32,7 +32,7 @@ public class EntryPanel extends ConfirmPanel
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		p.add(area, gbc);
 		++gbc.gridy;
-		p.add(this.entry = new CTextField(), gbc);
+		p.add(this.entry = new CGTextField(), gbc);
 		this.setMainComponent(p);
 	}
 

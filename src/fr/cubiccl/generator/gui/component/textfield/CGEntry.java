@@ -2,36 +2,38 @@ package fr.cubiccl.generator.gui.component.textfield;
 
 import java.awt.GridBagConstraints;
 
-import fr.cubi.cubigui.CEntry;
+import fr.cubi.cubigui.CPanel;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.utils.Text;
 
-public class CGEntry extends CEntry
+public class CGEntry extends CGTextField
 {
 	private static final long serialVersionUID = 1L;
 
+	public final CPanel container;
 	public final CGLabel label;
 
-	public CGEntry(String textID, String defaultValue)
+	public CGEntry(String textID)
 	{
-		this(new Text(textID), defaultValue);
+		this(textID == null ? null : new Text(textID), null);
 	}
 
-	public CGEntry(Text text)
+	public CGEntry(Text text, String defaultValue, Text suggestedText)
 	{
-		this(text, "");
-	}
-
-	public CGEntry(Text text, String defaultValue)
-	{
-		super(text.toString(), defaultValue);
+		super(suggestedText);
+		this.setText(defaultValue);
 		this.label = new CGLabel(text);
-		this.label.setHasColumn(true);
-		super.label.setVisible(false);
 
-		GridBagConstraints gbc = this.container.getGBC();
-		gbc.gridx = 0;
+		this.container = new CPanel();
+		GridBagConstraints gbc = this.container.createGridBagLayout();
 		this.container.add(this.label, gbc);
+		++gbc.gridx;
+		this.container.add(this, gbc);
+	}
+
+	public CGEntry(Text text, Text suggestedText)
+	{
+		this(text, "", suggestedText);
 	}
 
 }

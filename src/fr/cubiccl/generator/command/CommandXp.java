@@ -29,14 +29,13 @@ public class CommandXp extends Command
 
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
-		panel.add((this.entryAmount = new CGEntry("xp.amount", "0")).container, gbc);
+		panel.add((this.entryAmount = new CGEntry(new Text("xp.amount"), "0", Text.INTEGER)).container, gbc);
 		++gbc.gridy;
 		panel.add(this.checkboxLevel = new CGCheckBox("xp.level"), gbc);
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.PLAYERS_ONLY), gbc);
 
 		this.entryAmount.addIntFilter();
-
 		this.checkboxLevel.setSelected(true);
 
 		return panel;

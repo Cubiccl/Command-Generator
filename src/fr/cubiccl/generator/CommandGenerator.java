@@ -70,7 +70,7 @@ public class CommandGenerator
 		stateManager = new StateManager();
 		window = new Window();
 		window.updateTranslations();
-		setSelected(Commands.getCommandFromID("give")); // TODO change back to achievement
+		setSelected(Commands.getCommands()[0]);
 		window.setVisible(true);
 	}
 

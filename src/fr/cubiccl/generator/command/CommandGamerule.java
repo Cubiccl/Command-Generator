@@ -44,13 +44,13 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
-		panel.add((this.entryGamerule = new CGEntry(new Text("gamerule.entry"))).container, gbc);
+		panel.add((this.entryGamerule = new CGEntry(new Text("gamerule.entry"), new Text("gamerule.main"))).container, gbc);
 		++gbc.gridx;
 		panel.add(this.buttonPredefined = new CGButton("gamerule.predefined"), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		panel.add((this.entryValue = new CGEntry("score.value", "0")).container, gbc);
+		panel.add((this.entryValue = new CGEntry(Text.VALUE, "0", Text.INTEGER)).container, gbc);
 
 		this.entryValue.addIntFilter();
 

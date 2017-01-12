@@ -36,7 +36,9 @@ public class CommandWeather extends Command
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		panel.add((this.entryDuration = new CGEntry("weather.duration", "0")).container, gbc);
+		panel.add((this.entryDuration = new CGEntry(new Text("weather.duration"), "0", Text.INTEGER)).container, gbc);
+
+		this.entryDuration.addIntFilter();
 
 		return panel;
 	}

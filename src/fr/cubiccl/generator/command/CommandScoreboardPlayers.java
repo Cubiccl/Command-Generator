@@ -45,7 +45,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 			if (test)
 			{
 				this.checkbox.setTextID(new Text("scoreboard.test.max"));
-				this.entryObjective.label.setTextID(new Text("score.name"));
+				this.entryObjective.label.setTextID(Text.OBJECTIVE);
 				this.entryScore.label.setTextID(new Text("score.value.min"));
 			} else if (operation)
 			{
@@ -58,8 +58,8 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 			} else
 			{
 				this.checkbox.setTextID(new Text("scoreboard.reset.all"));
-				this.entryObjective.label.setTextID(new Text("score.name"));
-				this.entryScore.label.setTextID(new Text("score.value"));
+				this.entryObjective.label.setTextID(Text.OBJECTIVE);
+				this.entryScore.label.setTextID(Text.VALUE);
 			}
 		}
 
@@ -80,20 +80,20 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.ALL_ENTITIES), gbc);
 		++gbc.gridy;
-		panel.add((this.entryObjective = new CGEntry(new Text("score.name"))).container, gbc);
+		panel.add((this.entryObjective = new CGEntry(Text.OBJECTIVE, Text.OBJECTIVE)).container, gbc);
 		++gbc.gridy;
-		panel.add((this.entryScore = new CGEntry("score.value", "0")).container, gbc);
+		panel.add((this.entryScore = new CGEntry(Text.VALUE, "0", Text.INTEGER)).container, gbc);
 		++gbc.gridy;
 		panel.add(this.comboboxMode2 = new OptionCombobox("scoreboard.operation", OPERATIONS), gbc);
 		++gbc.gridy;
 		panel.add(this.panelTarget2 = new PanelTarget("target.title.any2", PanelTarget.ALL_ENTITIES), gbc);
 		++gbc.gridy;
-		panel.add((this.entryObjective2 = new CGEntry(new Text("score.name2"))).container, gbc);
+		panel.add((this.entryObjective2 = new CGEntry(new Text("score.name2"), Text.OBJECTIVE)).container, gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
 		panel.add(this.checkbox = new CGCheckBox("scoreboard.reset.all"), gbc);
 		++gbc.gridx;
-		panel.add((this.entryScore2 = new CGEntry("", "0")).container, gbc);
+		panel.add((this.entryScore2 = new CGEntry(null, "0", Text.NUMBER)).container, gbc);
 
 		this.comboboxMode.addActionListener(this);
 		this.entryScore.addIntFilter();

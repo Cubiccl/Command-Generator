@@ -64,9 +64,9 @@ public class CommandWorldborder extends Command implements ActionListener
 		++gbc.gridwidth;
 		panel.add(this.comboboxMode2 = new OptionCombobox("worldborder.mode", "amount", "buffer"), gbc);
 		++gbc.gridy;
-		panel.add((this.entryValue = new CGEntry("worldborder.add", "0")).container, gbc);
+		panel.add((this.entryValue = new CGEntry(new Text("worldborder.add"), "0", Text.INTEGER)).container, gbc);
 		++gbc.gridy;
-		panel.add((this.entryValue2 = new CGEntry("worldborder.add2", "0")).container, gbc);
+		panel.add((this.entryValue2 = new CGEntry(new Text("worldborder.add2"), "0", Text.INTEGER)).container, gbc);
 
 		this.comboboxMode.addActionListener(this);
 		this.comboboxMode2.addActionListener(this);

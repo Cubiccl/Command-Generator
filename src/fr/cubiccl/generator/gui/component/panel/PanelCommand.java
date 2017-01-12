@@ -13,7 +13,7 @@ import javax.swing.BorderFactory;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
-import fr.cubiccl.generator.gui.component.textfield.CTextField;
+import fr.cubiccl.generator.gui.component.textfield.CGTextField;
 
 public class PanelCommand extends CGPanel implements ActionListener
 {
@@ -23,7 +23,7 @@ public class PanelCommand extends CGPanel implements ActionListener
 	private CGButton buttonCopy;
 	private CGCheckBox checkboxEdit;
 	private CGLabel labelCommand;
-	public final CTextField textfieldCommand;
+	public final CGTextField textfieldCommand;
 
 	public PanelCommand()
 	{
@@ -31,7 +31,7 @@ public class PanelCommand extends CGPanel implements ActionListener
 
 		this.labelCommand = new CGLabel("command.label").setHasColumn(true);
 
-		this.textfieldCommand = new CTextField();
+		this.textfieldCommand = new CGTextField("command.output");
 		this.textfieldCommand.setEditable(false);
 
 		this.checkboxEdit = new CGCheckBox("command.edit");

@@ -55,11 +55,11 @@ public class CommandPlaysound extends Command
 		++gbc.gridy;
 		panel.add(this.panelCoordinates = new PanelCoordinates("playsound.coordinates"), gbc);
 		++gbc.gridy;
-		panel.add((this.entryVolume = new CGEntry("playsound.volume", "1")).container, gbc);
+		panel.add((this.entryVolume = new CGEntry(new Text("playsound.volume"), "1", Text.NUMBER)).container, gbc);
 		++gbc.gridy;
-		panel.add((this.entryPitch = new CGEntry("playsound.pitch", "1")).container, gbc);
+		panel.add((this.entryPitch = new CGEntry(new Text("playsound.pitch"), "1", Text.NUMBER)).container, gbc);
 		++gbc.gridy;
-		panel.add((this.entryMinVolume = new CGEntry("playsound.minimum_volume", "1")).container, gbc);
+		panel.add((this.entryMinVolume = new CGEntry(new Text("playsound.minimum_volume"), "1", Text.NUMBER)).container, gbc);
 
 		this.panelCoordinates.setRelativeText(new Text("playsound.relative"));
 		this.entryVolume.addNumberFilter();

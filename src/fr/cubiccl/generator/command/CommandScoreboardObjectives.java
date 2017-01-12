@@ -63,7 +63,7 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		panel.add((this.entryObjective = new CGEntry(new Text("score.name"))).container, gbc);
+		panel.add((this.entryObjective = new CGEntry(Text.OBJECTIVE, Text.OBJECTIVE)).container, gbc);
 		--gbc.gridwidth;
 		++gbc.gridy;
 		panel.add(this.labelSlot = new CGLabel("score.add.slot").setHasColumn(true), gbc);
@@ -72,7 +72,7 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		panel.add((this.entryDisplayName = new CGEntry(new Text("score.add.display"))).container, gbc);
+		panel.add((this.entryDisplayName = new CGEntry(new Text("score.add.display"), new Text("display.name"))).container, gbc);
 		panel.add(this.checkboxClearSlot = new CGCheckBox("score.slot.clear"), gbc);
 		++gbc.gridy;
 		panel.add(this.panelCriteria = new PanelCriteria(), gbc);

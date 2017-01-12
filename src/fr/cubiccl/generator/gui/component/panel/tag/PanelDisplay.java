@@ -50,7 +50,7 @@ public class PanelDisplay extends CGPanel implements IObjectList, ActionListener
 		gbc.gridx = 0;
 		++gbc.gridy;
 		gbc.gridwidth = 3;
-		this.add((this.entryName = new CGEntry("display.name", "")).container, gbc);
+		this.add((this.entryName = new CGEntry(new Text("display.name"), new Text("display.name"))).container, gbc);
 		++gbc.gridy;
 		this.add(new PanelObjectList(this), gbc);
 		++gbc.gridy;

@@ -46,9 +46,9 @@ public class CommandTp extends Command implements ActionListener
 
 		this.panelRotation = new CGPanel("tp.rotation");
 		GridBagConstraints gbc2 = this.panelRotation.createGridBagLayout();
-		this.panelRotation.add((this.entryYRot = new CGEntry("tp.rotation.y", "0")).container, gbc2);
+		this.panelRotation.add((this.entryYRot = new CGEntry(new Text("tp.rotation.y"), "0", Text.NUMBER)).container, gbc2);
 		++gbc2.gridy;
-		this.panelRotation.add((this.entryXRot = new CGEntry("tp.rotation.x", "0")).container, gbc2);
+		this.panelRotation.add((this.entryXRot = new CGEntry(new Text("tp.rotation.x"), "0", Text.NUMBER)).container, gbc2);
 		++gbc2.gridx;
 		--gbc2.gridy;
 		this.panelRotation.add(this.checkboxYRot = new CGCheckBox("tp.rotation.relative"), gbc2);
@@ -69,6 +69,9 @@ public class CommandTp extends Command implements ActionListener
 		this.panelCoordinates.setRelativeText(new Text("tp.relative.entity"));
 		this.panelDestination.setVisible(false);
 		this.comboboxMode.addActionListener(this);
+
+		this.entryXRot.addNumberFilter();
+		this.entryYRot.addNumberFilter();
 
 		return panel;
 	}
