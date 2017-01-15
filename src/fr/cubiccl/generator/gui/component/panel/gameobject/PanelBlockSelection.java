@@ -20,7 +20,7 @@ import fr.cubiccl.generator.gui.component.textfield.CGSpinner;
 
 public class PanelBlockSelection extends ConfirmPanel implements ComponentListener
 {
-	public static final int BLOCK_SIZE = 64, GAP = 5;
+	public static final int BLOCK_SIZE = 48, GAP = 5;
 	private static final long serialVersionUID = -3259302480348824205L;
 
 	private Block[] blocks;
@@ -65,6 +65,15 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		{
 
 			@Override
+			public void changeSelection(int objectCount)
+			{
+				int newObject = selected + objectCount;
+				if (newObject < 0) newObject = 0;
+				else if (newObject >= blocks.length) newObject = blocks.length - 1;
+				this.selectObject(newObject);
+			}
+
+			@Override
 			public int currentSelection()
 			{
 				return selected;
@@ -73,7 +82,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 			@Override
 			public void selectObject(int objectIndex)
 			{
-				setSelected(objectIndex, true);
+				if (objectIndex >= 0 && objectIndex < blocks.length) setSelected(objectIndex, true);
 			}
 		})), gbc);
 		++gbc.gridy;
@@ -86,6 +95,15 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		{
 
 			@Override
+			public void changeSelection(int objectCount)
+			{
+				int newObject = damage + objectCount;
+				if (newObject < 0) newObject = 0;
+				else if (newObject >= selectedBlock().damage.length) newObject = selectedBlock().damage.length - 1;
+				this.selectObject(newObject);
+			}
+
+			@Override
 			public int currentSelection()
 			{
 				return damage;
@@ -94,7 +112,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 			@Override
 			public void selectObject(int objectIndex)
 			{
-				setDamage(objectIndex);
+				if (objectIndex >= 0 && objectIndex < selectedBlock().damage.length) setDamage(objectIndex);
 			}
 		}), gbc);
 

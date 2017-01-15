@@ -2,13 +2,17 @@ package fr.cubiccl.generator.gui.component.panel.gameobject;
 
 import java.awt.Color;
 import java.awt.Graphics;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 import fr.cubiccl.generator.gui.component.interfaces.MCInventory;
 
-public class MCInventoryDrawer extends MouseAdapter
+public class MCInventoryDrawer extends MouseAdapter implements KeyListener
 {
+	public static final int MOVE_RIGHT = 0, MOVE_LEFT = 1, MOVE_UP = 2, MOVE_DOWN = 3;
+
 	private MCInventory inventory;
 
 	public MCInventoryDrawer(MCInventory inventory)
@@ -38,9 +42,34 @@ public class MCInventoryDrawer extends MouseAdapter
 	}
 
 	@Override
+	public void keyPressed(KeyEvent e)
+	{
+		if (e.getKeyCode() == KeyEvent.VK_RIGHT) this.inventory.onMove(MOVE_RIGHT);
+		else if (e.getKeyCode() == KeyEvent.VK_LEFT) this.inventory.onMove(MOVE_LEFT);
+		else if (e.getKeyCode() == KeyEvent.VK_UP) this.inventory.onMove(MOVE_UP);
+		else if (e.getKeyCode() == KeyEvent.VK_DOWN) this.inventory.onMove(MOVE_DOWN);
+	}
+
+	@Override
+	public void keyReleased(KeyEvent e)
+	{}
+
+	@Override
+	public void keyTyped(KeyEvent e)
+	{}
+
+	@Override
 	public void mouseClicked(MouseEvent e)
 	{
 		super.mouseClicked(e);
+		this.inventory.onClick();
+	}
+
+	@Override
+	public void mouseDragged(MouseEvent e)
+	{
+		super.mouseDragged(e);
+		this.inventory.onMove(e.getX(), e.getY());
 		this.inventory.onClick();
 	}
 

@@ -21,7 +21,7 @@ public class Textures
 		{
 			String[] data = path.split("=");
 			for (int i = 0; i < data.length - 1; ++i)
-				paths.put(data[i], data[data.length - 1]);
+				paths.put(data[i], "textures/" + data[data.length - 1]);
 		}
 	}
 
@@ -30,8 +30,20 @@ public class Textures
 	public static BufferedImage getTexture(String textureID)
 	{
 		String path = paths.get(textureID);
-		if (!textures.containsKey(path)) loadTexture(path);
-		if (textures.get(path) == null) CommandGenerator.log("Couldn't find texture: " + textureID);
+
+		if (path == null)
+		{
+			path = locateTexture(textureID);
+			if (path == null) return null;
+			paths.put(textureID, path);
+		}
+
+		if (!textures.containsKey(path))
+		{
+			loadTexture(path);
+			if (textures.get(path) == null) CommandGenerator.log("Couldn't find texture: " + textureID);
+		}
+		if (textures.get(path) == null) return null;
 		return textures.get(path);
 	}
 
@@ -39,6 +51,13 @@ public class Textures
 	private static void loadTexture(String path)
 	{
 		textures.put(path, FileUtils.readImage(path));
+	}
+
+	private static String locateTexture(String textureID)
+	{
+		String defaultPath = "textures/" + textureID.replaceAll("\\.", "/");
+		if (!textureID.startsWith("item.") || FileUtils.fileExists(defaultPath + ".png")) return defaultPath;
+		return "textures/block/" + textureID.replaceAll("\\.", "/").substring("item/".length());
 	}
 
 	private Textures()

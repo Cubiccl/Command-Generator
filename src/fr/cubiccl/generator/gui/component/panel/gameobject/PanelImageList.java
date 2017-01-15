@@ -31,6 +31,8 @@ public class PanelImageList extends JPanel implements MCInventory
 		this.setObjectsPerLine(20);
 		this.addMouseListener(this.drawer = new MCInventoryDrawer(this));
 		this.addMouseMotionListener(this.drawer);
+		this.addKeyListener(this.drawer);
+		this.setFocusable(true);
 	}
 
 	@Override
@@ -41,6 +43,7 @@ public class PanelImageList extends JPanel implements MCInventory
 			this.parent.selectObject(this.hovering);
 			this.repaint();
 		}
+		this.requestFocus();
 	}
 
 	@Override
@@ -48,6 +51,15 @@ public class PanelImageList extends JPanel implements MCInventory
 	{
 		this.hovering = -1;
 		this.repaint();
+	}
+
+	@Override
+	public void onMove(int direction)
+	{
+		if (direction == MCInventoryDrawer.MOVE_RIGHT) this.parent.changeSelection(1);
+		if (direction == MCInventoryDrawer.MOVE_LEFT) this.parent.changeSelection(-1);
+		if (direction == MCInventoryDrawer.MOVE_UP) this.parent.changeSelection(-this.objectsPerLine);
+		if (direction == MCInventoryDrawer.MOVE_DOWN) this.parent.changeSelection(this.objectsPerLine);
 	}
 
 	@Override

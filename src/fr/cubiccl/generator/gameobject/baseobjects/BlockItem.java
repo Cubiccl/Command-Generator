@@ -89,8 +89,9 @@ public class BlockItem implements NamedObject
 	public BufferedImage texture(int damage)
 	{
 		if (this.damage.length == 1 || this.textureType == -1) return Textures.getTexture(this.typeName() + "." + this.idString);
-		if (this.textureType == 0) return Textures.getTexture(this.typeName() + "." + this.idString + "." + damage);
-		return Textures.getTexture(this.typeName() + "." + this.idString + "." + damage % this.textureType);
+		if (this.textureType == 0) return Textures.getTexture(this.typeName() + "." + this.idString + "_" + damage);
+		if (this.textureType < -1) return Textures.getTexture(this.typeName() + "." + this.idString + "_" + damage / -this.textureType);
+		return Textures.getTexture(this.typeName() + "." + this.idString + "_" + damage % this.textureType);
 	}
 
 	private String typeName()

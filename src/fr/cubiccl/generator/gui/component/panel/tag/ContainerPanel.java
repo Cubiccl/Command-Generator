@@ -75,6 +75,10 @@ public class ContainerPanel extends CGPanel implements IStateListener<PanelItem>
 	}
 
 	@Override
+	public void onMove(int direction)
+	{}
+
+	@Override
 	public void onMove(int x, int y)
 	{
 		int previous = this.currentSlot;

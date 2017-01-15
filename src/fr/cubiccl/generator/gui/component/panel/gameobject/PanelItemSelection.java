@@ -20,7 +20,7 @@ import fr.cubiccl.generator.gui.component.textfield.CGSpinner;
 
 public class PanelItemSelection extends ConfirmPanel implements ComponentListener
 {
-	public static final int BLOCK_SIZE = 64, GAP = 5;
+	public static final int ITEM_SIZE = 48, GAP = 5;
 	private static final long serialVersionUID = -3259302480348824205L;
 
 	private ObjectCombobox<Item> comboboxItem;
@@ -65,6 +65,15 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 		{
 
 			@Override
+			public void changeSelection(int objectCount)
+			{
+				int newObject = selected + objectCount;
+				if (newObject < 0) newObject = 0;
+				else if (newObject >= items.length) newObject = items.length - 1;
+				this.selectObject(newObject);
+			}
+
+			@Override
 			public int currentSelection()
 			{
 				return selected;
@@ -73,7 +82,7 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 			@Override
 			public void selectObject(int objectIndex)
 			{
-				setSelected(objectIndex, true);
+				if (objectIndex >= 0 && objectIndex < items.length) setSelected(objectIndex, true);
 			}
 		})), gbc);
 		++gbc.gridy;
@@ -86,6 +95,15 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 		{
 
 			@Override
+			public void changeSelection(int objectCount)
+			{
+				int newObject = damage + objectCount;
+				if (newObject < 0) newObject = 0;
+				else if (newObject >= selectedItem().damage.length) newObject = selectedItem().damage.length - 1;
+				this.selectObject(newObject);
+			}
+
+			@Override
 			public int currentSelection()
 			{
 				return damage;
@@ -94,7 +112,7 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 			@Override
 			public void selectObject(int objectIndex)
 			{
-				setDamage(objectIndex);
+				if (objectIndex >= 0 && objectIndex < selectedItem().damage.length) setDamage(objectIndex);
 			}
 		}), gbc);
 
@@ -147,10 +165,10 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 	{
 		int width = this.getWidth() - 80;
 		int height = this.getHeight() - 300;
-		width -= width % (BLOCK_SIZE + GAP);
-		height -= height % (BLOCK_SIZE + GAP);
+		width -= width % (ITEM_SIZE + GAP);
+		height -= height % (ITEM_SIZE + GAP);
 		this.scrollpane.setPreferredSize(new Dimension(width + 15, height));
-		this.itemSelector.setObjectsPerLine(width / (BLOCK_SIZE + GAP));
+		this.itemSelector.setObjectsPerLine(width / (ITEM_SIZE + GAP));
 	}
 
 	@Override

@@ -38,7 +38,7 @@ public class CommandGive extends Command
 	{
 		ItemStack item = this.panelItem.generateItem();
 		return "/give " + this.panelTarget.generateTarget().toCommand() + " " + item.item.idString + " " + item.amount + " " + item.damage + " "
-				+ item.nbt.toCommand();
+				+ item.nbt.valueForCommand();
 	}
 
 }

@@ -17,7 +17,11 @@ import fr.cubiccl.generator.CommandGenerator;
 
 public class FileUtils
 {
-	public static final String folder = "resources/";
+	public static boolean fileExists(String path)
+	{
+		InputStream input = FileUtils.class.getResourceAsStream("/" + path);
+		return input != null;
+	}
 
 	/** @param path - The path to the File.
 	 * @return Each line of the File in a String Array. */
@@ -84,9 +88,9 @@ public class FileUtils
 		{
 			e1.printStackTrace();
 		}
-		
+
 		if (file == null) return;
-		
+
 		if (file.exists()) file.delete();
 		try
 		{
