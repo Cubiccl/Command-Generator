@@ -28,11 +28,11 @@ public class PanelImageList extends JPanel implements MCInventory
 		this.hovering = -1;
 		this.objectSize = DEFAULT_OBJECT_SIZE;
 		this.gap = DEFAULT_GAP;
-		this.setObjectsPerLine(20);
 		this.addMouseListener(this.drawer = new MCInventoryDrawer(this));
 		this.addMouseMotionListener(this.drawer);
 		this.addKeyListener(this.drawer);
 		this.setFocusable(true);
+		this.setObjectsPerLine(20);
 	}
 
 	@Override
@@ -94,7 +94,7 @@ public class PanelImageList extends JPanel implements MCInventory
 
 	public void setObjectsPerLine(int objectsPerLine)
 	{
-		this.objectsPerLine = Math.min(20, objectsPerLine);
+		this.objectsPerLine = Math.max(20, objectsPerLine);
 		int width = this.objectsPerLine * (this.objectSize + this.gap) - this.gap, height = (this.images.length / this.objectsPerLine + 1)
 				* (this.objectSize + this.gap);
 		this.setSize(width, height);
