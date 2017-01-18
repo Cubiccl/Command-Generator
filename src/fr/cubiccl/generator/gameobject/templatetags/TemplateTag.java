@@ -44,7 +44,7 @@ public abstract class TemplateTag implements IStateListener<CGPanel>, BaseObject
 		for (String app : this.applicable)
 		{
 			if (app.equals("ANY")) return true;
-			if (app.equals(id)) return true;
+			if (app.replaceAll("minecraft:", "").equals(id.replaceAll("minecraft:", ""))) return true;
 		}
 		return false;
 	}

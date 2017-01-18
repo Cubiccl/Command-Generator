@@ -41,7 +41,7 @@ public class BlockItem implements NamedObject, BaseObject, NumIdObject, IconedOb
 	public BlockItem(boolean type, int idInt, String idString, int... damage)
 	{
 		this.type = type;
-		this.idString = idString;
+		this.idString = "minecraft:" + idString;
 		this.idInt = idInt;
 		this.damage = damage;
 		this.textureType = 0;

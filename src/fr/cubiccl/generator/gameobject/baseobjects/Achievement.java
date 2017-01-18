@@ -16,7 +16,7 @@ public class Achievement implements NamedObject, BaseObject
 
 	public Achievement(String id, Item textureItem)
 	{
-		this.id = id;
+		this.id = "minecraft:" + id;
 		this.textureItem = textureItem;
 		ObjectRegistry.achievements.register(this);
 	}

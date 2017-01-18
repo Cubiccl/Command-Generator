@@ -20,7 +20,7 @@ public class EffectType implements NamedObject, BaseObject, NumIdObject, IconedO
 	public EffectType(int idInt, String idString)
 	{
 		this.idInt = idInt;
-		this.idString = idString;
+		this.idString = "minecraft:" + idString;
 		ObjectRegistry.effects.register(this);
 	}
 

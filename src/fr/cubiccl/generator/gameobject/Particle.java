@@ -12,7 +12,7 @@ public class Particle implements NamedObject, BaseObject
 
 	public Particle(String id)
 	{
-		this.id = id;
+		this.id = "minecraft:" + id;
 		ObjectRegistry.particles.register(this);
 	}
 

@@ -21,7 +21,7 @@ public class EnchantmentType implements NamedObject, BaseObject, NumIdObject
 	public EnchantmentType(int idInt, String idString, int maxLevel)
 	{
 		this.idInt = idInt;
-		this.idString = idString;
+		this.idString = "minecraft:" + idString;
 		this.maxLevel = maxLevel;
 		ObjectRegistry.enchantments.register(this);
 	}

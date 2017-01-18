@@ -890,6 +890,7 @@ CustomPotionColor,custom:Color,potion:splash_potion:lingering_potion
 CustomPotionEffects,custom:EffectList,potion:splash_potion:lingering_potion
 display,custom:Display,ANY
 ench,custom:EnchantmentList,ANY
+EntityTag,custom:EntityTag,armor_stand:spawn_egg
 Explosion,custom:Explosion,firework_charge
 Fireworks,custom:Fireworks,fireworks
 generation,num0,written_book,named=book^original:copy:copycopy:tattered
@@ -897,6 +898,7 @@ HideFlags,custom:HideFlags,ANY
 pages,custom:Json,writable_book:written_book
 Potion,string,potion:splash_potion:lingering_potion,custom=empty:water:mundane:thick:awkward:night_vision:long_night_vision:invisibility:long_invisibility:leaping:strong_leaping:long_leaping:fire_resistance:long_fire_resistance:swiftness:strong_swiftness:long_swiftness:slowness:long_slowness:water_breathing:long_water_breathing:healing:strong_healing:harming:strong_harming:poison:strong_poison:long_poison:regeneration:strong_regeneration:long_regeneration:strength:strong_strength:long_strength:weakness:long_weakness:luck
 RepairCost,num0,ANY
+SkullOwner,string,skull
 StoredEnchantments,custom:EnchantmentList,enchanted_book
 title,string,written_book
 Unbreakable,num3,list=durability

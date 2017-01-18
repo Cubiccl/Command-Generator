@@ -152,7 +152,9 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public T find(String id)
 	{
-		return registry.get(id);
+		T target = registry.get(id);
+		if (target == null) target = registry.get("minecraft:" + id);
+		return target;
 	}
 
 	@SuppressWarnings("unchecked")

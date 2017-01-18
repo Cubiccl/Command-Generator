@@ -12,7 +12,7 @@ public class Sound implements NamedObject, BaseObject
 
 	public Sound(String id)
 	{
-		this.id = id;
+		this.id = "minecraft:" + id;
 		ObjectRegistry.sounds.register(this);
 	}
 

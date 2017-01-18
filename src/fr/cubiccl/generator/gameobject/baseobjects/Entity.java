@@ -16,7 +16,7 @@ public class Entity implements NamedObject, IconedObject, BaseObject
 
 	public Entity(String id)
 	{
-		this.id = id;
+		this.id = "minecraft:" + id;
 		ObjectRegistry.entities.register(this);
 	}
 

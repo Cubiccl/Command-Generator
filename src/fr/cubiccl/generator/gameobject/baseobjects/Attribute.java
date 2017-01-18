@@ -12,7 +12,7 @@ public class Attribute implements NamedObject, BaseObject
 
 	public Attribute(String id)
 	{
-		this.id = id;
+		this.id = "minecraft:" + id;
 		ObjectRegistry.attributes.register(this);
 	}
 

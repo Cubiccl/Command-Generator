@@ -29,6 +29,7 @@ public class Textures
 	 * @return The corresponding BufferedImage. Returns null if <code>textureID</code> is not recognized or the File can't be found. */
 	public static BufferedImage getTexture(String textureID)
 	{
+		textureID = textureID.replaceAll("minecraft:", "");
 		String path = paths.get(textureID);
 
 		if (path == null)
