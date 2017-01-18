@@ -142,6 +142,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this.spinnerDurability.setValues(this.item.damage);
 		this.spinnerDurability.setText(Integer.toString(itemStack.damage));
 		this.panelTags.setObjectForTags(this.item.idString);
+		this.panelTags.setTags(itemStack.nbt.value());
 	}
 
 	@Override

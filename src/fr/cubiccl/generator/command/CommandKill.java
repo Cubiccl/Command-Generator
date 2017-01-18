@@ -20,7 +20,7 @@ public class CommandKill extends Command
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
-		
+
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.ALL_ENTITIES), gbc);
@@ -31,7 +31,7 @@ public class CommandKill extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/kill " + this.panelTarget.generateTarget().toCommand();
+		return "/kill " + this.panelTarget.generateTarget().toCommand() + " ";
 	}
 
 }

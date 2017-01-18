@@ -160,9 +160,26 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		this.updateTranslations();
 	}
 
+	public void setTags(Tag[] value)
+	{
+		for (int i = 0; i < this.values.length; i++)
+			this.values[i] = null;
+		for (Tag t : value)
+		{
+			for (int i = 0; i < this.tags.length; ++i)
+			{
+				if (this.tags[i].id().equals(t.id()))
+				{
+					this.values[i] = t;
+					break;
+				}
+			}
+		}
+	}
+
 	private void updateDisplay()
 	{
-		if (this.listTags.getSelectedIndex() == -1) return;
+		if (this.listTags.getSelectedIndex() == -1 || this.shownTags.size() == -1) return;
 		Tag value = this.selectedValue();
 		if (value == null) this.areaValue.setText(this.getSelectedTag().description() + "\n" + Lang.translate("tag.no_value"));
 		else this.areaValue.setText(value.template.description() + "\n" + value.toCommand());

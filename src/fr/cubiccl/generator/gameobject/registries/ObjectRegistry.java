@@ -154,6 +154,7 @@ public class ObjectRegistry<T extends BaseObject>
 	{
 		T target = registry.get(id);
 		if (target == null) target = registry.get("minecraft:" + id);
+		if (target == null) target = registry.get(id.replaceAll("minecraft:", ""));
 		return target;
 	}
 

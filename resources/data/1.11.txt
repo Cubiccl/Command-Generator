@@ -826,6 +826,7 @@ BrewTime,num0,brewing_stand
 BurnTime,num2,furnace:lit_furnace
 Command,string,chain_command_block:command_block:repeating_command_block
 CommandStats,custom:CommandStats,chain_command_block:command_block:repeating_command_block:sign:standing_sign:wall_sign
+conditionMet,num3,command_block:chain_command_block:repeating_command_block
 CookTime,num2,furnace:lit_furnace
 CookTimeTotal,num2,furnace:lit_furnace
 CustomName,string,brewing_stand:chest:chain_command_block:command_block:dispenser:dropper:enchanting_table:furnace:hopper:lit_furnace:repeating_command_block:trapped_chest
@@ -855,9 +856,9 @@ name,string,structure_block
 note,num1,noteblock
 OutputSignal,num0,comparator:powered_comparator:unpowered_comparator
 Patterns,custom:Patterns,banner:standing_banner:wall_banner
-posX,num0,piston_extension
-posY,num0,piston_extension
-posZ,num0,piston_extension
+posX,num0,structure_block
+posY,num0,structure_block
+posZ,num0,structure_block
 powered,num3,command_block:chain_command_block:noteblock:repeating_command_block
 Primary,custom:effect,beacon
 progress,num5,piston_extension
@@ -866,11 +867,13 @@ RequiredPlayerRange,num2,mob_spawner
 Rot,num1,skull,named=rotation^s:ssw:sw:wsw:w:nw:nnw:n:nne:ene:e:ese:se:sse
 rotation,string,structure_block,custom=NONE:CLOCKWISE_90:CLOCKWISE_180:COUNTERCLOCKWISE_90
 Secondary,custom:effect,beacon
-sizeX,num0,piston_extension
-sizeY,num0,piston_extension
-sizeZ,num0,piston_extension
+sizeX,num0,structure_block
+sizeY,num0,structure_block
+sizeZ,num0,structure_block
 SkullType,num1,skull,named=skull^skeleton:wither:zombie:player:creeper:dragon
 SpawnCount,num2,mob_spawner
+SpawnData,custom:EntityTag,mob_spawner
+SpawnPotentials,custom:SpawnPotentials,mob_spawner
 SpawnRange,num2,mob_spawner
 SuccessCount,num0,command_block:chain_command_block:repeating_command_block
 Text1,custom:Text,sign:standing_sign:wall_sign

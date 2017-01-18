@@ -40,8 +40,11 @@ public final class Tags
 	public static final TemplateNumber ENCHANTMENT_ID = new TemplateNumber("id", UNAVAILABLE, TagNumber.SHORT);
 	public static final TemplateNumber ENCHANTMENT_LVL = new TemplateNumber("lvl", UNAVAILABLE, TagNumber.SHORT);
 
-	public static final DefaultCompound ENTITY = new DefaultCompound("entity");
-	public static final TemplateString ENTITY_TYPE = new TemplateString("type", UNAVAILABLE);
+	public static final DefaultCompound ENTITY = new DefaultCompound("");
+	public static final TemplateString ENTITY_ID = new TemplateString("id", UNAVAILABLE);
+	public static final DefaultCompound ENTITY_PROPERTIES = new DefaultCompound("Properties");
+	public static final TemplateString ENTITY_TYPE = new TemplateString("Type", UNAVAILABLE);
+	public static final TemplateNumber ENTITY_WEIGHT = new TemplateNumber("Weight", UNAVAILABLE);
 
 	public static final TemplateString EVENT_ACTION = new TemplateString("action", UNAVAILABLE);
 	public static final DefaultCompound EVENT_CLICK = new DefaultCompound("ClickEvent");

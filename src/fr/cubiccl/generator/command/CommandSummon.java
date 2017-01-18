@@ -2,6 +2,7 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.LivingEntity;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEntity;
@@ -35,7 +36,8 @@ public class CommandSummon extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/summon " + this.panelEntity.selectedEntity().id + " " + this.panelCoordinates.generateCoordinates().toCommand();
+		LivingEntity e = this.panelEntity.generateEntity();
+		return "/summon " + e.entity.id + " " + this.panelCoordinates.generateCoordinates().toCommand() + " " + e.nbt.valueForCommand();
 	}
 
 }

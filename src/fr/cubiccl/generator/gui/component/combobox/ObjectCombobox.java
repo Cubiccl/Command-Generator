@@ -24,6 +24,11 @@ public class ObjectCombobox<T extends NamedObject> extends SearchCombobox implem
 		return this.objects[0];
 	}
 
+	public void setSelected(T object)
+	{
+		this.setSelectedItem(object.name().toString());
+	}
+
 	public void setValues(@SuppressWarnings("unchecked") T... objects)
 	{
 		this.objects = objects;
