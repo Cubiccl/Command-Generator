@@ -22,7 +22,7 @@ public class BlockItem implements NamedObject
 	/** Text ID of this Block/Item. */
 	public final String idString;
 	/** Defines how to handle language and texture. */
-	public int langType, textureType;
+	public int langType, textureType; // TODO remove langtype?
 	/** True if this is an Item, false if this is a Block. */
 	public final boolean type;
 

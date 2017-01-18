@@ -33,6 +33,7 @@ public class PanelEffect extends CGPanel implements ActionListener
 		EffectType[] effects = ObjectRegistry.getEffectTypes();
 
 		GridBagConstraints gbc = this.createGridBagLayout();
+		gbc.anchor = GridBagConstraints.WEST;
 		this.add(new CGLabel("effect.select").setHasColumn(true), gbc);
 		++gbc.gridx;
 		this.add(this.comboboxEffect = new ObjectCombobox<EffectType>(effects), gbc);
@@ -42,6 +43,7 @@ public class PanelEffect extends CGPanel implements ActionListener
 		gbc.gridx = 0;
 		++gbc.gridy;
 		gbc.gridwidth = 3;
+		gbc.anchor = GridBagConstraints.NORTH;
 		this.add((this.entryDuration = new CGEntry(new Text("effect.duration"), "0", Text.INTEGER)).container, gbc);
 		++gbc.gridy;
 		this.add((this.entryLevel = new CGEntry(new Text("effect.level"), "0", Text.INTEGER)).container, gbc);

@@ -56,6 +56,32 @@ public class ObjectRegistry
 		}
 	}
 
+	public static void checkNames()
+	{
+		for (Block block : blocks.values())
+		{
+			block.mainName().toString();
+			for (int d : block.damage)
+				block.name(d).toString();
+		}
+		for (Item item : items.values())
+		{
+			item.mainName().toString();
+			for (int d : item.damage)
+				item.name(d).toString();
+		}
+		for (Entity entity : entities.values())
+			entity.name().toString();
+		for (Achievement achievement : achievements.values())
+			achievement.name().toString();
+		for (EffectType effect : effects.values())
+			effect.name().toString();
+		for (EnchantmentType enchantment : enchantments.values())
+			enchantment.name().toString();
+		for (Attribute attribute : attributes.values())
+			attribute.name().toString();
+	}
+
 	public static void createAchievements(String[] data)
 	{
 		CommandGenerator.log("Creating Achievements...");
@@ -90,10 +116,12 @@ public class ObjectRegistry
 			String idString = values[1], damage = null;
 			int idInt = Integer.parseInt(values[0]), maxDamage = 0, langType = 0, textureType = 0;
 			boolean item = true;
+			String custom = null;
 
 			for (String a : values)
 			{
-				if (a.startsWith("damage=")) maxDamage = Integer.parseInt(a.substring("damage=".length()));
+				if (a.startsWith("custom=")) custom = a.substring("custom=".length());
+				else if (a.startsWith("damage=")) maxDamage = Integer.parseInt(a.substring("damage=".length()));
 				else if (a.startsWith("lang=")) langType = Integer.parseInt(a.substring("lang=".length()));
 				else if (a.startsWith("texture=")) textureType = Integer.parseInt(a.substring("texture=".length()));
 				else if (a.startsWith("damage_custom=")) damage = a.substring("damage_custom=".length());
@@ -102,18 +130,38 @@ public class ObjectRegistry
 			}
 
 			Block b;
-			if (damage == null) b = new Block(idInt, idString, maxDamage);
+			if (custom != null) try
+			{
+				b = (Block) Class.forName("fr.cubiccl.generator.gameobject.baseobjects.block.Block" + custom).getConstructors()[0].newInstance(idInt, idString);
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+				System.out.println("Couldn't create custom Block: " + idString);
+				continue;
+			}
+			else if (damage == null) b = new Block(idInt, idString, maxDamage);
 			else b = new Block(idInt, idString, createDamage(damage));
 			b.langType = langType;
-			b.textureType = textureType;
+			if (textureType != 0) b.textureType = textureType;
 
 			if (item)
 			{
 				Item i;
-				if (damage == null) i = new Item(idInt, idString, maxDamage);
+				if (custom != null) try
+				{
+					i = (Item) Class.forName("fr.cubiccl.generator.gameobject.baseobjects.item.Item" + custom).getConstructors()[0]
+							.newInstance(idInt, idString);
+				} catch (Exception e)
+				{
+					e.printStackTrace();
+					System.out.println("Couldn't create custom Item: " + idString);
+					continue;
+				}
+				else if (damage == null) i = new Item(idInt, idString, maxDamage);
 				else i = new Item(idInt, idString, createDamage(damage));
 				i.langType = langType;
-				i.textureType = textureType;
+				if (textureType != 0) i.textureType = textureType;
+
 				addToLists(idString, "placeable");
 			}
 		}
@@ -185,8 +233,7 @@ public class ObjectRegistry
 		{
 			TemplateItemId t = new TemplateItemId(id, tagType, applicable);
 			if (data.length == 4) t.setLimited(data[3].substring("limited=".length()).split(":"));
-		}
-		else try
+		} else try
 		{
 			Class<?> c = Class.forName("fr.cubiccl.generator.gameobject.templatetags.custom.Template" + customTagType);
 			c.getConstructors()[0].newInstance(id, tagType, applicable);
@@ -336,9 +383,7 @@ public class ObjectRegistry
 					break;
 
 				case 8:
-					String[] s = line.split(",");
-					for (String sound : s)
-						sounds.add(sound);
+					sounds.add(line);
 					break;
 
 				case 9:
@@ -389,8 +434,12 @@ public class ObjectRegistry
 	{
 		CommandGenerator.log("Creating Sounds...");
 		sounds.clear();
-		for (String id : data)
-			new Sound(id);
+		for (String category : data)
+		{
+			String prefix = category.substring(0, category.indexOf(':'));
+			for (String id : category.substring(category.indexOf(':') + 1).split(","))
+				new Sound(prefix + "." + id);
+		}
 		CommandGenerator.log("Successfully created " + sounds.size() + " sounds.");
 	}
 

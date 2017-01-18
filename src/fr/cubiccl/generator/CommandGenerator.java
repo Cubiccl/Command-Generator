@@ -99,6 +99,7 @@ public class CommandGenerator
 
 		LoadingFrame frame = new LoadingFrame(5);
 		ObjectRegistry.createObjects(frame);
+		ObjectRegistry.checkNames();
 		ObjectRegistry.loadTextures(frame);
 		Commands.createCommands(frame);
 		frame.dispose();

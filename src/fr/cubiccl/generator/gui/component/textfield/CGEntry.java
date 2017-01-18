@@ -22,7 +22,7 @@ public class CGEntry extends CGTextField
 	{
 		super(suggestedText);
 		this.setText(defaultValue);
-		this.label = new CGLabel(text);
+		this.label = new CGLabel(text).setHasColumn(true);
 
 		this.container = new CPanel();
 		GridBagConstraints gbc = this.container.createGridBagLayout();

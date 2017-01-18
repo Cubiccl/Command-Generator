@@ -22,16 +22,18 @@ public class PanelEntity extends CGPanel implements ActionListener
 	{
 		super(titleID);
 		GridBagConstraints gbc = this.createGridBagLayout();
+		gbc.anchor = GridBagConstraints.WEST;
 
-		this.add(this.comboboxEntity = new ObjectCombobox<Entity>(ObjectRegistry.getEntities()), gbc);
-		++gbc.gridy;
-		this.add(this.labelImage = new ImageLabel(this.selectedEntity().texture()), gbc);
+		this.add(this.labelImage = new ImageLabel(), gbc);
+		++gbc.gridx;
+		this.add((this.comboboxEntity = new ObjectCombobox<Entity>(ObjectRegistry.getEntities())).container, gbc);
 
+		this.labelImage.setImage(this.selectedEntity().texture());
 		this.comboboxEntity.addActionListener(this);
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0)
+	public void actionPerformed(ActionEvent e)
 	{
 		this.labelImage.setImage(this.selectedEntity().texture());
 	}

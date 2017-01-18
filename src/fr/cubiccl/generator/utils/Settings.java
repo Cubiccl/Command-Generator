@@ -20,9 +20,10 @@ public class Settings
 
 	public enum Version
 	{
-		v110("1.10"),
-		V18("1.8"),
-		V19("1.9");
+		v1d10("1.10"),
+		v1d11("1.11"),
+		V1d8("1.8"),
+		V1d9("1.9");
 
 		public final String name;
 
@@ -38,7 +39,7 @@ public class Settings
 	public static void createSettings()
 	{
 		setLanguage(Language.ENGLISH);
-		setVersion(Version.v110);
+		setVersion(Version.v1d11);
 	}
 
 	public static Language getLanguage()
@@ -46,15 +47,15 @@ public class Settings
 		return language;
 	}
 
+	public static Version getVersion()
+	{
+		return version;
+	}
+
 	public static void setLanguage(Language newLanguage)
 	{
 		language = newLanguage;
 		CommandGenerator.updateLanguage();
-	}
-
-	public static Version getVersion()
-	{
-		return version;
 	}
 
 	public static void setVersion(Version newVersion)
