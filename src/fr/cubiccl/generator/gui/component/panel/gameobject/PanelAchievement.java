@@ -4,8 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Achievement;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -19,7 +19,7 @@ public class PanelAchievement extends CGPanel implements ActionListener
 
 	public PanelAchievement()
 	{
-		Achievement[] achievements = ObjectRegistry.getAchievements();
+		Achievement[] achievements = ObjectRegistry.achievements.list();
 		GridBagConstraints gbc = this.createGridBagLayout();
 		this.comboboxAchievement = new ObjectCombobox<Achievement>(achievements);
 

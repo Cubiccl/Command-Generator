@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
@@ -18,7 +19,7 @@ public class AttributeModifier
 
 	public static AttributeModifier createFrom(TagCompound tag)
 	{
-		Attribute a = ObjectRegistry.getAttributes()[0];
+		Attribute a = ObjectRegistry.attributes.first();
 		String n = "", s = SLOTS[0];
 		byte o = OP_ADD;
 		double am = 0;
@@ -26,7 +27,7 @@ public class AttributeModifier
 
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.ATTRIBUTE_ATTRIBUTE_NAME.id)) a = ObjectRegistry.getAttributeFromID(((TagString) t).value());
+			if (t.id().equals(Tags.ATTRIBUTE_ATTRIBUTE_NAME.id)) a = ObjectRegistry.attributes.find(((TagString) t).value());
 			if (t.id().equals(Tags.ATTRIBUTE_MODIFIER_NAME.id)) n = ((TagString) t).value();
 			if (t.id().equals(Tags.ATTRIBUTE_SLOT.id)) s = ((TagString) t).value();
 			if (t.id().equals(Tags.ATTRIBUTE_OPERATION.id)) o = (byte) (int) ((TagNumber) t).value();

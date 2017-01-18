@@ -2,8 +2,8 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.Sound;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -41,7 +41,7 @@ public class CommandPlaysound extends Command
 		++gbc.gridy;
 		panel.add(new CGLabel("playsound.sound").setHasColumn(true), gbc);
 		++gbc.gridx;
-		panel.add((this.comboboxSound = new ObjectCombobox<Sound>(ObjectRegistry.getSounds())).container, gbc);
+		panel.add((this.comboboxSound = new ObjectCombobox<Sound>(ObjectRegistry.sounds.list())).container, gbc);
 		--gbc.gridx;
 		++gbc.gridy;
 		panel.add(new CGLabel("playsound.source").setHasColumn(true), gbc);

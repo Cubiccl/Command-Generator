@@ -1,10 +1,10 @@
 package fr.cubiccl.generator.gameobject.baseobjects;
 
 import fr.cubiccl.generator.gameobject.NamedObject;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 
-public class Attribute implements NamedObject
+public class Attribute implements NamedObject, BaseObject
 {
 
 	/** This Attribute's ID. */
@@ -13,7 +13,13 @@ public class Attribute implements NamedObject
 	public Attribute(String id)
 	{
 		this.id = id;
-		ObjectRegistry.registerAttribute(this);
+		ObjectRegistry.attributes.register(this);
+	}
+
+	@Override
+	public String id()
+	{
+		return this.id;
 	}
 
 	@Override

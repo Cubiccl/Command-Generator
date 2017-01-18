@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.tags.TagString;
@@ -12,7 +13,7 @@ public class ItemStack
 
 	public static ItemStack createFrom(TagCompound tag)
 	{
-		Item item = ObjectRegistry.getItemFromID(((TagString) tag.getTagFromId(Tags.ITEM_ID.id)).value());
+		Item item = ObjectRegistry.items.find(((TagString) tag.getTagFromId(Tags.ITEM_ID.id)).value());
 		int amount = ((TagNumber) tag.getTagFromId(Tags.ITEM_COUNT.id)).value();
 		int data = ((TagNumber) tag.getTagFromId(Tags.ITEM_DAMAGE.id)).value();
 		int slot = ((TagNumber) tag.getTagFromId(Tags.ITEM_SLOT.id)).value();

@@ -3,13 +3,14 @@ package fr.cubiccl.generator.gameobject.templatetags;
 import java.util.Stack;
 
 import fr.cubiccl.generator.CommandGenerator;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.IStateListener;
 import fr.cubiccl.generator.utils.Text;
 
-public abstract class TemplateTag implements IStateListener<CGPanel>
+public abstract class TemplateTag implements IStateListener<CGPanel>, BaseObject
 {
 	public static final String[] TYPE_NAMES =
 	{ "block", "item", "entity" };
@@ -22,12 +23,14 @@ public abstract class TemplateTag implements IStateListener<CGPanel>
 
 	public TemplateTag(String id, byte tagType, String... applicable)
 	{
-		super();
 		this.id = id;
 		this.type = tagType;
 		this.applicable = applicable;
 		this.creationListeners = new Stack<ITagCreationListener>();
-		ObjectRegistry.registerTag(this, tagType);
+
+		if (this.type == Tag.BLOCK) ObjectRegistry.blockTags.register(this);
+		else if (this.type == Tag.ITEM) ObjectRegistry.itemTags.register(this);
+		else if (this.type == Tag.ENTITY) ObjectRegistry.entityTags.register(this);
 	}
 
 	public void askValue(String objectId, Tag previousValue, ITagCreationListener panelTags)
@@ -54,6 +57,12 @@ public abstract class TemplateTag implements IStateListener<CGPanel>
 	}
 
 	public abstract Tag generateTag(CGPanel panel);
+
+	@Override
+	public String id()
+	{
+		return this.id;
+	}
 
 	protected boolean isInputValid(CGPanel panel)
 	{

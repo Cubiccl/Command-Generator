@@ -1,7 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
@@ -24,12 +24,12 @@ public class TemplateItemId extends TemplateString
 	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
 		PanelBlockSelection p = new PanelBlockSelection();
-		if (this.ids != null) p.setBlocks(ObjectRegistry.getBlocks(this.ids));
+		if (this.ids != null) p.setBlocks(ObjectRegistry.blocks.find(this.ids));
 
 		Block previous = p.selectedBlock();
 		if (previousValue != null)
 		{
-			previous = ObjectRegistry.getBlockFromID(((TagString) previousValue).value());
+			previous = ObjectRegistry.blocks.find(((TagString) previousValue).value());
 			p.setSelected(previous);
 		}
 		if (this.damage != -1)

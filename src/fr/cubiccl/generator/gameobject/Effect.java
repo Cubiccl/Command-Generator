@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
 import fr.cubiccl.generator.gameobject.baseobjects.EffectType;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
@@ -14,10 +15,10 @@ public class Effect
 	{
 		int a = 0, d = 0;
 		boolean h = false;
-		EffectType e = ObjectRegistry.getEffectTypes()[0];
+		EffectType e = ObjectRegistry.effects.first();
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.EFFECT_ID.id)) e = ObjectRegistry.getEffectFromID(((TagNumber) t).value());
+			if (t.id().equals(Tags.EFFECT_ID.id)) e = ObjectRegistry.effects.find(((TagNumber) t).value());
 			if (t.id().equals(Tags.EFFECT_DURATION.id)) d = ((TagNumber) t).value();
 			if (t.id().equals(Tags.EFFECT_AMPLIFIER.id)) a = ((TagNumber) t).value();
 			if (t.id().equals(Tags.EFFECT_PARTICLES.id)) h = ((TagNumber) t).value() == 1;

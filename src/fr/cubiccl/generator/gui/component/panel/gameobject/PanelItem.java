@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.ItemStack;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -36,7 +36,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 
 	public PanelItem(String titleID)
 	{
-		this(titleID, ObjectRegistry.getItems(ObjectRegistry.SORT_NUMERICALLY));
+		this(titleID, ObjectRegistry.items.list(ObjectRegistry.SORT_NUMERICALLY));
 	}
 
 	public PanelItem(String titleID, boolean hasData, Item[] items)

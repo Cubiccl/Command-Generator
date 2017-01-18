@@ -1,8 +1,8 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
 import fr.cubiccl.generator.gameobject.ItemStack;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
@@ -24,12 +24,11 @@ public class TemplateItem extends TemplateCompound
 	@Override
 	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
-		Item[] items = ObjectRegistry.getItems(ObjectRegistry.SORT_NUMERICALLY);
-		if (this.ids != null) items = ObjectRegistry.getItems(this.ids);
+		Item[] items = this.ids != null ? ObjectRegistry.items.find(this.ids) : ObjectRegistry.items.list(ObjectRegistry.SORT_NUMERICALLY);
 
 		PanelItem p = new PanelItem(null, items);
 
-		if (this.autoselect != null) p.setupFrom(new ItemStack(ObjectRegistry.getItemFromID(this.autoselect), 0, 1));
+		if (this.autoselect != null) p.setupFrom(new ItemStack(ObjectRegistry.items.find(this.autoselect), 0, 1));
 		if (previousValue != null) p.setupFrom(ItemStack.createFrom((TagCompound) previousValue));
 		p.setName(this.title());
 		return p;

@@ -5,8 +5,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.AttributeModifier;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -39,7 +39,7 @@ public class PanelAttributeModifier extends CGPanel
 		++gbc.gridy;
 		this.add(new CGLabel("attribute.modifier.attribute").setHasColumn(true), gbc);
 		++gbc.gridx;
-		this.add(this.comboboxAttribute = new ObjectCombobox<Attribute>(ObjectRegistry.getAttributes()), gbc);
+		this.add(this.comboboxAttribute = new ObjectCombobox<Attribute>(ObjectRegistry.attributes.list()), gbc);
 
 		--gbc.gridx;
 		++gbc.gridy;

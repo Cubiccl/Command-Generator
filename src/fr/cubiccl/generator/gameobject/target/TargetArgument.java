@@ -5,9 +5,10 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import fr.cubi.cubigui.CPanel;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
+import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -184,11 +185,11 @@ public class TargetArgument
 			}
 			if (this == TYPE)
 			{
-				Entity[] entities = ObjectRegistry.getEntities();
+				Entity[] entities = ObjectRegistry.entities.list();
 				String[] ids = new String[entities.length];
 				for (int i = 0; i < ids.length; ++i)
 					ids[i] = entities[i].id;
-				panel.add(new OptionCombobox("entity", ids), gbc);
+				panel.add(new ObjectCombobox<Entity>(entities), gbc);
 			}
 			--gbc.gridx;
 			++gbc.gridy;

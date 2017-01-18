@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.gui.Window;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -98,9 +98,7 @@ public class CommandGenerator
 		log("---- Creating objects ----");
 
 		LoadingFrame frame = new LoadingFrame(5);
-		ObjectRegistry.createObjects(frame);
-		ObjectRegistry.checkNames();
-		ObjectRegistry.loadTextures(frame);
+		ObjectCreator.createObjects(frame);
 		Commands.createCommands(frame);
 		frame.dispose();
 	}

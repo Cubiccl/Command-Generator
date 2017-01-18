@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.LivingEntity;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -26,7 +26,7 @@ public class PanelEntity extends CGPanel implements ActionListener
 
 		this.add(this.labelImage = new ImageLabel(), gbc);
 		++gbc.gridx;
-		this.add((this.comboboxEntity = new ObjectCombobox<Entity>(ObjectRegistry.getEntities())).container, gbc);
+		this.add((this.comboboxEntity = new ObjectCombobox<Entity>(ObjectRegistry.entities.list())).container, gbc);
 
 		this.labelImage.setImage(this.selectedEntity().texture());
 		this.comboboxEntity.addActionListener(this);

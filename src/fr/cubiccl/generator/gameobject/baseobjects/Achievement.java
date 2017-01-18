@@ -3,10 +3,10 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 import java.awt.image.BufferedImage;
 
 import fr.cubiccl.generator.gameobject.NamedObject;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 
-public class Achievement implements NamedObject
+public class Achievement implements NamedObject, BaseObject
 {
 
 	/** The ID of this Achievement. */
@@ -18,7 +18,13 @@ public class Achievement implements NamedObject
 	{
 		this.id = id;
 		this.textureItem = textureItem;
-		ObjectRegistry.registerAchievement(this);
+		ObjectRegistry.achievements.register(this);
+	}
+
+	@Override
+	public String id()
+	{
+		return this.id;
 	}
 
 	@Override

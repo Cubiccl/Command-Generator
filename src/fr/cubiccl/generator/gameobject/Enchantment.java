@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
 import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
@@ -12,11 +13,11 @@ public class Enchantment
 
 	public static Enchantment createFrom(TagCompound tag)
 	{
-		EnchantmentType type = ObjectRegistry.getEnchantmentTypes()[0];
+		EnchantmentType type = ObjectRegistry.enchantments.first();
 		int level = 1;
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.ENCHANTMENT_ID.id)) type = ObjectRegistry.getEnchantmentFromID(((TagNumber) t).value());
+			if (t.id().equals(Tags.ENCHANTMENT_ID.id)) type = ObjectRegistry.enchantments.find(((TagNumber) t).value());
 			if (t.id().equals(Tags.ENCHANTMENT_LVL.id)) level = ((TagNumber) t).value();
 		}
 		return new Enchantment(type, level);

@@ -11,7 +11,7 @@ import javax.swing.event.ListSelectionListener;
 
 import fr.cubi.cubigui.CTextArea;
 import fr.cubi.cubigui.RoundedCornerBorder;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
@@ -42,7 +42,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 
 	public PanelTags(String titleID, int tagType)
 	{
-		this(titleID, ObjectRegistry.getTags(tagType));
+		this(titleID, ObjectRegistry.listTags(tagType));
 	}
 
 	public PanelTags(String titleID, TemplateTag... tags)

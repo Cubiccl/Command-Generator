@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.baseobjects;
 
+import fr.cubiccl.generator.utils.Text;
+
 public class Item extends BlockItem
 {
 	public boolean hasDurability = false;
@@ -17,6 +19,12 @@ public class Item extends BlockItem
 	public Item(int idInt, String idString, int... damage)
 	{
 		super(ITEM, idInt, idString, damage);
+	}
+
+	public Text name(int damage)
+	{
+		if (this.hasDurability) return this.getName(this.idString);
+		return super.name(damage);
 	}
 
 }

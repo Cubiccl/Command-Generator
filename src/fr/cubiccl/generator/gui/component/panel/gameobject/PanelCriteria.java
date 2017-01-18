@@ -5,7 +5,7 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
@@ -58,15 +58,15 @@ public class PanelCriteria extends CGPanel implements ActionListener
 			else if (base.equals("stat")) this.setCurrentDetail(this.comboboxDetail = new OptionCombobox("stat", STAT));
 			else if (base.equals("stat.breakItem"))
 			{
-				this.setCurrentDetail(this.panelItem = new PanelItem(null, ObjectRegistry.getItemList("break")));
+				this.setCurrentDetail(this.panelItem = new PanelItem(null, ObjectRegistry.items.list("break")));
 				this.panelItem.setEnabledContent(false, false);
 			} else if (base.equals("stat.useItem"))
 			{
-				this.setCurrentDetail(this.panelItem = new PanelItem(null, ObjectRegistry.getItemList("use")));
+				this.setCurrentDetail(this.panelItem = new PanelItem(null, ObjectRegistry.items.list("use")));
 				this.panelItem.setEnabledContent(false, false);
 			} else if (base.equals("stat.craftItem"))
 			{
-				this.setCurrentDetail(this.panelItem = new PanelItem(null, ObjectRegistry.getItemList("craft")));
+				this.setCurrentDetail(this.panelItem = new PanelItem(null, ObjectRegistry.items.list("craft")));
 				this.panelItem.setEnabledContent(false, false);
 			} else if (base.equals("stat.drop") || base.equals("stat.pickup"))
 			{

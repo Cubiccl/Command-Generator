@@ -5,9 +5,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.CommandGenerator;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -39,7 +39,7 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 	{
 		super(titleID);
 		this.hasData = hasData;
-		this.block = ObjectRegistry.getBlocks(ObjectRegistry.SORT_NUMERICALLY)[1];
+		this.block = ObjectRegistry.blocks.find("stone");
 		this.damage = 0;
 
 		GridBagConstraints gbc = this.createGridBagLayout();

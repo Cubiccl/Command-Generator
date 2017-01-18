@@ -4,8 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.Particle;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -54,7 +54,7 @@ public class CommandParticle extends Command implements ActionListener
 		gbc.fill = GridBagConstraints.NONE;
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
-		panel.add((this.comboboxParticle = new ObjectCombobox<Particle>(ObjectRegistry.getParticles())).container, gbc);
+		panel.add((this.comboboxParticle = new ObjectCombobox<Particle>(ObjectRegistry.particles.list())).container, gbc);
 		++gbc.gridy;
 		panel.add(this.labelParticle = new CGLabel("particle." + this.comboboxParticle.getSelectedObject().id), gbc);
 		++gbc.gridy;

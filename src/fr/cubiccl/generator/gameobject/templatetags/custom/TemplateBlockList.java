@@ -3,8 +3,8 @@ package fr.cubiccl.generator.gameobject.templatetags.custom;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.tags.TagString;
@@ -91,7 +91,7 @@ public class TemplateBlockList extends TemplateList
 			TagList t = ((TagList) previousValue);
 			blocks = new Block[t.size()];
 			for (int i = 0; i < blocks.length; ++i)
-				blocks[i] = ObjectRegistry.getBlockFromID((String) t.getTag(i).value());
+				blocks[i] = ObjectRegistry.blocks.find((String) t.getTag(i).value());
 		}
 		PanelObjectList p = new PanelObjectList(new BlockList(blocks));
 		p.setName(this.title());

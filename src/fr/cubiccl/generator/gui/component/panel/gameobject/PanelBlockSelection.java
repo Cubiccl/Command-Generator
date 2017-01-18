@@ -8,8 +8,8 @@ import java.awt.event.ComponentListener;
 import java.awt.image.BufferedImage;
 
 import fr.cubi.cubigui.CPanel;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.interfaces.IImageSelectionListener;
@@ -44,7 +44,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		this.hasData = hasData;
 		this.selected = 0;
 		this.damage = 0;
-		this.blocks = ObjectRegistry.getBlocks(ObjectRegistry.SORT_NUMERICALLY);
+		this.blocks = ObjectRegistry.blocks.list(ObjectRegistry.SORT_NUMERICALLY);
 
 		CPanel p = new CPanel();
 		GridBagConstraints gbc = p.createGridBagLayout();

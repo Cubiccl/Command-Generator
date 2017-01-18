@@ -3,8 +3,8 @@ package fr.cubiccl.generator.gui.component.panel.gameobject;
 import java.awt.GridBagConstraints;
 
 import fr.cubiccl.generator.gameobject.Enchantment;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -26,7 +26,7 @@ public class PanelEnchantment extends CGPanel
 	{
 		super("enchant.title");
 		this.checkMaximum = checkMaximum;
-		EnchantmentType[] enchants = ObjectRegistry.getEnchantmentTypes();
+		EnchantmentType[] enchants = ObjectRegistry.enchantments.list();
 
 		GridBagConstraints gbc = this.createGridBagLayout();
 		this.add(new CGLabel("enchant.select").setHasColumn(true), gbc);

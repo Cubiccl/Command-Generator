@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.Effect;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.baseobjects.EffectType;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -30,7 +30,7 @@ public class PanelEffect extends CGPanel implements ActionListener
 	public PanelEffect()
 	{
 		super("effect.title");
-		EffectType[] effects = ObjectRegistry.getEffectTypes();
+		EffectType[] effects = ObjectRegistry.effects.list();
 
 		GridBagConstraints gbc = this.createGridBagLayout();
 		gbc.anchor = GridBagConstraints.WEST;

@@ -2,12 +2,13 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.image.BufferedImage;
 
+import fr.cubiccl.generator.gameobject.IconedObject;
 import fr.cubiccl.generator.gameobject.NamedObject;
-import fr.cubiccl.generator.gameobject.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
 
-public class Entity implements NamedObject
+public class Entity implements NamedObject, IconedObject, BaseObject
 {
 
 	/** This Entity's ID. */
@@ -16,7 +17,13 @@ public class Entity implements NamedObject
 	public Entity(String id)
 	{
 		this.id = id;
-		ObjectRegistry.registerEntity(this);
+		ObjectRegistry.entities.register(this);
+	}
+
+	@Override
+	public String id()
+	{
+		return this.id;
 	}
 
 	@Override
@@ -25,6 +32,7 @@ public class Entity implements NamedObject
 		return new Text("entity." + this.id);
 	}
 
+	@Override
 	public BufferedImage texture()
 	{
 		return Textures.getTexture("entity." + this.id);
