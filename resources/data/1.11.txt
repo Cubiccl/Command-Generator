@@ -540,9 +540,9 @@ item,xp_orb,leash_knot,painting,item_frame,armor_stand,evocation_fangs,ender_cry
 egg,arrow,snowball,fireball,small_fireball,ender_pearl,eye_of_ender_signal,potion,xp_bottle,wither_skull,fireworks_rocket,spectral_arrow,shulker_bullet,dragon_fireball,llama_spit
 tnt,falling_block,lightning_bolt
 commandblock_minecart,boat,minecart,chest_minecart,furnace_minecart,tnt_minecart,hopper_minecart,spawner_minecart
-elder_guardian,wither_skeleton,stray,husk,zombie_villager,evocation_villager,vex,vindication_villager
-creeper,skeleton,spider,giant,zombie,slime,ghast,zombie_pigman,enderman,cave_spider,silverfish,blaze,magma_cube,ender_dragon,wither,witch,endermite,guardian,shulker
-skeleton_horse,zombie_horse,donkey,mule,bat,pig,sheep,cow,chicken,squid,wolf,mooshroom,snowman,ocelot,villager_golem,horse,rabbit,polar_bear,llama,villager
+elder_guardian,wither_skeleton,stray,husk,zombie_villager,evocation_villager,vex,vindication_villager:mob
+creeper,skeleton,spider,giant,zombie,slime,ghast,zombie_pigman,enderman,cave_spider,silverfish,blaze,magma_cube,ender_dragon,wither,witch,endermite,guardian,shulker:mob
+skeleton_horse,zombie_horse,donkey,mule,bat,pig,sheep,cow,chicken,squid,wolf,mooshroom,snowman,ocelot,villager_golem,horse,rabbit,polar_bear,llama,villager:mob
 
 [EFFECTS]
 1,speed
@@ -908,21 +908,38 @@ Unbreakable,num3,list=durability
 
 // INTEGER = 0, BYTE = 1, SHORT = 2, BYTE_BOOLEAN = 3, LONG = 4, FLOAT = 5, DOUBLE = 6
 [ENTITYTAGS]
+AbsorptionAmount,num5,list=mob
+ActiveEffects,custom:EffectList,list=mob
 Air,num2,ANY
+ArmorDropChances,custom:DropChances4,list=mob
+CanPickUpLoot,num3,list=mob
 CommandStats,custom:CommandStats,ANY
 CustomName,string,ANY
 CustomNameVisible,num3,ANY
+DeathLootTable,string,list=mob
+DeathLootTableSeed,num4,list=mob
+DeathTime,num2,list=mob
 FallDistance,num5,ANY
+FallFlying,num3,list=mob
 Fire,num2,ANY
 Glowing,num3,ANY
+HandDropChances,custom:DropChances2,list=mob
+Health,num5,list=mob
+HurtTime,num2,list=mob
 Invulnerable,num3,ANY
+Leash,custom:Leash,list=mob
+Leashed,num3,list=mob
+LeftHanded,num3,list=mob
 Motion,custom:Coordinates,ANY
+NoAI,num3,list=mob
 NoGravity,num3,ANY
 Passengers,custom:EntityList,ANY
+PersistenceRequired,num3,list=mob
 PortalCooldown,num0,ANY
 Pos,custom:Coordinates,ANY
 Rotation,custom:Rotation,ANY
 Silent,num3,ANY
 Tags,custom:StringList,ANY
+Team,custom:StringList,list=mob
 UUIDLeast,num4,ANY
 UUIDMost,num4,ANY

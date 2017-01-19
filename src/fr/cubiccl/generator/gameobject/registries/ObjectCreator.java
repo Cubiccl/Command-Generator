@@ -6,18 +6,12 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.Container;
 import fr.cubiccl.generator.gameobject.Particle;
 import fr.cubiccl.generator.gameobject.Sound;
-import fr.cubiccl.generator.gameobject.baseobjects.Achievement;
-import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
-import fr.cubiccl.generator.gameobject.baseobjects.Block;
-import fr.cubiccl.generator.gameobject.baseobjects.EffectType;
-import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
-import fr.cubiccl.generator.gameobject.baseobjects.Entity;
-import fr.cubiccl.generator.gameobject.baseobjects.Item;
-import fr.cubiccl.generator.gameobject.baseobjects.Slot;
+import fr.cubiccl.generator.gameobject.baseobjects.*;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.target.TargetArgument;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateDropChances;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItemId;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
@@ -170,6 +164,10 @@ public class ObjectCreator
 		{
 			TemplateItemId t = new TemplateItemId(id, tagType, applicable);
 			if (data.length == 4) t.setLimited(data[3].substring("limited=".length()).split(":"));
+		} else if (customTagType.startsWith("DropChances"))
+		{
+			TemplateDropChances t = new TemplateDropChances(id, tagType, applicable);
+			t.setSlotCount(Integer.parseInt(customTagType.substring("DropChances".length())));
 		} else try
 		{
 			Class<?> c = Class.forName("fr.cubiccl.generator.gameobject.templatetags.custom.Template" + customTagType);
@@ -219,8 +217,15 @@ public class ObjectCreator
 	public static void createEntities(String[] data)
 	{
 		CommandGenerator.log("Creating Entities...");
-		for (String id : data)
-			new Entity(id);
+		for (String line : data)
+		{
+			String[] lists = line.split(":").length == 2 ? line.split(":")[1].split(",") : new String[0];
+			for (String id : line.split(":")[0].split(","))
+			{
+				new Entity(id);
+				ObjectRegistry.addToLists(id, lists);
+			}
+		}
 		CommandGenerator.log("Successfully created " + ObjectRegistry.entities.size() + " entities.");
 	}
 
@@ -285,9 +290,7 @@ public class ObjectCreator
 					break;
 
 				case 2:
-					String[] e = line.split(",");
-					for (String entity : e)
-						entities.add(entity);
+					entities.add(line);
 					break;
 
 				case 3:
