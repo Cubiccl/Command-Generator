@@ -19,11 +19,12 @@ public final class Tags
 
 	public static final DefaultCompound BLOCK = new DefaultCompound("block");
 
-	public static final TemplateNumber COORD_X = new TemplateNumber("X", UNAVAILABLE, TagNumber.INTEGER);
-	public static final TemplateNumber COORD_Y = new TemplateNumber("Y", UNAVAILABLE, TagNumber.INTEGER);
-	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateNumber COORD_X = new TemplateNumber("X", UNAVAILABLE, TagNumber.DOUBLE);
+	public static final TemplateNumber COORD_Y = new TemplateNumber("Y", UNAVAILABLE, TagNumber.DOUBLE);
+	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", UNAVAILABLE, TagNumber.DOUBLE);
 
 	public static final TemplateCompound DEFAULT_COMPOUND = new DefaultCompound("");
+	public static final TemplateNumber DEFAULT_FLOAT = new TemplateNumber("", UNAVAILABLE, TagNumber.FLOAT);
 	public static final TemplateNumber DEFAULT_INTEGER = new TemplateNumber("", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateString DEFAULT_STRING = new TemplateString("", UNAVAILABLE);
 

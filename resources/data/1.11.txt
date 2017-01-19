@@ -908,4 +908,21 @@ Unbreakable,num3,list=durability
 
 // INTEGER = 0, BYTE = 1, SHORT = 2, BYTE_BOOLEAN = 3, LONG = 4, FLOAT = 5, DOUBLE = 6
 [ENTITYTAGS]
+Air,num2,ANY
+CommandStats,custom:CommandStats,ANY
+CustomName,string,ANY
+CustomNameVisible,num3,ANY
+FallDistance,num5,ANY
+Fire,num2,ANY
+Glowing,num3,ANY
 Invulnerable,num3,ANY
+Motion,custom:Coordinates,ANY
+NoGravity,num3,ANY
+Passengers,custom:EntityList,ANY
+PortalCooldown,num0,ANY
+Pos,custom:Coordinates,ANY
+Rotation,custom:Rotation,ANY
+Silent,num3,ANY
+Tags,custom:StringList,ANY
+UUIDLeast,num4,ANY
+UUIDMost,num4,ANY

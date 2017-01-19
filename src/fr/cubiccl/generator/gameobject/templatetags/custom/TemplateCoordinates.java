@@ -8,6 +8,7 @@ import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.WrongValueException;
 
 public class TemplateCoordinates extends TemplateCompound
@@ -21,14 +22,15 @@ public class TemplateCoordinates extends TemplateCompound
 	@Override
 	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
-		PanelCoordinates p = new PanelCoordinates(null);
+		PanelCoordinates p = new PanelCoordinates(null, false);
 		if (previousValue != null)
 		{
 			TagCompound coord = (TagCompound) previousValue;
-			Coordinates c = new Coordinates((float) (int) coord.getTagFromId(Tags.COORD_X.id).value(), (float) (int) coord.getTagFromId(Tags.COORD_Y.id)
-					.value(), (float) (int) coord.getTagFromId(Tags.COORD_Z.id).value());
+			Coordinates c = new Coordinates((float) (double) coord.getTagFromId(Tags.COORD_X.id).value(), (float) (double) coord.getTagFromId(Tags.COORD_Y.id)
+					.value(), (float) (double) coord.getTagFromId(Tags.COORD_Z.id).value());
 			p.setupFrom(c);
 		}
+		if (this.id.equals("Motion")) p.setEntryText(new Text("tag.Motion.x"), new Text("tag.Motion.y"), new Text("tag.Motion.z"));
 		p.setName(this.title());
 		return p;
 	}

@@ -1,7 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
+import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
@@ -43,8 +43,8 @@ public class Coordinates
 
 	public TagCompound toTag(TemplateCompound container)
 	{
-		return new TagCompound(container, new TagNumber(Tags.COORD_X, (int) this.x), new TagNumber(Tags.COORD_Y, (int) this.y), new TagNumber(Tags.COORD_Z,
-				(int) this.z));
+		return new TagCompound(container, new TagBigNumber(Tags.COORD_X, this.x), new TagBigNumber(Tags.COORD_Y, this.y),
+				new TagBigNumber(Tags.COORD_Z, this.z));
 	}
 
 }

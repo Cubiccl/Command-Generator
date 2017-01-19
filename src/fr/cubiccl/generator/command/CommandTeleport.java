@@ -32,9 +32,9 @@ public class CommandTeleport extends Command
 
 		CGPanel rotation = new CGPanel("tp.rotation");
 		GridBagConstraints gbc2 = rotation.createGridBagLayout();
-		rotation.add((this.entryYRot = new CGEntry(new Text("tp.rotation.y"), "0", Text.NUMBER)).container, gbc2);
+		rotation.add((this.entryYRot = new CGEntry(new Text("tp.rotation.y"), "0", new Text("0 — 360", false))).container, gbc2);
 		++gbc2.gridy;
-		rotation.add((this.entryXRot = new CGEntry(new Text("tp.rotation.x"), "0", Text.NUMBER)).container, gbc2);
+		rotation.add((this.entryXRot = new CGEntry(new Text("tp.rotation.x"), "0", new Text("-90 — 90", false))).container, gbc2);
 		++gbc2.gridx;
 		--gbc2.gridy;
 		rotation.add(this.checkboxYRot = new CGCheckBox("tp.rotation.relative"), gbc2);

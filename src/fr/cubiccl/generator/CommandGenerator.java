@@ -70,7 +70,7 @@ public class CommandGenerator
 		stateManager = new StateManager();
 		window = new Window();
 		window.updateTranslations();
-		setSelected(Commands.getCommands()[0]);
+		setSelected(Commands.getCommandFromID("summon"));
 		window.setVisible(true);
 	}
 
