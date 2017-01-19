@@ -11,7 +11,6 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.Utils;
 
 public class CommandScoreboardPlayers extends Command implements ActionListener
 {
@@ -113,7 +112,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		String command = "/scoreboard players " + this.comboboxMode.getValue() + " " + this.panelTarget.generateTarget().toCommand() + " ";
 		String mode = this.comboboxMode.getValue();
 		String objective = this.entryObjective.getText();
-		if (!mode.equals("reset")) Utils.checkStringId(this.entryObjective.label.getAbsoluteText(), objective);
+		if (!mode.equals("reset")) this.entryObjective.checkValue(CGEntry.STRING);
 		if (mode.equals("set") || mode.equals("add") || mode.equals("remove")) return command + objective + " " + this.entryScore.getText();
 
 		if (mode.equals("reset"))
@@ -134,7 +133,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 
 		if (mode.equals("tag"))
 		{
-			Utils.checkStringId(this.entryScore.label.getAbsoluteText(), this.entryScore.getText());
+			this.entryScore.checkValue(CGEntry.STRING);
 			return command + this.panelTarget.generateTarget().toCommand() + " " + this.comboboxMode2.getValue() + " " + this.entryObjective.getText();
 		}
 

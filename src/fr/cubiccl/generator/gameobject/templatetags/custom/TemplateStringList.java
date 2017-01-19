@@ -35,7 +35,7 @@ public class TemplateStringList extends TemplateList
 		{
 			try
 			{
-				Utils.checkStringId(new Text("tag.Tags"), ((EntryPanel) panel).entry.getText());
+				Utils.checkStringId(new Text("tag." + id), ((EntryPanel) panel).entry.getText());
 			} catch (CommandGenerationException e)
 			{
 				CommandGenerator.report(e);
@@ -48,7 +48,7 @@ public class TemplateStringList extends TemplateList
 		@Override
 		public CGPanel createAddPanel()
 		{
-			return new EntryPanel("tag.Tags");
+			return new EntryPanel("tag." + id);
 		}
 
 		@Override

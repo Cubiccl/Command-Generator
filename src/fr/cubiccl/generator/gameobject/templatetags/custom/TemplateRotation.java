@@ -12,7 +12,6 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.Utils;
 
 public class TemplateRotation extends TemplateList
 {
@@ -67,8 +66,8 @@ public class TemplateRotation extends TemplateList
 		RotationPanel p = (RotationPanel) panel;
 		try
 		{
-			Utils.checkNumberInBounds(p.entryY.label.getAbsoluteText(), p.entryY.getText(), 0, 360);
-			Utils.checkNumberInBounds(p.entryX.label.getAbsoluteText(), p.entryX.getText(), -90, 90);
+			p.entryY.checkValueInBounds(CGEntry.FLOAT, 0, 360);
+			p.entryX.checkValueInBounds(CGEntry.FLOAT, -90, 90);
 			return true;
 		} catch (CommandGenerationException e)
 		{

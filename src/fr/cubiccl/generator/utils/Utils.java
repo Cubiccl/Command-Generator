@@ -23,6 +23,31 @@ public final class Utils
 	public static final String[] WOOL_COLORS =
 	{ "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "light_gray", "cyan", "purple", "blue", "brown", "green", "red", "black" };
 
+	public static void checkFloat(Text name, String value) throws CommandGenerationException
+	{
+		try
+		{
+			Float.parseFloat(value);
+		} catch (Exception e)
+		{
+			throw new WrongValueException(name, new Text("error.number"), value);
+		}
+	}
+
+	public static void checkFloatInBounds(Text name, String value, float minValue, float maxValue) throws CommandGenerationException
+	{
+		try
+		{
+			float i = Float.parseFloat(value);
+			if (i < minValue || i > maxValue) throw new WrongValueException(name, new Text("error.number.bounds", new Replacement("<min>", new Text(
+					Float.toString(minValue), false)), new Replacement("<max>", new Text(Float.toString(maxValue), false))), value);
+		} catch (NumberFormatException e)
+		{
+			throw new WrongValueException(name, new Text("error.number.bounds", new Replacement("<min>", new Text(Float.toString(minValue), false)),
+					new Replacement("<max>", new Text(Float.toString(maxValue), false))), value);
+		}
+	}
+
 	public static void checkFloatSuperior(Text name, String value, float minValue) throws CommandGenerationException
 	{
 		try
@@ -96,6 +121,19 @@ public final class Utils
 		{
 			throw new WrongValueException(name, new Text("error.number.bounds", new Replacement("<min>", new Text(Float.toString(minValue), false)),
 					new Replacement("<max>", new Text(Float.toString(maxValue), false))), value);
+		}
+	}
+
+	public static void checkNumberSuperior(Text name, String value, double minValue) throws CommandGenerationException
+	{
+		try
+		{
+			double f = Double.parseDouble(value);
+			if (f < minValue) throw new WrongValueException(name, new Text("error.number.greater", new Replacement("<min>", new Text(Double.toString(minValue),
+					false))), value);
+		} catch (NumberFormatException e)
+		{
+			throw new WrongValueException(name, new Text("error.number.greater", new Replacement("<min>", new Text(Double.toString(minValue), false))), value);
 		}
 	}
 

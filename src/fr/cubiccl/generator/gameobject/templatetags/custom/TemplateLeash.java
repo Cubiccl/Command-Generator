@@ -16,7 +16,6 @@ import fr.cubiccl.generator.gui.component.panel.utils.PanelRadio;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.Utils;
 
 public class TemplateLeash extends TemplateCompound
 {
@@ -82,8 +81,8 @@ public class TemplateLeash extends TemplateCompound
 		}
 		else try
 		{
-			Utils.checkNumber(((LeashEntityPanel) panel).entryMost.label.getAbsoluteText(), ((LeashEntityPanel) panel).entryMost.getText());
-			Utils.checkNumber(((LeashEntityPanel) panel).entryLeast.label.getAbsoluteText(), ((LeashEntityPanel) panel).entryLeast.getText());
+			((LeashEntityPanel) panel).entryMost.checkValue(CGEntry.NUMBER);
+			((LeashEntityPanel) panel).entryLeast.checkValue(CGEntry.NUMBER);
 		} catch (CommandGenerationException e)
 		{
 			CommandGenerator.report(e);

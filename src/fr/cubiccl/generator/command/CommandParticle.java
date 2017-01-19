@@ -17,7 +17,6 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.Utils;
 
 public class CommandParticle extends Command implements ActionListener
 {
@@ -102,18 +101,18 @@ public class CommandParticle extends Command implements ActionListener
 		Particle particle = this.comboboxParticle.getSelectedObject();
 		String xd = this.entryXd.getText(), yd = this.entryYd.getText(), zd = this.entryZd.getText(), speed = this.entrySpeed.getText(), count = this.entryCount
 				.getText();
-		Utils.checkFloatSuperior(this.entryXd.label.getAbsoluteText(), xd, 0);
-		Utils.checkFloatSuperior(this.entryYd.label.getAbsoluteText(), yd, 0);
-		Utils.checkFloatSuperior(this.entryZd.label.getAbsoluteText(), zd, 0);
-		Utils.checkFloatSuperior(this.entrySpeed.label.getAbsoluteText(), speed, 0);
-		Utils.checkIntegerSuperior(this.entryCount.label.getAbsoluteText(), count, 1);
+		this.entryXd.checkValueSuperior(CGEntry.FLOAT, 0);
+		this.entryYd.checkValueSuperior(CGEntry.FLOAT, 0);
+		this.entryZd.checkValueSuperior(CGEntry.FLOAT, 0);
+		this.entrySpeed.checkValueSuperior(CGEntry.FLOAT, 0);
+		this.entryCount.checkValueSuperior(CGEntry.INTEGER, 1);
 
 		xd = Float.toString(Float.parseFloat(xd) / 8);
 		yd = Float.toString(Float.parseFloat(yd) / 8);
 		zd = Float.toString(Float.parseFloat(zd) / 8);
 
 		String command = "/particle " + particle.id + " " + this.panelCoordinates.generateCoordinates().toCommand() + " " + xd + " " + yd + " " + zd + " "
-				+ speed + " ";
+				+ speed + " " + count + " ";
 		if (this.checkboxForce.isSelected()) command += "force";
 		else command += "normal";
 		command += " " + this.panelTarget.generateTarget().toCommand();

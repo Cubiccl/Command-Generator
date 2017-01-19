@@ -8,7 +8,6 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEntity;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.Utils;
 
 public class SpawnPotentialPanel extends CGPanel
 {
@@ -30,7 +29,7 @@ public class SpawnPotentialPanel extends CGPanel
 
 	public SpawnPotential createSpawnPotential() throws CommandGenerationException
 	{
-		Utils.checkIntegerSuperior(this.entryWeight.label.getAbsoluteText(), this.entryWeight.getText(), 1);
+		this.entryWeight.checkValueSuperior(CGEntry.INTEGER, 1);
 		return new SpawnPotential(this.panelEntity.generateEntity(), Integer.parseInt(this.entryWeight.getText()));
 	}
 

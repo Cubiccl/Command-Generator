@@ -12,7 +12,6 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.Utils;
 
 public class CommandTitle extends Command implements ActionListener
 {
@@ -75,9 +74,9 @@ public class CommandTitle extends Command implements ActionListener
 		if (mode.equals("title") || mode.equals("subtitle")) return command + " " + this.panelJson.generateMessage(Tags.JSON_LIST).value();
 		if (mode.equals("times"))
 		{
-			Utils.checkIntegerSuperior(this.entryFadeIn.label.getAbsoluteText(), this.entryFadeIn.getText(), 0);
-			Utils.checkIntegerSuperior(this.entryStay.label.getAbsoluteText(), this.entryStay.getText(), 0);
-			Utils.checkIntegerSuperior(this.entryFadeOut.label.getAbsoluteText(), this.entryFadeOut.getText(), 0);
+			this.entryFadeIn.checkValueSuperior(CGEntry.INTEGER, 0);
+			this.entryStay.checkValueSuperior(CGEntry.INTEGER, 0);
+			this.entryFadeOut.checkValueSuperior(CGEntry.INTEGER, 0);
 			return command + " " + this.entryFadeIn.getText() + " " + this.entryStay.getText() + " " + this.entryFadeOut.getText();
 		}
 		return command;

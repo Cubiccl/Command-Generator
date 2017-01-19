@@ -224,7 +224,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 	{
 		String text = this.entryMain.getText();
 		if (this.comboboxMode.getValue().equals("selector")) text = this.panelTarget.generateTarget().toCommand();
-		else if (!this.comboboxMode.getValue().equals("text")) Utils.checkStringId(this.entryMain.label.getAbsoluteText(), text);
+		else if (!this.comboboxMode.getValue().equals("text")) this.entryMain.checkValue(CGEntry.STRING);
 
 		JsonMessage message = new JsonMessage(this.comboboxMode.getSelectedIndex(), text, this.comboboxColor.getSelectedIndex());
 		if (this.comboboxMode.getValue().equals("score")) message.target = this.panelTarget.generateTarget().toCommand();

@@ -12,7 +12,6 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCriteria;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.Utils;
 
 public class CommandScoreboardObjectives extends Command implements ActionListener
 {
@@ -93,7 +92,7 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 		String objective = this.entryObjective.getText();
 		boolean display = this.comboboxMode.getValue().equals("setdisplay");
 		boolean clear = display && this.checkboxClearSlot.isSelected();
-		if (!(clear)) Utils.checkStringId(this.entryObjective.label.getAbsoluteText(), objective);
+		if (!(clear)) this.entryObjective.checkValue(CGEntry.STRING);
 
 		switch (this.comboboxMode.getValue())
 		{

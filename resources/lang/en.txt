@@ -2528,6 +2528,7 @@ tag.rotation.CLOCKWISE_180=Rotate 180 degrees
 tag.rotation.COUNTERCLOCKWISE_90=Rotate 90 degrees counterclockwise
 
 tag.Tags=Tag to add
+tag.Team=Team to join
 
 tag.title.ActiveEffects=Active Potion Effects
 tag.title.ArmorDropChances=Worn Items drop chances

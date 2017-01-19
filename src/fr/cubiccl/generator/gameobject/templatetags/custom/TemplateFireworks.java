@@ -18,7 +18,6 @@ import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.Utils;
 
 public class TemplateFireworks extends TemplateCompound
 {
@@ -143,7 +142,7 @@ public class TemplateFireworks extends TemplateCompound
 		FireworksPanel p = ((FireworksPanel) panel);
 		try
 		{
-			Utils.checkIntegerInBounds(p.entryFlight.label.getAbsoluteText(), p.entryFlight.getText(), -128, 127);
+			p.entryFlight.checkValueInBounds(CGEntry.INTEGER, -128, 127);
 			return true;
 		} catch (CommandGenerationException e)
 		{

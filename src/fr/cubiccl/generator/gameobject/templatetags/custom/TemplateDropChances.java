@@ -12,7 +12,6 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.Utils;
 
 public class TemplateDropChances extends TemplateList
 {
@@ -72,7 +71,7 @@ public class TemplateDropChances extends TemplateList
 		for (int i = 0; i < this.slotCount; i++)
 			try
 			{
-				Utils.checkNumberInBounds(((PanelDropChances) panel).entries[i].label.getAbsoluteText(), ((PanelDropChances) panel).entries[i].getText(), 0, 1);
+				((PanelDropChances) panel).entries[i].checkValueInBounds(CGEntry.FLOAT, 0, 1);
 			} catch (CommandGenerationException e)
 			{
 				CommandGenerator.report(e);

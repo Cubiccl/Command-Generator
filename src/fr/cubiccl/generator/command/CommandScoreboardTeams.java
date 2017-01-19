@@ -80,7 +80,7 @@ public class CommandScoreboardTeams extends Command implements ActionListener
 		String command = "/scoreboard teams " + this.comboboxMode.getValue();
 		String mode = this.comboboxMode.getValue();
 		String team = this.entryTeam.getText();
-		Utils.checkStringId(this.entryTeam.label.getAbsoluteText(), team);
+		this.entryTeam.checkValue(CGEntry.STRING);
 		command += " " + team;
 		if (mode.equals("empty")) return command;
 		if (mode.equals("add") && !this.entryDisplayName.getText().equals("")) command += " " + this.entryDisplayName.getText();
