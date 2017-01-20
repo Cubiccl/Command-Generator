@@ -156,7 +156,7 @@ public class ContainerPanel extends CGPanel implements IStateListener<PanelItem>
 		for (int i = 0; i < items.length; ++i)
 		{
 			ItemStack stack = ItemStack.createFrom((TagCompound) previousValue.getTag(i));
-			items[stack.slot] = stack;
+			items[i] = stack;
 		}
 		this.setupFrom(items);
 	}

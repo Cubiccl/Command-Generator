@@ -88,12 +88,14 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 			TemplateTag tag = this.getSelectedTag();
 			for (TemplateTag t : this.shownTags)
 			{
-				if (t.id.equals("carriedData") && tag instanceof TemplateBlockId && this.valueFor(t) != null) ((TemplateBlockId) tag).damage = (int) this
+				if (t.id.equals("DisplayData") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this
 						.valueFor(t).value();
-				if (t.id.equals("Data") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this.valueFor(t)
-						.value();
-				if (t.id.equals("Base") && tag instanceof TemplatePatterns && this.valueFor(t) != null) ((TemplatePatterns) tag).base = (int) this.valueFor(t)
-						.value();
+				else if (t.id.equals("carriedData") && tag instanceof TemplateBlockId && this.valueFor(t) != null) ((TemplateBlockId) tag).damage = (int) this
+						.valueFor(t).value();
+				else if (t.id.equals("Data") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this.valueFor(
+						t).value();
+				else if (t.id.equals("Base") && tag instanceof TemplatePatterns && this.valueFor(t) != null) ((TemplatePatterns) tag).base = (int) this
+						.valueFor(t).value();
 			}
 
 			tag.askValue(this.currentObject, this.selectedValue(), this);
@@ -124,6 +126,11 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateBlockId) template).damage);
 				((TemplateBlockId) template).damage = -1;
+				break;
+			} else if (this.tags[i].id.equals("DisplayData") && template.id.equals("DisplayTile"))
+			{
+				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateItemId) template).damage);
+				((TemplateItemId) template).damage = -1;
 				break;
 			}
 		}
