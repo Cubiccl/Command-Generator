@@ -929,6 +929,7 @@ ArmorItems,items,list=mob,noSlot
 AttachFace,num2,shulker,named=attach^down:up:north:south:east:west
 Attributes,custom:Attributes,list=mob
 BatFlags,num3,bat
+Block,custom:item_id,falling_block
 CanBreakDoors,num3,husk:zombie:zombie_pigman:zombie_villager
 CanPickUpLoot,num3,list=mob
 Career,num0,villager
@@ -948,6 +949,7 @@ CustomName,string,ANY
 CustomNameVisible,num3,ANY
 CustomPotionEffects,custom:EffectList,arrow
 damage,num6,arrow:spectral_arrow
+Data,num1,falling_block
 DeathLootTable,string,list=mob
 DeathLootTableSeed,num4,list=mob
 DeathTime,num2,list=mob
@@ -956,6 +958,7 @@ Delay,num2,spawner_minecart
 DisplayData,num0,list=minecart
 DisplayOffset,num0,list=minecart
 DisplayTile,custom:item_id,list=minecart
+DropItem,num3,falling_block
 DragonPhase,num0,ender_dragon,named=dragon^circling:strafing:landing_in:landing:landing_out:breath:breath_prepare:breath_roar:charging:death:no_ai
 Duration,num0,spectral_arrow
 EatingHaystack,num3,list=horse
@@ -965,15 +968,18 @@ ExplosionPower,num1,fireball:ghast
 ExplosionRadius,num1,creeper
 FallDistance,num5,ANY
 FallFlying,num3,list=mob
+FallHurtAmount,num0,falling_block
+FallHurtMax,num0,falling_block
 Fire,num2,ANY
 Fuel,num2,furnace_minecart
-Fuse,num2,creeper
+Fuse,num2,creeper:tnt
 Glowing,num3,ANY
 HandDropChances,custom:DropChances2,list=mob
 HandItems,items,list=mob,noSlot
 Health,num1,xp_orb
 Health,num5,list=mob
 HurtBy,string,zombie_pigman
+HurtEntities,num3,falling_block
 HurtTime,num2,list=mob
 ignited,num3,creeper
 InLove,num0,list=breed
@@ -1042,6 +1048,7 @@ Team,custom:StringList,list=mob
 Tame,num3,list=horse
 Temper,num0,list=horse
 Thrower,string,item
+TileEntityData,custom:BlockEntity,falling_block
 TNTFuse,num0,tnt_minecart
 TrackOutput,num3,commandblock_minecart
 TransferCooldown,num0,hopper_minecart

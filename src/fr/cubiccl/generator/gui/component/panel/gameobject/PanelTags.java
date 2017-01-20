@@ -15,6 +15,7 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
+import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.ITagCreationListener;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
@@ -86,6 +87,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		if (e.getSource() == this.buttonAdd && this.getSelectedTag() != null)
 		{
 			TemplateTag tag = this.getSelectedTag();
+			String objectToGive = this.currentObject;
 			for (TemplateTag t : this.shownTags)
 			{
 				if (t.id.equals("DisplayData") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this
@@ -96,9 +98,11 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 						t).value();
 				else if (t.id.equals("Base") && tag instanceof TemplatePatterns && this.valueFor(t) != null) ((TemplatePatterns) tag).base = (int) this
 						.valueFor(t).value();
+				else if (tag.id.equals("TileEntityData") && t.id.equals("Block")) objectToGive = this.valueFor(t) == null ? ObjectRegistry.blocks.first().idString
+						: ((TagString) this.valueFor(t)).value();
 			}
 
-			tag.askValue(this.currentObject, this.selectedValue(), this);
+			tag.askValue(objectToGive, this.selectedValue(), this);
 		} else if (e.getSource() == this.buttonRemove && this.getSelectedTag() != null)
 		{
 			this.values[this.indexOf(this.getSelectedTag())] = null;
@@ -117,7 +121,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplatePatterns) template).base);
 				((TemplatePatterns) template).base = -1;
 				break;
-			} else if (this.tags[i].id.equals("Data") && template.id.equals("Item"))
+			} else if (this.tags[i].id.equals("Data") && (template.id.equals("Item") || template.id.equals("Block")))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateItemId) template).damage);
 				((TemplateItemId) template).damage = -1;
