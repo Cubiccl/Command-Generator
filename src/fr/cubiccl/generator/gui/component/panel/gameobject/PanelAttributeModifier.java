@@ -22,22 +22,26 @@ public class PanelAttributeModifier extends CGPanel
 	private ObjectCombobox<Attribute> comboboxAttribute;
 	private OptionCombobox comboboxOperation, comboboxSlot;
 	private CGEntry entryName, entryAmount, entryUUIDMost, entryUUIDLeast;
+	private boolean isApplied;
+	private CGLabel labelSlot, labelAttribute;
 
 	public PanelAttributeModifier(boolean isApplied)
 	{
+		this.isApplied = isApplied;
+
 		GridBagConstraints gbc = this.createGridBagLayout();
 		++gbc.gridwidth;
 		this.add((this.entryName = new CGEntry(new Text("attribute.modifier.name"), new Text("attribute.modifier.name"))).container, gbc);
 
 		++gbc.gridy;
 		--gbc.gridwidth;
-		this.add(new CGLabel("attribute.modifier.slot").setHasColumn(true), gbc);
+		this.add(this.labelSlot = new CGLabel("attribute.modifier.slot").setHasColumn(true), gbc);
 		++gbc.gridx;
 		this.add(this.comboboxSlot = new OptionCombobox("attribute.modifier.slot", AttributeModifier.SLOTS), gbc);
 
 		--gbc.gridx;
 		++gbc.gridy;
-		this.add(new CGLabel("attribute.modifier.attribute").setHasColumn(true), gbc);
+		this.add(this.labelAttribute = new CGLabel("attribute.modifier.attribute").setHasColumn(true), gbc);
 		++gbc.gridx;
 		this.add(this.comboboxAttribute = new ObjectCombobox<Attribute>(ObjectRegistry.attributes.list()), gbc);
 
@@ -64,6 +68,14 @@ public class PanelAttributeModifier extends CGPanel
 		this.entryAmount.addNumberFilter();
 		this.entryUUIDMost.addNumberFilter();
 		this.entryUUIDLeast.addNumberFilter();
+
+		if (this.isApplied)
+		{
+			this.comboboxAttribute.setVisible(false);
+			this.comboboxSlot.setVisible(false);
+			this.labelAttribute.setVisible(false);
+			this.labelSlot.setVisible(false);
+		}
 	}
 
 	public AttributeModifier generateModifier()

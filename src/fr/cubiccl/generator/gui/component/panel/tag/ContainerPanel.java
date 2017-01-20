@@ -48,8 +48,11 @@ public class ContainerPanel extends CGPanel implements IStateListener<PanelItem>
 		this.addMouseMotionListener(this.drawer);
 	}
 
-	public TagList generateItems(TemplateItems template)
+	public TagList generateItems(TemplateItems template, boolean hasSlot)
 	{
+		if (!hasSlot) for (ItemStack item : this.items)
+			if (item != null) item.slot = -1;
+
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (ItemStack item : this.items)
 			if (item != null) tags.add(item.toTag(Tags.ITEM));

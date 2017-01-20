@@ -805,11 +805,13 @@ ui.button:click
 weather:rain,rain.above
 
 [CONTAINERS]
+ArmorItems,ArmorItems,4:1:8:8
 brewing_stand,brewing_stand,56:51,79:58,102:51,79:17,17:17
 chest,chest,27:9:8:18
 dispenser,dispenser,9:3:20:17
 dropper,dispenser,9:3:20:17
 furnace,furnace,21:13,21:49,81:31
+HandItems,HandItems,3:3,39:3
 hopper,hopper,5:5:21:18
 lit_furnace,furnace,21:13,21:49,81:31
 trapped_chest,chest,27:9:8:18
@@ -912,6 +914,8 @@ AbsorptionAmount,num5,list=mob
 ActiveEffects,custom:EffectList,list=mob
 Air,num2,ANY
 ArmorDropChances,custom:DropChances4,list=mob
+ArmorItems,items,list=mob,noSlot
+Attributes,custom:Attributes,list=mob
 CanPickUpLoot,num3,list=mob
 CommandStats,custom:CommandStats,ANY
 CustomName,string,ANY
@@ -924,6 +928,7 @@ FallFlying,num3,list=mob
 Fire,num2,ANY
 Glowing,num3,ANY
 HandDropChances,custom:DropChances2,list=mob
+HandItems,items,list=mob,noSlot
 Health,num5,list=mob
 HurtTime,num2,list=mob
 Invulnerable,num3,ANY

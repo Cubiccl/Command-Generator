@@ -11,6 +11,8 @@ import fr.cubiccl.generator.gui.component.panel.tag.ContainerPanel;
 public class TemplateItems extends TemplateList
 {
 
+	public boolean hasSlot = true;
+
 	public TemplateItems(String id, byte tagType, String[] applicable)
 	{
 		super(id, tagType, applicable);
@@ -19,7 +21,7 @@ public class TemplateItems extends TemplateList
 	@Override
 	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
-		Container container = ObjectRegistry.containers.find(objectId);
+		Container container = !this.hasSlot ? ObjectRegistry.containers.find(this.id) : ObjectRegistry.containers.find(objectId);
 		ContainerPanel p = new ContainerPanel(container);
 		if (previousValue != null) p.setupFrom((TagList) previousValue);
 		p.setName(container.name());
@@ -29,7 +31,7 @@ public class TemplateItems extends TemplateList
 	@Override
 	public TagList generateTag(CGPanel panel)
 	{
-		return ((ContainerPanel) panel).generateItems(this);
+		return ((ContainerPanel) panel).generateItems(this, this.hasSlot);
 	}
 
 }

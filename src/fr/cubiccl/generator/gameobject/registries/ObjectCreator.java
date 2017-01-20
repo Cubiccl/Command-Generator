@@ -408,7 +408,9 @@ public class ObjectCreator
 				break;
 
 			case "ite":
-				new TemplateItems(id, tagType, applicable);
+				TemplateItems ti = new TemplateItems(id, tagType, applicable);
+				for (String arg : data)
+					if (arg.equals("noSlot")) ti.hasSlot = false;
 				break;
 
 			case "cus":

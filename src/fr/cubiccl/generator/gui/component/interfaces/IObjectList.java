@@ -8,6 +8,7 @@ import fr.cubiccl.generator.utils.Text;
 public interface IObjectList
 {
 
+	/** @return True if the object was correctly added. If not, the Panel will not close. */
 	public boolean addObject(CGPanel panel);
 
 	public CGPanel createAddPanel();

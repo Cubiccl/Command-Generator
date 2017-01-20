@@ -29,6 +29,12 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 
 	public PanelObjectList(IObjectList objectList)
 	{
+		this(null, objectList);
+	}
+
+	public PanelObjectList(String titleID, IObjectList objectList)
+	{
+		super(titleID);
 		this.objectList = objectList;
 
 		GridBagConstraints gbc = this.createGridBagLayout();
@@ -51,7 +57,7 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		this.buttonRemove.addActionListener(this);
 		this.list.addListSelectionListener(this);
 		this.list.scrollPane.setPreferredSize(new Dimension(200, 100));
-		
+
 		this.updateList();
 	}
 
