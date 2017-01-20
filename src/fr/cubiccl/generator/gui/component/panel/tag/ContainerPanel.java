@@ -12,7 +12,6 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.Container;
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.baseobjects.Slot;
-import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -48,15 +47,32 @@ public class ContainerPanel extends CGPanel implements IStateListener<PanelItem>
 		this.addMouseMotionListener(this.drawer);
 	}
 
-	public TagList generateItems(TemplateItems template, boolean hasSlot)
+	public void empty()
+	{
+		for (int i = 0; i < this.items.length; i++)
+			this.items[i] = null;
+		this.repaint();
+	}
+
+	public ItemStack[] generateItems(boolean hasSlot)
 	{
 		if (!hasSlot) for (ItemStack item : this.items)
 			if (item != null) item.slot = -1;
 
-		ArrayList<Tag> tags = new ArrayList<Tag>();
+		ArrayList<ItemStack> toreturn = new ArrayList<ItemStack>();
 		for (ItemStack item : this.items)
-			if (item != null) tags.add(item.toTag(Tags.ITEM));
-		return new TagList(template, tags.toArray(new Tag[tags.size()]));
+			if (item != null) toreturn.add(item);
+
+		return toreturn.toArray(new ItemStack[toreturn.size()]);
+	}
+
+	public TagList generateItems(TemplateItems template, boolean hasSlot)
+	{
+		ItemStack[] generated = this.generateItems(hasSlot);
+		TagCompound[] tags = new TagCompound[generated.length];
+		for (int i = 0; i < tags.length; i++)
+			tags[i] = generated[i].toTag(Tags.DEFAULT_COMPOUND);
+		return new TagList(template, tags);
 	}
 
 	@Override
@@ -127,13 +143,22 @@ public class ContainerPanel extends CGPanel implements IStateListener<PanelItem>
 		}
 	}
 
+	public void setupFrom(ItemStack[] items)
+	{
+		for (int i = 0; i < items.length; ++i)
+			if (items[i] != null) this.items[items[i].slot] = items[i];
+		this.repaint();
+	}
+
 	public void setupFrom(TagList previousValue)
 	{
-		for (int i = 0; i < previousValue.size(); ++i)
+		ItemStack[] items = new ItemStack[previousValue.size()];
+		for (int i = 0; i < items.length; ++i)
 		{
 			ItemStack stack = ItemStack.createFrom((TagCompound) previousValue.getTag(i));
-			this.items[stack.slot] = stack;
+			items[stack.slot] = stack;
 		}
+		this.setupFrom(items);
 	}
 
 	@Override

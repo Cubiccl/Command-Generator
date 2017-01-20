@@ -76,6 +76,14 @@ public final class Tags
 	public static final TemplateString JSON_TEXT = new TemplateString("text", UNAVAILABLE);
 	public static final TemplateString JSON_TRANSLATE = new TemplateString("translate", UNAVAILABLE);
 
+	public static final DefaultCompound OFFER_BUY = new DefaultCompound("buy");
+	public static final DefaultCompound OFFER_BUYB = new DefaultCompound("buyB");
+	public static final TemplateNumber OFFER_EXP = new TemplateNumber("rewardExp", UNAVAILABLE, TagNumber.BYTE_BOOLEAN);
+	public static final TemplateNumber OFFER_MAX_USES = new TemplateNumber("maxUses", UNAVAILABLE, TagNumber.INTEGER);
+	public static final DefaultList OFFER_RECIPES = new DefaultList("Recipes");
+	public static final DefaultCompound OFFER_SELL = new DefaultCompound("sell");
+	public static final TemplateNumber OFFER_USES = new TemplateNumber("uses", UNAVAILABLE, TagNumber.INTEGER);
+
 	public static final DefaultCompound PATTERN = new DefaultCompound("Pattern");
 	public static final TemplateNumber PATTERN_COLOR = new TemplateNumber("Color", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateString PATTERN_SHAPE = new TemplateString("Pattern", UNAVAILABLE);
