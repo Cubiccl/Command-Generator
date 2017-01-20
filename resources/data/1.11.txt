@@ -966,6 +966,7 @@ EggLayTime,num0,chicken
 Enabled,num3,hopper_minecart
 ExplosionPower,num1,fireball:ghast
 ExplosionRadius,num1,creeper
+Facing,num1,painting:item_frame,named=frame^south:west:north:east
 FallDistance,num5,ANY
 FallFlying,num3,list=mob
 FallHurtAmount,num0,falling_block
@@ -988,7 +989,9 @@ Invul,num0,wither
 Invulnerable,num3,ANY
 IsChickenJockey,num3,chicken
 IsBaby,num3,husk:zombie:zombie_pigman:zombie_villager
-Item,custom:item,item
+Item,custom:item,item:item_frame
+ItemDropChance,num5,item_frame
+ItemRotation,num1,item_frame
 Items,items,donkey:llama:mule:chest_minecart:hopper_minecart
 Johnny,num3,vindication_illager
 LastOutput,string,commandblock_minecart
@@ -1004,6 +1007,7 @@ MaxNearbyEntities,num2,spawner_minecart
 MaxSpawnDelay,num2,spawner_minecart
 MinSpawnDelay,num2,spawner_minecart
 Motion,custom:Coordinates,ANY
+Motive,custom:Painting,painting,
 NoAI,num3,list=mob
 NoGravity,num3,ANY
 Offers,custom:Offers,villager

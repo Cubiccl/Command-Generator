@@ -116,22 +116,22 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		this.values[this.indexOf(template)] = value;
 		for (int i = 0; i < this.tags.length; ++i)
 		{
-			if (this.tags[i].id.equals("Base") && template.id.equals("Patterns"))
+			if (this.tags[i].id.equals("Base") && template instanceof TemplatePatterns && template.id.equals("Patterns"))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplatePatterns) template).base);
 				((TemplatePatterns) template).base = -1;
 				break;
-			} else if (this.tags[i].id.equals("Data") && (template.id.equals("Item") || template.id.equals("Block")))
+			} else if (this.tags[i].id.equals("Data") && template instanceof TemplateItemId && (template.id.equals("Item") || template.id.equals("Block")))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateItemId) template).damage);
 				((TemplateItemId) template).damage = -1;
 				break;
-			} else if (this.tags[i].id.equals("carriedData") && template.id.equals("carried"))
+			} else if (this.tags[i].id.equals("carriedData") && template instanceof TemplateBlockId && template.id.equals("carried"))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateBlockId) template).damage);
 				((TemplateBlockId) template).damage = -1;
 				break;
-			} else if (this.tags[i].id.equals("DisplayData") && template.id.equals("DisplayTile"))
+			} else if (this.tags[i].id.equals("DisplayData") && template instanceof TemplateItemId && template.id.equals("DisplayTile"))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateItemId) template).damage);
 				((TemplateItemId) template).damage = -1;
