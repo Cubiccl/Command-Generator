@@ -140,7 +140,7 @@ public class ContainerPanel extends CGPanel implements IStateListener<PanelItem>
 	public boolean shouldStateClose(PanelItem panel)
 	{
 		this.items[this.currentSlot] = panel.generateItem();
-		this.items[this.currentSlot].slot = this.currentSlot;
+		this.items[this.currentSlot].slot = this.currentSlot + this.container.startsAt;
 		return true;
 	}
 

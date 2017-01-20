@@ -13,11 +13,13 @@ public class Container implements NamedObject, BaseObject, IconedObject
 
 	public final String id, layoutID;
 	public final Slot[] slots;
+	public final int startsAt;
 
-	public Container(String id, String layoutID, Slot... slots)
+	public Container(String id, String layoutID, int startsAt, Slot... slots)
 	{
 		this.id = id;
 		this.layoutID = layoutID;
+		this.startsAt = startsAt;
 		this.slots = slots;
 		ObjectRegistry.containers.register(this);
 	}

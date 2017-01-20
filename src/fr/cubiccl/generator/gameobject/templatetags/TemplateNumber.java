@@ -68,7 +68,7 @@ public class TemplateNumber extends TemplateTag
 					v = i;
 					break;
 				}
-			p.combobox.setSelectedIndex(v);
+			if (v < this.names.length && v >= 0) p.combobox.setSelectedIndex(v);
 		}
 		return p;
 	}
@@ -135,7 +135,7 @@ public class TemplateNumber extends TemplateTag
 		this.maxValue = max;
 	}
 
-	public void setNames(String prefix, String[] names)
+	public void setNames(String prefix, String... names)
 	{
 		this.prefix = prefix;
 		this.names = names;

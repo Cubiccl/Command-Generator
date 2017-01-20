@@ -8,6 +8,7 @@ import fr.cubiccl.generator.gameobject.Particle;
 import fr.cubiccl.generator.gameobject.Sound;
 import fr.cubiccl.generator.gameobject.baseobjects.*;
 import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.target.TargetArgument;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
@@ -107,6 +108,7 @@ public class ObjectCreator
 		{
 			String[] values = a.split(",");
 			Slot[] slots;
+			int startsAt = 0;
 			if (values.length == 3)
 			{
 				String[] slotData = values[2].split(":");
@@ -124,6 +126,7 @@ public class ObjectCreator
 					}
 
 				}
+				if (slotData.length == 5) startsAt = Integer.parseInt(slotData[4]);
 			} else
 			{
 				slots = new Slot[values.length - 2];
@@ -133,7 +136,7 @@ public class ObjectCreator
 					slots[i - 2] = new Slot(i - 2, Integer.parseInt(slot[0]), Integer.parseInt(slot[1]));
 				}
 			}
-			new Container(values[0], values[1], slots);
+			new Container(values[0], values[1], startsAt, slots);
 		}
 		CommandGenerator.log("Successfully created " + ObjectRegistry.containers.size() + " containers.");
 	}
@@ -142,7 +145,7 @@ public class ObjectCreator
 	{
 		if (customTagType.equals("color"))
 		{
-			TemplateNumber tag = new TemplateNumber(id, tagType, applicable);
+			TemplateNumber tag = id.equals("Base") ? new TemplateNumber(id, tagType, applicable) : new TemplateNumber(id, tagType, TagNumber.BYTE, applicable);
 			tag.setNames("color", Utils.WOOL_COLORS);
 		} else if (customTagType.equals("effect"))
 		{
