@@ -188,7 +188,7 @@ public class ObjectRegistry<T extends BaseObject>
 			@Override
 			public int compare(T o1, T o2)
 			{
-				return o1.id().compareTo(o2.id());
+				return o1.id().toLowerCase().compareTo(o2.id().toLowerCase());
 			}
 		});
 		else if (sortType == SORT_NUMERICALLY && this.hasNumericalIds) a.sort(new Comparator<T>()
