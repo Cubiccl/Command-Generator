@@ -19,7 +19,7 @@ public class ObjectRegistry<T extends BaseObject>
 	public static final ObjectRegistry<Attribute> attributes = new ObjectRegistry<Attribute>(false, false, Attribute.class);
 	public static final BlockRegistry blocks = new BlockRegistry();
 	public static final ObjectRegistry<TemplateTag> blockTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
-	public static final ObjectRegistry<Container> containers = new ObjectRegistry<Container>(false, true, Container.class);
+	public static final ContainerRegistry containers = new ContainerRegistry();
 	public static final ObjectRegistry<EffectType> effects = new ObjectRegistry<EffectType>(true, true, EffectType.class);
 	public static final ObjectRegistry<EnchantmentType> enchantments = new ObjectRegistry<EnchantmentType>(true, false, EnchantmentType.class);
 	public static final ObjectRegistry<Entity> entities = new ObjectRegistry<Entity>(false, true, Entity.class);

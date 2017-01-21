@@ -809,23 +809,19 @@ ui.button:click
 weather:rain,rain.above
 
 [CONTAINERS]
-ArmorItems,ArmorItems,4:1:8:8
-brewing_stand,brewing_stand,56:51,79:58,102:51,79:17,17:17
-chest,chest,27:9:8:18
-chest_minecart,chest,27:9:8:18
-dispenser,dispenser,9:3:20:17
-donkey,horse,15:5:61:8:2
-dropper,dispenser,9:3:20:17
-furnace,furnace,21:13,21:49,81:31
-HandItems,HandItems,3:3,39:3
-hopper,hopper,5:5:21:18
-hopper_minecart,hopper,5:5:21:18
-llama,horse,15:5:61:8:2
-lit_furnace,furnace,21:13,21:49,81:31
-mule,horse,15:5:61:8:2
+ArmorItems,ArmorItems:slot.armor,4:1:8:8
+brewing_stand,brewing_stand:slot.brewing_stand,56:51,79:58,102:51,79:17,17:17
+chest,chest:chest_minecart:slot.chest:slot.enderchest:slot.inventory:trapped_chest,27:9:8:18
+dispenser,dispenser:dropper:slot.dispenser,9:3:20:17
+furnace,furnace:lit_furnace:slot.furnace,21:13,21:49,81:31
+HandItems,HandItems:slot.weapon,3:3,39:3
+hopper,hopper:hopper_minecart:slot.hopper,5:5:21:18
+horse,donkey:llama:mule:slot.horse.chest,15:5:61:8:2
+horse_armor,slot.horse.armor,1:1:1:1
+horse_saddle,slot.horse.saddle,1:1:1:1
+hotbar,slot.hotbar,3:3,23:3,43:3,63:3,83:3,103:3,123:3,143:3,163:3
 trade,trade,15:14,99:15,41:14
-trapped_chest,chest,27:9:8:18
-villager,villager,8:8:21:18
+villager,slot.villager:villager,8:8:21:18
 
 [BLOCKTAGS]
 // INTEGER = 0, BYTE = 1, SHORT = 2, BYTE_BOOLEAN = 3, LONG = 4, FLOAT = 5, DOUBLE = 6

@@ -121,7 +121,6 @@ public class ObjectCreator
 						x = startX;
 						y += Slot.SIZE + 2;
 					}
-
 				}
 				if (slotData.length == 5) startsAt = Integer.parseInt(slotData[4]);
 			} else
@@ -133,7 +132,7 @@ public class ObjectCreator
 					slots[i - 2] = new Slot(i - 2, Integer.parseInt(slot[0]), Integer.parseInt(slot[1]));
 				}
 			}
-			new Container(values[0], values[1], startsAt, slots);
+			new Container(values[0], startsAt, values[1].split(":"), slots);
 		}
 		CommandGenerator.log("Successfully created " + ObjectRegistry.containers.size() + " containers.");
 	}

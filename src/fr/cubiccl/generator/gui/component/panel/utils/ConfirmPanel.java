@@ -55,6 +55,7 @@ public class ConfirmPanel extends CGPanel implements ActionListener
 		this.add(p, gbc);
 
 		--gbc.gridy;
+		gbc.fill = GridBagConstraints.NONE;
 		if (component != null) this.setMainComponent(component);
 
 		this.buttonOK.addActionListener(this);

@@ -9,15 +9,16 @@ import fr.cubiccl.generator.utils.Textures;
 public class Container extends BaseObject
 {
 
-	public final String id, layoutID;
+	public final String[] applicable;
+	public final String id;
 	public final Slot[] slots;
 	public final int startsAt;
 
-	public Container(String id, String layoutID, int startsAt, Slot... slots)
+	public Container(String id, int startsAt, String[] applicable, Slot... slots)
 	{
 		this.id = id;
-		this.layoutID = layoutID;
 		this.startsAt = startsAt;
+		this.applicable = applicable;
 		this.slots = slots;
 		ObjectRegistry.containers.register(this);
 	}
@@ -37,7 +38,7 @@ public class Container extends BaseObject
 	@Override
 	public BufferedImage texture()
 	{
-		return Textures.getTexture("container." + this.layoutID);
+		return Textures.getTexture("container." + this.id());
 	}
 
 }

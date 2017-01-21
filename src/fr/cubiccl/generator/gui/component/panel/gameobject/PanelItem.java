@@ -57,7 +57,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		gbc.gridx = 0;
 		++gbc.gridy;
 		gbc.gridwidth = 3;
-		this.add((this.spinnerAmount = new CGSpinner("item.amount", Utils.generateArray(64))).container, gbc);
+		this.add((this.spinnerAmount = new CGSpinner("item.amount", Utils.generateArray(1, 64))).container, gbc);
 		++gbc.gridy;
 		this.add((this.spinnerDurability = new CGSpinner("item.durability", this.item.damage)).container, gbc);
 		++gbc.gridy;

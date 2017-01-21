@@ -5,7 +5,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.CommandGenerator;
-import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -21,9 +20,10 @@ import fr.cubiccl.generator.utils.Text;
 
 public class CommandReplaceitem extends Command implements ActionListener, IStateListener<PanelSlotSelection>
 {
-	private static final String[] CONTAINER_BLOCKS =
-	{ "chest", "dispenser", "hopper", "brewing_stand", "furnace" }, CONTAINER_ENTITIES =
-	{ "ArmorItems", "HandItems", "enderchest", "hotbar", "inventory", "horse_saddle", "horse_armor", "horse_chest", "villager" };
+	public static final String[] CONTAINER_BLOCKS =
+	{ "slot.brewing_stand", "slot.chest", "slot.dispenser", "slot.furnace", "slot.hopper" }, CONTAINER_ENTITIES =
+	{ "slot.armor", "slot.weapon", "slot.enderchest", "slot.hotbar", "slot.inventory", "slot.horse.armor", "slot.horse.saddle", "slot.horse.chest",
+			"slot.villager" };
 	public static final int[][] SLOT_NUMBERS =
 	{
 	{ 0, 26 },
@@ -61,8 +61,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 			else this.labelSlot.setTextID(new Text("replaceitem.slot.selected", new Replacement("<slot>", this.selectedEntitySlot)));
 		} else
 		{
-			PanelSlotSelection p = new PanelSlotSelection(new Text("replaceitem.slot.selection"), ObjectRegistry.containers.find(block ? CONTAINER_BLOCKS
-					: CONTAINER_ENTITIES));
+			PanelSlotSelection p = new PanelSlotSelection(new Text("replaceitem.slot.selection"), block ? CONTAINER_BLOCKS : CONTAINER_ENTITIES);
 			p.showContainerFor(block ? this.selectedBlockSlot : this.selectedEntitySlot);
 			CommandGenerator.stateManager.setState(p, this);
 		}
