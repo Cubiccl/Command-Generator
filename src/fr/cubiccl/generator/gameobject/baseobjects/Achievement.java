@@ -2,11 +2,10 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.image.BufferedImage;
 
-import fr.cubiccl.generator.gameobject.NamedObject;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 
-public class Achievement implements NamedObject, BaseObject
+public class Achievement extends BaseObject
 {
 
 	/** The ID of this Achievement. */
@@ -33,9 +32,10 @@ public class Achievement implements NamedObject, BaseObject
 		return new Text("achievement." + this.id);
 	}
 
+	@Override
 	public BufferedImage texture()
 	{
-		return this.textureItem.texture(this.textureItem.damage[0]);
+		return this.textureItem.texture();
 	}
 
 }

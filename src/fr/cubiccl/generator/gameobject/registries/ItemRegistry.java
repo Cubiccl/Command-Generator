@@ -7,7 +7,7 @@ public class ItemRegistry extends ObjectRegistry<Item>
 
 	public ItemRegistry()
 	{
-		super(true, true, true, Item.class);
+		super(true, true, Item.class);
 	}
 
 	@Override

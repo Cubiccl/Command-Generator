@@ -2,19 +2,16 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.image.BufferedImage;
 
-import fr.cubiccl.generator.gameobject.IconedObject;
-import fr.cubiccl.generator.gameobject.NamedObject;
-import fr.cubiccl.generator.gameobject.registries.NumIdObject;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
 
-public class EffectType implements NamedObject, BaseObject, NumIdObject, IconedObject
+public class EffectType extends BaseObject
 {
 
-	/** This Effect's ID. */
+	/** This Effect's numerical ID. */
 	public final int idInt;
-	/** This Effect's ID. */
+	/** This Effect's string ID. */
 	public final String idString;
 
 	public EffectType(int idInt, String idString)
@@ -31,15 +28,15 @@ public class EffectType implements NamedObject, BaseObject, NumIdObject, IconedO
 	}
 
 	@Override
-	public Text name()
+	public int idNum()
 	{
-		return new Text("effect." + this.idString);
+		return this.idInt;
 	}
 
 	@Override
-	public Integer numId()
+	public Text name()
 	{
-		return this.idInt;
+		return new Text("effect." + this.idString);
 	}
 
 	@Override

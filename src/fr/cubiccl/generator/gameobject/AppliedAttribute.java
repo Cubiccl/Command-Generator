@@ -78,9 +78,9 @@ public class AppliedAttribute
 
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.ATTRIBUTE_ATTRIBUTE_NAME.id)) a = ObjectRegistry.attributes.find(((TagString) t).value());
-			if (t.id().equals(Tags.ATTRIBUTE_BASE.id)) b = ((TagBigNumber) t).value();
-			if (t.id().equals(Tags.ATTRIBUTE_MODIFIERS.id))
+			if (t.id().equals(Tags.ATTRIBUTE_ATTRIBUTE_NAME.id())) a = ObjectRegistry.attributes.find(((TagString) t).value());
+			if (t.id().equals(Tags.ATTRIBUTE_BASE.id())) b = ((TagBigNumber) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_MODIFIERS.id()))
 			{
 				TagList list = (TagList) t;
 				m = new AttributeModifier[list.size()];

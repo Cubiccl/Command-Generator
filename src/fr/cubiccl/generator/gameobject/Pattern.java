@@ -22,7 +22,7 @@ public class Pattern
 
 	public static Pattern createFrom(TagCompound tag)
 	{
-		return new Pattern(((TagNumber) tag.getTagFromId(Tags.PATTERN_COLOR.id)).value(), ((TagString) tag.getTagFromId(Tags.PATTERN_SHAPE.id)).value());
+		return new Pattern(((TagNumber) tag.getTagFromId(Tags.PATTERN_COLOR.id())).value(), ((TagString) tag.getTagFromId(Tags.PATTERN_SHAPE.id())).value());
 	}
 
 	public final int color;

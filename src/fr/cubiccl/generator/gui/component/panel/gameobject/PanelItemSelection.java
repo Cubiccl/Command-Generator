@@ -142,7 +142,7 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 			int index = 0;
 			String value = this.comboboxItem.getValue();
 			for (int i = 0; i < this.items.length; ++i)
-				if (this.items[i].idString.equals(value))
+				if (this.items[i].id().equals(value))
 				{
 					index = i;
 					break;
@@ -225,7 +225,7 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 	public void setSelected(Item item)
 	{
 		for (int i = 0; i < this.items.length; ++i)
-			if (this.items[i].idString.equals(item.idString))
+			if (this.items[i].id().equals(item.id()))
 			{
 				this.setSelected(i, true);
 				break;

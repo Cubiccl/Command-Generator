@@ -15,7 +15,7 @@ public class ItemStained extends Item
 	@Override
 	public Text name(int damage)
 	{
-		return BlockStained.getName(this.idString, damage);
+		return BlockStained.getName(this.id(), damage);
 	}
 
 }

@@ -8,11 +8,7 @@ import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 
-import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagList;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
-import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateDisplay;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
@@ -140,30 +136,30 @@ public class PanelDisplay extends CGPanel implements IObjectList, ActionListener
 
 	public void setupFrom(TagCompound previousValue)
 	{
-		if (previousValue.hasTag(Tags.DISPLAY_LOCAL.id))
+		if (previousValue.hasTag(Tags.DISPLAY_LOCAL.id()))
 		{
 			this.buttonTranslate.setSelected(true);
 			this.entryName.setVisible(true);
-			this.entryName.setText((String) previousValue.getTagFromId(Tags.DISPLAY_LOCAL.id).value());
+			this.entryName.setText((String) previousValue.getTagFromId(Tags.DISPLAY_LOCAL.id()).value());
 		}
-		if (previousValue.hasTag(Tags.DISPLAY_NAME.id))
+		if (previousValue.hasTag(Tags.DISPLAY_NAME.id()))
 		{
 			this.buttonTranslate.setSelected(true);
 			this.entryName.setVisible(true);
-			this.entryName.setText((String) previousValue.getTagFromId(Tags.DISPLAY_NAME.id).value());
+			this.entryName.setText((String) previousValue.getTagFromId(Tags.DISPLAY_NAME.id()).value());
 		}
-		if (previousValue.hasTag(Tags.DISPLAY_LORE.id))
+		if (previousValue.hasTag(Tags.DISPLAY_LORE.id()))
 		{
 			this.lore.clear();
-			TagList lores = (TagList) previousValue.getTagFromId(Tags.DISPLAY_LORE.id);
+			TagList lores = (TagList) previousValue.getTagFromId(Tags.DISPLAY_LORE.id());
 			for (Tag t : lores.value())
 				this.lore.add((String) t.value());
 		}
-		if (previousValue.hasTag(Tags.DISPLAY_COLOR.id))
+		if (previousValue.hasTag(Tags.DISPLAY_COLOR.id()))
 		{
 			this.checkboxDye.setSelected(true);
 			this.panelColor.setVisible(true);
-			this.panelColor.setupFrom((int) previousValue.getTagFromId(Tags.DISPLAY_COLOR.id).value());
+			this.panelColor.setupFrom((int) previousValue.getTagFromId(Tags.DISPLAY_COLOR.id()).value());
 		}
 	}
 

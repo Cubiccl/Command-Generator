@@ -17,8 +17,8 @@ public class Enchantment
 		int level = 1;
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.ENCHANTMENT_ID.id)) type = ObjectRegistry.enchantments.find(((TagNumber) t).value());
-			if (t.id().equals(Tags.ENCHANTMENT_LVL.id)) level = ((TagNumber) t).value();
+			if (t.id().equals(Tags.ENCHANTMENT_ID.id())) type = ObjectRegistry.enchantments.find(((TagNumber) t).value());
+			if (t.id().equals(Tags.ENCHANTMENT_LVL.id())) level = ((TagNumber) t).value();
 		}
 		return new Enchantment(type, level);
 	}

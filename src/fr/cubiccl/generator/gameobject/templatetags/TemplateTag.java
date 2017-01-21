@@ -10,7 +10,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.IStateListener;
 import fr.cubiccl.generator.utils.Text;
 
-public abstract class TemplateTag implements IStateListener<CGPanel>, BaseObject
+public abstract class TemplateTag extends BaseObject implements IStateListener<CGPanel>
 {
 	public static final String[] TYPE_NAMES =
 	{ "block", "item", "entity" };
@@ -18,7 +18,7 @@ public abstract class TemplateTag implements IStateListener<CGPanel>, BaseObject
 	private String[] applicable;
 	/** Need several in case of chest-like recursion */
 	private Stack<ITagCreationListener> creationListeners;
-	public final String id;
+	private final String id;
 	public final byte type;
 
 	public TemplateTag(String id, byte tagType, String... applicable)
@@ -39,6 +39,7 @@ public abstract class TemplateTag implements IStateListener<CGPanel>, BaseObject
 		CommandGenerator.stateManager.setState(this.createPanel(objectId, previousValue), this);
 	}
 
+	/** @return True if this tag can be applied to the Object with the input ID. */
 	public boolean canApplyTo(String id)
 	{
 		for (String app : this.applicable)

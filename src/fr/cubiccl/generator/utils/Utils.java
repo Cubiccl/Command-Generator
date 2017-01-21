@@ -1,22 +1,7 @@
 package fr.cubiccl.generator.utils;
 
-import java.util.Comparator;
-
-import fr.cubiccl.generator.gameobject.baseobjects.Block;
-
 public final class Utils
 {
-	public static class BlockComparator implements Comparator<Block>
-	{
-
-		@Override
-		public int compare(Block o1, Block o2)
-		{
-			return o1.idInt - o2.idInt;
-		}
-
-	}
-
 	public static final String[] COLORS =
 	{ "white", "aqua", "black", "blue", "dark_aqua", "dark_blue", "dark_gray", "dark_green", "dark_purple", "dark_red", "gold", "gray", "green",
 			"light_purple", "red", "yellow" };

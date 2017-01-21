@@ -18,10 +18,10 @@ public class Effect
 		EffectType e = ObjectRegistry.effects.first();
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.EFFECT_ID.id)) e = ObjectRegistry.effects.find(((TagNumber) t).value());
-			if (t.id().equals(Tags.EFFECT_DURATION.id)) d = ((TagNumber) t).value();
-			if (t.id().equals(Tags.EFFECT_AMPLIFIER.id)) a = ((TagNumber) t).value();
-			if (t.id().equals(Tags.EFFECT_PARTICLES.id)) h = ((TagNumber) t).value() == 1;
+			if (t.id().equals(Tags.EFFECT_ID.id())) e = ObjectRegistry.effects.find(((TagNumber) t).value());
+			if (t.id().equals(Tags.EFFECT_DURATION.id())) d = ((TagNumber) t).value();
+			if (t.id().equals(Tags.EFFECT_AMPLIFIER.id())) a = ((TagNumber) t).value();
+			if (t.id().equals(Tags.EFFECT_PARTICLES.id())) h = ((TagNumber) t).value() == 1;
 		}
 		return new Effect(e, d, a, h);
 	}

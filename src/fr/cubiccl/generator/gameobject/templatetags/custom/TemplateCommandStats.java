@@ -29,22 +29,22 @@ public class TemplateCommandStats extends TemplateCompound
 
 		if (previous != null)
 		{
-			p.setObjective(PanelCommandStats.SUCCESS_COUNT, (String) previous.getTagFromId(Tags.STATS_SUCCESS_OBJECTIVE.id).value());
-			p.setObjective(PanelCommandStats.AFFECTED_BLOCKS, (String) previous.getTagFromId(Tags.STATS_BLOCKS_OBJECTIVE.id).value());
-			p.setObjective(PanelCommandStats.AFFECTED_ENTITIES, (String) previous.getTagFromId(Tags.STATS_ENTITIES_OBJECTIVE.id).value());
-			p.setObjective(PanelCommandStats.AFFECTED_ITEMS, (String) previous.getTagFromId(Tags.STATS_ITEMS_OBJECTIVE.id).value());
-			p.setObjective(PanelCommandStats.QUERY_RESULT, (String) previous.getTagFromId(Tags.STATS_QUERY_OBJECTIVE.id).value());
+			p.setObjective(PanelCommandStats.SUCCESS_COUNT, (String) previous.getTagFromId(Tags.STATS_SUCCESS_OBJECTIVE.id()).value());
+			p.setObjective(PanelCommandStats.AFFECTED_BLOCKS, (String) previous.getTagFromId(Tags.STATS_BLOCKS_OBJECTIVE.id()).value());
+			p.setObjective(PanelCommandStats.AFFECTED_ENTITIES, (String) previous.getTagFromId(Tags.STATS_ENTITIES_OBJECTIVE.id()).value());
+			p.setObjective(PanelCommandStats.AFFECTED_ITEMS, (String) previous.getTagFromId(Tags.STATS_ITEMS_OBJECTIVE.id()).value());
+			p.setObjective(PanelCommandStats.QUERY_RESULT, (String) previous.getTagFromId(Tags.STATS_QUERY_OBJECTIVE.id()).value());
 
-			if (previous.hasTag(Tags.STATS_SUCCESS_NAME.id)) p.setTarget(PanelCommandStats.SUCCESS_COUNT,
-					Target.createFrom((String) previous.getTagFromId(Tags.STATS_SUCCESS_NAME.id).value()));
-			if (previous.hasTag(Tags.STATS_BLOCKS_NAME.id)) p.setTarget(PanelCommandStats.AFFECTED_BLOCKS,
-					Target.createFrom((String) previous.getTagFromId(Tags.STATS_BLOCKS_NAME.id).value()));
-			if (previous.hasTag(Tags.STATS_ENTITIES_NAME.id)) p.setTarget(PanelCommandStats.AFFECTED_ENTITIES,
-					Target.createFrom((String) previous.getTagFromId(Tags.STATS_ENTITIES_NAME.id).value()));
-			if (previous.hasTag(Tags.STATS_ITEMS_NAME.id)) p.setTarget(PanelCommandStats.AFFECTED_ITEMS,
-					Target.createFrom((String) previous.getTagFromId(Tags.STATS_ITEMS_NAME.id).value()));
-			if (previous.hasTag(Tags.STATS_QUERY_NAME.id)) p.setTarget(PanelCommandStats.QUERY_RESULT,
-					Target.createFrom((String) previous.getTagFromId(Tags.STATS_QUERY_NAME.id).value()));
+			if (previous.hasTag(Tags.STATS_SUCCESS_NAME.id())) p.setTarget(PanelCommandStats.SUCCESS_COUNT,
+					Target.createFrom((String) previous.getTagFromId(Tags.STATS_SUCCESS_NAME.id()).value()));
+			if (previous.hasTag(Tags.STATS_BLOCKS_NAME.id())) p.setTarget(PanelCommandStats.AFFECTED_BLOCKS,
+					Target.createFrom((String) previous.getTagFromId(Tags.STATS_BLOCKS_NAME.id()).value()));
+			if (previous.hasTag(Tags.STATS_ENTITIES_NAME.id())) p.setTarget(PanelCommandStats.AFFECTED_ENTITIES,
+					Target.createFrom((String) previous.getTagFromId(Tags.STATS_ENTITIES_NAME.id()).value()));
+			if (previous.hasTag(Tags.STATS_ITEMS_NAME.id())) p.setTarget(PanelCommandStats.AFFECTED_ITEMS,
+					Target.createFrom((String) previous.getTagFromId(Tags.STATS_ITEMS_NAME.id()).value()));
+			if (previous.hasTag(Tags.STATS_QUERY_NAME.id())) p.setTarget(PanelCommandStats.QUERY_RESULT,
+					Target.createFrom((String) previous.getTagFromId(Tags.STATS_QUERY_NAME.id()).value()));
 		}
 
 		p.setName(this.title());

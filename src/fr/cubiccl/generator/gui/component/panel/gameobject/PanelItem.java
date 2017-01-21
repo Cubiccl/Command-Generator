@@ -64,7 +64,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this.add(this.panelTags = new PanelTags("item.tags", Tag.ITEM), gbc);
 
 		this.buttonSelectItem.addActionListener(this);
-		this.panelTags.setObjectForTags(this.item.idString);
+		this.panelTags.setObjectForTags(this.item.id());
 		this.updateDisplay();
 	}
 
@@ -169,7 +169,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this.spinnerAmount.setText(Integer.toString(itemStack.amount));
 		this.spinnerDurability.setValues(this.item.damage);
 		this.spinnerDurability.setText(Integer.toString(itemStack.damage));
-		this.panelTags.setObjectForTags(this.item.idString);
+		this.panelTags.setObjectForTags(this.item.id());
 		this.panelTags.setTags(itemStack.nbt.value());
 	}
 
@@ -180,7 +180,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this.damage = panel.selectedDamage();
 		this.updateDisplay();
 		this.spinnerDurability.setValues(this.item.damage);
-		this.panelTags.setObjectForTags(this.item.idString);
+		this.panelTags.setObjectForTags(this.item.id());
 		return true;
 	}
 

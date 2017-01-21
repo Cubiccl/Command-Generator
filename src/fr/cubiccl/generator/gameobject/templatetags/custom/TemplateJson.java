@@ -17,7 +17,7 @@ public class TemplateJson extends TemplateList
 	@Override
 	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
-		return new PanelListJsonMessage("tag.title." + this.id);
+		return new PanelListJsonMessage("tag.title." + this.id());
 	}
 
 	@Override

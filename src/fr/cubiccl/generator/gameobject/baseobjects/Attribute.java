@@ -1,10 +1,9 @@
 package fr.cubiccl.generator.gameobject.baseobjects;
 
-import fr.cubiccl.generator.gameobject.NamedObject;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 
-public class Attribute implements NamedObject, BaseObject
+public class Attribute extends BaseObject
 {
 
 	/** This Attribute's ID. */

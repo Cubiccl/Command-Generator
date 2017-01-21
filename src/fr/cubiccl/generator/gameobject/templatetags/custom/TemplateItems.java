@@ -21,7 +21,7 @@ public class TemplateItems extends TemplateList
 	@Override
 	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
-		Container container = !this.hasSlot ? ObjectRegistry.containers.find(this.id) : ObjectRegistry.containers.find(objectId);
+		Container container = !this.hasSlot ? ObjectRegistry.containers.find(this.id()) : ObjectRegistry.containers.find(objectId);
 		ContainerPanel p = new ContainerPanel(container);
 		if (previousValue != null) p.setupFrom((TagList) previousValue);
 		p.setName(container.name());

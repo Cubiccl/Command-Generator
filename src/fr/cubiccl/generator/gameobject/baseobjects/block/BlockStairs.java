@@ -21,7 +21,7 @@ public class BlockStairs extends Block
 	@Override
 	public Text name(int damage)
 	{
-		return getName(this.idString, damage);
+		return getName(this.id(), damage);
 	}
 
 }

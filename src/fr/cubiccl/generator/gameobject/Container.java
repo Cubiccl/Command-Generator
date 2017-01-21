@@ -8,7 +8,7 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
 
-public class Container implements NamedObject, BaseObject, IconedObject
+public class Container extends BaseObject
 {
 
 	public final String id, layoutID;

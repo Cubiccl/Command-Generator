@@ -7,7 +7,7 @@ public class BlockRegistry extends ObjectRegistry<Block>
 
 	public BlockRegistry()
 	{
-		super(true, true, true, Block.class);
+		super(true, true, Block.class);
 	}
 
 	@Override

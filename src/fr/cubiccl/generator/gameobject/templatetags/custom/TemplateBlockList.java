@@ -15,7 +15,6 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlockSelection;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.Utils.BlockComparator;
 
 public class TemplateBlockList extends TemplateList
 {
@@ -37,7 +36,7 @@ public class TemplateBlockList extends TemplateList
 			if (!this.blocks.contains(b))
 			{
 				this.blocks.add(b);
-				this.blocks.sort(new BlockComparator());
+				this.blocks.sort(new ObjectComparatorIDNum());
 			}
 			return true;
 		}
@@ -65,7 +64,7 @@ public class TemplateBlockList extends TemplateList
 		{
 			String[] values = new String[this.blocks.size()];
 			for (int i = 0; i < values.length; ++i)
-				values[i] = this.blocks.get(i).idString;
+				values[i] = this.blocks.get(i).id();
 			return values;
 		}
 

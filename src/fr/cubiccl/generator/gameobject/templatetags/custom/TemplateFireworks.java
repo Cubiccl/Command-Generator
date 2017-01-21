@@ -102,8 +102,8 @@ public class TemplateFireworks extends TemplateCompound
 		{
 			for (Tag t : previousValue.value())
 			{
-				if (t.id().equals(Tags.FIREWORK_FLIGHT.id)) this.entryFlight.setText(Integer.toString(((TagNumber) t).value()));
-				if (t.id().equals(Tags.FIREWORK_EXPLOSIONS.id)) this.explosions.setValues(((TagList) t).value());
+				if (t.id().equals(Tags.FIREWORK_FLIGHT.id())) this.entryFlight.setText(Integer.toString(((TagNumber) t).value()));
+				if (t.id().equals(Tags.FIREWORK_EXPLOSIONS.id())) this.explosions.setValues(((TagList) t).value());
 			}
 			this.panelExplosions.updateList();
 		}

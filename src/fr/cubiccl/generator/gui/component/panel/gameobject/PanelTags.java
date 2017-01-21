@@ -91,19 +91,19 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 			String objectToGive = this.currentObject;
 			for (TemplateTag t : this.shownTags)
 			{
-				if (t.id.equals("DisplayData") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this
+				if (t.id().equals("DisplayData") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this
 						.valueFor(t).value();
-				else if (t.id.equals("carriedData") && tag instanceof TemplateBlockId && this.valueFor(t) != null) ((TemplateBlockId) tag).damage = (int) this
+				else if (t.id().equals("carriedData") && tag instanceof TemplateBlockId && this.valueFor(t) != null) ((TemplateBlockId) tag).damage = (int) this
 						.valueFor(t).value();
-				else if (t.id.equals("Data") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this.valueFor(
-						t).value();
-				else if (t.id.equals("Base") && tag instanceof TemplatePatterns && this.valueFor(t) != null) ((TemplatePatterns) tag).base = (int) this
+				else if (t.id().equals("Data") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this
 						.valueFor(t).value();
-				else if (tag.id.equals("TileEntityData") && t.id.equals("Block")) objectToGive = this.valueFor(t) == null ? ObjectRegistry.blocks.first().idString
-						: ((TagString) this.valueFor(t)).value();
-				else if (t.id.equals("ParticleParam1") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param1 = (int) this
+				else if (t.id().equals("Base") && tag instanceof TemplatePatterns && this.valueFor(t) != null) ((TemplatePatterns) tag).base = (int) this
 						.valueFor(t).value();
-				else if (t.id.equals("ParticleParam2") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param2 = (int) this
+				else if (tag.id().equals("TileEntityData") && t.id().equals("Block")) objectToGive = this.valueFor(t) == null ? ObjectRegistry.blocks.first()
+						.id() : ((TagString) this.valueFor(t)).value();
+				else if (t.id().equals("ParticleParam1") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param1 = (int) this
+						.valueFor(t).value();
+				else if (t.id().equals("ParticleParam2") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param2 = (int) this
 						.valueFor(t).value();
 			}
 
@@ -122,33 +122,34 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		boolean particles = false;
 		for (int i = 0; i < this.tags.length; ++i)
 		{
-			if (this.tags[i].id.equals("Base") && template instanceof TemplatePatterns && template.id.equals("Patterns"))
+			if (this.tags[i].id().equals("Base") && template instanceof TemplatePatterns && template.id().equals("Patterns"))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplatePatterns) template).base);
 				((TemplatePatterns) template).base = -1;
 				break;
-			} else if (this.tags[i].id.equals("Data") && template instanceof TemplateItemId && (template.id.equals("Item") || template.id.equals("Block")))
+			} else if (this.tags[i].id().equals("Data") && template instanceof TemplateItemId
+					&& (template.id().equals("Item") || template.id().equals("Block")))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateItemId) template).damage);
 				((TemplateItemId) template).damage = -1;
 				break;
-			} else if (this.tags[i].id.equals("carriedData") && template instanceof TemplateBlockId && template.id.equals("carried"))
+			} else if (this.tags[i].id().equals("carriedData") && template instanceof TemplateBlockId && template.id().equals("carried"))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateBlockId) template).damage);
 				((TemplateBlockId) template).damage = -1;
 				break;
-			} else if (this.tags[i].id.equals("DisplayData") && template instanceof TemplateItemId && template.id.equals("DisplayTile"))
+			} else if (this.tags[i].id().equals("DisplayData") && template instanceof TemplateItemId && template.id().equals("DisplayTile"))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateItemId) template).damage);
 				((TemplateItemId) template).damage = -1;
 				break;
-			} else if (this.tags[i].id.equals("ParticleParam1") && template instanceof TemplateParticle && template.id.equals("Particle"))
+			} else if (this.tags[i].id().equals("ParticleParam1") && template instanceof TemplateParticle && template.id().equals("Particle"))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateParticle) template).param1);
 				((TemplateParticle) template).param1 = 0;
 				if (particles) break;
 				particles = true;
-			} else if (this.tags[i].id.equals("ParticleParam2") && template instanceof TemplateParticle && template.id.equals("Particle"))
+			} else if (this.tags[i].id().equals("ParticleParam2") && template instanceof TemplateParticle && template.id().equals("Particle"))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateParticle) template).param2);
 				((TemplateParticle) template).param2 = 0;
@@ -233,7 +234,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 			int selected = this.listTags.getSelectedIndex();
 			String[] names = new String[this.shownTags.size()];
 			for (int i = 0; i < names.length; ++i)
-				names[i] = this.shownTags.get(i).id;
+				names[i] = this.shownTags.get(i).id();
 			this.listTags.setValues(names);
 			this.listTags.setSelectedIndex(selected == -1 ? 0 : selected);
 		}

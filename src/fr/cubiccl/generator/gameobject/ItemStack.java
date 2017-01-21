@@ -13,11 +13,11 @@ public class ItemStack
 
 	public static ItemStack createFrom(TagCompound tag)
 	{
-		Item item = ObjectRegistry.items.find(((TagString) tag.getTagFromId(Tags.ITEM_ID.id)).value());
-		int amount = ((TagNumber) tag.getTagFromId(Tags.ITEM_COUNT.id)).value();
-		int data = ((TagNumber) tag.getTagFromId(Tags.ITEM_DAMAGE.id)).value();
-		int slot = tag.hasTag(Tags.ITEM_SLOT.id) ? ((TagNumber) tag.getTagFromId(Tags.ITEM_SLOT.id)).value() : -1;
-		ItemStack is = new ItemStack(item, data, amount, (TagCompound) tag.getTagFromId(Tags.ITEM_NBT.id));
+		Item item = ObjectRegistry.items.find(((TagString) tag.getTagFromId(Tags.ITEM_ID.id())).value());
+		int amount = ((TagNumber) tag.getTagFromId(Tags.ITEM_COUNT.id())).value();
+		int data = ((TagNumber) tag.getTagFromId(Tags.ITEM_DAMAGE.id())).value();
+		int slot = tag.hasTag(Tags.ITEM_SLOT.id()) ? ((TagNumber) tag.getTagFromId(Tags.ITEM_SLOT.id())).value() : -1;
+		ItemStack is = new ItemStack(item, data, amount, (TagCompound) tag.getTagFromId(Tags.ITEM_NBT.id()));
 		is.slot = slot;
 		return is;
 	}
@@ -44,14 +44,14 @@ public class ItemStack
 
 	public String toCommand()
 	{
-		return this.item.idString + " " + this.amount + " " + this.damage + " " + this.nbt.toCommand();
+		return this.item.id() + " " + this.amount + " " + this.damage + " " + this.nbt.toCommand();
 	}
 
 	public TagCompound toTag(TemplateCompound container)
 	{
-		if (this.slot == -1) return new TagCompound(container, new TagString(Tags.ITEM_ID, this.item.idString), new TagNumber(Tags.ITEM_DAMAGE, this.damage),
+		if (this.slot == -1) return new TagCompound(container, new TagString(Tags.ITEM_ID, this.item.id()), new TagNumber(Tags.ITEM_DAMAGE, this.damage),
 				new TagNumber(Tags.ITEM_COUNT, this.amount), this.nbt);
-		return new TagCompound(container, new TagString(Tags.ITEM_ID, this.item.idString), new TagNumber(Tags.ITEM_DAMAGE, this.damage), new TagNumber(
+		return new TagCompound(container, new TagString(Tags.ITEM_ID, this.item.id()), new TagNumber(Tags.ITEM_DAMAGE, this.damage), new TagNumber(
 				Tags.ITEM_COUNT, this.amount), new TagNumber(Tags.ITEM_SLOT, this.slot), this.nbt);
 	}
 

@@ -7,11 +7,7 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.LivingEntity;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagList;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
-import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
@@ -33,9 +29,9 @@ public class TemplateSpawnPotentials extends TemplateCompound
 
 			for (Tag t : (Tag[]) tag.value())
 			{
-				if (t.template.id.equals(Tags.ENTITY_TYPE.id)) e = ObjectRegistry.entities.find((String) t.value());
-				else if (t.template.id.equals(Tags.ENTITY_WEIGHT.id)) w = (int) t.value();
-				else if (t.template.id.equals(Tags.ENTITY_PROPERTIES.id)) p = (TagCompound) t;
+				if (t.id().equals(Tags.ENTITY_TYPE.id())) e = ObjectRegistry.entities.find((String) t.value());
+				else if (t.id().equals(Tags.ENTITY_WEIGHT.id())) w = (int) t.value();
+				else if (t.id().equals(Tags.ENTITY_PROPERTIES.id())) p = (TagCompound) t;
 			}
 
 			return new SpawnPotential(new LivingEntity(e, p), w);

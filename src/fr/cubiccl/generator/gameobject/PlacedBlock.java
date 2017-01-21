@@ -19,7 +19,7 @@ public class PlacedBlock
 
 	public String toCommand()
 	{
-		return this.block.idString + " " + this.data + " " + this.nbt.value();
+		return this.block.id() + " " + this.data + " " + this.nbt.value();
 	}
 
 }

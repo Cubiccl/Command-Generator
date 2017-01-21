@@ -1,9 +1,9 @@
 package fr.cubiccl.generator.gui.component.combobox;
 
-import fr.cubiccl.generator.gameobject.NamedObject;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 
-public class ObjectCombobox<T extends NamedObject> extends SearchCombobox implements ITranslated
+public class ObjectCombobox<T extends BaseObject> extends SearchCombobox implements ITranslated
 {
 	private static final long serialVersionUID = 3964813972467084524L;
 

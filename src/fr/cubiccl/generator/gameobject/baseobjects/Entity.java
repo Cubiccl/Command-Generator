@@ -2,13 +2,11 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.image.BufferedImage;
 
-import fr.cubiccl.generator.gameobject.IconedObject;
-import fr.cubiccl.generator.gameobject.NamedObject;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
 
-public class Entity implements NamedObject, IconedObject, BaseObject
+public class Entity extends BaseObject
 {
 
 	/** This Entity's ID. */

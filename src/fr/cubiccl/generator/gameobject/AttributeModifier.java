@@ -2,11 +2,7 @@ package fr.cubiccl.generator.gameobject;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
-import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
-import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
@@ -27,13 +23,13 @@ public class AttributeModifier
 
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.ATTRIBUTE_ATTRIBUTE_NAME.id)) a = ObjectRegistry.attributes.find(((TagString) t).value());
-			if (t.id().equals(Tags.ATTRIBUTE_MODIFIER_NAME.id)) n = ((TagString) t).value();
-			if (t.id().equals(Tags.ATTRIBUTE_SLOT.id)) s = ((TagString) t).value();
-			if (t.id().equals(Tags.ATTRIBUTE_OPERATION.id)) o = (byte) (int) ((TagNumber) t).value();
-			if (t.id().equals(Tags.ATTRIBUTE_AMOUNT.id)) am = ((TagBigNumber) t).value();
-			if (t.id().equals(Tags.ATTRIBUTE_UUIDMOST.id)) um = (long) (double) ((TagBigNumber) t).value();
-			if (t.id().equals(Tags.ATTRIBUTE_UUIDLEAST.id)) ul = (long) (double) ((TagBigNumber) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_ATTRIBUTE_NAME.id())) a = ObjectRegistry.attributes.find(((TagString) t).value());
+			if (t.id().equals(Tags.ATTRIBUTE_MODIFIER_NAME.id())) n = ((TagString) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_SLOT.id())) s = ((TagString) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_OPERATION.id())) o = (byte) (int) ((TagNumber) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_AMOUNT.id())) am = ((TagBigNumber) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_UUIDMOST.id())) um = (long) (double) ((TagBigNumber) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_UUIDLEAST.id())) ul = (long) (double) ((TagBigNumber) t).value();
 		}
 
 		return new AttributeModifier(a, n, s, o, am, um, ul);

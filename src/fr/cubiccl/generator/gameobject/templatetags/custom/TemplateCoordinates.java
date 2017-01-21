@@ -30,13 +30,13 @@ public class TemplateCoordinates extends TemplateCompound
 		{
 			TagCompound coord = (TagCompound) previousValue;
 			Coordinates c;
-			if (this.isInteger) c = new Coordinates((float) (int) coord.getTagFromId(Tags.COORD_X.id).value(), (float) (int) coord
-					.getTagFromId(Tags.COORD_Y.id).value(), (float) (int) coord.getTagFromId(Tags.COORD_Z.id).value());
-			else c = new Coordinates((float) (double) coord.getTagFromId(Tags.COORD_X.id).value(),
-					(float) (double) coord.getTagFromId(Tags.COORD_Y.id).value(), (float) (double) coord.getTagFromId(Tags.COORD_Z.id).value());
+			if (this.isInteger) c = new Coordinates((float) (int) coord.getTagFromId(Tags.COORD_X.id()).value(), (float) (int) coord.getTagFromId(
+					Tags.COORD_Y.id()).value(), (float) (int) coord.getTagFromId(Tags.COORD_Z.id()).value());
+			else c = new Coordinates((float) (double) coord.getTagFromId(Tags.COORD_X.id()).value(), (float) (double) coord.getTagFromId(Tags.COORD_Y.id())
+					.value(), (float) (double) coord.getTagFromId(Tags.COORD_Z.id()).value());
 			p.setupFrom(c);
 		}
-		if (this.id.equals("Motion")) p.setEntryText(new Text("tag.Motion.x"), new Text("tag.Motion.y"), new Text("tag.Motion.z"));
+		if (this.id().equals("Motion")) p.setEntryText(new Text("tag.Motion.x"), new Text("tag.Motion.y"), new Text("tag.Motion.z"));
 		p.setName(this.title());
 		return p;
 	}

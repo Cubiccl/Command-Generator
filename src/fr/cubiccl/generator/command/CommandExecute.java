@@ -66,7 +66,7 @@ public class CommandExecute extends Command implements ActionListener
 		if (this.checkboxBlock.isSelected())
 		{
 			PlacedBlock block = this.panelBlock.generateBlock();
-			command += "detect " + this.panelBlockCoordinates.generateCoordinates().toCommand() + " " + block.block.idString + " " + block.data + " ";
+			command += "detect " + this.panelBlockCoordinates.generateCoordinates().toCommand() + " " + block.block.id() + " " + block.data + " ";
 		}
 		return command;
 	}

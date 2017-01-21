@@ -48,7 +48,7 @@ public class TemplateItemId extends TemplateString
 	public TagString generateTag(CGPanel panel)
 	{
 		this.damage = ((PanelBlockSelection) panel).selectedDamage();
-		return new TagString(this, ((PanelBlockSelection) panel).selectedBlock().idString);
+		return new TagString(this, ((PanelBlockSelection) panel).selectedBlock().id());
 	}
 
 	public void setLimited(String[] ids)

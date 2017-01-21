@@ -2,13 +2,10 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.image.BufferedImage;
 
-import fr.cubiccl.generator.gameobject.NamedObject;
-import fr.cubiccl.generator.gameobject.registries.NumIdObject;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.Textures;
 
-public class EnchantmentType implements NamedObject, BaseObject, NumIdObject
+public class EnchantmentType extends BaseObject
 {
 
 	/** This Enchantment's numerical ID. */
@@ -33,20 +30,20 @@ public class EnchantmentType implements NamedObject, BaseObject, NumIdObject
 	}
 
 	@Override
+	public int idNum()
+	{
+		return this.idInt;
+	}
+
+	@Override
 	public Text name()
 	{
 		return new Text("enchantment." + this.idString);
 	}
 
-	@Override
-	public Integer numId()
-	{
-		return this.idInt;
-	}
-
 	public BufferedImage texture()
 	{
-		return Textures.getTexture("enchantment." + this.idString);
+		return null;
 	}
 
 }

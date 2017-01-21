@@ -142,7 +142,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 			int index = 0;
 			String value = this.comboboxBlock.getValue();
 			for (int i = 0; i < this.blocks.length; ++i)
-				if (this.blocks[i].idString.equals(value))
+				if (this.blocks[i].id().equals(value))
 				{
 					index = i;
 					break;
@@ -210,7 +210,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 	public void setSelected(Block block)
 	{
 		for (int i = 0; i < this.blocks.length; ++i)
-			if (this.blocks[i].idString.equals(block.idString))
+			if (this.blocks[i].id().equals(block.id()))
 			{
 				this.setSelected(i, true);
 				break;

@@ -5,8 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.ItemStack;
-import fr.cubiccl.generator.gameobject.Particle;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
+import fr.cubiccl.generator.gameobject.baseobjects.Particle;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -48,7 +48,8 @@ public class PanelParticle extends CGPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		Particle particle = this.comboboxParticle.getSelectedObject();
-		this.panelBlockParticle.setVisible(particle.id.equals("minecraft:blockcrack") || particle.id.equals("minecraft:blockdust") || particle.id.equals("minecraft:fallingdust"));
+		this.panelBlockParticle.setVisible(particle.id.equals("minecraft:blockcrack") || particle.id.equals("minecraft:blockdust")
+				|| particle.id.equals("minecraft:fallingdust"));
 		this.panelItemParticle.setVisible(particle.id.equals("minecraft:iconcrack"));
 		this.labelParticle.setTextID(new Text("particle." + particle.id));
 	}
@@ -56,9 +57,9 @@ public class PanelParticle extends CGPanel implements ActionListener
 	public int generateParam1()
 	{
 		Particle p = this.selectedParticle();
-		if (p.id.equals("minecraft:iconcrack")) return this.panelItemParticle.selectedItem().idInt;
+		if (p.id.equals("minecraft:iconcrack")) return this.panelItemParticle.selectedItem().idNum();
 		if (p.id.equals("minecraft:blockdust") || p.id.equals("minecraft:blockcrack") || p.id.equals("minecraft:fallingdust")) return this.panelBlockParticle
-				.selectedBlock().idInt + this.panelBlockParticle.selectedDamage() * 4096;
+				.selectedBlock().idNum() + this.panelBlockParticle.selectedDamage() * 4096;
 		return 0;
 	}
 

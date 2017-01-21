@@ -30,7 +30,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.settings) JOptionPane.showMessageDialog(null, "Coming soon as DLC Kappa");
+		if (e.getSource() == this.settings) JOptionPane.showMessageDialog(null, "Nothing to be done yet lol");
 		if (e.getSource() == this.exit) CommandGenerator.window.dispose();
 	}
 

@@ -45,7 +45,7 @@ public class TemplateBlockId extends TemplateNumber
 	public TagNumber generateTag(CGPanel panel)
 	{
 		this.damage = ((PanelBlockSelection) panel).selectedDamage();
-		return new TagNumber(this, ((PanelBlockSelection) panel).selectedBlock().idInt);
+		return new TagNumber(this, ((PanelBlockSelection) panel).selectedBlock().idNum());
 	}
 
 	@Override

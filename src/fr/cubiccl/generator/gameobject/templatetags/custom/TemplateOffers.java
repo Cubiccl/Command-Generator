@@ -26,7 +26,7 @@ public class TemplateOffers extends TemplateCompound
 
 		if (previousValue != null)
 		{
-			TagList previous = (TagList) ((TagCompound) previousValue).getTagFromId(Tags.OFFER_RECIPES.id);
+			TagList previous = (TagList) ((TagCompound) previousValue).getTagFromId(Tags.OFFER_RECIPES.id());
 			TradeOffer[] trades = new TradeOffer[previous.size()];
 			for (int i = 0; i < trades.length; i++)
 				trades[i] = TradeOffer.createFrom((TagCompound) previous.getTag(i));

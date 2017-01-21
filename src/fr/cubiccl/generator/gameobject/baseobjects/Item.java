@@ -23,7 +23,7 @@ public class Item extends BlockItem
 
 	public Text name(int damage)
 	{
-		if (this.hasDurability) return this.getName(this.idString);
+		if (this.hasDurability) return this.name(this.id());
 		return super.name(damage);
 	}
 

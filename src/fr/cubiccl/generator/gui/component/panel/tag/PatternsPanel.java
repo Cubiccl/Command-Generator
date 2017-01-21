@@ -148,6 +148,7 @@ public class PatternsPanel extends CGPanel implements ActionListener
 
 	public void setBaseColor(int colorIndex)
 	{
+		this.comboboxBackground.setSelectedIndex(colorIndex);
 		this.banner.setBackground(Pattern.COLORS[colorIndex]);
 	}
 

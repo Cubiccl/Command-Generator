@@ -1,10 +1,8 @@
-package fr.cubiccl.generator.gameobject;
+package fr.cubiccl.generator.gameobject.baseobjects;
 
-import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.utils.Text;
 
-public class Particle implements NamedObject, BaseObject
+public class Particle extends BaseObject
 {
 
 	/** This Particle's ID. */
@@ -20,12 +18,6 @@ public class Particle implements NamedObject, BaseObject
 	public String id()
 	{
 		return this.id;
-	}
-
-	@Override
-	public Text name()
-	{
-		return new Text(this.id, false);
 	}
 
 }

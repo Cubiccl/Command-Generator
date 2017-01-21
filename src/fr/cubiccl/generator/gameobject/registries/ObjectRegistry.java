@@ -2,21 +2,13 @@ package fr.cubiccl.generator.gameobject.registries;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.Container;
-import fr.cubiccl.generator.gameobject.IconedObject;
-import fr.cubiccl.generator.gameobject.NamedObject;
-import fr.cubiccl.generator.gameobject.Particle;
-import fr.cubiccl.generator.gameobject.Sound;
-import fr.cubiccl.generator.gameobject.baseobjects.Achievement;
-import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
-import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
-import fr.cubiccl.generator.gameobject.baseobjects.EffectType;
-import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
-import fr.cubiccl.generator.gameobject.baseobjects.Entity;
+import fr.cubiccl.generator.gameobject.baseobjects.*;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject.ObjectComparatorID;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject.ObjectComparatorIDNum;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gui.LoadingFrame;
@@ -24,21 +16,21 @@ import fr.cubiccl.generator.utils.Textures;
 
 public class ObjectRegistry<T extends BaseObject>
 {
-	public static final ObjectRegistry<Achievement> achievements = new ObjectRegistry<Achievement>(false, true, false, Achievement.class);
-	public static final ObjectRegistry<Attribute> attributes = new ObjectRegistry<Attribute>(false, true, false, Attribute.class);
+	public static final ObjectRegistry<Achievement> achievements = new ObjectRegistry<Achievement>(false, false, Achievement.class);
+	public static final ObjectRegistry<Attribute> attributes = new ObjectRegistry<Attribute>(false, false, Attribute.class);
 	public static final BlockRegistry blocks = new BlockRegistry();
-	public static final ObjectRegistry<TemplateTag> blockTags = new ObjectRegistry<TemplateTag>(false, false, false, TemplateTag.class);
-	public static final ObjectRegistry<Container> containers = new ObjectRegistry<Container>(false, true, true, Container.class);
-	public static final ObjectRegistry<EffectType> effects = new ObjectRegistry<EffectType>(true, true, true, EffectType.class);
-	public static final ObjectRegistry<EnchantmentType> enchantments = new ObjectRegistry<EnchantmentType>(true, true, false, EnchantmentType.class);
-	public static final ObjectRegistry<Entity> entities = new ObjectRegistry<Entity>(false, true, true, Entity.class);
-	public static final ObjectRegistry<TemplateTag> entityTags = new ObjectRegistry<TemplateTag>(false, false, false, TemplateTag.class);
+	public static final ObjectRegistry<TemplateTag> blockTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
+	public static final ObjectRegistry<Container> containers = new ObjectRegistry<Container>(false, true, Container.class);
+	public static final ObjectRegistry<EffectType> effects = new ObjectRegistry<EffectType>(true, true, EffectType.class);
+	public static final ObjectRegistry<EnchantmentType> enchantments = new ObjectRegistry<EnchantmentType>(true, false, EnchantmentType.class);
+	public static final ObjectRegistry<Entity> entities = new ObjectRegistry<Entity>(false, true, Entity.class);
+	public static final ObjectRegistry<TemplateTag> entityTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
 	public static final ItemRegistry items = new ItemRegistry();
-	public static final ObjectRegistry<TemplateTag> itemTags = new ObjectRegistry<TemplateTag>(false, false, false, TemplateTag.class);
+	public static final ObjectRegistry<TemplateTag> itemTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
 	static final HashMap<String, ArrayList<String>> objectLists = new HashMap<String, ArrayList<String>>();
-	public static final ObjectRegistry<Particle> particles = new ObjectRegistry<Particle>(false, true, false, Particle.class);
+	public static final ObjectRegistry<Particle> particles = new ObjectRegistry<Particle>(false, false, Particle.class);
 	public static final byte SORT_ALPHABETICALLY = 0, SORT_NUMERICALLY = 1;
-	public static final ObjectRegistry<Sound> sounds = new ObjectRegistry<Sound>(false, true, false, Sound.class);
+	public static final ObjectRegistry<Sound> sounds = new ObjectRegistry<Sound>(false, false, Sound.class);
 
 	static void addToLists(String objectId, String... lists)
 	{
@@ -123,14 +115,13 @@ public class ObjectRegistry<T extends BaseObject>
 	}
 
 	private final Class<T> c;
-	private final boolean hasNumericalIds, hasName, hasTexture;
+	private final boolean hasNumericalIds, hasTexture;
 	protected final HashMap<Integer, String> ids;
 	protected final HashMap<String, T> registry;
 
-	ObjectRegistry(boolean hasNumericalIds, boolean hasName, boolean hasTexture, Class<T> c)
+	ObjectRegistry(boolean hasNumericalIds, boolean hasTexture, Class<T> c)
 	{
 		this.hasNumericalIds = hasNumericalIds;
-		this.hasName = hasName;
 		this.hasTexture = hasTexture;
 		this.c = c;
 		this.registry = new HashMap<String, T>();
@@ -139,9 +130,8 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public void checkNames()
 	{
-		if (!this.hasName) return;
 		for (T object : this.registry.values())
-			((NamedObject) object).name().toString();
+			object.name().toString();
 	}
 
 	public T find(int id)
@@ -183,30 +173,9 @@ public class ObjectRegistry<T extends BaseObject>
 		ArrayList<T> a = new ArrayList<T>();
 		a.addAll(registry.values());
 
-		if (sortType == SORT_ALPHABETICALLY) a.sort(new Comparator<T>()
-		{
-			@Override
-			public int compare(T o1, T o2)
-			{
-				return o1.id().toLowerCase().compareTo(o2.id().toLowerCase());
-			}
-		});
-		else if (sortType == SORT_NUMERICALLY && this.hasNumericalIds) a.sort(new Comparator<T>()
-		{
-			@Override
-			public int compare(T o1, T o2)
-			{
-				return ((NumIdObject) o1).numId() - ((NumIdObject) o2).numId();
-			}
-		});
-		else a.sort(new Comparator<T>()
-		{
-			@Override
-			public int compare(T o1, T o2)
-			{
-				return o1.id().compareTo(o2.id());
-			}
-		});
+		if (sortType == SORT_ALPHABETICALLY) a.sort(new ObjectComparatorID());
+		else if (sortType == SORT_NUMERICALLY && this.hasNumericalIds) a.sort(new ObjectComparatorIDNum());
+		else a.sort(new ObjectComparatorID());
 
 		return a.toArray((T[]) Array.newInstance(c, a.size()));
 	}
@@ -220,13 +189,13 @@ public class ObjectRegistry<T extends BaseObject>
 	{
 		if (!this.hasTexture) return;
 		for (T object : this.registry.values())
-			((IconedObject) object).texture();
+			object.texture();
 	}
 
 	public void register(T object)
 	{
 		registry.put(object.id(), object);
-		if (this.hasNumericalIds) this.ids.put(((NumIdObject) object).numId(), object.id());
+		if (this.hasNumericalIds) this.ids.put(object.idNum(), object.id());
 	}
 
 	public void reset()

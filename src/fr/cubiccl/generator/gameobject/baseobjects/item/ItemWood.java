@@ -16,7 +16,7 @@ public class ItemWood extends Item
 	@Override
 	public Text name(int damage)
 	{
-		return BlockWood.getName(this.idString, damage);
+		return BlockWood.getName(this.id(), damage);
 	}
 
 }

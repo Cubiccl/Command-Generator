@@ -15,7 +15,7 @@ public abstract class Tag
 
 	public String id()
 	{
-		return this.template.id;
+		return this.template.id();
 	}
 
 	public void setJson(boolean isJson)

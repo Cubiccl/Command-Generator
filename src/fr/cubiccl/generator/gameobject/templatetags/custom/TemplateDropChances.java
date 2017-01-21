@@ -43,7 +43,7 @@ public class TemplateDropChances extends TemplateList
 	@Override
 	protected CGPanel createPanel(String objectId, Tag previousValue)
 	{
-		PanelDropChances p = new PanelDropChances(this.id, this.slotCount);
+		PanelDropChances p = new PanelDropChances(this.id(), this.slotCount);
 
 		if (previousValue != null)
 		{

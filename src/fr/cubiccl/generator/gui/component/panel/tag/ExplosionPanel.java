@@ -128,11 +128,11 @@ public class ExplosionPanel extends CGPanel
 	{
 		for (Tag t : previousValue.value())
 		{
-			if (t.id().equals(Tags.FIREWORK_TYPE.id)) this.comboboxType.setSelectedIndex(((TagNumber) t).value());
-			else if (t.id().equals(Tags.FIREWORK_FLICKER.id)) this.boxFlicker.setSelected(((TagNumber) t).value() == 1);
-			else if (t.id().equals(Tags.FIREWORK_TRAIL.id)) this.boxTrail.setSelected(((TagNumber) t).value() == 1);
-			else if (t.id().equals(Tags.FIREWORK_COLORS.id)) this.primaryColors.setValues(((TagList) t).value());
-			else if (t.id().equals(Tags.FIREWORK_FADE_COLORS.id)) this.fadeColors.setValues(((TagList) t).value());
+			if (t.id().equals(Tags.FIREWORK_TYPE.id())) this.comboboxType.setSelectedIndex(((TagNumber) t).value());
+			else if (t.id().equals(Tags.FIREWORK_FLICKER.id())) this.boxFlicker.setSelected(((TagNumber) t).value() == 1);
+			else if (t.id().equals(Tags.FIREWORK_TRAIL.id())) this.boxTrail.setSelected(((TagNumber) t).value() == 1);
+			else if (t.id().equals(Tags.FIREWORK_COLORS.id())) this.primaryColors.setValues(((TagList) t).value());
+			else if (t.id().equals(Tags.FIREWORK_FADE_COLORS.id())) this.fadeColors.setValues(((TagList) t).value());
 		}
 		this.panelFadeColors.updateList();
 		this.panelPrimaryColors.updateList();
