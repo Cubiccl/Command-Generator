@@ -27,7 +27,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 	private Item[] availableItems;
 	private CGButton buttonSelectItem;
 	private int damage;
-	private boolean hasData;
+	private boolean hasData, hasDurability = true;
 	private Item item;
 	private CGLabel labelName;
 	private ImageLabel labelTexture;
@@ -116,9 +116,25 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		return this.item;
 	}
 
+	public void setDamage(int damage)
+	{
+		for (int i = 0; i < this.item.damage.length; ++i)
+			if (this.item.damage[i] == this.damage)
+			{
+				this.damage = damage;
+				this.updateDisplay();
+				break;
+			}
+	}
+
 	public void setEnabledContent(boolean data, boolean amount)
 	{
 		this.setHasData(data);
+		this.setHasAmount(amount);
+	}
+
+	public void setHasAmount(boolean amount)
+	{
 		this.spinnerAmount.container.setVisible(amount);
 	}
 
@@ -133,8 +149,20 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		}
 	}
 
+	public void setHasDurability(boolean hasDurability)
+	{
+		this.hasDurability = hasDurability;
+		this.updateDisplay();
+	}
+
+	public void setHasNBT(boolean hasNBT)
+	{
+		this.panelTags.setVisible(hasNBT);
+	}
+
 	public void setupFrom(ItemStack itemStack)
 	{
+		if (itemStack.item == null) return;
 		this.item = itemStack.item;
 		this.damage = itemStack.damage;
 		this.updateDisplay();
@@ -162,7 +190,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		else this.labelName.setText(this.selectedItem().mainName().toString());
 		this.labelTexture.setImage(this.selectedItem().texture(this.damage));
 
-		this.spinnerDurability.container.setVisible(this.hasData && this.item.hasDurability);
+		this.spinnerDurability.container.setVisible(this.hasData && this.hasDurability && this.item.hasDurability);
 	}
 
 }

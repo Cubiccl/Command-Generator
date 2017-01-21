@@ -1,46 +1,28 @@
 package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.Particle;
-import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
-import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
-import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
-import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelParticle;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class CommandParticle extends Command implements ActionListener
+public class CommandParticle extends Command
 {
 	private CGCheckBox checkboxForce;
-	private ObjectCombobox<Particle> comboboxParticle;
 	private CGEntry entryXd, entryYd, entryZd, entrySpeed, entryCount;
-	private CGLabel labelParticle;
-	private PanelBlock panelBlockParticle;
 	private PanelCoordinates panelCoordinates;
-	private PanelItem panelItemParticle;
+	private PanelParticle panelParticle;
 	private PanelTarget panelTarget;
 
 	public CommandParticle()
 	{
 		super("particle");
-	}
-
-	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		Particle particle = this.comboboxParticle.getSelectedObject();
-		this.panelBlockParticle.setVisible(particle.id.equals("blockcrack") || particle.id.equals("blockdust") || particle.id.equals("fallingdust"));
-		this.panelItemParticle.setVisible(particle.id.equals("iconcrack"));
-		this.labelParticle.setTextID(new Text("particle." + particle.id));
 	}
 
 	@Override
@@ -53,9 +35,7 @@ public class CommandParticle extends Command implements ActionListener
 		gbc.fill = GridBagConstraints.NONE;
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
-		panel.add((this.comboboxParticle = new ObjectCombobox<Particle>(ObjectRegistry.particles.list())).container, gbc);
-		++gbc.gridy;
-		panel.add(this.labelParticle = new CGLabel("particle." + this.comboboxParticle.getSelectedObject().id), gbc);
+		panel.add(this.panelParticle = new PanelParticle("particle.title"), gbc);
 		++gbc.gridy;
 		panel.add(this.panelCoordinates = new PanelCoordinates("particle.coordinates"), gbc);
 		++gbc.gridy;
@@ -79,18 +59,12 @@ public class CommandParticle extends Command implements ActionListener
 		++gbc.gridwidth;
 		gbc.fill = GridBagConstraints.NONE;
 		panel.add(this.panelTarget = new PanelTarget("particle.target", PanelTarget.PLAYERS_ONLY), gbc);
-		++gbc.gridy;
-		panel.add(this.panelBlockParticle = new PanelBlock("particle.block"), gbc);
-		panel.add(this.panelItemParticle = new PanelItem("particle.item"), gbc);
 
 		this.entryXd.addNumberFilter();
 		this.entryYd.addNumberFilter();
 		this.entryZd.addNumberFilter();
 		this.entrySpeed.addIntFilter();
 		this.entryCount.addIntFilter();
-		this.panelBlockParticle.setVisible(false);
-		this.panelItemParticle.setVisible(false);
-		this.comboboxParticle.addActionListener(this);
 
 		return panel;
 	}
@@ -98,7 +72,7 @@ public class CommandParticle extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		Particle particle = this.comboboxParticle.getSelectedObject();
+		Particle particle = this.panelParticle.selectedParticle();
 		String xd = this.entryXd.getText(), yd = this.entryYd.getText(), zd = this.entryZd.getText(), speed = this.entrySpeed.getText(), count = this.entryCount
 				.getText();
 		this.entryXd.checkValueSuperior(CGEntry.FLOAT, 0);
@@ -117,9 +91,9 @@ public class CommandParticle extends Command implements ActionListener
 		else command += "normal";
 		command += " " + this.panelTarget.generateTarget().toCommand();
 
-		if (particle.id.equals("iconcrack")) command += " " + this.panelItemParticle.selectedItem().idInt + " " + this.panelItemParticle.selectedDamage();
-		if (particle.id.equals("blockcrack") || particle.id.equals("blockdust") || particle.id.equals("fallingdust")) command += " "
-				+ (this.panelBlockParticle.selectedBlock().idInt + 4096 * this.panelBlockParticle.selectedDamage());
+		if (particle.id.equals("minecraft:iconcrack")) command += " " + this.panelParticle.generateParam1() + " " + this.panelParticle.generateParam2();
+		if (particle.id.equals("minecraft:blockcrack") || particle.id.equals("minecraft:blockdust") || particle.id.equals("minecraft:fallingdust")) command += " "
+				+ this.panelParticle.generateParam1();
 
 		return command;
 	}

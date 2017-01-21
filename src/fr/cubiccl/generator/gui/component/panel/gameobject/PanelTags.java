@@ -22,6 +22,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockId;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItemId;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateParticle;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.CScrollPane;
@@ -100,6 +101,10 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 						.valueFor(t).value();
 				else if (tag.id.equals("TileEntityData") && t.id.equals("Block")) objectToGive = this.valueFor(t) == null ? ObjectRegistry.blocks.first().idString
 						: ((TagString) this.valueFor(t)).value();
+				else if (t.id.equals("ParticleParam1") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param1 = (int) this
+						.valueFor(t).value();
+				else if (t.id.equals("ParticleParam2") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param2 = (int) this
+						.valueFor(t).value();
 			}
 
 			tag.askValue(objectToGive, this.selectedValue(), this);
@@ -114,6 +119,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	public void createTag(TemplateTag template, Tag value)
 	{
 		this.values[this.indexOf(template)] = value;
+		boolean particles = false;
 		for (int i = 0; i < this.tags.length; ++i)
 		{
 			if (this.tags[i].id.equals("Base") && template instanceof TemplatePatterns && template.id.equals("Patterns"))
@@ -136,6 +142,18 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateItemId) template).damage);
 				((TemplateItemId) template).damage = -1;
 				break;
+			} else if (this.tags[i].id.equals("ParticleParam1") && template instanceof TemplateParticle && template.id.equals("Particle"))
+			{
+				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateParticle) template).param1);
+				((TemplateParticle) template).param1 = 0;
+				if (particles) break;
+				particles = true;
+			} else if (this.tags[i].id.equals("ParticleParam2") && template instanceof TemplateParticle && template.id.equals("Particle"))
+			{
+				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateParticle) template).param2);
+				((TemplateParticle) template).param2 = 0;
+				if (particles) break;
+				particles = true;
 			}
 		}
 		this.updateDisplay();

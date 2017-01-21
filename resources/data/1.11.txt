@@ -169,7 +169,7 @@
 167,iron_trapdoor,blockOnly,damage=15,texture=-1
 168,prismarine,damage=2,lists=craft:use
 169,sea_lantern,lists=craft:use
-170,hay_block,lists=craft:use,damage=2,texture=-1
+170,hay_block,blockOnly,damage=2,texture=-1
 171,carpet,custom=Stained,lists=craft:use
 172,hardened_clay,lists=craft:use
 173,coal_block,lists=craft:use
@@ -295,6 +295,7 @@
 163,acacia_stairs,lists=craft:use:placeable
 164,dark_oak_stairs,lists=craft:use:placeable
 167,iron_trapdoor,lists=craft:use:placeable
+170,hay_block,lists=craft:use:placeable
 175,double_plant,damage=5,lists=use:placeable
 180,red_sandstone_stairs,lists=craft:use:placeable
 182,stone_slab2,lists=craft:use:placeable
@@ -536,7 +537,7 @@
 2267,record_wait,lists=use
 
 [ENTITIES]
-item,xp_orb,leash_knot,painting,item_frame,armor_stand,evocation_fangs,ender_crystal
+item,xp_orb,area_effect_cloud,leash_knot,painting,item_frame,armor_stand,evocation_fangs,ender_crystal
 egg,arrow,snowball,fireball,small_fireball,ender_pearl,eye_of_ender_signal,potion,xp_bottle,wither_skull,fireworks_rocket,spectral_arrow,shulker_bullet,dragon_fireball,llama_spit
 tnt,falling_block,lightning_bolt
 boat
@@ -940,7 +941,7 @@ carriedData,num2,enderman
 CatType,num0,ocelot,named=ocelot^wild:tuxedo:tabby:siamese
 ChestedHorse,num3,donkey:mule:llama
 CollarColor,custom:color,wolf
-Color,custom:Color,sheep:shulker:arrow
+Color,custom:Color,sheep:shulker:area_effect_cloud:arrow
 Command,string,commandblock_minecart
 CommandStats,custom:CommandStats,ANY
 ConversionTime,num0,zombie_villager
@@ -962,8 +963,9 @@ DisplayOffset,num0,list=minecart
 DisplayTile,custom:item_id,list=minecart
 DropItem,num3,falling_block
 DragonPhase,num0,ender_dragon,named=dragon^circling:strafing:landing_in:landing:landing_out:breath:breath_prepare:breath_roar:charging:death:no_ai
-Duration,num0,spectral_arrow
+Duration,num0,area_effect_cloud:spectral_arrow
 EatingHaystack,num3,list=horse
+Effects,custom:EffectList,area_effect_cloud
 EggLayTime,num0,chicken
 Enabled,num3,hopper_minecart
 ExplosionPower,num1,fireball:ghast
@@ -974,6 +976,7 @@ FallFlying,num3,list=mob:armor_stand
 FallHurtAmount,num0,falling_block
 FallHurtMax,num0,falling_block
 Fire,num2,ANY
+FireworksItem,custom:item,fireworks_rocket,autoselect=fireworks
 Fuel,num2,furnace_minecart
 Fuse,num2,creeper:tnt
 Glowing,num3,ANY
@@ -1002,8 +1005,9 @@ Leash,custom:Leash,list=mob
 Leashed,num3,list=mob
 LeftHanded,num3,list=mob
 life,num2,arrow:spectral_arrow
+Life,num0,fireworks_rocket
 LifeTicks,num0,vex
-LifeTime,num0,endermite
+LifeTime,num0,endermite:fireworks_rocket
 LootTable,string,chest_minecart:hopper_minecart
 LootTableSeed,num4,chest_minecart:hopper_minecart
 Marker,num3,armor_stand
@@ -1019,6 +1023,9 @@ Offers,custom:Offers,villager
 Owner,string,item
 ownerName,string,egg:ender_pearl:potion:snowball:xp_bottle
 OwnerUUID,string,ocelot:wolf:skeleton_horse:zombie_horse:donkey:mule:horse:llama
+Particle,custom:Particle,area_effect_cloud
+ParticleParam1,num0,area_effect_cloud
+ParticleParam2,num0,area_effect_cloud
 Passengers,custom:EntityList,ANY
 Peek,num2,shulker
 PersistenceRequired,num3,list=mob
@@ -1029,13 +1036,17 @@ PlayerSpawned,num3,endermite
 PortalCooldown,num0,ANY
 Pos,custom:Coordinates,ANY
 Pose,custom:Pose,armor_stand
-Potion,custom:item,potion,autoselect=splash_potion
+Potion,custom:item,area_effect_cloud:potion,autoselect=splash_potion
 powered,num3,creeper
 Profession,num0,villager:zombie_villager,named=profession^farmer:librarian:priest:blacksmith:butcher:nitwit
 Pumpkin,num3,snowman
 PushX,num6,furnace_minecart
 PushZ,num6,furnace_minecart
 RabbitType,num0,rabbit,named=rabbit^brown:white:black:black_white:gold:salt:killer
+Radius,num5,area_effect_cloud
+RadiusOnUse,num5,area_effect_cloud
+RadiusPerTick,num5,area_effect_cloud
+ReapplicationDelay,num0,area_effect_cloud
 RequiredPlayerRange,num2,spawner_minecart
 Rotation,custom:Rotation,ANY
 Saddle,num3,pig

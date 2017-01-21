@@ -110,13 +110,24 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		}
 	}
 
+	public void setHasNBT(boolean hasNBT)
+	{
+		this.panelTags.setVisible(hasNBT);
+	}
+
+	public void setupFrom(PlacedBlock placedBlock)
+	{
+		this.block = placedBlock.block;
+		this.damage = placedBlock.data;
+		this.updateDisplay();
+		this.panelTags.setObjectForTags(this.block.idString);
+		if (placedBlock.nbt.size() > 0) this.panelTags.setTags(placedBlock.nbt.value());
+	}
+
 	@Override
 	public boolean shouldStateClose(PanelBlockSelection panel)
 	{
-		this.block = panel.selectedBlock();
-		this.damage = panel.selectedDamage();
-		this.updateDisplay();
-		this.panelTags.setObjectForTags(this.block.idString);
+		this.setupFrom(new PlacedBlock(panel.selectedBlock(), panel.selectedDamage(), new TagCompound(Tags.DEFAULT_COMPOUND)));
 		return true;
 	}
 
