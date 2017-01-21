@@ -6,7 +6,7 @@ import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
-public class TradeOffer
+public class TradeOffer extends GameObject
 {
 
 	public static TradeOffer createFrom(TagCompound tag)
@@ -38,6 +38,19 @@ public class TradeOffer
 		return this.buy != null && this.sell != null;
 	}
 
+	@Override
+	public String toCommand()
+	{
+		return this.toString();
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.buy.toString() + (this.buySecondary != null ? " + " + this.buySecondary.toString() : "") + " -> " + this.sell.toString();
+	}
+
+	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
 		if (this.buySecondary == null) return new TagCompound(container, new TagNumber(Tags.OFFER_EXP, this.experienceReward ? 1 : 0), new TagNumber(

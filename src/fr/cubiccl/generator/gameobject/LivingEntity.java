@@ -10,7 +10,7 @@ import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
-public class LivingEntity
+public class LivingEntity extends GameObject
 {
 	public static LivingEntity createFrom(TagCompound tag)
 	{
@@ -29,6 +29,19 @@ public class LivingEntity
 		this.nbt = nbt;
 	}
 
+	@Override
+	public String toCommand()
+	{
+		return this.entity.id();
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.entity.name().toString();
+	}
+
+	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();

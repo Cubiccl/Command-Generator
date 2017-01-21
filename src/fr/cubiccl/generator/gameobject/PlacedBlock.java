@@ -2,8 +2,9 @@ package fr.cubiccl.generator.gameobject;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
-public class PlacedBlock
+public class PlacedBlock extends GameObject
 {
 
 	public final Block block;
@@ -20,6 +21,18 @@ public class PlacedBlock
 	public String toCommand()
 	{
 		return this.block.id() + " " + this.data + " " + this.nbt.value();
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.block.name(this.data).toString();
+	}
+
+	@Override
+	public TagCompound toTag(TemplateCompound container)
+	{
+		return null;
 	}
 
 }

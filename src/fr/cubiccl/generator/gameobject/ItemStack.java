@@ -8,7 +8,7 @@ import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
-public class ItemStack
+public class ItemStack extends GameObject
 {
 
 	public static ItemStack createFrom(TagCompound tag)
@@ -42,11 +42,19 @@ public class ItemStack
 		this.nbt = nbt;
 	}
 
+	@Override
 	public String toCommand()
 	{
-		return this.item.id() + " " + this.amount + " " + this.damage + " " + this.nbt.toCommand();
+		return this.item.id() + " " + this.amount + " " + this.damage + " " + this.nbt.valueForCommand();
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.amount + " " + this.item.name(this.damage);
+	}
+
+	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
 		if (this.slot == -1) return new TagCompound(container, new TagString(Tags.ITEM_ID, this.item.id()), new TagNumber(Tags.ITEM_DAMAGE, this.damage),

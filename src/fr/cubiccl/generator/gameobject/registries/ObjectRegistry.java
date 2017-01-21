@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import fr.cubiccl.generator.CommandGenerator;
-import fr.cubiccl.generator.gameobject.Container;
 import fr.cubiccl.generator.gameobject.baseobjects.*;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject.ObjectComparatorID;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject.ObjectComparatorIDNum;

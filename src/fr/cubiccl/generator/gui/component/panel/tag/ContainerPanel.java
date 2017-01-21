@@ -9,8 +9,8 @@ import java.util.ArrayList;
 
 import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.CommandGenerator;
-import fr.cubiccl.generator.gameobject.Container;
 import fr.cubiccl.generator.gameobject.ItemStack;
+import fr.cubiccl.generator.gameobject.baseobjects.Container;
 import fr.cubiccl.generator.gameobject.baseobjects.Slot;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;

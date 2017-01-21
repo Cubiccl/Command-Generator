@@ -9,11 +9,12 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Utils;
 
-public class Pattern
+public class Pattern extends GameObject
 {
 	public static final Color[] COLORS =
 	{ Color.WHITE, new Color(216, 127, 51), new Color(178, 76, 216), new Color(102, 153, 216), new Color(229, 229, 51), new Color(127, 204, 25),
@@ -56,13 +57,20 @@ public class Pattern
 	}
 
 	@Override
+	public String toCommand()
+	{
+		return this.toString();
+	}
+
+	@Override
 	public String toString()
 	{
 		return new Text("color." + Utils.WOOL_COLORS[this.color]) + " " + new Text("pattern." + this.shape).toString().toLowerCase();
 	}
 
-	public TagCompound toTag()
+	@Override
+	public TagCompound toTag(TemplateCompound container)
 	{
-		return new TagCompound(Tags.PATTERN, new TagString(Tags.PATTERN_SHAPE, this.shape), new TagNumber(Tags.PATTERN_COLOR, this.color));
+		return new TagCompound(container, new TagString(Tags.PATTERN_SHAPE, this.shape), new TagNumber(Tags.PATTERN_COLOR, this.color));
 	}
 }

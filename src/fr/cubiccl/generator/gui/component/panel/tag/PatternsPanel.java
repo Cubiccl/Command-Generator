@@ -14,6 +14,7 @@ import fr.cubi.cubigui.CButton;
 import fr.cubiccl.generator.gameobject.Pattern;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
@@ -142,7 +143,7 @@ public class PatternsPanel extends CGPanel implements ActionListener
 	{
 		TagCompound[] tags = new TagCompound[this.patterns.size()];
 		for (int i = 0; i < tags.length; ++i)
-			tags[i] = this.patterns.get(i).toTag();
+			tags[i] = this.patterns.get(i).toTag(Tags.DEFAULT_COMPOUND);
 		return tags;
 	}
 

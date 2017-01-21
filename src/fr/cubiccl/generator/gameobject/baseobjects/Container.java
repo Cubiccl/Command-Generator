@@ -1,9 +1,7 @@
-package fr.cubiccl.generator.gameobject;
+package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.image.BufferedImage;
 
-import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
-import fr.cubiccl.generator.gameobject.baseobjects.Slot;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;

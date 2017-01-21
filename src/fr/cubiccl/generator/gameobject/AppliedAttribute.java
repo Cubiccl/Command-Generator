@@ -13,7 +13,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelAttributeModifier;
 import fr.cubiccl.generator.utils.Text;
 
-public class AppliedAttribute
+public class AppliedAttribute extends GameObject
 {
 	public static class AttributeModifierList implements IObjectList
 	{
@@ -103,6 +103,19 @@ public class AppliedAttribute
 		this.modifiers = modifiers;
 	}
 
+	@Override
+	public String toCommand()
+	{
+		return this.toString();
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.attribute.name().toString() + ", " + this.modifiers.length + " modifiers";
+	}
+
+	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
 		TagCompound[] m = new TagCompound[this.modifiers.length];

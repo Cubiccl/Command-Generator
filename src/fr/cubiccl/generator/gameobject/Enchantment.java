@@ -8,7 +8,7 @@ import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
-public class Enchantment
+public class Enchantment extends GameObject
 {
 
 	public static Enchantment createFrom(TagCompound tag)
@@ -32,6 +32,7 @@ public class Enchantment
 		this.level = level;
 	}
 
+	@Override
 	public String toCommand()
 	{
 		return this.type.idString + " " + this.level;
@@ -43,6 +44,7 @@ public class Enchantment
 		return this.type.name().toString() + " " + this.level;
 	}
 
+	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
 		return new TagCompound(container, new TagNumber(Tags.ENCHANTMENT_ID, this.type.idInt), new TagNumber(Tags.ENCHANTMENT_LVL, this.level));

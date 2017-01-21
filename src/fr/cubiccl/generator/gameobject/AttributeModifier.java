@@ -6,7 +6,7 @@ import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
-public class AttributeModifier
+public class AttributeModifier extends GameObject
 {
 	public static final byte OP_ADD = 0, OP_MULTIPLY = 1, OP_MULTIPLY_ALL = 2;
 
@@ -51,6 +51,25 @@ public class AttributeModifier
 		this.amount = amount;
 		this.UUIDMost = UUIDMost;
 		this.UUIDLeast = UUIDLeast;
+	}
+
+	@Override
+	public String toCommand()
+	{
+		return this.toString();
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.name + ", affects " + this.attribute.name().toString();
+	}
+
+	@Override
+	@Deprecated
+	public TagCompound toTag(TemplateCompound container)
+	{
+		return this.toTag(container, true);
 	}
 
 	/** @param isApplied - True if is applied to an entity. Thus attribute and slot won't be included. */

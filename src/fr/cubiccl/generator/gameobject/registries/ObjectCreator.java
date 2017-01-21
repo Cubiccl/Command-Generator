@@ -3,7 +3,6 @@ package fr.cubiccl.generator.gameobject.registries;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.CommandGenerator;
-import fr.cubiccl.generator.gameobject.Container;
 import fr.cubiccl.generator.gameobject.baseobjects.*;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;

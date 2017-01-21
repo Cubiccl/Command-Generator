@@ -8,7 +8,7 @@ import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
-public class Effect
+public class Effect extends GameObject
 {
 
 	public static Effect createFrom(TagCompound tag)
@@ -41,11 +41,19 @@ public class Effect
 		this.hideParticles = hideParticles;
 	}
 
+	@Override
 	public String toCommand()
 	{
 		return this.type.idString + " " + this.duration + " " + this.amplifier + " " + this.hideParticles;
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.type.name().toString() + " " + this.amplifier + " (" + this.duration + "s" + (this.hideParticles ? ", particles hidden)" : ")");
+	}
+
+	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
 		return new TagCompound(container, new TagNumber(Tags.EFFECT_ID, this.type.idInt), new TagNumber(Tags.EFFECT_AMPLIFIER, this.amplifier), new TagNumber(

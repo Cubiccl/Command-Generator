@@ -7,7 +7,7 @@ import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 
-public class Coordinates
+public class Coordinates extends GameObject
 {
 
 	public static Coordinates createFrom(TagList tag)
@@ -43,6 +43,7 @@ public class Coordinates
 		this.zRelative = zRelative;
 	}
 
+	@Override
 	public String toCommand()
 	{
 		String command = "";
@@ -58,6 +59,23 @@ public class Coordinates
 		return command;
 	}
 
+	@Override
+	public String toString()
+	{
+		String text = "X=";
+		if (this.xRelative) text += "~";
+		text += this.x + ", Y=";
+
+		if (this.yRelative) text += "~";
+		text += this.y + " ,Z=";
+
+		if (this.zRelative) text += "~";
+		text += this.z;
+
+		return text;
+	}
+
+	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
 		return new TagCompound(container, new TagBigNumber(Tags.COORD_X, this.x), new TagBigNumber(Tags.COORD_Y, this.y),
