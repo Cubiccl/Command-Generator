@@ -22,13 +22,13 @@ public class TemplateString extends TemplateTag
 	{
 		if (this.authorizedValues != null)
 		{
-			ComboboxPanel p = new ComboboxPanel(this.description(), "tag." + this.id(), this.authorizedValues);
+			ComboboxPanel p = new ComboboxPanel(this.description(object), "tag." + this.id(), this.authorizedValues);
 			if (previousValue != null) for (int i = 0; i < this.authorizedValues.length; ++i)
 				if (this.authorizedValues[i].equals(previousValue.value())) p.combobox.setSelectedIndex(i);
 			return p;
 		}
 
-		EntryPanel p = new EntryPanel(this.description());
+		EntryPanel p = new EntryPanel(this.description(object));
 		if (previousValue != null) p.entry.setText(((TagString) previousValue).value());
 		return p;
 	}

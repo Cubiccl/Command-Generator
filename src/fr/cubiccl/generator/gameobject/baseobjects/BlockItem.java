@@ -80,7 +80,7 @@ public class BlockItem extends BaseObject
 	@Override
 	public Text name()
 	{
-		return new Text(this.idString, false);
+		return this.mainName();
 	}
 
 	/** @param damage - A damage value.

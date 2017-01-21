@@ -42,14 +42,14 @@ public class TemplateNumber extends TemplateTag
 	{
 		if (this.numberType == TagNumber.BYTE_BOOLEAN)
 		{
-			PanelRadio p = new PanelRadio(this.description(), "value", "true", "false");
+			PanelRadio p = new PanelRadio(this.description(object), "value", "true", "false");
 			if (previousValue != null && (int) previousValue.value() == 0) p.setSelected(1);
 			return p;
 		}
 
 		if (this.names == null)
 		{
-			EntryPanel p = new EntryPanel(this.description());
+			EntryPanel p = new EntryPanel(this.description(object));
 			if (this.isBigNumber()) p.entry.addNumberFilter();
 			else p.entry.addIntFilter();
 			if (previousValue != null)
@@ -59,7 +59,7 @@ public class TemplateNumber extends TemplateTag
 			} else p.entry.setText("0");
 			return p;
 		}
-		ComboboxPanel p = new ComboboxPanel(this.description(), this.prefix, this.names);
+		ComboboxPanel p = new ComboboxPanel(this.description(object), this.prefix, this.names);
 		if (previousValue != null)
 		{
 			int v = ((TagNumber) previousValue).value();

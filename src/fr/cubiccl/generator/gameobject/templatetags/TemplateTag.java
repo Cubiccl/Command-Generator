@@ -8,6 +8,8 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.IStateListener;
+import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
 public abstract class TemplateTag extends BaseObject implements IStateListener<CGPanel>
@@ -68,10 +70,13 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 
 	protected abstract CGPanel createPanel(BaseObject object, Tag previousValue);
 
-	/** @return A description of this NBT Tag. */
-	public Text description()
+	/** @param object - The Object this Tag is applied to.
+	 * @return A description of this NBT Tag. */
+	public Text description(BaseObject object)
 	{
-		return new Text("tag." + TYPE_NAMES[this.type] + "." + this.id);
+		String objectSpecific = "tag." + TYPE_NAMES[this.type] + "." + this.id + "." + object.id();
+		if (Lang.keyExists(objectSpecific)) return new Text(objectSpecific, new Replacement("<o>", object.name()));
+		return new Text("tag." + TYPE_NAMES[this.type] + "." + this.id, new Replacement("<o>", object.name()));
 	}
 
 	/** @param object - The Object this Tag is applied to.

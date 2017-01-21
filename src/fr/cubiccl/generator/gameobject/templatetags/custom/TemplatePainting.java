@@ -76,7 +76,7 @@ public class TemplatePainting extends TemplateString
 	@Override
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
-		return new PanelPainting(this.description(), PAINTINGS);
+		return new PanelPainting(this.description(object), PAINTINGS);
 	}
 
 	@Override

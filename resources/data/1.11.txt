@@ -982,7 +982,6 @@ Fuse,num2,creeper:tnt
 Glowing,num3,ANY
 HandDropChances,custom:DropChances2,list=mob
 HandItems,items,list=mob:armor_stand,noSlot
-Health,num1,xp_orb
 Health,num5,list=mob
 HurtBy,string,zombie_pigman
 HurtEntities,num3,falling_block

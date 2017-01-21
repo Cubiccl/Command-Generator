@@ -126,6 +126,7 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 			this.damageSelector.setVisible(false);
 			this.spinnerDamage.container.setVisible(false);
 		}
+		this.comboboxItem.setUseIDs(true);
 		this.comboboxItem.addActionListener(this);
 		this.spinnerDamage.addActionListener(this);
 		this.setMainComponent(p);
