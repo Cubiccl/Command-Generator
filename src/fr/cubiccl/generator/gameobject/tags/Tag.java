@@ -1,8 +1,10 @@
 package fr.cubiccl.generator.gameobject.tags;
 
+import fr.cubiccl.generator.gameobject.GameObject;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 
-public abstract class Tag
+public abstract class Tag extends GameObject
 {
 	public static final byte BLOCK = 0, ITEM = 1, ENTITY = 2, UNAVAILABLE = 3;
 	protected boolean isJson;
@@ -23,6 +25,7 @@ public abstract class Tag
 		this.isJson = isJson;
 	}
 
+	@Override
 	public String toCommand()
 	{
 		if (this.isJson)
@@ -37,6 +40,13 @@ public abstract class Tag
 	public String toString()
 	{
 		return this.toCommand();
+	}
+
+	@Override
+	@Deprecated
+	public TagCompound toTag(TemplateCompound container)
+	{
+		return null;
 	}
 
 	public int type()
