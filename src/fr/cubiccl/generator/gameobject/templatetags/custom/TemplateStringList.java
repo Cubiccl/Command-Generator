@@ -32,7 +32,7 @@ public class TemplateStringList extends TemplateList
 		}
 
 		@Override
-		public boolean addObject(CGPanel panel)
+		public boolean addObject(CGPanel panel, int editIndex)
 		{
 			try
 			{
@@ -42,14 +42,17 @@ public class TemplateStringList extends TemplateList
 				CommandGenerator.report(e);
 				return false;
 			}
-			this.strings.add(((EntryPanel) panel).entry.getText());
+			if (editIndex == -1) this.strings.add(((EntryPanel) panel).entry.getText());
+			else this.strings.set(editIndex, ((EntryPanel) panel).entry.getText());
 			return true;
 		}
 
 		@Override
-		public CGPanel createAddPanel()
+		public CGPanel createAddPanel(int editIndex)
 		{
-			return new EntryPanel("tag." + id());
+			EntryPanel p = new EntryPanel("tag." + id());
+			if (editIndex != -1) p.entry.setText(this.strings.get(editIndex));
+			return p;
 		}
 
 		@Override

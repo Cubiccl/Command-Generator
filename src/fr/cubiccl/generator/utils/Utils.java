@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.utils;
 
+import java.text.DecimalFormat;
+
 public final class Utils
 {
 	public static final String[] COLORS =
@@ -150,6 +152,11 @@ public final class Utils
 	{
 		if (value.contains(" ")) throw new WrongValueException(name, new Text("error.space"), value);
 		if (value.equals("")) throw new MissingValueException(name);
+	}
+
+	public static String doubleToString(double d)
+	{
+		return new DecimalFormat("#").format(d);
 	}
 
 	public static int[] generateArray(int maxValue)

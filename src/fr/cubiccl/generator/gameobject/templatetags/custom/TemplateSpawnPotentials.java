@@ -74,11 +74,13 @@ public class TemplateSpawnPotentials extends TemplateCompound
 		}
 
 		@Override
-		public boolean addObject(CGPanel panel)
+		public boolean addObject(CGPanel panel, int editIndex)
 		{
 			try
 			{
-				this.spawnPotentials.add(((SpawnPotentialPanel) panel).createSpawnPotential());
+				SpawnPotential s = ((SpawnPotentialPanel) panel).createSpawnPotential();
+				if (editIndex == -1) this.spawnPotentials.add(s);
+				else this.spawnPotentials.set(editIndex, s);
 				return true;
 			} catch (CommandGenerationException e)
 			{
@@ -88,9 +90,11 @@ public class TemplateSpawnPotentials extends TemplateCompound
 		}
 
 		@Override
-		public CGPanel createAddPanel()
+		public CGPanel createAddPanel(int editIndex)
 		{
-			return new SpawnPotentialPanel();
+			SpawnPotentialPanel p = new SpawnPotentialPanel();
+			if (editIndex != -1) p.setupFrom(this.spawnPotentials.get(editIndex));
+			return p;
 		}
 
 		@Override
@@ -128,7 +132,7 @@ public class TemplateSpawnPotentials extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object,Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		SpawnPotential[] potentials = new SpawnPotential[0];
 		if (previousValue != null)

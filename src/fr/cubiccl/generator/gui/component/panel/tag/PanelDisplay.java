@@ -48,7 +48,7 @@ public class PanelDisplay extends CGPanel implements IObjectList, ActionListener
 		gbc.gridwidth = 3;
 		this.add((this.entryName = new CGEntry(new Text("display.name"), new Text("display.name"))).container, gbc);
 		++gbc.gridy;
-		this.add(new PanelObjectList(this), gbc);
+		this.add(new PanelObjectList("display.lore.title", this), gbc);
 		++gbc.gridy;
 		this.add(this.checkboxDye = new CGCheckBox("display.dye.check"), gbc);
 		++gbc.gridy;
@@ -77,15 +77,19 @@ public class PanelDisplay extends CGPanel implements IObjectList, ActionListener
 	}
 
 	@Override
-	public boolean addObject(CGPanel panel)
+	public boolean addObject(CGPanel panel, int editIndex)
 	{
-		return this.lore.add(((EntryPanel) panel).entry.getText());
+		if (editIndex == -1) this.lore.add(((EntryPanel) panel).entry.getText());
+		else this.lore.set(editIndex, ((EntryPanel) panel).entry.getText());
+		return true;
 	}
 
 	@Override
-	public CGPanel createAddPanel()
+	public CGPanel createAddPanel(int editIndex)
 	{
-		return new EntryPanel("display.lore");
+		EntryPanel p = new EntryPanel("display.lore");
+		if (editIndex != -1) p.entry.setText(this.lore.get(editIndex));
+		return p;
 	}
 
 	public TagCompound generateDisplay(TemplateDisplay container)

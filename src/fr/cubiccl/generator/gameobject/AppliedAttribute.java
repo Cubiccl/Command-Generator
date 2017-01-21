@@ -27,18 +27,21 @@ public class AppliedAttribute extends GameObject
 		}
 
 		@Override
-		public boolean addObject(CGPanel panel)
+		public boolean addObject(CGPanel panel, int editIndex)
 		{
 			AttributeModifier m = ((PanelAttributeModifier) panel).generateModifier();
 			if (m == null) return false;
-			this.modifiers.add(m);
+			if (editIndex == -1) this.modifiers.add(m);
+			else this.modifiers.set(editIndex, m);
 			return true;
 		}
 
 		@Override
-		public CGPanel createAddPanel()
+		public CGPanel createAddPanel(int editIndex)
 		{
-			return new PanelAttributeModifier(this.isApplied);
+			PanelAttributeModifier p = new PanelAttributeModifier(this.isApplied);
+			if (editIndex != -1) p.setupFrom(this.modifiers.get(editIndex));
+			return p;
 		}
 
 		@Override

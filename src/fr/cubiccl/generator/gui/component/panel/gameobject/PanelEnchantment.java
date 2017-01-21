@@ -53,4 +53,10 @@ public class PanelEnchantment extends CGPanel
 		return this.comboboxEnchant.getSelectedObject();
 	}
 
+	public void setupFrom(Enchantment enchantment)
+	{
+		this.comboboxEnchant.setSelected(enchantment.type);
+		this.entryLevel.setText(Integer.toString(enchantment.level));
+	}
+
 }

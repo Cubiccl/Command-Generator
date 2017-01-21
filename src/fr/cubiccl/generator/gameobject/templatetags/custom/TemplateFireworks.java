@@ -27,16 +27,19 @@ public class TemplateFireworks extends TemplateCompound
 		private ArrayList<TagCompound> explosions = new ArrayList<TagCompound>();
 
 		@Override
-		public boolean addObject(CGPanel panel)
+		public boolean addObject(CGPanel panel, int editIndex)
 		{
-			this.explosions.add(((ExplosionPanel) panel).generateExplosion(Tags.DEFAULT_COMPOUND));
+			if (editIndex == -1) this.explosions.add(((ExplosionPanel) panel).generateExplosion(Tags.DEFAULT_COMPOUND));
+			else this.explosions.set(editIndex, ((ExplosionPanel) panel).generateExplosion(Tags.DEFAULT_COMPOUND));
 			return true;
 		}
 
 		@Override
-		public CGPanel createAddPanel()
+		public CGPanel createAddPanel(int editIndex)
 		{
-			return new ExplosionPanel();
+			ExplosionPanel p = new ExplosionPanel();
+			if (editIndex != -1) p.setupFrom(this.explosions.get(editIndex));
+			return p;
 		}
 
 		@Override

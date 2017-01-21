@@ -26,7 +26,7 @@ public class TemplateEnchantmentList extends TemplateList
 		private ArrayList<Enchantment> enchantments = new ArrayList<Enchantment>();
 
 		@Override
-		public boolean addObject(CGPanel panel)
+		public boolean addObject(CGPanel panel, int editIndex)
 		{
 			Enchantment ench = null;
 			try
@@ -37,7 +37,11 @@ public class TemplateEnchantmentList extends TemplateList
 				CommandGenerator.report(e);
 				return false;
 			}
-			if (!this.enchantments.contains(ench))
+			if (editIndex != -1)
+			{
+				if (this.enchantments.contains(ench)) this.enchantments.remove(editIndex);
+				else this.enchantments.set(editIndex, ench);
+			} else if (!this.enchantments.contains(ench))
 			{
 				this.enchantments.add(ench);
 				this.enchantments.sort(new Comparator<Enchantment>()
@@ -54,9 +58,11 @@ public class TemplateEnchantmentList extends TemplateList
 		}
 
 		@Override
-		public CGPanel createAddPanel()
+		public CGPanel createAddPanel(int editIndex)
 		{
-			return new PanelEnchantment(false);
+			PanelEnchantment p = new PanelEnchantment(false);
+			if (editIndex != -1) p.setupFrom(this.enchantments.get(editIndex));
+			return p;
 		}
 
 		@Override

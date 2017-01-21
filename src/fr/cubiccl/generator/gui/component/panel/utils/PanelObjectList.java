@@ -21,7 +21,8 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 {
 	private static final long serialVersionUID = 2923920419688577940L;
 
-	private CGButton buttonAdd, buttonRemove;
+	private CGButton buttonAdd, buttonEdit, buttonRemove;
+	private int editing = -1;
 	private ImageLabel labelImage;
 	private CGLabel labelName;
 	private CGList list;
@@ -44,16 +45,21 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 
 		++gbc.gridx;
 		--gbc.gridy;
-		++gbc.gridheight;
+		gbc.gridheight = 3;
 		this.add((this.list = new CGList()).scrollPane, gbc);
 
 		++gbc.gridx;
-		--gbc.gridheight;
+		gbc.gridheight = 1;
 		this.add(this.buttonAdd = new CGButton("general.add"), gbc);
+		++gbc.gridy;
+		this.add(this.buttonEdit = new CGButton("general.edit"), gbc);
 		++gbc.gridy;
 		this.add(this.buttonRemove = new CGButton("general.remove"), gbc);
 
+		this.buttonEdit.setEnabled(false);
+		this.buttonRemove.setEnabled(false);
 		this.buttonAdd.addActionListener(this);
+		this.buttonEdit.addActionListener(this);
 		this.buttonRemove.addActionListener(this);
 		this.list.addListSelectionListener(this);
 		this.list.scrollPane.setPreferredSize(new Dimension(200, 100));
@@ -64,8 +70,15 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonAdd) CommandGenerator.stateManager.setState(this.objectList.createAddPanel(), this);
-		else if (e.getSource() == this.buttonRemove) this.removeSelected();
+		if (e.getSource() == this.buttonAdd)
+		{
+			this.editing = -1;
+			CommandGenerator.stateManager.setState(this.objectList.createAddPanel(this.editing), this);
+		} else if (e.getSource() == this.buttonEdit)
+		{
+			this.editing = this.selectedIndex();
+			CommandGenerator.stateManager.setState(this.objectList.createAddPanel(this.editing), this);
+		} else if (e.getSource() == this.buttonRemove) this.removeSelected();
 	}
 
 	private void removeSelected()
@@ -86,7 +99,7 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 	@Override
 	public boolean shouldStateClose(CGPanel panel)
 	{
-		boolean shouldClose = this.objectList.addObject(panel);
+		boolean shouldClose = this.objectList.addObject(panel, this.editing);
 		if (shouldClose) this.updateList();
 		return shouldClose;
 	}
@@ -94,9 +107,17 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 	private void updateDisplay()
 	{
 		int index = this.selectedIndex();
-		if (index == -1) return;
-		this.labelImage.setImage(this.objectList.getTexture(index));
-		this.labelName.setTextID(this.objectList.getName(index));
+		this.buttonEdit.setEnabled(index != -1);
+		this.buttonRemove.setEnabled(index != -1);
+		if (index == -1)
+		{
+			this.labelImage.setImage(null);
+			this.labelName.setText("");
+		} else
+		{
+			this.labelImage.setImage(this.objectList.getTexture(index));
+			this.labelName.setTextID(this.objectList.getName(index));
+		}
 	}
 
 	public void updateList()

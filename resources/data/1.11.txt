@@ -840,6 +840,7 @@ CookTime,num2,furnace:lit_furnace
 CookTimeTotal,num2,furnace:lit_furnace
 CustomName,string,brewing_stand:chest:chain_command_block:command_block:dispenser:dropper:enchanting_table:furnace:hopper:lit_furnace:repeating_command_block:trapped_chest
 Data,num0,flower_pot
+Delay,num2,mob_spawner
 ExactTeleport,num3,end_gateway
 ExitPortal,custom:Coordinates,end_gateway
 extending,num3,piston_extension
@@ -854,7 +855,10 @@ Levels,num0,beacon
 Lock,string,beacon:brewing_stand:chest:dispenser:dropper:furnace:hopper:lit_furnace:trapped_chest
 LootTable,string,chest:dispenser:dropper:hopper:trapped_chest
 LootTableSeed,num4,chest:dispenser:dropper:hopper:trapped_chest
+MaxNearbyEntities,num2,mob_spawner
+MaxSpawnDelay,num2,mob_spawner
 metadata,string,structure_block
+MinSpawnDelay,num2,mob_spawner
 mirror,string,structure_block,custom=NONE:LEFT_RIGHT:FRONT_BACK
 mode,string,structure_block,custom=SAVE:LOAD:CORNER:DATA
 name,string,structure_block

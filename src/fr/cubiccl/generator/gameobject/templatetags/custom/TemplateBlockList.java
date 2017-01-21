@@ -31,9 +31,14 @@ public class TemplateBlockList extends TemplateList
 		}
 
 		@Override
-		public boolean addObject(CGPanel panel)
+		public boolean addObject(CGPanel panel, int editIndex)
 		{
 			Block b = ((PanelBlockSelection) panel).selectedBlock();
+			if (editIndex != -1)
+			{
+				if (this.blocks.contains(b)) this.removeObject(editIndex);
+				else this.blocks.set(editIndex, b);
+			}
 			if (!this.blocks.contains(b))
 			{
 				this.blocks.add(b);
@@ -43,9 +48,11 @@ public class TemplateBlockList extends TemplateList
 		}
 
 		@Override
-		public CGPanel createAddPanel()
+		public CGPanel createAddPanel(int editIndex)
 		{
-			return new PanelBlockSelection(false);
+			PanelBlockSelection p = new PanelBlockSelection(false);
+			if (editIndex != -1) p.setSelected(this.blocks.get(editIndex));
+			return p;
 		}
 
 		@Override

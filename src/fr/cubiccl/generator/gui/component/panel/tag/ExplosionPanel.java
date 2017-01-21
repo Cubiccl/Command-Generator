@@ -35,16 +35,20 @@ public class ExplosionPanel extends CGPanel
 		}
 
 		@Override
-		public boolean addObject(CGPanel panel)
+		public boolean addObject(CGPanel panel, int editIndex)
 		{
-			this.colors.add(new TagNumber(Tags.DEFAULT_INTEGER, ((PanelColor) panel).getValue()));
+			TagNumber t = new TagNumber(Tags.DEFAULT_INTEGER, ((PanelColor) panel).getValue());
+			if (editIndex == -1) this.colors.add(t);
+			else this.colors.set(editIndex, t);
 			return true;
 		}
 
 		@Override
-		public CGPanel createAddPanel()
+		public CGPanel createAddPanel(int editIndex)
 		{
-			return new PanelColor(this.name);
+			PanelColor p = new PanelColor(this.name);
+			if (editIndex != -1) p.setupFrom(this.colors.get(editIndex).value);
+			return p;
 		}
 
 		@Override
@@ -109,10 +113,10 @@ public class ExplosionPanel extends CGPanel
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		this.add(this.panelPrimaryColors = new PanelObjectList(this.primaryColors = new ColorList("firework.colors.primary")), gbc);
+		this.add(this.panelPrimaryColors = new PanelObjectList("firework.colors.primary", this.primaryColors = new ColorList("firework.colors.primary")), gbc);
 		++gbc.gridy;
-		this.add(this.panelFadeColors = new PanelObjectList(this.fadeColors = new ColorList("firework.colors.fade")), gbc);
-		
+		this.add(this.panelFadeColors = new PanelObjectList("firework.colors.fade", this.fadeColors = new ColorList("firework.colors.fade")), gbc);
+
 		this.setName("tag.title.Explosion");
 	}
 

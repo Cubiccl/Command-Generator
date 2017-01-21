@@ -56,7 +56,7 @@ public class PanelEffect extends CGPanel implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0)
+	public void actionPerformed(ActionEvent e)
 	{
 		this.labelTexture.setImage(this.comboboxEffect.getSelectedObject().texture());
 	}
@@ -68,5 +68,14 @@ public class PanelEffect extends CGPanel implements ActionListener
 
 		return new Effect(this.comboboxEffect.getSelectedObject(), Integer.parseInt(this.entryDuration.getText()), Integer.parseInt(this.entryLevel.getText()),
 				this.checkboxHideParticles.isSelected());
+	}
+
+	public void setupFrom(Effect effect)
+	{
+		this.checkboxHideParticles.setSelected(effect.hideParticles);
+		this.comboboxEffect.setSelected(effect.type);
+		this.labelTexture.setImage(this.comboboxEffect.getSelectedObject().texture());
+		this.entryDuration.setText(Integer.toString(effect.duration));
+		this.entryLevel.setText(Integer.toBinaryString(effect.amplifier));
 	}
 }

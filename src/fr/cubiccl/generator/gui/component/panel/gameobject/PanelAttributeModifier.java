@@ -14,6 +14,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.Utils;
 
 public class PanelAttributeModifier extends CGPanel
 {
@@ -91,6 +92,17 @@ public class PanelAttributeModifier extends CGPanel
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	public void setupFrom(AttributeModifier modifier)
+	{
+		this.comboboxAttribute.setSelected(modifier.attribute);
+		this.comboboxOperation.setSelectedIndex(modifier.operation);
+		this.comboboxSlot.setValue(modifier.slot);
+		this.entryName.setText(modifier.name);
+		this.entryAmount.setText(Utils.doubleToString(modifier.amount));
+		this.entryUUIDMost.setText(Utils.doubleToString(modifier.UUIDMost));
+		this.entryUUIDLeast.setText(Utils.doubleToString(modifier.UUIDLeast));
 	}
 
 }

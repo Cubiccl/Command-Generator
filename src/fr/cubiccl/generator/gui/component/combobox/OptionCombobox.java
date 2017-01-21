@@ -30,6 +30,16 @@ public class OptionCombobox extends CGComboBox implements ITranslated
 		this.updateTranslations();
 	}
 
+	public void setValue(String value)
+	{
+		for (int i = 0; i < this.options.length; i++)
+			if (value.equals(this.options[i]))
+			{
+				this.setSelectedIndex(i);
+				return;
+			}
+	}
+
 	@Override
 	public void updateTranslations()
 	{

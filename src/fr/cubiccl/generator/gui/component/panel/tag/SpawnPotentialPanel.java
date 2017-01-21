@@ -33,4 +33,11 @@ public class SpawnPotentialPanel extends CGPanel
 		return new SpawnPotential(this.panelEntity.generateEntity(), Integer.parseInt(this.entryWeight.getText()));
 	}
 
+	public void setupFrom(SpawnPotential spawnPotential)
+	{
+		this.entryWeight.setText(Integer.toString(spawnPotential.weight));
+		this.panelEntity.selectEntity(spawnPotential.entity.entity);
+		this.panelEntity.setTags(spawnPotential.entity.nbt.value());
+	}
+
 }

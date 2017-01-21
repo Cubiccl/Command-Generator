@@ -31,16 +31,23 @@ public class TemplateEntityList extends TemplateList
 		}
 
 		@Override
-		public boolean addObject(CGPanel panel)
+		public boolean addObject(CGPanel panel, int editIndex)
 		{
-			this.entities.add(((PanelEntity) panel).generateEntity());
+			if (editIndex == -1) this.entities.add(((PanelEntity) panel).generateEntity());
+			else this.entities.set(editIndex, ((PanelEntity) panel).generateEntity());
 			return true;
 		}
 
 		@Override
-		public CGPanel createAddPanel()
+		public CGPanel createAddPanel(int editIndex)
 		{
-			return new PanelEntity(null);
+			PanelEntity p = new PanelEntity(null);
+			if (editIndex != -1)
+			{
+				p.selectEntity(this.entities.get(editIndex).entity);
+				p.setTags(this.entities.get(editIndex).nbt.value());
+			}
+			return p;
 		}
 
 		@Override

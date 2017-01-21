@@ -31,11 +31,12 @@ public class TemplateAttributes extends TemplateList
 		}
 
 		@Override
-		public boolean addObject(CGPanel panel)
+		public boolean addObject(CGPanel panel, int editIndex)
 		{
 			try
 			{
-				this.attributes.add(((PanelAttribute) panel).generateAttribute());
+				if (editIndex == -1) this.attributes.add(((PanelAttribute) panel).generateAttribute());
+				else this.attributes.set(editIndex, ((PanelAttribute) panel).generateAttribute());
 				return true;
 			} catch (CommandGenerationException e)
 			{
@@ -45,9 +46,11 @@ public class TemplateAttributes extends TemplateList
 		}
 
 		@Override
-		public CGPanel createAddPanel()
+		public CGPanel createAddPanel(int editIndex)
 		{
-			return new PanelAttribute();
+			PanelAttribute p = new PanelAttribute();
+			if (editIndex != -1) p.setupFrom(this.attributes.get(editIndex));
+			return p;
 		}
 
 		@Override

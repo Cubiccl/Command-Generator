@@ -26,20 +26,24 @@ public class TemplateEffectList extends TemplateList
 		private ArrayList<Effect> effects = new ArrayList<Effect>();
 
 		@Override
-		public boolean addObject(CGPanel panel)
+		public boolean addObject(CGPanel panel, int editIndex)
 		{
-			Effect ench = null;
+			Effect effect = null;
 			try
 			{
-				ench = ((PanelEffect) panel).generateEffect();
+				effect = ((PanelEffect) panel).generateEffect();
 			} catch (CommandGenerationException e)
 			{
 				CommandGenerator.report(e);
 				return false;
 			}
-			if (!this.effects.contains(ench))
+			if (editIndex != -1)
 			{
-				this.effects.add(ench);
+				if (this.effects.contains(effect)) this.effects.remove(editIndex);
+				else this.effects.set(editIndex, effect);
+			} else if (!this.effects.contains(effect))
+			{
+				this.effects.add(effect);
 				this.effects.sort(new Comparator<Effect>()
 				{
 
@@ -54,9 +58,11 @@ public class TemplateEffectList extends TemplateList
 		}
 
 		@Override
-		public CGPanel createAddPanel()
+		public CGPanel createAddPanel(int editIndex)
 		{
-			return new PanelEffect();
+			PanelEffect e = new PanelEffect();
+			if (editIndex != -1) e.setupFrom(this.effects.get(editIndex));
+			return e;
 		}
 
 		@Override
