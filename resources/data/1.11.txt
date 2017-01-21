@@ -925,10 +925,11 @@ Anger,num2,zombie_pigman
 Angry,num3,wolf
 ArmorDropChances,custom:DropChances4,list=mob
 ArmorItem,custom:item,donkey:horse:mule:skeleton_horse:zombie_horse,autoselect=iron_horse_armor
-ArmorItems,items,list=mob,noSlot
+ArmorItems,items,list=mob:armor_stand,noSlot
 AttachFace,num2,shulker,named=attach^down:up:north:south:east:west
 Attributes,custom:Attributes,list=mob
 BatFlags,num3,bat
+BeamTarget,custom:Coordinates,ender_crystal
 Block,custom:item_id,falling_block
 CanBreakDoors,num3,husk:zombie:zombie_pigman:zombie_villager
 CanPickUpLoot,num3,list=mob
@@ -955,6 +956,7 @@ DeathLootTableSeed,num4,list=mob
 DeathTime,num2,list=mob
 DecorItem,custom:item,llama,autoselect=carpet
 Delay,num2,spawner_minecart
+DisabledSlots,custom:DisabledSlots,armor_stand
 DisplayData,num0,list=minecart
 DisplayOffset,num0,list=minecart
 DisplayTile,custom:item_id,list=minecart
@@ -968,7 +970,7 @@ ExplosionPower,num1,fireball:ghast
 ExplosionRadius,num1,creeper
 Facing,num1,painting:item_frame,named=frame^south:west:north:east
 FallDistance,num5,ANY
-FallFlying,num3,list=mob
+FallFlying,num3,list=mob:armor_stand
 FallHurtAmount,num0,falling_block
 FallHurtMax,num0,falling_block
 Fire,num2,ANY
@@ -976,7 +978,7 @@ Fuel,num2,furnace_minecart
 Fuse,num2,creeper:tnt
 Glowing,num3,ANY
 HandDropChances,custom:DropChances2,list=mob
-HandItems,items,list=mob,noSlot
+HandItems,items,list=mob:armor_stand,noSlot
 Health,num1,xp_orb
 Health,num5,list=mob
 HurtBy,string,zombie_pigman
@@ -985,6 +987,7 @@ HurtTime,num2,list=mob
 ignited,num3,creeper
 InLove,num0,list=breed
 Inventory,items,villager
+Invisible,num3,armor_stand
 Invul,num0,wither
 Invulnerable,num3,ANY
 IsChickenJockey,num3,chicken
@@ -1003,12 +1006,14 @@ LifeTicks,num0,vex
 LifeTime,num0,endermite
 LootTable,string,chest_minecart:hopper_minecart
 LootTableSeed,num4,chest_minecart:hopper_minecart
+Marker,num3,armor_stand
 MaxNearbyEntities,num2,spawner_minecart
 MaxSpawnDelay,num2,spawner_minecart
 MinSpawnDelay,num2,spawner_minecart
 Motion,custom:Coordinates,ANY
 Motive,custom:Painting,painting,
 NoAI,num3,list=mob
+NoBasePlate,num3,armor_stand
 NoGravity,num3,ANY
 Offers,custom:Offers,villager
 Owner,string,item
@@ -1023,6 +1028,7 @@ PlayerCreated,num3,villager_golem
 PlayerSpawned,num3,endermite
 PortalCooldown,num0,ANY
 Pos,custom:Coordinates,ANY
+Pose,custom:Pose,armor_stand
 Potion,custom:item,potion,autoselect=splash_potion
 powered,num3,creeper
 Profession,num0,villager:zombie_villager,named=profession^farmer:librarian:priest:blacksmith:butcher:nitwit
@@ -1035,11 +1041,14 @@ Rotation,custom:Rotation,ANY
 Saddle,num3,pig
 SaddleItem,custom:item,donkey:horse:mule:skeleton_horse:zombie_horse,autoselect=saddle
 Sheared,num3,sheep
+ShowArms,num3,armor_stand
+ShowBottom,num3,ender_crystal
 Silent,num3,ANY
 Sitting,num3,ocelot:wolf
 Size,num0,magma_cube:slime
 SkeletonTrap,num3,skeleton_horse
 SkeletonTrapTime,num0,skeleton_horse
+Small,num3,armor_stand
 SpawnCount,num2,spawner_minecart
 SpawnData,custom:EntityTag,spawner_minecart
 SpawnPotentials,custom:SpawnPotentials,spawner_minecart
@@ -1061,4 +1070,5 @@ UUIDLeast,num4,ANY
 UUIDMost,num4,ANY
 Value,num2,xp_orb
 Variant,custom:HorseVariant,horse:llama
+Warmup,num0,evocation_fangs
 Willing,num3,villager

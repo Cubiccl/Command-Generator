@@ -10,9 +10,7 @@ import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
 
 public class PanelEnchantment extends CGPanel
 {
@@ -45,23 +43,9 @@ public class PanelEnchantment extends CGPanel
 
 	public Enchantment generateEnchantment() throws CommandGenerationException
 	{
-		EnchantmentType enchant = this.selectedEnchantment();
-		int level;
-		String l = this.entryLevel.getText();
-
-		try
-		{
-			level = Integer.parseInt(l);
-			if (level < 1) throw new WrongValueException(this.entryLevel.label.getAbsoluteText(), new Text("error.integer.greater", new Replacement("<min>",
-					"1")), l);
-			if (this.checkMaximum && level > enchant.maxLevel) throw new WrongValueException(this.entryLevel.label.getAbsoluteText(), new Text(
-					"error.integer.bounds", new Replacement("<min>", "1"), new Replacement("<max>", Integer.toString(enchant.maxLevel))), l);
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryLevel.label.getAbsoluteText(), new Text("error.integer.greater", new Replacement("<min>", "1")), l);
-		}
-
-		return new Enchantment(enchant, level);
+		if (this.checkMaximum) this.entryLevel.checkValueInBounds(CGEntry.INTEGER, 1, this.selectedEnchantment().maxLevel);
+		this.entryLevel.checkValueSuperior(CGEntry.INTEGER, 1);
+		return new Enchantment(this.selectedEnchantment(), Integer.parseInt(this.entryLevel.getText()));
 	}
 
 	private EnchantmentType selectedEnchantment()

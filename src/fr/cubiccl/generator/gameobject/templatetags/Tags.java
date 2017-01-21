@@ -22,8 +22,11 @@ public final class Tags
 	public static final DefaultCompound BLOCK = new DefaultCompound("block");
 
 	public static final TemplateNumber COORD_X = new TemplateNumber("X", UNAVAILABLE, TagNumber.DOUBLE);
+	public static final TemplateNumber COORD_X_INT = new TemplateNumber("X", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateNumber COORD_Y = new TemplateNumber("Y", UNAVAILABLE, TagNumber.DOUBLE);
+	public static final TemplateNumber COORD_Y_INT = new TemplateNumber("Y", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", UNAVAILABLE, TagNumber.DOUBLE);
+	public static final TemplateNumber COORD_Z_INT = new TemplateNumber("Z", UNAVAILABLE, TagNumber.INTEGER);
 
 	public static final TemplateCompound DEFAULT_COMPOUND = new DefaultCompound("");
 	public static final TemplateNumber DEFAULT_FLOAT = new TemplateNumber("", UNAVAILABLE, TagNumber.FLOAT);
@@ -87,6 +90,13 @@ public final class Tags
 	public static final DefaultCompound PATTERN = new DefaultCompound("Pattern");
 	public static final TemplateNumber PATTERN_COLOR = new TemplateNumber("Color", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateString PATTERN_SHAPE = new TemplateString("Pattern", UNAVAILABLE);
+
+	public static final DefaultList POSE_ARM_LEFT = new DefaultList("LeftArm");
+	public static final DefaultList POSE_ARM_RIGHT = new DefaultList("RightArm");
+	public static final DefaultList POSE_BODY = new DefaultList("Body");
+	public static final DefaultList POSE_HEAD = new DefaultList("Head");
+	public static final DefaultList POSE_LEG_LEFT = new DefaultList("LeftLeg");
+	public static final DefaultList POSE_LEG_RIGHT = new DefaultList("RightLeg");
 
 	public static final TemplateString SCORE_OBJECTIVE = new TemplateString("objective", UNAVAILABLE);
 	public static final TemplateString SCORE_TARGET = new TemplateString("name", UNAVAILABLE);

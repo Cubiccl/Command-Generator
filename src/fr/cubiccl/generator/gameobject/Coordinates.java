@@ -2,11 +2,28 @@ package fr.cubiccl.generator.gameobject;
 
 import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 
 public class Coordinates
 {
+
+	public static Coordinates createFrom(TagList tag)
+	{
+		float x = 0, y = 0, z = 0;
+		try
+		{
+			x = (float) (double) ((TagBigNumber) tag.getTag(0)).value();
+			y = (float) (double) ((TagBigNumber) tag.getTag(1)).value();
+			z = (float) (double) ((TagBigNumber) tag.getTag(2)).value();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return new Coordinates(x, y, z);
+	}
 
 	public final float x, y, z;
 	public final boolean xRelative, yRelative, zRelative;
@@ -45,6 +62,12 @@ public class Coordinates
 	{
 		return new TagCompound(container, new TagBigNumber(Tags.COORD_X, this.x), new TagBigNumber(Tags.COORD_Y, this.y),
 				new TagBigNumber(Tags.COORD_Z, this.z));
+	}
+
+	public TagList toTagList(TemplateList container)
+	{
+		return new TagList(container, new TagBigNumber(Tags.DEFAULT_FLOAT, this.x), new TagBigNumber(Tags.DEFAULT_FLOAT, this.y), new TagBigNumber(
+				Tags.DEFAULT_FLOAT, this.z));
 	}
 
 }

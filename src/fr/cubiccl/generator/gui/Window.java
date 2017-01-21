@@ -18,6 +18,7 @@ import fr.cubiccl.generator.gui.component.menubar.CMenuBar;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.PanelCommand;
 import fr.cubiccl.generator.gui.component.panel.PanelCommandSelection;
+import fr.cubiccl.generator.utils.Textures;
 
 public class Window extends JFrame implements ComponentListener, ITranslated, WindowListener
 {
@@ -41,6 +42,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.createLayout();
 		this.addComponentListener(this);
 		this.addWindowListener(this);
+		this.setIconImage(Textures.getTexture("gui.icon"));
 	}
 
 	@Override

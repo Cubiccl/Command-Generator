@@ -6,8 +6,8 @@ import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
+import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
 
 public class PanelCoordinates extends CGPanel
 {
@@ -57,41 +57,13 @@ public class PanelCoordinates extends CGPanel
 		}
 	}
 
-	public Coordinates generateCoordinates() throws WrongValueException
+	public Coordinates generateCoordinates() throws CommandGenerationException
 	{
-		float x = 0, y = 0, z = 0;
-
-		try
-		{
-			x = Float.parseFloat(this.entryX.getText());
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryX.label.getAbsoluteText(), new Text("error.number"), this.entryX.getText());
-		}
-		try
-		{
-			y = Float.parseFloat(this.entryY.getText());
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryY.label.getAbsoluteText(), new Text("error.number"), this.entryY.getText());
-		}
-		try
-		{
-			z = Float.parseFloat(this.entryZ.getText());
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryZ.label.getAbsoluteText(), new Text("error.number"), this.entryZ.getText());
-		}
-
+		this.entryX.checkValue(CGEntry.FLOAT);
+		this.entryY.checkValue(CGEntry.FLOAT);
+		this.entryZ.checkValue(CGEntry.FLOAT);
+		float x = Float.parseFloat(this.entryX.getText()), y = Float.parseFloat(this.entryY.getText()), z = Float.parseFloat(this.entryZ.getText());
 		return new Coordinates(x, y, z, this.checkboxX.isSelected(), this.checkboxY.isSelected(), this.checkboxZ.isSelected());
-	}
-
-	/** Changes the text of the "relative" checkboxes. */
-	public void setRelativeText(Text text)
-	{
-		this.checkboxX.setTextID(text);
-		this.checkboxY.setTextID(text);
-		this.checkboxZ.setTextID(text);
 	}
 
 	/** Changes the text of the coordinate entries. */
@@ -100,6 +72,14 @@ public class PanelCoordinates extends CGPanel
 		this.entryX.label.setTextID(textX);
 		this.entryY.label.setTextID(textY);
 		this.entryZ.label.setTextID(textZ);
+	}
+
+	/** Changes the text of the "relative" checkboxes. */
+	public void setRelativeText(Text text)
+	{
+		this.checkboxX.setTextID(text);
+		this.checkboxY.setTextID(text);
+		this.checkboxZ.setTextID(text);
 	}
 
 	public void setupFrom(Coordinates coordinates)

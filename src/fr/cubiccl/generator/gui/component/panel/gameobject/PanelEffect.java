@@ -14,9 +14,7 @@ import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
 
 public class PanelEffect extends CGPanel implements ActionListener
 {
@@ -65,29 +63,10 @@ public class PanelEffect extends CGPanel implements ActionListener
 
 	public Effect generateEffect() throws CommandGenerationException
 	{
-		int duration, level;
-		String d = this.entryDuration.getText(), l = this.entryLevel.getText();
+		this.entryDuration.checkValueSuperior(CGEntry.INTEGER, 0);
+		this.entryLevel.checkValueInBounds(CGEntry.INTEGER, 0, 255);
 
-		try
-		{
-			duration = Integer.parseInt(d);
-			if (duration < 0) throw new WrongValueException(this.entryDuration.label.getAbsoluteText(), new Text("error.integer.positive"), d);
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryDuration.label.getAbsoluteText(), new Text("error.integer.positive"), d);
-		}
-
-		try
-		{
-			level = Integer.parseInt(l);
-			if (level < 0 || level > 255) throw new WrongValueException(this.entryLevel.label.getAbsoluteText(), new Text("error.integer.bounds",
-					new Replacement("<min>", "0"), new Replacement("<max>", "255")), l);
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryLevel.label.getAbsoluteText(), new Text("error.integer.bounds", new Replacement("<min>", "0"),
-					new Replacement("<max>", "255")), l);
-		}
-
-		return new Effect(this.comboboxEffect.getSelectedObject(), duration, level, this.checkboxHideParticles.isSelected());
+		return new Effect(this.comboboxEffect.getSelectedObject(), Integer.parseInt(this.entryDuration.getText()), Integer.parseInt(this.entryLevel.getText()),
+				this.checkboxHideParticles.isSelected());
 	}
 }

@@ -23,9 +23,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.IStateListener;
-import fr.cubiccl.generator.utils.MissingValueException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
 
 public class PanelTarget extends CGPanel implements ActionListener, IStateListener<CGPanel>, ListSelectionListener
 {
@@ -156,10 +154,8 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 	{
 		if (this.player())
 		{
-			String name = this.entryName.getText();
-			if (name.equals("")) throw new MissingValueException(this.entryName.label.getAbsoluteText());
-			if (name.contains(" ")) throw new WrongValueException(this.entryName.label.getAbsoluteText(), new Text("error.space"), name);
-			return new Target(name);
+			this.entryName.checkValue(CGEntry.STRING);
+			return new Target(this.entryName.getText());
 		}
 		return new Target(Target.typeFromID(this.comboboxType.getValue()), this.arguments.toArray(new Argument[this.arguments.size()]));
 	}
