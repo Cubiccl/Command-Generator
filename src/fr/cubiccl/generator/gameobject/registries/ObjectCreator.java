@@ -23,7 +23,6 @@ public class ObjectCreator
 
 	public static void createAchievements(String[] data)
 	{
-		CommandGenerator.log("Creating Achievements...");
 		for (String a : data)
 		{
 			String[] values = a.split(",");
@@ -34,7 +33,6 @@ public class ObjectCreator
 
 	public static void createAttributes(String[] data)
 	{
-		CommandGenerator.log("Creating Attributes...");
 		for (String id : data)
 			new Attribute(id);
 		CommandGenerator.log("Successfully created " + ObjectRegistry.attributes.size() + " attributes.");
@@ -42,7 +40,6 @@ public class ObjectCreator
 
 	public static void createBlocks(String[] data)
 	{
-		CommandGenerator.log("Creating Blocks...");
 		for (String block : data)
 		{
 			String[] values = block.split(",");
@@ -100,7 +97,6 @@ public class ObjectCreator
 
 	private static void createContainers(String[] data)
 	{
-		CommandGenerator.log("Creating Containers...");
 		for (String a : data)
 		{
 			String[] values = a.split(",");
@@ -193,7 +189,6 @@ public class ObjectCreator
 
 	public static void createEffects(String[] data)
 	{
-		CommandGenerator.log("Creating Effects...");
 		for (String a : data)
 		{
 			String[] values = a.split(",");
@@ -204,7 +199,6 @@ public class ObjectCreator
 
 	public static void createEnchantments(String[] data)
 	{
-		CommandGenerator.log("Creating Enchantments...");
 		for (String a : data)
 		{
 			String[] values = a.split(",");
@@ -215,7 +209,6 @@ public class ObjectCreator
 
 	public static void createEntities(String[] data)
 	{
-		CommandGenerator.log("Creating Entities...");
 		for (String line : data)
 		{
 			String[] lists = line.split(":").length == 2 ? line.split(":")[1].split(",") : new String[0];
@@ -230,7 +223,6 @@ public class ObjectCreator
 
 	public static void createItems(String[] data)
 	{
-		CommandGenerator.log("Creating Items...");
 		for (String item : data)
 		{
 			String[] values = item.split(",");
@@ -360,7 +352,6 @@ public class ObjectCreator
 
 	public static void createParticles(String[] data)
 	{
-		CommandGenerator.log("Creating Particles...");
 		for (String id : data)
 			new Particle(id);
 		CommandGenerator.log("Successfully created " + ObjectRegistry.particles.size() + " particles.");
@@ -368,7 +359,6 @@ public class ObjectCreator
 
 	public static void createSounds(String[] data)
 	{
-		CommandGenerator.log("Creating Sounds...");
 		for (String category : data)
 		{
 			String prefix = category.substring(0, category.indexOf(':'));
@@ -429,7 +419,6 @@ public class ObjectCreator
 
 	public static void createTags(String[] data, byte tagType)
 	{
-		CommandGenerator.log("Creating NBT Tags...");
 		for (String tag : data)
 			createTag(tagType, tag.split(","));
 

@@ -1,28 +1,19 @@
 Welcome to the Command Generator vIndev by Cubi !
-Charging textures...
 ---- Creating objects ----
-Creating Blocks...
-Successfully created 219 blocks.
-Creating Items...
-Successfully created 377 items.
-Creating Entities...
-Successfully created 61 entities.
-Creating Effects...
-Successfully created 23 effects.
-Creating Enchantments...
-Successfully created 25 enchantments.
-Creating Achievements...
+Successfully created 236 blocks.
+Successfully created 393 items.
+Successfully created 82 entities.
+Successfully created 27 effects.
+Successfully created 30 enchantments.
 Successfully created 33 achievements.
-Creating Attributes...
-Successfully created 7 attributes.
-Creating Particles...
-Successfully created 40 particles.
-Creating Sounds...
-Successfully created 225 sounds.
-Creating Block Tags...
-Successfully created 3 Block NBT Tags.
-Successfully created 3 object lists.
+Successfully created 11 attributes.
+Successfully created 48 particles.
+Successfully created 485 sounds.
+Successfully created 35 containers.
+Successfully created 66 Block NBT Tags.
+Successfully created 21 Item NBT Tags.
+Successfully created 164 Entity NBT Tags.
+Successfully created 9 object lists.
+Loading textures...
 ---- Creating window ----
-Selected Command : achievement
-Selected Command : give
-Exit Command Generator... Bye bye !
+Exiting Command Generator... Bye bye !
