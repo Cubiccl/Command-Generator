@@ -153,7 +153,7 @@ public class ObjectRegistry<T extends BaseObject>
 		ArrayList<T> objects = new ArrayList<T>();
 		for (int i = 0; i < ids.length; ++i)
 			objects.add(this.find(ids[i]));
-		return (T[]) objects.toArray();
+		return objects.toArray((T[]) Array.newInstance(c, objects.size()));
 	}
 
 	public T first()

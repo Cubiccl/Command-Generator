@@ -20,7 +20,7 @@ public class ConfirmPanel extends CGPanel implements ActionListener
 {
 	private static final long serialVersionUID = -7457797405576343429L;
 
-	private CGButton buttonOK, buttonCancel;
+	protected CGButton buttonOK, buttonCancel;
 	public Component component;
 	private GridBagConstraints gbc;
 

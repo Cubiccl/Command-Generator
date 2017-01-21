@@ -4,17 +4,26 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelSlotSelection;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
-import fr.cubiccl.generator.gui.component.textfield.CGSpinner;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Utils;
+import fr.cubiccl.generator.utils.IStateListener;
+import fr.cubiccl.generator.utils.Replacement;
+import fr.cubiccl.generator.utils.Text;
 
-public class CommandReplaceitem extends Command implements ActionListener
+public class CommandReplaceitem extends Command implements ActionListener, IStateListener<PanelSlotSelection>
 {
+	private static final String[] CONTAINER_BLOCKS =
+	{ "chest", "dispenser", "hopper", "brewing_stand", "furnace" }, CONTAINER_ENTITIES =
+	{ "ArmorItems", "HandItems", "enderchest", "hotbar", "inventory", "horse_saddle", "horse_armor", "horse_chest", "villager" };
 	public static final int[][] SLOT_NUMBERS =
 	{
 	{ 0, 26 },
@@ -26,11 +35,14 @@ public class CommandReplaceitem extends Command implements ActionListener
 	{ "container" }, SLOTS_ENTITY =
 	{ "enderchest", "hotbar", "inventory", "horse.chest", "villager", "armor.chest", "armor.feet", "armor.head", "armor.legs", "weapon.mainhand",
 			"weapon.offhand", "horse.saddle", "horse.armor" };
-	private OptionCombobox comboboxMode, comboboxSlotType;
+
+	private CGButton buttonSlot;
+	private OptionCombobox comboboxMode;
+	private CGLabel labelSlot;
 	private PanelCoordinates panelCoordinates;
 	private PanelItem panelItem;
 	private PanelTarget panelTarget;
-	private CGSpinner spinnerSlotNumber;
+	private String selectedBlockSlot = "slot.container.0", selectedEntitySlot = "slot.weapon.mainhand";
 
 	public CommandReplaceitem()
 	{
@@ -40,27 +52,19 @@ public class CommandReplaceitem extends Command implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		boolean block = this.comboboxMode.getValue().equals("block");
 		if (e.getSource() == this.comboboxMode)
 		{
-			boolean block = this.comboboxMode.getValue().equals("block");
 			this.panelCoordinates.setVisible(block);
 			this.panelTarget.setVisible(!block);
-			if (block)
-			{
-				this.comboboxSlotType.setOptions("replaceitem.slot", SLOTS_BLOCK);
-				this.spinnerSlotNumber.setValues(Utils.generateArray(26));
-			} else
-			{
-				this.comboboxSlotType.setOptions("replaceitem.slot", SLOTS_ENTITY);
-				// this.comboboxSlotType.setSelectedIndex(this.comboboxSlotType.getSelectedIndex());
-			}
+			if (block) this.labelSlot.setTextID(new Text("replaceitem.slot.selected", new Replacement("<slot>", this.selectedBlockSlot)));
+			else this.labelSlot.setTextID(new Text("replaceitem.slot.selected", new Replacement("<slot>", this.selectedEntitySlot)));
 		} else
 		{
-			boolean number = this.comboboxSlotType.getSelectedIndex() < 5;
-			this.spinnerSlotNumber.container.setVisible(number);
-			int index = this.comboboxSlotType.getSelectedIndex();
-			if (number && this.comboboxMode.getValue().equals("entity")) this.spinnerSlotNumber.setValues(Utils.generateArray(SLOT_NUMBERS[index][0],
-					SLOT_NUMBERS[index][1]));
+			PanelSlotSelection p = new PanelSlotSelection(new Text("replaceitem.slot.selection"), ObjectRegistry.containers.find(block ? CONTAINER_BLOCKS
+					: CONTAINER_ENTITIES));
+			p.showContainerFor(block ? this.selectedBlockSlot : this.selectedEntitySlot);
+			CommandGenerator.stateManager.setState(p, this);
 		}
 	}
 
@@ -79,16 +83,16 @@ public class CommandReplaceitem extends Command implements ActionListener
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.ALL_ENTITIES), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
-		panel.add(this.comboboxSlotType = new OptionCombobox("replaceitem.slot", SLOTS_BLOCK), gbc);
+		panel.add(this.labelSlot = new CGLabel(new Text("replaceitem.slot.selected", new Replacement("<slot>", this.selectedBlockSlot))), gbc);
 		++gbc.gridx;
-		panel.add((this.spinnerSlotNumber = new CGSpinner("replaceitem.slot_number", Utils.generateArray(26))).container, gbc);
+		panel.add(this.buttonSlot = new CGButton("replaceitem.slot.change"), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
 		panel.add(this.panelItem = new PanelItem("replaceitem.item"), gbc);
 
 		this.comboboxMode.addActionListener(this);
-		this.comboboxSlotType.addActionListener(this);
+		this.buttonSlot.addActionListener(this);
 		this.panelTarget.setVisible(false);
 
 		return panel;
@@ -98,11 +102,24 @@ public class CommandReplaceitem extends Command implements ActionListener
 	public String generate() throws CommandGenerationException
 	{
 		String command = "/replaceitem " + this.comboboxMode.getValue() + " ";
-		if (this.comboboxMode.getValue().equals("block")) command += this.panelCoordinates.generateCoordinates().toCommand();
-		else command += this.panelTarget.generateTarget().toCommand();
-		return command
-				+ " "
-				+ (this.comboboxSlotType.getSelectedIndex() < 5 ? ("slot." + this.comboboxSlotType.getValue() + "." + this.spinnerSlotNumber.getValue())
-						: ("slot." + this.comboboxSlotType.getValue())) + " " + this.panelItem.generateItem().toCommand();
+		if (this.comboboxMode.getValue().equals("block")) command += this.panelCoordinates.generateCoordinates().toCommand() + " " + this.selectedBlockSlot;
+		else command += this.panelTarget.generateTarget().toCommand() + " " + this.selectedEntitySlot;
+		return command + " " + this.panelItem.generateItem().toCommand();
+	}
+
+	@Override
+	public boolean shouldStateClose(PanelSlotSelection panel)
+	{
+		if (this.comboboxMode.getValue().equals("block"))
+		{
+			this.selectedBlockSlot = panel.selectedSlot();
+			this.labelSlot.setTextID(new Text("replaceitem.slot.selected", new Replacement("<slot>", this.selectedBlockSlot)));
+		} else
+		{
+			this.selectedEntitySlot = panel.selectedSlot();
+			this.labelSlot.setTextID(new Text("replaceitem.slot.selected", new Replacement("<slot>", this.selectedEntitySlot)));
+		}
+
+		return true;
 	}
 }
