@@ -43,8 +43,12 @@ public class PanelSlotSelection extends ConfirmPanel
 			@Override
 			public void onClick()
 			{
-				CommandGenerator.stateManager.clearState(true);
+				if (this.currentSlot() != -1) CommandGenerator.stateManager.clearState(true);
 			}
+
+			@Override
+			public void onRightClick()
+			{}
 		}, gbc);
 
 		this.combobox.addActionListener(this);

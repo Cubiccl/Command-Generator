@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.ItemStack;
@@ -16,6 +18,7 @@ import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.utils.IStateListener;
+import fr.cubiccl.generator.utils.Lang;
 
 public class ContainerPanel extends SlotSelectionPanel implements IStateListener<PanelItem>
 {
@@ -65,6 +68,17 @@ public class ContainerPanel extends SlotSelectionPanel implements IStateListener
 			PanelItem p = new PanelItem("general.item");
 			if (this.items[this.currentSlot()] != null) p.setupFrom(this.items[this.currentSlot()]);
 			CommandGenerator.stateManager.setState(p, this);
+		}
+	}
+
+	@Override
+	public void onRightClick()
+	{
+		if (this.currentSlot() != -1 && this.items[this.currentSlot()] != null)
+		{
+			if (JOptionPane.showConfirmDialog(this, Lang.translate("container.confirm_deletion"), "", JOptionPane.YES_NO_OPTION, JOptionPane.WARNING_MESSAGE) != 0) return;
+			this.items[this.currentSlot()] = null;
+			this.repaint();
 		}
 	}
 

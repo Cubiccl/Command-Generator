@@ -38,9 +38,6 @@ public abstract class SlotSelectionPanel extends CGPanel implements MCInventory
 	}
 
 	@Override
-	public abstract void onClick();
-
-	@Override
 	public void onExit()
 	{
 		this.currentSlot = -1;

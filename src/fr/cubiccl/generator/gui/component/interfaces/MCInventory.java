@@ -15,4 +15,6 @@ public interface MCInventory
 	/** Mouse movement. */
 	public void onMove(int x, int y);
 
+	public void onRightClick();
+
 }

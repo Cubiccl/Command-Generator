@@ -71,6 +71,10 @@ public class PanelImageList extends JPanel implements MCInventory
 	}
 
 	@Override
+	public void onRightClick()
+	{}
+
+	@Override
 	public void paint(Graphics g)
 	{
 		super.paint(g);

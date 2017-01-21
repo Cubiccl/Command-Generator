@@ -7,6 +7,8 @@ import java.awt.event.KeyListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import javax.swing.SwingUtilities;
+
 import fr.cubiccl.generator.gui.component.interfaces.MCInventory;
 
 public class MCInventoryDrawer extends MouseAdapter implements KeyListener
@@ -62,7 +64,8 @@ public class MCInventoryDrawer extends MouseAdapter implements KeyListener
 	public void mouseClicked(MouseEvent e)
 	{
 		super.mouseClicked(e);
-		this.inventory.onClick();
+		if (SwingUtilities.isRightMouseButton(e)) this.inventory.onRightClick();
+		else if (SwingUtilities.isLeftMouseButton(e)) this.inventory.onClick();
 	}
 
 	@Override
@@ -70,7 +73,7 @@ public class MCInventoryDrawer extends MouseAdapter implements KeyListener
 	{
 		super.mouseDragged(e);
 		this.inventory.onMove(e.getX(), e.getY());
-		this.inventory.onClick();
+		if (SwingUtilities.isLeftMouseButton(e)) this.inventory.onClick();
 	}
 
 	@Override

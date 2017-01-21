@@ -70,7 +70,7 @@ public class CommandGenerator
 		stateManager = new StateManager();
 		window = new Window();
 		window.updateTranslations();
-		setSelected(Commands.getCommandFromID("replaceitem"));
+		setSelected(Commands.getCommandFromID("achievement"));
 		window.setVisible(true);
 	}
 
