@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
@@ -15,10 +16,10 @@ public class TemplateBlockEntity extends TemplateCompound
 	}
 
 	@Override
-	protected PanelTags createPanel(String objectId, Tag previousValue)
+	protected PanelTags createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelTags p = new PanelTags(null, Tag.BLOCK);
-		p.setObjectForTags(objectId);
+		p.setTargetObject(object);
 
 		if (previousValue != null) p.setTags(((TagCompound) previousValue).value());
 
@@ -27,7 +28,7 @@ public class TemplateBlockEntity extends TemplateCompound
 	}
 
 	@Override
-	public TagCompound generateTag(CGPanel panel)
+	public TagCompound generateTag(BaseObject object, CGPanel panel)
 	{
 		return ((PanelTags) panel).generateTags(this);
 	}

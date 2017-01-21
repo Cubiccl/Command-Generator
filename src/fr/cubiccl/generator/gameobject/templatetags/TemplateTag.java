@@ -12,12 +12,25 @@ import fr.cubiccl.generator.utils.Text;
 
 public abstract class TemplateTag extends BaseObject implements IStateListener<CGPanel>
 {
+
+	private static class TagCreation
+	{
+		public final ITagCreationListener listener;
+		public final BaseObject object;
+
+		public TagCreation(ITagCreationListener listener, BaseObject object)
+		{
+			this.listener = listener;
+			this.object = object;
+		}
+	}
+
 	public static final String[] TYPE_NAMES =
 	{ "block", "item", "entity" };
 
 	private String[] applicable;
 	/** Need several in case of chest-like recursion */
-	private Stack<ITagCreationListener> creationListeners;
+	private Stack<TagCreation> creationListeners;
 	private final String id;
 	public final byte type;
 
@@ -26,38 +39,44 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 		this.id = id;
 		this.type = tagType;
 		this.applicable = applicable;
-		this.creationListeners = new Stack<ITagCreationListener>();
+		this.creationListeners = new Stack<TagCreation>();
 
 		if (this.type == Tag.BLOCK) ObjectRegistry.blockTags.register(this);
 		else if (this.type == Tag.ITEM) ObjectRegistry.itemTags.register(this);
 		else if (this.type == Tag.ENTITY) ObjectRegistry.entityTags.register(this);
 	}
 
-	public void askValue(String objectId, Tag previousValue, ITagCreationListener panelTags)
+	/** @param object - The Object this Tag will be applied to.
+	 * @param previousValue - The value this Tag previously had.
+	 * @param listener - Warned when the creation is complete. */
+	public void askValue(BaseObject object, Tag previousValue, ITagCreationListener listener)
 	{
-		this.creationListeners.push(panelTags);
-		CommandGenerator.stateManager.setState(this.createPanel(objectId, previousValue), this);
+		this.creationListeners.push(new TagCreation(listener, object));
+		CommandGenerator.stateManager.setState(this.createPanel(object, previousValue), this);
 	}
 
 	/** @return True if this tag can be applied to the Object with the input ID. */
-	public boolean canApplyTo(String id)
+	public boolean canApplyTo(BaseObject object)
 	{
 		for (String app : this.applicable)
 		{
 			if (app.equals("ANY")) return true;
-			if (app.replaceAll("minecraft:", "").equals(id.replaceAll("minecraft:", ""))) return true;
+			if (app.replaceAll("minecraft:", "").equals(object.id().replaceAll("minecraft:", ""))) return true;
 		}
 		return false;
 	}
 
-	protected abstract CGPanel createPanel(String objectId, Tag previousValue);
+	protected abstract CGPanel createPanel(BaseObject object, Tag previousValue);
 
+	/** @return A description of this NBT Tag. */
 	public Text description()
 	{
 		return new Text("tag." + TYPE_NAMES[this.type] + "." + this.id);
 	}
 
-	public abstract Tag generateTag(CGPanel panel);
+	/** @param object - The Object this Tag is applied to.
+	 * @return The generated Tag. */
+	protected abstract Tag generateTag(BaseObject object, CGPanel panel);
 
 	@Override
 	public String id()
@@ -65,7 +84,9 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 		return this.id;
 	}
 
-	protected boolean isInputValid(CGPanel panel)
+	/** @param object - The Object this Tag is applied to.
+	 * @return True if the user Input is valid. */
+	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
 		return true;
 	}
@@ -73,9 +94,11 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	@Override
 	public boolean shouldStateClose(CGPanel panel)
 	{
-		if (this.isInputValid(panel))
+		TagCreation creation = this.creationListeners.peek();
+		if (this.isInputValid(creation.object, panel))
 		{
-			this.creationListeners.pop().createTag(this, this.generateTag(panel));
+			creation.listener.createTag(this, this.generateTag(creation.object, panel));
+			this.creationListeners.pop();
 			return true;
 		}
 		return false;

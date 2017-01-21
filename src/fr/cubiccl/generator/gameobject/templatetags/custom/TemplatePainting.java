@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JPanel;
 
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
@@ -73,19 +74,19 @@ public class TemplatePainting extends TemplateString
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		return new PanelPainting(this.description(), PAINTINGS);
 	}
 
 	@Override
-	public TagString generateTag(CGPanel panel)
+	public TagString generateTag(BaseObject object, CGPanel panel)
 	{
 		return new TagString(this, ((PanelPainting) panel).combobox.getValue());
 	}
 
 	@Override
-	protected boolean isInputValid(CGPanel panel)
+	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
 		return true;
 	}

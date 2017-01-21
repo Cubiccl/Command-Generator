@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags;
 
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
@@ -14,13 +15,13 @@ public abstract class TemplateList extends TemplateTag
 		}
 
 		@Override
-		protected CGPanel createPanel(String objectId, Tag previousValue)
+		protected CGPanel createPanel(BaseObject object, Tag previousValue)
 		{
 			return null;
 		}
 
 		@Override
-		public Tag generateTag(CGPanel panel)
+		public Tag generateTag(BaseObject object, CGPanel panel)
 		{
 			return null;
 		}

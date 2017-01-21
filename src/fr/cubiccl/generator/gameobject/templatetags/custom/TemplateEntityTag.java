@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
@@ -16,11 +17,11 @@ public class TemplateEntityTag extends TemplateCompound
 	}
 
 	@Override
-	protected PanelEntity createPanel(String objectId, Tag previousValue)
+	protected PanelEntity createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelEntity p = new PanelEntity(null);
-		if (objectId.equals("minecraft:armor_stand")) p.selectEntity(ObjectRegistry.entities.find("armor_stand"));
-		if (objectId.equals("minecraft:spawn_egg") || objectId.equals("minecraft:mob_spawner")) p.selectEntity(ObjectRegistry.entities.find("creeper"));
+		if (object.id().equals("minecraft:armor_stand")) p.selectEntity(ObjectRegistry.entities.find("armor_stand"));
+		if (object.id().equals("minecraft:spawn_egg") || object.id().equals("minecraft:mob_spawner")) p.selectEntity(ObjectRegistry.entities.find("creeper"));
 
 		if (previousValue != null)
 		{
@@ -34,7 +35,7 @@ public class TemplateEntityTag extends TemplateCompound
 	}
 
 	@Override
-	public TagCompound generateTag(CGPanel panel)
+	public TagCompound generateTag(BaseObject object, CGPanel panel)
 	{
 		return ((PanelEntity) panel).generateEntity().toTag(this);
 	}

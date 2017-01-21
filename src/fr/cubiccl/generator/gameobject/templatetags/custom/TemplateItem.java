@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
 import fr.cubiccl.generator.gameobject.ItemStack;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
@@ -22,7 +23,7 @@ public class TemplateItem extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		Item[] items = this.ids != null ? ObjectRegistry.items.find(this.ids) : ObjectRegistry.items.list(ObjectRegistry.SORT_NUMERICALLY);
 
@@ -35,7 +36,7 @@ public class TemplateItem extends TemplateCompound
 	}
 
 	@Override
-	public Tag generateTag(CGPanel panel)
+	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
 		return ((PanelItem) panel).generateItem().toTag(this);
 	}

@@ -3,6 +3,7 @@ package fr.cubiccl.generator.gameobject.templatetags.custom;
 import java.awt.GridBagConstraints;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -41,7 +42,7 @@ public class TemplateDropChances extends TemplateList
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelDropChances p = new PanelDropChances(this.id(), this.slotCount);
 
@@ -57,7 +58,7 @@ public class TemplateDropChances extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(CGPanel panel)
+	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
 		TagBigNumber[] tags = new TagBigNumber[this.slotCount];
 		for (int i = 0; i < tags.length; i++)
@@ -66,7 +67,7 @@ public class TemplateDropChances extends TemplateList
 	}
 
 	@Override
-	protected boolean isInputValid(CGPanel panel)
+	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
 		for (int i = 0; i < this.slotCount; i++)
 			try

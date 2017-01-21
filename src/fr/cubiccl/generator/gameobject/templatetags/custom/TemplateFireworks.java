@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -116,7 +117,7 @@ public class TemplateFireworks extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		FireworksPanel p = new FireworksPanel();
 		if (previousValue != null) p.setupFrom((TagCompound) previousValue);
@@ -125,7 +126,7 @@ public class TemplateFireworks extends TemplateCompound
 	}
 
 	@Override
-	public Tag generateTag(CGPanel panel)
+	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
 		try
 		{
@@ -137,7 +138,7 @@ public class TemplateFireworks extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(CGPanel panel)
+	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
 		FireworksPanel p = ((FireworksPanel) panel);
 		try

@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
@@ -15,13 +16,13 @@ public class TemplateJson extends TemplateList
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		return new PanelListJsonMessage("tag.title." + this.id());
 	}
 
 	@Override
-	public TagList generateTag(CGPanel panel)
+	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
 		return ((PanelListJsonMessage) panel).generateMessage(this);
 	}

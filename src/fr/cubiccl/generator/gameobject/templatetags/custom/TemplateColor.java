@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
@@ -17,9 +18,9 @@ public class TemplateColor extends TemplateNumber
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
-		if (objectId.equals("minecraft:sheep") || objectId.equals("minecraft:shulker")) return super.createPanel(objectId, previousValue);
+		if (object.id().equals("minecraft:sheep") || object.id().equals("minecraft:shulker")) return super.createPanel(object, previousValue);
 
 		PanelColor p = new PanelColor(null);
 		if (previousValue != null) p.setupFrom(((TagNumber) previousValue).value);
@@ -28,17 +29,17 @@ public class TemplateColor extends TemplateNumber
 	}
 
 	@Override
-	public Tag generateTag(CGPanel panel)
+	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
 		if (panel instanceof PanelColor) return new TagNumber(this, ((PanelColor) panel).getValue());
-		return super.generateTag(panel);
+		return super.generateTag(object, panel);
 	}
 
 	@Override
-	protected boolean isInputValid(CGPanel panel)
+	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
 		if (panel instanceof PanelColor) return true;
-		return super.isInputValid(panel);
+		return super.isInputValid(object, panel);
 	}
 
 }

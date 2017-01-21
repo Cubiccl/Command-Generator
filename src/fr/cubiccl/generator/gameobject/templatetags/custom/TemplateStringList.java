@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.tags.TagString;
@@ -87,7 +88,7 @@ public class TemplateStringList extends TemplateList
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		String[] values = new String[0];
 		if (previousValue != null)
@@ -103,7 +104,7 @@ public class TemplateStringList extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(CGPanel panel)
+	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
 		String[] s = ((StringList) ((PanelObjectList) panel).objectList).strings.toArray(new String[0]);
 		TagString[] tags = new TagString[s.length];

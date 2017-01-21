@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.templatetags;
 
 import java.text.DecimalFormat;
 
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
@@ -37,7 +38,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		if (this.numberType == TagNumber.BYTE_BOOLEAN)
 		{
@@ -74,7 +75,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	public Tag generateTag(CGPanel panel)
+	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
 		if (this.numberType == TagNumber.BYTE_BOOLEAN) return new TagNumber(this, 1 - ((PanelRadio) panel).getSelected());
 
@@ -111,7 +112,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	protected boolean isInputValid(CGPanel panel)
+	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
 		if (this.numberType == TagNumber.BYTE_BOOLEAN) return true;
 		try

@@ -4,6 +4,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.LivingEntity;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -77,7 +78,7 @@ public class TemplateEntityList extends TemplateList
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		LivingEntity[] entities = new LivingEntity[0];
 		if (previousValue != null)
@@ -93,7 +94,7 @@ public class TemplateEntityList extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(CGPanel panel)
+	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
 		ArrayList<LivingEntity> entities = ((EntityList) ((PanelObjectList) panel).objectList).entities;
 		TagCompound[] t = new TagCompound[entities.size()];

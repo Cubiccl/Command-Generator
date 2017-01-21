@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.templatetags.custom;
 
 import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -22,21 +23,21 @@ public class TemplateText extends TemplateString
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object,Tag previousValue)
 	{
 		PanelRadio p = new PanelRadio(new Text("text.choose"), "text", "string", "json");
 		DisplayUtils.showPopup(CommandGenerator.window, "", p.component);
 
-		if (p.getSelected() == 0) return super.createPanel(objectId, previousValue);
+		if (p.getSelected() == 0) return super.createPanel(object, previousValue);
 
 		PanelJsonMessage pj = new PanelJsonMessage();
 		return pj;
 	}
 
 	@Override
-	public TagString generateTag(CGPanel panel)
+	public TagString generateTag(BaseObject object, CGPanel panel)
 	{
-		if (panel instanceof EntryPanel) return super.generateTag(panel);
+		if (panel instanceof EntryPanel) return super.generateTag(object, panel);
 		try
 		{
 			return new TagString(this, ((PanelJsonMessage) panel).generateMessage().toTag(Tags.JSON_CONTAINER).valueForCommand());

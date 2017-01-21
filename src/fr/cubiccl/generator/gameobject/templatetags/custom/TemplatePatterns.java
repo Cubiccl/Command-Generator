@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
@@ -16,7 +17,7 @@ public class TemplatePatterns extends TemplateList
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		PatternsPanel p = new PatternsPanel();
 		if (previousValue != null) p.setupFrom((TagList) previousValue);
@@ -26,7 +27,7 @@ public class TemplatePatterns extends TemplateList
 	}
 
 	@Override
-	public Tag generateTag(CGPanel panel)
+	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
 		this.base = ((PatternsPanel) panel).getBaseColor();
 		return new TagList(this, ((PatternsPanel) panel).getPatterns());

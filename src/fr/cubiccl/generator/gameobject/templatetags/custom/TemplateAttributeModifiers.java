@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.templatetags.custom;
 
 import fr.cubiccl.generator.gameobject.AppliedAttribute.AttributeModifierList;
 import fr.cubiccl.generator.gameobject.AttributeModifier;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -18,7 +19,7 @@ public class TemplateAttributeModifiers extends TemplateList
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		AttributeModifierList list = new AttributeModifierList(false);
 		if (previousValue != null) for (Tag t : ((TagList) previousValue).value())
@@ -29,7 +30,7 @@ public class TemplateAttributeModifiers extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(CGPanel panel)
+	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
 		AttributeModifier[] values = ((AttributeModifierList) ((PanelObjectList) panel).objectList).modifiers.toArray(new AttributeModifier[0]);
 		TagCompound[] tags = new TagCompound[values.length];

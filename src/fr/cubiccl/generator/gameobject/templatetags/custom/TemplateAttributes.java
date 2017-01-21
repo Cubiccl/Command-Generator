@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.AppliedAttribute;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -84,7 +85,7 @@ public class TemplateAttributes extends TemplateList
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		AppliedAttribute[] attributes = new AppliedAttribute[0];
 		if (previousValue != null)
@@ -100,7 +101,7 @@ public class TemplateAttributes extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(CGPanel panel)
+	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
 		ArrayList<AppliedAttribute> list = ((AttributeList) ((PanelObjectList) panel).objectList).attributes;
 		TagCompound[] tags = new TagCompound[list.size()];

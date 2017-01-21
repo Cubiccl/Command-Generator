@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.templatetags.custom;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.TradeOffer;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -20,7 +21,7 @@ public class TemplateOffers extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelTradeOffers p = new PanelTradeOffers();
 
@@ -38,7 +39,7 @@ public class TemplateOffers extends TemplateCompound
 	}
 
 	@Override
-	public TagList generateTag(CGPanel panel)
+	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
 		TradeOffer[] trades = new TradeOffer[0];
 		try
@@ -55,7 +56,7 @@ public class TemplateOffers extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(CGPanel panel)
+	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
 		try
 		{

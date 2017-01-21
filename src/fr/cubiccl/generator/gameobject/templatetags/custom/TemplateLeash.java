@@ -5,6 +5,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
@@ -45,7 +46,7 @@ public class TemplateLeash extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelRadio p = new PanelRadio(new Text("leash.choose"), "leash", "fence", "entity");
 		DisplayUtils.showPopup(CommandGenerator.window, "", p.component);
@@ -55,7 +56,7 @@ public class TemplateLeash extends TemplateCompound
 	}
 
 	@Override
-	public TagCompound generateTag(CGPanel panel)
+	public TagCompound generateTag(BaseObject object, CGPanel panel)
 	{
 		if (panel instanceof PanelCoordinates) try
 		{
@@ -69,7 +70,7 @@ public class TemplateLeash extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(CGPanel panel)
+	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
 		if (panel instanceof PanelCoordinates) try
 		{

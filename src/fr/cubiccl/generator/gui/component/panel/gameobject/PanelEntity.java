@@ -38,14 +38,14 @@ public class PanelEntity extends CGPanel implements ActionListener
 
 		this.labelImage.setImage(this.selectedEntity().texture());
 		this.comboboxEntity.addActionListener(this);
-		this.panelTags.setObjectForTags(this.selectedEntity().id);
+		this.panelTags.setTargetObject(this.selectedEntity());
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		this.labelImage.setImage(this.selectedEntity().texture());
-		this.panelTags.setObjectForTags(this.selectedEntity().id());
+		this.panelTags.setTargetObject(this.selectedEntity());
 	}
 
 	public LivingEntity generateEntity()

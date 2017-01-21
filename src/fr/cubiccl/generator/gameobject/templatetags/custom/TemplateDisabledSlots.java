@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
@@ -15,7 +16,7 @@ public class TemplateDisabledSlots extends TemplateNumber
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelDisabledSlots p = new PanelDisabledSlots();
 		if (previousValue != null) p.setupFrom(((TagNumber) previousValue).value());
@@ -24,13 +25,13 @@ public class TemplateDisabledSlots extends TemplateNumber
 	}
 
 	@Override
-	public TagNumber generateTag(CGPanel panel)
+	public TagNumber generateTag(BaseObject object, CGPanel panel)
 	{
 		return new TagNumber(this, ((PanelDisabledSlots) panel).generateValue());
 	}
 
 	@Override
-	protected boolean isInputValid(CGPanel panel)
+	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
 		return true;
 	}

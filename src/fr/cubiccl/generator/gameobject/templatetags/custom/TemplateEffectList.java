@@ -6,6 +6,7 @@ import java.util.Comparator;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.Effect;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -93,7 +94,7 @@ public class TemplateEffectList extends TemplateList
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		EffectList list = new EffectList();
 		if (previousValue != null) for (Tag t : ((TagList) previousValue).value())
@@ -104,7 +105,7 @@ public class TemplateEffectList extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(CGPanel panel)
+	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
 		Effect[] values = ((EffectList) ((PanelObjectList) panel).objectList).effects.toArray(new Effect[0]);
 		TagCompound[] tags = new TagCompound[values.length];

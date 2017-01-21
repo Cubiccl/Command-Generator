@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.LivingEntity;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.*;
@@ -127,7 +128,7 @@ public class TemplateSpawnPotentials extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object,Tag previousValue)
 	{
 		SpawnPotential[] potentials = new SpawnPotential[0];
 		if (previousValue != null)
@@ -144,7 +145,7 @@ public class TemplateSpawnPotentials extends TemplateCompound
 	}
 
 	@Override
-	public Tag generateTag(CGPanel panel)
+	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
 		ArrayList<SpawnPotential> values = ((SpawnPotentialList) ((PanelObjectList) panel).objectList).spawnPotentials;
 		TagCompound[] tags = new TagCompound[values.size()];

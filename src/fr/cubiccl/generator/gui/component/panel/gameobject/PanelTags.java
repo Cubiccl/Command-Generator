@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionListener;
 
 import fr.cubi.cubigui.CTextArea;
 import fr.cubi.cubigui.RoundedCornerBorder;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
@@ -36,8 +37,8 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 
 	private CTextArea areaValue;
 	private CGButton buttonAdd, buttonRemove;
-	/** The Object to check if tags are allowed for. */
-	private String currentObject;
+	/** The Object the Tags will be applied to. */
+	private BaseObject currentObject;
 	private CGList listTags;
 	private ArrayList<TemplateTag> shownTags;
 	private TemplateTag[] tags;
@@ -88,7 +89,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		if (e.getSource() == this.buttonAdd && this.getSelectedTag() != null)
 		{
 			TemplateTag tag = this.getSelectedTag();
-			String objectToGive = this.currentObject;
+			BaseObject objectToGive = this.currentObject;
 			for (TemplateTag t : this.shownTags)
 			{
 				if (t.id().equals("DisplayData") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this
@@ -100,7 +101,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 				else if (t.id().equals("Base") && tag instanceof TemplatePatterns && this.valueFor(t) != null) ((TemplatePatterns) tag).base = (int) this
 						.valueFor(t).value();
 				else if (tag.id().equals("TileEntityData") && t.id().equals("Block")) objectToGive = this.valueFor(t) == null ? ObjectRegistry.blocks.first()
-						.id() : ((TagString) this.valueFor(t)).value();
+						: ObjectRegistry.blocks.find(((TagString) this.valueFor(t)).value());
 				else if (t.id().equals("ParticleParam1") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param1 = (int) this
 						.valueFor(t).value();
 				else if (t.id().equals("ParticleParam2") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param2 = (int) this
@@ -187,17 +188,6 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		return this.valueFor(this.getSelectedTag());
 	}
 
-	public void setObjectForTags(String objectID)
-	{
-		this.currentObject = objectID;
-		this.shownTags.clear();
-		for (int i = 0; i < this.tags.length; ++i)
-			if (this.tags[i].canApplyTo(this.currentObject)) this.shownTags.add(this.tags[i]);
-			else this.values[i] = null;
-
-		this.updateTranslations();
-	}
-
 	public void setTags(Tag[] value)
 	{
 		for (int i = 0; i < this.values.length; i++)
@@ -213,6 +203,17 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 				}
 			}
 		}
+	}
+
+	public void setTargetObject(BaseObject object)
+	{
+		this.currentObject = object;
+		this.shownTags.clear();
+		for (int i = 0; i < this.tags.length; ++i)
+			if (this.tags[i].canApplyTo(this.currentObject)) this.shownTags.add(this.tags[i]);
+			else this.values[i] = null;
+
+		this.updateTranslations();
 	}
 
 	private void updateDisplay()

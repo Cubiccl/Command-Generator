@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.Coordinates;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -56,7 +57,7 @@ public class TemplatePose extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelPose p = new PanelPose();
 
@@ -76,7 +77,7 @@ public class TemplatePose extends TemplateCompound
 	}
 
 	@Override
-	public TagCompound generateTag(CGPanel panel)
+	public TagCompound generateTag(BaseObject object, CGPanel panel)
 	{
 		PanelPose p = (PanelPose) panel;
 		TagList[] tags = new TagList[6];
@@ -96,7 +97,7 @@ public class TemplatePose extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(CGPanel panel)
+	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
 		try
 		{

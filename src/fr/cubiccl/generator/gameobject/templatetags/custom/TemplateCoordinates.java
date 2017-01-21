@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.templatetags.custom;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.Coordinates;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
@@ -22,9 +23,9 @@ public class TemplateCoordinates extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(String objectId, Tag previousValue)
+	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
-		this.isInteger = objectId.equals("minecraft:ender_crystal");
+		this.isInteger = object.id().equals("minecraft:ender_crystal");
 		PanelCoordinates p = new PanelCoordinates(null, false);
 		if (previousValue != null)
 		{
@@ -42,7 +43,7 @@ public class TemplateCoordinates extends TemplateCompound
 	}
 
 	@Override
-	public TagCompound generateTag(CGPanel panel)
+	public TagCompound generateTag(BaseObject object, CGPanel panel)
 	{
 		try
 		{
@@ -61,7 +62,7 @@ public class TemplateCoordinates extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(CGPanel panel)
+	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
 		try
 		{
