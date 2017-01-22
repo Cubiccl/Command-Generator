@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.JsonMessage;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
@@ -242,6 +243,32 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 				this.panelHoverEvent.getValue());
 
 		return message;
+	}
+
+	public void setupFrom(JsonMessage message)
+	{
+		this.comboboxMode.setSelectedIndex(message.mode);
+		this.entryMain.setText(message.text);
+		if (message.target != null) this.panelTarget.setupFrom(Target.createFrom(message.target));
+
+		this.comboboxColor.setSelectedIndex(message.color);
+		this.checkboxBold.setSelected(message.bold);
+		this.checkboxUnderlined.setSelected(message.underlined);
+		this.checkboxItalic.setSelected(message.italic);
+		this.checkboxStrikethrough.setSelected(message.strikethrough);
+		this.checkboxObfuscated.setSelected(message.obfuscated);
+		this.entryInsertion.setText(message.insertion);
+
+		if (message.clickAction != null)
+		{
+			this.panelClickEvent.comboboxMode.setValue(message.clickAction);
+			this.panelClickEvent.entryValue.setText(message.clickValue);
+		}
+		if (message.hoverAction != null)
+		{
+			this.panelHoverEvent.comboboxMode.setValue(message.hoverAction);
+			// this.panelHoverEvent.setValue(message.hoverValue); need NBT generation :(
+		}
 	}
 
 }

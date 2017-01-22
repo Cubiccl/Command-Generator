@@ -28,35 +28,41 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 	{
 		private static final long serialVersionUID = 349507741634702290L;
 
-		private IconButton buttonRemove;
+		private IconButton buttonEdit, buttonRemove;
+		public final int index;
 		private JsonMessage message;
 		private PanelListJsonMessage parent;
 
-		public PanelSingleMessage(JsonMessage message, PanelListJsonMessage parent)
+		public PanelSingleMessage(JsonMessage message, int index, PanelListJsonMessage parent)
 		{
 			super();
 			this.message = message;
+			this.index = index;
 			this.parent = parent;
 			this.add(this.message.displayInLabel());
+			this.add(this.buttonEdit = new IconButton(new ImageIcon("resources/textures/gui/edit.png")));
 			this.add(this.buttonRemove = new IconButton(new ImageIcon("resources/textures/gui/delete.png")));
 
+			this.buttonEdit.addActionListener(this);
 			this.buttonRemove.addActionListener(this);
 		}
 
 		@Override
 		public void actionPerformed(ActionEvent e)
 		{
-			this.parent.deleteMessage(this.message);
+			if (e.getSource() == this.buttonEdit) this.parent.editMessage(this.index);
+			else if (e.getSource() == this.buttonRemove) this.parent.deleteMessage(this.index);
 		}
 
 	}
 
 	private static final long serialVersionUID = -2937152202773615069L;
+
 	private CGButton buttonAdd;
+	private int editing = -1;
 	private boolean hasEvents;
 	private ArrayList<JsonMessage> messages;
 	private ArrayList<PanelSingleMessage> messagesPanels;
-
 	private JPanel panelMessages;
 
 	public PanelListJsonMessage()
@@ -89,18 +95,27 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		this.editing = -1;
 		PanelJsonMessage p = new PanelJsonMessage(this.hasEvents);
-		p.setName(new Text("json.title").toString());
+		p.setName(new Text("json.title"));
 		CommandGenerator.stateManager.setState(p, this);
 	}
 
-	public void deleteMessage(JsonMessage message)
+	public void deleteMessage(int index)
 	{
-		int index = this.messages.indexOf(message);
 		this.messagesPanels.get(index).setVisible(false);
 		this.remove(this.messagesPanels.get(index));
 		this.messages.remove(index);
 		this.messagesPanels.remove(index);
+	}
+
+	public void editMessage(int index)
+	{
+		this.editing = index;
+		PanelJsonMessage p = new PanelJsonMessage(this.hasEvents);
+		p.setName(new Text("json.title"));
+		p.setupFrom(this.messages.get(index));
+		CommandGenerator.stateManager.setState(p, this);
 	}
 
 	public TagList generateMessage(TemplateList container)
@@ -126,10 +141,20 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 			return false;
 		}
 
-		PanelSingleMessage panelM = new PanelSingleMessage(message, this);
-		this.messages.add(message);
-		this.messagesPanels.add(panelM);
-		this.panelMessages.add(panelM);
+		PanelSingleMessage panelM = new PanelSingleMessage(message, this.editing == -1 ? this.messages.size() : this.editing, this);
+		if (this.editing == -1)
+		{
+			this.messages.add(message);
+			this.messagesPanels.add(panelM);
+			this.panelMessages.add(panelM);
+		} else
+		{
+			this.messages.set(this.editing, message);
+			this.messagesPanels.set(this.editing, panelM);
+			this.panelMessages.removeAll();
+			for (PanelSingleMessage p : this.messagesPanels)
+				this.panelMessages.add(p);
+		}
 		return true;
 	}
 }

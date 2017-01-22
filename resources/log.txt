@@ -16,4 +16,10 @@ Successfully created 164 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
+Generating !
+Successfully generated : /tellraw @a [{"score":{"objective":"LOL","name":"kpk"},"color":"dark_aqua","bold":"true","underlined":"true","italic":"true","strikethrough":"true","obfuscated":"true","insertion":"jpl"}]
+Generating !
+Successfully generated : /tellraw @a [{"score":{"objective":"LOL","name":"kpk"},"color":"dark_aqua","bold":"true","underlined":"true","italic":"true","strikethrough":"true","obfuscated":"true","insertion":"jpl"}]
+Generating !
+Successfully generated : /tellraw @a []
 Exiting Command Generator... Bye bye !

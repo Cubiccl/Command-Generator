@@ -57,7 +57,7 @@ public class CommandClone extends Command implements ActionListener
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		panel.add(this.panelBlock = new PanelBlock("clone.block", false), gbc);
+		panel.add(this.panelBlock = new PanelBlock("clone.block"), gbc);
 
 		this.panelBlock.setVisible(false);
 		this.comboboxMaskMode.addActionListener(this);
@@ -68,9 +68,17 @@ public class CommandClone extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/clone " + this.panelCoordinatesSourceStart.generateCoordinates().toCommand() + " "
-				+ this.panelCoordinatesSourceEnd.generateCoordinates().toCommand() + " " + this.panelCoordinatesDestination.generateCoordinates().toCommand()
-				+ " " + this.comboboxMaskMode.getValue() + " " + this.comboboxCloneMode.getValue()
-				+ (this.comboboxMaskMode.getValue().equals("filtered") ? (" " + this.panelBlock.selectedBlock().id()) : "");
+		return "/clone "
+				+ this.panelCoordinatesSourceStart.generateCoordinates().toCommand()
+				+ " "
+				+ this.panelCoordinatesSourceEnd.generateCoordinates().toCommand()
+				+ " "
+				+ this.panelCoordinatesDestination.generateCoordinates().toCommand()
+				+ " "
+				+ this.comboboxMaskMode.getValue()
+				+ " "
+				+ this.comboboxCloneMode.getValue()
+				+ (this.comboboxMaskMode.getValue().equals("filtered") ? (" " + this.panelBlock.selectedBlock().id() + " " + this.panelBlock.selectedDamage())
+						: "");
 	}
 }

@@ -16,7 +16,7 @@ public class CGTextField extends CTextField implements ITranslated
 
 	public CGTextField()
 	{
-		this("");
+		this((String) null);
 	}
 
 	public CGTextField(String suggestedTextID)

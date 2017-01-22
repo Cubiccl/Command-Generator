@@ -8,7 +8,6 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandXp extends Command
 {
@@ -44,13 +43,8 @@ public class CommandXp extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		try
-		{
-			Integer.parseInt(this.entryAmount.getText());
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryAmount.label.getAbsoluteText(), new Text("error.integer"), this.entryAmount.getText());
-		}
+		this.entryAmount.checkValue(CGEntry.INTEGER);
+		if (!this.checkboxLevel.isSelected()) this.entryAmount.checkValueSuperior(CGEntry.INTEGER, 0);
 		return "/xp " + this.entryAmount.getText() + (this.checkboxLevel.isSelected() ? "L " : " ") + this.panelTarget.generateTarget().toCommand();
 	}
 

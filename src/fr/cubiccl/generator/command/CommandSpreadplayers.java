@@ -8,7 +8,6 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandSpreadplayers extends Command
 {
@@ -62,41 +61,10 @@ public class CommandSpreadplayers extends Command
 	public String generate() throws CommandGenerationException
 	{
 		String x = this.entryX.getText(), z = this.entryZ.getText(), d = this.entryDistance.getText(), r = this.entryRange.getText();
-		float distance = 0;
-
-		try
-		{
-			Float.parseFloat(x);
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryX.label.getAbsoluteText(), new Text("error.number"), x);
-		}
-
-		try
-		{
-			Float.parseFloat(z);
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryZ.label.getAbsoluteText(), new Text("error.number"), z);
-		}
-
-		try
-		{
-			distance = Float.parseFloat(d);
-			if (distance < 0) throw new WrongValueException(this.entryDistance.label.getAbsoluteText(), new Text("error.number.positive"), d);
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryDistance.label.getAbsoluteText(), new Text("error.number.positive"), d);
-		}
-
-		try
-		{
-			float f = Float.parseFloat(r);
-			if (f < distance + 1) throw new WrongValueException(this.entryRange.label.getAbsoluteText(), new Text("error.spreadplayers"), r);
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryRange.label.getAbsoluteText(), new Text("error.number.positive"), r);
-		}
+		this.entryX.checkValue(CGEntry.FLOAT);
+		this.entryZ.checkValue(CGEntry.FLOAT);
+		this.entryDistance.checkValueSuperior(CGEntry.FLOAT, 0);
+		this.entryRange.checkValueSuperior(CGEntry.FLOAT, Float.parseFloat(this.entryDistance.getText()) + 1);
 
 		return "/spreadplayers " + (this.checkboxX.isSelected() ? "~" : "") + x + " " + (this.checkboxZ.isSelected() ? "~" : "") + z + " " + d + " " + r + " "
 				+ this.checkboxTeams.isSelected() + " " + this.panelTarget.generateTarget().toCommand();

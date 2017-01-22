@@ -192,14 +192,21 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 	public void setupFrom(Target target)
 	{
 		if (target == null) return;
+
 		for (int i = 0; i < TARGETS[this.mode].length; ++i)
 			if (target.type.id.equals(TARGETS[this.mode][i]))
 			{
 				this.comboboxType.setSelectedIndex(i);
 				break;
 			}
-
 		this.arguments.clear();
+
+		if (target.type == TargetType.PLAYER)
+		{
+			this.entryName.setText(target.playerName);
+			return;
+		}
+
 		if (target.arguments != null) for (Argument a : target.arguments)
 			this.arguments.add(a);
 

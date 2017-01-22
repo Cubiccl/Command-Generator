@@ -23,13 +23,13 @@ public class JsonMessage
 	public static final int TEXT = 0, TRANSLATE = 1, SCORE = 2, SELECTOR = 3;
 
 	public boolean bold, underlined, italic, strikethrough, obfuscated;
-	private String clickAction, clickValue;
-	private int color;
-	private String hoverAction, hoverValue;
+	public String clickAction, clickValue;
+	public int color;
+	public String hoverAction, hoverValue;
 	public String insertion;
 	public final int mode;
 	public String target;
-	private String text;
+	public String text;
 
 	public JsonMessage(int mode, String text, int color)
 	{

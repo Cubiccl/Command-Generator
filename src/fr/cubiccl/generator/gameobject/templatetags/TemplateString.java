@@ -6,6 +6,7 @@ import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ComboboxPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
+import fr.cubiccl.generator.utils.Text;
 
 public class TemplateString extends TemplateTag
 {
@@ -30,6 +31,7 @@ public class TemplateString extends TemplateTag
 
 		EntryPanel p = new EntryPanel(this.description(object));
 		if (previousValue != null) p.entry.setText(((TagString) previousValue).value());
+		p.setName(new Text(this.id(), false));
 		return p;
 	}
 

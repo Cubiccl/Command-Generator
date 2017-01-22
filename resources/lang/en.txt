@@ -37,7 +37,7 @@ block.tags=NBT Tags
 clear.all_items=Empty target's inventory
 clear.ignore_data=Ignore Item data
 clear.item=Item to delete
-clear.no_limit=Clear all Items of this type
+clear.no_limit=Clear all Items of this type in target's inventory
 
 clone.block=Block to copy
 clone.mode.filtered=Clone only blocks of a certain ID
@@ -177,6 +177,8 @@ enchant.title=Enchantment
 entity.spawn=Entity to Spawn
 entity.tags=NBT Tags
 entity.weight=Weight (chance to spawn)
+entitydata.explain=Choosing an Entity below will not target those Entities. Use the "type" argument for the target.
+entitydata.nbt=NBT Tags to apply
 
 error.integer=<name>: "XXX" is not valid. It must be an integer.
 error.integer.bounds=<name>: "XXX" is not valid. It must be an integer between <min> and <max>.
@@ -312,6 +314,16 @@ loading.textures.block=Loading Block textures...
 loading.textures.item=Loading Item textures...
 loading.textures.other=Loading other textures...
 
+locate.EndCity=End City
+locate.Fortress=Nether Fortress
+locate.Mansion=Mansion
+locate.Mineshaft=Mineshaft
+locate.Monument=Ocean Monument
+locate.select=Choose a Structure
+locate.Stronghold=Stronghold
+locate.Temple=Jungle Temple
+locate.Village=Village
+
 menu.exit=Exit
 menu.settings=Settings (wip)
 
@@ -383,6 +395,7 @@ rotation.z=Z Rotation
 say.message=Message to display
 
 setblock.block=Block to place
+setblock.block_data=NBT Tags to set
 setblock.coordinates=Coordinates of the Block
 setblock.mode.destroy=Destroy previous block
 setblock.mode.keep=Keep previous block if not air
@@ -546,6 +559,7 @@ time.query.gametime=Ticks passed since world creation
 
 title.fade_in=Time to fade in
 title.fade_out=Time to fade out
+title.mode.actionbar=Display text on Action bar
 title.mode.clear=Remove title & subtitle
 title.mode.reset=Reset title properties to default
 title.mode.subtitle=Display subtitle
@@ -1808,18 +1822,21 @@ block.yellow_shulker_box.x=Yellow Shulker Box (<facing>)
 
 // COMMANDS
 command.achievement=Gives/removes one or all achievement(s) to/from a Player.
+command.blockdata=Changes the NBT Tags of a Block.
 command.clear=Removes Items from a Player's inventory.
 command.clone=Copies a region of blocks to a destination.
 command.defaultgamemode=Changes the game mode Players join the world with.
 command.difficulty=Changes the world difficulty.
 command.effect=Applies an Effect to an Entity, or removes all Effects from the Entity.
 command.enchant=Enchants the Item a Player is holding.
+command.entitydata=Changes the NBT Tags of an Entity.
 command.execute=Makes an Entity execute a command.
 command.fill=Fills a region with the target blocks.
 command.gamemode=Changes the game mode of a Player.
 command.gamerule=Changes the value of a game rule.
 command.give=Gives an Item to a Player.
 command.kill=Kills an Entity.
+command.locate=Shows the coordinate of the closest Structure.
 command.particle=Shows particles.
 command.playsound=Plays a sound to a Player.
 command.replaceitem=Places an Item in a container or inventory.
@@ -1836,6 +1853,7 @@ command.summon=Summons an Entity at the given coordinates.
 command.teleport=Teleports an Entity to a location.
 command.tell=Sends a chat message to a Player.
 command.tellraw=Sends a Json message to a Player.
+command.testfor=Tests if an Entity exists. Can be counted with stats.
 command.testforblock=Tests the block at the given coordinates.
 command.testforblocks=Tests if a region of blocks matches another template region.
 command.time=Changes the time, or used to get the time.

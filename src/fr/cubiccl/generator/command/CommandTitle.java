@@ -29,7 +29,7 @@ public class CommandTitle extends Command implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		String mode = this.comboboxMode.getValue();
-		this.panelJson.setVisible(mode.equals("title") || mode.equals("subtitle"));
+		this.panelJson.setVisible(mode.equals("title") || mode.equals("subtitle") || mode.equals("actionbar"));
 		this.entryFadeIn.container.setVisible(mode.equals("times"));
 		this.entryStay.container.setVisible(mode.equals("times"));
 		this.entryFadeOut.container.setVisible(mode.equals("times"));
@@ -43,7 +43,7 @@ public class CommandTitle extends Command implements ActionListener
 
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
-		panel.add(this.comboboxMode = new OptionCombobox("title.mode", "title", "subtitle", "times", "clear", "reset"), gbc);
+		panel.add(this.comboboxMode = new OptionCombobox("title.mode", "title", "subtitle", "actionbar", "times", "clear", "reset"), gbc);
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.PLAYERS_ONLY), gbc);
 		++gbc.gridy;
@@ -71,7 +71,8 @@ public class CommandTitle extends Command implements ActionListener
 	{
 		String mode = this.comboboxMode.getValue();
 		String command = "/title " + this.panelTarget.generateTarget().toCommand() + " " + mode;
-		if (mode.equals("title") || mode.equals("subtitle")) return command + " " + this.panelJson.generateMessage(Tags.JSON_LIST).value();
+		if (mode.equals("title") || mode.equals("subtitle") || mode.equals("actionbar")) return command + " "
+				+ this.panelJson.generateMessage(Tags.JSON_LIST).valueForCommand();
 		if (mode.equals("times"))
 		{
 			this.entryFadeIn.checkValueSuperior(CGEntry.INTEGER, 0);

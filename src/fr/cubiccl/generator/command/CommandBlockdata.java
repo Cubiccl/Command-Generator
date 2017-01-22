@@ -2,19 +2,20 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
-import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
-public class CommandSpawnpoint extends Command
+public class CommandBlockdata extends Command
 {
+	private PanelBlock panelBlock;
 	private PanelCoordinates panelCoordinates;
-	private PanelTarget panelTarget;
 
-	public CommandSpawnpoint()
+	public CommandBlockdata()
 	{
-		super("spawnpoint");
+		super("blockdata");
 	}
 
 	@Override
@@ -25,9 +26,9 @@ public class CommandSpawnpoint extends Command
 
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
-		panel.add(this.panelTarget = new PanelTarget(PanelTarget.PLAYERS_ONLY), gbc);
+		panel.add(this.panelCoordinates = new PanelCoordinates("setblock.coordinates"), gbc);
 		++gbc.gridy;
-		panel.add(this.panelCoordinates = new PanelCoordinates("spawnpoint.coordinates"), gbc);
+		panel.add(this.panelBlock = new PanelBlock("setblock.block_data"), gbc);
 
 		return panel;
 	}
@@ -35,7 +36,7 @@ public class CommandSpawnpoint extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/spawnpoint " + this.panelTarget.generateTarget().toCommand() + " " + this.panelCoordinates.generateCoordinates().toCommand();
+		PlacedBlock block = this.panelBlock.generateBlock();
+		return "/blockdata " + this.panelCoordinates.generateCoordinates().toCommand() + " " + block.nbt.valueForCommand();
 	}
-
 }

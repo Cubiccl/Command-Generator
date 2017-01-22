@@ -50,9 +50,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		panel.add((this.entryValue = new CGEntry(Text.VALUE, "0", Text.INTEGER)).container, gbc);
-
-		this.entryValue.addIntFilter();
+		panel.add((this.entryValue = new CGEntry(Text.VALUE, "0", null)).container, gbc);
 
 		this.buttonPredefined.addActionListener(this);
 
@@ -64,6 +62,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	{
 		String command = "/gamerule " + this.entryGamerule.getText();
 		String gamerule = this.entryGamerule.getText(), value = this.entryValue.getText();
+		this.entryGamerule.checkValue(CGEntry.STRING);
 
 		boolean predefined = false;
 		for (String rule : GAMERULES)

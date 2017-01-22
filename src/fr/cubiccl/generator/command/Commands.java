@@ -15,18 +15,21 @@ public class Commands
 	{
 		frame.setText("loading.commands");
 		new CommandAchievement();
+		new CommandBlockdata();
 		new CommandClear();
 		new CommandClone();
 		new CommandDefaultgamemode();
 		new CommandDifficulty();
 		new CommandEffect();
 		new CommandEnchant();
+		new CommandEntitydata("entitydata");
 		new CommandExecute();
 		new CommandFill();
 		new CommandGamemode();
 		new CommandGamerule();
 		new CommandGive();
 		new CommandKill();
+		new CommandLocate();
 		new CommandParticle();
 		new CommandPlaysound();
 		new CommandReplaceitem();
@@ -43,6 +46,7 @@ public class Commands
 		new CommandTeleport();
 		new CommandTell();
 		new CommandTellraw();
+		new CommandEntitydata("testfor");
 		new CommandTestforblock();
 		new CommandTestforblocks();
 		new CommandTime();

@@ -25,7 +25,9 @@ public class CommandFill extends Command implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent arg0)
 	{
-		this.panelBlockReplace.setVisible(this.comboboxMode.getValue().equals("filter"));
+		boolean filter = this.comboboxMode.getValue().equals("filter");
+		this.panelBlockReplace.setVisible(filter);
+		this.panelBlockFill.setHasNBT(!filter);
 	}
 
 	@Override
@@ -47,6 +49,7 @@ public class CommandFill extends Command implements ActionListener
 		panel.add(this.panelBlockReplace = new PanelBlock("fill.block.replace"), gbc);
 
 		this.panelBlockReplace.setVisible(false);
+		this.panelBlockReplace.setHasNBT(false);
 		this.comboboxMode.addActionListener(this);
 
 		return panel;

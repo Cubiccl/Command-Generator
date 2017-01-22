@@ -8,7 +8,6 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandWeather extends Command
 {
@@ -49,15 +48,7 @@ public class CommandWeather extends Command
 		String command = "/weather " + this.comboboxWeather.getValue();
 		if (this.entryDuration.getText().equals("")) return command;
 
-		try
-		{
-			int i = Integer.parseInt(this.entryDuration.getText());
-			if (i < 0) throw new WrongValueException(this.entryDuration.label.getAbsoluteText(), new Text("error.integer.positive"),
-					this.entryDuration.getText());
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryDuration.label.getAbsoluteText(), new Text("error.integer.positive"), this.entryDuration.getText());
-		}
+		this.entryDuration.checkValueSuperior(CGEntry.INTEGER, 0);
 		return command + " " + this.entryDuration.getText();
 	}
 

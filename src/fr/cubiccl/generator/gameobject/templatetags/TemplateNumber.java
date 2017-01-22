@@ -10,6 +10,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ComboboxPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelRadio;
+import fr.cubiccl.generator.utils.Text;
 
 public class TemplateNumber extends TemplateTag
 {
@@ -44,6 +45,7 @@ public class TemplateNumber extends TemplateTag
 		{
 			PanelRadio p = new PanelRadio(this.description(object), "value", "true", "false");
 			if (previousValue != null && (int) previousValue.value() == 0) p.setSelected(1);
+			p.setName(new Text(this.id(), false));
 			return p;
 		}
 
@@ -57,6 +59,7 @@ public class TemplateNumber extends TemplateTag
 				if (this.isBigNumber()) p.entry.setText(new DecimalFormat("#").format(((TagBigNumber) previousValue).value()));
 				else p.entry.setText(Integer.toString(((TagNumber) previousValue).value()));
 			} else p.entry.setText("0");
+			p.setName(new Text(this.id(), false));
 			return p;
 		}
 		ComboboxPanel p = new ComboboxPanel(this.description(object), this.prefix, this.names);
@@ -71,6 +74,7 @@ public class TemplateNumber extends TemplateTag
 				}
 			if (v < this.names.length && v >= 0) p.combobox.setSelectedIndex(v);
 		}
+		p.setName(new Text(this.id(), false));
 		return p;
 	}
 

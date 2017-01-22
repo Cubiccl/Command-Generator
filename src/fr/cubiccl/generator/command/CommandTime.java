@@ -10,7 +10,6 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandTime extends Command implements ActionListener
 {
@@ -61,18 +60,11 @@ public class CommandTime extends Command implements ActionListener
 	{
 		String command = "/time " + this.comboboxMode.getValue() + " ";
 		String mode = this.comboboxMode.getValue();
-		if (mode.equals("query")) return command + mode + " " + this.comboboxQuery.getValue();
+		if (mode.equals("query")) return command + this.comboboxQuery.getValue();
 
-		try
-		{
-			int i = Integer.parseInt(this.entryValue.getText());
-			if (i < 0) throw new WrongValueException(this.entryValue.label.getAbsoluteText(), new Text("error.integer.positive"), this.entryValue.getText());
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryValue.label.getAbsoluteText(), new Text("error.integer.positive"), this.entryValue.getText());
-		}
+		this.entryValue.checkValueSuperior(CGEntry.INTEGER, 0);
 
-		return command + " " + this.entryValue.getText();
+		return command + this.entryValue.getText();
 	}
 
 }

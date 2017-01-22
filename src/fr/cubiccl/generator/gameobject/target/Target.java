@@ -57,7 +57,6 @@ public class Target
 
 	public final Argument[] arguments;
 	public final String playerName;
-
 	public final TargetType type;
 
 	public Target(String playerName)

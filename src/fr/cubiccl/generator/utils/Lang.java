@@ -21,6 +21,7 @@ public class Lang
 		textID = textID.replaceAll("minecraft:", "");
 		if (keyExists(textID)) return dictionnary.get(textID);
 		CommandGenerator.log("Couldn't find translation for : " + textID);
+		new Exception().printStackTrace();
 		return textID;
 	}
 

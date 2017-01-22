@@ -101,11 +101,18 @@ public class TargetArgument
 
 	public String checkValue(CGPanel panel) throws CommandGenerationException
 	{
-		if (this == M || this == TYPE)
+		if (this == M)
 		{
 			String value = ((OptionCombobox) panel.getComponent(1)).getValue();
 			if (((CGCheckBox) panel.getComponent(2)).isSelected()) return "!" + (value.equals("all") ? "-1" : value);
 			return value.equals("all") ? "-1" : value;
+		}
+		if (this == TYPE)
+		{
+			@SuppressWarnings("unchecked")
+			Entity value = ((ObjectCombobox<Entity>) panel.getComponent(1)).getSelectedObject();
+			if (((CGCheckBox) panel.getComponent(2)).isSelected()) return "!" + value.id();
+			return value.id();
 		}
 
 		CGEntry entry = (CGEntry) ((CPanel) panel.getComponent(0)).getComponent(1);
@@ -201,7 +208,7 @@ public class TargetArgument
 			++gbc.gridy;
 			panel.add(new CGCheckBox("target.argument.reverse"), gbc);
 		}
-		panel.setName(this.name().toString());
+		panel.setName(this.name());
 		return panel;
 	}
 

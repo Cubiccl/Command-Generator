@@ -10,7 +10,6 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandWorldborder extends Command implements ActionListener
 {
@@ -83,69 +82,30 @@ public class CommandWorldborder extends Command implements ActionListener
 	{
 		String mode = this.comboboxMode.getValue(), mode2 = this.comboboxMode2.getValue(), value = this.entryValue.getText(), value2 = this.entryValue2
 				.getText();
-		Text name = this.entryValue.label.getAbsoluteText(), name2 = this.entryValue2.label.getAbsoluteText();
 		String command = "/worldborder " + mode + " ";
 
 		switch (mode)
 		{
 			case "add":
 			case "set":
-				try
-				{
-					int i = Integer.parseInt(value);
-					if (mode.equals("set") && i < 0) throw new WrongValueException(name, new Text("error.integer.positive"), value);
-				} catch (NumberFormatException e)
-				{
-					throw new WrongValueException(name, new Text("error.integer"), value);
-				}
+				if (mode.equals("set")) this.entryValue.checkValueSuperior(CGEntry.INTEGER, 0);
+				else this.entryValue.checkValue(CGEntry.INTEGER);
 
 				boolean time = !value2.equals("");
-				if (time) try
-				{
-					int i = Integer.parseInt(value2);
-					if (i < 0) throw new WrongValueException(name2, new Text("error.integer.positive"), value2);
-				} catch (NumberFormatException e)
-				{
-					throw new WrongValueException(name2, new Text("error.integer.positive"), value2);
-				}
+				if (time) this.entryValue2.checkValue(CGEntry.INTEGER);
 
 				return command + value + (time ? (" " + value2) : "");
 
 			case "center":
-				try
-				{
-					Integer.parseInt(value);
-				} catch (NumberFormatException e)
-				{
-					throw new WrongValueException(name, new Text("error.integer"), value);
-				}
-				try
-				{
-					Integer.parseInt(value2);
-				} catch (NumberFormatException e)
-				{
-					throw new WrongValueException(name2, new Text("error.integer"), value2);
-				}
+				this.entryValue.checkValue(CGEntry.INTEGER);
+				this.entryValue2.checkValue(CGEntry.INTEGER);
 				return command + value + " " + value2;
 
 			case "damage":
 			case "warning":
 				boolean isFloat = mode.equals("damage") && mode2.equals("amount");
-				try
-				{
-					float f;
-					if (isFloat) f = Float.parseFloat(value);
-					else f = Integer.parseInt(value2);
-					if (f < 0)
-					{
-						if (isFloat) throw new WrongValueException(name, new Text("error.number.positive"), value);
-						throw new WrongValueException(name2, new Text("error.integer.positive"), value2);
-					}
-				} catch (NumberFormatException e)
-				{
-					if (isFloat) throw new WrongValueException(name, new Text("error.number.positive"), value);
-					throw new WrongValueException(name2, new Text("error.integer.positive"), value2);
-				}
+				if (isFloat) this.entryValue.checkValueSuperior(CGEntry.FLOAT, 0);
+				else this.entryValue.checkValueSuperior(CGEntry.INTEGER, 0);
 				return command + mode2 + " " + value;
 
 			default:

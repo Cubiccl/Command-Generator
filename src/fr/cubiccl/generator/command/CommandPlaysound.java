@@ -12,9 +12,7 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandPlaysound extends Command
 {
@@ -72,42 +70,13 @@ public class CommandPlaysound extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		float volume, pitch, minVolume;
 		String v = this.entryVolume.getText(), p = this.entryPitch.getText(), mv = this.entryMinVolume.getText();
 
-		try
-		{
-			volume = Float.parseFloat(v);
-			if (volume < 0) throw new WrongValueException(this.entryVolume.label.getAbsoluteText(), new Text("error.number.greater", new Replacement("<min>",
-					"0")), v);
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryVolume.label.getAbsoluteText(), new Text("error.number.greater", new Replacement("<min>", "0")), v);
-		}
-
-		try
-		{
-			pitch = Float.parseFloat(p);
-			if (pitch < 0 || pitch > 2) throw new WrongValueException(this.entryPitch.label.getAbsoluteText(), new Text("error.number.bounds", new Replacement(
-					"<min>", "0"), new Replacement("<max>", "2")), p);
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryPitch.label.getAbsoluteText(), new Text("error.number.bounds", new Replacement("<min>", "0"),
-					new Replacement("<max>", "2")), p);
-		}
-
-		try
-		{
-			minVolume = Float.parseFloat(mv);
-			if (minVolume < 0) throw new WrongValueException(this.entryMinVolume.label.getAbsoluteText(), new Text("error.number.greater", new Replacement(
-					"<min>", "0")), mv);
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryMinVolume.label.getAbsoluteText(), new Text("error.number.greater", new Replacement("<min>", "0")), mv);
-		}
+		this.entryVolume.checkValueSuperior(CGEntry.FLOAT, 0);
+		this.entryPitch.checkValueInBounds(CGEntry.FLOAT, 0, 2);
+		this.entryMinVolume.checkValueSuperior(CGEntry.FLOAT, 0);
 
 		return "/playsound " + this.comboboxSound.getSelectedObject().id + " " + this.comboboxSource.getValue() + " "
-				+ this.panelTarget.generateTarget().toCommand() + this.panelCoordinates.generateCoordinates().toCommand() + " " + volume + " " + pitch + " "
-				+ minVolume;
+				+ this.panelTarget.generateTarget().toCommand() + this.panelCoordinates.generateCoordinates().toCommand() + " " + v + " " + p + " " + mv;
 	}
 }

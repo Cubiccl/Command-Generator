@@ -6,9 +6,7 @@ import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.MissingValueException;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
 
 public class CommandTrigger extends Command
 {
@@ -43,16 +41,8 @@ public class CommandTrigger extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		if (this.entryObjective.getText().equals("")) throw new MissingValueException(this.entryObjective.label.getAbsoluteText());
-		if (this.entryObjective.getText().contains(" ")) throw new WrongValueException(this.entryObjective.label.getAbsoluteText(), new Text("error.space"),
-				this.entryObjective.getText());
-		try
-		{
-			Integer.parseInt(this.entryValue.getText());
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(this.entryValue.label.getAbsoluteText(), new Text("error.integer"), this.entryValue.getText());
-		}
+		this.entryObjective.checkValue(CGEntry.STRING);
+		this.entryValue.checkValue(CGEntry.INTEGER);
 		return "/trigger " + this.entryObjective.getText() + " " + this.comboboxMode.getValue() + " " + this.entryValue.getText();
 	}
 
