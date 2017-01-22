@@ -32,7 +32,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 
 	public Window()
 	{
-		super("Command Generator v2.0");
+		super("Command Generator v2.0-pre");
 		this.setSize(800, 600);
 		this.setMinimumSize(new Dimension(800, 400));
 		this.setLocationRelativeTo(null);
