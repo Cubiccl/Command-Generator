@@ -26,15 +26,15 @@ public class ConfirmPanel extends CGPanel implements ActionListener
 
 	public ConfirmPanel()
 	{
-		this((Text) null, null);
+		this((Text) null, null, true);
 	}
 
 	public ConfirmPanel(String titleID, Component component)
 	{
-		this(titleID == null ? null : new Text(titleID), component);
+		this(titleID == null ? null : new Text(titleID), component, true);
 	}
 
-	public ConfirmPanel(Text title, Component component)
+	public ConfirmPanel(Text title, Component component, boolean hasOKButton)
 	{
 		this.gbc = this.createGridBagLayout();
 		if (title != null)
@@ -48,17 +48,20 @@ public class ConfirmPanel extends CGPanel implements ActionListener
 		++gbc.gridy;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 
-		JPanel p = new JPanel(new GridLayout(1, 2));
-		((GridLayout) p.getLayout()).setVgap(10);
-		p.add(this.buttonCancel = new CGButton("general.cancel"));
-		p.add(this.buttonOK = new CGButton("general.confirm"));
-		this.add(p, gbc);
+		if (hasOKButton)
+		{
+			JPanel p = new JPanel(new GridLayout(1, 2));
+			((GridLayout) p.getLayout()).setVgap(10);
+			p.add(this.buttonCancel = new CGButton("general.cancel"));
+			p.add(this.buttonOK = new CGButton("general.confirm"));
+			this.add(p, gbc);
+		} else this.add(this.buttonCancel = new CGButton("general.cancel"), gbc);
 
 		--gbc.gridy;
 		gbc.fill = GridBagConstraints.NONE;
 		if (component != null) this.setMainComponent(component);
 
-		this.buttonOK.addActionListener(this);
+		if (hasOKButton) this.buttonOK.addActionListener(this);
 		this.buttonCancel.addActionListener(this);
 	}
 

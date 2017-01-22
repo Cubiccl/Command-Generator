@@ -14,7 +14,6 @@ public class CMenuItem extends JMenuItem
 	public CMenuItem()
 	{
 		this.setFont(DisplayUtils.FONT.deriveFont(Font.BOLD, 12));
-		this.setBorderPainted(true);
 		this.setUI(new CButtonUI());
 	}
 

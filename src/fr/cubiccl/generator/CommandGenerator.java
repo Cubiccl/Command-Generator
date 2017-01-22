@@ -8,14 +8,11 @@ import fr.cubiccl.generator.command.Commands;
 import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.gui.Window;
-import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.FileUtils;
-import fr.cubiccl.generator.utils.Lang;
-import fr.cubiccl.generator.utils.Settings;
-import fr.cubiccl.generator.utils.StateManager;
+import fr.cubiccl.generator.utils.*;
 
 public class CommandGenerator
 {
+	private static ArrayList<String> commandHistory = new ArrayList<String>();
 	private static String executeCommand = "";
 	private static ArrayList<String> log = new ArrayList<String>();
 	private static Command selected;
@@ -26,6 +23,11 @@ public class CommandGenerator
 	{
 		executeCommand = "";
 		window.setExecuteCommand(false);
+	}
+
+	public static String[] commandHistory()
+	{
+		return commandHistory.toArray(new String[commandHistory.size()]);
 	}
 
 	public static void finishLog()
@@ -43,10 +45,16 @@ public class CommandGenerator
 			{
 				if (executeCommand.equals("")) executeCommand += command;
 				else executeCommand += command.substring(1);
+
 				window.showCommand(executeCommand);
+
 				if (command.startsWith("/execute ")) DisplayUtils.showMessage(window, Lang.translate("general.success"),
 						Lang.translate("general.success_execute"));
-				else executeCommand = "";
+				else
+				{
+					commandHistory.add(executeCommand);
+					executeCommand = "";
+				}
 				window.setExecuteCommand(command.startsWith("/execute "));
 			}
 			log("Successfully generated : " + command);

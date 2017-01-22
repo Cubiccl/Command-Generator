@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gui.component;
 
+import java.awt.event.ComponentEvent;
+import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 
 import fr.cubi.cubigui.CList;
@@ -20,9 +22,29 @@ public class CGList extends CList
 	{
 		super(values);
 		this.values = new ArrayList<String>();
-		for (String value : values)
-			this.values.add(value);
+		this.setValues(values);
 		this.scrollPane = new CScrollPane(this);
+		this.scrollPane.addComponentListener(new ComponentListener()
+		{
+
+			@Override
+			public void componentHidden(ComponentEvent e)
+			{}
+
+			@Override
+			public void componentMoved(ComponentEvent e)
+			{}
+
+			@Override
+			public void componentResized(ComponentEvent e)
+			{
+				reload();
+			}
+
+			@Override
+			public void componentShown(ComponentEvent e)
+			{}
+		});
 	}
 
 	public void addValue(String value)
@@ -46,7 +68,12 @@ public class CGList extends CList
 
 	private void reload()
 	{
-		super.setValues(this.values.toArray(new String[this.values.size()]));
+		if (this.scrollPane == null) return;
+		String[] shownValues = new String[this.values.size()];
+		for (int i = 0; i < shownValues.length; i++)
+			shownValues[i] = this.values.get(i).length() < this.scrollPane.getWidth() / this.getFont().getSize() * 2 ? this.values.get(i) : this.values.get(i)
+					.substring(0, Math.max(0, this.scrollPane.getWidth() / this.getFont().getSize() * 2 - 3)) + "...";
+		super.setValues(shownValues);
 	}
 
 	public void removeValue(String value)

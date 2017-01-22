@@ -24,7 +24,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 {
 	private static final long serialVersionUID = -3962531275009303736L;
 
-	private CMenuBar menubar;
+	public CMenuBar menubar;
 	private PanelCommand panelCommand;
 	private PanelCommandSelection panelCommandSelection;
 	private CGPanel panelGui;
@@ -101,6 +101,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	{
 		this.panelGui = gui;
 		this.scrollpane.setViewportView(this.panelGui);
+		this.panelCommandSelection.setEnabled(CommandGenerator.stateManager.stateCount() <= 1);
 	}
 
 	public void showCommand(String command)

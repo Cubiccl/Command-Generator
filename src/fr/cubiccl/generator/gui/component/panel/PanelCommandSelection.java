@@ -1,9 +1,6 @@
 package fr.cubiccl.generator.gui.component.panel;
 
-import java.awt.Font;
-import java.awt.GridBagConstraints;
-import java.awt.GridBagLayout;
-import java.awt.Insets;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -20,10 +17,10 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 	public static final int HEIGHT = 60;
 	private static final long serialVersionUID = 9144607045203777459L;
 
+	public CGButton buttonCancelExecute;
 	private CGButton buttonGenerate;
 	private CGComboBox comboboxCommands;
 	private CGLabel labelCommand;
-	public CGButton buttonCancelExecute;
 
 	public PanelCommandSelection()
 	{
@@ -69,6 +66,16 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 		this.add(this.buttonGenerate, gbc);
 		++gbc.gridx;
 		this.add(this.buttonCancelExecute, gbc);
+	}
+
+	@Override
+	public void setEnabled(boolean enabled)
+	{
+		super.setEnabled(enabled);
+		this.comboboxCommands.setEnabled(enabled);
+		this.buttonGenerate.setEnabled(enabled);
+		this.buttonCancelExecute.setEnabled(enabled);
+		this.labelCommand.setForeground(enabled ? Color.BLACK : Color.GRAY);
 	}
 
 }

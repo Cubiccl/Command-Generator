@@ -57,6 +57,11 @@ public class StateManager
 		this.updatePanel();
 	}
 
+	public int stateCount()
+	{
+		return this.states.size();
+	}
+
 	private void updatePanel()
 	{
 		State state = this.getState();
@@ -64,8 +69,7 @@ public class StateManager
 		{
 			state.panel.updateTranslations();
 			if (this.states.size() == 1 || state.isConfirmIncluded) CommandGenerator.window.setMainPanel(state.panel);
-			else CommandGenerator.window.setMainPanel(new ConfirmPanel(state.panel.getStateName(), state.panel));
+			else CommandGenerator.window.setMainPanel(new ConfirmPanel(state.panel.getStateName(), state.panel, true));
 		}
 	}
-
 }

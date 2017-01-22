@@ -27,9 +27,8 @@ public class PanelSlotSelection extends ConfirmPanel
 
 	public PanelSlotSelection(Text title, String[] containerIDs)
 	{
-		super(title, null);
+		super(title, null, false);
 		this.containerIDs = containerIDs;
-		this.buttonOK.setVisible(false);
 
 		CGPanel p = new CGPanel();
 		GridBagConstraints gbc = p.createGridBagLayout();

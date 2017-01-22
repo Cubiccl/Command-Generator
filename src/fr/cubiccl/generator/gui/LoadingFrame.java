@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gui;
 
+import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 import javax.swing.JProgressBar;
 
@@ -14,6 +15,7 @@ public class LoadingFrame extends JFrame
 	public LoadingFrame(int progressTotal)
 	{
 		super(new Text("loading.generator").toString());
+		this.setIconImage(new ImageIcon("resources/textures/gui/icon.png").getImage());
 		this.setVisible(true);
 		this.setSize(400, 200);
 		this.setResizable(false);

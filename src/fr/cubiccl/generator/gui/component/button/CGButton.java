@@ -21,6 +21,12 @@ public class CGButton extends CButton implements ITranslated
 		this.text = text;
 	}
 
+	public void setText(Text text)
+	{
+		this.text = text;
+		this.updateTranslations();
+	}
+
 	@Override
 	public void updateTranslations()
 	{

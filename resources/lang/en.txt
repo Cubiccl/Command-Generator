@@ -77,6 +77,7 @@ command.cancel_execute=Cancel /execute
 command.copy=Copy to Clipboard
 command.edit=Edit Command
 command.generate=Generate !
+command.history=Command history
 command.label=Generated Command
 command.output=Command output
 command.select=Select a Command
@@ -243,6 +244,7 @@ gamerule.predefined=Predefined gamerules...
 gamerule.predefined.select=Select a predefined gamerule
 
 general.add=Add
+general.back=Back
 general.cancel=Cancel
 general.confirm=OK
 general.edit=Edit selected
