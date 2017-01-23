@@ -1,18 +1,73 @@
 package fr.cubiccl.generator.utils;
 
+import java.awt.Desktop;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.net.URL;
+import java.nio.channels.Channels;
+import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
+import javax.swing.JOptionPane;
 
 import fr.cubiccl.generator.CommandGenerator;
 
 public class FileUtils
 {
+	public static final String resourcesFolder = "resources/";
+	private static final String VERSION_URL = "https://www.dropbox.com/s/1crneiyy6fx3lqk/version.txt?dl=1";
+
+	public static void checkForUpdates()
+	{
+		CommandGenerator.log("Checking for updates...");
+		if (!download(VERSION_URL, resourcesFolder + "version.txt"))
+		{
+			CommandGenerator.log("Couldn't check for updates, version checking failed.");
+			return;
+		}
+		if (Settings.GENERATOR_VERSION.equals(readFileAsArray("version.txt")[0])) return;
+
+		if (JOptionPane.showConfirmDialog(null, "A new update for the Command Generator has been found ! Would you like to update?", "Update available!",
+				JOptionPane.YES_NO_OPTION) != 0) return;
+		File f = new File("updater.jar");
+		if (!f.exists()) CommandGenerator.log("Couldn't update because there is no updater... WTF");
+		else try
+		{
+			Desktop.getDesktop().open(f);
+			System.exit(0);
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+			CommandGenerator.log("Couldn't update : " + e.getMessage());
+		}
+	}
+
+	/** Downloads a single file.
+	 * 
+	 * @return True if the download was successful. */
+	public static boolean download(String url, String destination)
+	{
+		try
+		{
+			URL download = new URL(url);
+			ReadableByteChannel rbc = Channels.newChannel(download.openStream());
+			FileOutputStream fileOut = new FileOutputStream(destination);
+			fileOut.getChannel().transferFrom(rbc, 0, 1 << 24);
+			fileOut.flush();
+			fileOut.close();
+			rbc.close();
+			return true;
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
 	public static boolean fileExists(String path)
 	{
-		File file = new File("resources/" + path);
+		File file = new File(resourcesFolder + path);
 		return file != null && file.exists();
 	}
 
@@ -20,7 +75,7 @@ public class FileUtils
 	 * @return Each line of the File in a String Array. */
 	public static String[] readFileAsArray(String path)
 	{
-		File file = new File("resources/" + path);
+		File file = new File(resourcesFolder + path);
 
 		ArrayList<String> lines = new ArrayList<String>();
 		if (file != null && file.exists())
@@ -46,7 +101,7 @@ public class FileUtils
 	 * @return The Image located at <code>path</code>. */
 	public static BufferedImage readImage(String path)
 	{
-		File file = new File("resources/" + path + ".png");
+		File file = new File(resourcesFolder + path + ".png");
 		if (file == null || !file.exists())
 		{
 			CommandGenerator.log("Couldn't find Image: " + path);
@@ -66,7 +121,7 @@ public class FileUtils
 	 * @param data - Each line to write. */
 	public static void writeToFile(String path, String[] data)
 	{
-		File file = new File("resources/" + path);
+		File file = new File(resourcesFolder + path);
 
 		if (file.exists()) file.delete();
 		try

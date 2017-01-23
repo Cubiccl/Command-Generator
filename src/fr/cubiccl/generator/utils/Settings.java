@@ -55,9 +55,11 @@ public class Settings
 		}
 	}
 
+	public static final boolean CHECK_UPDATES = false;
+	public static final String GENERATOR_VERSION = "2.0-pre";
 	private static Language language;
 	private static Version mcversion;
-	public static final String MINECRAFT_VERSION = "mcversion", GENERATOR_VERSION = "cgversion", LANG = "lang";
+	public static final String MINECRAFT_VERSION = "mcversion", LANG = "lang";
 	private static HashMap<String, String> settings = new HashMap<String, String>();
 
 	private static String getDefault(String settingID)
@@ -66,9 +68,6 @@ public class Settings
 		{
 			case MINECRAFT_VERSION:
 				return Version.v1d11.name;
-
-			case GENERATOR_VERSION:
-				return "2.0";
 
 			case LANG:
 				return Language.ENGLISH.codeName;

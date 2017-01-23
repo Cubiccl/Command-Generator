@@ -74,7 +74,8 @@ public class CommandGenerator
 
 	public static void main(String[] args)
 	{
-		log("Welcome to the Command Generator v2.0-pre by Cubi !");
+		log("Welcome to the Command Generator v" + Settings.GENERATOR_VERSION + " by Cubi !");
+		FileUtils.checkForUpdates();
 		Settings.loadSettings();
 		log("---- Creating window ----");
 		stateManager = new StateManager();
