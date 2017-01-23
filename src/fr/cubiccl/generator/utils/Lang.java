@@ -28,7 +28,7 @@ public class Lang
 	public static void updateLang()
 	{
 		dictionnary.clear();
-		String[] translations = FileUtils.readFileAsArray("lang/" + Settings.getLanguage().codeName + ".txt");
+		String[] translations = FileUtils.readFileAsArray("lang/" + Settings.language().codeName + ".txt");
 		for (String translation : translations)
 		{
 			if (translation.contains("=")) dictionnary.put(translation.substring(0, translation.indexOf('=')),

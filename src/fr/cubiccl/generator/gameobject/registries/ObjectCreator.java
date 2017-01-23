@@ -259,7 +259,7 @@ public class ObjectCreator
 	{
 		frame.setText("loading.objects");
 		ObjectRegistry.resetAll();
-		String[] data = FileUtils.readFileAsArray("data/" + Settings.getVersion().name + ".txt");
+		String[] data = FileUtils.readFileAsArray("data/" + Settings.version().name + ".txt");
 		ArrayList<String> blocks = new ArrayList<String>(), items = new ArrayList<String>(), entities = new ArrayList<String>(), effects = new ArrayList<String>(), enchantments = new ArrayList<String>(), achievements = new ArrayList<String>(), attributes = new ArrayList<String>(), particles = new ArrayList<String>(), sounds = new ArrayList<String>(), containers = new ArrayList<String>(), blocktags = new ArrayList<String>(), itemtags = new ArrayList<String>(), entitytags = new ArrayList<String>();
 
 		int current = -1;

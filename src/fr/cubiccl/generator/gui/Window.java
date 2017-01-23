@@ -124,13 +124,13 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	@Override
 	public void windowClosed(WindowEvent arg0)
 	{
-		CommandGenerator.finishLog();
+		CommandGenerator.exit();
 	}
 
 	@Override
 	public void windowClosing(WindowEvent arg0)
 	{
-		CommandGenerator.finishLog();
+		CommandGenerator.exit();
 	}
 
 	@Override

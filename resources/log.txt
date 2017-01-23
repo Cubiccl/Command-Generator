@@ -16,6 +16,4 @@ Successfully created 164 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
-Generating !
-Successfully generated : /testforblock ~0.0 ~0.0 ~0.0 minecraft:chest 2 {Items:[{id:"minecraft:stone",Damage:0s,Count:1b,Slot:3s,tag:{AttributeModifiers:[{Name:"",Operation:0,Amount:0.0d,UUIDMost:2494830844172421600l,UUIDLeast:5609602848547557400l,AttributeName:"minecraft:generic.armor",Slot:"mainhand"},{Name:"",Operation:0,Amount:0.0d,UUIDMost:-8460056050860189700l,UUIDLeast:-4972383480236732400l,AttributeName:"minecraft:generic.armor",Slot:"mainhand"},{Name:"",Operation:0,Amount:0.0d,UUIDMost:-5071007734151722000l,UUIDLeast:5021067103894413300l,AttributeName:"minecraft:generic.armor",Slot:"mainhand"},{Name:"",Operation:0,Amount:0.0d,UUIDMost:-752182004186109570l,UUIDLeast:4946569709069033500l,AttributeName:"minecraft:generic.armor",Slot:"mainhand"}]}}]}
 Exiting Command Generator... Bye bye !

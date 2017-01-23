@@ -30,10 +30,12 @@ public class CommandGenerator
 		return commandHistory.toArray(new String[commandHistory.size()]);
 	}
 
-	public static void finishLog()
+	public static void exit()
 	{
 		log("Exiting Command Generator... Bye bye !");
 		FileUtils.writeToFile("log.txt", log.toArray(new String[log.size()]));
+		Settings.save();
+		log("Log and settings save successful.");
 	}
 
 	public static void generate()
@@ -73,7 +75,7 @@ public class CommandGenerator
 	public static void main(String[] args)
 	{
 		log("Welcome to the Command Generator v2.0-pre by Cubi !");
-		Settings.createSettings();
+		Settings.loadSettings();
 		log("---- Creating window ----");
 		stateManager = new StateManager();
 		window = new Window();
