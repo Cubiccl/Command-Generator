@@ -82,7 +82,7 @@ public class CommandWorldborder extends Command implements ActionListener
 	{
 		String mode = this.comboboxMode.getValue(), mode2 = this.comboboxMode2.getValue(), value = this.entryValue.getText(), value2 = this.entryValue2
 				.getText();
-		String command = "/worldborder " + mode + " ";
+		String command = this.id + " " + mode + " ";
 
 		switch (mode)
 		{

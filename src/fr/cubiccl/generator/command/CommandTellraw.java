@@ -36,7 +36,7 @@ public class CommandTellraw extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/tellraw " + this.panelTarget.generateTarget().toCommand() + " " + this.panelJson.generateMessage(Tags.JSON_LIST).valueForCommand();
+		return this.id + " " + this.panelTarget.generateTarget().toCommand() + " " + this.panelJson.generateMessage(Tags.JSON_LIST).valueForCommand();
 	}
 
 }

@@ -58,7 +58,7 @@ public class CommandAchievement extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = "/" + this.id + " " + this.comboboxMode.getValue() + " ";
+		String command = this.id + " " + this.comboboxMode.getValue() + " ";
 		if (this.comboboxNumber.getValue().equals("all")) command += "* ";
 		else command += "achievement." + this.panelAchievement.getAchievement().id.substring("minecraft:".length()) + " ";
 

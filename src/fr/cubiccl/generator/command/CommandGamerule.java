@@ -60,7 +60,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = "/gamerule " + this.entryGamerule.getText();
+		String command = this.id + " " + this.entryGamerule.getText();
 		String gamerule = this.entryGamerule.getText(), value = this.entryValue.getText();
 		this.entryGamerule.checkValue(CGEntry.STRING);
 

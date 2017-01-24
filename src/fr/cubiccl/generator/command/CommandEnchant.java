@@ -35,7 +35,7 @@ public class CommandEnchant extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/enchant " + this.panelTarget.generateTarget().toCommand() + " " + this.panelEnchant.generateEnchantment().toCommand();
+		return this.id + " " + this.panelTarget.generateTarget().toCommand() + " " + this.panelEnchant.generateEnchantment().toCommand();
 	}
 
 }

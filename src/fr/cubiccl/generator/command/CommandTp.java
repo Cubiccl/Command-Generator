@@ -79,7 +79,7 @@ public class CommandTp extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = "/tp " + this.panelTarget.generateTarget().toCommand() + " ";
+		String command = this.id + " " + this.panelTarget.generateTarget().toCommand() + " ";
 		if (this.comboboxMode.getValue().equals("entity")) return command + this.panelDestination.generateTarget().toCommand();
 
 		String y = this.entryYRot.getText(), x = this.entryXRot.getText();

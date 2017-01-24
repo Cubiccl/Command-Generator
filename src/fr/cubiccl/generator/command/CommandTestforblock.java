@@ -38,7 +38,7 @@ public class CommandTestforblock extends Command
 	{
 		PlacedBlock block = this.panelBlock.generateBlock();
 		String nbt = block.nbt.valueForCommand();
-		return "/testforblock " + this.panelCoordinates.generateCoordinates().toCommand() + " " + block.block.id() + " " + block.data
+		return this.id + " " + this.panelCoordinates.generateCoordinates().toCommand() + " " + block.block.id() + " " + block.data
 				+ (nbt.equals("{}") ? "" : " " + nbt);
 	}
 

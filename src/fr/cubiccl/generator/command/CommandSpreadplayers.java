@@ -66,7 +66,7 @@ public class CommandSpreadplayers extends Command
 		this.entryDistance.checkValueSuperior(CGEntry.FLOAT, 0);
 		this.entryRange.checkValueSuperior(CGEntry.FLOAT, Float.parseFloat(this.entryDistance.getText()) + 1);
 
-		return "/spreadplayers " + (this.checkboxX.isSelected() ? "~" : "") + x + " " + (this.checkboxZ.isSelected() ? "~" : "") + z + " " + d + " " + r + " "
+		return this.id + " " + (this.checkboxX.isSelected() ? "~" : "") + x + " " + (this.checkboxZ.isSelected() ? "~" : "") + z + " " + d + " " + r + " "
 				+ this.checkboxTeams.isSelected() + " " + this.panelTarget.generateTarget().toCommand();
 	}
 

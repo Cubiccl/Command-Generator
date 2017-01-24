@@ -36,7 +36,7 @@ public class CommandDifficulty extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/difficulty " + this.comboboxDifficulty.getValue();
+		return this.id + " " + this.comboboxDifficulty.getValue();
 	}
 
 }

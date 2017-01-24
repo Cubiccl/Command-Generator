@@ -5,6 +5,8 @@ import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
 import javax.swing.JPanel;
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
 
 import fr.cubiccl.generator.gui.component.interfaces.IImageSelectionListener;
 import fr.cubiccl.generator.gui.component.interfaces.MCInventory;
@@ -33,6 +35,22 @@ public class PanelImageList extends JPanel implements MCInventory
 		this.addKeyListener(this.drawer);
 		this.setFocusable(true);
 		this.setObjectsPerLine(20);
+		this.addAncestorListener(new AncestorListener()
+		{
+			@Override
+			public void ancestorAdded(AncestorEvent event)
+			{
+				hovering = -1;
+			}
+
+			@Override
+			public void ancestorMoved(AncestorEvent event)
+			{}
+
+			@Override
+			public void ancestorRemoved(AncestorEvent event)
+			{}
+		});
 	}
 
 	@Override

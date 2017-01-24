@@ -58,7 +58,7 @@ public class CommandTime extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = "/time " + this.comboboxMode.getValue() + " ";
+		String command = this.id + " " + this.comboboxMode.getValue() + " ";
 		String mode = this.comboboxMode.getValue();
 		if (mode.equals("query")) return command + this.comboboxQuery.getValue();
 

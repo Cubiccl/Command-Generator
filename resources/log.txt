@@ -1,6 +1,5 @@
-Welcome to the Command Generator v2.0-pre by Cubi !
+Welcome to the Command Generator v2.0.1 by Cubi !
 Checking for updates...
-File not found : version.txt
 ---- Creating objects ----
 Successfully created 236 blocks.
 Successfully created 393 items.
@@ -18,4 +17,6 @@ Successfully created 164 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
+Generating !
+Successfully generated : summon minecraft:armor_stand ~0.0 ~0.0 ~0.0 {HandItems:[{id:"minecraft:stone",Damage:0s,Count:1b,tag:{}}]}
 Exiting Command Generator... Bye bye !

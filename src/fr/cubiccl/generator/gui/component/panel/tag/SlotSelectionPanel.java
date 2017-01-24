@@ -4,6 +4,9 @@ import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
 
+import javax.swing.event.AncestorEvent;
+import javax.swing.event.AncestorListener;
+
 import fr.cubiccl.generator.gameobject.baseobjects.Container;
 import fr.cubiccl.generator.gameobject.baseobjects.Slot;
 import fr.cubiccl.generator.gui.component.interfaces.MCInventory;
@@ -25,6 +28,23 @@ public abstract class SlotSelectionPanel extends CGPanel implements MCInventory
 		this.setContainer(container);
 		this.addMouseListener(this.drawer = new MCInventoryDrawer(this));
 		this.addMouseMotionListener(this.drawer);
+		this.addAncestorListener(new AncestorListener()
+		{
+
+			@Override
+			public void ancestorAdded(AncestorEvent event)
+			{
+				onExit();
+			}
+
+			@Override
+			public void ancestorMoved(AncestorEvent event)
+			{}
+
+			@Override
+			public void ancestorRemoved(AncestorEvent event)
+			{}
+		});
 	}
 
 	public Container container()

@@ -45,7 +45,7 @@ public class CommandXp extends Command
 	{
 		this.entryAmount.checkValue(CGEntry.INTEGER);
 		if (!this.checkboxLevel.isSelected()) this.entryAmount.checkValueSuperior(CGEntry.INTEGER, 0);
-		return "/xp " + this.entryAmount.getText() + (this.checkboxLevel.isSelected() ? "L " : " ") + this.panelTarget.generateTarget().toCommand();
+		return this.id + " " + this.entryAmount.getText() + (this.checkboxLevel.isSelected() ? "L " : " ") + this.panelTarget.generateTarget().toCommand();
 	}
 
 }

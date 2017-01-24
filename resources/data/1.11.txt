@@ -1,3 +1,5 @@
+[REMOVE]
+
 [BLOCKS]
 0,air,blockOnly
 1,stone,damage=6,lists=craft:use

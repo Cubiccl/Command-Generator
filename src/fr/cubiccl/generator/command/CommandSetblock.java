@@ -42,7 +42,7 @@ public class CommandSetblock extends Command
 	{
 		PlacedBlock block = this.panelBlock.generateBlock();
 		String nbt = block.nbt.valueForCommand();
-		return "/setblock " + this.panelCoordinates.generateCoordinates().toCommand() + " " + block.block.id() + " " + block.data + " "
+		return this.id + " " + this.panelCoordinates.generateCoordinates().toCommand() + " " + block.block.id() + " " + block.data + " "
 				+ this.comboboxMode.getValue() + (nbt.equals("{}") ? "" : " " + nbt);
 	}
 

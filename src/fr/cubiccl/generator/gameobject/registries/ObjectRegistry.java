@@ -141,9 +141,9 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public T find(String id)
 	{
-		T target = registry.get(id);
-		if (target == null) target = registry.get("minecraft:" + id);
-		if (target == null && id != null) target = registry.get(id.replaceAll("minecraft:", ""));
+		T target = this.registry.get(id);
+		if (target == null) target = this.registry.get("minecraft:" + id);
+		if (target == null && id != null) target = this.registry.get(id.replaceAll("minecraft:", ""));
 		return target;
 	}
 
@@ -170,7 +170,7 @@ public class ObjectRegistry<T extends BaseObject>
 	public T[] list(int sortType)
 	{
 		ArrayList<T> a = new ArrayList<T>();
-		a.addAll(registry.values());
+		a.addAll(this.registry.values());
 
 		if (sortType == SORT_ALPHABETICALLY) a.sort(new ObjectComparatorID());
 		else if (sortType == SORT_NUMERICALLY && this.hasNumericalIds) a.sort(new ObjectComparatorIDNum());
@@ -193,7 +193,7 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public void register(T object)
 	{
-		registry.put(object.id(), object);
+		this.registry.put(object.id(), object);
 		if (this.hasNumericalIds) this.ids.put(object.idNum(), object.id());
 	}
 
@@ -206,6 +206,18 @@ public class ObjectRegistry<T extends BaseObject>
 	public int size()
 	{
 		return this.registry.size();
+	}
+
+	public void unregister(String ID)
+	{
+		this.unregister(this.find(ID));
+	}
+
+	public void unregister(T object)
+	{
+		if (object == null) return;
+		if (this.registry.containsValue(object)) this.registry.remove(object);
+		if (this.hasNumericalIds && this.ids.containsValue(object.id())) this.ids.remove(object.id());
 	}
 
 }

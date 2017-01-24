@@ -17,6 +17,7 @@ import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.utils.Settings;
 import fr.cubiccl.generator.utils.Text;
 
 public class PanelCommandHistory extends ConfirmPanel implements ListSelectionListener
@@ -32,6 +33,8 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 	{
 		super(new Text("command.history"), null, false);
 		this.history = CommandGenerator.commandHistory();
+		if (Boolean.parseBoolean(Settings.getSetting(Settings.SLASH))) for (int i = 0; i < history.length; ++i)
+			this.history[i] = "/" + this.history[i];
 
 		CScrollPane scrollpane = new CScrollPane(this.area = new CTextArea(""));
 		CGPanel p = new CGPanel();
@@ -83,7 +86,7 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 	{
 		super.actionPerformed(e);
 		if (e.getSource() == this.buttonCopy) Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(this.area.getText()), null);
-		if (e.getSource() == this.buttonCancel) CommandGenerator.window.menubar.history.setEnabled(true);
+		if (e.getSource() == this.buttonCancel) CommandGenerator.window.menubar.toggleMenu(true);
 	}
 
 	@Override

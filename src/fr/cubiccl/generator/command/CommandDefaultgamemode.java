@@ -36,7 +36,7 @@ public class CommandDefaultgamemode extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/defaultgamemode " + this.comboboxGamemode.getValue();
+		return this.id + " " + this.comboboxGamemode.getValue();
 	}
 
 }

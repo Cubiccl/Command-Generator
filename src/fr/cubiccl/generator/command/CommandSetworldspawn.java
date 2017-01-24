@@ -31,7 +31,7 @@ public class CommandSetworldspawn extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/setworldspawn " + this.panelCoordinates.generateCoordinates().toCommand();
+		return this.id + " " + this.panelCoordinates.generateCoordinates().toCommand();
 	}
 
 }

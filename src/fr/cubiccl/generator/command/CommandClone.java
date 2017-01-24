@@ -68,7 +68,8 @@ public class CommandClone extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/clone "
+		return this.id
+				+ " "
 				+ this.panelCoordinatesSourceStart.generateCoordinates().toCommand()
 				+ " "
 				+ this.panelCoordinatesSourceEnd.generateCoordinates().toCommand()

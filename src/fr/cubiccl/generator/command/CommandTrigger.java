@@ -43,7 +43,7 @@ public class CommandTrigger extends Command
 	{
 		this.entryObjective.checkValue(CGEntry.STRING);
 		this.entryValue.checkValue(CGEntry.INTEGER);
-		return "/trigger " + this.entryObjective.getText() + " " + this.comboboxMode.getValue() + " " + this.entryValue.getText();
+		return this.id + " " + this.entryObjective.getText() + " " + this.comboboxMode.getValue() + " " + this.entryValue.getText();
 	}
 
 }

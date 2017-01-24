@@ -32,7 +32,7 @@ public class CommandSay extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/say " + this.entryMessage.getText();
+		return this.id + " " + this.entryMessage.getText();
 	}
 
 }

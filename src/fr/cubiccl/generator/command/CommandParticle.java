@@ -85,7 +85,7 @@ public class CommandParticle extends Command
 		yd = Float.toString(Float.parseFloat(yd) / 8);
 		zd = Float.toString(Float.parseFloat(zd) / 8);
 
-		String command = "/particle " + particle.id + " " + this.panelCoordinates.generateCoordinates().toCommand() + " " + xd + " " + yd + " " + zd + " "
+		String command = this.id + " " + particle.id + " " + this.panelCoordinates.generateCoordinates().toCommand() + " " + xd + " " + yd + " " + zd + " "
 				+ speed + " " + count + " ";
 		if (this.checkboxForce.isSelected()) command += "force";
 		else command += "normal";

@@ -9,8 +9,7 @@ public class Settings
 {
 	public static enum Language
 	{
-		ENGLISH("English", "en"),
-		FRENCH("Français", "fr");
+		ENGLISH("English", "en");
 
 		public static Language get(String codeName)
 		{
@@ -53,13 +52,23 @@ public class Settings
 		{
 			return this.order - anotherVersion.order;
 		}
+
+		public boolean isAfter(Version anotherVersion)
+		{
+			return this.compareTo(anotherVersion) > 0;
+		}
+
+		public boolean isBefore(Version anotherVersion)
+		{
+			return this.compareTo(anotherVersion) < 0;
+		}
 	}
 
 	public static final boolean CHECK_UPDATES = false;
-	public static final String GENERATOR_VERSION = "2.0-pre";
+	public static final String GENERATOR_VERSION = "2.0.1";
 	private static Language language;
 	private static Version mcversion;
-	public static final String MINECRAFT_VERSION = "mcversion", LANG = "lang";
+	public static final String MINECRAFT_VERSION = "mcversion", LANG = "lang", SLASH = "slash";
 	private static HashMap<String, String> settings = new HashMap<String, String>();
 
 	private static String getDefault(String settingID)
@@ -71,6 +80,9 @@ public class Settings
 
 			case LANG:
 				return Language.ENGLISH.codeName;
+
+			case SLASH:
+				return "true";
 
 			default:
 				return null;

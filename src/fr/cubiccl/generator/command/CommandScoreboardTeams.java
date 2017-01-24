@@ -77,7 +77,7 @@ public class CommandScoreboardTeams extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = "/scoreboard teams " + this.comboboxMode.getValue();
+		String command = this.id + " teams " + this.comboboxMode.getValue();
 		String mode = this.comboboxMode.getValue();
 		String team = this.entryTeam.getText();
 		this.entryTeam.checkValue(CGEntry.STRING);

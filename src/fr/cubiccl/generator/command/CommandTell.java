@@ -36,7 +36,7 @@ public class CommandTell extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/tell " + this.panelTarget.generateTarget().toCommand() + " " + this.entryMessage.getText();
+		return this.id + " " + this.panelTarget.generateTarget().toCommand() + " " + this.entryMessage.getText();
 	}
 
 }

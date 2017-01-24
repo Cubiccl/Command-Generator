@@ -59,7 +59,7 @@ public class CommandFill extends Command implements ActionListener
 	public String generate() throws CommandGenerationException
 	{
 		PlacedBlock block = this.panelBlockFill.generateBlock();
-		String command = "/fill " + this.panelCoordinatesStart.generateCoordinates().toCommand() + " "
+		String command = this.id + " " + this.panelCoordinatesStart.generateCoordinates().toCommand() + " "
 				+ this.panelCoordinatesEnd.generateCoordinates().toCommand() + " " + block.block.id() + " " + block.data + " ";
 
 		if (!this.comboboxMode.getValue().equals("filter"))

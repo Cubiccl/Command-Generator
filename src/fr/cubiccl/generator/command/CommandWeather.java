@@ -45,7 +45,7 @@ public class CommandWeather extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = "/weather " + this.comboboxWeather.getValue();
+		String command = this.id + " " + this.comboboxWeather.getValue();
 		if (this.entryDuration.getText().equals("")) return command;
 
 		this.entryDuration.checkValueSuperior(CGEntry.INTEGER, 0);

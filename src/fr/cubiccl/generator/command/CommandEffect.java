@@ -49,7 +49,7 @@ public class CommandEffect extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = "/effect " + this.panelTarget.generateTarget().toCommand() + " ";
+		String command = this.id + " " + this.panelTarget.generateTarget().toCommand() + " ";
 
 		if (this.comboboxMode.getValue().equals("clear")) return command + "clear";
 

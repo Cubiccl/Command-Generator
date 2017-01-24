@@ -70,7 +70,7 @@ public class CommandTitle extends Command implements ActionListener
 	public String generate() throws CommandGenerationException
 	{
 		String mode = this.comboboxMode.getValue();
-		String command = "/title " + this.panelTarget.generateTarget().toCommand() + " " + mode;
+		String command = this.id + " " + this.panelTarget.generateTarget().toCommand() + " " + mode;
 		if (mode.equals("title") || mode.equals("subtitle") || mode.equals("actionbar")) return command + " "
 				+ this.panelJson.generateMessage(Tags.JSON_LIST).valueForCommand();
 		if (mode.equals("times"))

@@ -46,18 +46,18 @@ public class CommandGenerator
 			String command = selectedCommand().generate();
 			{
 				if (executeCommand.equals("")) executeCommand += command;
-				else executeCommand += command.substring(1);
+				else executeCommand += command;
 
 				window.showCommand(executeCommand);
 
-				if (command.startsWith("/execute ")) DisplayUtils.showMessage(window, Lang.translate("general.success"),
+				if (command.startsWith("execute ")) DisplayUtils.showMessage(window, Lang.translate("general.success"),
 						Lang.translate("general.success_execute"));
 				else
 				{
 					commandHistory.add(executeCommand);
 					executeCommand = "";
 				}
-				window.setExecuteCommand(command.startsWith("/execute "));
+				window.setExecuteCommand(command.startsWith("execute "));
 			}
 			log("Successfully generated : " + command);
 		} catch (CommandGenerationException e)

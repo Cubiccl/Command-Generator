@@ -37,7 +37,7 @@ public class CommandLocate extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/locate " + this.comboboxStructure.getValue();
+		return this.id + " " + this.comboboxStructure.getValue();
 	}
 
 }

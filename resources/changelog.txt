@@ -1,0 +1,13 @@
+------------------------- VERSION 2.0.1 -------------------------
+ADDITIONS
+- Added the Settings page. You can choose if you want the "/" to appear when you generate a Command.
+
+BUGFIXES
+- Fixed various NBT tags not showing for mobs & armor stands, such as HandItems and ArmorItems.
+
+CHANGED TRANSLATIONS
+menu.settings
+
+ADDED TRANSLATIONS
+general.no, general.yes
+settings.save, settings.slash.description, settings.slash.title, settings.title

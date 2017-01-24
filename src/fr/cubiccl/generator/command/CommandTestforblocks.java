@@ -42,7 +42,7 @@ public class CommandTestforblocks extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return "/testforblocks " + this.panelCoordinatesSourceStart.generateCoordinates().toCommand() + " "
+		return this.id + " " + this.panelCoordinatesSourceStart.generateCoordinates().toCommand() + " "
 				+ this.panelCoordinatesSourceEnd.generateCoordinates().toCommand() + " " + this.panelCoordinatesDestination.generateCoordinates().toCommand()
 				+ " " + this.comboboxMode.getValue();
 	}

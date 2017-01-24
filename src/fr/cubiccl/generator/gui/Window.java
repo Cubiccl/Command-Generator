@@ -107,7 +107,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 
 	public void showCommand(String command)
 	{
-		this.panelCommand.textfieldCommand.setText(command);
+		this.panelCommand.textfieldCommand.setText((Boolean.parseBoolean(Settings.getSetting(Settings.SLASH)) ? "/" : "") + command);
 	}
 
 	@Override

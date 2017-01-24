@@ -260,7 +260,7 @@ public class ObjectCreator
 		frame.setText("loading.objects");
 		ObjectRegistry.resetAll();
 		String[] data = FileUtils.readFileAsArray("data/" + Settings.version().name + ".txt");
-		ArrayList<String> blocks = new ArrayList<String>(), items = new ArrayList<String>(), entities = new ArrayList<String>(), effects = new ArrayList<String>(), enchantments = new ArrayList<String>(), achievements = new ArrayList<String>(), attributes = new ArrayList<String>(), particles = new ArrayList<String>(), sounds = new ArrayList<String>(), containers = new ArrayList<String>(), blocktags = new ArrayList<String>(), itemtags = new ArrayList<String>(), entitytags = new ArrayList<String>();
+		ArrayList<String> toRemove = new ArrayList<String>(), blocks = new ArrayList<String>(), items = new ArrayList<String>(), entities = new ArrayList<String>(), effects = new ArrayList<String>(), enchantments = new ArrayList<String>(), achievements = new ArrayList<String>(), attributes = new ArrayList<String>(), particles = new ArrayList<String>(), sounds = new ArrayList<String>(), containers = new ArrayList<String>(), blocktags = new ArrayList<String>(), itemtags = new ArrayList<String>(), entitytags = new ArrayList<String>();
 
 		int current = -1;
 		for (String line : data)
@@ -273,63 +273,68 @@ public class ObjectCreator
 			switch (current)
 			{
 				case 0:
-					blocks.add(line);
+					toRemove.add(line);
 					break;
 
 				case 1:
-					items.add(line);
+					blocks.add(line);
 					break;
 
 				case 2:
-					entities.add(line);
+					items.add(line);
 					break;
 
 				case 3:
-					effects.add(line);
+					entities.add(line);
 					break;
 
 				case 4:
-					enchantments.add(line);
+					effects.add(line);
 					break;
 
 				case 5:
-					achievements.add(line);
+					enchantments.add(line);
 					break;
 
 				case 6:
+					achievements.add(line);
+					break;
+
+				case 7:
 					String[] a = line.split(",");
 					for (String attribute : a)
 						attributes.add(attribute);
 					break;
 
-				case 7:
+				case 8:
 					String[] p = line.split(",");
 					for (String particle : p)
 						particles.add(particle);
 					break;
 
-				case 8:
+				case 9:
 					sounds.add(line);
 					break;
 
-				case 9:
+				case 10:
 					containers.add(line);
 					break;
 
-				case 10:
+				case 11:
 					blocktags.add(line);
 					break;
 
-				case 11:
+				case 12:
 					itemtags.add(line);
 					break;
 
-				case 12:
+				case 13:
 					entitytags.add(line);
 					break;
 			}
 		}
 
+		removePrevious(toRemove.toArray(new String[toRemove.size()]));
 		createBlocks(blocks.toArray(new String[blocks.size()]));
 		createItems(items.toArray(new String[items.size()]));
 		createEntities(entities.toArray(new String[entities.size()]));
@@ -372,7 +377,15 @@ public class ObjectCreator
 	{
 		String id = data[0];
 		String[] applicable = data[2].split(":");
-		if (applicable.length == 1 && applicable[0].startsWith("list=")) applicable = ObjectRegistry.getList(applicable[0].substring("list=".length()));
+
+		ArrayList<String> app = new ArrayList<String>();
+		for (String a : applicable)
+			if (a.startsWith("list=")) for (String o : ObjectRegistry.getList(a.substring("list=".length())))
+				app.add(o);
+			else app.add(a);
+
+		applicable = app.toArray(new String[app.size()]);
+
 		switch (data[1].substring(0, 3))
 		{
 			case "num":
@@ -425,6 +438,71 @@ public class ObjectCreator
 		if (tagType == Tag.BLOCK) CommandGenerator.log("Successfully created " + ObjectRegistry.blockTags.size() + " Block NBT Tags.");
 		else if (tagType == Tag.ITEM) CommandGenerator.log("Successfully created " + ObjectRegistry.itemTags.size() + " Item NBT Tags.");
 		else if (tagType == Tag.ENTITY) CommandGenerator.log("Successfully created " + ObjectRegistry.entityTags.size() + " Entity NBT Tags.");
+	}
+
+	private static void removePrevious(String[] values)
+	{
+		for (String line : values)
+		{
+			String type = line.split(" ")[0], id = line.split(" ")[1];
+			switch (type)
+			{
+				case "block":
+					ObjectRegistry.blocks.unregister(id);
+					break;
+
+				case "item":
+					ObjectRegistry.items.unregister(id);
+					break;
+
+				case "entity":
+					ObjectRegistry.entities.unregister(id);
+					break;
+
+				case "effect":
+					ObjectRegistry.effects.unregister(id);
+					break;
+
+				case "enchantment":
+					ObjectRegistry.enchantments.unregister(id);
+					break;
+
+				case "achievement":
+					ObjectRegistry.achievements.unregister(id);
+					break;
+
+				case "attribute":
+					ObjectRegistry.attributes.unregister(id);
+					break;
+
+				case "particle":
+					ObjectRegistry.particles.unregister(id);
+					break;
+
+				case "sound":
+					ObjectRegistry.sounds.unregister(id);
+					break;
+
+				case "container":
+					ObjectRegistry.containers.unregister(id);
+					break;
+
+				case "block_tag":
+					ObjectRegistry.blockTags.unregister(id);
+					break;
+
+				case "item_tag":
+					ObjectRegistry.itemTags.unregister(id);
+					break;
+
+				case "entity_tag":
+					ObjectRegistry.entityTags.unregister(id);
+					break;
+
+				default:
+					break;
+			}
+		}
 	}
 
 	private ObjectCreator()

@@ -88,7 +88,7 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = "/scoreboard objectives " + this.comboboxMode.getValue();
+		String command = this.id + " objectives " + this.comboboxMode.getValue();
 		String objective = this.entryObjective.getText();
 		boolean display = this.comboboxMode.getValue().equals("setdisplay");
 		boolean clear = display && this.checkboxClearSlot.isSelected();

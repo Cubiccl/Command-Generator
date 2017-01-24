@@ -84,7 +84,7 @@ public class CommandStats extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = "/stats " + this.comboboxSourceMode.getValue() + " ";
+		String command = this.id + " " + this.comboboxSourceMode.getValue() + " ";
 
 		if (this.comboboxSourceMode.getValue().equals("block")) command += this.panelCoordinates.generateCoordinates().toCommand();
 		else command += this.panelSource.generateTarget().toCommand();

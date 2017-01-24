@@ -109,7 +109,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = "/scoreboard players " + this.comboboxMode.getValue() + " " + this.panelTarget.generateTarget().toCommand() + " ";
+		String command = this.id + " players " + this.comboboxMode.getValue() + " " + this.panelTarget.generateTarget().toCommand() + " ";
 		String mode = this.comboboxMode.getValue();
 		String objective = this.entryObjective.getText();
 		if (!mode.equals("reset")) this.entryObjective.checkValue(CGEntry.STRING);
