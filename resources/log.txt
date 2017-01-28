@@ -18,5 +18,5 @@ Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
 Generating !
-Successfully generated : summon minecraft:armor_stand ~0.0 ~0.0 ~0.0 {HandItems:[{id:"minecraft:stone",Damage:0s,Count:1b,tag:{}}]}
+Successfully generated : achievement take * @a
 Exiting Command Generator... Bye bye !

@@ -1,3 +1,18 @@
+------------------------- VERSION 2.0.2 -------------------------
+ADDITIONS
+- Added a French translation. You can change the language in the settings.
+
+BUGFIXES
+- Fixed bug where the menu would stay disabled when canceling out of the Settings.
+
+CHANGED TRANSLATIONS
+clone.mode.replace
+execute.block
+json.mode.translate
+
+ADDED TRANSLATIONS
+settings.lang
+
 ------------------------- VERSION 2.0.1 -------------------------
 ADDITIONS
 - Added the Settings page. You can choose if you want the "/" to appear when you generate a Command.

@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.utils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 
 import fr.cubiccl.generator.CommandGenerator;
@@ -9,13 +10,30 @@ public class Settings
 {
 	public static enum Language
 	{
-		ENGLISH("English", "en");
+		ENGLISH("English", "en"),
+		FRENCH("French", "fr");
 
 		public static Language get(String codeName)
 		{
 			for (Language l : Language.values())
 				if (l.codeName.equals(codeName)) return l;
 			return get(Settings.getDefault(LANG));
+		}
+
+		public static Language[] getLanguages()
+		{
+			ArrayList<Language> langs = new ArrayList<Settings.Language>();
+			for (Language language : values())
+				langs.add(language);
+			langs.sort(new Comparator<Language>()
+			{
+				@Override
+				public int compare(Language o1, Language o2)
+				{
+					return o1.name.toLowerCase().compareTo(o2.name.toLowerCase());
+				}
+			});
+			return langs.toArray(new Language[langs.size()]);
 		}
 
 		public final String name, codeName;
