@@ -93,6 +93,11 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.validate();
 	}
 
+	public void onVersionChange()
+	{
+		this.panelCommandSelection.onVersionChange();
+	}
+
 	public void setExecuteCommand(boolean executeCommand)
 	{
 		this.panelCommandSelection.buttonCancelExecute.setVisible(executeCommand);

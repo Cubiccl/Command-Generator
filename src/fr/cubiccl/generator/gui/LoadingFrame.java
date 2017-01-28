@@ -12,11 +12,11 @@ public class LoadingFrame extends JFrame
 
 	private final JProgressBar progressbar;
 
-	public LoadingFrame(int progressTotal)
+	public LoadingFrame(int progressTotal, boolean isVisible)
 	{
 		super(new Text("loading.generator").toString());
 		this.setIconImage(new ImageIcon("resources/textures/gui/icon.png").getImage());
-		this.setVisible(true);
+		this.setVisible(isVisible);
 		this.setSize(400, 200);
 		this.setResizable(false);
 		this.setLocationRelativeTo(null);
@@ -28,8 +28,13 @@ public class LoadingFrame extends JFrame
 
 	public void setText(String textID)
 	{
+		this.setText(new Text(textID));
+	}
+
+	public void setText(Text text)
+	{
 		this.progressbar.setValue(this.progressbar.getValue() + 1);
-		this.progressbar.setString(new Text(textID).toString());
+		this.progressbar.setString(text.toString());
 	}
 
 }

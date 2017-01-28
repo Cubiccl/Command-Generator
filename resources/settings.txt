@@ -1,4 +1,3 @@
 slash=true
-2.0-pre=null
 lang=en
 mcversion=1.11

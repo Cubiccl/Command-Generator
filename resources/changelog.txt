@@ -1,3 +1,15 @@
+------------------------- VERSION 2.1.0 -------------------------
+ADDITIONS
+
+BUGFIXES
+
+CHANGED TRANSLATIONS
+loading.generator
+
+ADDED TRANSLATIONS
+loading.title
+settings.version.description, settings.version.title
+
 ------------------------- VERSION 2.0.1 -------------------------
 ADDITIONS
 - Added the Settings page. You can choose if you want the "/" to appear when you generate a Command.

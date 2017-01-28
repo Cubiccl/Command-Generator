@@ -14,9 +14,8 @@ import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItemId;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
 import fr.cubiccl.generator.gui.LoadingFrame;
-import fr.cubiccl.generator.utils.FileUtils;
-import fr.cubiccl.generator.utils.Settings;
-import fr.cubiccl.generator.utils.Utils;
+import fr.cubiccl.generator.utils.*;
+import fr.cubiccl.generator.utils.Settings.Version;
 
 public class ObjectCreator
 {
@@ -255,11 +254,118 @@ public class ObjectCreator
 		CommandGenerator.log("Successfully created " + ObjectRegistry.items.size() + " items.");
 	}
 
-	public static void createObjects(LoadingFrame frame)
+	public static void createParticles(String[] data)
 	{
-		frame.setText("loading.objects");
+		for (String id : data)
+			new Particle(id);
+		CommandGenerator.log("Successfully created " + ObjectRegistry.particles.size() + " particles.");
+	}
+
+	public static void createSounds(String[] data)
+	{
+		for (String category : data)
+		{
+			String prefix = category.substring(0, category.indexOf(':'));
+			for (String id : category.substring(category.indexOf(':') + 1).split(","))
+				new Sound(prefix + "." + id);
+		}
+		CommandGenerator.log("Successfully created " + ObjectRegistry.sounds.size() + " sounds.");
+	}
+
+	private static void createTag(byte tagType, String[] data)
+	{
+		String id = data[0];
+		String[] applicable = data[2].split(":");
+
+		ArrayList<String> app = new ArrayList<String>();
+		for (String a : applicable)
+			if (a.startsWith("list=")) for (String o : ObjectRegistry.getList(a.substring("list=".length())))
+				app.add(o);
+			else app.add(a);
+
+		applicable = app.toArray(new String[app.size()]);
+
+		switch (data[1].substring(0, 3))
+		{
+			case "num":
+				TemplateNumber number = new TemplateNumber(id, tagType, Byte.parseByte(data[1].substring(3, 4)), applicable);
+				for (int i = 3; i < data.length; ++i)
+				{
+					if (data[i].startsWith("bounds="))
+					{
+						String[] bounds = data[i].substring("bounds=".length()).split(":");
+						number.setBounds(Double.parseDouble(bounds[0]), Double.parseDouble(bounds[1]));
+					} else if (data[i].startsWith("values="))
+					{
+						String[] v = data[i].substring("values=".length()).split(":");
+						int[] values = new int[v.length];
+						for (int j = 0; j < values.length; ++j)
+							values[j] = Integer.parseInt(v[j]);
+						number.setValues(values);
+					} else if (data[i].startsWith("named=")) number.setNames(data[i].substring("named=".length(), data[i].indexOf('^')),
+							data[i].substring(data[i].indexOf('^') + 1).split(":"));
+
+				}
+				break;
+
+			case "ite":
+				TemplateItems ti = new TemplateItems(id, tagType, applicable);
+				for (String arg : data)
+					if (arg.equals("noSlot")) ti.hasSlot = false;
+				break;
+
+			case "cus":
+				createCustomTag(id, tagType, applicable, data[1].split(":")[1], data);
+				break;
+
+			case "str":
+			default:
+				TemplateString t = new TemplateString(id, tagType, applicable);
+				for (int i = 3; i < data.length; ++i)
+				{
+					if (data[i].startsWith("custom=")) t.setValues(data[i].substring("custom=".length()).split(":"));
+				}
+				break;
+		}
+	}
+
+	public static void createTags(String[] data, byte tagType)
+	{
+		for (String tag : data)
+			createTag(tagType, tag.split(","));
+
+		if (tagType == Tag.BLOCK) CommandGenerator.log("Successfully created " + ObjectRegistry.blockTags.size() + " Block NBT Tags.");
+		else if (tagType == Tag.ITEM) CommandGenerator.log("Successfully created " + ObjectRegistry.itemTags.size() + " Item NBT Tags.");
+		else if (tagType == Tag.ENTITY) CommandGenerator.log("Successfully created " + ObjectRegistry.entityTags.size() + " Entity NBT Tags.");
+	}
+
+	public static void creationEnd(LoadingFrame frame)
+	{
+		CommandGenerator.log("Successfully created " + ObjectRegistry.objectLists.size() + " object lists.");
+		TargetArgument.createArguments();
+
+		ObjectRegistry.checkAllNames();
+		ObjectRegistry.loadAllTextures(frame);
+	}
+
+	public static void creationStart(LoadingFrame frame)
+	{
 		ObjectRegistry.resetAll();
-		String[] data = FileUtils.readFileAsArray("data/" + Settings.version().name + ".txt");
+	}
+
+	public static void loadObjects(LoadingFrame frame)
+	{
+		creationStart(frame);
+		for (Version v : Settings.versionsToLoad())
+			loadVersion(frame, v);
+		creationEnd(frame);
+	}
+
+	public static void loadVersion(LoadingFrame frame, Version version)
+	{
+		CommandGenerator.log("------------ Loading version " + version.name + " ------------");
+		frame.setTitle(new Text("loading.title", new Replacement("<version>", version.name)).toString());
+		String[] data = FileUtils.readFileAsArray("data/" + version.name + ".txt");
 		ArrayList<String> toRemove = new ArrayList<String>(), blocks = new ArrayList<String>(), items = new ArrayList<String>(), entities = new ArrayList<String>(), effects = new ArrayList<String>(), enchantments = new ArrayList<String>(), achievements = new ArrayList<String>(), attributes = new ArrayList<String>(), particles = new ArrayList<String>(), sounds = new ArrayList<String>(), containers = new ArrayList<String>(), blocktags = new ArrayList<String>(), itemtags = new ArrayList<String>(), entitytags = new ArrayList<String>();
 
 		int current = -1;
@@ -348,96 +454,6 @@ public class ObjectCreator
 		createTags(blocktags.toArray(new String[blocktags.size()]), Tag.BLOCK);
 		createTags(itemtags.toArray(new String[itemtags.size()]), Tag.ITEM);
 		createTags(entitytags.toArray(new String[entitytags.size()]), Tag.ENTITY);
-		CommandGenerator.log("Successfully created " + ObjectRegistry.objectLists.size() + " object lists.");
-		TargetArgument.createArguments();
-
-		ObjectRegistry.checkAllNames();
-		ObjectRegistry.loadAllTextures(frame);
-	}
-
-	public static void createParticles(String[] data)
-	{
-		for (String id : data)
-			new Particle(id);
-		CommandGenerator.log("Successfully created " + ObjectRegistry.particles.size() + " particles.");
-	}
-
-	public static void createSounds(String[] data)
-	{
-		for (String category : data)
-		{
-			String prefix = category.substring(0, category.indexOf(':'));
-			for (String id : category.substring(category.indexOf(':') + 1).split(","))
-				new Sound(prefix + "." + id);
-		}
-		CommandGenerator.log("Successfully created " + ObjectRegistry.sounds.size() + " sounds.");
-	}
-
-	private static void createTag(byte tagType, String[] data)
-	{
-		String id = data[0];
-		String[] applicable = data[2].split(":");
-
-		ArrayList<String> app = new ArrayList<String>();
-		for (String a : applicable)
-			if (a.startsWith("list=")) for (String o : ObjectRegistry.getList(a.substring("list=".length())))
-				app.add(o);
-			else app.add(a);
-
-		applicable = app.toArray(new String[app.size()]);
-
-		switch (data[1].substring(0, 3))
-		{
-			case "num":
-				TemplateNumber number = new TemplateNumber(id, tagType, Byte.parseByte(data[1].substring(3, 4)), applicable);
-				for (int i = 3; i < data.length; ++i)
-				{
-					if (data[i].startsWith("bounds="))
-					{
-						String[] bounds = data[i].substring("bounds=".length()).split(":");
-						number.setBounds(Double.parseDouble(bounds[0]), Double.parseDouble(bounds[1]));
-					} else if (data[i].startsWith("values="))
-					{
-						String[] v = data[i].substring("values=".length()).split(":");
-						int[] values = new int[v.length];
-						for (int j = 0; j < values.length; ++j)
-							values[j] = Integer.parseInt(v[j]);
-						number.setValues(values);
-					} else if (data[i].startsWith("named=")) number.setNames(data[i].substring("named=".length(), data[i].indexOf('^')),
-							data[i].substring(data[i].indexOf('^') + 1).split(":"));
-
-				}
-				break;
-
-			case "ite":
-				TemplateItems ti = new TemplateItems(id, tagType, applicable);
-				for (String arg : data)
-					if (arg.equals("noSlot")) ti.hasSlot = false;
-				break;
-
-			case "cus":
-				createCustomTag(id, tagType, applicable, data[1].split(":")[1], data);
-				break;
-
-			case "str":
-			default:
-				TemplateString t = new TemplateString(id, tagType, applicable);
-				for (int i = 3; i < data.length; ++i)
-				{
-					if (data[i].startsWith("custom=")) t.setValues(data[i].substring("custom=".length()).split(":"));
-				}
-				break;
-		}
-	}
-
-	public static void createTags(String[] data, byte tagType)
-	{
-		for (String tag : data)
-			createTag(tagType, tag.split(","));
-
-		if (tagType == Tag.BLOCK) CommandGenerator.log("Successfully created " + ObjectRegistry.blockTags.size() + " Block NBT Tags.");
-		else if (tagType == Tag.ITEM) CommandGenerator.log("Successfully created " + ObjectRegistry.itemTags.size() + " Item NBT Tags.");
-		else if (tagType == Tag.ENTITY) CommandGenerator.log("Successfully created " + ObjectRegistry.entityTags.size() + " Entity NBT Tags.");
 	}
 
 	private static void removePrevious(String[] values)
