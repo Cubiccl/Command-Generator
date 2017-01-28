@@ -25,7 +25,7 @@ public class PanelAchievement extends CGPanel implements ActionListener
 
 		this.add(this.comboboxAchievement.container, gbc);
 		++gbc.gridx;
-		this.add(this.labelImage = new ImageLabel(achievements.length != 0 ? achievements[0].texture() : null), gbc);
+		this.add(this.labelImage = new ImageLabel(achievements[0].texture()), gbc);
 
 		this.comboboxAchievement.addActionListener(this);
 

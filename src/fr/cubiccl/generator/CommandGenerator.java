@@ -108,18 +108,10 @@ public class CommandGenerator
 	{
 		log("---- Creating objects ----");
 
-		if (window != null) window.setEnabled(false);
-		LoadingFrame frame = new LoadingFrame(5, window == null);
-		ObjectCreator.loadObjects(frame);
+		LoadingFrame frame = new LoadingFrame(5);
+		ObjectCreator.createObjects(frame);
 		Commands.createCommands(frame);
 		frame.dispose();
-
-		if (window != null)
-		{
-			window.onVersionChange();
-			window.setEnabled(true);
-			window.requestFocus();
-		}
 	}
 
 	public static void updateLanguage()

@@ -1,7 +1,6 @@
 package fr.cubiccl.generator.utils;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.HashMap;
 
 import fr.cubiccl.generator.CommandGenerator;
@@ -38,22 +37,6 @@ public class Settings
 			for (Version v : Version.values())
 				if (v.name.equals(name)) return v;
 			return get(Settings.getDefault(MINECRAFT_VERSION));
-		}
-
-		public static Version[] getVersions()
-		{
-			ArrayList<Version> versions = new ArrayList<Version>();
-			for (Version v : values())
-				versions.add(v);
-			versions.sort(new Comparator<Version>()
-			{
-				@Override
-				public int compare(Version o1, Version o2)
-				{
-					return o1.compare(o2);
-				}
-			});
-			return versions.toArray(new Version[versions.size()]);
 		}
 
 		public final String name;
@@ -120,9 +103,6 @@ public class Settings
 	public static void loadSettings()
 	{
 		String[] values = FileUtils.readFileAsArray("settings.txt");
-		mcversion = Version.get(getDefault(MINECRAFT_VERSION));
-		language = Language.get(getDefault(LANG));
-
 		String version = getDefault(MINECRAFT_VERSION), lang = getDefault(LANG);
 		for (String line : values)
 		{
@@ -131,9 +111,8 @@ public class Settings
 			else if (id.equals(MINECRAFT_VERSION)) version = value;
 			else setSetting(id, value);
 		}
-
-		if (!setSetting(LANG, lang)) setLanguage(Language.get(getSetting(LANG)));
-		if (!setSetting(MINECRAFT_VERSION, version)) setVersion(Version.get(getSetting(MINECRAFT_VERSION)));
+		setSetting(LANG, lang);
+		setSetting(MINECRAFT_VERSION, version);
 	}
 
 	public static void save()
@@ -150,22 +129,11 @@ public class Settings
 		CommandGenerator.updateLanguage();
 	}
 
-	/** @return True if updates were triggered. (version & language.) */
-	public static boolean setSetting(String id, String value)
+	public static void setSetting(String id, String value)
 	{
-		String lang = language().codeName, version = version().name;
 		settings.put(id, value);
-		if (id.equals(LANG) && !value.equals(lang))
-		{
-			setLanguage(Language.get(value));
-			return true;
-		}
-		if (id.equals(MINECRAFT_VERSION) && !value.equals(version))
-		{
-			setVersion(Version.get(value));
-			return true;
-		}
-		return false;
+		if (id.equals(LANG)) setLanguage(Language.get(value));
+		if (id.equals(MINECRAFT_VERSION)) setVersion(Version.get(value));
 	}
 
 	public static void setVersion(Version newVersion)
@@ -177,28 +145,6 @@ public class Settings
 	public static Version version()
 	{
 		return mcversion;
-	}
-
-	public static Version[] versionsToLoad()
-	{
-		ArrayList<Version> versions = new ArrayList<Version>();
-		Version current = version();
-
-		// Get versions to load
-		for (Version v : Version.values())
-			if (v == current || v.isBefore(current)) versions.add(v);
-
-		// Sort versions
-		versions.sort(new Comparator<Version>()
-		{
-			@Override
-			public int compare(Version o1, Version o2)
-			{
-				return o1.compare(o2);
-			}
-		});
-
-		return versions.toArray(new Version[versions.size()]);
 	}
 
 	private Settings()

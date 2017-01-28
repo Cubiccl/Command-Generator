@@ -27,7 +27,11 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 
 		this.labelCommand = new CGLabel(new Text("command.select")).setHasColumn(true);
 
-		this.comboboxCommands = new CGComboBox();
+		Command[] commands = Commands.getCommands();
+		String[] names = new String[commands.length];
+		for (int i = 0; i < names.length; ++i)
+			names[i] = commands[i].id;
+		this.comboboxCommands = new CGComboBox(names);
 		this.comboboxCommands.addActionListener(this);
 
 		this.buttonGenerate = new CGButton("command.generate");
@@ -37,7 +41,6 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 		this.buttonCancelExecute.addActionListener(this);
 		this.buttonCancelExecute.setVisible(false);
 		this.createLayout();
-		this.onVersionChange();
 	}
 
 	@Override
@@ -63,17 +66,6 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 		this.add(this.buttonGenerate, gbc);
 		++gbc.gridx;
 		this.add(this.buttonCancelExecute, gbc);
-	}
-
-	public void onVersionChange()
-	{
-		String previous = this.comboboxCommands.getValue();
-		Command[] commands = Commands.getCommands();
-		String[] names = new String[commands.length];
-		for (int i = 0; i < names.length; ++i)
-			names[i] = commands[i].id;
-		this.comboboxCommands.setValues(names);
-		if (previous != null) this.comboboxCommands.setSelectedItem(previous);
 	}
 
 	@Override

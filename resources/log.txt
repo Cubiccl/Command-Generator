@@ -1,41 +1,6 @@
 Welcome to the Command Generator v2.0.1 by Cubi !
 Checking for updates...
 ---- Creating objects ----
------------- Loading version 1.10 ------------
-File not found : data/1.10.txt
-Successfully created 0 blocks.
-Successfully created 0 items.
-Successfully created 0 entities.
-Successfully created 0 effects.
-Successfully created 0 enchantments.
-Successfully created 0 achievements.
-Successfully created 0 attributes.
-Successfully created 0 particles.
-Successfully created 0 sounds.
-Successfully created 0 containers.
-Successfully created 0 Block NBT Tags.
-Successfully created 0 Item NBT Tags.
-Successfully created 0 Entity NBT Tags.
-Successfully created 0 object lists.
-Loading textures...
----- Creating window ----
----- Creating objects ----
------------- Loading version 1.10 ------------
-File not found : data/1.10.txt
-Successfully created 0 blocks.
-Successfully created 0 items.
-Successfully created 0 entities.
-Successfully created 0 effects.
-Successfully created 0 enchantments.
-Successfully created 0 achievements.
-Successfully created 0 attributes.
-Successfully created 0 particles.
-Successfully created 0 sounds.
-Successfully created 0 containers.
-Successfully created 0 Block NBT Tags.
-Successfully created 0 Item NBT Tags.
-Successfully created 0 Entity NBT Tags.
------------- Loading version 1.11 ------------
 Successfully created 236 blocks.
 Successfully created 393 items.
 Successfully created 82 entities.
@@ -51,4 +16,7 @@ Successfully created 21 Item NBT Tags.
 Successfully created 164 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
+---- Creating window ----
+Generating !
+Successfully generated : summon minecraft:armor_stand ~0.0 ~0.0 ~0.0 {HandItems:[{id:"minecraft:stone",Damage:0s,Count:1b,tag:{}}]}
 Exiting Command Generator... Bye bye !
