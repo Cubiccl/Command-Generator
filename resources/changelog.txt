@@ -1,6 +1,9 @@
 ------------------------- VERSION 2.0.2 -------------------------
 ADDITIONS
+- You can now choose if Objects should be sorted by name of ID.
 - Added a French translation. You can change the language in the settings.
+- The blockData tag is now set automatically with blockId.
+- Moved the Exit button to topright to avoid misclick when going for Settings. Yes it happened D:
 
 BUGFIXES
 - Fixed bug where the menu would stay disabled when canceling out of the Settings.
@@ -15,9 +18,12 @@ argument.description.dx, argument.description.dy, argument.description.dz
 enchantment.curse_of_vanishing -> enchantment.vanishing_curse
 item.boat, item.brick, item.nether_brick
 item.fish.2 <-> item.fish.3
+tag.block.blockData
+Removed dots at the end of argument descriptions (argument.description.*)
 
 ADDED TRANSLATIONS
 settings.lang
+settings.sort.description, settings.sort.id, settings.sort.name, settings.sort.title
 
 ------------------------- VERSION 2.0.1 -------------------------
 ADDITIONS

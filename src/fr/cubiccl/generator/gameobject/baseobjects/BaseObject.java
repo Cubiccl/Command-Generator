@@ -28,6 +28,16 @@ public abstract class BaseObject
 		}
 	}
 
+	/** Sorts Objects alphabetically according to their names. */
+	public static class ObjectComparatorName implements Comparator<BaseObject>
+	{
+		@Override
+		public int compare(BaseObject o1, BaseObject o2)
+		{
+			return o1.name().toString().toLowerCase().compareTo(o2.name().toString().toLowerCase());
+		}
+	}
+
 	/** @return This Object's identifier. */
 	public abstract String id();
 

@@ -73,7 +73,8 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		this.buttonRemoveArgument.setEnabled(false);
 
 		this.listArguments = new CGList();
-		this.listArguments.scrollPane.setPreferredSize(new Dimension(200, 120));
+		this.listArguments.scrollPane.setPreferredSize(new Dimension(200, 100));
+		this.listArguments.scrollPane.setMinimumSize(new Dimension(200, 100));
 		this.listArguments.addListSelectionListener(this);
 
 		this.comboboxType.addActionListener(this);

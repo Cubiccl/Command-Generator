@@ -8,6 +8,7 @@ import javax.swing.ButtonGroup;
 import javax.swing.JPanel;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.combobox.CGComboBox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -22,6 +23,7 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 	private static final long serialVersionUID = 761491984316094420L;
 
 	private CGRadioButton buttonSlashYes, buttonSlashNo;
+	private CGRadioButton buttonSortID, buttonSortName;
 	private CGComboBox comboboxLanguage;
 	private Language[] languages;
 
@@ -44,12 +46,24 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 		p.add(this.buttonSlashNo = new CGRadioButton("general.no"));
 		panelSlash.add(p, gbc);
 
+		CGPanel panelSort = new CGPanel("settings.sort.title");
+		gbc = panelSort.createGridBagLayout();
+		panelSort.add(new CGLabel("settings.sort.description"), gbc);
+		++gbc.gridy;
+
+		p = new JPanel(new GridLayout(1, 2));
+		p.add(this.buttonSortID = new CGRadioButton("settings.sort.id"));
+		p.add(this.buttonSortName = new CGRadioButton("settings.sort.name"));
+		panelSort.add(p, gbc);
+
 		CGPanel panelLang = new CGPanel("settings.lang");
 		panelLang.add(this.comboboxLanguage = new CGComboBox(langs));
 
 		CGPanel panelMain = new CGPanel();
 		gbc = panelMain.createGridBagLayout();
 		panelMain.add(panelSlash, gbc);
+		++gbc.gridy;
+		panelMain.add(panelSort, gbc);
 		++gbc.gridy;
 		panelMain.add(panelLang, gbc);
 		this.setMainComponent(panelMain);
@@ -59,6 +73,14 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 		group.add(this.buttonSlashNo);
 		this.buttonSlashYes.setSelected(Boolean.parseBoolean(Settings.getSetting(Settings.SLASH)));
 		this.buttonSlashNo.setSelected(!this.buttonSlashYes.isSelected());
+
+		group = new ButtonGroup();
+		group.add(this.buttonSortID);
+		group.add(this.buttonSortName);
+		this.buttonSortID.setSelected(Byte.parseByte(Settings.getSetting(Settings.SORT_TYPE)) == ObjectRegistry.SORT_ALPHABETICALLY);
+		this.buttonSortName.setSelected(!this.buttonSortID.isSelected());
+		
+		this.comboboxLanguage.setSelectedItem(Settings.language().name);
 	}
 
 	@Override
@@ -72,6 +94,7 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 	public boolean shouldStateClose(PanelSettings panel)
 	{
 		Settings.setSetting(Settings.SLASH, Boolean.toString(this.buttonSlashYes.isSelected()));
+		Settings.setSetting(Settings.SORT_TYPE, Byte.toString(this.buttonSortID.isSelected() ? ObjectRegistry.SORT_ALPHABETICALLY : ObjectRegistry.SORT_NAME));
 		Settings.setSetting(Settings.LANG, this.languages[this.comboboxLanguage.getSelectedIndex()].codeName);
 		CommandGenerator.window.menubar.toggleMenu(true);
 		return true;

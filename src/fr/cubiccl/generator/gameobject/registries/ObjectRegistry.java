@@ -8,9 +8,11 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.*;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject.ObjectComparatorID;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject.ObjectComparatorIDNum;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject.ObjectComparatorName;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gui.LoadingFrame;
+import fr.cubiccl.generator.utils.Settings;
 import fr.cubiccl.generator.utils.Textures;
 
 public class ObjectRegistry<T extends BaseObject>
@@ -28,7 +30,7 @@ public class ObjectRegistry<T extends BaseObject>
 	public static final ObjectRegistry<TemplateTag> itemTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
 	static final HashMap<String, ArrayList<String>> objectLists = new HashMap<String, ArrayList<String>>();
 	public static final ObjectRegistry<Particle> particles = new ObjectRegistry<Particle>(false, false, Particle.class);
-	public static final byte SORT_ALPHABETICALLY = 0, SORT_NUMERICALLY = 1;
+	public static final byte SORT_ALPHABETICALLY = 0, SORT_NUMERICALLY = 1, SORT_NAME = 2;
 	public static final ObjectRegistry<Sound> sounds = new ObjectRegistry<Sound>(false, false, Sound.class);
 
 	static void addToLists(String objectId, String... lists)
@@ -153,7 +155,7 @@ public class ObjectRegistry<T extends BaseObject>
 		ArrayList<T> objects = new ArrayList<T>();
 		for (int i = 0; i < ids.length; ++i)
 			objects.add(this.find(ids[i]));
-		return objects.toArray((T[]) Array.newInstance(c, objects.size()));
+		return objects.toArray((T[]) Array.newInstance(this.c, objects.size()));
 	}
 
 	public T first()
@@ -163,7 +165,7 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public T[] list()
 	{
-		return list(SORT_ALPHABETICALLY);
+		return list(Byte.parseByte(Settings.getSetting(Settings.SORT_TYPE)));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -172,11 +174,12 @@ public class ObjectRegistry<T extends BaseObject>
 		ArrayList<T> a = new ArrayList<T>();
 		a.addAll(this.registry.values());
 
-		if (sortType == SORT_ALPHABETICALLY) a.sort(new ObjectComparatorID());
+		if (sortType == SORT_NAME) a.sort(new ObjectComparatorName());
+		else if (sortType == SORT_ALPHABETICALLY) a.sort(new ObjectComparatorID());
 		else if (sortType == SORT_NUMERICALLY && this.hasNumericalIds) a.sort(new ObjectComparatorIDNum());
 		else a.sort(new ObjectComparatorID());
 
-		return a.toArray((T[]) Array.newInstance(c, a.size()));
+		return a.toArray((T[]) Array.newInstance(this.c, a.size()));
 	}
 
 	public T[] list(String listId)

@@ -96,6 +96,8 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 						.valueFor(t).value();
 				else if (t.id().equals("carriedData") && tag instanceof TemplateBlockId && this.valueFor(t) != null) ((TemplateBlockId) tag).damage = (int) this
 						.valueFor(t).value();
+				else if (t.id().equals("blockData") && tag instanceof TemplateBlockId && this.valueFor(t) != null) ((TemplateBlockId) tag).damage = (int) this
+						.valueFor(t).value();
 				else if (t.id().equals("Data") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this
 						.valueFor(t).value();
 				else if (t.id().equals("Base") && tag instanceof TemplatePatterns && this.valueFor(t) != null) ((TemplatePatterns) tag).base = (int) this
@@ -135,6 +137,11 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 				((TemplateItemId) template).damage = -1;
 				break;
 			} else if (this.tags[i].id().equals("carriedData") && template instanceof TemplateBlockId && template.id().equals("carried"))
+			{
+				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateBlockId) template).damage);
+				((TemplateBlockId) template).damage = -1;
+				break;
+			}  else if (this.tags[i].id().equals("blockData") && template instanceof TemplateBlockId && template.id().equals("blockId"))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateBlockId) template).damage);
 				((TemplateBlockId) template).damage = -1;

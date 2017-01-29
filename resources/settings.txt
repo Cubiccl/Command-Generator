@@ -1,4 +1,5 @@
 slash=true
 2.0-pre=null
+sort=2
 lang=fr
 mcversion=1.11

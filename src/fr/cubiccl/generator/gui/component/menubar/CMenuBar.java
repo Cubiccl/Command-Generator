@@ -3,6 +3,7 @@ package fr.cubiccl.generator.gui.component.menubar;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.Box;
 import javax.swing.JMenuBar;
 
 import fr.cubiccl.generator.CommandGenerator;
@@ -21,6 +22,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 	{
 		this.add(this.history = new CMenuItem());
 		this.add(this.settings = new CMenuItem());
+		this.add(Box.createHorizontalGlue());
 		this.add(this.exit = new CMenuItem());
 
 		this.history.addActionListener(this);

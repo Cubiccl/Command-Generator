@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 
 public class Settings
 {
@@ -83,10 +84,10 @@ public class Settings
 	}
 
 	public static final boolean CHECK_UPDATES = false;
-	public static final String GENERATOR_VERSION = "2.0.1";
+	public static final String GENERATOR_VERSION = "2.0.2";
 	private static Language language;
 	private static Version mcversion;
-	public static final String MINECRAFT_VERSION = "mcversion", LANG = "lang", SLASH = "slash";
+	public static final String MINECRAFT_VERSION = "mcversion", LANG = "lang", SLASH = "slash", SORT_TYPE = "sort";
 	private static HashMap<String, String> settings = new HashMap<String, String>();
 
 	private static String getDefault(String settingID)
@@ -101,6 +102,9 @@ public class Settings
 
 			case SLASH:
 				return "true";
+
+			case SORT_TYPE:
+				return Byte.toString(ObjectRegistry.SORT_ALPHABETICALLY);
 
 			default:
 				return null;
