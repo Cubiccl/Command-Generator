@@ -11,7 +11,7 @@ public class Settings
 	public static enum Language
 	{
 		ENGLISH("English", "en"),
-		FRENCH("French", "fr");
+		FRENCH("Français", "fr");
 
 		public static Language get(String codeName)
 		{

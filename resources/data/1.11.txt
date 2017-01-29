@@ -609,7 +609,7 @@ pig,sheep,cow,chicken,wolf,mooshroom,ocelot,rabbit,polar_bear,villager:mob,breed
 61,luck_of_the_sea,3
 62,lure,3
 70,mending,1
-71,curse_of_vanishing,1
+71,vanishing_curse,1
 
 [ACHIEVEMENTS]
 openInventory,book

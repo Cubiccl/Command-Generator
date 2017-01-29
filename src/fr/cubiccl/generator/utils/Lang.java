@@ -13,11 +13,7 @@ public class Lang
 
 	private static String doTranslate(String textID)
 	{
-		if (Settings.language() != Language.ENGLISH)
-		{
-			if (dictionnary.containsKey(textID)) return dictionnary.get(textID);
-			CommandGenerator.log("Not translated in " + Settings.language().name + " : " + textID);
-		}
+		if (Settings.language() != Language.ENGLISH && dictionnary.containsKey(textID)) return dictionnary.get(textID);
 		if (english.containsKey(textID)) return english.get(textID);
 		return textID;
 	}
@@ -60,6 +56,9 @@ public class Lang
 			if (translation.contains("=")) dictionnary.put(translation.substring(0, translation.indexOf('=')),
 					translation.substring(translation.indexOf('=') + 1));
 		}
+
+		for (String textID : english.keySet())
+			if (!dictionnary.containsKey(textID)) CommandGenerator.log("Not translated in " + Settings.language().name + " : " + textID);
 	}
 
 	private Lang()

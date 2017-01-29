@@ -4,11 +4,17 @@ ADDITIONS
 
 BUGFIXES
 - Fixed bug where the menu would stay disabled when canceling out of the Settings.
+- Changed ID of Curse of Vanishing. Wiki is lying and telling its ID is curse_of_vanishing, but it's vanishing_curse.
+- Mistranslated Pufferfish and Clownfish.
 
 CHANGED TRANSLATIONS
 clone.mode.replace
 execute.block
 json.mode.translate
+argument.description.dx, argument.description.dy, argument.description.dz
+enchantment.curse_of_vanishing -> enchantment.vanishing_curse
+item.boat, item.brick, item.nether_brick
+item.fish.2 <-> item.fish.3
 
 ADDED TRANSLATIONS
 settings.lang

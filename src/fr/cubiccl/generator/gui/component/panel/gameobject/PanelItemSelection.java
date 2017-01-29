@@ -49,7 +49,7 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 		CPanel p = new CPanel();
 		GridBagConstraints gbc = p.createGridBagLayout();
 		gbc.anchor = GridBagConstraints.CENTER;
-		p.add(new CGLabel("block.id").setHasColumn(true), gbc);
+		p.add(new CGLabel("item.id").setHasColumn(true), gbc);
 		++gbc.gridx;
 		p.add((this.comboboxItem = new ObjectCombobox<Item>(this.items)).container, gbc);
 		++gbc.gridx;
