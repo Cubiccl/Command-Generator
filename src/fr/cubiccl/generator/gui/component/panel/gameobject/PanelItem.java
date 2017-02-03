@@ -39,7 +39,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this(titleID, ObjectRegistry.items.list(ObjectRegistry.SORT_NUMERICALLY));
 	}
 
-	public PanelItem(String titleID, boolean hasData, Item[] items)
+	public PanelItem(String titleID, boolean hasData, boolean hasNBT, Item[] items)
 	{
 		super(titleID);
 		this.hasData = hasData;
@@ -61,7 +61,8 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		++gbc.gridy;
 		this.add((this.spinnerDurability = new CGSpinner("item.durability", this.item.damage)).container, gbc);
 		++gbc.gridy;
-		this.add(this.panelTags = new PanelTags("item.tags", Tag.ITEM), gbc);
+		this.panelTags = new PanelTags("item.tags", Tag.ITEM);
+		if (hasNBT) this.add(this.panelTags, gbc);
 
 		this.buttonSelectItem.addActionListener(this);
 		this.panelTags.setTargetObject(this.item);
@@ -70,7 +71,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 
 	public PanelItem(String titleID, Item[] items)
 	{
-		this(titleID, true, items);
+		this(titleID, true, true, items);
 	}
 
 	@Override
@@ -160,27 +161,40 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this.panelTags.setVisible(hasNBT);
 	}
 
+	public void setItem(Item item)
+	{
+		boolean found = false;
+		for (Item i : this.availableItems)
+			if (item == i)
+			{
+				found = true;
+				break;
+			}
+		if (!found) return;
+		this.item = item;
+		this.damage = this.item.damage[0];
+		this.panelTags.setTargetObject(this.item);
+		this.spinnerDurability.setValues(this.item.damage);
+		this.updateDisplay();
+	}
+
 	public void setupFrom(ItemStack itemStack)
 	{
 		if (itemStack.item == null) return;
-		this.item = itemStack.item;
+		this.setItem(itemStack.item);
 		this.damage = itemStack.damage;
 		this.updateDisplay();
 		this.spinnerAmount.setText(Integer.toString(itemStack.amount));
-		this.spinnerDurability.setValues(this.item.damage);
 		this.spinnerDurability.setText(Integer.toString(itemStack.damage));
-		this.panelTags.setTargetObject(this.item);
 		this.panelTags.setTags(itemStack.nbt.value());
 	}
 
 	@Override
 	public boolean shouldStateClose(PanelItemSelection panel)
 	{
-		this.item = panel.selectedItem();
+		this.setItem(panel.selectedItem());
 		this.damage = panel.selectedDamage();
 		this.updateDisplay();
-		this.spinnerDurability.setValues(this.item.damage);
-		this.panelTags.setTargetObject(this.item);
 		return true;
 	}
 
@@ -191,6 +205,13 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this.labelTexture.setImage(this.selectedItem().texture(this.damage));
 
 		this.spinnerDurability.container.setVisible(this.hasData && this.hasDurability && this.item.hasDurability);
+	}
+
+	@Override
+	public void updateTranslations()
+	{
+		super.updateTranslations();
+		if (this.item != null) this.updateDisplay();
 	}
 
 }

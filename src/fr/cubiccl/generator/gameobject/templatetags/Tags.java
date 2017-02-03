@@ -31,6 +31,7 @@ public final class Tags
 	public static final TemplateCompound DEFAULT_COMPOUND = new DefaultCompound("");
 	public static final TemplateNumber DEFAULT_FLOAT = new TemplateNumber("", UNAVAILABLE, TagNumber.FLOAT);
 	public static final TemplateNumber DEFAULT_INTEGER = new TemplateNumber("", UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateList DEFAULT_LIST = new DefaultList("");
 	public static final TemplateString DEFAULT_STRING = new TemplateString("", UNAVAILABLE);
 
 	public static final TemplateNumber DISPLAY_COLOR = new TemplateNumber("color", UNAVAILABLE, TagNumber.INTEGER);
@@ -119,5 +120,8 @@ public final class Tags
 	public static final TemplateString TEXT_OBFUSCATED = new TemplateString("obfuscated", UNAVAILABLE);
 	public static final TemplateString TEXT_STRIKETHROUGH = new TemplateString("strikethrough", UNAVAILABLE);
 	public static final TemplateString TEXT_UNDERLINED = new TemplateString("underlined", UNAVAILABLE);
+
+	public static void create()
+	{}
 
 }

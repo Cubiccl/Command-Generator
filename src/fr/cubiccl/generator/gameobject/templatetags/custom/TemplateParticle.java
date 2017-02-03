@@ -12,9 +12,9 @@ public class TemplateParticle extends TemplateString
 {
 	public int param1 = 0, param2 = 0;
 
-	public TemplateParticle(String id, byte tagType, String[] applicable)
+	public TemplateParticle(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

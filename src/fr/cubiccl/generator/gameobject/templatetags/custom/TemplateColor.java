@@ -11,9 +11,9 @@ import fr.cubiccl.generator.utils.Utils;
 public class TemplateColor extends TemplateNumber
 {
 
-	public TemplateColor(String id, byte tagType, String[] applicable)
+	public TemplateColor(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 		this.setNames("color", Utils.WOOL_COLORS);
 	}
 

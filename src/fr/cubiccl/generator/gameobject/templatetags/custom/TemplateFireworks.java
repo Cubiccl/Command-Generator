@@ -114,9 +114,9 @@ public class TemplateFireworks extends TemplateCompound
 
 	}
 
-	public TemplateFireworks(String id, byte tagType, String... applicable)
+	public TemplateFireworks(String id, byte applicationType, String... applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

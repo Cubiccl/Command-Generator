@@ -240,4 +240,11 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 		this.labelImage.setImage(this.selectedItem().texture(this.selectedDamage()));
 	}
 
+	@Override
+	public void updateTranslations()
+	{
+		super.updateTranslations();
+		if (this.items != null) this.updateDisplay();
+	}
+
 }

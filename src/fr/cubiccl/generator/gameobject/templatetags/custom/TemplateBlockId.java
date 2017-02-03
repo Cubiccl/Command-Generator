@@ -13,9 +13,9 @@ public class TemplateBlockId extends TemplateNumber
 {
 	public int damage;
 
-	public TemplateBlockId(String id, byte tagType, String[] applicable)
+	public TemplateBlockId(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, TagNumber.SHORT, applicable);
+		super(id, applicationType, TagNumber.SHORT, applicable);
 		this.damage = -1;
 	}
 

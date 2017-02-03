@@ -14,9 +14,9 @@ public class TemplateItemId extends TemplateString
 	public int damage;
 	private String[] ids;
 
-	public TemplateItemId(String id, byte tagType, String[] applicable)
+	public TemplateItemId(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 		this.ids = null;
 		this.damage = -1;
 	}

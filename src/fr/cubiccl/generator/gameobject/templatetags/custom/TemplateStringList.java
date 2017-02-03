@@ -85,9 +85,9 @@ public class TemplateStringList extends TemplateList
 
 	}
 
-	public TemplateStringList(String id, byte tagType, String[] applicable)
+	public TemplateStringList(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

@@ -35,12 +35,23 @@ public class PanelAchievement extends CGPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent arg0)
 	{
-		this.labelImage.setImage(this.getAchievement().texture());
+		this.onSelection();
 	}
 
 	public Achievement getAchievement()
 	{
 		return this.comboboxAchievement.getSelectedObject();
+	}
+
+	private void onSelection()
+	{
+		this.labelImage.setImage(this.getAchievement().texture());
+	}
+
+	public void setSelection(Achievement achievement)
+	{
+		this.comboboxAchievement.setSelected(achievement);
+		this.onSelection();
 	}
 
 }

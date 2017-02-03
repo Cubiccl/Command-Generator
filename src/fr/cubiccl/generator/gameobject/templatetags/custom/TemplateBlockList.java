@@ -84,9 +84,9 @@ public class TemplateBlockList extends TemplateList
 
 	}
 
-	public TemplateBlockList(String id, byte tagType, String[] applicable)
+	public TemplateBlockList(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

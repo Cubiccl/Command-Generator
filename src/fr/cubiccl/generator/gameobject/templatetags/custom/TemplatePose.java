@@ -51,9 +51,9 @@ public class TemplatePose extends TemplateCompound
 
 	}
 
-	public TemplatePose(String id, byte tagType, String[] applicable)
+	public TemplatePose(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

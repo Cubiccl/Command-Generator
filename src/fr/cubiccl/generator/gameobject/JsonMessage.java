@@ -20,25 +20,87 @@ public class JsonMessage
 	{ Color.WHITE, new Color(85, 255, 255), Color.BLACK, new Color(85, 85, 255), new Color(0, 170, 170), new Color(0, 0, 170), new Color(85, 85, 85),
 			new Color(0, 170, 0), new Color(170, 0, 170), new Color(170, 0, 0), new Color(255, 170, 0), new Color(170, 170, 170), new Color(85, 255, 85),
 			new Color(255, 85, 255), new Color(255, 85, 85), new Color(255, 255, 85) };
-	public static final int TEXT = 0, TRANSLATE = 1, SCORE = 2, SELECTOR = 3;
+	public static final byte TEXT = 0, TRANSLATE = 1, SCORE = 2, SELECTOR = 3;
+
+	public static JsonMessage createFrom(TagCompound tag)
+	{
+		JsonMessage message = new JsonMessage(TEXT, "", 0);
+		for (Tag t : tag.value())
+		{
+			if (t.id().equals(JSON_TRANSLATE.id()))
+			{
+				message.mode = TRANSLATE;
+				message.text = (String) t.value();
+			}
+
+			if (t.id().equals(JSON_SCORE.id()))
+			{
+				message.mode = SCORE;
+				message.text = (String) ((TagCompound) t).getTagFromId(SCORE_OBJECTIVE.id()).value();
+				message.target = (String) ((TagCompound) t).getTagFromId(SCORE_TARGET.id()).value();
+			}
+
+			if (t.id().equals(JSON_SELECTOR.id()))
+			{}
+
+			if (t.id().equals(JSON_SELECTOR.id()))
+			{
+				message.mode = SELECTOR;
+				message.text = (String) t.value();
+			}
+
+			if (t.id().equals(JSON_TEXT.id()))
+			{
+				message.mode = TEXT;
+				message.text = (String) t.value();
+			}
+
+			if (t.id().equals(TEXT_COLOR.id())) message.color = getColorID((String) t.value());
+			if (t.id().equals(TEXT_BOLD.id())) message.bold = t.value().equals("true");
+			if (t.id().equals(TEXT_UNDERLINED.id())) message.underlined = t.value().equals("true");
+			if (t.id().equals(TEXT_ITALIC.id())) message.italic = t.value().equals("true");
+			if (t.id().equals(TEXT_STRIKETHROUGH.id())) message.strikethrough = t.value().equals("true");
+			if (t.id().equals(TEXT_OBFUSCATED.id())) message.obfuscated = t.value().equals("true");
+			if (t.id().equals(TEXT_INSERTION.id())) message.insertion = (String) t.value();
+
+			if (t.id().equals(EVENT_CLICK.id()))
+			{
+				message.clickAction = (String) ((TagCompound) t).getTagFromId(EVENT_ACTION.id()).value();
+				message.clickValue = (String) ((TagCompound) t).getTagFromId(EVENT_VALUE.id()).value();
+			}
+			if (t.id().equals(EVENT_HOVER.id()))
+			{
+				message.hoverAction = (String) ((TagCompound) t).getTagFromId(EVENT_ACTION.id()).value();
+				message.hoverValue = (String) ((TagCompound) t).getTagFromId(EVENT_VALUE.id()).value();
+			}
+		}
+		return message;
+	}
+
+	private static int getColorID(String value)
+	{
+		for (int i = 0; i < Utils.COLORS.length; ++i)
+			if (Utils.COLORS[i].equals(value)) return i;
+		return 0;
+	}
 
 	public boolean bold, underlined, italic, strikethrough, obfuscated;
 	public String clickAction, clickValue;
 	public int color;
 	public String hoverAction, hoverValue;
 	public String insertion;
-	public final int mode;
+	public byte mode;
 	public String target;
 	public String text;
 
-	public JsonMessage(int mode, String text, int color)
+	public JsonMessage(byte mode, String text, int color)
 	{
 		this.mode = mode;
 		this.text = text;
 		this.color = color;
 	}
 
-	public JLabel displayInLabel()
+	public JLabel displayInLabel(JLabel label)
 	{
 		String display = this.text;
 		if (this.obfuscated) display = "0bfUsC4t3D";
@@ -48,7 +110,7 @@ public class JsonMessage
 		if (this.strikethrough) display = "<strike>" + display + "</strike>";
 		if (this.insertion != null) display += "<br />Inserts: " + this.insertion;
 
-		JLabel label = new JLabel("<html>" + display + "</htlm>");
+		label.setText("<html>" + display + "</htlm>");
 		label.setForeground(LABEL_COLOR[this.color]);
 		label.setBackground(Color.GRAY);
 		label.setOpaque(true);

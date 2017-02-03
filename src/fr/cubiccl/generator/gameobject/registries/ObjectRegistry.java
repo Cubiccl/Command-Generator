@@ -32,6 +32,7 @@ public class ObjectRegistry<T extends BaseObject>
 	public static final ObjectRegistry<Particle> particles = new ObjectRegistry<Particle>(false, false, Particle.class);
 	public static final byte SORT_ALPHABETICALLY = 0, SORT_NUMERICALLY = 1, SORT_NAME = 2;
 	public static final ObjectRegistry<Sound> sounds = new ObjectRegistry<Sound>(false, false, Sound.class);
+	public static final ObjectRegistry<TemplateTag> unavailableTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
 
 	static void addToLists(String objectId, String... lists)
 	{
@@ -57,6 +58,7 @@ public class ObjectRegistry<T extends BaseObject>
 		itemTags.checkNames();
 		particles.checkNames();
 		sounds.checkNames();
+		unavailableTags.checkNames();
 	}
 
 	public static String[] getList(String listId)
@@ -65,10 +67,10 @@ public class ObjectRegistry<T extends BaseObject>
 		return new String[0];
 	}
 
-	public static TemplateTag[] listTags(int tagType)
+	public static TemplateTag[] listTags(int applicationType)
 	{
-		if (tagType == Tag.ENTITY) return entityTags.list();
-		else if (tagType == Tag.ITEM) return itemTags.list();
+		if (applicationType == Tag.ENTITY) return entityTags.list();
+		else if (applicationType == Tag.ITEM) return itemTags.list();
 		return blockTags.list();
 	}
 
@@ -95,6 +97,7 @@ public class ObjectRegistry<T extends BaseObject>
 		itemTags.loadTextures();
 		particles.loadTextures();
 		sounds.loadTextures();
+		unavailableTags.loadTextures();
 	}
 
 	static void resetAll()
@@ -113,6 +116,7 @@ public class ObjectRegistry<T extends BaseObject>
 		particles.reset();
 		sounds.reset();
 		objectLists.clear();
+		unavailableTags.reset();
 	}
 
 	private final Class<T> c;
@@ -154,13 +158,21 @@ public class ObjectRegistry<T extends BaseObject>
 	{
 		ArrayList<T> objects = new ArrayList<T>();
 		for (int i = 0; i < ids.length; ++i)
-			objects.add(this.find(ids[i]));
+		{
+			if (this.knows(ids[i])) objects.add(this.find(ids[i]));
+			if (this.knows(ids[i] + "_DOUBLE")) objects.add(this.find(ids[i] + "_DOUBLE"));
+		}
 		return objects.toArray((T[]) Array.newInstance(this.c, objects.size()));
 	}
 
 	public T first()
 	{
 		return this.registry.values().iterator().next();
+	}
+
+	public boolean knows(String id)
+	{
+		return this.registry.containsKey(id) || this.registry.containsKey(id.replaceAll("minecraft:", ""));
 	}
 
 	public T[] list()
@@ -196,8 +208,9 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public void register(T object)
 	{
-		this.registry.put(object.id(), object);
-		if (this.hasNumericalIds) this.ids.put(object.idNum(), object.id());
+		if (this.knows(object.id())) this.registry.put(object.id().replaceAll("minecraft:", "") + "_DOUBLE", object);
+		else this.registry.put(object.id().replaceAll("minecraft:", ""), object);
+		if (this.hasNumericalIds) this.ids.put(object.idNum(), object.id().replaceAll("minecraft:", ""));
 	}
 
 	public void reset()
@@ -220,7 +233,7 @@ public class ObjectRegistry<T extends BaseObject>
 	{
 		if (object == null) return;
 		if (this.registry.containsValue(object)) this.registry.remove(object);
-		if (this.hasNumericalIds && this.ids.containsValue(object.id())) this.ids.remove(object.id());
+		if (this.hasNumericalIds && this.ids.containsValue(object.id().replaceAll("minecraft:", ""))) this.ids.remove(object.id().replaceAll("minecraft:", ""));
 	}
 
 }

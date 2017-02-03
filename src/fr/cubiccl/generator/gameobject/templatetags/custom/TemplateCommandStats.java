@@ -17,9 +17,9 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 public class TemplateCommandStats extends TemplateCompound
 {
 
-	public TemplateCommandStats(String id, byte tagType, String[] applicable)
+	public TemplateCommandStats(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

@@ -5,6 +5,10 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.gameobject.baseobjects.Achievement;
+import fr.cubiccl.generator.gameobject.baseobjects.Block;
+import fr.cubiccl.generator.gameobject.baseobjects.Entity;
+import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -44,6 +48,12 @@ public class PanelCriteria extends CGPanel implements ActionListener
 		this.add(this.comboboxBase = new OptionCombobox("criteria", BASE), gbc);
 		gbc.gridy = 2;
 
+		this.panelAchievement = new PanelAchievement();
+		this.comboboxDetail = new OptionCombobox("stat", STAT);
+		this.panelBlock = new PanelBlock(null, false, false);
+		this.panelItem = new PanelItem(null, false, false, ObjectRegistry.items.list("break"));
+		this.panelEntity = new PanelEntity(null, false);
+
 		this.comboboxBase.addActionListener(this);
 		this.comboboxBase.setSelectedIndex(0);
 	}
@@ -51,35 +61,7 @@ public class PanelCriteria extends CGPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.comboboxBase)
-		{
-			String base = this.comboboxBase.getValue();
-			if (base.equals("achievement")) this.setCurrentDetail(this.panelAchievement = new PanelAchievement());
-			else if (base.equals("stat")) this.setCurrentDetail(this.comboboxDetail = new OptionCombobox("stat", STAT));
-			else if (base.equals("stat.breakItem"))
-			{
-				this.setCurrentDetail(this.panelItem = new PanelItem(null, ObjectRegistry.items.list("break")));
-				this.panelItem.setEnabledContent(false, false);
-			} else if (base.equals("stat.useItem"))
-			{
-				this.setCurrentDetail(this.panelItem = new PanelItem(null, ObjectRegistry.items.list("use")));
-				this.panelItem.setEnabledContent(false, false);
-			} else if (base.equals("stat.craftItem"))
-			{
-				this.setCurrentDetail(this.panelItem = new PanelItem(null, ObjectRegistry.items.list("craft")));
-				this.panelItem.setEnabledContent(false, false);
-			} else if (base.equals("stat.drop") || base.equals("stat.pickup"))
-			{
-				this.setCurrentDetail(this.panelItem = new PanelItem(null));
-				this.panelItem.setEnabledContent(false, false);
-			} else if (base.equals("stat.mineBlock"))
-			{
-				this.setCurrentDetail(this.panelBlock = new PanelBlock(null));
-				this.panelBlock.setHasData(false);
-			} else if (base.equals("killedByTeam") || base.equals("teamKill")) this.setCurrentDetail(this.comboboxDetail = new OptionCombobox("color", COLORS));
-			else if (base.toLowerCase().contains("entity")) this.setCurrentDetail(this.panelEntity = new PanelEntity(null));
-			else this.setCurrentDetail(null);
-		}
+		if (e.getSource() == this.comboboxBase) this.onBaseChange();
 	}
 
 	public String getCriteria()
@@ -94,6 +76,58 @@ public class PanelCriteria extends CGPanel implements ActionListener
 		return this.comboboxBase.getValue();
 	}
 
+	private void onBaseChange()
+	{
+		String base = this.comboboxBase.getValue();
+		if (base.equals("achievement"))
+		{
+			Achievement previous = this.panelAchievement.getAchievement();
+			this.setCurrentDetail(this.panelAchievement = new PanelAchievement());
+			this.panelAchievement.setSelection(previous);
+		} else if (base.equals("stat")) this.setCurrentDetail(this.comboboxDetail = new OptionCombobox("stat", STAT));
+		else if (base.equals("stat.breakItem"))
+		{
+			Item previous = this.panelItem.selectedItem();
+			this.setCurrentDetail(this.panelItem = new PanelItem(null, false, false, ObjectRegistry.items.list("break")));
+			this.panelItem.setEnabledContent(false, false);
+			this.panelItem.setItem(previous);
+		} else if (base.equals("stat.useItem"))
+		{
+			Item previous = this.panelItem.selectedItem();
+			this.setCurrentDetail(this.panelItem = new PanelItem(null, false, false, ObjectRegistry.items.list("use")));
+			this.panelItem.setEnabledContent(false, false);
+			this.panelItem.setItem(previous);
+		} else if (base.equals("stat.craftItem"))
+		{
+			Item previous = this.panelItem.selectedItem();
+			this.setCurrentDetail(this.panelItem = new PanelItem(null, false, false, ObjectRegistry.items.list("craft")));
+			this.panelItem.setEnabledContent(false, false);
+			this.panelItem.setItem(previous);
+		} else if (base.equals("stat.drop") || base.equals("stat.pickup"))
+		{
+			Item previous = this.panelItem.selectedItem();
+			this.setCurrentDetail(this.panelItem = new PanelItem(null, false, false, ObjectRegistry.items.list(ObjectRegistry.SORT_NUMERICALLY)));
+			this.panelItem.setEnabledContent(false, false);
+			this.panelItem.setItem(previous);
+		} else if (base.equals("stat.mineBlock"))
+		{
+			Block previous = this.panelBlock.selectedBlock();
+			this.setCurrentDetail(this.panelBlock = new PanelBlock(null, false, false));
+			this.panelBlock.setHasData(false);
+			this.panelBlock.setBlock(previous);
+		} else if (base.equals("killedByTeam") || base.equals("teamKill"))
+		{
+			String previous = this.comboboxDetail.getValue();
+			this.setCurrentDetail(this.comboboxDetail = new OptionCombobox("color", COLORS));
+			this.comboboxDetail.setValue(previous);
+		} else if (base.toLowerCase().contains("entity"))
+		{
+			Entity previous = this.panelEntity.selectedEntity();
+			this.setCurrentDetail(this.panelEntity = new PanelEntity(null, false));
+			this.panelEntity.setEntity(previous);
+		} else this.setCurrentDetail(null);
+	}
+
 	private void setCurrentDetail(Component component)
 	{
 		this.gbc.gridy = 1;
@@ -103,4 +137,22 @@ public class PanelCriteria extends CGPanel implements ActionListener
 		this.updateUI();
 	}
 
+	public void setupFrom(String criteria)
+	{
+		if (!criteria.contains("."))
+		{
+			this.comboboxBase.setValue(criteria);
+			this.onBaseChange();
+			return;
+		}
+		this.comboboxBase.setValue(criteria.substring(0, criteria.lastIndexOf('.')));
+		this.onBaseChange();
+		String id = criteria.substring(criteria.lastIndexOf('.') + 1, criteria.length());
+		if (criteria.startsWith("achievement.")) this.panelAchievement.setSelection(ObjectRegistry.achievements.find(id));
+		else if (criteria.contains("Item") || criteria.startsWith("stat.drop.") || criteria.startsWith("stat.pickup.")) this.panelItem
+				.setItem(ObjectRegistry.items.find(id));
+		else if (criteria.toLowerCase().contains("entity")) this.panelEntity.setEntity(ObjectRegistry.entities.find(id));
+		else if (criteria.startsWith("stat.mineBlock")) this.panelBlock.setBlock(ObjectRegistry.blocks.find(id));
+		else if (criteria.startsWith("stat") || criteria.startsWith("teamKill") || criteria.startsWith("killedByTeam")) this.comboboxDetail.setValue(id);
+	}
 }

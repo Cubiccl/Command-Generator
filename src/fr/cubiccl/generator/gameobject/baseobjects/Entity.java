@@ -36,4 +36,10 @@ public class Entity extends BaseObject
 		return Textures.getTexture("entity." + this.id);
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.name().toString();
+	}
+
 }

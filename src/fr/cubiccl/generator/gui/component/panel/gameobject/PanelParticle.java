@@ -91,4 +91,11 @@ public class PanelParticle extends CGPanel implements ActionListener
 		this.comboboxParticle.setSelected(particle);
 	}
 
+	@Override
+	public void updateTranslations()
+	{
+		super.updateTranslations();
+		if (this.comboboxParticle != null) this.labelParticle.setTextID(new Text("particle." + this.selectedParticle().id));
+	}
+
 }

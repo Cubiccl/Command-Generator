@@ -1,3 +1,17 @@
+------------------------- VERSION 2.0.3 -------------------------
+ADDITIONS
+
+BUGS FIXED
+- Json Text NBT tags for Signs can now be edited.
+- Also fixed Json Hover Event not being used when editing.
+- Age NBT tag was not showing for Breeding animals.
+- Added missing title for Text NBT tags.
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+tag.title.Text1, tag.title.Text2, tag.title.Text3, tag.title.Text4
+
 ------------------------- VERSION 2.0.2 -------------------------
 ADDITIONS
 - You can now choose if Objects should be sorted by name of ID.
@@ -5,7 +19,7 @@ ADDITIONS
 - The blockData tag is now set automatically with blockId.
 - Moved the Exit button to topright to avoid misclick when going for Settings. Yes it happened D:
 
-BUGFIXES
+BUGS FIXED
 - Fixed bug where the menu would stay disabled when canceling out of the Settings.
 - Changed ID of Curse of Vanishing. Wiki is lying and telling its ID is curse_of_vanishing, but it's vanishing_curse.
 - Mistranslated Pufferfish and Clownfish.
@@ -29,7 +43,7 @@ settings.sort.description, settings.sort.id, settings.sort.name, settings.sort.t
 ADDITIONS
 - Added the Settings page. You can choose if you want the "/" to appear when you generate a Command.
 
-BUGFIXES
+BUGS FIXED
 - Fixed various NBT tags not showing for mobs & armor stands, such as HandItems and ArmorItems.
 
 CHANGED TRANSLATIONS

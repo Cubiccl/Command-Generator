@@ -10,9 +10,9 @@ import fr.cubiccl.generator.gui.component.panel.tag.PanelHideFlags;
 public class TemplateHideFlags extends TemplateNumber
 {
 
-	public TemplateHideFlags(String id, byte tagType, String[] applicable)
+	public TemplateHideFlags(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

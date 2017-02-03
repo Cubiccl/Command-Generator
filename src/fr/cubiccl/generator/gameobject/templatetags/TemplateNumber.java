@@ -14,17 +14,17 @@ import fr.cubiccl.generator.utils.Text;
 
 public class TemplateNumber extends TemplateTag
 {
+	private boolean isByteBoolean;
 	private double minValue, maxValue;
 	private String[] names;
-	public final byte numberType;
 	private String prefix;
 	private int[] values;
 
 	/** @param numberType see {@link TagNumber#INTEGER} */
-	public TemplateNumber(String id, byte tagType, byte numberType, String... applicable)
+	public TemplateNumber(String id, byte applicationType, byte numberType, String... applicable)
 	{
-		super(id, tagType, applicable);
-		this.numberType = numberType;
+		super(id, TagNumber.TYPE_TRANSITION[numberType], applicationType, applicable);
+		this.isByteBoolean = numberType == TagNumber.BYTE_BOOLEAN;
 		this.minValue = -Double.MAX_VALUE;
 		this.maxValue = Double.MAX_VALUE;
 		this.names = null;
@@ -33,15 +33,15 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	/** defaults to integer */
-	public TemplateNumber(String id, byte tagType, String... applicable)
+	public TemplateNumber(String id, byte applicationType, String... applicable)
 	{
-		this(id, tagType, TagNumber.INTEGER, applicable);
+		this(id, applicationType, TagNumber.INTEGER, applicable);
 	}
 
 	@Override
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
-		if (this.numberType == TagNumber.BYTE_BOOLEAN)
+		if (this.isByteBoolean)
 		{
 			PanelRadio p = new PanelRadio(this.description(object), "value", "true", "false");
 			if (previousValue != null && (int) previousValue.value() == 0) p.setSelected(1);
@@ -81,7 +81,7 @@ public class TemplateNumber extends TemplateTag
 	@Override
 	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
-		if (this.numberType == TagNumber.BYTE_BOOLEAN) return new TagNumber(this, 1 - ((PanelRadio) panel).getSelected());
+		if (this.isByteBoolean) return new TagNumber(this, 1 - ((PanelRadio) panel).getSelected());
 
 		if (this.names == null)
 		{
@@ -112,13 +112,13 @@ public class TemplateNumber extends TemplateTag
 
 	private boolean isBigNumber()
 	{
-		return this.numberType == TagNumber.LONG || this.numberType == TagNumber.FLOAT || this.numberType == TagNumber.DOUBLE;
+		return this.tagType == Tag.LONG || this.tagType == Tag.FLOAT || this.tagType == Tag.DOUBLE;
 	}
 
 	@Override
 	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
-		if (this.numberType == TagNumber.BYTE_BOOLEAN) return true;
+		if (this.isByteBoolean) return true;
 		try
 		{
 			if (this.names == null)
@@ -132,6 +132,14 @@ public class TemplateNumber extends TemplateTag
 			return false;
 		}
 		return true;
+	}
+
+	@Override
+	public Tag readTag(String value, boolean isJson)
+	{
+		if (this.tagType != Tag.INT) value = value.substring(0, value.length() - 1);
+		if (this.isBigNumber()) return new TagBigNumber(this, Double.parseDouble(value));
+		return new TagNumber(this, Integer.parseInt(value));
 	}
 
 	public void setBounds(double min, double max)

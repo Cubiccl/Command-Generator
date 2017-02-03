@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags;
 
+import java.util.regex.Pattern;
+
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagString;
@@ -12,9 +14,9 @@ public class TemplateString extends TemplateTag
 {
 	private String[] authorizedValues;
 
-	public TemplateString(String id, byte tagType, String... applicable)
+	public TemplateString(String id, byte applicationType, String... applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, Tag.STRING, applicationType, applicable);
 		this.authorizedValues = null;
 	}
 
@@ -40,6 +42,13 @@ public class TemplateString extends TemplateTag
 	{
 		if (this.authorizedValues != null) return new TagString(this, ((ComboboxPanel) panel).combobox.getValue());
 		return new TagString(this, ((EntryPanel) panel).entry.getText());
+	}
+
+	@Override
+	public TagString readTag(String value, boolean isJson)
+	{
+		if (value.startsWith("\"") && value.endsWith("\"")) value = value.substring(1, value.length() - 1);
+		return new TagString(this, value.replaceAll(Pattern.quote("\\\""), "\"").replaceAll(Pattern.quote("\\\\"), "\\"));
 	}
 
 	public void setValues(String... authorizedValues)

@@ -10,9 +10,9 @@ import fr.cubiccl.generator.gui.component.panel.tag.PanelDisplay;
 public class TemplateDisplay extends TemplateCompound
 {
 
-	public TemplateDisplay(String id, byte tagType, String[] applicable)
+	public TemplateDisplay(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

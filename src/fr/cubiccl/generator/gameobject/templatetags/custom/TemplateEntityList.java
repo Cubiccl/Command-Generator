@@ -44,7 +44,7 @@ public class TemplateEntityList extends TemplateList
 			PanelEntity p = new PanelEntity(null);
 			if (editIndex != -1)
 			{
-				p.selectEntity(this.entities.get(editIndex).entity);
+				p.setEntity(this.entities.get(editIndex).entity);
 				p.setTags(this.entities.get(editIndex).nbt.value());
 			}
 			return p;
@@ -79,9 +79,9 @@ public class TemplateEntityList extends TemplateList
 
 	}
 
-	public TemplateEntityList(String id, byte tagType, String[] applicable)
+	public TemplateEntityList(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

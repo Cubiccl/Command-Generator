@@ -44,9 +44,9 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	private TemplateTag[] tags;
 	private Tag[] values;
 
-	public PanelTags(String titleID, int tagType)
+	public PanelTags(String titleID, int applicationType)
 	{
-		this(titleID, ObjectRegistry.listTags(tagType));
+		this(titleID, ObjectRegistry.listTags(applicationType));
 	}
 
 	public PanelTags(String titleID, TemplateTag... tags)

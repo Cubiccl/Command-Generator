@@ -94,9 +94,9 @@ public class TemplateEnchantmentList extends TemplateList
 
 	}
 
-	public TemplateEnchantmentList(String id, byte tagType, String[] applicable)
+	public TemplateEnchantmentList(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

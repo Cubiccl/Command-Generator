@@ -14,9 +14,9 @@ public class TemplateItems extends TemplateList
 
 	public boolean hasSlot = true;
 
-	public TemplateItems(String id, byte tagType, String[] applicable)
+	public TemplateItems(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

@@ -10,9 +10,9 @@ import fr.cubiccl.generator.gui.component.panel.tag.PanelDisabledSlots;
 public class TemplateDisabledSlots extends TemplateNumber
 {
 
-	public TemplateDisabledSlots(String id, byte tagType, String[] applicable)
+	public TemplateDisabledSlots(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, TagNumber.INTEGER, applicable);
+		super(id, applicationType, TagNumber.INTEGER, applicable);
 	}
 
 	@Override

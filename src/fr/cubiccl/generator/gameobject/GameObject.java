@@ -1,10 +1,16 @@
 package fr.cubiccl.generator.gameobject;
 
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
 public abstract class GameObject
 {
+	
+	public String save()
+	{
+		return this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand();
+	}
 
 	/** @return How this Object should display in a generated Command. */
 	public abstract String toCommand();

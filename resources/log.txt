@@ -1,5 +1,4 @@
-Welcome to the Command Generator v2.0.1 by Cubi !
-Checking for updates...
+Welcome to the Command Generator v2.0.3 by Cubi !
 ---- Creating objects ----
 Successfully created 236 blocks.
 Successfully created 393 items.
@@ -13,8 +12,12 @@ Successfully created 485 sounds.
 Successfully created 35 containers.
 Successfully created 66 Block NBT Tags.
 Successfully created 21 Item NBT Tags.
-Successfully created 164 Entity NBT Tags.
+Successfully created 165 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
+Generating !
+Successfully generated : locate Monument
+Generating !
+Successfully generated : setblock ~0.0 ~0.0 ~0.0 minecraft:standing_sign 7 destroy {Text2:"{\"text\":\"\",\"color\":\"white\",\"obfuscated\":\"true\"}"}
 Exiting Command Generator... Bye bye !

@@ -94,9 +94,9 @@ public class TemplateEffectList extends TemplateList
 
 	}
 
-	public TemplateEffectList(String id, byte tagType, String[] applicable)
+	public TemplateEffectList(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

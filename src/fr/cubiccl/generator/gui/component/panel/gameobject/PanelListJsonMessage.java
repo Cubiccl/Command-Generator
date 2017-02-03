@@ -7,6 +7,7 @@ import java.util.ArrayList;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import fr.cubiccl.generator.CommandGenerator;
@@ -17,6 +18,7 @@ import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.button.IconButton;
+import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.IStateListener;
@@ -24,12 +26,13 @@ import fr.cubiccl.generator.utils.Text;
 
 public class PanelListJsonMessage extends CGPanel implements ActionListener, IStateListener<PanelJsonMessage>
 {
-	class PanelSingleMessage extends JPanel implements ActionListener
+	class PanelSingleMessage extends JPanel implements ActionListener, ITranslated
 	{
 		private static final long serialVersionUID = 349507741634702290L;
 
 		private IconButton buttonEdit, buttonRemove;
-		public final int index;
+		public int index;
+		private JLabel labelMessage;
 		private JsonMessage message;
 		private PanelListJsonMessage parent;
 
@@ -39,7 +42,7 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 			this.message = message;
 			this.index = index;
 			this.parent = parent;
-			this.add(this.message.displayInLabel());
+			this.add(this.message.displayInLabel(this.labelMessage = new JLabel()));
 			this.add(this.buttonEdit = new IconButton(new ImageIcon("resources/textures/gui/edit.png")));
 			this.add(this.buttonRemove = new IconButton(new ImageIcon("resources/textures/gui/delete.png")));
 
@@ -52,6 +55,12 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 		{
 			if (e.getSource() == this.buttonEdit) this.parent.editMessage(this.index);
 			else if (e.getSource() == this.buttonRemove) this.parent.deleteMessage(this.index);
+		}
+
+		@Override
+		public void updateTranslations()
+		{
+			this.message.displayInLabel(this.labelMessage);
 		}
 
 	}
@@ -101,12 +110,23 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 		CommandGenerator.stateManager.setState(p, this);
 	}
 
+	public void addMessage(JsonMessage message)
+	{
+		PanelSingleMessage panelM = new PanelSingleMessage(message, this.messages.size(), this);
+		this.messages.add(message);
+		this.messagesPanels.add(panelM);
+		this.panelMessages.add(panelM);
+	}
+
 	public void deleteMessage(int index)
 	{
 		this.messagesPanels.get(index).setVisible(false);
 		this.remove(this.messagesPanels.get(index));
 		this.messages.remove(index);
 		this.messagesPanels.remove(index);
+
+		for (int i = 0; i < this.messagesPanels.size(); ++i)
+			this.messagesPanels.get(i).index = i;
 	}
 
 	public void editMessage(int index)
@@ -141,16 +161,11 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 			return false;
 		}
 
-		PanelSingleMessage panelM = new PanelSingleMessage(message, this.editing == -1 ? this.messages.size() : this.editing, this);
-		if (this.editing == -1)
-		{
-			this.messages.add(message);
-			this.messagesPanels.add(panelM);
-			this.panelMessages.add(panelM);
-		} else
+		if (this.editing == -1) this.addMessage(message);
+		else
 		{
 			this.messages.set(this.editing, message);
-			this.messagesPanels.set(this.editing, panelM);
+			this.messagesPanels.set(this.editing, new PanelSingleMessage(message, this.editing, this));
 			this.panelMessages.removeAll();
 			for (PanelSingleMessage p : this.messagesPanels)
 				this.panelMessages.add(p);

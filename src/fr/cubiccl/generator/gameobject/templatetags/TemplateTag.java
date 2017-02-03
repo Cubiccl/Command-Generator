@@ -31,21 +31,23 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	{ "block", "item", "entity" };
 
 	private String[] applicable;
+	public final byte applicationType, tagType;
 	/** Need several in case of chest-like recursion */
 	private Stack<TagCreation> creationListeners;
 	private final String id;
-	public final byte type;
 
-	public TemplateTag(String id, byte tagType, String... applicable)
+	public TemplateTag(String id, byte tagType, byte applicationType, String... applicable)
 	{
 		this.id = id;
-		this.type = tagType;
+		this.tagType = tagType;
+		this.applicationType = applicationType;
 		this.applicable = applicable;
 		this.creationListeners = new Stack<TagCreation>();
 
-		if (this.type == Tag.BLOCK) ObjectRegistry.blockTags.register(this);
-		else if (this.type == Tag.ITEM) ObjectRegistry.itemTags.register(this);
-		else if (this.type == Tag.ENTITY) ObjectRegistry.entityTags.register(this);
+		if (this.applicationType == Tag.BLOCK) ObjectRegistry.blockTags.register(this);
+		else if (this.applicationType == Tag.ITEM) ObjectRegistry.itemTags.register(this);
+		else if (this.applicationType == Tag.ENTITY) ObjectRegistry.entityTags.register(this);
+		else if (this.applicationType == Tag.UNAVAILABLE) ObjectRegistry.unavailableTags.register(this);
 	}
 
 	/** @param object - The Object this Tag will be applied to.
@@ -74,9 +76,9 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	 * @return A description of this NBT Tag. */
 	public Text description(BaseObject object)
 	{
-		String objectSpecific = "tag." + TYPE_NAMES[this.type] + "." + this.id + "." + object.id();
+		String objectSpecific = "tag." + TYPE_NAMES[this.applicationType] + "." + this.id + "." + object.id();
 		if (Lang.keyExists(objectSpecific)) return new Text(objectSpecific, new Replacement("<o>", object.name()));
-		return new Text("tag." + TYPE_NAMES[this.type] + "." + this.id, new Replacement("<o>", object.name()));
+		return new Text("tag." + TYPE_NAMES[this.applicationType] + "." + this.id, new Replacement("<o>", object.name()));
 	}
 
 	/** @param object - The Object this Tag is applied to.
@@ -95,6 +97,8 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	{
 		return true;
 	}
+
+	public abstract Tag readTag(String value, boolean isJson);
 
 	@Override
 	public boolean shouldStateClose(CGPanel panel)

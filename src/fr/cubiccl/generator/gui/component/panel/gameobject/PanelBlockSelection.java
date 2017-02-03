@@ -240,4 +240,11 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		this.labelImage.setImage(this.selectedBlock().texture(this.selectedDamage()));
 	}
 
+	@Override
+	public void updateTranslations()
+	{
+		super.updateTranslations();
+		if (this.blocks != null) this.updateDisplay();
+	}
+
 }

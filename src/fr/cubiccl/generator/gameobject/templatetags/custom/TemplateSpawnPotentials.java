@@ -11,6 +11,7 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.tag.SpawnPotentialPanel;
@@ -18,7 +19,7 @@ import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class TemplateSpawnPotentials extends TemplateCompound
+public class TemplateSpawnPotentials extends TemplateList
 {
 	public static class SpawnPotential
 	{
@@ -126,9 +127,9 @@ public class TemplateSpawnPotentials extends TemplateCompound
 
 	}
 
-	public TemplateSpawnPotentials(String id, byte tagType, String[] applicable)
+	public TemplateSpawnPotentials(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

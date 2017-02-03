@@ -23,6 +23,11 @@ public class PanelEntity extends CGPanel implements ActionListener
 
 	public PanelEntity(String titleID)
 	{
+		this(titleID, true);
+	}
+
+	public PanelEntity(String titleID, boolean hasNBT)
+	{
 		super(titleID);
 		GridBagConstraints gbc = this.createGridBagLayout();
 		gbc.anchor = GridBagConstraints.WEST;
@@ -34,7 +39,8 @@ public class PanelEntity extends CGPanel implements ActionListener
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		this.add(this.panelTags = new PanelTags("entity.tags", Tag.ENTITY), gbc);
+		this.panelTags = new PanelTags("entity.tags", Tag.ENTITY);
+		if (hasNBT) this.add(this.panelTags, gbc);
 
 		this.labelImage.setImage(this.selectedEntity().texture());
 		this.comboboxEntity.addActionListener(this);
@@ -58,14 +64,22 @@ public class PanelEntity extends CGPanel implements ActionListener
 		return this.comboboxEntity.getSelectedObject();
 	}
 
-	public void selectEntity(Entity entity)
+	public void setEntity(Entity entity)
 	{
 		this.comboboxEntity.setSelected(entity);
+		this.panelTags.setTargetObject(entity);
+		this.labelImage.setImage(this.selectedEntity().texture());
 	}
 
 	public void setTags(Tag[] value)
 	{
 		this.panelTags.setTags(value);
+	}
+
+	public void setupFrom(LivingEntity entity)
+	{
+		this.setEntity(entity.entity);
+		this.setTags(entity.nbt.value());
 	}
 
 }

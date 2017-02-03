@@ -10,9 +10,9 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelListJsonMessage;
 public class TemplateJson extends TemplateList
 {
 
-	public TemplateJson(String id, byte tagType, String[] applicable)
+	public TemplateJson(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

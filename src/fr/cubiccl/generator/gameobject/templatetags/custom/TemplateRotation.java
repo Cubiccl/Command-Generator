@@ -34,9 +34,9 @@ public class TemplateRotation extends TemplateList
 
 	}
 
-	public TemplateRotation(String id, byte tagType, String[] applicable)
+	public TemplateRotation(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

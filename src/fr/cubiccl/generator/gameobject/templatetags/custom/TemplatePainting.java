@@ -68,9 +68,9 @@ public class TemplatePainting extends TemplateString
 	{ "Kebab", "Aztec", "Alban", "Aztec2", "Bomb", "Plant", "Wasteland", "Wanderer", "Graham", "Pool", "Courbet", "Sunset", "Sea", "Creebet", "Match", "Bust",
 			"Stage", "Void", "SkullAnRoses", "Wither", "Fighters", "Skeleton", "DonkeyKong", "Pointer", "Pigscene", "BurningSkull" };
 
-	public TemplatePainting(String id, byte tagType, String... applicable)
+	public TemplatePainting(String id, byte applicationType, String... applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

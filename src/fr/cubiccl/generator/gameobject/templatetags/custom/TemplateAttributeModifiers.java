@@ -13,9 +13,9 @@ import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 
 public class TemplateAttributeModifiers extends TemplateList
 {
-	public TemplateAttributeModifiers(String id, byte tagType, String... applicable)
+	public TemplateAttributeModifiers(String id, byte applicationType, String... applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

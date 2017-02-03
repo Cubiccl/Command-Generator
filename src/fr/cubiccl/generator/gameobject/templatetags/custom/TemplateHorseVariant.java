@@ -10,9 +10,9 @@ import fr.cubiccl.generator.gui.component.panel.tag.PanelHorseVariant;
 public class TemplateHorseVariant extends TemplateNumber
 {
 
-	public TemplateHorseVariant(String id, byte tagType, String[] applicable)
+	public TemplateHorseVariant(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, TagNumber.INTEGER, applicable);
+		super(id, applicationType, TagNumber.INTEGER, applicable);
 		this.setNames("variant.base", "creamy", "white", "brown", "gray");
 	}
 

@@ -2801,6 +2801,10 @@ tag.title.SpawnPotentials=Spawn Potentials
 tag.title.StoredEnchantments=Stored Enchantments
 tag.title.Tags=Scoreboard Tags
 tag.title.Team=Teams to join
+tag.title.Text1=First row of Text
+tag.title.Text2=Second row of Text
+tag.title.Text3=Third row of Text
+tag.title.Text4=Fourth row of Text
 tag.title.TileEntityData=Block NBT Tags
 tag.title.Variant=Horse variant
 

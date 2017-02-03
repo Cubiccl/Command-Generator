@@ -4,7 +4,13 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.JsonMessage;
+import fr.cubiccl.generator.gameobject.LivingEntity;
+import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
@@ -227,7 +233,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 		if (this.comboboxMode.getValue().equals("selector")) text = this.panelTarget.generateTarget().toCommand();
 		else if (!this.comboboxMode.getValue().equals("text")) this.entryMain.checkValue(CGEntry.STRING);
 
-		JsonMessage message = new JsonMessage(this.comboboxMode.getSelectedIndex(), text, this.comboboxColor.getSelectedIndex());
+		JsonMessage message = new JsonMessage((byte) this.comboboxMode.getSelectedIndex(), text, this.comboboxColor.getSelectedIndex());
 		if (this.comboboxMode.getValue().equals("score")) message.target = this.panelTarget.generateTarget().toCommand();
 
 		message.bold = this.checkboxBold.isSelected();
@@ -248,8 +254,9 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 	public void setupFrom(JsonMessage message)
 	{
 		this.comboboxMode.setSelectedIndex(message.mode);
-		this.entryMain.setText(message.text);
+		if (message.mode != JsonMessage.SELECTOR) this.entryMain.setText(message.text);
 		if (message.target != null) this.panelTarget.setupFrom(Target.createFrom(message.target));
+		if (message.mode == JsonMessage.SELECTOR) this.panelTarget.setupFrom(Target.createFrom(message.text));
 
 		this.comboboxColor.setSelectedIndex(message.color);
 		this.checkboxBold.setSelected(message.bold);
@@ -263,11 +270,37 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 		{
 			this.panelClickEvent.comboboxMode.setValue(message.clickAction);
 			this.panelClickEvent.entryValue.setText(message.clickValue);
+			this.checkboxClickEvent.setSelected(true);
+			this.panelClickEvent.setVisible(true);
 		}
 		if (message.hoverAction != null)
 		{
 			this.panelHoverEvent.comboboxMode.setValue(message.hoverAction);
-			// this.panelHoverEvent.setValue(message.hoverValue); need NBT generation :(
+			switch (this.panelHoverEvent.comboboxMode.getValue())
+			{
+				case "show_achievement":
+					this.panelHoverEvent.panelAchievement.setupFrom(message.hoverValue);
+					break;
+
+				case "show_entity":
+					this.panelHoverEvent.panelEntity.setupFrom(LivingEntity.createFrom((TagCompound) NBTReader.read(message.hoverValue, true, false)));
+					break;
+
+				case "show_item":
+					this.panelHoverEvent.panelItem.setupFrom(ItemStack.createFrom((TagCompound) NBTReader.read(message.hoverValue, true, false)));
+					break;
+
+				case "show_text":
+					TagList list = (TagList) NBTReader.read(message.hoverValue, true, true);
+					for (Tag tag : list.value())
+						this.panelHoverEvent.panelJson.addMessage(JsonMessage.createFrom((TagCompound) tag));
+					break;
+
+				default:
+					break;
+			}
+			this.checkboxHoverEvent.setSelected(true);
+			this.panelHoverEvent.setVisible(true);
 		}
 	}
 

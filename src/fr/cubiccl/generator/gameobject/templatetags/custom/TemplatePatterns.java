@@ -11,9 +11,9 @@ public class TemplatePatterns extends TemplateList
 {
 	public int base;
 
-	public TemplatePatterns(String id, byte tagType, String[] applicable)
+	public TemplatePatterns(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

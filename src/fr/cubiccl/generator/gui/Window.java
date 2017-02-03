@@ -116,6 +116,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.panelCommand.updateTranslations();
 		this.panelCommandSelection.updateTranslations();
 		this.menubar.updateTranslations();
+		if (this.panelGui != null) this.panelGui.updateTranslations();
 	}
 
 	@Override

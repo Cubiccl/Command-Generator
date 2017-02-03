@@ -82,14 +82,14 @@ public class CGEntry extends CGTextField
 	{
 		try
 		{
-		if (checkMode == INTEGER) Utils.checkIntegerInBounds(this.label.getAbsoluteText(), this.getText(), (int) min, (int) max);
-		else if (checkMode == FLOAT) Utils.checkFloatInBounds(this.label.getAbsoluteText(), this.getText(), (int) min, (int) max);
-		else if (checkMode == NUMBER) Utils.checkNumberInBounds(this.label.getAbsoluteText(), this.getText(), (int) min, (int) max);
-	} catch (CommandGenerationException e)
-	{
-		this.setWarning(true);
-		throw e;
-	}
+			if (checkMode == INTEGER) Utils.checkIntegerInBounds(this.label.getAbsoluteText(), this.getText(), (int) min, (int) max);
+			else if (checkMode == FLOAT) Utils.checkFloatInBounds(this.label.getAbsoluteText(), this.getText(), (int) min, (int) max);
+			else if (checkMode == NUMBER) Utils.checkNumberInBounds(this.label.getAbsoluteText(), this.getText(), (int) min, (int) max);
+		} catch (CommandGenerationException e)
+		{
+			this.setWarning(true);
+			throw e;
+		}
 	}
 
 	/** @param checkMode - What format to check. See {@link CGEntry#STRING_ID}
@@ -98,12 +98,12 @@ public class CGEntry extends CGTextField
 	{
 		try
 		{
-		if (checkMode == INTEGER) Utils.checkIntegerSuperior(this.label.getAbsoluteText(), this.getText(), (int) min);
-		else if (checkMode == FLOAT) Utils.checkFloatSuperior(this.label.getAbsoluteText(), this.getText(), (int) min);
-		else if (checkMode == NUMBER) Utils.checkNumberSuperior(this.label.getAbsoluteText(), this.getText(), (int) min);
-	} catch (CommandGenerationException e)
-	{
-		this.setWarning(true);
+			if (checkMode == INTEGER) Utils.checkIntegerSuperior(this.label.getAbsoluteText(), this.getText(), (int) min);
+			else if (checkMode == FLOAT) Utils.checkFloatSuperior(this.label.getAbsoluteText(), this.getText(), (int) min);
+			else if (checkMode == NUMBER) Utils.checkNumberSuperior(this.label.getAbsoluteText(), this.getText(), (int) min);
+		} catch (CommandGenerationException e)
+		{
+			this.setWarning(true);
 			throw e;
 		}
 	}
@@ -115,4 +115,12 @@ public class CGEntry extends CGTextField
 		else ((RoundedCornerBorder) this.getBorder()).setColor(null);
 		this.repaint();
 	}
+
+	@Override
+	public void updateTranslations()
+	{
+		super.updateTranslations();
+		if (this.label != null) this.label.updateTranslations();
+	}
+
 }

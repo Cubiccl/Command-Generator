@@ -3,10 +3,11 @@ package fr.cubiccl.generator.gui.component.textfield;
 import java.awt.GridBagConstraints;
 
 import fr.cubi.cubigui.CSpinner;
+import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.utils.Text;
 
-public class CGSpinner extends CSpinner
+public class CGSpinner extends CSpinner implements ITranslated
 {
 	private static final long serialVersionUID = -2618376540277157790L;
 
@@ -27,6 +28,12 @@ public class CGSpinner extends CSpinner
 		GridBagConstraints gbc = this.container.getGBC();
 		gbc.gridx = 0;
 		this.container.add(this.label, gbc);
+	}
+
+	@Override
+	public void updateTranslations()
+	{
+		this.label.updateTranslations();
 	}
 
 }

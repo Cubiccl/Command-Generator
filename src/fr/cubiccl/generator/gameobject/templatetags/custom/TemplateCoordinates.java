@@ -17,9 +17,9 @@ public class TemplateCoordinates extends TemplateCompound
 {
 	private boolean isInteger = false;
 
-	public TemplateCoordinates(String id, byte tagType, String[] applicable)
+	public TemplateCoordinates(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

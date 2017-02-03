@@ -10,9 +10,9 @@ import fr.cubiccl.generator.gui.component.panel.tag.ExplosionPanel;
 public class TemplateExplosion extends TemplateCompound
 {
 
-	public TemplateExplosion(String id, byte tagType, String... applicable)
+	public TemplateExplosion(String id, byte applicationType, String... applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

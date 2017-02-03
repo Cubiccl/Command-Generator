@@ -7,6 +7,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 public abstract class Tag extends GameObject
 {
 	public static final byte BLOCK = 0, ITEM = 1, ENTITY = 2, UNAVAILABLE = 3;
+	public static final byte STRING = 0, BYTE = 1, SHORT = 2, INT = 3, LONG = 4, FLOAT = 5, DOUBLE = 6, LIST = 7, COMPOUND = 8;
 	protected boolean isJson;
 	public final TemplateTag template;
 
@@ -28,11 +29,7 @@ public abstract class Tag extends GameObject
 	@Override
 	public String toCommand()
 	{
-		if (this.isJson)
-		{
-			if (this instanceof TagCompound || this instanceof TagList || this instanceof TagString) return "\"" + this.id() + "\":" + this.valueForCommand();
-			return "\"" + this.id() + "\":\"" + this.valueForCommand() + "\"";
-		}
+		if (this.isJson) return "\"" + this.id() + "\":" + this.valueForCommand();
 		return this.id() + ":" + this.valueForCommand();
 	}
 
@@ -51,7 +48,7 @@ public abstract class Tag extends GameObject
 
 	public int type()
 	{
-		return this.template.type;
+		return this.template.applicationType;
 	}
 
 	public abstract Object value();

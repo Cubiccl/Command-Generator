@@ -10,9 +10,9 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTags;
 public class TemplateBlockEntity extends TemplateCompound
 {
 
-	public TemplateBlockEntity(String id, byte tagType, String[] applicable)
+	public TemplateBlockEntity(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

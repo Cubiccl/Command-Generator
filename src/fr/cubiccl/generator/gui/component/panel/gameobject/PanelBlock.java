@@ -32,10 +32,10 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 
 	public PanelBlock(String titleID)
 	{
-		this(titleID, true);
+		this(titleID, true, true);
 	}
 
-	public PanelBlock(String titleID, boolean hasData)
+	public PanelBlock(String titleID, boolean hasData, boolean hasNBT)
 	{
 		super(titleID);
 		this.hasData = hasData;
@@ -52,7 +52,8 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		gbc.gridx = 0;
 		++gbc.gridy;
 		gbc.gridwidth = 3;
-		this.add(this.panelTags = new PanelTags("block.tags", Tag.BLOCK), gbc);
+		this.panelTags = new PanelTags("block.tags", Tag.BLOCK);
+		if (hasNBT) this.add(this.panelTags, gbc);
 
 		this.buttonSelectBlock.addActionListener(this);
 		this.updateDisplay();
@@ -100,6 +101,13 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		return this.damage;
 	}
 
+	public void setBlock(Block block)
+	{
+		this.block = block;
+		this.panelTags.setTargetObject(this.block);
+		this.updateDisplay();
+	}
+
 	public void setHasData(boolean hasData)
 	{
 		this.hasData = hasData;
@@ -117,10 +125,8 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 
 	public void setupFrom(PlacedBlock placedBlock)
 	{
-		this.block = placedBlock.block;
+		this.setBlock(placedBlock.block);
 		this.damage = placedBlock.data;
-		this.updateDisplay();
-		this.panelTags.setTargetObject(this.block);
 		if (placedBlock.nbt.size() > 0) this.panelTags.setTags(placedBlock.nbt.value());
 	}
 
@@ -136,6 +142,13 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		if (this.hasData) this.labelName.setText(this.selectedBlock().name(this.damage).toString());
 		else this.labelName.setText(this.selectedBlock().mainName().toString());
 		this.labelTexture.setImage(this.selectedBlock().texture(this.damage));
+	}
+
+	@Override
+	public void updateTranslations()
+	{
+		super.updateTranslations();
+		if (this.block != null) this.updateDisplay();
 	}
 
 }

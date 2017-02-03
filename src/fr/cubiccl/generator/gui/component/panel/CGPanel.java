@@ -48,6 +48,7 @@ public class CGPanel extends CPanel implements ITranslated
 		if (this.titleID != null) this.setBorder(BorderFactory.createTitledBorder(Lang.translate(this.titleID)));
 		for (Component component : this.getComponents())
 			if (component instanceof ITranslated) ((ITranslated) component).updateTranslations();
+		this.repaint();
 	}
 
 }

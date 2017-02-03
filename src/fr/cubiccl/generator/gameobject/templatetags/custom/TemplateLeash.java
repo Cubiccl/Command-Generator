@@ -40,9 +40,9 @@ public class TemplateLeash extends TemplateCompound
 
 	}
 
-	public TemplateLeash(String id, byte tagType, String[] applicable)
+	public TemplateLeash(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override

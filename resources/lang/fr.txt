@@ -2793,6 +2793,10 @@ tag.title.SpawnPotentials=Possibilités de créatures
 tag.title.StoredEnchantments=Enchantements stockés
 tag.title.Tags=Marqueurs de score
 tag.title.Team=Équipes à joindre
+tag.title.Text1=Première ligne de Texte
+tag.title.Text2=Seconde ligne de Texte
+tag.title.Text3=Troisième ligne de Texte
+tag.title.Text4=Quatrième ligne de Texte
 tag.title.TileEntityData=Données NBT de Bloc
 tag.title.Variant=Variante de Cheval
 

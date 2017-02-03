@@ -7,6 +7,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.*;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.target.TargetArgument;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateDropChances;
@@ -133,15 +134,15 @@ public class ObjectCreator
 		CommandGenerator.log("Successfully created " + ObjectRegistry.containers.size() + " containers.");
 	}
 
-	private static void createCustomTag(String id, byte tagType, String[] applicable, String customTagType, String[] data)
+	private static void createCustomTag(String id, byte applicationType, String[] applicable, String customTagType, String[] data)
 	{
 		if (customTagType.equals("color"))
 		{
-			TemplateNumber tag = id.equals("Base") ? new TemplateNumber(id, tagType, applicable) : new TemplateNumber(id, tagType, TagNumber.BYTE, applicable);
+			TemplateNumber tag = id.equals("Base") ? new TemplateNumber(id, applicationType, applicable) : new TemplateNumber(id, applicationType, TagNumber.BYTE, applicable);
 			tag.setNames("color", Utils.WOOL_COLORS);
 		} else if (customTagType.equals("effect"))
 		{
-			TemplateNumber tag = new TemplateNumber(id, tagType, applicable);
+			TemplateNumber tag = new TemplateNumber(id, applicationType, applicable);
 			EffectType[] effects = ObjectRegistry.effects.list(ObjectRegistry.SORT_NUMERICALLY);
 			String[] ids = new String[effects.length];
 			for (int i = 0; i < ids.length; ++i)
@@ -149,7 +150,7 @@ public class ObjectCreator
 			tag.setNames("effect", ids);
 		} else if (customTagType.equals("item"))
 		{
-			TemplateItem t = new TemplateItem(id, tagType, applicable);
+			TemplateItem t = new TemplateItem(id, applicationType, applicable);
 			for (int i = 3; i < data.length; ++i)
 			{
 				if (data[i].startsWith("limited=")) t.setLimited(data[i].substring("limited=".length()).split(":"));
@@ -157,16 +158,16 @@ public class ObjectCreator
 			}
 		} else if (customTagType.equals("item_id"))
 		{
-			TemplateItemId t = new TemplateItemId(id, tagType, applicable);
+			TemplateItemId t = new TemplateItemId(id, applicationType, applicable);
 			if (data.length == 4) t.setLimited(data[3].substring("limited=".length()).split(":"));
 		} else if (customTagType.startsWith("DropChances"))
 		{
-			TemplateDropChances t = new TemplateDropChances(id, tagType, applicable);
+			TemplateDropChances t = new TemplateDropChances(id, applicationType, applicable);
 			t.setSlotCount(Integer.parseInt(customTagType.substring("DropChances".length())));
 		} else try
 		{
 			Class<?> c = Class.forName("fr.cubiccl.generator.gameobject.templatetags.custom.Template" + customTagType);
-			c.getConstructors()[0].newInstance(id, tagType, applicable);
+			c.getConstructors()[0].newInstance(id, applicationType, applicable);
 		} catch (ClassNotFoundException e)
 		{
 			CommandGenerator.log("Couldn't find Tag class: " + customTagType);
@@ -348,6 +349,7 @@ public class ObjectCreator
 		createTags(blocktags.toArray(new String[blocktags.size()]), Tag.BLOCK);
 		createTags(itemtags.toArray(new String[itemtags.size()]), Tag.ITEM);
 		createTags(entitytags.toArray(new String[entitytags.size()]), Tag.ENTITY);
+		Tags.create();
 		CommandGenerator.log("Successfully created " + ObjectRegistry.objectLists.size() + " object lists.");
 		TargetArgument.createArguments();
 
@@ -373,7 +375,7 @@ public class ObjectCreator
 		CommandGenerator.log("Successfully created " + ObjectRegistry.sounds.size() + " sounds.");
 	}
 
-	private static void createTag(byte tagType, String[] data)
+	private static void createTag(byte applicationType, String[] data)
 	{
 		String id = data[0];
 		String[] applicable = data[2].split(":");
@@ -389,7 +391,7 @@ public class ObjectCreator
 		switch (data[1].substring(0, 3))
 		{
 			case "num":
-				TemplateNumber number = new TemplateNumber(id, tagType, Byte.parseByte(data[1].substring(3, 4)), applicable);
+				TemplateNumber number = new TemplateNumber(id, applicationType, Byte.parseByte(data[1].substring(3, 4)), applicable);
 				for (int i = 3; i < data.length; ++i)
 				{
 					if (data[i].startsWith("bounds="))
@@ -410,18 +412,18 @@ public class ObjectCreator
 				break;
 
 			case "ite":
-				TemplateItems ti = new TemplateItems(id, tagType, applicable);
+				TemplateItems ti = new TemplateItems(id, applicationType, applicable);
 				for (String arg : data)
 					if (arg.equals("noSlot")) ti.hasSlot = false;
 				break;
 
 			case "cus":
-				createCustomTag(id, tagType, applicable, data[1].split(":")[1], data);
+				createCustomTag(id, applicationType, applicable, data[1].split(":")[1], data);
 				break;
 
 			case "str":
 			default:
-				TemplateString t = new TemplateString(id, tagType, applicable);
+				TemplateString t = new TemplateString(id, applicationType, applicable);
 				for (int i = 3; i < data.length; ++i)
 				{
 					if (data[i].startsWith("custom=")) t.setValues(data[i].substring("custom=".length()).split(":"));
@@ -430,14 +432,14 @@ public class ObjectCreator
 		}
 	}
 
-	public static void createTags(String[] data, byte tagType)
+	public static void createTags(String[] data, byte applicationType)
 	{
 		for (String tag : data)
-			createTag(tagType, tag.split(","));
+			createTag(applicationType, tag.split(","));
 
-		if (tagType == Tag.BLOCK) CommandGenerator.log("Successfully created " + ObjectRegistry.blockTags.size() + " Block NBT Tags.");
-		else if (tagType == Tag.ITEM) CommandGenerator.log("Successfully created " + ObjectRegistry.itemTags.size() + " Item NBT Tags.");
-		else if (tagType == Tag.ENTITY) CommandGenerator.log("Successfully created " + ObjectRegistry.entityTags.size() + " Entity NBT Tags.");
+		if (applicationType == Tag.BLOCK) CommandGenerator.log("Successfully created " + ObjectRegistry.blockTags.size() + " Block NBT Tags.");
+		else if (applicationType == Tag.ITEM) CommandGenerator.log("Successfully created " + ObjectRegistry.itemTags.size() + " Item NBT Tags.");
+		else if (applicationType == Tag.ENTITY) CommandGenerator.log("Successfully created " + ObjectRegistry.entityTags.size() + " Entity NBT Tags.");
 	}
 
 	private static void removePrevious(String[] values)

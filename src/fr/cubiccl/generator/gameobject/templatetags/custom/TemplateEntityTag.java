@@ -11,22 +11,22 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEntity;
 public class TemplateEntityTag extends TemplateCompound
 {
 
-	public TemplateEntityTag(String id, byte tagType, String[] applicable)
+	public TemplateEntityTag(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override
 	protected PanelEntity createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelEntity p = new PanelEntity(null);
-		if (object.id().equals("minecraft:armor_stand")) p.selectEntity(ObjectRegistry.entities.find("armor_stand"));
-		if (object.id().equals("minecraft:spawn_egg") || object.id().equals("minecraft:mob_spawner")) p.selectEntity(ObjectRegistry.entities.find("creeper"));
+		if (object.id().equals("minecraft:armor_stand")) p.setEntity(ObjectRegistry.entities.find("armor_stand"));
+		if (object.id().equals("minecraft:spawn_egg") || object.id().equals("minecraft:mob_spawner")) p.setEntity(ObjectRegistry.entities.find("creeper"));
 
 		if (previousValue != null)
 		{
 			TagCompound t = (TagCompound) previousValue;
-			if (t.hasTag("id")) p.selectEntity(ObjectRegistry.entities.find((String) t.getTagFromId("id").value()));
+			if (t.hasTag("id")) p.setEntity(ObjectRegistry.entities.find((String) t.getTagFromId("id").value()));
 			p.setTags(t.value());
 		}
 

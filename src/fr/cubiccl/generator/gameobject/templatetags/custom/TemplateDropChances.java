@@ -36,9 +36,9 @@ public class TemplateDropChances extends TemplateList
 
 	private int slotCount = 1;
 
-	public TemplateDropChances(String id, byte tagType, String[] applicable)
+	public TemplateDropChances(String id, byte applicationType, String[] applicable)
 	{
-		super(id, tagType, applicable);
+		super(id, applicationType, applicable);
 	}
 
 	@Override
