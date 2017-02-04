@@ -1,6 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
-import java.awt.image.BufferedImage;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -13,11 +13,11 @@ import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEnchantment;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Text;
 
 public class TemplateEnchantmentList extends TemplateList
 {
@@ -66,15 +66,9 @@ public class TemplateEnchantmentList extends TemplateList
 		}
 
 		@Override
-		public Text getName(int index)
+		public Component getDisplayComponent(int index)
 		{
-			return this.enchantments.get(index).type.name();
-		}
-
-		@Override
-		public BufferedImage getTexture(int index)
-		{
-			return null;
+			return new CGLabel(this.enchantments.get(index).type.name());
 		}
 
 		@Override
@@ -113,7 +107,7 @@ public class TemplateEnchantmentList extends TemplateList
 	@Override
 	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
-		Enchantment[] values = ((EnchantmentList) ((PanelObjectList) panel).objectList).enchantments.toArray(new Enchantment[0]);
+		Enchantment[] values = ((EnchantmentList) ((PanelObjectList) panel).getObjectList()).enchantments.toArray(new Enchantment[0]);
 		TagCompound[] tags = new TagCompound[values.length];
 		for (int i = 0; i < tags.length; ++i)
 			tags[i] = values[i].toTag(Tags.DEFAULT_COMPOUND);

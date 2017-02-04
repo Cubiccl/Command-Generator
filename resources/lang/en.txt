@@ -337,6 +337,7 @@ locate.Temple=Jungle Temple
 locate.Village=Village
 
 menu.exit=Exit
+menu.objects=Custom Objects
 menu.settings=Settings
 
 objects.attribute=Attributes
@@ -348,6 +349,7 @@ objects.entity=Entities
 objects.item=Items
 objects.json=Json messages
 objects.modifier=Attribute Modifiers
+objects.name=Give a name to your objet :
 objects.trade=Villager Trades
 
 particle.block=Block texture for the particle

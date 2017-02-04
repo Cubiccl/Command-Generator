@@ -32,12 +32,7 @@ public abstract class GameObject
 
 	public String save()
 	{
-		TagCompound t = this.toTag(Tags.DEFAULT_COMPOUND, true);
-		Tag[] tags = new Tag[t.size() + 1];
-		for (int i = 0; i < tags.length - 1; ++i)
-			tags[1 + i] = t.getTag(i);
-		tags[0] = new TagString(Tags.OBJECT_NAME, this.customName());
-		return new TagCompound(Tags.DEFAULT_COMPOUND, tags).valueForCommand();
+		return this.toTag(Tags.DEFAULT_COMPOUND, true).valueForCommand();
 	}
 
 	public void setCustomName(String name)
@@ -55,7 +50,7 @@ public abstract class GameObject
 	 * @return This Object, as an NBT Tag. */
 	public TagCompound toTag(TemplateCompound container)
 	{
-		return this.toTag(container, true);
+		return this.toTag(container, false);
 	}
 
 	/** @param container The container Tag.

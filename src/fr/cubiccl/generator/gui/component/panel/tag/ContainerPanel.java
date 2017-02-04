@@ -46,7 +46,13 @@ public class ContainerPanel extends SlotSelectionPanel implements IStateListener
 
 		ArrayList<ItemStack> toreturn = new ArrayList<ItemStack>();
 		for (ItemStack item : this.items)
-			if (item != null) toreturn.add(item);
+			if (item != null) try
+			{
+				toreturn.add(item.clone());
+			} catch (CloneNotSupportedException e)
+			{
+				e.printStackTrace();
+			}
 
 		return toreturn.toArray(new ItemStack[toreturn.size()]);
 	}

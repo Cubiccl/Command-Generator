@@ -1,7 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.CommandGenerator;
@@ -13,6 +13,7 @@ import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.tag.ExplosionPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
@@ -43,15 +44,9 @@ public class TemplateFireworks extends TemplateCompound
 		}
 
 		@Override
-		public Text getName(int index)
+		public Component getDisplayComponent(int index)
 		{
-			return new Text("Explosion " + index, false);
-		}
-
-		@Override
-		public BufferedImage getTexture(int index)
-		{
-			return null;
+			return new CGLabel(new Text("Explosion " + index, false));
 		}
 
 		@Override
@@ -59,7 +54,7 @@ public class TemplateFireworks extends TemplateCompound
 		{
 			String[] values = new String[this.explosions.size()];
 			for (int i = 0; i < values.length; i++)
-				values[i] = this.getName(i).toString();
+				values[i] = "Explosion " + i;
 			return values;
 		}
 

@@ -56,7 +56,7 @@ public class PanelEnchantment extends CGPanel
 	public void setupFrom(Enchantment enchantment)
 	{
 		this.comboboxEnchant.setSelected(enchantment.type);
-		this.entryLevel.setText(Integer.toString(enchantment.level));
+		if (!this.checkMaximum || this.selectedEnchantment().maxLevel >= enchantment.level) this.entryLevel.setText(Integer.toString(enchantment.level));
 	}
 
 }

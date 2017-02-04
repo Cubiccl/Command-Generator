@@ -266,14 +266,14 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 		this.checkboxObfuscated.setSelected(message.obfuscated);
 		this.entryInsertion.setText(message.insertion);
 
-		if (message.clickAction != null)
+		if (message.clickAction != null && this.hasEvents)
 		{
 			this.panelClickEvent.comboboxMode.setValue(message.clickAction);
 			this.panelClickEvent.entryValue.setText(message.clickValue);
 			this.checkboxClickEvent.setSelected(true);
 			this.panelClickEvent.setVisible(true);
 		}
-		if (message.hoverAction != null)
+		if (message.hoverAction != null && this.hasEvents)
 		{
 			this.panelHoverEvent.comboboxMode.setValue(message.hoverAction);
 			switch (this.panelHoverEvent.comboboxMode.getValue())

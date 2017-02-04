@@ -96,9 +96,9 @@ public class PanelAttributeModifier extends CGPanel
 
 	public void setupFrom(AttributeModifier modifier)
 	{
-		this.comboboxAttribute.setSelected(modifier.attribute);
+		if (!this.isApplied) this.comboboxAttribute.setSelected(modifier.attribute);
 		this.comboboxOperation.setSelectedIndex(modifier.operation);
-		this.comboboxSlot.setValue(modifier.slot);
+		if (!this.isApplied) this.comboboxSlot.setValue(modifier.slot);
 		this.entryName.setText(modifier.name);
 		this.entryAmount.setText(Utils.doubleToString(modifier.amount));
 		this.entryUUIDMost.setText(Utils.doubleToString(modifier.UUIDMost));

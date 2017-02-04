@@ -1,6 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
-import java.awt.image.BufferedImage;
+import java.awt.Component;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
@@ -12,10 +12,11 @@ import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlockSelection;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
-import fr.cubiccl.generator.utils.Text;
 
 public class TemplateBlockList extends TemplateList
 {
@@ -56,15 +57,12 @@ public class TemplateBlockList extends TemplateList
 		}
 
 		@Override
-		public Text getName(int index)
+		public Component getDisplayComponent(int index)
 		{
-			return this.blocks.get(index).mainName();
-		}
-
-		@Override
-		public BufferedImage getTexture(int index)
-		{
-			return this.blocks.get(index).texture(0);
+			CGPanel p = new CGPanel();
+			p.add(new CGLabel(this.blocks.get(index).mainName()));
+			p.add(new ImageLabel(this.blocks.get(index).texture(0)));
+			return p;
 		}
 
 		@Override
@@ -108,7 +106,7 @@ public class TemplateBlockList extends TemplateList
 	@Override
 	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
-		String[] values = ((PanelObjectList) panel).objectList.getValues();
+		String[] values = ((PanelObjectList) panel).getObjectList().getValues();
 		TagString[] tags = new TagString[values.length];
 		for (int i = 0; i < tags.length; ++i)
 			tags[i] = new TagString(Tags.DEFAULT_STRING, values[i]);

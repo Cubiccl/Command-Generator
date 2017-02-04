@@ -1,9 +1,8 @@
 package fr.cubiccl.generator.gui.component.interfaces;
 
-import java.awt.image.BufferedImage;
+import java.awt.Component;
 
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.utils.Text;
 
 public interface IObjectList
 {
@@ -16,9 +15,9 @@ public interface IObjectList
 	 * @return A panel to display to the user, so that he or she may create or edit an Object. */
 	public CGPanel createAddPanel(int editIndex);
 
-	public Text getName(int index);
-
-	public BufferedImage getTexture(int index);
+	/** @param index - The index of the selected Object.
+	 * @return A Panel that should display the selected Object. */
+	public Component getDisplayComponent(int index);
 
 	public String[] getValues();
 

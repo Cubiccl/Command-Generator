@@ -8,6 +8,7 @@ import javax.swing.JMenuBar;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCustomObjects;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelCommandHistory;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelSettings;
 import fr.cubiccl.generator.utils.Lang;
@@ -16,15 +17,18 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 {
 	private static final long serialVersionUID = 2644541217645898670L;
 
-	private CMenuItem history, settings, exit;
+	private CMenuItem objects, history, settings, exit;
+	private boolean objectsEnabled = true;
 
 	public CMenuBar()
 	{
+		this.add(this.objects = new CMenuItem());
 		this.add(this.history = new CMenuItem());
 		this.add(this.settings = new CMenuItem());
 		this.add(Box.createHorizontalGlue());
 		this.add(this.exit = new CMenuItem());
 
+		this.objects.addActionListener(this);
 		this.history.addActionListener(this);
 		this.settings.addActionListener(this);
 		this.exit.addActionListener(this);
@@ -35,6 +39,11 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
+		if (e.getSource() == this.objects)
+		{
+			this.toggleObjects(false);
+			CommandGenerator.stateManager.setState(new PanelCustomObjects(), null);
+		}
 		if (e.getSource() == this.history)
 		{
 			this.toggleMenu(false);
@@ -51,13 +60,22 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 
 	public void toggleMenu(boolean enabled)
 	{
+		if (enabled) this.objects.setEnabled(this.objectsEnabled);
+		else this.objects.setEnabled(false);
 		this.history.setEnabled(enabled);
 		this.settings.setEnabled(enabled);
+	}
+
+	public void toggleObjects(boolean enabled)
+	{
+		this.objectsEnabled = enabled;
+		this.objects.setEnabled(enabled);
 	}
 
 	@Override
 	public void updateTranslations()
 	{
+		this.objects.setText(Lang.translate("menu.objects"));
 		this.history.setText(Lang.translate("command.history"));
 		this.settings.setText(Lang.translate("menu.settings"));
 		this.exit.setText(Lang.translate("menu.exit"));

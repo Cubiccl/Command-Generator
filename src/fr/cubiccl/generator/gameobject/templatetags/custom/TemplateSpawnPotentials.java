@@ -1,6 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
-import java.awt.image.BufferedImage;
+import java.awt.Component;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.CommandGenerator;
@@ -13,6 +13,8 @@ import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.tag.SpawnPotentialPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
@@ -99,15 +101,12 @@ public class TemplateSpawnPotentials extends TemplateList
 		}
 
 		@Override
-		public Text getName(int index)
+		public Component getDisplayComponent(int index)
 		{
-			return new Text(this.getValues()[index], false);
-		}
-
-		@Override
-		public BufferedImage getTexture(int index)
-		{
-			return this.spawnPotentials.get(index).entity.entity.texture();
+			CGPanel p = new CGPanel();
+			p.add(new CGLabel(new Text(this.spawnPotentials.get(index).toString(), false)));
+			p.add(new ImageLabel(this.spawnPotentials.get(index).entity.entity.texture()));
+			return p;
 		}
 
 		@Override
@@ -152,7 +151,7 @@ public class TemplateSpawnPotentials extends TemplateList
 	@Override
 	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
-		ArrayList<SpawnPotential> values = ((SpawnPotentialList) ((PanelObjectList) panel).objectList).spawnPotentials;
+		ArrayList<SpawnPotential> values = ((SpawnPotentialList) ((PanelObjectList) panel).getObjectList()).spawnPotentials;
 		TagCompound[] tags = new TagCompound[values.size()];
 		for (int i = 0; i < tags.length; ++i)
 			tags[i] = values.get(i).toTag(Tags.DEFAULT_COMPOUND);

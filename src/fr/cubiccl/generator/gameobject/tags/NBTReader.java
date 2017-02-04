@@ -74,7 +74,7 @@ public class NBTReader
 	{
 		if (isInList) return readNamelessTag(determineType(tag), tag, isJson);
 		String id = tag.substring(0, tag.indexOf(":")), value = tag.substring(tag.indexOf(":") + 1);
-		if (isJson) id = id.substring(1, id.length() - 1);
+		if (isJson && id.startsWith("\"") && id.endsWith("\"")) id = id.substring(1, id.length() - 1);
 		byte type = determineType(value);
 		TemplateTag matching = findMatchingTag(id, type);
 		if (matching == null) return null;

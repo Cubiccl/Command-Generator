@@ -1,6 +1,6 @@
 package fr.cubiccl.generator.gameobject;
 
-import java.awt.image.BufferedImage;
+import java.awt.Component;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
@@ -9,6 +9,7 @@ import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelAttributeModifier;
 import fr.cubiccl.generator.utils.Text;
@@ -45,15 +46,9 @@ public class AppliedAttribute extends GameObject
 		}
 
 		@Override
-		public Text getName(int index)
+		public Component getDisplayComponent(int index)
 		{
-			return new Text(this.modifiers.get(index).name, false);
-		}
-
-		@Override
-		public BufferedImage getTexture(int index)
-		{
-			return null;
+			return new CGLabel(new Text(this.modifiers.get(index).name, false));
 		}
 
 		@Override
@@ -61,7 +56,7 @@ public class AppliedAttribute extends GameObject
 		{
 			String[] values = new String[this.modifiers.size()];
 			for (int i = 0; i < values.length; i++)
-				values[i] = this.getName(i).toString();
+				values[i] = this.modifiers.get(i).name;
 			return values;
 		}
 

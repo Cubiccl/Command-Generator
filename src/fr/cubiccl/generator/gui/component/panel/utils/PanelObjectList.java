@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gui.component.panel.utils;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
@@ -12,8 +13,6 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
-import fr.cubiccl.generator.gui.component.label.CGLabel;
-import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.IStateListener;
 
@@ -22,11 +21,10 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 	private static final long serialVersionUID = 2923920419688577940L;
 
 	private CGButton buttonAdd, buttonEdit, buttonRemove;
+	private Component componentDisplay;
 	private int editing = -1;
-	private ImageLabel labelImage;
-	private CGLabel labelName;
 	private CGList list;
-	public final IObjectList objectList;
+	private IObjectList objectList;
 
 	public PanelObjectList(IObjectList objectList)
 	{
@@ -39,12 +37,7 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		this.objectList = objectList;
 
 		GridBagConstraints gbc = this.createGridBagLayout();
-		this.add(this.labelImage = new ImageLabel(), gbc);
-		++gbc.gridy;
-		this.add(this.labelName = new CGLabel(""), gbc);
-
-		++gbc.gridx;
-		--gbc.gridy;
+		gbc.gridx = 1;
 		gbc.gridheight = 3;
 		this.add((this.list = new CGList()).scrollPane, gbc);
 
@@ -55,6 +48,10 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		this.add(this.buttonEdit = new CGButton("general.edit"), gbc);
 		++gbc.gridy;
 		this.add(this.buttonRemove = new CGButton("general.remove"), gbc);
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		gbc.gridheight = 3;
 
 		this.buttonEdit.setEnabled(false);
 		this.buttonRemove.setEnabled(false);
@@ -81,6 +78,11 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		} else if (e.getSource() == this.buttonRemove) this.removeSelected();
 	}
 
+	public IObjectList getObjectList()
+	{
+		return this.objectList;
+	}
+
 	private void removeSelected()
 	{
 		int index = this.selectedIndex();
@@ -96,6 +98,12 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		return this.list.getSelectedIndex();
 	}
 
+	public void setList(IObjectList objectList)
+	{
+		this.objectList = objectList;
+		this.updateList();
+	}
+
 	@Override
 	public boolean shouldStateClose(CGPanel panel)
 	{
@@ -109,15 +117,14 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		int index = this.selectedIndex();
 		this.buttonEdit.setEnabled(index != -1);
 		this.buttonRemove.setEnabled(index != -1);
-		if (index == -1)
+		if (this.componentDisplay != null) this.remove(this.componentDisplay);
+		if (index == -1) this.componentDisplay = null;
+		else
 		{
-			this.labelImage.setImage(null);
-			this.labelName.setText("");
-		} else
-		{
-			this.labelImage.setImage(this.objectList.getTexture(index));
-			this.labelName.setTextID(this.objectList.getName(index));
+			this.componentDisplay = this.objectList.getDisplayComponent(index);
+			this.add(this.componentDisplay, this.gbc);
 		}
+		this.revalidate();
 	}
 
 	public void updateList()

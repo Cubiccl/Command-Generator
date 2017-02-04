@@ -1,33 +1,55 @@
 package fr.cubiccl.generator.gameobject.registries;
 
+import java.awt.Component;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import javax.swing.JOptionPane;
+
+import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.*;
+import fr.cubiccl.generator.gameobject.registries.ListInterface.AttributeList;
+import fr.cubiccl.generator.gameobject.registries.ListInterface.BlockList;
+import fr.cubiccl.generator.gameobject.registries.ListInterface.CoordinatesList;
+import fr.cubiccl.generator.gameobject.registries.ListInterface.EffectList;
+import fr.cubiccl.generator.gameobject.registries.ListInterface.EnchantmentList;
+import fr.cubiccl.generator.gameobject.registries.ListInterface.EntityList;
+import fr.cubiccl.generator.gameobject.registries.ListInterface.ItemList;
+import fr.cubiccl.generator.gameobject.registries.ListInterface.JsonList;
+import fr.cubiccl.generator.gameobject.registries.ListInterface.ModifierList;
+import fr.cubiccl.generator.gameobject.registries.ListInterface.TradeList;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Text;
 
-public class ObjectSaver<T extends GameObject>
+public class ObjectSaver<T extends GameObject> implements IObjectList
 {
-	public static final ObjectSaver<AttributeModifier> attributeModifiers = new ObjectSaver<AttributeModifier>("modifier", AttributeModifier.class);
-	public static final ObjectSaver<AppliedAttribute> attributes = new ObjectSaver<AppliedAttribute>("attribute", AppliedAttribute.class);
-	public static final ObjectSaver<PlacedBlock> blocks = new ObjectSaver<PlacedBlock>("block", PlacedBlock.class);
-	public static final ObjectSaver<Coordinates> coordinates = new ObjectSaver<Coordinates>("coordinates", Coordinates.class);
-	public static final ObjectSaver<Effect> effects = new ObjectSaver<Effect>("effect", Effect.class);
-	public static final ObjectSaver<Enchantment> enchantments = new ObjectSaver<Enchantment>("enchantment", Enchantment.class);
-	public static final ObjectSaver<LivingEntity> entities = new ObjectSaver<LivingEntity>("entity", LivingEntity.class);
-	public static final ObjectSaver<ItemStack> items = new ObjectSaver<ItemStack>("item", ItemStack.class);
-	public static final ObjectSaver<JsonMessage> jsonMessages = new ObjectSaver<JsonMessage>("json", JsonMessage.class);
+	public static final ObjectSaver<AttributeModifier> attributeModifiers = new ObjectSaver<AttributeModifier>("modifier", new ModifierList(),
+			AttributeModifier.class);
+	public static final ObjectSaver<AppliedAttribute> attributes = new ObjectSaver<AppliedAttribute>("attribute", new AttributeList(), AppliedAttribute.class);
+	public static final ObjectSaver<PlacedBlock> blocks = new ObjectSaver<PlacedBlock>("block", new BlockList(), PlacedBlock.class);
+	public static final ObjectSaver<Coordinates> coordinates = new ObjectSaver<Coordinates>("coordinates", new CoordinatesList(), Coordinates.class);
+	public static final ObjectSaver<Effect> effects = new ObjectSaver<Effect>("effect", new EffectList(), Effect.class);
+	public static final ObjectSaver<Enchantment> enchantments = new ObjectSaver<Enchantment>("enchantment", new EnchantmentList(), Enchantment.class);
+	public static final ObjectSaver<LivingEntity> entities = new ObjectSaver<LivingEntity>("entity", new EntityList(), LivingEntity.class);
+	public static final ObjectSaver<ItemStack> items = new ObjectSaver<ItemStack>("item", new ItemList(), ItemStack.class);
+	public static final ObjectSaver<JsonMessage> jsonMessages = new ObjectSaver<JsonMessage>("json", new JsonList(), JsonMessage.class);
 	private static final int MODIFIERS = 0, ATTRIBUTES = 1, BLOCKS = 2, COORDINATES = 3, EFFECTS = 4, ENCHANTMENTS = 5, ENTITIES = 6, ITEMS = 7, JSONS = 8,
 			TRADES = 9;
-	public static final ObjectSaver<TradeOffer> trades = new ObjectSaver<TradeOffer>("trade", TradeOffer.class);
+	@SuppressWarnings("rawtypes")
+	public static ObjectSaver[] savers;
+	public static final ObjectSaver<TradeOffer> trades = new ObjectSaver<TradeOffer>("trade", new TradeList(), TradeOffer.class);
 
 	public static void load()
 	{
+		savers = new ObjectSaver[]
+		{ attributeModifiers, attributes, blocks, coordinates, effects, enchantments, entities, items, jsonMessages, trades };
 		resetAll();
 		String[] data = FileUtils.readFileAsArray("savedObjects.txt");
 		int current = -1;
@@ -73,7 +95,7 @@ public class ObjectSaver<T extends GameObject>
 					break;
 
 				case JSONS:
-					jsonMessages.addObject(JsonMessage.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					jsonMessages.addObject(JsonMessage.createFrom((TagCompound) NBTReader.read(line, true, true)));
 					break;
 
 				case TRADES:
@@ -88,16 +110,9 @@ public class ObjectSaver<T extends GameObject>
 
 	public static void resetAll()
 	{
-		attributeModifiers.reset();
-		attributes.reset();
-		blocks.reset();
-		coordinates.reset();
-		effects.reset();
-		enchantments.reset();
-		entities.reset();
-		items.reset();
-		jsonMessages.reset();
-		trades.reset();
+		for (@SuppressWarnings("rawtypes")
+		ObjectSaver saver : savers)
+			saver.reset();
 	}
 
 	public static void save()
@@ -106,8 +121,7 @@ public class ObjectSaver<T extends GameObject>
 		data.add("// This file saves Custom Game Objects.");
 
 		for (@SuppressWarnings("rawtypes")
-		ObjectSaver saver : new ObjectSaver[]
-		{ attributeModifiers, attributes, blocks, coordinates, effects, enchantments, entities, items, jsonMessages, trades })
+		ObjectSaver saver : savers)
 		{
 			data.add("");
 			data.add("[" + saver.name.toString().toUpperCase() + "]");
@@ -119,19 +133,50 @@ public class ObjectSaver<T extends GameObject>
 	}
 
 	public final Class<T> c;
+	private ListInterface<T> list;
 	public final Text name;
 	private HashMap<String, T> savedObjects;
 
-	protected ObjectSaver(String nameID, Class<T> c)
+	protected ObjectSaver(String nameID, ListInterface<T> list, Class<T> c)
 	{
 		this.name = new Text("objects." + nameID);
+		this.list = list;
 		this.c = c;
 		this.savedObjects = new HashMap<String, T>();
+	}
+
+	@Override
+	public boolean addObject(CGPanel panel, int editIndex)
+	{
+		try
+		{
+			T object = this.list.createObject(panel);
+
+			if (editIndex != -1)
+			{
+				T o = this.get(editIndex);
+				this.delete(o);
+				object.setCustomName(o.customName());
+			} else object.setCustomName(JOptionPane.showInputDialog(new Text("objects.name")));
+
+			this.addObject(object);
+			return true;
+		} catch (CommandGenerationException e)
+		{
+			CommandGenerator.report(e);
+			return false;
+		}
 	}
 
 	public void addObject(T object)
 	{
 		if (!this.knows(object)) this.savedObjects.put(object.customName(), object);
+	}
+
+	@Override
+	public CGPanel createAddPanel(int editIndex)
+	{
+		return this.list.createEditionPanel(editIndex == -1 ? null : this.list()[editIndex]);
 	}
 
 	public void delete(T object)
@@ -143,6 +188,27 @@ public class ObjectSaver<T extends GameObject>
 	{
 		if (this.savedObjects.containsKey(name)) return this.savedObjects.get(name);
 		return null;
+	}
+
+	private T get(int index)
+	{
+		return this.list()[index];
+	}
+
+	@Override
+	public Component getDisplayComponent(int index)
+	{
+		return this.list.getDisplayComponent(this.list()[index]);
+	}
+
+	@Override
+	public String[] getValues()
+	{
+		T[] list = this.list();
+		String[] names = new String[list.length];
+		for (int i = 0; i < names.length; ++i)
+			names[i] = list[i].customName();
+		return names;
 	}
 
 	public boolean knows(T object)
@@ -164,6 +230,12 @@ public class ObjectSaver<T extends GameObject>
 			}
 		});
 		return values.toArray((T[]) Array.newInstance(this.c, values.size()));
+	}
+
+	@Override
+	public void removeObject(int index)
+	{
+		this.delete(this.list()[index]);
 	}
 
 	private void reset()

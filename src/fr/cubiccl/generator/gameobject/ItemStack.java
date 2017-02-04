@@ -22,10 +22,10 @@ public class ItemStack extends GameObject
 
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.ITEM_ID)) i = ObjectRegistry.items.find(((TagString) t).value);
-			if (t.id().equals(Tags.ITEM_COUNT)) a = ((TagNumber) t).value;
-			if (t.id().equals(Tags.ITEM_DAMAGE)) d = ((TagNumber) t).value;
-			if (t.id().equals(Tags.ITEM_SLOT)) s = ((TagNumber) t).value;
+			if (t.id().equals(Tags.ITEM_ID.id())) i = ObjectRegistry.items.find(((TagString) t).value);
+			if (t.id().equals(Tags.ITEM_COUNT.id())) a = ((TagNumber) t).value;
+			if (t.id().equals(Tags.ITEM_DAMAGE.id())) d = ((TagNumber) t).value;
+			if (t.id().equals(Tags.ITEM_SLOT.id())) s = ((TagNumber) t).value;
 			if (t.id().equals(Tags.ITEM_NBT.id())) nbt = (TagCompound) t;
 		}
 
@@ -53,6 +53,14 @@ public class ItemStack extends GameObject
 		this.amount = amount;
 		this.slot = 0;
 		this.nbt = nbt;
+	}
+
+	@Override
+	public ItemStack clone() throws CloneNotSupportedException
+	{
+		ItemStack is = new ItemStack(item, damage, amount, nbt);
+		is.slot = this.slot;
+		return is;
 	}
 
 	@Override

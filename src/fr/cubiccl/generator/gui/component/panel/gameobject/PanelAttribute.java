@@ -39,7 +39,7 @@ public class PanelAttribute extends CGPanel
 
 	public AppliedAttribute generateAttribute() throws CommandGenerationException
 	{
-		ArrayList<AttributeModifier> modifiers = ((AttributeModifierList) this.panelModifiers.objectList).modifiers;
+		ArrayList<AttributeModifier> modifiers = ((AttributeModifierList) this.panelModifiers.getObjectList()).modifiers;
 		this.entryBase.checkValue(CGEntry.NUMBER);
 		return new AppliedAttribute(this.comboboxAttribute.getSelectedObject(), Double.parseDouble(this.entryBase.getText()),
 				modifiers.toArray(new AttributeModifier[modifiers.size()]));
@@ -49,9 +49,9 @@ public class PanelAttribute extends CGPanel
 	{
 		this.comboboxAttribute.setSelected(attribute.attribute);
 		this.entryBase.setText(Utils.doubleToString(attribute.base));
-		((AttributeModifierList) this.panelModifiers.objectList).modifiers.clear();
+		((AttributeModifierList) this.panelModifiers.getObjectList()).modifiers.clear();
 		for (AttributeModifier m : attribute.modifiers)
-			((AttributeModifierList) this.panelModifiers.objectList).modifiers.add(m);
+			((AttributeModifierList) this.panelModifiers.getObjectList()).modifiers.add(m);
 		this.panelModifiers.updateList();
 	}
 

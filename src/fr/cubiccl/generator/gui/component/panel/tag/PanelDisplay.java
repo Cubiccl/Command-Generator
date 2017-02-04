@@ -1,9 +1,9 @@
 package fr.cubiccl.generator.gui.component.panel.tag;
 
+import java.awt.Component;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
@@ -14,6 +14,7 @@ import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateDisplay;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelColor;
@@ -29,6 +30,7 @@ public class PanelDisplay extends CGPanel implements IObjectList, ActionListener
 	private CGRadioButton buttonTranslate, buttonName, buttonNone;
 	private CGCheckBox checkboxDye;
 	private CGEntry entryName;
+	private PanelObjectList listLore;
 	private ArrayList<String> lore;
 	private PanelColor panelColor;
 
@@ -48,7 +50,7 @@ public class PanelDisplay extends CGPanel implements IObjectList, ActionListener
 		gbc.gridwidth = 3;
 		this.add((this.entryName = new CGEntry(new Text("display.name"), new Text("display.name"))).container, gbc);
 		++gbc.gridy;
-		this.add(new PanelObjectList("display.lore.title", this), gbc);
+		this.add(this.listLore = new PanelObjectList("display.lore.title", this), gbc);
 		++gbc.gridy;
 		this.add(this.checkboxDye = new CGCheckBox("display.dye.check"), gbc);
 		++gbc.gridy;
@@ -110,6 +112,11 @@ public class PanelDisplay extends CGPanel implements IObjectList, ActionListener
 	}
 
 	@Override
+	public Component getDisplayComponent(int index)
+	{
+		return new CGLabel(this.getName(index));
+	}
+
 	public Text getName(int index)
 	{
 		String value = this.lore.get(index);
@@ -118,17 +125,11 @@ public class PanelDisplay extends CGPanel implements IObjectList, ActionListener
 	}
 
 	@Override
-	public BufferedImage getTexture(int index)
-	{
-		return null;
-	}
-
-	@Override
 	public String[] getValues()
 	{
 		String[] values = new String[this.lore.size()];
 		for (int i = 0; i < values.length; i++)
-			values[i] = new Text("display.lore.x", new Replacement("<index>", Integer.toString(i))).toString();
+			values[i] = new Text("display.lore.x", new Replacement("<index>", Integer.toString(i + 1))).toString();
 		return values;
 	}
 
@@ -148,7 +149,7 @@ public class PanelDisplay extends CGPanel implements IObjectList, ActionListener
 		}
 		if (previousValue.hasTag(Tags.DISPLAY_NAME.id()))
 		{
-			this.buttonTranslate.setSelected(true);
+			this.buttonName.setSelected(true);
 			this.entryName.setVisible(true);
 			this.entryName.setText((String) previousValue.getTagFromId(Tags.DISPLAY_NAME.id()).value());
 		}
@@ -158,6 +159,7 @@ public class PanelDisplay extends CGPanel implements IObjectList, ActionListener
 			TagList lores = (TagList) previousValue.getTagFromId(Tags.DISPLAY_LORE.id());
 			for (Tag t : lores.value())
 				this.lore.add((String) t.value());
+			this.listLore.updateList();
 		}
 		if (previousValue.hasTag(Tags.DISPLAY_COLOR.id()))
 		{
@@ -166,5 +168,4 @@ public class PanelDisplay extends CGPanel implements IObjectList, ActionListener
 			this.panelColor.setupFrom((int) previousValue.getTagFromId(Tags.DISPLAY_COLOR.id()).value());
 		}
 	}
-
 }

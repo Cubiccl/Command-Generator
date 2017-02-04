@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gui.component.panel.tag;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Graphics;
 import java.awt.GridBagConstraints;
 import java.awt.image.BufferedImage;
@@ -16,6 +17,7 @@ import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelColor;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
@@ -52,12 +54,14 @@ public class ExplosionPanel extends CGPanel
 		}
 
 		@Override
-		public Text getName(int index)
+		public Component getDisplayComponent(int index)
 		{
-			return new Text(Integer.toString(this.colors.get(index).value()), false);
+			CGPanel p = new CGPanel();
+			p.add(new CGLabel(new Text(Integer.toString(this.colors.get(index).value()), false)));
+			p.add(new ImageLabel(this.getTexture(index)));
+			return p;
 		}
 
-		@Override
 		public BufferedImage getTexture(int index)
 		{
 			BufferedImage img = new BufferedImage(40, 40, BufferedImage.TYPE_INT_RGB);

@@ -126,8 +126,8 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 	public void setupFrom(PlacedBlock placedBlock)
 	{
 		this.setBlock(placedBlock.block);
-		this.damage = placedBlock.data;
-		if (placedBlock.nbt.size() > 0) this.panelTags.setTags(placedBlock.nbt.value());
+		if (this.hasData) this.damage = placedBlock.data;
+		if (this.panelTags.isVisible() && placedBlock.nbt.size() > 0) this.panelTags.setTags(placedBlock.nbt.value());
 	}
 
 	@Override

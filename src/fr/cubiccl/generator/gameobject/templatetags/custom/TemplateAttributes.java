@@ -1,6 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
-import java.awt.image.BufferedImage;
+import java.awt.Component;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.CommandGenerator;
@@ -12,11 +12,11 @@ import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelAttribute;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Text;
 
 public class TemplateAttributes extends TemplateList
 {
@@ -54,15 +54,9 @@ public class TemplateAttributes extends TemplateList
 		}
 
 		@Override
-		public Text getName(int index)
+		public Component getDisplayComponent(int index)
 		{
-			return this.attributes.get(index).attribute.name();
-		}
-
-		@Override
-		public BufferedImage getTexture(int index)
-		{
-			return null;
+			return new CGLabel(this.attributes.get(index).attribute.name());
 		}
 
 		@Override
@@ -70,7 +64,7 @@ public class TemplateAttributes extends TemplateList
 		{
 			String[] values = new String[this.attributes.size()];
 			for (int i = 0; i < values.length; i++)
-				values[i] = this.getName(i).toString();
+				values[i] = this.attributes.get(i).attribute.name().toString();
 			return values;
 		}
 
@@ -106,7 +100,7 @@ public class TemplateAttributes extends TemplateList
 	@Override
 	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
-		ArrayList<AppliedAttribute> list = ((AttributeList) ((PanelObjectList) panel).objectList).attributes;
+		ArrayList<AppliedAttribute> list = ((AttributeList) ((PanelObjectList) panel).getObjectList()).attributes;
 		TagCompound[] tags = new TagCompound[list.size()];
 		for (int i = 0; i < tags.length; i++)
 			tags[i] = list.get(i).toTag(Tags.DEFAULT_COMPOUND);

@@ -79,7 +79,7 @@ public class PanelEntity extends CGPanel implements ActionListener
 	public void setupFrom(LivingEntity entity)
 	{
 		this.setEntity(entity.entity);
-		this.setTags(entity.nbt.value());
+		if (this.panelTags.isVisible()) this.setTags(entity.nbt.value());
 	}
 
 }

@@ -45,6 +45,7 @@ public abstract class TemplateCompound extends TemplateTag
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (String v : values)
 		{
+			if (v.equals("")) continue;
 			Tag t = NBTReader.read(v, false, isJson);
 			if (t != null) tags.add(t);
 		}

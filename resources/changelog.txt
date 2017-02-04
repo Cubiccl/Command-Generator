@@ -1,12 +1,17 @@
 ------------------------- VERSION 2.1.0 -------------------------
 ADDITIONS
+- Custom Objects can now be created and saved ! 
+These include Attributes, Attribute modifiers, Blocks, Coordinates, Effects, Enchantments, Entities, Items, Json messages and Trade Offers.
 
 BUGS FIXED
+- Fixed crash when reading an empty List or Compound NBT Tag.
+- Fixed various errors in the Display NBT Tag.
 
 CHANGED TRANSLATIONS
 
 ADDED TRANSLATIONS
-objects.attribute, objects.block, objects.coordinates, objects.effect, objects.enchantment, objects.entity, objects.item, objects.json, objects.modifier, objects.trade
+menu.objects
+objects.attribute, objects.block, objects.coordinates, objects.effect, objects.enchantment, objects.entity, objects.item, objects.json, objects.modifier, objects.name, objects.trade
 
 ------------------------- VERSION 2.0.3 -------------------------
 ADDITIONS

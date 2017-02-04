@@ -1,6 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
-import java.awt.image.BufferedImage;
+import java.awt.Component;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.LivingEntity;
@@ -11,10 +11,11 @@ import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEntity;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
-import fr.cubiccl.generator.utils.Text;
 
 public class TemplateEntityList extends TemplateList
 {
@@ -51,15 +52,12 @@ public class TemplateEntityList extends TemplateList
 		}
 
 		@Override
-		public Text getName(int index)
+		public Component getDisplayComponent(int index)
 		{
-			return this.entities.get(index).entity.name();
-		}
-
-		@Override
-		public BufferedImage getTexture(int index)
-		{
-			return this.entities.get(index).entity.texture();
+			CGPanel p = new CGPanel();
+			p.add(new CGLabel(this.entities.get(index).entity.name()));
+			p.add(new ImageLabel(this.entities.get(index).entity.texture()));
+			return p;
 		}
 
 		@Override
@@ -103,7 +101,7 @@ public class TemplateEntityList extends TemplateList
 	@Override
 	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
-		ArrayList<LivingEntity> entities = ((EntityList) ((PanelObjectList) panel).objectList).entities;
+		ArrayList<LivingEntity> entities = ((EntityList) ((PanelObjectList) panel).getObjectList()).entities;
 		TagCompound[] t = new TagCompound[entities.size()];
 		for (int i = 0; i < t.length; i++)
 			t[i] = entities.get(i).toTag(Tags.DEFAULT_COMPOUND);

@@ -182,11 +182,11 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 	{
 		if (itemStack.item == null) return;
 		this.setItem(itemStack.item);
-		this.damage = itemStack.damage;
+		if (this.hasData) this.damage = itemStack.damage;
 		this.updateDisplay();
-		this.spinnerAmount.setText(Integer.toString(itemStack.amount));
-		this.spinnerDurability.setText(Integer.toString(itemStack.damage));
-		this.panelTags.setTags(itemStack.nbt.value());
+		if (this.spinnerAmount.isVisible()) this.spinnerAmount.setText(Integer.toString(itemStack.amount));
+		if (this.hasDurability) this.spinnerDurability.setText(Integer.toString(itemStack.damage));
+		if (this.panelTags.isVisible()) this.panelTags.setTags(itemStack.nbt.value());
 	}
 
 	@Override

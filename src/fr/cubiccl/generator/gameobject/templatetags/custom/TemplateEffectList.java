@@ -1,6 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
-import java.awt.image.BufferedImage;
+import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -13,6 +13,8 @@ import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEffect;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
@@ -66,15 +68,12 @@ public class TemplateEffectList extends TemplateList
 		}
 
 		@Override
-		public Text getName(int index)
+		public Component getDisplayComponent(int index)
 		{
-			return this.effects.get(index).type.name();
-		}
-
-		@Override
-		public BufferedImage getTexture(int index)
-		{
-			return this.effects.get(index).type.texture();
+			CGPanel p = new CGPanel();
+			p.add(new CGLabel(new Text(this.effects.get(index).toString())));
+			p.add(new ImageLabel(this.effects.get(index).type.texture()));
+			return p;
 		}
 
 		@Override
@@ -113,7 +112,7 @@ public class TemplateEffectList extends TemplateList
 	@Override
 	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
-		Effect[] values = ((EffectList) ((PanelObjectList) panel).objectList).effects.toArray(new Effect[0]);
+		Effect[] values = ((EffectList) ((PanelObjectList) panel).getObjectList()).effects.toArray(new Effect[0]);
 		TagCompound[] tags = new TagCompound[values.length];
 		for (int i = 0; i < tags.length; ++i)
 			tags[i] = values[i].toTag(Tags.DEFAULT_COMPOUND);

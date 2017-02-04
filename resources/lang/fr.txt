@@ -329,6 +329,7 @@ locate.Temple=Temple de la Jungle
 locate.Village=Village
 
 menu.exit=Quitter
+menu.objects=Objets personnalisés
 menu.settings=Paramètres
 
 objects.attribute=Attributs
@@ -340,6 +341,7 @@ objects.entity=Entités
 objects.item=Objets
 objects.json=Messages Json
 objects.modifier=Modificateurs d'Attributs
+objects.name=Donnez un nom à votre objet :
 objects.trade=Transactions de Villageois
 
 particle.block=Particule de Bloc

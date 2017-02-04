@@ -32,7 +32,7 @@ public class TemplateAttributeModifiers extends TemplateList
 	@Override
 	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
-		AttributeModifier[] values = ((AttributeModifierList) ((PanelObjectList) panel).objectList).modifiers.toArray(new AttributeModifier[0]);
+		AttributeModifier[] values = ((AttributeModifierList) ((PanelObjectList) panel).getObjectList()).modifiers.toArray(new AttributeModifier[0]);
 		TagCompound[] tags = new TagCompound[values.length];
 		for (int i = 0; i < tags.length; ++i)
 			tags[i] = values[i].toTag(Tags.DEFAULT_COMPOUND, false, false);
