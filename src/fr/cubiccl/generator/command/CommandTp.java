@@ -79,8 +79,8 @@ public class CommandTp extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = this.id + " " + this.panelTarget.generateTarget().toCommand() + " ";
-		if (this.comboboxMode.getValue().equals("entity")) return command + this.panelDestination.generateTarget().toCommand();
+		String command = this.id + " " + this.panelTarget.generate().toCommand() + " ";
+		if (this.comboboxMode.getValue().equals("entity")) return command + this.panelDestination.generate().toCommand();
 
 		String y = this.entryYRot.getText(), x = this.entryXRot.getText();
 		boolean rotation = !y.equals("") || !x.equals("");
@@ -108,7 +108,7 @@ public class CommandTp extends Command implements ActionListener
 			}
 		}
 
-		return command + this.panelCoordinates.generateCoordinates().toCommand() + " "
+		return command + this.panelCoordinates.generate().toCommand() + " "
 				+ (rotation ? (" " + (this.checkboxYRot.isSelected() ? "~" : "") + y + " " + (this.checkboxXRot.isSelected() ? "~" : "") + x) : "");
 	}
 }

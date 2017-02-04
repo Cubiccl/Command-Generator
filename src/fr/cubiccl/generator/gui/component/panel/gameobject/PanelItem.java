@@ -8,19 +8,22 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.button.CGButton;
+import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.textfield.CGSpinner;
 import fr.cubiccl.generator.utils.IStateListener;
 import fr.cubiccl.generator.utils.Utils;
 
-public class PanelItem extends CGPanel implements ActionListener, IStateListener<PanelItemSelection>
+public class PanelItem extends CGPanel implements ActionListener, IStateListener<PanelItemSelection>, ICustomObject<ItemStack>
 {
 	private static final long serialVersionUID = -8600189753659710473L;
 
@@ -39,7 +42,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this(titleID, ObjectRegistry.items.list(ObjectRegistry.SORT_NUMERICALLY));
 	}
 
-	public PanelItem(String titleID, boolean hasData, boolean hasNBT, Item[] items)
+	public PanelItem(String titleID, boolean hasData, boolean hasNBT, boolean customObjects, Item[] items)
 	{
 		super(titleID);
 		this.hasData = hasData;
@@ -63,6 +66,9 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		++gbc.gridy;
 		this.panelTags = new PanelTags("item.tags", Tag.ITEM);
 		if (hasNBT) this.add(this.panelTags, gbc);
+		gbc.fill = GridBagConstraints.NONE;
+		++gbc.gridy;
+		if (customObjects) this.add(new PanelCustomObject<ItemStack>(this, ObjectSaver.items), gbc);
 
 		this.buttonSelectItem.addActionListener(this);
 		this.panelTags.setTargetObject(this.item);
@@ -71,7 +77,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 
 	public PanelItem(String titleID, Item[] items)
 	{
-		this(titleID, true, true, items);
+		this(titleID, true, true, true, items);
 	}
 
 	@Override
@@ -92,7 +98,8 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		}
 	}
 
-	public ItemStack generateItem()
+	@Override
+	public ItemStack generate()
 	{
 		return new ItemStack(this.selectedItem(), this.selectedDamage(), this.selectedAmount(), this.getNBT(Tags.ITEM_NBT));
 	}
@@ -178,6 +185,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this.updateDisplay();
 	}
 
+	@Override
 	public void setupFrom(ItemStack itemStack)
 	{
 		if (itemStack.item == null) return;

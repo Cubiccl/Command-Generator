@@ -340,8 +340,12 @@ objects.enchantment=Enchantements
 objects.entity=Entités
 objects.item=Objets
 objects.json=Messages Json
+objects.load=Charger
 objects.modifier=Modificateurs d'Attributs
 objects.name=Donnez un nom à votre objet :
+objects.save=Enregistrer
+objects.target=Cibles
+objects.title=<object> personnalisé(e)s
 objects.trade=Transactions de Villageois
 
 particle.block=Particule de Bloc

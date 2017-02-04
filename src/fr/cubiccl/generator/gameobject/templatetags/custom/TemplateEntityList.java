@@ -34,8 +34,8 @@ public class TemplateEntityList extends TemplateList
 		@Override
 		public boolean addObject(CGPanel panel, int editIndex)
 		{
-			if (editIndex == -1) this.entities.add(((PanelEntity) panel).generateEntity());
-			else this.entities.set(editIndex, ((PanelEntity) panel).generateEntity());
+			if (editIndex == -1) this.entities.add(((PanelEntity) panel).generate());
+			else this.entities.set(editIndex, ((PanelEntity) panel).generate());
 			return true;
 		}
 

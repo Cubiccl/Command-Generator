@@ -118,6 +118,8 @@ public final class Tags
 	public static final TemplateString STATS_SUCCESS_NAME = new TemplateString("SuccessCountName", UNAVAILABLE);
 	public static final TemplateString STATS_SUCCESS_OBJECTIVE = new TemplateString("SuccessCountObjective", UNAVAILABLE);
 
+	public static final TemplateString TARGET = new TemplateString("target", UNAVAILABLE);
+
 	public static final TemplateString TEXT_BOLD = new TemplateString("bold", UNAVAILABLE);
 	public static final TemplateString TEXT_COLOR = new TemplateString("color", UNAVAILABLE);
 	public static final TemplateString TEXT_INSERTION = new TemplateString("insertion", UNAVAILABLE);

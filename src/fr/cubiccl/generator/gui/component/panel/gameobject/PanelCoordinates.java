@@ -3,13 +3,16 @@ package fr.cubiccl.generator.gui.component.panel.gameobject;
 import java.awt.GridBagConstraints;
 
 import fr.cubiccl.generator.gameobject.Coordinates;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
+import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class PanelCoordinates extends CGPanel
+public class PanelCoordinates extends CGPanel implements ICustomObject<Coordinates>
 {
 	private static final long serialVersionUID = -6721007750575550659L;
 
@@ -23,6 +26,11 @@ public class PanelCoordinates extends CGPanel
 	}
 
 	public PanelCoordinates(String titleID, boolean canBeRelative)
+	{
+		this(titleID, canBeRelative, true);
+	}
+
+	public PanelCoordinates(String titleID, boolean canBeRelative, boolean customObjects)
 	{
 		super(titleID);
 		this.canBeRelative = canBeRelative;
@@ -41,6 +49,12 @@ public class PanelCoordinates extends CGPanel
 		this.add(this.checkboxY = new CGCheckBox("coordinate.relative"), gbc);
 		++gbc.gridy;
 		this.add(this.checkboxZ = new CGCheckBox("coordinate.relative"), gbc);
+		--gbc.gridx;
+		++gbc.gridy;
+		++gbc.gridwidth;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.CENTER;
+		if (customObjects) this.add(new PanelCustomObject<Coordinates>(this, ObjectSaver.coordinates), gbc);
 
 		this.entryX.addNumberFilter();
 		this.entryY.addNumberFilter();
@@ -57,7 +71,8 @@ public class PanelCoordinates extends CGPanel
 		}
 	}
 
-	public Coordinates generateCoordinates() throws CommandGenerationException
+	@Override
+	public Coordinates generate() throws CommandGenerationException
 	{
 		this.entryX.checkValue(CGEntry.FLOAT);
 		this.entryY.checkValue(CGEntry.FLOAT);
@@ -82,6 +97,7 @@ public class PanelCoordinates extends CGPanel
 		this.checkboxZ.setTextID(text);
 	}
 
+	@Override
 	public void setupFrom(Coordinates coordinates)
 	{
 		this.entryX.setText(Float.toString(coordinates.x));

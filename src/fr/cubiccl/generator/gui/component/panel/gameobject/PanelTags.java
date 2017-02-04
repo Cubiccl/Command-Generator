@@ -141,7 +141,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateBlockId) template).damage);
 				((TemplateBlockId) template).damage = -1;
 				break;
-			}  else if (this.tags[i].id().equals("blockData") && template instanceof TemplateBlockId && template.id().equals("blockId"))
+			} else if (this.tags[i].id().equals("blockData") && template instanceof TemplateBlockId && template.id().equals("blockId"))
 			{
 				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateBlockId) template).damage);
 				((TemplateBlockId) template).damage = -1;
@@ -236,8 +236,11 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	{
 		super.updateTranslations();
 		if (this.tags == null) return;
-		if (this.shownTags.size() == 0) this.areaValue.setText("");
-		else
+		if (this.shownTags.size() == 0)
+		{
+			this.listTags.setValues(new String[0]);
+			this.areaValue.setText("");
+		} else
 		{
 			int selected = this.listTags.getSelectedIndex();
 			String[] names = new String[this.shownTags.size()];

@@ -58,9 +58,9 @@ public class CommandFill extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		PlacedBlock block = this.panelBlockFill.generateBlock();
-		String command = this.id + " " + this.panelCoordinatesStart.generateCoordinates().toCommand() + " "
-				+ this.panelCoordinatesEnd.generateCoordinates().toCommand() + " " + block.block.id() + " " + block.data + " ";
+		PlacedBlock block = this.panelBlockFill.generate();
+		String command = this.id + " " + this.panelCoordinatesStart.generate().toCommand() + " " + this.panelCoordinatesEnd.generate().toCommand() + " "
+				+ block.block.id() + " " + block.data + " ";
 
 		if (!this.comboboxMode.getValue().equals("filter"))
 		{
@@ -68,7 +68,7 @@ public class CommandFill extends Command implements ActionListener
 			return command + this.comboboxMode.getValue() + (nbt.equals("{}") ? "" : " " + nbt);
 		}
 
-		PlacedBlock block2 = this.panelBlockReplace.generateBlock();
+		PlacedBlock block2 = this.panelBlockReplace.generate();
 		return command + " replace " + block2.block.id() + " " + block2.data;
 	}
 }

@@ -5,14 +5,17 @@ import java.awt.GridBagConstraints;
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.TradeOffer;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
+import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.tag.ContainerPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class PanelTrade extends CGPanel
+public class PanelTrade extends CGPanel implements ICustomObject<TradeOffer>
 {
 	private static final long serialVersionUID = -7818304541070644582L;
 
@@ -22,6 +25,11 @@ public class PanelTrade extends CGPanel
 	private CGPanel panelOptions;
 
 	public PanelTrade()
+	{
+		this(true);
+	}
+
+	public PanelTrade(boolean customObjects)
 	{
 		this.panelOptions = new CGPanel("trade.properties");
 		GridBagConstraints gbc = this.panelOptions.createGridBagLayout();
@@ -35,14 +43,16 @@ public class PanelTrade extends CGPanel
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(this.panelItems = new ContainerPanel(ObjectRegistry.containers.find("trade")), gbc);
 		++gbc.gridy;
-		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(this.panelOptions, gbc);
+		++gbc.gridy;
+		if (customObjects) this.add(new PanelCustomObject<TradeOffer>(this, ObjectSaver.trades), gbc);
 
 		this.entryMaxUses.addIntFilter();
 		this.entryUses.addIntFilter();
 	}
 
-	public TradeOffer generateTrade() throws CommandGenerationException
+	@Override
+	public TradeOffer generate() throws CommandGenerationException
 	{
 		this.entryMaxUses.checkValue(CGEntry.INTEGER);
 		this.entryUses.checkValue(CGEntry.INTEGER);
@@ -80,6 +90,7 @@ public class PanelTrade extends CGPanel
 		return trade;
 	}
 
+	@Override
 	public void setupFrom(TradeOffer trade)
 	{
 		this.checkboxReward.setSelected(trade.experienceReward);

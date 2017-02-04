@@ -86,8 +86,8 @@ public class CommandStats extends Command implements ActionListener
 	{
 		String command = this.id + " " + this.comboboxSourceMode.getValue() + " ";
 
-		if (this.comboboxSourceMode.getValue().equals("block")) command += this.panelCoordinates.generateCoordinates().toCommand();
-		else command += this.panelSource.generateTarget().toCommand();
+		if (this.comboboxSourceMode.getValue().equals("block")) command += this.panelCoordinates.generate().toCommand();
+		else command += this.panelSource.generate().toCommand();
 
 		command += " " + this.comboboxMode.getValue() + " " + this.comboboxStat.getValue();
 		if (this.comboboxMode.getValue().equals("set"))
@@ -95,7 +95,7 @@ public class CommandStats extends Command implements ActionListener
 			String objective = this.entryObjective.getText();
 			if (objective.equals("")) throw new MissingValueException(this.entryObjective.label.getAbsoluteText());
 			if (objective.contains(" ")) throw new WrongValueException(this.entryObjective.label.getAbsoluteText(), new Text("error.space"), objective);
-			command += " " + this.panelTarget.generateTarget().toCommand() + " " + objective;
+			command += " " + this.panelTarget.generate().toCommand() + " " + objective;
 		}
 
 		return command;

@@ -101,9 +101,9 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 	public String generate() throws CommandGenerationException
 	{
 		String command = this.id + " " + this.comboboxMode.getValue() + " ";
-		if (this.comboboxMode.getValue().equals("block")) command += this.panelCoordinates.generateCoordinates().toCommand() + " " + this.selectedBlockSlot;
-		else command += this.panelTarget.generateTarget().toCommand() + " " + this.selectedEntitySlot;
-		return command + " " + this.panelItem.generateItem().toCommand();
+		if (this.comboboxMode.getValue().equals("block")) command += this.panelCoordinates.generate().toCommand() + " " + this.selectedBlockSlot;
+		else command += this.panelTarget.generate().toCommand() + " " + this.selectedEntitySlot;
+		return command + " " + this.panelItem.generate().toCommand();
 	}
 
 	@Override

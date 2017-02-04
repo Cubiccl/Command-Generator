@@ -84,7 +84,7 @@ public class CommandScoreboardTeams extends Command implements ActionListener
 		command += " " + team;
 		if (mode.equals("empty")) return command;
 		if (mode.equals("add") && !this.entryDisplayName.getText().equals("")) command += " " + this.entryDisplayName.getText();
-		if (mode.equals("join") || mode.equals("leave")) command += " " + this.panelTarget.generateTarget().toCommand();
+		if (mode.equals("join") || mode.equals("leave")) command += " " + this.panelTarget.generate().toCommand();
 		if (mode.equals("option")) command += " " + this.comboboxOptionName.getValue() + " " + this.comboboxOptionValue.getValue();
 
 		return command;

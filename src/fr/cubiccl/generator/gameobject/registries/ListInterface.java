@@ -3,11 +3,13 @@ package fr.cubiccl.generator.gameobject.registries;
 import java.awt.Component;
 
 import fr.cubiccl.generator.gameobject.*;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.*;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
 public abstract class ListInterface<T extends GameObject>
@@ -17,16 +19,16 @@ public abstract class ListInterface<T extends GameObject>
 		@Override
 		public CGPanel createEditionPanel(AppliedAttribute a)
 		{
-			PanelAttribute p = new PanelAttribute();
+			PanelAttribute p = new PanelAttribute(false);
 			if (a != null) p.setupFrom(a);
-			p.setName(new Text("objects.attribute"));
+			p.setName(new Text("objects.title", new Replacement("<object>", new Text("objects.attribute"))));
 			return p;
 		}
 
 		@Override
 		public AppliedAttribute createObject(CGPanel panel) throws CommandGenerationException
 		{
-			return ((PanelAttribute) panel).generateAttribute();
+			return ((PanelAttribute) panel).generate();
 		}
 
 		@Override
@@ -41,16 +43,16 @@ public abstract class ListInterface<T extends GameObject>
 		@Override
 		public CGPanel createEditionPanel(PlacedBlock b)
 		{
-			PanelBlock p = new PanelBlock(null);
+			PanelBlock p = new PanelBlock(null, true, true, false);
 			if (b != null) p.setupFrom(b);
-			p.setName(new Text("objects.block"));
+			p.setName(new Text("objects.title", new Replacement("<object>", new Text("objects.block"))));
 			return p;
 		}
 
 		@Override
 		public PlacedBlock createObject(CGPanel panel) throws CommandGenerationException
 		{
-			return ((PanelBlock) panel).generateBlock();
+			return ((PanelBlock) panel).generate();
 		}
 
 		@Override
@@ -68,16 +70,16 @@ public abstract class ListInterface<T extends GameObject>
 		@Override
 		public CGPanel createEditionPanel(Coordinates c)
 		{
-			PanelCoordinates p = new PanelCoordinates(null);
+			PanelCoordinates p = new PanelCoordinates(null, true, false);
 			if (c != null) p.setupFrom(c);
-			p.setName(new Text("objects.coordinates"));
+			p.setName(new Text("objects.title", new Replacement("<object>", new Text("objects.coordinates"))));
 			return p;
 		}
 
 		@Override
 		public Coordinates createObject(CGPanel panel) throws CommandGenerationException
 		{
-			return ((PanelCoordinates) panel).generateCoordinates();
+			return ((PanelCoordinates) panel).generate();
 		}
 
 		@Override
@@ -92,16 +94,16 @@ public abstract class ListInterface<T extends GameObject>
 		@Override
 		public CGPanel createEditionPanel(Effect e)
 		{
-			PanelEffect p = new PanelEffect();
+			PanelEffect p = new PanelEffect(false);
 			if (e != null) p.setupFrom(e);
-			p.setName(new Text("objects.effect"));
+			p.setName(new Text("objects.title", new Replacement("<object>", new Text("objects.effect"))));
 			return p;
 		}
 
 		@Override
 		public Effect createObject(CGPanel panel) throws CommandGenerationException
 		{
-			return ((PanelEffect) panel).generateEffect();
+			return ((PanelEffect) panel).generate();
 		}
 
 		@Override
@@ -119,16 +121,16 @@ public abstract class ListInterface<T extends GameObject>
 		@Override
 		public CGPanel createEditionPanel(Enchantment e)
 		{
-			PanelEnchantment p = new PanelEnchantment(false);
+			PanelEnchantment p = new PanelEnchantment(false, false);
 			if (e != null) p.setupFrom(e);
-			p.setName(new Text("objects.enchantment"));
+			p.setName(new Text("objects.title", new Replacement("<object>", new Text("objects.enchantment"))));
 			return p;
 		}
 
 		@Override
 		public Enchantment createObject(CGPanel panel) throws CommandGenerationException
 		{
-			return ((PanelEnchantment) panel).generateEnchantment();
+			return ((PanelEnchantment) panel).generate();
 		}
 
 		@Override
@@ -143,7 +145,7 @@ public abstract class ListInterface<T extends GameObject>
 		@Override
 		public CGPanel createEditionPanel(LivingEntity e)
 		{
-			PanelEntity p = new PanelEntity(null);
+			PanelEntity p = new PanelEntity(null, true, false);
 			if (e != null) p.setupFrom(e);
 			p.setName(new Text("objects.entity"));
 			return p;
@@ -152,7 +154,7 @@ public abstract class ListInterface<T extends GameObject>
 		@Override
 		public LivingEntity createObject(CGPanel panel) throws CommandGenerationException
 		{
-			return ((PanelEntity) panel).generateEntity();
+			return ((PanelEntity) panel).generate();
 		}
 
 		@Override
@@ -170,16 +172,16 @@ public abstract class ListInterface<T extends GameObject>
 		@Override
 		public CGPanel createEditionPanel(ItemStack i)
 		{
-			PanelItem p = new PanelItem(null);
+			PanelItem p = new PanelItem(null, true, true, false, ObjectRegistry.items.list());
 			if (i != null) p.setupFrom(i);
-			p.setName(new Text("objects.item"));
+			p.setName(new Text("objects.title", new Replacement("<object>", new Text("objects.item"))));
 			return p;
 		}
 
 		@Override
 		public ItemStack createObject(CGPanel panel) throws CommandGenerationException
 		{
-			return ((PanelItem) panel).generateItem();
+			return ((PanelItem) panel).generate();
 		}
 
 		@Override
@@ -197,16 +199,16 @@ public abstract class ListInterface<T extends GameObject>
 		@Override
 		public CGPanel createEditionPanel(JsonMessage m)
 		{
-			PanelJsonMessage p = new PanelJsonMessage();
+			PanelJsonMessage p = new PanelJsonMessage(true, false);
 			if (m != null) p.setupFrom(m);
-			p.setName(new Text("objects.json"));
+			p.setName(new Text("objects.title", new Replacement("<object>", new Text("objects.json"))));
 			return p;
 		}
 
 		@Override
 		public JsonMessage createObject(CGPanel panel) throws CommandGenerationException
 		{
-			return ((PanelJsonMessage) panel).generateMessage();
+			return ((PanelJsonMessage) panel).generate();
 		}
 
 		@Override
@@ -221,16 +223,16 @@ public abstract class ListInterface<T extends GameObject>
 		@Override
 		public CGPanel createEditionPanel(AttributeModifier m)
 		{
-			PanelAttributeModifier p = new PanelAttributeModifier(false);
+			PanelAttributeModifier p = new PanelAttributeModifier(false, false);
 			if (m != null) p.setupFrom(m);
-			p.setName(new Text("objects.modifier"));
+			p.setName(new Text("objects.title", new Replacement("<object>", new Text("objects.modifier"))));
 			return p;
 		}
 
 		@Override
 		public AttributeModifier createObject(CGPanel panel) throws CommandGenerationException
 		{
-			return ((PanelAttributeModifier) panel).generateModifier();
+			return ((PanelAttributeModifier) panel).generate();
 		}
 
 		@Override
@@ -240,21 +242,45 @@ public abstract class ListInterface<T extends GameObject>
 		}
 	}
 
+	public static class TargetList extends ListInterface<Target>
+	{
+		@Override
+		public CGPanel createEditionPanel(Target t)
+		{
+			PanelTarget p = new PanelTarget(null, PanelTarget.ALL_ENTITIES, false);
+			if (t != null) p.setupFrom(t);
+			p.setName(new Text("objects.title", new Replacement("<object>", new Text("objects.target"))));
+			return p;
+		}
+
+		@Override
+		public Target createObject(CGPanel panel) throws CommandGenerationException
+		{
+			return ((PanelTarget) panel).generate();
+		}
+
+		@Override
+		public Component getDisplayComponent(Target t)
+		{
+			return new CGLabel(new Text(t.toString(), false));
+		}
+	}
+
 	public static class TradeList extends ListInterface<TradeOffer>
 	{
 		@Override
 		public CGPanel createEditionPanel(TradeOffer t)
 		{
-			PanelTrade p = new PanelTrade();
+			PanelTrade p = new PanelTrade(false);
 			if (t != null) p.setupFrom(t);
-			p.setName(new Text("objects.trade"));
+			p.setName(new Text("objects.title", new Replacement("<object>", new Text("objects.trade"))));
 			return p;
 		}
 
 		@Override
 		public TradeOffer createObject(CGPanel panel) throws CommandGenerationException
 		{
-			return ((PanelTrade) panel).generateTrade();
+			return ((PanelTrade) panel).generate();
 		}
 
 		@Override

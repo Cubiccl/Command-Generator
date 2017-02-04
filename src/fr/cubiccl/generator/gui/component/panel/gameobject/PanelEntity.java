@@ -7,13 +7,16 @@ import java.awt.event.ActionListener;
 import fr.cubiccl.generator.gameobject.LivingEntity;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
+import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 
-public class PanelEntity extends CGPanel implements ActionListener
+public class PanelEntity extends CGPanel implements ActionListener, ICustomObject<LivingEntity>
 {
 	private static final long serialVersionUID = -7130115756741628375L;
 
@@ -23,18 +26,31 @@ public class PanelEntity extends CGPanel implements ActionListener
 
 	public PanelEntity(String titleID)
 	{
-		this(titleID, true);
+		this(titleID, true, true);
 	}
 
 	public PanelEntity(String titleID, boolean hasNBT)
+	{
+		this(titleID, hasNBT, true);
+	}
+
+	public PanelEntity(String titleID, boolean hasNBT, boolean customObjects)
 	{
 		super(titleID);
 		GridBagConstraints gbc = this.createGridBagLayout();
 		gbc.anchor = GridBagConstraints.WEST;
 
+		gbc.gridheight = 2;
 		this.add(this.labelImage = new ImageLabel(), gbc);
+		gbc.gridheight = 1;
 		++gbc.gridx;
 		this.add((this.comboboxEntity = new ObjectCombobox<Entity>(ObjectRegistry.entities.list())).container, gbc);
+		++gbc.gridy;
+		gbc.anchor = GridBagConstraints.EAST;
+		gbc.fill = GridBagConstraints.NONE;
+		if (customObjects) this.add(new PanelCustomObject<LivingEntity>(this, ObjectSaver.entities), gbc);
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 
 		--gbc.gridx;
 		++gbc.gridy;
@@ -54,7 +70,8 @@ public class PanelEntity extends CGPanel implements ActionListener
 		this.panelTags.setTargetObject(this.selectedEntity());
 	}
 
-	public LivingEntity generateEntity()
+	@Override
+	public LivingEntity generate()
 	{
 		return new LivingEntity(this.selectedEntity(), this.panelTags.generateTags(Tags.ENTITY));
 	}
@@ -76,6 +93,7 @@ public class PanelEntity extends CGPanel implements ActionListener
 		this.panelTags.setTags(value);
 	}
 
+	@Override
 	public void setupFrom(LivingEntity entity)
 	{
 		this.setEntity(entity.entity);

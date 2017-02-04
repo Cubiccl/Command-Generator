@@ -38,7 +38,7 @@ public class TemplateItem extends TemplateCompound
 	@Override
 	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
-		return ((PanelItem) panel).generateItem().toTag(this);
+		return ((PanelItem) panel).generate().toTag(this);
 	}
 
 	public void setAutoselect(String id)

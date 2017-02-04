@@ -36,10 +36,9 @@ public class CommandTestforblock extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		PlacedBlock block = this.panelBlock.generateBlock();
+		PlacedBlock block = this.panelBlock.generate();
 		String nbt = block.nbt.valueForCommand();
-		return this.id + " " + this.panelCoordinates.generateCoordinates().toCommand() + " " + block.block.id() + " " + block.data
-				+ (nbt.equals("{}") ? "" : " " + nbt);
+		return this.id + " " + this.panelCoordinates.generate().toCommand() + " " + block.block.id() + " " + block.data + (nbt.equals("{}") ? "" : " " + nbt);
 	}
 
 }

@@ -50,8 +50,8 @@ public class PanelCriteria extends CGPanel implements ActionListener
 
 		this.panelAchievement = new PanelAchievement();
 		this.comboboxDetail = new OptionCombobox("stat", STAT);
-		this.panelBlock = new PanelBlock(null, false, false);
-		this.panelItem = new PanelItem(null, false, false, ObjectRegistry.items.list("break"));
+		this.panelBlock = new PanelBlock(null, false, false, true);
+		this.panelItem = new PanelItem(null, false, false, true, ObjectRegistry.items.list("break"));
 		this.panelEntity = new PanelEntity(null, false);
 
 		this.comboboxBase.addActionListener(this);
@@ -88,31 +88,31 @@ public class PanelCriteria extends CGPanel implements ActionListener
 		else if (base.equals("stat.breakItem"))
 		{
 			Item previous = this.panelItem.selectedItem();
-			this.setCurrentDetail(this.panelItem = new PanelItem(null, false, false, ObjectRegistry.items.list("break")));
+			this.setCurrentDetail(this.panelItem = new PanelItem(null, false, false, true, ObjectRegistry.items.list("break")));
 			this.panelItem.setEnabledContent(false, false);
 			this.panelItem.setItem(previous);
 		} else if (base.equals("stat.useItem"))
 		{
 			Item previous = this.panelItem.selectedItem();
-			this.setCurrentDetail(this.panelItem = new PanelItem(null, false, false, ObjectRegistry.items.list("use")));
+			this.setCurrentDetail(this.panelItem = new PanelItem(null, false, false, true, ObjectRegistry.items.list("use")));
 			this.panelItem.setEnabledContent(false, false);
 			this.panelItem.setItem(previous);
 		} else if (base.equals("stat.craftItem"))
 		{
 			Item previous = this.panelItem.selectedItem();
-			this.setCurrentDetail(this.panelItem = new PanelItem(null, false, false, ObjectRegistry.items.list("craft")));
+			this.setCurrentDetail(this.panelItem = new PanelItem(null, false, false, true, ObjectRegistry.items.list("craft")));
 			this.panelItem.setEnabledContent(false, false);
 			this.panelItem.setItem(previous);
 		} else if (base.equals("stat.drop") || base.equals("stat.pickup"))
 		{
 			Item previous = this.panelItem.selectedItem();
-			this.setCurrentDetail(this.panelItem = new PanelItem(null, false, false, ObjectRegistry.items.list(ObjectRegistry.SORT_NUMERICALLY)));
+			this.setCurrentDetail(this.panelItem = new PanelItem(null, false, false, true, ObjectRegistry.items.list(ObjectRegistry.SORT_NUMERICALLY)));
 			this.panelItem.setEnabledContent(false, false);
 			this.panelItem.setItem(previous);
 		} else if (base.equals("stat.mineBlock"))
 		{
 			Block previous = this.panelBlock.selectedBlock();
-			this.setCurrentDetail(this.panelBlock = new PanelBlock(null, false, false));
+			this.setCurrentDetail(this.panelBlock = new PanelBlock(null, false, false, true));
 			this.panelBlock.setHasData(false);
 			this.panelBlock.setBlock(previous);
 		} else if (base.equals("killedByTeam") || base.equals("teamKill"))

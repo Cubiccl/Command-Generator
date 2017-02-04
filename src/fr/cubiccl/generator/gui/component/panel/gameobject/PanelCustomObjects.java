@@ -20,7 +20,7 @@ public class PanelCustomObjects extends ConfirmPanel
 
 	public PanelCustomObjects()
 	{
-		super(null, null, false);
+		super(new Text("menu.objects"), null, false);
 		this.buttonCancel.setText(new Text("general.back"));
 		this.setName(new Text("menu.objects"));
 

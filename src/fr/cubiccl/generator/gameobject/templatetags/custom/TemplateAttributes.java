@@ -35,8 +35,8 @@ public class TemplateAttributes extends TemplateList
 		{
 			try
 			{
-				if (editIndex == -1) this.attributes.add(((PanelAttribute) panel).generateAttribute());
-				else this.attributes.set(editIndex, ((PanelAttribute) panel).generateAttribute());
+				if (editIndex == -1) this.attributes.add(((PanelAttribute) panel).generate());
+				else this.attributes.set(editIndex, ((PanelAttribute) panel).generate());
 				return true;
 			} catch (CommandGenerationException e)
 			{

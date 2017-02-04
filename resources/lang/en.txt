@@ -348,8 +348,12 @@ objects.enchantment=Enchantments
 objects.entity=Entities
 objects.item=Items
 objects.json=Json messages
+objects.load=Load
 objects.modifier=Attribute Modifiers
 objects.name=Give a name to your objet :
+objects.save=Save
+objects.target=Targets
+objects.title=Custom <object>
 objects.trade=Villager Trades
 
 particle.block=Block texture for the particle

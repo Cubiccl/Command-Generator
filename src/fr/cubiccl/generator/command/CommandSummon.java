@@ -36,8 +36,8 @@ public class CommandSummon extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		LivingEntity e = this.panelEntity.generateEntity();
-		return this.id + " " + e.entity.id + " " + this.panelCoordinates.generateCoordinates().toCommand() + " " + e.nbt.valueForCommand();
+		LivingEntity e = this.panelEntity.generate();
+		return this.id + " " + e.entity.id + " " + this.panelCoordinates.generate().toCommand() + " " + e.nbt.valueForCommand();
 	}
 
 }

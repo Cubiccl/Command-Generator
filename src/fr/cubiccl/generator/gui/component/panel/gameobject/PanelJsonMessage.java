@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.JsonMessage;
 import fr.cubiccl.generator.gameobject.LivingEntity;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
@@ -15,14 +16,16 @@ import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
+import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Utils;
 
-public class PanelJsonMessage extends CGPanel implements ActionListener
+public class PanelJsonMessage extends CGPanel implements ActionListener, ICustomObject<JsonMessage>
 {
 	class PanelClickEvent extends CGPanel implements ActionListener
 	{
@@ -112,10 +115,10 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 					return this.panelAchievement.getCriteria();
 
 				case "show_entity":
-					return this.panelEntity.generateEntity().toTag(Tags.ENTITY).valueForCommand();
+					return this.panelEntity.generate().toTag(Tags.ENTITY).valueForCommand();
 
 				case "show_item":
-					return this.panelItem.generateItem().toTag(Tags.ITEM).valueForCommand();
+					return this.panelItem.generate().toTag(Tags.ITEM).valueForCommand();
 
 				default:
 					return this.panelJson.generateMessage(Tags.JSON_LIST).valueForCommand();
@@ -139,6 +142,11 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 	}
 
 	public PanelJsonMessage(boolean hasEvents)
+	{
+		this(hasEvents, true);
+	}
+
+	public PanelJsonMessage(boolean hasEvents, boolean customObjects)
 	{
 		super();
 		this.hasEvents = hasEvents;
@@ -181,6 +189,9 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 		this.add(this.panelClickEvent = new PanelClickEvent(), gbc);
 		++gbc.gridy;
 		this.add(this.panelHoverEvent = new PanelHoverEvent(), gbc);
+		++gbc.gridy;
+		gbc.fill = GridBagConstraints.NONE;
+		if (customObjects) this.add(new PanelCustomObject<JsonMessage>(this, ObjectSaver.jsonMessages), gbc);
 
 		this.comboboxMode.addActionListener(this);
 		this.checkboxClickEvent.addActionListener(this);
@@ -227,14 +238,15 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 		if (e.getSource() == this.checkboxHoverEvent) this.panelHoverEvent.setVisible(this.checkboxHoverEvent.isSelected());
 	}
 
-	public JsonMessage generateMessage() throws CommandGenerationException
+	@Override
+	public JsonMessage generate() throws CommandGenerationException
 	{
 		String text = this.entryMain.getText();
-		if (this.comboboxMode.getValue().equals("selector")) text = this.panelTarget.generateTarget().toCommand();
+		if (this.comboboxMode.getValue().equals("selector")) text = this.panelTarget.generate().toCommand();
 		else if (!this.comboboxMode.getValue().equals("text")) this.entryMain.checkValue(CGEntry.STRING);
 
 		JsonMessage message = new JsonMessage((byte) this.comboboxMode.getSelectedIndex(), text, this.comboboxColor.getSelectedIndex());
-		if (this.comboboxMode.getValue().equals("score")) message.target = this.panelTarget.generateTarget().toCommand();
+		if (this.comboboxMode.getValue().equals("score")) message.target = this.panelTarget.generate().toCommand();
 
 		message.bold = this.checkboxBold.isSelected();
 		message.underlined = this.checkboxUnderlined.isSelected();
@@ -251,6 +263,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener
 		return message;
 	}
 
+	@Override
 	public void setupFrom(JsonMessage message)
 	{
 		this.comboboxMode.setSelectedIndex(message.mode);

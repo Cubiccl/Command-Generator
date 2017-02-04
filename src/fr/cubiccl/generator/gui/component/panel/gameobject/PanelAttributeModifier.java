@@ -7,16 +7,19 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.AttributeModifier;
 import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
+import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Utils;
 
-public class PanelAttributeModifier extends CGPanel
+public class PanelAttributeModifier extends CGPanel implements ICustomObject<AttributeModifier>
 {
 	private static final long serialVersionUID = -8412726255073387389L;
 
@@ -28,14 +31,19 @@ public class PanelAttributeModifier extends CGPanel
 
 	public PanelAttributeModifier(boolean isApplied)
 	{
+		this(isApplied, true);
+	}
+
+	public PanelAttributeModifier(boolean isApplied, boolean customObjects)
+	{
 		this.isApplied = isApplied;
 
 		GridBagConstraints gbc = this.createGridBagLayout();
-		++gbc.gridwidth;
+		gbc.gridwidth = 2;
 		this.add((this.entryName = new CGEntry(new Text("attribute.modifier.name"), new Text("attribute.modifier.name"))).container, gbc);
 
 		++gbc.gridy;
-		--gbc.gridwidth;
+		gbc.gridwidth = 1;
 		this.add(this.labelSlot = new CGLabel("attribute.modifier.slot").setHasColumn(true), gbc);
 		++gbc.gridx;
 		this.add(this.comboboxSlot = new OptionCombobox("attribute.modifier.slot", AttributeModifier.SLOTS), gbc);
@@ -65,6 +73,9 @@ public class PanelAttributeModifier extends CGPanel
 				Text.INTEGER)).container, gbc);
 		++gbc.gridy;
 		this.add(new CGLabel("attribute.modifier.uuid.details"), gbc);
+		++gbc.gridy;
+		gbc.fill = GridBagConstraints.NONE;
+		if (customObjects) this.add(new PanelCustomObject<AttributeModifier>(this, ObjectSaver.attributeModifiers), gbc);
 
 		this.entryAmount.addNumberFilter();
 		this.entryUUIDMost.addNumberFilter();
@@ -79,7 +90,8 @@ public class PanelAttributeModifier extends CGPanel
 		}
 	}
 
-	public AttributeModifier generateModifier()
+	@Override
+	public AttributeModifier generate()
 	{
 		try
 		{
@@ -94,6 +106,7 @@ public class PanelAttributeModifier extends CGPanel
 		}
 	}
 
+	@Override
 	public void setupFrom(AttributeModifier modifier)
 	{
 		if (!this.isApplied) this.comboboxAttribute.setSelected(modifier.attribute);

@@ -20,10 +20,10 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 {
 	private static final long serialVersionUID = 2923920419688577940L;
 
-	private CGButton buttonAdd, buttonEdit, buttonRemove;
+	protected CGButton buttonAdd, buttonEdit, buttonRemove;
 	private Component componentDisplay;
 	private int editing = -1;
-	private CGList list;
+	protected CGList list;
 	private IObjectList objectList;
 
 	public PanelObjectList(IObjectList objectList)

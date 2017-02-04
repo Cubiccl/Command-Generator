@@ -83,12 +83,12 @@ public class TemplatePose extends TemplateCompound
 		TagList[] tags = new TagList[6];
 		try
 		{
-			tags[0] = p.body.generateCoordinates().toTagList(Tags.POSE_BODY);
-			tags[1] = p.head.generateCoordinates().toTagList(Tags.POSE_HEAD);
-			tags[2] = p.leftArm.generateCoordinates().toTagList(Tags.POSE_ARM_LEFT);
-			tags[3] = p.rightArm.generateCoordinates().toTagList(Tags.POSE_ARM_RIGHT);
-			tags[4] = p.leftLeg.generateCoordinates().toTagList(Tags.POSE_LEG_LEFT);
-			tags[5] = p.rightLeg.generateCoordinates().toTagList(Tags.POSE_LEG_RIGHT);
+			tags[0] = p.body.generate().toTagList(Tags.POSE_BODY);
+			tags[1] = p.head.generate().toTagList(Tags.POSE_HEAD);
+			tags[2] = p.leftArm.generate().toTagList(Tags.POSE_ARM_LEFT);
+			tags[3] = p.rightArm.generate().toTagList(Tags.POSE_ARM_RIGHT);
+			tags[4] = p.leftLeg.generate().toTagList(Tags.POSE_LEG_LEFT);
+			tags[5] = p.rightLeg.generate().toTagList(Tags.POSE_LEG_RIGHT);
 		} catch (CommandGenerationException e)
 		{
 			e.printStackTrace();
@@ -102,12 +102,12 @@ public class TemplatePose extends TemplateCompound
 		try
 		{
 			PanelPose p = (PanelPose) panel;
-			p.body.generateCoordinates().toTagList(Tags.POSE_BODY);
-			p.head.generateCoordinates().toTagList(Tags.POSE_HEAD);
-			p.leftArm.generateCoordinates().toTagList(Tags.POSE_ARM_LEFT);
-			p.rightArm.generateCoordinates().toTagList(Tags.POSE_ARM_RIGHT);
-			p.leftLeg.generateCoordinates().toTagList(Tags.POSE_LEG_LEFT);
-			p.rightLeg.generateCoordinates().toTagList(Tags.POSE_LEG_RIGHT);
+			p.body.generate().toTagList(Tags.POSE_BODY);
+			p.head.generate().toTagList(Tags.POSE_HEAD);
+			p.leftArm.generate().toTagList(Tags.POSE_ARM_LEFT);
+			p.rightArm.generate().toTagList(Tags.POSE_ARM_RIGHT);
+			p.leftLeg.generate().toTagList(Tags.POSE_LEG_LEFT);
+			p.rightLeg.generate().toTagList(Tags.POSE_LEG_RIGHT);
 			return true;
 		} catch (CommandGenerationException e)
 		{

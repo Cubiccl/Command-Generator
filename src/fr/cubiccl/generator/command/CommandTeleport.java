@@ -58,7 +58,7 @@ public class CommandTeleport extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = this.id + " " + this.panelTarget.generateTarget().toCommand() + " " + this.panelCoordinates.generateCoordinates().toCommand();
+		String command = this.id + " " + this.panelTarget.generate().toCommand() + " " + this.panelCoordinates.generate().toCommand();
 
 		String y = this.entryYRot.getText(), x = this.entryXRot.getText();
 		boolean rotation = !y.equals("") || !x.equals("");

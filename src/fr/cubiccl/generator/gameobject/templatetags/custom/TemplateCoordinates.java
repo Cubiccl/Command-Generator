@@ -49,11 +49,11 @@ public class TemplateCoordinates extends TemplateCompound
 		{
 			if (this.isInteger)
 			{
-				Coordinates c = ((PanelCoordinates) panel).generateCoordinates();
+				Coordinates c = ((PanelCoordinates) panel).generate();
 				int x = (int) c.x, y = (int) c.y, z = (int) c.z;
 				return new TagCompound(this, new TagNumber(Tags.COORD_X_INT, x), new TagNumber(Tags.COORD_Y_INT, y), new TagNumber(Tags.COORD_Z_INT, z));
 			}
-			return ((PanelCoordinates) panel).generateCoordinates().toTag(this);
+			return ((PanelCoordinates) panel).generate().toTag(this);
 		} catch (CommandGenerationException e)
 		{
 			e.printStackTrace();
@@ -66,7 +66,7 @@ public class TemplateCoordinates extends TemplateCompound
 	{
 		try
 		{
-			((PanelCoordinates) panel).generateCoordinates();
+			((PanelCoordinates) panel).generate();
 		} catch (CommandGenerationException e)
 		{
 			CommandGenerator.report(e);

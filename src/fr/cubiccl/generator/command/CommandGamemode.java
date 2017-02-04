@@ -42,7 +42,7 @@ public class CommandGamemode extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return this.id + " " + this.comboboxGamemode.getValue() + " " + this.panelTarget.generateTarget().toCommand();
+		return this.id + " " + this.comboboxGamemode.getValue() + " " + this.panelTarget.generate().toCommand();
 	}
 
 }

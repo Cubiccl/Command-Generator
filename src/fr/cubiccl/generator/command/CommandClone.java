@@ -70,11 +70,11 @@ public class CommandClone extends Command implements ActionListener
 	{
 		return this.id
 				+ " "
-				+ this.panelCoordinatesSourceStart.generateCoordinates().toCommand()
+				+ this.panelCoordinatesSourceStart.generate().toCommand()
 				+ " "
-				+ this.panelCoordinatesSourceEnd.generateCoordinates().toCommand()
+				+ this.panelCoordinatesSourceEnd.generate().toCommand()
 				+ " "
-				+ this.panelCoordinatesDestination.generateCoordinates().toCommand()
+				+ this.panelCoordinatesDestination.generate().toCommand()
 				+ " "
 				+ this.comboboxMaskMode.getValue()
 				+ " "

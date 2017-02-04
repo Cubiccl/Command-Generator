@@ -11,6 +11,7 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gameobject.target.Argument;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gameobject.target.Target.TargetType;
@@ -18,14 +19,16 @@ import fr.cubiccl.generator.gameobject.target.TargetArgument;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
+import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.IStateListener;
 import fr.cubiccl.generator.utils.Text;
 
-public class PanelTarget extends CGPanel implements ActionListener, IStateListener<CGPanel>, ListSelectionListener
+public class PanelTarget extends CGPanel implements ActionListener, IStateListener<CGPanel>, ListSelectionListener, ICustomObject<Target>
 {
 	public static final int ALL_ENTITIES = 0, PLAYERS_ONLY = 1, ENTITIES_ONLY = 2;
 	private static final long serialVersionUID = 4720702579772411649L;
@@ -47,11 +50,17 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 
 	public PanelTarget(int mode)
 	{
-		this(TITLES[mode], mode);
+		this(TITLES[mode], mode, true);
 	}
 
 	/** @see PanelTarget#ALL_ENTITIES */
 	public PanelTarget(String titleID, int mode)
+	{
+		this(titleID, mode, true);
+	}
+
+	/** @see PanelTarget#ALL_ENTITIES */
+	public PanelTarget(String titleID, int mode, boolean customObjects)
 	{
 		super(titleID);
 		this.mode = mode;
@@ -81,7 +90,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		this.buttonAddArgument.addActionListener(this);
 		this.buttonRemoveArgument.addActionListener(this);
 
-		this.createLayout();
+		this.createLayout(customObjects);
 		this.updateTranslations();
 	}
 
@@ -120,7 +129,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		return true;
 	}
 
-	private void createLayout()
+	private void createLayout(boolean customObjects)
 	{
 		GridBagConstraints gbc = this.createGridBagLayout();
 
@@ -149,9 +158,15 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		++gbc.gridwidth;
 		gbc.fill = GridBagConstraints.BOTH;
 		this.add(this.listArguments.scrollPane, gbc);
+
+		++gbc.gridy;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.CENTER;
+		if (customObjects) this.add(new PanelCustomObject<Target>(this, ObjectSaver.targets), gbc);
 	}
 
-	public Target generateTarget() throws CommandGenerationException
+	@Override
+	public Target generate() throws CommandGenerationException
 	{
 		if (this.player())
 		{
@@ -190,6 +205,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		return this.comboboxType.getValue().equals(TargetType.PLAYER.id);
 	}
 
+	@Override
 	public void setupFrom(Target target)
 	{
 		if (target == null) return;

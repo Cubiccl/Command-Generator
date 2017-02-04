@@ -31,7 +31,7 @@ public class CommandKill extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return this.id + " " + this.panelTarget.generateTarget().toCommand() + " ";
+		return this.id + " " + this.panelTarget.generate().toCommand() + " ";
 	}
 
 }

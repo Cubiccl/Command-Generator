@@ -30,7 +30,7 @@ public class SpawnPotentialPanel extends CGPanel
 	public SpawnPotential createSpawnPotential() throws CommandGenerationException
 	{
 		this.entryWeight.checkValueSuperior(CGEntry.INTEGER, 1);
-		return new SpawnPotential(this.panelEntity.generateEntity(), Integer.parseInt(this.entryWeight.getText()));
+		return new SpawnPotential(this.panelEntity.generate(), Integer.parseInt(this.entryWeight.getText()));
 	}
 
 	public void setupFrom(SpawnPotential spawnPotential)

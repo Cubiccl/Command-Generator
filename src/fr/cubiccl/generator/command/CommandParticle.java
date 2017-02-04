@@ -85,11 +85,11 @@ public class CommandParticle extends Command
 		yd = Float.toString(Float.parseFloat(yd) / 8);
 		zd = Float.toString(Float.parseFloat(zd) / 8);
 
-		String command = this.id + " " + particle.id + " " + this.panelCoordinates.generateCoordinates().toCommand() + " " + xd + " " + yd + " " + zd + " "
-				+ speed + " " + count + " ";
+		String command = this.id + " " + particle.id + " " + this.panelCoordinates.generate().toCommand() + " " + xd + " " + yd + " " + zd + " " + speed + " "
+				+ count + " ";
 		if (this.checkboxForce.isSelected()) command += "force";
 		else command += "normal";
-		command += " " + this.panelTarget.generateTarget().toCommand();
+		command += " " + this.panelTarget.generate().toCommand();
 
 		if (particle.id.equals("minecraft:iconcrack")) command += " " + this.panelParticle.generateParam1() + " " + this.panelParticle.generateParam2();
 		if (particle.id.equals("minecraft:blockcrack") || particle.id.equals("minecraft:blockdust") || particle.id.equals("minecraft:fallingdust")) command += " "

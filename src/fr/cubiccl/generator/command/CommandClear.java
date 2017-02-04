@@ -64,12 +64,12 @@ public class CommandClear extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		ItemStack item = this.panelItem.generateItem();
-		if (this.checkboxAllItem.isSelected()) return "/clear " + this.panelTarget.generateTarget().toCommand();
+		ItemStack item = this.panelItem.generate();
+		if (this.checkboxAllItem.isSelected()) return "/clear " + this.panelTarget.generate().toCommand();
 		int data = item.damage, amount = item.amount;
 		if (this.checkboxIgnoreData.isSelected()) data = -1;
 		if (this.checkboxAll.isSelected()) amount = -1;
-		return this.id + " " + this.panelTarget.generateTarget().toCommand() + " " + item.item.id() + " " + data + " " + amount + " " + item.nbt.valueForCommand();
+		return this.id + " " + this.panelTarget.generate().toCommand() + " " + item.item.id() + " " + data + " " + amount + " " + item.nbt.valueForCommand();
 	}
 
 }

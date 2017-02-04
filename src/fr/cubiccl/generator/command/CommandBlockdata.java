@@ -36,7 +36,7 @@ public class CommandBlockdata extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		PlacedBlock block = this.panelBlock.generateBlock();
-		return this.id + " " + this.panelCoordinates.generateCoordinates().toCommand() + " " + block.nbt.valueForCommand();
+		PlacedBlock block = this.panelBlock.generate();
+		return this.id + " " + this.panelCoordinates.generate().toCommand() + " " + block.nbt.valueForCommand();
 	}
 }

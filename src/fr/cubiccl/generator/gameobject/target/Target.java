@@ -2,7 +2,13 @@ package fr.cubiccl.generator.gameobject.target;
 
 import java.util.ArrayList;
 
-public class Target
+import fr.cubiccl.generator.gameobject.GameObject;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+
+public class Target extends GameObject
 {
 
 	public static enum TargetType
@@ -36,6 +42,12 @@ public class Target
 			arguments.add(Argument.createFrom(arg.split("=")[0], arg.split("=")[1]));
 
 		return new Target(type, arguments.toArray(new Argument[arguments.size()]));
+	}
+
+	public static Target createFrom(TagCompound tag)
+	{
+		if (!tag.hasTag(Tags.TARGET.id())) return null;
+		return createFrom((String) tag.getTagFromId(Tags.TARGET.id()).value());
 	}
 
 	public static TargetType typeFromID(String id)
@@ -85,6 +97,19 @@ public class Target
 			command += this.arguments[i].toCommand();
 		}
 		return command + "]";
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.toCommand();
+	}
+
+	@Override
+	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	{
+		if (includeName) return new TagCompound(container, new TagString(Tags.TARGET, this.toCommand()), this.nameTag());
+		return new TagCompound(container, new TagString(Tags.TARGET, this.toCommand()));
 	}
 
 }

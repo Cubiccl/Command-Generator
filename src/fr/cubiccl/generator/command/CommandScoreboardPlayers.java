@@ -109,7 +109,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = this.id + " players " + this.comboboxMode.getValue() + " " + this.panelTarget.generateTarget().toCommand() + " ";
+		String command = this.id + " players " + this.comboboxMode.getValue() + " " + this.panelTarget.generate().toCommand() + " ";
 		String mode = this.comboboxMode.getValue();
 		String objective = this.entryObjective.getText();
 		if (!mode.equals("reset")) this.entryObjective.checkValue(CGEntry.STRING);
@@ -129,12 +129,12 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		}
 
 		if (mode.equals("operation")) return command + objective + " " + this.comboboxMode2.getValue().replaceAll("#", "=") + " "
-				+ this.panelTarget2.generateTarget().toCommand() + " " + this.entryObjective2.getText();
+				+ this.panelTarget2.generate().toCommand() + " " + this.entryObjective2.getText();
 
 		if (mode.equals("tag"))
 		{
 			this.entryScore.checkValue(CGEntry.STRING);
-			return command + this.panelTarget.generateTarget().toCommand() + " " + this.comboboxMode2.getValue() + " " + this.entryObjective.getText();
+			return command + this.panelTarget.generate().toCommand() + " " + this.comboboxMode2.getValue() + " " + this.entryObjective.getText();
 		}
 
 		return command;

@@ -79,7 +79,7 @@ public class PanelCommandStats extends CGPanel implements ActionListener
 
 	public void saveCurrent() throws CommandGenerationException
 	{
-		this.targets[this.currentSelection] = this.panelTarget.generateTarget();
+		this.targets[this.currentSelection] = this.panelTarget.generate();
 		this.objectives[this.currentSelection] = this.entryObjective.getText();
 	}
 

@@ -30,7 +30,7 @@ public class AppliedAttribute extends GameObject
 		@Override
 		public boolean addObject(CGPanel panel, int editIndex)
 		{
-			AttributeModifier m = ((PanelAttributeModifier) panel).generateModifier();
+			AttributeModifier m = ((PanelAttributeModifier) panel).generate();
 			if (m == null) return false;
 			if (editIndex == -1) this.modifiers.add(m);
 			else this.modifiers.set(editIndex, m);

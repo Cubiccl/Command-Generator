@@ -8,17 +8,21 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.button.CGButton;
+import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
+import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.IStateListener;
 
-public class PanelBlock extends CGPanel implements ActionListener, IStateListener<PanelBlockSelection>
+public class PanelBlock extends CGPanel implements ActionListener, IStateListener<PanelBlockSelection>, ICustomObject<PlacedBlock>
 {
 	private static final long serialVersionUID = -8600189753659710473L;
 
@@ -32,10 +36,10 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 
 	public PanelBlock(String titleID)
 	{
-		this(titleID, true, true);
+		this(titleID, true, true, true);
 	}
 
-	public PanelBlock(String titleID, boolean hasData, boolean hasNBT)
+	public PanelBlock(String titleID, boolean hasData, boolean hasNBT, boolean customObjects)
 	{
 		super(titleID);
 		this.hasData = hasData;
@@ -54,6 +58,9 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		gbc.gridwidth = 3;
 		this.panelTags = new PanelTags("block.tags", Tag.BLOCK);
 		if (hasNBT) this.add(this.panelTags, gbc);
+		++gbc.gridy;
+		gbc.fill = GridBagConstraints.NONE;
+		if (customObjects) this.add(new PanelCustomObject<PlacedBlock>(this, ObjectSaver.blocks), gbc);
 
 		this.buttonSelectBlock.addActionListener(this);
 		this.updateDisplay();
@@ -76,7 +83,8 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		}
 	}
 
-	public PlacedBlock generateBlock()
+	@Override
+	public PlacedBlock generate() throws CommandGenerationException
 	{
 		return this.generateBlock(Tags.BLOCK);
 	}
@@ -123,6 +131,7 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		this.panelTags.setVisible(hasNBT);
 	}
 
+	@Override
 	public void setupFrom(PlacedBlock placedBlock)
 	{
 		this.setBlock(placedBlock.block);

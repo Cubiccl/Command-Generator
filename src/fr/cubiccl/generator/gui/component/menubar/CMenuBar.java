@@ -42,7 +42,8 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		if (e.getSource() == this.objects)
 		{
 			this.toggleObjects(false);
-			CommandGenerator.stateManager.setState(new PanelCustomObjects(), null);
+			PanelCustomObjects p = new PanelCustomObjects();
+			CommandGenerator.stateManager.setState(p, null);
 		}
 		if (e.getSource() == this.history)
 		{

@@ -77,6 +77,6 @@ public class CommandPlaysound extends Command
 		this.entryMinVolume.checkValueSuperior(CGEntry.FLOAT, 0);
 
 		return this.id + " " + this.comboboxSound.getSelectedObject().id + " " + this.comboboxSource.getValue() + " "
-				+ this.panelTarget.generateTarget().toCommand() + this.panelCoordinates.generateCoordinates().toCommand() + " " + v + " " + p + " " + mv;
+				+ this.panelTarget.generate().toCommand() + this.panelCoordinates.generate().toCommand() + " " + v + " " + p + " " + mv;
 	}
 }

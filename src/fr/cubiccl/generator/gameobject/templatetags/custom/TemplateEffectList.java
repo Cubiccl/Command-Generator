@@ -33,7 +33,7 @@ public class TemplateEffectList extends TemplateList
 			Effect effect = null;
 			try
 			{
-				effect = ((PanelEffect) panel).generateEffect();
+				effect = ((PanelEffect) panel).generate();
 			} catch (CommandGenerationException e)
 			{
 				CommandGenerator.report(e);

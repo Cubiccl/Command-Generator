@@ -81,7 +81,7 @@ public class PanelTradeOffers extends CGPanel implements ActionListener
 	private void applyCurrent() throws CommandGenerationException
 	{
 		if (this.current == -1) return;
-		this.trades.set(this.current, this.panelCurrent.generateTrade());
+		this.trades.set(this.current, this.panelCurrent.generate());
 	}
 
 	private TradeOffer currentOffer()

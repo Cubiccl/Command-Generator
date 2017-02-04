@@ -62,11 +62,11 @@ public class CommandExecute extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = this.id + " " + this.panelTarget.generateTarget().toCommand() + " " + this.panelCoordinates.generateCoordinates().toCommand() + " ";
+		String command = this.id + " " + this.panelTarget.generate().toCommand() + " " + this.panelCoordinates.generate().toCommand() + " ";
 		if (this.checkboxBlock.isSelected())
 		{
-			PlacedBlock block = this.panelBlock.generateBlock();
-			command += "detect " + this.panelBlockCoordinates.generateCoordinates().toCommand() + " " + block.block.id() + " " + block.data + " ";
+			PlacedBlock block = this.panelBlock.generate();
+			command += "detect " + this.panelBlockCoordinates.generate().toCommand() + " " + block.block.id() + " " + block.data + " ";
 		}
 		return command;
 	}

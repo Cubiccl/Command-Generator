@@ -7,16 +7,19 @@ import java.awt.event.ActionListener;
 import fr.cubiccl.generator.gameobject.Effect;
 import fr.cubiccl.generator.gameobject.baseobjects.EffectType;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
+import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class PanelEffect extends CGPanel implements ActionListener
+public class PanelEffect extends CGPanel implements ActionListener, ICustomObject<Effect>
 {
 	private static final long serialVersionUID = 7100906772655502112L;
 
@@ -26,6 +29,11 @@ public class PanelEffect extends CGPanel implements ActionListener
 	private ImageLabel labelTexture;
 
 	public PanelEffect()
+	{
+		this(true);
+	}
+
+	public PanelEffect(boolean customObjects)
 	{
 		super("effect.title");
 		EffectType[] effects = ObjectRegistry.effects.list();
@@ -38,10 +46,15 @@ public class PanelEffect extends CGPanel implements ActionListener
 		++gbc.gridx;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(this.labelTexture = new ImageLabel(effects[0].texture()), gbc);
+		++gbc.gridx;
+		gbc.fill = GridBagConstraints.NONE;
+		gbc.anchor = GridBagConstraints.EAST;
+		if (customObjects) this.add(new PanelCustomObject<Effect>(this, ObjectSaver.effects), gbc);
 		gbc.gridx = 0;
 		++gbc.gridy;
-		gbc.gridwidth = 3;
+		gbc.gridwidth = 4;
 		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add((this.entryDuration = new CGEntry(new Text("effect.duration"), "0", Text.INTEGER)).container, gbc);
 		++gbc.gridy;
 		this.add((this.entryLevel = new CGEntry(new Text("effect.level"), "0", Text.INTEGER)).container, gbc);
@@ -61,7 +74,8 @@ public class PanelEffect extends CGPanel implements ActionListener
 		this.labelTexture.setImage(this.comboboxEffect.getSelectedObject().texture());
 	}
 
-	public Effect generateEffect() throws CommandGenerationException
+	@Override
+	public Effect generate() throws CommandGenerationException
 	{
 		this.entryDuration.checkValueSuperior(CGEntry.INTEGER, 0);
 		this.entryLevel.checkValueInBounds(CGEntry.INTEGER, 0, 255);
@@ -70,12 +84,13 @@ public class PanelEffect extends CGPanel implements ActionListener
 				this.checkboxHideParticles.isSelected());
 	}
 
+	@Override
 	public void setupFrom(Effect effect)
 	{
 		this.checkboxHideParticles.setSelected(effect.hideParticles);
 		this.comboboxEffect.setSelected(effect.type);
 		this.labelTexture.setImage(this.comboboxEffect.getSelectedObject().texture());
 		this.entryDuration.setText(Integer.toString(effect.duration));
-		this.entryLevel.setText(Integer.toBinaryString(effect.amplifier));
+		this.entryLevel.setText(Integer.toString(effect.amplifier));
 	}
 }

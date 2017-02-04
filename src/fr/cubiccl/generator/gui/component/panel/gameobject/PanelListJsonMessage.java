@@ -154,7 +154,7 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 
 		try
 		{
-			message = panel.generateMessage();
+			message = panel.generate();
 		} catch (CommandGenerationException e)
 		{
 			CommandGenerator.report(e);

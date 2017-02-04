@@ -31,7 +31,7 @@ public class TemplateEnchantmentList extends TemplateList
 			Enchantment ench = null;
 			try
 			{
-				ench = ((PanelEnchantment) panel).generateEnchantment();
+				ench = ((PanelEnchantment) panel).generate();
 			} catch (CommandGenerationException e)
 			{
 				CommandGenerator.report(e);

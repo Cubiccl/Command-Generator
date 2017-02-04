@@ -60,7 +60,7 @@ public class TemplateLeash extends TemplateCompound
 	{
 		if (panel instanceof PanelCoordinates) try
 		{
-			return ((PanelCoordinates) panel).generateCoordinates().toTag(this);
+			return ((PanelCoordinates) panel).generate().toTag(this);
 		} catch (CommandGenerationException e)
 		{
 			e.printStackTrace();
@@ -74,7 +74,7 @@ public class TemplateLeash extends TemplateCompound
 	{
 		if (panel instanceof PanelCoordinates) try
 		{
-			((PanelCoordinates) panel).generateCoordinates();
+			((PanelCoordinates) panel).generate();
 		} catch (CommandGenerationException e)
 		{
 			CommandGenerator.report(e);

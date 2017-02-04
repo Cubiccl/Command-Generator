@@ -19,9 +19,11 @@ import fr.cubiccl.generator.gameobject.registries.ListInterface.EntityList;
 import fr.cubiccl.generator.gameobject.registries.ListInterface.ItemList;
 import fr.cubiccl.generator.gameobject.registries.ListInterface.JsonList;
 import fr.cubiccl.generator.gameobject.registries.ListInterface.ModifierList;
+import fr.cubiccl.generator.gameobject.registries.ListInterface.TargetList;
 import fr.cubiccl.generator.gameobject.registries.ListInterface.TradeList;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -41,15 +43,16 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 	public static final ObjectSaver<ItemStack> items = new ObjectSaver<ItemStack>("item", new ItemList(), ItemStack.class);
 	public static final ObjectSaver<JsonMessage> jsonMessages = new ObjectSaver<JsonMessage>("json", new JsonList(), JsonMessage.class);
 	private static final int MODIFIERS = 0, ATTRIBUTES = 1, BLOCKS = 2, COORDINATES = 3, EFFECTS = 4, ENCHANTMENTS = 5, ENTITIES = 6, ITEMS = 7, JSONS = 8,
-			TRADES = 9;
+			TRADES = 9, TARGETS = 10;
 	@SuppressWarnings("rawtypes")
 	public static ObjectSaver[] savers;
+	public static final ObjectSaver<Target> targets = new ObjectSaver<Target>("target", new TargetList(), Target.class);
 	public static final ObjectSaver<TradeOffer> trades = new ObjectSaver<TradeOffer>("trade", new TradeList(), TradeOffer.class);
 
 	public static void load()
 	{
 		savers = new ObjectSaver[]
-		{ attributeModifiers, attributes, blocks, coordinates, effects, enchantments, entities, items, jsonMessages, trades };
+		{ attributeModifiers, attributes, blocks, coordinates, effects, enchantments, entities, items, jsonMessages, trades, targets };
 		resetAll();
 		String[] data = FileUtils.readFileAsArray("savedObjects.txt");
 		int current = -1;
@@ -100,6 +103,10 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 
 				case TRADES:
 					trades.addObject(TradeOffer.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					break;
+
+				case TARGETS:
+					targets.addObject(Target.createFrom((TagCompound) NBTReader.read(line, true, false)));
 					break;
 
 				default:
@@ -157,7 +164,11 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 				T o = this.get(editIndex);
 				this.delete(o);
 				object.setCustomName(o.customName());
-			} else object.setCustomName(JOptionPane.showInputDialog(new Text("objects.name")));
+			} else
+			{
+				object.setCustomName(JOptionPane.showInputDialog(new Text("objects.name")));
+				if (object.customName() == null) return false;
+			}
 
 			this.addObject(object);
 			return true;
