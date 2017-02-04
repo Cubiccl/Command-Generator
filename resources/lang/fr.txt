@@ -331,6 +331,17 @@ locate.Village=Village
 menu.exit=Quitter
 menu.settings=Paramètres
 
+objects.attribute=Attributs
+objects.block=Blocs
+objects.coordinates=Coordonnées
+objects.effect=Effets
+objects.enchantment=Enchantements
+objects.entity=Entités
+objects.item=Objets
+objects.json=Messages Json
+objects.modifier=Modificateurs d'Attributs
+objects.trade=Transactions de Villageois
+
 particle.block=Particule de Bloc
 particle.coordinates=Coordonnées des Particules
 particle.count=Nombre de Particules

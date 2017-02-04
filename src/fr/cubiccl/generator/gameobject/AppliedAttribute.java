@@ -92,7 +92,9 @@ public class AppliedAttribute extends GameObject
 			}
 		}
 
-		return new AppliedAttribute(a, b, m);
+		AppliedAttribute at = new AppliedAttribute(a, b, m);
+		at.findName(tag);
+		return at;
 	}
 
 	public Attribute attribute;
@@ -119,12 +121,14 @@ public class AppliedAttribute extends GameObject
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
 		TagCompound[] m = new TagCompound[this.modifiers.length];
 		for (int i = 0; i < m.length; i++)
-			m[i] = this.modifiers[i].toTag(Tags.DEFAULT_COMPOUND, true);
+			m[i] = this.modifiers[i].toTag(Tags.DEFAULT_COMPOUND, true, includeName);
 
+		if (includeName) return new TagCompound(container, new TagString(Tags.ATTRIBUTE_ATTRIBUTE_NAME, this.attribute.id), new TagBigNumber(
+				Tags.ATTRIBUTE_BASE, this.base), this.nameTag(), new TagList(Tags.ATTRIBUTE_MODIFIERS, m));
 		return new TagCompound(container, new TagString(Tags.ATTRIBUTE_ATTRIBUTE_NAME, this.attribute.id), new TagBigNumber(Tags.ATTRIBUTE_BASE, this.base),
 				new TagList(Tags.ATTRIBUTE_MODIFIERS, m));
 	}

@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
+import java.util.ArrayList;
+
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
@@ -23,6 +25,7 @@ public class TradeOffer extends GameObject
 			else if (t.id().equals(Tags.OFFER_SELL.id())) trade.sell = ItemStack.createFrom((TagCompound) t);
 		}
 
+		trade.findName(tag);
 		return trade;
 	}
 
@@ -51,13 +54,17 @@ public class TradeOffer extends GameObject
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
-		if (this.buySecondary == null) return new TagCompound(container, new TagNumber(Tags.OFFER_EXP, this.experienceReward ? 1 : 0), new TagNumber(
-				Tags.OFFER_MAX_USES, this.maxUses), new TagNumber(Tags.OFFER_USES, this.uses), this.buy.toTag(Tags.OFFER_BUY), this.sell.toTag(Tags.OFFER_SELL));
-		return new TagCompound(container, new TagNumber(Tags.OFFER_EXP, this.experienceReward ? 1 : 0), new TagNumber(Tags.OFFER_MAX_USES, this.maxUses),
-				new TagNumber(Tags.OFFER_USES, this.uses), this.buy.toTag(Tags.OFFER_BUY), this.buySecondary.toTag(Tags.OFFER_BUYB),
-				this.sell.toTag(Tags.OFFER_SELL));
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		tags.add(new TagNumber(Tags.OFFER_EXP, this.experienceReward ? 1 : 0));
+		tags.add(new TagNumber(Tags.OFFER_MAX_USES, this.maxUses));
+		tags.add(new TagNumber(Tags.OFFER_USES, this.uses));
+		tags.add(this.buy.toTag(Tags.OFFER_BUY));
+		if (this.buySecondary != null) tags.add(this.buySecondary.toTag(Tags.OFFER_BUYB));
+		tags.add(this.sell.toTag(Tags.OFFER_SELL));
+		if (includeName) tags.add(this.nameTag());
+		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
 	}
 
 }

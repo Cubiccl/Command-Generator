@@ -10,11 +10,10 @@ import javax.swing.JLabel;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
-import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.utils.Utils;
 
-public class JsonMessage
+public class JsonMessage extends GameObject
 {
 	public static final Color[] LABEL_COLOR =
 	{ Color.WHITE, new Color(85, 255, 255), Color.BLACK, new Color(85, 85, 255), new Color(0, 170, 170), new Color(0, 0, 170), new Color(85, 85, 85),
@@ -74,6 +73,7 @@ public class JsonMessage
 				message.hoverValue = (String) ((TagCompound) t).getTagFromId(EVENT_VALUE.id()).value();
 			}
 		}
+		message.findName(tag);
 		return message;
 	}
 
@@ -130,7 +130,19 @@ public class JsonMessage
 		this.hoverValue = hoverValue;
 	}
 
-	public TagCompound toTag(TemplateCompound container)
+	@Override
+	public String toCommand()
+	{
+		return this.toString();
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.toTag(DEFAULT_COMPOUND).valueForCommand();
+	}
+
+	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
@@ -153,7 +165,7 @@ public class JsonMessage
 				break;
 		}
 
-		tags.add(new TagString(Tags.TEXT_COLOR, Utils.COLORS[this.color]));
+		tags.add(new TagString(TEXT_COLOR, Utils.COLORS[this.color]));
 		if (this.bold) tags.add(new TagString(TEXT_BOLD, "true"));
 		if (this.underlined) tags.add(new TagString(TEXT_UNDERLINED, "true"));
 		if (this.italic) tags.add(new TagString(TEXT_ITALIC, "true"));
@@ -164,6 +176,7 @@ public class JsonMessage
 				this.clickValue)));
 		if (this.hoverAction != null) tags.add(new TagCompound(EVENT_HOVER, new TagString(EVENT_ACTION, this.hoverAction), new TagString(EVENT_VALUE,
 				this.hoverValue)));
+		if (includeName) tags.add(this.nameTag());
 
 		TagCompound tag = new TagCompound(container, tags.toArray(new Tag[tags.size()]));
 		tag.setJson(true);

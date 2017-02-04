@@ -1,0 +1,21 @@
+// This file saves Custom Game Objects.
+
+[ATTRIBUTE MODIFIERS]
+
+[ATTRIBUTES]
+
+[BLOCKS]
+
+[COORDINATES]
+
+[EFFECTS]
+
+[ENCHANTMENTS]
+
+[ENTITIES]
+
+[ITEMS]
+
+[JSON MESSAGES]
+
+[VILLAGER TRADES]

@@ -41,7 +41,7 @@ public abstract class Tag extends GameObject
 
 	@Override
 	@Deprecated
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
 		return null;
 	}

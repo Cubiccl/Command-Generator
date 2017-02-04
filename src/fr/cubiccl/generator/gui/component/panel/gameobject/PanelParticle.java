@@ -77,7 +77,7 @@ public class PanelParticle extends CGPanel implements ActionListener
 	{
 		int id = param1 % 4096;
 		int damage = (param1 - id) / 4096;
-		this.panelBlockParticle.setupFrom(new PlacedBlock(ObjectRegistry.blocks.find(id), damage, new TagCompound(Tags.DEFAULT_COMPOUND)));
+		this.panelBlockParticle.setupFrom(new PlacedBlock(ObjectRegistry.blocks.find(id), damage, new TagCompound(Tags.BLOCK_NBT)));
 		this.panelItemParticle.setupFrom(new ItemStack(ObjectRegistry.items.find(param1), 0, 0));
 	}
 

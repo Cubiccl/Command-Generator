@@ -1,3 +1,13 @@
+------------------------- VERSION 2.1.0 -------------------------
+ADDITIONS
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+objects.attribute, objects.block, objects.coordinates, objects.effect, objects.enchantment, objects.entity, objects.item, objects.json, objects.modifier, objects.trade
+
 ------------------------- VERSION 2.0.3 -------------------------
 ADDITIONS
 

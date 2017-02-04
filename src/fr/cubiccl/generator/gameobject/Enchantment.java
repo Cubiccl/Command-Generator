@@ -20,7 +20,9 @@ public class Enchantment extends GameObject
 			if (t.id().equals(Tags.ENCHANTMENT_ID.id())) type = ObjectRegistry.enchantments.find(((TagNumber) t).value());
 			if (t.id().equals(Tags.ENCHANTMENT_LVL.id())) level = ((TagNumber) t).value();
 		}
-		return new Enchantment(type, level);
+		Enchantment e = new Enchantment(type, level);
+		e.findName(tag);
+		return e;
 	}
 
 	public final int level;
@@ -45,8 +47,10 @@ public class Enchantment extends GameObject
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
+		if (includeName) return new TagCompound(container, new TagNumber(Tags.ENCHANTMENT_ID, this.type.idInt),
+				new TagNumber(Tags.ENCHANTMENT_LVL, this.level), this.nameTag());
 		return new TagCompound(container, new TagNumber(Tags.ENCHANTMENT_ID, this.type.idInt), new TagNumber(Tags.ENCHANTMENT_LVL, this.level));
 	}
 

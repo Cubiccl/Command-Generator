@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
+import java.util.ArrayList;
+
 import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.*;
@@ -32,7 +34,9 @@ public class AttributeModifier extends GameObject
 			if (t.id().equals(Tags.ATTRIBUTE_UUIDLEAST.id())) ul = (long) (double) ((TagBigNumber) t).value();
 		}
 
-		return new AttributeModifier(a, n, s, o, am, um, ul);
+		AttributeModifier m = new AttributeModifier(a, n, s, o, am, um, ul);
+		m.findName(tag);
+		return m;
 	}
 
 	public final double amount;
@@ -67,26 +71,26 @@ public class AttributeModifier extends GameObject
 
 	@Override
 	@Deprecated
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
-		return this.toTag(container, true);
+		return this.toTag(container, true, includeName);
 	}
 
 	/** @param isApplied - True if is applied to an entity. Thus attribute and slot won't be included. */
-	public TagCompound toTag(TemplateCompound container, boolean isApplied)
+	public TagCompound toTag(TemplateCompound container, boolean isApplied, boolean includeName)
 	{
-		Tag[] tags = new Tag[isApplied ? 5 : 7];
-		tags[0] = new TagString(Tags.ATTRIBUTE_MODIFIER_NAME, this.name);
-		tags[1] = new TagNumber(Tags.ATTRIBUTE_OPERATION, this.operation);
-		tags[2] = new TagBigNumber(Tags.ATTRIBUTE_AMOUNT, this.amount);
-		tags[3] = new TagBigNumber(Tags.ATTRIBUTE_UUIDMOST, this.UUIDMost);
-		tags[4] = new TagBigNumber(Tags.ATTRIBUTE_UUIDLEAST, this.UUIDLeast);
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		tags.add(new TagString(Tags.ATTRIBUTE_MODIFIER_NAME, this.name));
+		tags.add(new TagNumber(Tags.ATTRIBUTE_OPERATION, this.operation));
+		tags.add(new TagBigNumber(Tags.ATTRIBUTE_AMOUNT, this.amount));
+		tags.add(new TagBigNumber(Tags.ATTRIBUTE_UUIDMOST, this.UUIDMost));
+		tags.add(new TagBigNumber(Tags.ATTRIBUTE_UUIDLEAST, this.UUIDLeast));
 		if (!isApplied)
 		{
-			tags[5] = new TagString(Tags.ATTRIBUTE_ATTRIBUTE_NAME, this.attribute.id);
-			tags[6] = new TagString(Tags.ATTRIBUTE_SLOT, this.slot);
+			tags.add(new TagString(Tags.ATTRIBUTE_ATTRIBUTE_NAME, this.attribute.id));
+			tags.add(new TagString(Tags.ATTRIBUTE_SLOT, this.slot));
 		}
-		return new TagCompound(container, tags);
+		if (includeName) tags.add(this.nameTag());
+		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
 	}
-
 }

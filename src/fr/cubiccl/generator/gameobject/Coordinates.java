@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject;
 
+import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -9,6 +10,22 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 
 public class Coordinates extends GameObject
 {
+
+	public static Coordinates createFrom(TagCompound tag)
+	{
+		float x = 0, y = 0, z = 0;
+
+		for (Tag t : tag.value())
+		{
+			if (t.id().equals(Tags.COORD_X.id())) x = (float) ((TagBigNumber) t).value;
+			if (t.id().equals(Tags.COORD_Y.id())) y = (float) ((TagBigNumber) t).value;
+			if (t.id().equals(Tags.COORD_Z.id())) z = (float) ((TagBigNumber) t).value;
+		}
+
+		Coordinates c = new Coordinates(x, y, z);
+		c.findName(tag);
+		return c;
+	}
 
 	public static Coordinates createFrom(TagList tag)
 	{
@@ -22,6 +39,7 @@ public class Coordinates extends GameObject
 		{
 			e.printStackTrace();
 		}
+
 		return new Coordinates(x, y, z);
 	}
 
@@ -76,8 +94,10 @@ public class Coordinates extends GameObject
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
+		if (includeName) return new TagCompound(container, new TagBigNumber(Tags.COORD_X, this.x), new TagBigNumber(Tags.COORD_Y, this.y), new TagBigNumber(
+				Tags.COORD_Z, this.z), this.nameTag());
 		return new TagCompound(container, new TagBigNumber(Tags.COORD_X, this.x), new TagBigNumber(Tags.COORD_Y, this.y),
 				new TagBigNumber(Tags.COORD_Z, this.z));
 	}

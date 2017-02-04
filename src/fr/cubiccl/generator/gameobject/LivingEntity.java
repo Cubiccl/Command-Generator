@@ -17,7 +17,15 @@ public class LivingEntity extends GameObject
 		Entity e = ObjectRegistry.entities.first();
 		TagCompound nbt = tag;
 		if (tag.hasTag("id")) e = ObjectRegistry.entities.find(((TagString) tag.getTagFromId("id")).value());
-		return new LivingEntity(e, nbt);
+
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		for (Tag t : nbt.value())
+			if (!t.id().equals(Tags.ENTITY_ID) && !t.id().equals(Tags.OBJECT_NAME)) tags.add(t);
+		nbt = new TagCompound((TemplateCompound) nbt.template, tags.toArray(new Tag[tags.size()]));
+
+		LivingEntity en = new LivingEntity(e, nbt);
+		en.findName(tag);
+		return en;
 	}
 
 	public final Entity entity;
@@ -42,12 +50,13 @@ public class LivingEntity extends GameObject
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		tags.add(new TagString(Tags.ENTITY_ID, this.entity.id()));
 		for (Tag t : this.nbt.value())
 			tags.add(t);
+		if (includeName) tags.add(this.nameTag());
 		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
 	}
 

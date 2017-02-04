@@ -6,6 +6,7 @@ import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
 import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.gui.Window;
 import fr.cubiccl.generator.utils.*;
@@ -35,7 +36,8 @@ public class CommandGenerator
 		log("Exiting Command Generator... Bye bye !");
 		FileUtils.writeToFile("log.txt", log.toArray(new String[log.size()]));
 		Settings.save();
-		log("Log and settings save successful.");
+		ObjectSaver.save();
+		log("Log, settings and custom objects save successful.");
 	}
 
 	public static void generate()
@@ -112,6 +114,7 @@ public class CommandGenerator
 		LoadingFrame frame = new LoadingFrame(5);
 		ObjectCreator.createObjects(frame);
 		Commands.createCommands(frame);
+		ObjectSaver.load();
 		frame.dispose();
 	}
 

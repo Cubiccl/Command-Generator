@@ -35,7 +35,7 @@ public class TemplateAttributeModifiers extends TemplateList
 		AttributeModifier[] values = ((AttributeModifierList) ((PanelObjectList) panel).objectList).modifiers.toArray(new AttributeModifier[0]);
 		TagCompound[] tags = new TagCompound[values.length];
 		for (int i = 0; i < tags.length; ++i)
-			tags[i] = values[i].toTag(Tags.DEFAULT_COMPOUND, false);
+			tags[i] = values[i].toTag(Tags.DEFAULT_COMPOUND, false, false);
 		return new TagList(this, tags);
 	}
 

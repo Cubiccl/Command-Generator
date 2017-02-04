@@ -23,7 +23,9 @@ public class Effect extends GameObject
 			if (t.id().equals(Tags.EFFECT_AMPLIFIER.id())) a = ((TagNumber) t).value();
 			if (t.id().equals(Tags.EFFECT_PARTICLES.id())) h = ((TagNumber) t).value() == 1;
 		}
-		return new Effect(e, d, a, h);
+		Effect ef = new Effect(e, d, a, h);
+		ef.findName(tag);
+		return ef;
 	}
 
 	/** Level of Effect (0 = Level 1) */
@@ -54,8 +56,11 @@ public class Effect extends GameObject
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
+		if (includeName) return new TagCompound(container, new TagNumber(Tags.EFFECT_ID, this.type.idInt),
+				new TagNumber(Tags.EFFECT_AMPLIFIER, this.amplifier), new TagNumber(Tags.EFFECT_DURATION, this.duration), new TagNumber(Tags.EFFECT_PARTICLES,
+						this.hideParticles ? 0 : 1), this.nameTag());
 		return new TagCompound(container, new TagNumber(Tags.EFFECT_ID, this.type.idInt), new TagNumber(Tags.EFFECT_AMPLIFIER, this.amplifier), new TagNumber(
 				Tags.EFFECT_DURATION, this.duration), new TagNumber(Tags.EFFECT_PARTICLES, this.hideParticles ? 0 : 1));
 	}

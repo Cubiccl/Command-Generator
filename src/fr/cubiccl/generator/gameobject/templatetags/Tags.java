@@ -20,6 +20,9 @@ public final class Tags
 	public static final TemplateNumber ATTRIBUTE_UUIDMOST = new TemplateNumber("UUIDMost", UNAVAILABLE, TagNumber.LONG);
 
 	public static final DefaultCompound BLOCK = new DefaultCompound("block");
+	public static final TemplateNumber BLOCK_DATA = new TemplateNumber("data", UNAVAILABLE, TagNumber.BYTE);
+	public static final TemplateString BLOCK_ID = new TemplateString("id", UNAVAILABLE);
+	public static final DefaultCompound BLOCK_NBT = new DefaultCompound("tag");
 
 	public static final TemplateNumber COORD_X = new TemplateNumber("X", UNAVAILABLE, TagNumber.DOUBLE);
 	public static final TemplateNumber COORD_X_INT = new TemplateNumber("X", UNAVAILABLE, TagNumber.INTEGER);
@@ -79,6 +82,8 @@ public final class Tags
 	public static final TemplateString JSON_SELECTOR = new TemplateString("selector", UNAVAILABLE);
 	public static final TemplateString JSON_TEXT = new TemplateString("text", UNAVAILABLE);
 	public static final TemplateString JSON_TRANSLATE = new TemplateString("translate", UNAVAILABLE);
+
+	public static final TemplateString OBJECT_NAME = new TemplateString("ObjectName", UNAVAILABLE);
 
 	public static final DefaultCompound OFFER_BUY = new DefaultCompound("buy");
 	public static final DefaultCompound OFFER_BUYB = new DefaultCompound("buyB");

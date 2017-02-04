@@ -16,8 +16,4 @@ Successfully created 165 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
-Generating !
-Successfully generated : locate Monument
-Generating !
-Successfully generated : setblock ~0.0 ~0.0 ~0.0 minecraft:standing_sign 7 destroy {Text2:"{\"text\":\"\",\"color\":\"white\",\"obfuscated\":\"true\"}"}
 Exiting Command Generator... Bye bye !

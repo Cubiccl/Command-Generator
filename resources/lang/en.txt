@@ -339,6 +339,17 @@ locate.Village=Village
 menu.exit=Exit
 menu.settings=Settings
 
+objects.attribute=Attributes
+objects.block=Blocks
+objects.coordinates=Coordinates
+objects.effect=Effects
+objects.enchantment=Enchantments
+objects.entity=Entities
+objects.item=Items
+objects.json=Json messages
+objects.modifier=Attribute Modifiers
+objects.trade=Villager Trades
+
 particle.block=Block texture for the particle
 particle.coordinates=Coordinates of the particles
 particle.count=Number of particles
