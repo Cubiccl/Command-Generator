@@ -9,11 +9,17 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 
 public class CommandDifficulty extends Command
 {
+	public static final String[][] acceptable =
+	{
+	{ "peaceful", "p", "0" },
+	{ "easy", "e", "1" },
+	{ "normal", "n", "2" },
+	{ "hard", "h", "3" } };
 	private OptionCombobox comboboxDifficulty;
 
 	public CommandDifficulty()
 	{
-		super("difficulty");
+		super("difficulty", "difficulty <difficulty>", 2);
 	}
 
 	@Override
@@ -37,6 +43,21 @@ public class CommandDifficulty extends Command
 	public String generate() throws CommandGenerationException
 	{
 		return this.id + " " + this.comboboxDifficulty.getValue();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		if (index == 1)
+		{
+			for (int i = 0; i < acceptable.length; ++i)
+				for (int j = 0; j < acceptable[i].length; ++j)
+					if (acceptable[i][j].equals(argument))
+					{
+						this.comboboxDifficulty.setSelectedIndex(i);
+						return;
+					}
+		}
 	}
 
 }

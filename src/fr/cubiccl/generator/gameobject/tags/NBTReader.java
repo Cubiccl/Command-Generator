@@ -70,6 +70,11 @@ public class NBTReader
 		return split.toArray(new String[split.size()]);
 	}
 
+	/** Reads a String NBT Tag and returns its NBT Tag form.
+	 * 
+	 * @param tag - The tag to read.
+	 * @param isInList - True if it is in a TagList, and thus its ID is not present.
+	 * @param isJson - True if it is in a json NBT structure, and thus its ID is surrounded with quotes "". */
 	public static Tag read(String tag, boolean isInList, boolean isJson)
 	{
 		if (isInList) return readNamelessTag(determineType(tag), tag, isJson);

@@ -39,7 +39,10 @@ public class Target extends GameObject
 		String[] args = value.substring(3, value.length() - 1).split(",");
 		ArrayList<Argument> arguments = new ArrayList<Argument>();
 		for (String arg : args)
-			arguments.add(Argument.createFrom(arg.split("=")[0], arg.split("=")[1]));
+		{
+			Argument a = Argument.createFrom(arg.split("=")[0], arg.split("=")[1]);
+			if (a != null) arguments.add(a);
+		}
 
 		return new Target(type, arguments.toArray(new Argument[arguments.size()]));
 	}

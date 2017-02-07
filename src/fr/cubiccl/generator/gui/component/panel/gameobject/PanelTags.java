@@ -199,6 +199,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	{
 		for (int i = 0; i < this.values.length; i++)
 			this.values[i] = null;
+
 		for (Tag t : value)
 		{
 			for (int i = 0; i < this.tags.length; ++i)
@@ -210,6 +211,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 				}
 			}
 		}
+		this.updateDisplay();
 	}
 
 	public void setTargetObject(BaseObject object)
@@ -261,7 +263,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	{
 		if (template == null) return null;
 		for (Tag tag : this.values)
-			if (tag != null && tag.template == template) return tag;
+			if (tag != null && tag.template.id().equals(template.id())) return tag;
 		return null;
 	}
 }

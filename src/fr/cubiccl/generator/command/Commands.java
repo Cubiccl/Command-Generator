@@ -79,6 +79,14 @@ public class Commands
 		return c.toArray(new Command[c.size()]);
 	}
 
+	public static Command identifyCommand(String command)
+	{
+		if (command.startsWith("/")) command = command.substring(1);
+		for (Command c : commands.values())
+			if (command.startsWith(c.id)) return c;
+		return null;
+	}
+
 	public static void registerCommand(Command command)
 	{
 		commands.put(command.id, command);

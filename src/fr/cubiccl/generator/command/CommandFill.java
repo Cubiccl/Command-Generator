@@ -4,7 +4,12 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
@@ -19,7 +24,8 @@ public class CommandFill extends Command implements ActionListener
 
 	public CommandFill()
 	{
-		super("fill");
+		super("fill", "fill <x1> <y1> <z1> <x2> <y2> <z2> <block> [dataValue] [oldBlockHandling] [dataTag]\n"
+				+ "fill <x1> <y1> <z1> <x2> <y2> <z2> <block> <dataValue> replace <replaceTileName> [replaceDataValue]", 8, 9, 10, 11, 12);
 	}
 
 	@Override
@@ -56,6 +62,23 @@ public class CommandFill extends Command implements ActionListener
 	}
 
 	@Override
+	protected void defaultGui()
+	{
+		this.panelBlockFill.setBlock(ObjectRegistry.blocks.find("stone"));
+		this.panelBlockFill.setData(0);
+		this.comboboxMode.setValue("replace");
+		this.panelBlockFill.setTags(new Tag[0]);
+	}
+
+	@Override
+	protected void finishReading()
+	{
+		boolean filter = this.comboboxMode.getValue().equals("filter");
+		this.panelBlockReplace.setVisible(filter);
+		this.panelBlockFill.setHasNBT(!filter);
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		PlacedBlock block = this.panelBlockFill.generate();
@@ -70,5 +93,35 @@ public class CommandFill extends Command implements ActionListener
 
 		PlacedBlock block2 = this.panelBlockReplace.generate();
 		return command + " replace " + block2.block.id() + " " + block2.data;
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// fill <x1> <y1> <z1> <x2> <y2> <z2> <block> [dataValue] [oldBlockHandling] [dataTag]
+		// fill <x1> <y1> <z1> <x2> <y2> <z2> <block> <dataValue> replace <replaceTileName> [replaceDataValue]
+
+		if (index == 1) this.panelCoordinatesStart.setupFrom(Coordinates.createFrom(argument, fullCommand[2], fullCommand[3]));
+		if (index == 4) this.panelCoordinatesEnd.setupFrom(Coordinates.createFrom(argument, fullCommand[5], fullCommand[6]));
+		if (index == 7) this.panelBlockFill.setBlock(ObjectRegistry.blocks.find(argument));
+		if (index == 8 && !argument.equals("-1")) try
+		{
+			this.panelBlockFill.setData(Integer.parseInt(argument));
+		} catch (Exception e)
+		{}
+		if (index == 9) this.comboboxMode.setValue(argument);
+		if (index == 10)
+		{
+			if (!argument.startsWith("{"))
+			{
+				this.comboboxMode.setValue("filter");
+				this.panelBlockReplace.setBlock(ObjectRegistry.blocks.find(argument));
+			} else this.panelBlockFill.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
+		}
+		if (index == 11) try
+		{
+			this.panelBlockReplace.setData(Integer.parseInt(argument));
+		} catch (Exception e)
+		{}
 	}
 }

@@ -15,7 +15,7 @@ public class CommandTrigger extends Command
 
 	public CommandTrigger()
 	{
-		super("trigger");
+		super("trigger", "trigger <objective> <add|set> <value>", 4);
 	}
 
 	@Override
@@ -46,4 +46,17 @@ public class CommandTrigger extends Command
 		return this.id + " " + this.entryObjective.getText() + " " + this.comboboxMode.getValue() + " " + this.entryValue.getText();
 	}
 
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// trigger <objective> <add|set> <value>
+		if (index == 1) this.entryObjective.setText(argument);
+		if (index == 2) this.comboboxMode.setValue(argument);
+		if (index == 3) try
+		{
+			Integer.parseInt(argument);
+			this.entryValue.setText(argument);
+		} catch (Exception e)
+		{}
+	}
 }

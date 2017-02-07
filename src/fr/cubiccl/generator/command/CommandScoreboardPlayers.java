@@ -4,6 +4,7 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -24,46 +25,17 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 
 	public CommandScoreboardPlayers()
 	{
-		super("scoreboard players");
+		super("scoreboard players", "scoreboard players <add|remove|set> <player> <objective> <score>\n"
+				+ "scoreboard players <enable|reset> <player> <objective>\n" + "scoreboard players test <player> <objective> <min> [max]\n"
+				+ "scoreboard players operation <target player> <target objective> <operation> <player> <objective>\n"
+				+ "scoreboard players tag <player> <add|remove> <tagName>", 4, 5, 6, 7);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		String mode = this.comboboxMode.getValue();
-		boolean operation = mode.equals("operation"), test = mode.equals("test"), tag = mode.equals("tag");
-		if (e.getSource() == this.comboboxMode)
-		{
-			this.entryScore.container.setVisible(!mode.equals("reset") && !mode.equals("enable") && !tag && !operation);
-			this.checkbox.setVisible(mode.equals("reset") || test);
-			this.panelTarget2.setVisible(operation);
-			this.entryObjective2.container.setVisible(operation);
-			this.entryScore2.container.setVisible(test);
-			this.entryScore2.label.setVisible(!test);
-			this.comboboxMode2.setVisible(operation || tag);
-			if (test)
-			{
-				this.checkbox.setTextID(new Text("scoreboard.test.max"));
-				this.entryObjective.label.setTextID(Text.OBJECTIVE);
-				this.entryScore.label.setTextID(new Text("score.value.min"));
-			} else if (operation)
-			{
-				this.entryObjective.label.setTextID(new Text("score.name1"));
-				this.comboboxMode2.setOptions("scoreboard.operation", OPERATIONS);
-			} else if (tag)
-			{
-				this.entryObjective.label.setTextID(new Text("scoreboard.tag.value"));
-				this.comboboxMode2.setOptions("scoreboard.tag", "add", "remove");
-			} else
-			{
-				this.checkbox.setTextID(new Text("scoreboard.reset.all"));
-				this.entryObjective.label.setTextID(Text.OBJECTIVE);
-				this.entryScore.label.setTextID(Text.VALUE);
-			}
-		}
-
-		this.entryObjective.container.setVisible(!mode.equals("reset") || !this.checkbox.isSelected());
-		this.entryScore2.setEnabled(this.checkbox.isSelected() || !test);
+		if (e.getSource() == this.comboboxMode) this.onModeChange();
+		else this.onCheckbox();
 	}
 
 	@Override
@@ -107,9 +79,15 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 	}
 
 	@Override
+	protected void finishReading()
+	{
+		this.onCheckbox();
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = this.id + " players " + this.comboboxMode.getValue() + " " + this.panelTarget.generate().toCommand() + " ";
+		String command = this.id + " " + this.comboboxMode.getValue() + " " + this.panelTarget.generate().toCommand() + " ";
 		String mode = this.comboboxMode.getValue();
 		String objective = this.entryObjective.getText();
 		if (!mode.equals("reset")) this.entryObjective.checkValue(CGEntry.STRING);
@@ -138,5 +116,81 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		}
 
 		return command;
+	}
+
+	private void onCheckbox()
+	{
+		String mode = this.comboboxMode.getValue();
+		this.entryObjective.container.setVisible(!mode.equals("reset") || !this.checkbox.isSelected());
+		this.entryScore2.setEnabled(this.checkbox.isSelected() || !mode.equals("test"));
+	}
+
+	private void onModeChange()
+	{
+		String mode = this.comboboxMode.getValue();
+		boolean operation = mode.equals("operation"), test = mode.equals("test"), tag = mode.equals("tag");
+		this.entryScore.container.setVisible(!mode.equals("reset") && !mode.equals("enable") && !tag && !operation);
+		this.checkbox.setVisible(mode.equals("reset") || test);
+		this.panelTarget2.setVisible(operation);
+		this.entryObjective2.container.setVisible(operation);
+		this.entryScore2.container.setVisible(test);
+		this.entryScore2.label.setVisible(!test);
+		this.comboboxMode2.setVisible(operation || tag);
+		if (test)
+		{
+			this.checkbox.setTextID(new Text("scoreboard.test.max"));
+			this.entryObjective.label.setTextID(Text.OBJECTIVE);
+			this.entryScore.label.setTextID(new Text("score.value.min"));
+		} else if (operation)
+		{
+			this.entryObjective.label.setTextID(new Text("score.name1"));
+			this.comboboxMode2.setOptions("scoreboard.operation", OPERATIONS);
+		} else if (tag)
+		{
+			this.entryObjective.label.setTextID(new Text("scoreboard.tag.value"));
+			this.comboboxMode2.setOptions("scoreboard.tag", "add", "remove");
+		} else
+		{
+			this.checkbox.setTextID(new Text("scoreboard.reset.all"));
+			this.entryObjective.label.setTextID(Text.OBJECTIVE);
+			this.entryScore.label.setTextID(Text.VALUE);
+		}
+
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// scoreboard players <add|remove|set> <player> <objective> <score>
+		// scoreboard players <enable|reset> <player> <objective>
+		// scoreboard players test <player> <objective> <min> [max]
+		// scoreboard players operation <target player> <target objective> <operation> <player> <objective>
+		// scoreboard players tag <player> add <tagName>
+		String mode = fullCommand[1];
+		if (index == 1)
+		{
+			this.comboboxMode.setValue(argument);
+			this.onModeChange();
+		}
+		if (index == 2) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 3) if (mode.equals("tag")) this.comboboxMode2.setValue(argument);
+		else this.entryObjective.setText(argument);
+		if (index == 4) if (mode.equals("operation")) this.comboboxMode2.setValue(argument.replace("=", "#"));
+		else if (mode.equals("tag")) this.entryObjective.setText(argument);
+		else try
+		{
+			Integer.parseInt(argument);
+			this.entryScore.setText(argument);
+		} catch (Exception e)
+		{}
+		if (index == 5) if (mode.equals("test")) try
+		{
+			Integer.parseInt(argument);
+			this.checkbox.setSelected(true);
+			this.entryScore2.setText(argument);
+		} catch (Exception e)
+		{}
+		else this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 6) this.entryObjective2.setText(argument);
 	}
 }

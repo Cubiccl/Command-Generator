@@ -47,11 +47,7 @@ public class PanelParticle extends CGPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		Particle particle = this.comboboxParticle.getSelectedObject();
-		this.panelBlockParticle.setVisible(particle.id.equals("minecraft:blockcrack") || particle.id.equals("minecraft:blockdust")
-				|| particle.id.equals("minecraft:fallingdust"));
-		this.panelItemParticle.setVisible(particle.id.equals("minecraft:iconcrack"));
-		this.labelParticle.setTextID(new Text("particle." + particle.id));
+		this.onParticleChange();
 	}
 
 	public int generateParam1()
@@ -66,6 +62,16 @@ public class PanelParticle extends CGPanel implements ActionListener
 	public int generateParam2()
 	{
 		return this.selectedParticle().id.equals("minecraft:iconcrack") ? this.panelItemParticle.selectedDamage() : 0;
+	}
+
+	private void onParticleChange()
+	{
+		Particle particle = this.comboboxParticle.getSelectedObject();
+		this.panelBlockParticle.setVisible(particle.id.equals("minecraft:blockcrack") || particle.id.equals("minecraft:blockdust")
+				|| particle.id.equals("minecraft:fallingdust"));
+		this.panelItemParticle.setVisible(particle.id.equals("minecraft:iconcrack"));
+		this.labelParticle.setTextID(new Text("particle." + particle.id));
+
 	}
 
 	public Particle selectedParticle()
@@ -86,9 +92,10 @@ public class PanelParticle extends CGPanel implements ActionListener
 		this.panelItemParticle.setDamage(param2);
 	}
 
-	public void setSelected(Particle particle)
+	public void setParticle(Particle particle)
 	{
 		this.comboboxParticle.setSelected(particle);
+		this.onParticleChange();
 	}
 
 	@Override

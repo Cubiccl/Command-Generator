@@ -83,6 +83,7 @@ public class PanelEntity extends CGPanel implements ActionListener, ICustomObjec
 
 	public void setEntity(Entity entity)
 	{
+		if (entity == null) return;
 		this.comboboxEntity.setSelected(entity);
 		this.panelTags.setTargetObject(entity);
 		this.labelImage.setImage(this.selectedEntity().texture());

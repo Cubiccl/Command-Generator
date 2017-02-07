@@ -2,6 +2,8 @@ package fr.cubiccl.generator;
 
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
@@ -14,7 +16,7 @@ import fr.cubiccl.generator.utils.*;
 public class CommandGenerator
 {
 	private static ArrayList<String> commandHistory = new ArrayList<String>();
-	private static String executeCommand = "";
+	private static String executeCommand = "", executeInput = null;
 	private static ArrayList<String> log = new ArrayList<String>();
 	private static Command selected;
 	public static StateManager stateManager;
@@ -29,6 +31,14 @@ public class CommandGenerator
 	public static String[] commandHistory()
 	{
 		return commandHistory.toArray(new String[commandHistory.size()]);
+	}
+
+	public static void doLoad(String input) throws CommandGenerationException
+	{
+		Command command = Commands.identifyCommand(input);
+		if (command == null) return;
+		command.setupFrom(input);
+		setSelected(command);
 	}
 
 	public static void exit()
@@ -52,9 +62,20 @@ public class CommandGenerator
 
 				window.showCommand(executeCommand);
 
-				if (command.startsWith("execute ")) DisplayUtils.showMessage(window, Lang.translate("general.success"),
-						Lang.translate("general.success_execute"));
-				else
+				if (command.startsWith("execute "))
+				{
+					DisplayUtils.showMessage(window, Lang.translate("general.success"), Lang.translate("general.success_execute"));
+					if (executeInput != null)
+					{
+						String input = executeInput;
+						executeInput = null; // To avoid setting back to null if this is another /execute
+						try
+						{
+							doLoad(input);
+						} catch (CommandGenerationException e)
+						{}
+					}
+				} else
 				{
 					commandHistory.add(executeCommand);
 					executeCommand = "";
@@ -66,6 +87,30 @@ public class CommandGenerator
 		{
 			report(e);
 		}
+	}
+
+	public static void loadCommand()
+	{
+		Command command;
+		String input = null;
+		boolean done = false;
+		do
+		{
+			input = JOptionPane.showInputDialog(window, new Text("command.load.details"), input == null ? "" : input);
+			if (input == null) return;
+			command = Commands.identifyCommand(input);
+			if (command == null) JOptionPane.showMessageDialog(window, new Text("error.command.identify"), "", JOptionPane.ERROR_MESSAGE);
+			else
+
+			try
+			{
+				doLoad(input);
+				done = true;
+			} catch (CommandGenerationException e)
+			{
+				report(e);
+			}
+		} while (!done);
 	}
 
 	public static void log(String text)
@@ -99,12 +144,18 @@ public class CommandGenerator
 		return selected;
 	}
 
+	public static void setExecuteInput(String input)
+	{
+		executeInput = input;
+	}
+
 	public static void setSelected(Command command)
 	{
 		if (command == selected) return;
 		selected = command;
+		window.setSelected(command);
 		stateManager.clear();
-		stateManager.setState(selectedCommand().createGUI(), null);
+		stateManager.setState(selectedCommand().getGUI(), null);
 	}
 
 	public static void updateData()

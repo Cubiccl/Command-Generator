@@ -28,22 +28,14 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 
 	public CommandScoreboardObjectives()
 	{
-		super("scoreboard objectives");
+		super("scoreboard objectives", "scoreboard objectives add <name> <criteria> [display name]\n" + "scoreboard objectives remove <objective>\n"
+				+ "scoreboard objectives setdisplay <slot> [objective]", 3, 4, 5);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.comboboxMode)
-		{
-			boolean display = this.comboboxMode.getValue().equals("setdisplay"), add = this.comboboxMode.getValue().equals("add");
-			this.comboboxDisplaySlot.setVisible(display);
-			this.entryDisplayName.container.setVisible(add);
-			this.checkboxClearSlot.setVisible(display);
-			this.labelSlot.setVisible(display);
-			this.panelCriteria.setVisible(add);
-		}
-		this.entryObjective.container.setVisible(!this.comboboxMode.getValue().equals("setdisplay") || !this.checkboxClearSlot.isSelected());
+		this.finishReading();
 	}
 
 	@Override
@@ -86,9 +78,28 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 	}
 
 	@Override
+	protected void defaultGui()
+	{
+		this.checkboxClearSlot.setSelected(true);
+		this.entryObjective.container.setVisible(false);
+	}
+
+	@Override
+	protected void finishReading()
+	{
+		boolean display = this.comboboxMode.getValue().equals("setdisplay"), add = this.comboboxMode.getValue().equals("add");
+		this.comboboxDisplaySlot.setVisible(display);
+		this.entryDisplayName.container.setVisible(add);
+		this.checkboxClearSlot.setVisible(display);
+		this.labelSlot.setVisible(display);
+		this.panelCriteria.setVisible(add);
+		this.entryObjective.container.setVisible(!this.comboboxMode.getValue().equals("setdisplay") || !this.checkboxClearSlot.isSelected());
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = this.id + " objectives " + this.comboboxMode.getValue();
+		String command = this.id + " " + this.comboboxMode.getValue();
 		String objective = this.entryObjective.getText();
 		boolean display = this.comboboxMode.getValue().equals("setdisplay");
 		boolean clear = display && this.checkboxClearSlot.isSelected();
@@ -110,5 +121,24 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 		}
 
 		return command + " " + objective;
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// scoreboard objectives add <name> <criteria> [display name]
+		// scoreboard objectives remove <objective>
+		// scoreboard objectives setdisplay <slot> [objective]
+		String mode = fullCommand[1];
+		if (index == 1) this.comboboxMode.setValue(argument);
+		if (index == 2) if (mode.equals("setdisplay")) this.comboboxDisplaySlot.setValue(argument);
+		else this.entryObjective.setText(argument);
+		if (index == 3) if (mode.equals("setdisplay"))
+		{
+			this.checkboxClearSlot.setSelected(false);
+			this.entryObjective.container.setVisible(true);
+			this.entryObjective.setText(argument);
+		} else this.panelCriteria.setupFrom(argument);
+		if (index == 4) this.entryObjective.setText(argument);
 	}
 }

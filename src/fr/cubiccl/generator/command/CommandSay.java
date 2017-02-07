@@ -13,7 +13,7 @@ public class CommandSay extends Command
 
 	public CommandSay()
 	{
-		super("say");
+		super("say", "say <message ...>", -2);
 	}
 
 	@Override
@@ -33,6 +33,12 @@ public class CommandSay extends Command
 	public String generate() throws CommandGenerationException
 	{
 		return this.id + " " + this.entryMessage.getText();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		if (index == 1) this.entryMessage.setText(argument);
 	}
 
 }

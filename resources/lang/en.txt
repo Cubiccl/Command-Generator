@@ -87,6 +87,8 @@ command.edit=Edit Command
 command.generate=Generate !
 command.history=Command history
 command.label=Generated Command
+command.load=Load command...
+command.load.details=Type in a Command that the Generator should load.
 command.output=Command output
 command.select=Select a Command
 
@@ -189,6 +191,8 @@ entity.weight=Weight (chance to spawn)
 entitydata.explain=Choosing an Entity below will not target those Entities. Use the "type" argument for the target.
 entitydata.nbt=NBT Tags to apply
 
+error.command.identify=This command could not be identified.
+error.command.structure=This command doesn't have a valid structure.<structure>
 error.integer=<name>: "XXX" is not valid. It must be an integer.
 error.integer.bounds=<name>: "XXX" is not valid. It must be an integer between <min> and <max>.
 error.integer.greater=<name>: "XXX" is not valid. It must be an integer greater than or equal to <min>.
@@ -483,7 +487,7 @@ scoreboard.operation.>=If Score 1 > Score 2, set Score 1 to Score 2
 scoreboard.operation.><=Swap Scores 1 and 2
 scoreboard.option.always=Always
 scoreboard.option.hideForOtherTeams=Hide for other Teams
-scoreboard.option.hideForOwnTeams=Hide for own Team
+scoreboard.option.hideForOwnTeam=Hide for own Team
 scoreboard.option.never=Never
 scoreboard.option.pushOtherTeams=Push other Teams
 scoreboard.option.pushOwnTeams=Push own Team

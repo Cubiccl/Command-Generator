@@ -60,6 +60,13 @@ public class BlockItem extends BaseObject
 		return this.idInt;
 	}
 
+	public boolean isDataValid(int data)
+	{
+		for (int i : this.damage)
+			if (i == data) return true;
+		return false;
+	}
+
 	/** @return True if this is an Item, false if this is a Block. */
 	public boolean isItem()
 	{

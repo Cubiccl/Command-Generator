@@ -16,7 +16,7 @@ public class CommandWeather extends Command
 
 	public CommandWeather()
 	{
-		super("weather");
+		super("weather", "weather <weather> [duration]", 3);
 	}
 
 	@Override
@@ -52,4 +52,15 @@ public class CommandWeather extends Command
 		return command + " " + this.entryDuration.getText();
 	}
 
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		if (index == 1) this.comboboxWeather.setValue(argument);
+		if (index == 2) try
+		{
+			Integer.parseInt(argument);
+			this.entryDuration.setText(argument);
+		} catch (Exception e)
+		{}
+	}
 }

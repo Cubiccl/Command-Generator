@@ -18,30 +18,16 @@ public class CommandWorldborder extends Command implements ActionListener
 
 	public CommandWorldborder()
 	{
-		super("worldborder");
+		super("worldborder", "worldborder <add|set> <distance> [time]\n" + "worldborder center <x> <y>\n" + "worldborder get\n"
+				+ "worldborder damage <amount|buffer> <value>\n" + "worldborder warning <distance|time> <value>", 2, 3, 4);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.comboboxMode)
+		if (e.getSource() == this.comboboxMode || e.getSource() == this.comboboxMode2)
 		{
-			String mode = this.comboboxMode.getValue();
-			this.entryValue.container.setVisible(!mode.equals("get"));
-			this.entryValue.label.setTextID(new Text("worldborder." + mode));
-			boolean value2 = mode.equals("center") || mode.equals("add") || mode.equals("set"), mode2 = mode.equals("damage") || mode.equals("warning");
-			this.entryValue2.container.setVisible(value2);
-			if (value2) this.entryValue2.label.setTextID(new Text("worldborder." + mode + "2"));
-			this.comboboxMode2.setVisible(mode2);
-			if (mode2)
-			{
-				if (mode.equals("damage")) this.comboboxMode2.setOptions("worldborder.mode", "amount", "buffer");
-				else if (mode.equals("warning")) this.comboboxMode2.setOptions("worldborder.mode", "distance", "time");
-				this.comboboxMode2.setSelectedIndex(this.comboboxMode2.getSelectedIndex());
-			}
-		} else if (e.getSource() == this.comboboxMode2)
-		{
-			this.entryValue.label.setTextID(new Text("worldborder." + this.comboboxMode.getValue() + "." + this.comboboxMode2.getValue()));
+			this.finishReading();
 		}
 	}
 
@@ -71,10 +57,30 @@ public class CommandWorldborder extends Command implements ActionListener
 		this.comboboxMode2.addActionListener(this);
 		this.comboboxMode2.setVisible(false);
 
-		this.entryValue.addIntFilter();
-		this.entryValue2.addIntFilter();
+		this.entryValue.addNumberFilter();
+		this.entryValue2.addNumberFilter();
 
 		return panel;
+	}
+
+	@Override
+	protected void finishReading()
+	{
+		String mode = this.comboboxMode.getValue();
+		this.entryValue.container.setVisible(!mode.equals("get"));
+		boolean value2 = mode.equals("center") || mode.equals("add") || mode.equals("set"), mode2 = mode.equals("damage") || mode.equals("warning");
+		if (!mode.equals("get") && !mode2) this.entryValue.label.setTextID(new Text("worldborder." + mode));
+		this.entryValue2.container.setVisible(value2);
+		if (value2) this.entryValue2.label.setTextID(new Text("worldborder." + mode + "2"));
+		this.comboboxMode2.setVisible(mode2);
+		if (mode2)
+		{
+			if (mode.equals("damage")) this.comboboxMode2.setOptions("worldborder.mode", "amount", "buffer");
+			else if (mode.equals("warning")) this.comboboxMode2.setOptions("worldborder.mode", "distance", "time");
+			this.comboboxMode2.setSelectedIndex(this.comboboxMode2.getSelectedIndex());
+			this.entryValue.label.setTextID(new Text("worldborder." + this.comboboxMode.getValue() + "." + this.comboboxMode2.getValue()));
+		}
+
 	}
 
 	@Override
@@ -111,5 +117,31 @@ public class CommandWorldborder extends Command implements ActionListener
 			default:
 				return command;
 		}
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// worldborder <add|set> <distance> [time]
+		// worldborder center <x> <y>
+		// worldborder get
+		// worldborder damage <amount|buffer> <value>
+		// worldborder warning <distance|time> <value>
+		if (index == 1) this.comboboxMode.setValue(argument);
+		if (index == 2) if (this.comboboxMode.getValue().equals("center")) try
+		{
+			Float.parseFloat(argument);
+			this.entryValue.setText(argument);
+		} catch (Exception e)
+		{}
+		else this.comboboxMode2.setValue(argument);
+		if (index == 3) try
+		{
+			Float.parseFloat(argument);
+			String mode = this.comboboxMode.getValue();
+			if (mode.equals("center") || mode.equals("add") || mode.equals("set")) this.entryValue2.setText(argument);
+			else this.entryValue.setText(argument);
+		} catch (Exception e)
+		{}
 	}
 }

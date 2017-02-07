@@ -50,6 +50,7 @@ public class PanelAchievement extends CGPanel implements ActionListener
 
 	public void setSelection(Achievement achievement)
 	{
+		if (achievement == null) return;
 		this.comboboxAchievement.setSelected(achievement);
 		this.onSelection();
 	}

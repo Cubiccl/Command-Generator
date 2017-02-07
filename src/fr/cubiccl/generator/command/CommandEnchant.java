@@ -2,6 +2,8 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEnchantment;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
@@ -14,7 +16,7 @@ public class CommandEnchant extends Command
 
 	public CommandEnchant()
 	{
-		super("enchant");
+		super("enchant", "enchant <player> <enchantment> <level>", 4);
 	}
 
 	@Override
@@ -36,6 +38,20 @@ public class CommandEnchant extends Command
 	public String generate() throws CommandGenerationException
 	{
 		return this.id + " " + this.panelTarget.generate().toCommand() + " " + this.panelEnchant.generate().toCommand();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// enchant <player> <enchantment> <level>
+
+		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 2) this.panelEnchant.setEnchantment(ObjectRegistry.enchantments.find(argument));
+		if (index == 3) try
+		{
+			this.panelEnchant.setLevel(Integer.parseInt(argument));
+		} catch (Exception e)
+		{}
 	}
 
 }

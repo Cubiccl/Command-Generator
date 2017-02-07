@@ -24,7 +24,7 @@ public class TemplateParticle extends TemplateString
 
 		if (previousValue != null)
 		{
-			p.setSelected(ObjectRegistry.particles.find(((TagString) previousValue).value()));
+			p.setParticle(ObjectRegistry.particles.find(((TagString) previousValue).value()));
 			p.setParam1(this.param1);
 			p.setParam2(this.param2);
 		}

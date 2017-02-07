@@ -2,6 +2,7 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -15,7 +16,7 @@ public class CommandGamemode extends Command
 
 	public CommandGamemode()
 	{
-		super("gamemode");
+		super("gamemode", "gamemode <mode> <player>", 3);
 	}
 
 	@Override
@@ -43,6 +44,22 @@ public class CommandGamemode extends Command
 	public String generate() throws CommandGenerationException
 	{
 		return this.id + " " + this.comboboxGamemode.getValue() + " " + this.panelTarget.generate().toCommand();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		if (index == 1)
+		{
+			for (int i = 0; i < CommandDefaultgamemode.acceptable.length; ++i)
+				for (int j = 0; j < CommandDefaultgamemode.acceptable[i].length; ++j)
+					if (CommandDefaultgamemode.acceptable[i][j].equals(argument))
+					{
+						this.comboboxGamemode.setSelectedIndex(i);
+						return;
+					}
+		} else if (index == 2) this.panelTarget.setupFrom(Target.createFrom(argument));
+
 	}
 
 }

@@ -1,4 +1,4 @@
-Welcome to the Command Generator v2.0.3 by Cubi !
+Welcome to the Command Generator v2.1.0 by Cubi !
 ---- Creating objects ----
 Successfully created 236 blocks.
 Successfully created 393 items.

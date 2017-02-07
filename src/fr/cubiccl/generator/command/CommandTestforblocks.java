@@ -2,6 +2,7 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
@@ -14,7 +15,7 @@ public class CommandTestforblocks extends Command
 
 	public CommandTestforblocks()
 	{
-		super("testforblocks");
+		super("testforblocks", "testforblocks <pattern-coordinates-start> <pattern-coordinates-end> <test-coordinates> [mode]", 10, 11);
 	}
 
 	@Override
@@ -40,10 +41,26 @@ public class CommandTestforblocks extends Command
 	}
 
 	@Override
+	protected void defaultGui()
+	{
+		this.comboboxMode.setValue("all");
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		return this.id + " " + this.panelCoordinatesSourceStart.generate().toCommand() + " " + this.panelCoordinatesSourceEnd.generate().toCommand() + " "
 				+ this.panelCoordinatesDestination.generate().toCommand() + " " + this.comboboxMode.getValue();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// testforblocks <pattern-coordinates-start> <pattern-coordinates-end> <test-coordinates> [mode]
+		if (index == 1) this.panelCoordinatesSourceStart.setupFrom(Coordinates.createFrom(argument, fullCommand[2], fullCommand[3]));
+		if (index == 4) this.panelCoordinatesSourceEnd.setupFrom(Coordinates.createFrom(argument, fullCommand[5], fullCommand[6]));
+		if (index == 7) this.panelCoordinatesDestination.setupFrom(Coordinates.createFrom(argument, fullCommand[8], fullCommand[9]));
+		if (index == 10) this.comboboxMode.setValue(argument);
 	}
 
 }

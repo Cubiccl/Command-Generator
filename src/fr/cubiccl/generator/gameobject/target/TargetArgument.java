@@ -111,8 +111,8 @@ public class TargetArgument
 		{
 			@SuppressWarnings("unchecked")
 			Entity value = ((ObjectCombobox<Entity>) panel.getComponent(1)).getSelectedObject();
-			if (((CGCheckBox) panel.getComponent(2)).isSelected()) return "!" + value.id();
-			return value.id();
+			if (((CGCheckBox) panel.getComponent(2)).isSelected()) return "!" + value.id().replaceAll("minecraft:", "");
+			return value.id().replaceAll("minecraft:", "");
 		}
 
 		CGEntry entry = (CGEntry) ((CPanel) panel.getComponent(0)).getComponent(1);

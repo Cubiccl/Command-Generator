@@ -2,6 +2,8 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.Coordinates;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
@@ -21,7 +23,7 @@ public class CommandTeleport extends Command
 
 	public CommandTeleport()
 	{
-		super("teleport");
+		super("teleport", "teleport <entity> <x> <y> <z> [<y-rot> <x-rot>]", 5, 7);
 	}
 
 	@Override
@@ -87,5 +89,29 @@ public class CommandTeleport extends Command
 		}
 
 		return command + (rotation ? (" " + (this.checkboxYRot.isSelected() ? "~" : "") + y + " " + (this.checkboxXRot.isSelected() ? "~" : "") + x) : "");
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// teleport <entity> <x> <y> <z> [<y-rot> <x-rot>]
+		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+		if (index == 5 || index == 6)
+		{
+			if (argument.startsWith("~"))
+			{
+				argument = argument.substring(1);
+				if (index == 5) this.checkboxYRot.setSelected(true);
+				if (index == 6) this.checkboxXRot.setSelected(true);
+			}
+			try
+			{
+				float f = Float.parseFloat(argument);
+				if (index == 5 && f >= -180 && f <= 180) this.entryYRot.setText(argument);
+				if (index == 6 && f >= -90 && f <= 90) this.entryXRot.setText(argument);
+			} catch (Exception e)
+			{}
+		}
 	}
 }

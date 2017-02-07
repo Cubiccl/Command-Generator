@@ -2,6 +2,7 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
@@ -15,7 +16,7 @@ public class CommandTell extends Command
 
 	public CommandTell()
 	{
-		super("tell");
+		super("tell", "tell <player> <message ...>", -3);
 	}
 
 	@Override
@@ -37,6 +38,13 @@ public class CommandTell extends Command
 	public String generate() throws CommandGenerationException
 	{
 		return this.id + " " + this.panelTarget.generate().toCommand() + " " + this.entryMessage.getText();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 2) this.entryMessage.setText(argument);
 	}
 
 }

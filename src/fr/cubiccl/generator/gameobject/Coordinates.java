@@ -7,9 +7,45 @@ import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
+import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class Coordinates extends GameObject
 {
+
+	public static Coordinates createFrom(String x, String y, String z) throws CommandGenerationException
+	{
+		float X = 0, Y = 0, Z = 0;
+		boolean xr = false, yr = false, zr = false;
+
+		if (x.startsWith("~"))
+		{
+			x = x.substring(1);
+			xr = true;
+		}
+		if (y.startsWith("~"))
+		{
+			y = y.substring(1);
+			yr = true;
+		}
+		if (z.startsWith("~"))
+		{
+			z = z.substring(1);
+			zr = true;
+		}
+
+		try
+		{
+			if (!x.equals("")) X = Float.parseFloat(x);
+			if (!y.equals("")) Y = Float.parseFloat(y);
+			if (!z.equals("")) Z = Float.parseFloat(z);
+		} catch (NumberFormatException e)
+		{
+			throw new CommandGenerationException(new Text("error.coordinates"));
+		}
+
+		return new Coordinates(X, Y, Z, xr, yr, zr);
+	}
 
 	public static Coordinates createFrom(TagCompound tag)
 	{

@@ -2,6 +2,7 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -12,7 +13,7 @@ public class CommandSetworldspawn extends Command
 
 	public CommandSetworldspawn()
 	{
-		super("setworldspawn");
+		super("setworldspawn", "setworldspawn <x> <y> <z>", 4);
 	}
 
 	@Override
@@ -32,6 +33,12 @@ public class CommandSetworldspawn extends Command
 	public String generate() throws CommandGenerationException
 	{
 		return this.id + " " + this.panelCoordinates.generate().toCommand();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		if (index == 1) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[2], fullCommand[3]));
 	}
 
 }

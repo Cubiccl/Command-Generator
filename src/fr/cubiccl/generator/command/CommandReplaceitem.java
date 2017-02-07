@@ -5,6 +5,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.Coordinates;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -46,7 +52,8 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 
 	public CommandReplaceitem()
 	{
-		super("replaceitem");
+		super("replaceitem", "replaceitem block <x> <y> <z> <slot> <item> [amount] [data] [dataTag]\n"
+				+ "replaceitem entity <entity> <slot> <item> [amount] [data] [dataTag]", 5, 6, 7, 8, 9, 10);
 	}
 
 	@Override
@@ -55,10 +62,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 		boolean block = this.comboboxMode.getValue().equals("block");
 		if (e.getSource() == this.comboboxMode)
 		{
-			this.panelCoordinates.setVisible(block);
-			this.panelTarget.setVisible(!block);
-			if (block) this.labelSlot.setTextID(new Text("replaceitem.slot.selected", new Replacement("<slot>", this.selectedBlockSlot)));
-			else this.labelSlot.setTextID(new Text("replaceitem.slot.selected", new Replacement("<slot>", this.selectedEntitySlot)));
+			this.finishReading();
 		} else
 		{
 			PanelSlotSelection p = new PanelSlotSelection(new Text("replaceitem.slot.selection"), block ? CONTAINER_BLOCKS : CONTAINER_ENTITIES);
@@ -98,12 +102,72 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 	}
 
 	@Override
+	protected void defaultGui()
+	{
+		this.panelItem.setCount(1);
+		this.panelItem.setDamage(0);
+		this.panelItem.setTags(new Tag[0]);
+	}
+
+	@Override
+	protected void finishReading()
+	{
+		boolean block = this.comboboxMode.getValue().equals("block");
+		this.panelCoordinates.setVisible(block);
+		this.panelTarget.setVisible(!block);
+		if (block) this.labelSlot.setTextID(new Text("replaceitem.slot.selected", new Replacement("<slot>", this.selectedBlockSlot)));
+		else this.labelSlot.setTextID(new Text("replaceitem.slot.selected", new Replacement("<slot>", this.selectedEntitySlot)));
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String command = this.id + " " + this.comboboxMode.getValue() + " ";
 		if (this.comboboxMode.getValue().equals("block")) command += this.panelCoordinates.generate().toCommand() + " " + this.selectedBlockSlot;
 		else command += this.panelTarget.generate().toCommand() + " " + this.selectedEntitySlot;
 		return command + " " + this.panelItem.generate().toCommand();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// replaceitem block <x> <y> <z> <slot> <item> [amount] [data] [dataTag]
+		// replaceitem entity <entity> <slot> <item> [amount] [data] [dataTag]
+		boolean block = fullCommand[1].equals("block");
+		if (index == 1) this.comboboxMode.setValue(argument);
+		if (block)
+		{
+			if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+			if (index == 5) this.selectedBlockSlot = argument;
+			if (index == 6) this.panelItem.setItem(ObjectRegistry.items.find(argument));
+			if (index == 7) try
+			{
+				this.panelItem.setCount(Integer.parseInt(argument));
+			} catch (Exception e)
+			{}
+			if (index == 8) try
+			{
+				this.panelItem.setDamage(Integer.parseInt(argument));
+			} catch (Exception e)
+			{}
+			if (index == 9) this.panelItem.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
+		} else
+		{
+			if (index == 2) this.panelTarget.setupFrom(Target.createFrom(argument));
+			if (index == 3) this.selectedEntitySlot = argument;
+			if (index == 4) this.panelItem.setItem(ObjectRegistry.items.find(argument));
+			if (index == 5) try
+			{
+				this.panelItem.setCount(Integer.parseInt(argument));
+			} catch (Exception e)
+			{}
+			if (index == 6) try
+			{
+				this.panelItem.setDamage(Integer.parseInt(argument));
+			} catch (Exception e)
+			{}
+			if (index == 7) this.panelItem.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
+		}
 	}
 
 	@Override

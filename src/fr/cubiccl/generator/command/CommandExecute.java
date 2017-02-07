@@ -4,7 +4,11 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
@@ -22,7 +26,8 @@ public class CommandExecute extends Command implements ActionListener
 
 	public CommandExecute()
 	{
-		super("execute");
+		super("execute", "execute <entity> <x> <y> <z> <command ...>\n"
+				+ "execute <entity> <x> <y> <z> detect <x2> <y2> <z2> <block> <dataValue> <command ...>", -6);
 	}
 
 	@Override
@@ -52,6 +57,7 @@ public class CommandExecute extends Command implements ActionListener
 		panel.add(this.panelBlockCoordinates = new PanelCoordinates("execute.coordinates.block"), gbc);
 
 		this.panelCoordinates.setRelativeText(new Text("execute.relative"));
+		this.panelBlock.setHasNBT(false);
 		this.panelBlock.setVisible(false);
 		this.panelBlockCoordinates.setVisible(false);
 		this.checkboxBlock.addActionListener(this);
@@ -69,5 +75,35 @@ public class CommandExecute extends Command implements ActionListener
 			command += "detect " + this.panelBlockCoordinates.generate().toCommand() + " " + block.block.id() + " " + block.data + " ";
 		}
 		return command;
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// execute <entity> <x> <y> <z> <command ...>
+		// execute <entity> <x> <y> <z> detect <x2> <y2> <z2> <block> <dataValue> <command ...>
+		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+		if (index == 5)
+		{
+			boolean block = argument.startsWith("detect ");
+			this.checkboxBlock.setSelected(block);
+			this.panelBlock.setVisible(block);
+			this.panelBlockCoordinates.setVisible(block);
+			if (block)
+			{
+				String[] args = argument.split(" ");
+				if (args.length < 7) this.incorrectStructureError();
+				this.panelBlockCoordinates.setupFrom(Coordinates.createFrom(args[1], args[2], args[3]));
+				this.panelBlock.setBlock(ObjectRegistry.blocks.find(args[4]));
+				try
+				{
+					this.panelBlock.setData(Integer.parseInt(args[5]));
+				} catch (Exception e)
+				{}
+				CommandGenerator.setExecuteInput(argument.substring(args[0].length() + args[1].length() + args[2].length() + args[3].length()
+						+ args[4].length() + args[5].length() + 6)); // 6 for each space
+			} else CommandGenerator.setExecuteInput(argument);
+		}
 	}
 }

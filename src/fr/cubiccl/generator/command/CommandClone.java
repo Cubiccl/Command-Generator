@@ -4,6 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.gameobject.Coordinates;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
@@ -18,7 +20,8 @@ public class CommandClone extends Command implements ActionListener
 
 	public CommandClone()
 	{
-		super("clone");
+		super("clone", "clone <source coordinates start> <source coordinates end> <destination coordinates> [maskMode] [cloneMode] [TileName] [dataValue]", 10,
+				11, 12, 13, 14);
 	}
 
 	@Override
@@ -60,6 +63,7 @@ public class CommandClone extends Command implements ActionListener
 		panel.add(this.panelBlock = new PanelBlock("clone.block"), gbc);
 
 		this.panelBlock.setVisible(false);
+		this.panelBlock.setHasNBT(false);
 		this.comboboxMaskMode.addActionListener(this);
 
 		return panel;
@@ -81,5 +85,29 @@ public class CommandClone extends Command implements ActionListener
 				+ this.comboboxCloneMode.getValue()
 				+ (this.comboboxMaskMode.getValue().equals("filtered") ? (" " + this.panelBlock.selectedBlock().id() + " " + this.panelBlock.selectedDamage())
 						: "");
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// clone <source coordinates start> <source coordinates end> <destination coordinates> [maskMode] [cloneMode] [TileName] [dataValue]
+		if (index == 1) this.panelCoordinatesSourceStart.setupFrom(Coordinates.createFrom(argument, fullCommand[2], fullCommand[3]));
+		if (index == 4) this.panelCoordinatesSourceEnd.setupFrom(Coordinates.createFrom(argument, fullCommand[5], fullCommand[6]));
+		if (index == 7) this.panelCoordinatesDestination.setupFrom(Coordinates.createFrom(argument, fullCommand[8], fullCommand[9]));
+		if (index == 10) this.comboboxMaskMode.setValue(argument);
+		if (index == 11) this.comboboxCloneMode.setValue(argument);
+		if (index == 12) this.panelBlock.setBlock(ObjectRegistry.blocks.find(argument));
+		if (index == 13) try
+		{
+			this.panelBlock.setData(Integer.parseInt(argument));
+		} catch (Exception e)
+		{}
+	}
+
+	@Override
+	protected void defaultGui()
+	{
+		this.comboboxMaskMode.setValue("replace");
+		this.comboboxCloneMode.setValue("normal");
 	}
 }

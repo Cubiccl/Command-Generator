@@ -2,6 +2,7 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
@@ -17,7 +18,7 @@ public class CommandSpreadplayers extends Command
 
 	public CommandSpreadplayers()
 	{
-		super("spreadplayers");
+		super("spreadplayers", "spreadplayers <x> <z> <spreadDistance> <maxRange> <respectTeams> <player>", 7);
 	}
 
 	@Override
@@ -58,6 +59,13 @@ public class CommandSpreadplayers extends Command
 	}
 
 	@Override
+	protected void defaultGui()
+	{
+		this.checkboxX.setSelected(false);
+		this.checkboxZ.setSelected(false);
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String x = this.entryX.getText(), z = this.entryZ.getText(), d = this.entryDistance.getText(), r = this.entryRange.getText();
@@ -70,4 +78,26 @@ public class CommandSpreadplayers extends Command
 				+ this.checkboxTeams.isSelected() + " " + this.panelTarget.generate().toCommand();
 	}
 
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// spreadplayers <x> <z> <spreadDistance> <maxRange> <respectTeams> <player>
+		if (index >= 1 && index <= 4) try
+		{
+			if ((index == 1 || index == 2) && argument.startsWith("~"))
+			{
+				argument = argument.substring(1);
+				if (index == 1) this.checkboxX.setSelected(true);
+				if (index == 2) this.checkboxZ.setSelected(true);
+			}
+			Float.parseFloat(argument);
+			if (index == 1) this.entryX.setText(argument);
+			if (index == 2) this.entryZ.setText(argument);
+			if (index == 3) this.entryDistance.setText(argument);
+			if (index == 4) this.entryRange.setText(argument);
+		} catch (Exception e)
+		{}
+		if (index == 5) this.checkboxTeams.setSelected(argument.equals("true"));
+		if (index == 6) this.panelTarget.setupFrom(Target.createFrom(argument));
+	}
 }

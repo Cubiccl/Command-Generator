@@ -124,15 +124,19 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		return this.item;
 	}
 
+	public void setCount(int count)
+	{
+		this.spinnerAmount.setText(Integer.toString(count));
+	}
+
 	public void setDamage(int damage)
 	{
-		for (int i = 0; i < this.item.damage.length; ++i)
-			if (this.item.damage[i] == this.damage)
-			{
-				this.damage = damage;
-				this.updateDisplay();
-				break;
-			}
+		if (this.item.hasDurability && this.item.isDataValid(damage)) this.spinnerDurability.setText(Integer.toString(damage));
+		else if (this.item.isDataValid(damage))
+		{
+			this.damage = damage;
+			this.updateDisplay();
+		}
 	}
 
 	public void setEnabledContent(boolean data, boolean amount)
@@ -170,6 +174,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 
 	public void setItem(Item item)
 	{
+		if (item == null) return;
 		boolean found = false;
 		for (Item i : this.availableItems)
 			if (item == i)
@@ -183,6 +188,11 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this.panelTags.setTargetObject(this.item);
 		this.spinnerDurability.setValues(this.item.damage);
 		this.updateDisplay();
+	}
+
+	public void setTags(Tag[] tags)
+	{
+		this.panelTags.setTags(tags);
 	}
 
 	@Override

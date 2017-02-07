@@ -18,7 +18,7 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 	private static final long serialVersionUID = 9144607045203777459L;
 
 	public CGButton buttonCancelExecute;
-	private CGButton buttonGenerate;
+	private CGButton buttonGenerate, buttonLoadCommand;
 	private CGComboBox comboboxCommands;
 	private CGLabel labelCommand;
 
@@ -37,6 +37,8 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 		this.buttonGenerate = new CGButton("command.generate");
 		this.buttonGenerate.addActionListener(this);
 		this.buttonGenerate.setFont(this.buttonGenerate.getFont().deriveFont(Font.BOLD, 20));
+		this.buttonLoadCommand = new CGButton("command.load");
+		this.buttonLoadCommand.addActionListener(this);
 		this.buttonCancelExecute = new CGButton("command.cancel_execute");
 		this.buttonCancelExecute.addActionListener(this);
 		this.buttonCancelExecute.setVisible(false);
@@ -47,6 +49,7 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == this.buttonGenerate) CommandGenerator.generate();
+		if (e.getSource() == this.buttonLoadCommand) CommandGenerator.loadCommand();
 		if (e.getSource() == this.buttonCancelExecute) CommandGenerator.cancelExecute();
 		if (e.getSource() == this.comboboxCommands) CommandGenerator.setSelected(Commands.getCommandFromID(this.comboboxCommands.getValue()));
 	}
@@ -65,6 +68,8 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 		++gbc.gridx;
 		this.add(this.buttonGenerate, gbc);
 		++gbc.gridx;
+		this.add(this.buttonLoadCommand, gbc);
+		++gbc.gridx;
 		this.add(this.buttonCancelExecute, gbc);
 	}
 
@@ -74,8 +79,14 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 		super.setEnabled(enabled);
 		this.comboboxCommands.setEnabled(enabled);
 		this.buttonGenerate.setEnabled(enabled);
+		this.buttonLoadCommand.setEnabled(enabled);
 		this.buttonCancelExecute.setEnabled(enabled);
 		this.labelCommand.setForeground(enabled ? Color.BLACK : Color.GRAY);
+	}
+
+	public void setSelected(Command command)
+	{
+		this.comboboxCommands.setSelectedItem(command.id);
 	}
 
 }

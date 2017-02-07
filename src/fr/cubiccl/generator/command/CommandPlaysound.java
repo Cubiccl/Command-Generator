@@ -2,8 +2,10 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.baseobjects.Sound;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -24,7 +26,7 @@ public class CommandPlaysound extends Command
 
 	public CommandPlaysound()
 	{
-		super("playsound");
+		super("playsound", "playsound <sound> <source> <player> [<x> <y> <z>] [volume] [pitch] [minimumVolume]", 4, 7, 8, 9, 10);
 	}
 
 	@Override
@@ -68,6 +70,15 @@ public class CommandPlaysound extends Command
 	}
 
 	@Override
+	protected void defaultGui()
+	{
+		this.panelCoordinates.setupFrom(new Coordinates(0, 0, 0, true, true, true));
+		this.entryVolume.setText("0");
+		this.entryPitch.setText("0");
+		this.entryMinVolume.setText("0");
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String v = this.entryVolume.getText(), p = this.entryPitch.getText(), mv = this.entryMinVolume.getText();
@@ -76,7 +87,27 @@ public class CommandPlaysound extends Command
 		this.entryPitch.checkValueInBounds(CGEntry.FLOAT, 0, 2);
 		this.entryMinVolume.checkValueSuperior(CGEntry.FLOAT, 0);
 
-		return this.id + " " + this.comboboxSound.getSelectedObject().id + " " + this.comboboxSource.getValue() + " "
-				+ this.panelTarget.generate().toCommand() + this.panelCoordinates.generate().toCommand() + " " + v + " " + p + " " + mv;
+		return this.id + " " + this.comboboxSound.getSelectedObject().id + " " + this.comboboxSource.getValue() + " " + this.panelTarget.generate().toCommand()
+				+ this.panelCoordinates.generate().toCommand() + " " + v + " " + p + " " + mv;
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// playsound <sound> <source> <player> [<x> <y> <z>] [volume] [pitch] [minimumVolume]
+		if (index == 1) this.comboboxSound.setSelected(ObjectRegistry.sounds.find(argument));
+		if (index == 2) this.comboboxSource.setValue(argument);
+		if (index == 3) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 4) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[5], fullCommand[6]));
+		if (index >= 7) try
+		{
+			if (Float.parseFloat(argument) >= 0)
+			{
+				if (index == 7) this.entryVolume.setText(argument);
+				if (index == 8 && Float.parseFloat(argument) <= 2) this.entryPitch.setText(argument);
+				if (index == 9) this.entryMinVolume.setText(argument);
+			}
+		} catch (Exception e)
+		{}
 	}
 }

@@ -2,6 +2,8 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.Coordinates;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
@@ -14,7 +16,7 @@ public class CommandSpawnpoint extends Command
 
 	public CommandSpawnpoint()
 	{
-		super("spawnpoint");
+		super("spawnpoint", "spawnpoint <player> <x> <y> <z>", 5);
 	}
 
 	@Override
@@ -36,6 +38,13 @@ public class CommandSpawnpoint extends Command
 	public String generate() throws CommandGenerationException
 	{
 		return this.id + " " + this.panelTarget.generate().toCommand() + " " + this.panelCoordinates.generate().toCommand();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
 	}
 
 }

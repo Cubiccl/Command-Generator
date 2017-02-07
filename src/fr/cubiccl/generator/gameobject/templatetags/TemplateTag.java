@@ -85,6 +85,11 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	 * @return The generated Tag. */
 	protected abstract Tag generateTag(BaseObject object, CGPanel panel);
 
+	public String[] getApplicable()
+	{
+		return this.applicable;
+	}
+
 	@Override
 	public String id()
 	{

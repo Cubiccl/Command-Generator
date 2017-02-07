@@ -65,10 +65,20 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 		return this.comboboxEnchant.getSelectedObject();
 	}
 
+	public void setEnchantment(EnchantmentType enchantment)
+	{
+		if (enchantment != null) this.comboboxEnchant.setSelected(enchantment);
+	}
+
+	public void setLevel(int level)
+	{
+		if (!this.checkMaximum || this.selectedEnchantment().maxLevel >= level) this.entryLevel.setText(Integer.toString(level));
+	}
+
 	public void setupFrom(Enchantment enchantment)
 	{
-		this.comboboxEnchant.setSelected(enchantment.type);
-		if (!this.checkMaximum || this.selectedEnchantment().maxLevel >= enchantment.level) this.entryLevel.setText(Integer.toString(enchantment.level));
+		this.setEnchantment(enchantment.type);
+		this.setLevel(enchantment.level);
 	}
 
 }

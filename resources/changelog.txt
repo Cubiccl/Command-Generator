@@ -1,3 +1,16 @@
+------------------------- VERSION 2.2.0 -------------------------
+ADDITIONS
+Check all commands
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+scoreboard.option.hideForOwnTeams -> scoreboard.option.hideForOwnTeam
+
+ADDED TRANSLATIONS
+command.load, command.load.details
+error.command.identify, error.command.structure, error.coordinates
+
 ------------------------- VERSION 2.1.0 -------------------------
 ADDITIONS
 - Custom Objects can now be created and saved ! 

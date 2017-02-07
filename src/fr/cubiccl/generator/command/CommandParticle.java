@@ -2,7 +2,10 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.baseobjects.Particle;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
@@ -22,7 +25,7 @@ public class CommandParticle extends Command
 
 	public CommandParticle()
 	{
-		super("particle");
+		super("particle", "particle <name> <x> <y> <z> <xd> <yd> <zd> <speed> [count] [mode] [player] [params ...]", 9, 10, 11, 12, 13, 14);
 	}
 
 	@Override
@@ -70,6 +73,15 @@ public class CommandParticle extends Command
 	}
 
 	@Override
+	protected void defaultGui()
+	{
+		this.entryCount.setText("1");
+		this.checkboxForce.setSelected(false);
+		this.panelParticle.setParam1(0);
+		this.panelParticle.setParam2(0);
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		Particle particle = this.panelParticle.selectedParticle();
@@ -96,6 +108,39 @@ public class CommandParticle extends Command
 				+ this.panelParticle.generateParam1();
 
 		return command;
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// particle <name> <x> <y> <z> <xd> <yd> <zd> <speed> [count] [mode] [player] [params ...]
+		if (index == 1) this.panelParticle.setParticle(ObjectRegistry.particles.find(argument));
+		if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+		if (index >= 5 && index <= 8) try
+		{
+			if (Float.parseFloat(argument) >= 0) if (index == 5) this.entryXd.setText(argument);
+			else if (index == 6) this.entryYd.setText(argument);
+			else if (index == 7) this.entryZd.setText(argument);
+			else if (index == 8) this.entrySpeed.setText(argument);
+		} catch (Exception e)
+		{}
+		if (index == 9) try
+		{
+			if (Integer.parseInt(argument) >= 1) this.entryCount.setText(argument);
+		} catch (Exception e)
+		{}
+		if (index == 10) this.checkboxForce.setSelected(argument.equals("force"));
+		if (index == 11) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 12) try
+		{
+			this.panelParticle.setParam1(Integer.parseInt(argument));
+		} catch (Exception e)
+		{}
+		if (index == 13) try
+		{
+			this.panelParticle.setParam2(Integer.parseInt(argument));
+		} catch (Exception e)
+		{}
 	}
 
 }

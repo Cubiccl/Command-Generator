@@ -2,6 +2,7 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -12,7 +13,7 @@ public class CommandKill extends Command
 
 	public CommandKill()
 	{
-		super("kill");
+		super("kill", "kill <entity>", 2);
 	}
 
 	@Override
@@ -34,4 +35,9 @@ public class CommandKill extends Command
 		return this.id + " " + this.panelTarget.generate().toCommand() + " ";
 	}
 
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+	}
 }

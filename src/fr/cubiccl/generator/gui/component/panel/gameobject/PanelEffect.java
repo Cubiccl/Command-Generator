@@ -65,6 +65,7 @@ public class PanelEffect extends CGPanel implements ActionListener, ICustomObjec
 		this.entryLevel.addIntFilter();
 
 		this.comboboxEffect.addActionListener(this);
+		this.setDefault();
 		this.updateTranslations();
 	}
 
@@ -84,13 +85,40 @@ public class PanelEffect extends CGPanel implements ActionListener, ICustomObjec
 				this.checkboxHideParticles.isSelected());
 	}
 
+	public void setAmplifier(int amplifier)
+	{
+		this.entryLevel.setText(Integer.toString(amplifier));
+	}
+
+	public void setDefault()
+	{
+		this.setDuration(30);
+		this.setAmplifier(0);
+		this.setHideParticles(false);
+	}
+
+	public void setDuration(int duration)
+	{
+		this.entryDuration.setText(Integer.toString(duration));
+	}
+
+	public void setEffect(EffectType effect)
+	{
+		if (effect != null) this.comboboxEffect.setSelected(effect);
+	}
+
+	public void setHideParticles(boolean hideParticles)
+	{
+		this.checkboxHideParticles.setSelected(hideParticles);
+	}
+
 	@Override
 	public void setupFrom(Effect effect)
 	{
-		this.checkboxHideParticles.setSelected(effect.hideParticles);
+		this.setHideParticles(effect.hideParticles);
 		this.comboboxEffect.setSelected(effect.type);
 		this.labelTexture.setImage(this.comboboxEffect.getSelectedObject().texture());
-		this.entryDuration.setText(Integer.toString(effect.duration));
-		this.entryLevel.setText(Integer.toString(effect.amplifier));
+		this.setDuration(effect.duration);
+		this.setAmplifier(effect.amplifier);
 	}
 }

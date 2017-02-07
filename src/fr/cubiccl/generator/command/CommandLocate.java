@@ -13,7 +13,7 @@ public class CommandLocate extends Command
 
 	public CommandLocate()
 	{
-		super("locate");
+		super("locate", "locate <structure>", 2);
 	}
 
 	@Override
@@ -38,6 +38,13 @@ public class CommandLocate extends Command
 	public String generate() throws CommandGenerationException
 	{
 		return this.id + " " + this.comboboxStructure.getValue();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// locate <structure>
+		if (index == 1) this.comboboxStructure.setValue(argument);
 	}
 
 }

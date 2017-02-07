@@ -2,6 +2,7 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
@@ -17,7 +18,7 @@ public class CommandXp extends Command
 
 	public CommandXp()
 	{
-		super("xp");
+		super("xp", "xp <level>[L] <player>", 3);
 	}
 
 	@Override
@@ -46,6 +47,24 @@ public class CommandXp extends Command
 		this.entryAmount.checkValue(CGEntry.INTEGER);
 		if (!this.checkboxLevel.isSelected()) this.entryAmount.checkValueSuperior(CGEntry.INTEGER, 0);
 		return this.id + " " + this.entryAmount.getText() + (this.checkboxLevel.isSelected() ? "L " : " ") + this.panelTarget.generate().toCommand();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		if (index == 1)
+		{
+			this.checkboxLevel.setSelected(argument.endsWith("L"));
+			String lvl = argument.endsWith("L") ? argument.substring(0, argument.length() - 1) : argument;
+			try
+			{
+				Integer.parseInt(lvl);
+			} catch (NumberFormatException e)
+			{
+				this.incorrectStructureError();
+			}
+			this.entryAmount.setText(lvl);
+		} else if (index == 2) this.panelTarget.setupFrom(Target.createFrom(argument));
 	}
 
 }

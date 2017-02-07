@@ -12,6 +12,7 @@ import javax.swing.JFrame;
 import javax.swing.JScrollPane;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.menubar.CMenuBar;
@@ -103,6 +104,11 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.panelGui = gui;
 		this.scrollpane.setViewportView(this.panelGui);
 		this.panelCommandSelection.setEnabled(CommandGenerator.stateManager.stateCount() <= 1);
+	}
+
+	public void setSelected(Command command)
+	{
+		this.panelCommandSelection.setSelected(command);
 	}
 
 	public void showCommand(String command)

@@ -25,7 +25,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 
 	public CommandGamerule()
 	{
-		super("gamerule");
+		super("gamerule", "gamerule <rule> [value]", 2, 3);
 	}
 
 	@Override
@@ -86,6 +86,14 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 		}
 
 		return command + " " + this.entryValue.getText();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// gamerule <rule> [value]
+		if (index == 1) this.entryGamerule.setText(argument);
+		if (index == 2) this.entryValue.setText(argument);
 	}
 
 	@Override

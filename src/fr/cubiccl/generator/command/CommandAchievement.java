@@ -4,6 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelAchievement;
@@ -18,7 +20,7 @@ public class CommandAchievement extends Command implements ActionListener
 
 	public CommandAchievement()
 	{
-		super("achievement");
+		super("achievement", "achievement <give|take> <achievement|*> <player>", 4);
 	}
 
 	@Override
@@ -63,6 +65,22 @@ public class CommandAchievement extends Command implements ActionListener
 		else command += "achievement." + this.panelAchievement.getAchievement().id.substring("minecraft:".length()) + " ";
 
 		return command + this.panelTarget.generate().toCommand();
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		if (index == 1) this.comboboxMode.setValue(argument);
+		else if (index == 3) this.panelTarget.setupFrom(Target.createFrom(argument));
+		else if (index == 2)
+		{
+			if (argument.equals("*")) this.comboboxNumber.setValue("all");
+			else
+			{
+				this.comboboxNumber.setValue("one");
+				this.panelAchievement.setSelection(ObjectRegistry.achievements.find(argument));
+			}
+		}
 	}
 
 }

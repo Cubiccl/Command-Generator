@@ -79,6 +79,8 @@ command.edit=Éditer la commande
 command.generate=Générer !
 command.history=Historique des commandes
 command.label=Commande générée
+command.load=Charger une commande...
+command.load.details=Entrez une Commande que le Générateur va charger.
 command.output=Commande
 command.select=Choisissez une commande
 
@@ -181,6 +183,8 @@ entity.weight=Importance (probabilité qu'elle apparaisse)
 entitydata.explain=Choisir une Entité ci-dessous ne ciblera pas de type d'Entité. Utilisez l'argument "type" pour cela.
 entitydata.nbt=Données NBT à appliquer
 
+error.command.identify=La Commande n'a pas pu être identifiée.
+error.command.length=Le nombre d'arguments de la Commande n'est pas valide.
 error.integer=<name>: "XXX" n'est pas valide. Ce doit être un nombre entier.
 error.integer.bounds=<name>: "XXX" n'est pas valide. Ce doit être un nombre entier entre <min> et <max>.
 error.integer.greater=<name>: "XXX" n'est pas valide. Ce doit être un nombre entier supérieur ou égal à <min>.
@@ -475,7 +479,7 @@ scoreboard.operation.>=Si 1 > Score 2, fixer Score 1 à la valeur de Score 2
 scoreboard.operation.><=Échanger Scores 1 et 2
 scoreboard.option.always=Toujours
 scoreboard.option.hideForOtherTeams=Cacher pour les autres Équipes
-scoreboard.option.hideForOwnTeams=Cacher pour sa propre Équipe
+scoreboard.option.hideForOwnTeam=Cacher pour sa propre Équipe
 scoreboard.option.never=Jamais
 scoreboard.option.pushOtherTeams=Pousser les autres Équipes
 scoreboard.option.pushOwnTeams=Pousser sa propre Équipe

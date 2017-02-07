@@ -4,6 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.gameobject.Coordinates;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -26,7 +28,7 @@ public class CommandTp extends Command implements ActionListener
 
 	public CommandTp()
 	{
-		super("tp");
+		super("tp", "tp <target player> <destination player>\n" + "tp <player> <x> <y> <z> [<y-rot> <x-rot>]", 3, 5, 7);
 	}
 
 	@Override
@@ -110,5 +112,39 @@ public class CommandTp extends Command implements ActionListener
 
 		return command + this.panelCoordinates.generate().toCommand() + " "
 				+ (rotation ? (" " + (this.checkboxYRot.isSelected() ? "~" : "") + y + " " + (this.checkboxXRot.isSelected() ? "~" : "") + x) : "");
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// tp <target player> <destination player>
+		// tp <player> <x> <y> <z> [<y-rot> <x-rot>]
+
+		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 2)
+		{
+			boolean entity = fullCommand.length == 3;
+			this.panelDestination.setVisible(entity);
+			this.panelCoordinates.setVisible(!entity);
+			this.panelRotation.setVisible(!entity);
+			if (entity) this.panelDestination.setupFrom(Target.createFrom(argument));
+			else this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+		}
+		if (index == 5 || index == 6)
+		{
+			if (argument.startsWith("~"))
+			{
+				argument = argument.substring(1);
+				if (index == 5) this.checkboxYRot.setSelected(true);
+				if (index == 6) this.checkboxXRot.setSelected(true);
+			}
+			try
+			{
+				float f = Float.parseFloat(argument);
+				if (index == 5 && f >= -180 && f <= 180) this.entryYRot.setText(argument);
+				if (index == 6 && f >= -90 && f <= 90) this.entryXRot.setText(argument);
+			} catch (Exception e)
+			{}
+		}
 	}
 }

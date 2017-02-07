@@ -118,6 +118,12 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 		this.panelMessages.add(panelM);
 	}
 
+	public void clear()
+	{
+		while (this.messages.size() != 0)
+			this.deleteMessage(0);
+	}
+
 	public void deleteMessage(int index)
 	{
 		this.messagesPanels.get(index).setVisible(false);

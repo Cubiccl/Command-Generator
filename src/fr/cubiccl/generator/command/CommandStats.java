@@ -4,6 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.gameobject.Coordinates;
+import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -25,7 +27,8 @@ public class CommandStats extends Command implements ActionListener
 
 	public CommandStats()
 	{
-		super("stats");
+		super("stats", "stats block <x> <y> <z> clear <stat>\n" + "stats block <x> <y> <z> set <stat> <selector> <objective>\n"
+				+ "stats entity <selector2> clear <stat>\n" + "stats entity <selector2> set <stat> <selector> <objective>", 5, 7, 9);
 	}
 
 	@Override
@@ -99,6 +102,31 @@ public class CommandStats extends Command implements ActionListener
 		}
 
 		return command;
+	}
+
+	@Override
+	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
+	{
+		// stats block <x> <y> <z> clear <stat>
+		// stats block <x> <y> <z> set <stat> <selector> <objective>
+		// stats entity <selector2> clear <stat>
+		// stats entity <selector2> set <stat> <selector> <objective>
+		if (index == 1) this.comboboxSourceMode.setValue(argument);
+		if (this.comboboxSourceMode.getValue().equals("block"))
+		{
+			if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+			if (index == 5) this.comboboxMode.setValue(argument);
+			if (index == 6) this.comboboxStat.setValue(argument);
+			if (index == 7) this.panelTarget.setupFrom(Target.createFrom(argument));
+			if (index == 8) this.entryObjective.setText(argument);
+		} else
+		{
+			if (index == 2) this.panelSource.setupFrom(Target.createFrom(argument));
+			if (index == 3) this.comboboxMode.setValue(argument);
+			if (index == 4) this.comboboxStat.setValue(argument);
+			if (index == 5) this.panelTarget.setupFrom(Target.createFrom(argument));
+			if (index == 6) this.entryObjective.setText(argument);
+		}
 	}
 
 }

@@ -6,6 +6,7 @@ public class Argument
 {
 	public static Argument createFrom(String id, String value)
 	{
+		System.out.println(id + "," + value);
 		boolean reversed = false;
 		if (value.startsWith("!"))
 		{
@@ -23,7 +24,8 @@ public class Argument
 		if (a != null) return new Argument(a, value, reversed);
 
 		if (id.contains("_min")) return new Argument(TargetArgument.SCORE, id.substring("score_".length(), id.length() - "_min".length()), value, reversed);
-		else return new Argument(TargetArgument.SCORE, id.substring("score_".length()), value, reversed);
+		else if (id.contains("score_")) return new Argument(TargetArgument.SCORE, id.substring("score_".length()), value, reversed);
+		return null;
 	}
 
 	public final TargetArgument argument;
