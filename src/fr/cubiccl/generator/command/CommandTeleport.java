@@ -58,6 +58,15 @@ public class CommandTeleport extends Command
 	}
 
 	@Override
+	protected void defaultGui()
+	{
+		this.entryXRot.setText("0");
+		this.entryYRot.setText("0");
+		this.checkboxXRot.setSelected(true);
+		this.checkboxXRot.setSelected(true);
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String command = this.id + " " + this.panelTarget.generate().toCommand() + " " + this.panelCoordinates.generate().toCommand();

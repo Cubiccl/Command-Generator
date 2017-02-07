@@ -91,7 +91,7 @@ public class CommandParticle extends Command
 		this.entryYd.checkValueSuperior(CGEntry.FLOAT, 0);
 		this.entryZd.checkValueSuperior(CGEntry.FLOAT, 0);
 		this.entrySpeed.checkValueSuperior(CGEntry.FLOAT, 0);
-		this.entryCount.checkValueSuperior(CGEntry.INTEGER, 1);
+		this.entryCount.checkValueSuperior(CGEntry.INTEGER, 0);
 
 		xd = Float.toString(Float.parseFloat(xd) / 8);
 		yd = Float.toString(Float.parseFloat(yd) / 8);
@@ -126,7 +126,7 @@ public class CommandParticle extends Command
 		{}
 		if (index == 9) try
 		{
-			if (Integer.parseInt(argument) >= 1) this.entryCount.setText(argument);
+			if (Integer.parseInt(argument) >= 0) this.entryCount.setText(argument);
 		} catch (Exception e)
 		{}
 		if (index == 10) this.checkboxForce.setSelected(argument.equals("force"));

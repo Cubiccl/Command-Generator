@@ -17,6 +17,7 @@ import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Settings;
 import fr.cubiccl.generator.utils.Text;
 
@@ -25,7 +26,7 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 	private static final long serialVersionUID = 6740618472685947499L;
 
 	private CTextArea area;
-	private CGButton buttonCopy;
+	private CGButton buttonCopy, buttonLoad;
 	private String[] history;
 	private CGList listCommand;
 
@@ -39,13 +40,15 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 		CScrollPane scrollpane = new CScrollPane(this.area = new CTextArea(""));
 		CGPanel p = new CGPanel();
 		GridBagConstraints gbc = p.createGridBagLayout();
-		gbc.gridheight = 2;
+		gbc.gridheight = 3;
 		p.add((this.listCommand = new CGList(this.history)).scrollPane, gbc);
 		++gbc.gridx;
 		gbc.gridheight = 1;
 		p.add(scrollpane, gbc);
 		++gbc.gridy;
 		p.add(this.buttonCopy = new CGButton("command.copy"), gbc);
+		++gbc.gridy;
+		p.add(this.buttonLoad = new CGButton("command.load"), gbc);
 
 		this.setMainComponent(p);
 
@@ -53,6 +56,9 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 		this.area.setLineWrap(true);
 		this.area.setWrapStyleWord(true);
 		this.buttonCopy.addActionListener(this);
+		this.buttonLoad.addActionListener(this);
+		this.buttonCopy.setEnabled(false);
+		this.buttonLoad.setEnabled(false);
 		this.buttonCancel.setText(new Text("general.back"));
 		this.listCommand.addListSelectionListener(this);
 		this.listCommand.setSelectedIndex(0);
@@ -72,7 +78,7 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 			{
 				int width = getWidth() / 3;
 				listCommand.scrollPane.setPreferredSize(new Dimension(width, width / 2));
-				scrollpane.setPreferredSize(new Dimension(width, width / 2 - buttonCopy.getHeight() - 10));
+				scrollpane.setPreferredSize(new Dimension(width, width / 2 - buttonCopy.getHeight() - buttonLoad.getHeight() - 20));
 			}
 
 			@Override
@@ -86,13 +92,27 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 	{
 		super.actionPerformed(e);
 		if (e.getSource() == this.buttonCopy) Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(this.area.getText()), null);
-		if (e.getSource() == this.buttonCancel) CommandGenerator.window.menubar.toggleMenu(true);
+		if (e.getSource() == this.buttonLoad)
+		{
+			try
+			{
+				CommandGenerator.doLoad(this.history[this.listCommand.getSelectedIndex()]);
+			} catch (CommandGenerationException e1)
+			{
+				CommandGenerator.report(new CommandGenerationException(new Text(
+						"The Generator failed to load a Command it generated! LOL This is weird. Can you report this bug please?")));
+			}
+		}
+		if (e.getSource() == this.buttonCancel || e.getSource() == this.buttonLoad) CommandGenerator.window.menubar.toggleMenu(true);
 	}
 
 	@Override
 	public void valueChanged(ListSelectionEvent e)
 	{
-		if (this.listCommand.getSelectedIndex() == -1) this.area.setText("");
+		boolean enabled = this.listCommand.getSelectedIndex() != -1;
+		this.buttonCopy.setEnabled(enabled);
+		this.buttonLoad.setEnabled(enabled);
+		if (!enabled) this.area.setText("");
 		else this.area.setText(this.history[this.listCommand.getSelectedIndex()]);
 	}
 

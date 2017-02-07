@@ -42,6 +42,7 @@ public class Commands
 		new CommandSpawnpoint();
 		new CommandSpreadplayers();
 		new CommandStats();
+		new CommandStopsound();
 		new CommandSummon();
 		new CommandTeleport();
 		new CommandTell();
@@ -82,6 +83,8 @@ public class Commands
 	public static Command identifyCommand(String command)
 	{
 		if (command.startsWith("/")) command = command.substring(1);
+		Command co = getCommandFromID(command.split(" ")[0]);
+		if (co != null) return co;
 		for (Command c : commands.values())
 			if (command.startsWith(c.id)) return c;
 		return null;

@@ -102,13 +102,15 @@ public class Coordinates extends GameObject
 	{
 		String command = "";
 		if (this.xRelative) command += "~";
-		command += this.x + " ";
+		if (!(this.xRelative && this.x == 0)) command += this.x;
+		command += " ";
 
 		if (this.yRelative) command += "~";
-		command += this.y + " ";
+		if (!(this.yRelative && this.y == 0)) command += this.y;
+		command += " ";
 
 		if (this.zRelative) command += "~";
-		command += this.z;
+		if (!(this.zRelative && this.z == 0)) command += this.z;
 
 		return command;
 	}

@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gui.component.button.CGButton;
+import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ComboboxPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
@@ -20,7 +21,9 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	{ "commandBlockOutput", "disableElytraMovementCheck", "doDaylightCycle", "doEntityDrops", "doFireTick", "doMobLoot", "doMobSpawning", "doTileDrops",
 			"keepInventory", "logAdminCommands", "mobGriefing", "naturalRegeneration", "randomTickSpeed", "reducedDebugInfo", "sendCommandFeedback",
 			"showDeathMessages", "spawnRadius", "spectatorsGenerateChunks" };
+
 	private CGButton buttonPredefined;
+	private CGCheckBox checkboxQuery;
 	private CGEntry entryGamerule, entryValue;
 
 	public CommandGamerule()
@@ -29,9 +32,11 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0)
+	public void actionPerformed(ActionEvent e)
 	{
-		CommandGenerator.stateManager.setState(new ComboboxPanel(new Text("gamerule.predefined.select"), "gamerule", GAMERULES), this);
+		if (e.getSource() == this.buttonPredefined) CommandGenerator.stateManager.setState(new ComboboxPanel(new Text("gamerule.predefined.select"),
+				"gamerule", GAMERULES), this);
+		else this.onCheckbox();
 	}
 
 	@Override
@@ -50,11 +55,27 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
+		panel.add(this.checkboxQuery = new CGCheckBox("gamerule.query"), gbc);
+		++gbc.gridy;
 		panel.add((this.entryValue = new CGEntry(Text.VALUE, "0", null)).container, gbc);
 
 		this.buttonPredefined.addActionListener(this);
+		this.checkboxQuery.addActionListener(this);
 
 		return panel;
+	}
+
+	@Override
+	protected void defaultGui()
+	{
+		this.checkboxQuery.setSelected(false);
+		this.onCheckbox();
+	}
+
+	@Override
+	protected void finishReading()
+	{
+		this.onCheckbox();
 	}
 
 	@Override
@@ -85,15 +106,28 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 					"error.value.truefalse"), value);
 		}
 
-		return command + " " + this.entryValue.getText();
+		return command + (this.checkboxQuery.isSelected() ? "" : " " + this.entryValue.getText());
+	}
+
+	private void onCheckbox()
+	{
+		this.entryValue.container.setVisible(!this.checkboxQuery.isSelected());
 	}
 
 	@Override
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
 		// gamerule <rule> [value]
-		if (index == 1) this.entryGamerule.setText(argument);
-		if (index == 2) this.entryValue.setText(argument);
+		if (index == 1)
+		{
+			this.entryGamerule.setText(argument);
+			this.checkboxQuery.setSelected(true);
+		}
+		if (index == 2)
+		{
+			this.entryValue.setText(argument);
+			this.checkboxQuery.setSelected(false);
+		}
 	}
 
 	@Override

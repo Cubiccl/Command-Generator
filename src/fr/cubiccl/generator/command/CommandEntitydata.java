@@ -7,7 +7,6 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
-import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEntity;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
@@ -33,10 +32,9 @@ public class CommandEntitydata extends Command
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.ENTITIES_ONLY), gbc);
 		++gbc.gridy;
-		panel.add(new CGLabel("entitydata.explain"), gbc);
-		++gbc.gridy;
-		panel.add(this.panelEntity = new PanelEntity("entitydata.nbt"), gbc);
+		panel.add(this.panelEntity = new PanelEntity(this.id.equals("testfor") ? "entitydata.nbt.test" : "entitydata.nbt"), gbc);
 
+		this.panelEntity.setLabelExplainVisible(true);
 		return panel;
 	}
 

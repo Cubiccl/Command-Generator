@@ -12,6 +12,7 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
@@ -21,6 +22,7 @@ public class PanelEntity extends CGPanel implements ActionListener, ICustomObjec
 	private static final long serialVersionUID = -7130115756741628375L;
 
 	private ObjectCombobox<Entity> comboboxEntity;
+	private CGLabel labelExplainTagOnly;
 	private ImageLabel labelImage;
 	private PanelTags panelTags;
 
@@ -44,17 +46,21 @@ public class PanelEntity extends CGPanel implements ActionListener, ICustomObjec
 		this.add(this.labelImage = new ImageLabel(), gbc);
 		gbc.gridheight = 1;
 		++gbc.gridx;
+		++gbc.gridwidth;
 		this.add((this.comboboxEntity = new ObjectCombobox<Entity>(ObjectRegistry.entities.list())).container, gbc);
 		++gbc.gridy;
+		--gbc.gridwidth;
+		this.add(this.labelExplainTagOnly = new CGLabel("entitydata.explain"), gbc);
+		++gbc.gridx;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
 		if (customObjects) this.add(new PanelCustomObject<LivingEntity>(this, ObjectSaver.entities), gbc);
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 
-		--gbc.gridx;
+		gbc.gridx = 0;
 		++gbc.gridy;
-		++gbc.gridwidth;
+		gbc.gridwidth = 3;
 		this.panelTags = new PanelTags("entity.tags", Tag.ENTITY);
 		if (hasNBT) this.add(this.panelTags, gbc);
 
@@ -87,6 +93,11 @@ public class PanelEntity extends CGPanel implements ActionListener, ICustomObjec
 		this.comboboxEntity.setSelected(entity);
 		this.panelTags.setTargetObject(entity);
 		this.labelImage.setImage(this.selectedEntity().texture());
+	}
+
+	public void setLabelExplainVisible(boolean visible)
+	{
+		this.labelExplainTagOnly.setVisible(visible);
 	}
 
 	public void setTags(Tag[] value)

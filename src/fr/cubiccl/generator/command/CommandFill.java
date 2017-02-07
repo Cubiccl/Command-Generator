@@ -8,8 +8,8 @@ import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
-import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
@@ -18,6 +18,7 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 
 public class CommandFill extends Command implements ActionListener
 {
+	private CGCheckBox checkboxData;
 	private OptionCombobox comboboxMode;
 	private PanelBlock panelBlockFill, panelBlockReplace;
 	private PanelCoordinates panelCoordinatesStart, panelCoordinatesEnd;
@@ -29,11 +30,10 @@ public class CommandFill extends Command implements ActionListener
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent arg0)
+	public void actionPerformed(ActionEvent e)
 	{
-		boolean filter = this.comboboxMode.getValue().equals("filter");
-		this.panelBlockReplace.setVisible(filter);
-		this.panelBlockFill.setHasNBT(!filter);
+		if (e.getSource() == this.comboboxMode) this.finishReading();
+		else this.panelBlockReplace.setHasData(!this.checkboxData.isSelected());
 	}
 
 	@Override
@@ -52,12 +52,14 @@ public class CommandFill extends Command implements ActionListener
 		++gbc.gridy;
 		panel.add(this.panelBlockFill = new PanelBlock("fill.block"), gbc);
 		++gbc.gridy;
+		panel.add(this.checkboxData = new CGCheckBox("fill.block.replace.ignore_data"), gbc);
+		++gbc.gridy;
 		panel.add(this.panelBlockReplace = new PanelBlock("fill.block.replace"), gbc);
 
 		this.panelBlockReplace.setVisible(false);
 		this.panelBlockReplace.setHasNBT(false);
 		this.comboboxMode.addActionListener(this);
-
+		this.checkboxData.addActionListener(this);
 		return panel;
 	}
 
@@ -67,7 +69,8 @@ public class CommandFill extends Command implements ActionListener
 		this.panelBlockFill.setBlock(ObjectRegistry.blocks.find("stone"));
 		this.panelBlockFill.setData(0);
 		this.comboboxMode.setValue("replace");
-		this.panelBlockFill.setTags(new Tag[0]);
+		this.checkboxData.setSelected(false);
+		this.panelBlockReplace.setHasData(true);
 	}
 
 	@Override
@@ -76,6 +79,7 @@ public class CommandFill extends Command implements ActionListener
 		boolean filter = this.comboboxMode.getValue().equals("filter");
 		this.panelBlockReplace.setVisible(filter);
 		this.panelBlockFill.setHasNBT(!filter);
+		this.checkboxData.setVisible(filter);
 	}
 
 	@Override
@@ -92,7 +96,7 @@ public class CommandFill extends Command implements ActionListener
 		}
 
 		PlacedBlock block2 = this.panelBlockReplace.generate();
-		return command + " replace " + block2.block.id() + " " + block2.data;
+		return command + " replace " + block2.block.id() + (this.checkboxData.isSelected() ? "" : " " + block2.data);
 	}
 
 	@Override
@@ -121,6 +125,8 @@ public class CommandFill extends Command implements ActionListener
 		if (index == 11) try
 		{
 			this.panelBlockReplace.setData(Integer.parseInt(argument));
+			this.checkboxData.setSelected(true);
+			this.panelBlockReplace.setHasData(false);
 		} catch (Exception e)
 		{}
 	}

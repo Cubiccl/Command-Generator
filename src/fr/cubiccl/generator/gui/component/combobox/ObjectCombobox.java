@@ -27,6 +27,7 @@ public class ObjectCombobox<T extends BaseObject> extends SearchCombobox impleme
 
 	public void setSelected(T object)
 	{
+		if (object == null) return;
 		this.setSelectedItem(object.name().toString());
 	}
 

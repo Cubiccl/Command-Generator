@@ -6,7 +6,7 @@ public class Sound extends BaseObject
 {
 
 	/** This Sound's ID. */
-	public final String id;
+	private final String id;
 
 	public Sound(String id)
 	{

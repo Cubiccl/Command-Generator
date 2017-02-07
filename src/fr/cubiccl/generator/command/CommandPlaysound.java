@@ -18,6 +18,8 @@ import fr.cubiccl.generator.utils.Text;
 
 public class CommandPlaysound extends Command
 {
+	public static final String[] CHANNELS =
+	{ "master", "music", "record", "weather", "block", "hostile", "neutral", "player", "ambient", "voice" };
 	private ObjectCombobox<Sound> comboboxSound;
 	private OptionCombobox comboboxSource;
 	private CGEntry entryVolume, entryPitch, entryMinVolume;
@@ -46,8 +48,7 @@ public class CommandPlaysound extends Command
 		++gbc.gridy;
 		panel.add(new CGLabel("playsound.source").setHasColumn(true), gbc);
 		++gbc.gridx;
-		panel.add(this.comboboxSource = new OptionCombobox("playsound.source", "master", "music", "record", "weather", "block", "hostile", "neutral", "player",
-				"ambient", "voice"), gbc);
+		panel.add(this.comboboxSource = new OptionCombobox("playsound.source", CHANNELS), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
@@ -74,7 +75,7 @@ public class CommandPlaysound extends Command
 	{
 		this.panelCoordinates.setupFrom(new Coordinates(0, 0, 0, true, true, true));
 		this.entryVolume.setText("0");
-		this.entryPitch.setText("0");
+		this.entryPitch.setText("1");
 		this.entryMinVolume.setText("0");
 	}
 
@@ -87,7 +88,7 @@ public class CommandPlaysound extends Command
 		this.entryPitch.checkValueInBounds(CGEntry.FLOAT, 0, 2);
 		this.entryMinVolume.checkValueSuperior(CGEntry.FLOAT, 0);
 
-		return this.id + " " + this.comboboxSound.getSelectedObject().id + " " + this.comboboxSource.getValue() + " " + this.panelTarget.generate().toCommand()
+		return this.id + " " + this.comboboxSound.getSelectedObject().id() + " " + this.comboboxSource.getValue() + " " + this.panelTarget.generate().toCommand()
 				+ this.panelCoordinates.generate().toCommand() + " " + v + " " + p + " " + mv;
 	}
 

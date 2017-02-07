@@ -1,15 +1,24 @@
 ------------------------- VERSION 2.2.0 -------------------------
 ADDITIONS
-Check all commands
+- Commands can now be loaded with the Load Command button or the Command history !
+The Generator will read the command and setup as if you just had created it, so you can edit it easily.
+- Added a bunch of missing command features.
+
+Check all scoreboard commands
+save
+Details for command arguments
+Player NBT Tags
 
 BUGS FIXED
 
 CHANGED TRANSLATIONS
 scoreboard.option.hideForOwnTeams -> scoreboard.option.hideForOwnTeam
+spread.distance, weather.duration
 
 ADDED TRANSLATIONS
-command.load, command.load.details
-error.command.identify, error.command.structure, error.coordinates
+command.load, command.load.details, command.stopsound
+error.command.identify, error.command.structure, error.coordinates, error.spread.no_players
+entitydata.nbt.test, fill.block.replace.ignore_data, gamerule.query, spawnpoint.current, spread.targets, testforblock.ignore_data, weather.duration.random
 
 ------------------------- VERSION 2.1.0 -------------------------
 ADDITIONS

@@ -79,6 +79,15 @@ public class CommandTp extends Command implements ActionListener
 	}
 
 	@Override
+	protected void defaultGui()
+	{
+		this.entryXRot.setText("0");
+		this.entryYRot.setText("0");
+		this.checkboxXRot.setSelected(true);
+		this.checkboxYRot.setSelected(true);
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String command = this.id + " " + this.panelTarget.generate().toCommand() + " ";

@@ -87,7 +87,7 @@ command.edit=Edit Command
 command.generate=Generate !
 command.history=Command history
 command.label=Generated Command
-command.load=Load command...
+command.load=Load command
 command.load.details=Type in a Command that the Generator should load.
 command.output=Command output
 command.select=Select a Command
@@ -190,6 +190,7 @@ entity.tags=NBT Tags
 entity.weight=Weight (chance to spawn)
 entitydata.explain=Choosing an Entity below will not target those Entities. Use the "type" argument for the target.
 entitydata.nbt=NBT Tags to apply
+entitydata.nbt.test=NBT Tags to match
 
 error.command.identify=This command could not be identified.
 error.command.structure=This command doesn't have a valid structure.<structure>
@@ -203,6 +204,7 @@ error.number.greater=<name>: "XXX" is not valid. It must be a number greater tha
 error.number.positive=<name>: "XXX" is not valid. It must be a positive number.
 error.space=<name>: "XXX" is not valid. It shouldn't contain any space.
 error.spreadplayers=<name>: "XXX" is not valid. It must be greater than the distance between players +1.
+error.spread.no_players=Please select at least one Entity to spread.
 error.title=Error
 error.trade.incomplete=This trade is incomplete.
 error.value.missing=Missing information for: <name>
@@ -217,6 +219,7 @@ execute.target=Command executor
 
 fill.block=Block to fill with
 fill.block.replace=Block to replace
+fill.block.replace.ignore_data=Ignore the data of Blocks to replace
 fill.mode.destroy=Destroys and drops previous blocks
 fill.mode.filter=Only replace blocks of a certain ID and data
 fill.mode.hollow=Only fills the outline of the region, the rest becomes air
@@ -254,6 +257,7 @@ gamerule.entry=Gamerule to change
 gamerule.main=Gamerule
 gamerule.predefined=Predefined gamerules...
 gamerule.predefined.select=Select a predefined gamerule
+gamerule.query=Query gamerule value
 
 general.add=Add
 general.back=Back
@@ -537,9 +541,11 @@ slot.place=Disable placing
 slot.remove=Disable removing
 
 spawnpoint.coordinates=New spawn point
+spawnpoint.current=Use Player's current location
 
-spread.distance=Distance between each player
+spread.distance=Distance between each entity
 spread.range=Maximum distance from the center (square)
+spread.targets=Entities to spread
 spread.teams=Teleport entities of the same team together
 spread.x=Spreading center: X position
 spread.z=Spreading center: Z position
@@ -560,6 +566,10 @@ stats.stat.AffectedItems=Number of Items (in chests, inventories...) affected by
 stats.stat.QueryResult=Result of a query command (/time query, /worldborder get)
 stats.stat.SuccessCount=Number of consecutive successful executions
 stats.target=Entity whose scoreboard will be updated
+
+stopsound.all=Stop all sounds
+stopsound.sound=Sound to stop
+stopsound.source=Channel containing the sound
 
 summon.coordinates=Coordinates of the Entity
 summon.entity=Entity to summon
@@ -582,6 +592,7 @@ target.type.player=One player
 
 testforblock.block=Block to match
 testforblock.coordinates=Coordinates of the Block
+testforblock.ignore_data=Ignore Block data
 
 testforblocks.destination=Area to check: northwestern corner
 testforblocks.mode.all=Match every block
@@ -650,7 +661,8 @@ variant.marking.white_dots=White dots
 variant.markings=Markings
 
 weather.clear=Clear weather
-weather.duration=Duration (optionnal)
+weather.duration=Duration (in ticks, optionnal)
+weather.duration.random=Random duration between 6000 and 18000
 weather.rain=Rain
 weather.select=Weather to apply
 weather.thunder=Thunder
@@ -1892,8 +1904,9 @@ command.scoreboard teams=Creates, removes, add/remove players or changes Teams o
 command.setblock=Places a block at the given coordinates.
 command.setworldspawn=Changes the world spawn point.
 command.spawnpoint=Changes the spawn point of a Player.
-command.spreadplayers=Spreads target Entities around the world.
+command.spreadplayers=Spreads Entities around the world.
 command.stats=Allows scoreboard objectives to be updated when a source (Entity or Block) executes a command. The score will be set to the result of the chosen stat.
+command.stopsound=Stops a sound.
 command.summon=Summons an Entity at the given coordinates.
 command.teleport=Teleports an Entity to a location.
 command.tell=Sends a chat message to a Player.

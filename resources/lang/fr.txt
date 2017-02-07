@@ -79,7 +79,7 @@ command.edit=Éditer la commande
 command.generate=Générer !
 command.history=Historique des commandes
 command.label=Commande générée
-command.load=Charger une commande...
+command.load=Charger une commande
 command.load.details=Entrez une Commande que le Générateur va charger.
 command.output=Commande
 command.select=Choisissez une commande
@@ -182,6 +182,7 @@ entity.tags=Données NBT
 entity.weight=Importance (probabilité qu'elle apparaisse)
 entitydata.explain=Choisir une Entité ci-dessous ne ciblera pas de type d'Entité. Utilisez l'argument "type" pour cela.
 entitydata.nbt=Données NBT à appliquer
+entitydata.nbt.test=Données NBT à tester
 
 error.command.identify=La Commande n'a pas pu être identifiée.
 error.command.length=Le nombre d'arguments de la Commande n'est pas valide.
@@ -195,10 +196,11 @@ error.number.greater=<name>: "XXX" n'est pas valide. Ce doit être un nombre supé
 error.number.positive=<name>: "XXX" n'est pas valide. Ce doit être un nombre positif.
 error.space=<name>: "XXX" n'est pas valide. Il ne doit pas contenir d'espace.
 error.spreadplayers=<name>: "XXX" n'est pas valide. Ce doit être plus grand que la distance entre les Joueurs plus 1.
+error.spread.no_players=<name>: Vous n'avez sélectionné aucune Entité à téléporter.
 error.title=Erreur
 error.trade.incomplete=Cette transation est incomplète.
 error.value.missing=Information manquante pour : <name>
-error.value.truefalse=<name>: "XXX" n'est pas valide. Ce doit être soit "true" soit "false".
+error.value.truefalse="XXX" n'est pas valide. Ce doit être soit "true" soit "false".
 
 execute.block=Bloc auquel correspondre
 execute.coordinates=Coordonnées de la commande éxécutée
@@ -209,6 +211,7 @@ execute.target=Éxécuteur de la commande
 
 fill.block=Blocs à utiliser pour remplir
 fill.block.replace=Blocs à remplacer
+fill.block.replace.ignore_data=Ignorer la variante des Blocs à remplacer
 fill.mode.destroy=Détruire et laisser tomber les anciens Blocs
 fill.mode.filter=Remplacer uniquement les Blocs avec certains ID et type
 fill.mode.hollow=Remplir uniquement le contour de la région, le reste devient de l'Air
@@ -246,6 +249,7 @@ gamerule.entry=Règle de jeu à changer
 gamerule.main=Règle de jeu
 gamerule.predefined=Règles de jeu prédéfinies...
 gamerule.predefined.select=Choisissez une règle de jeu
+gamerule.query=Récupérer la valeur
 
 general.add=Ajouter
 general.back=Retour
@@ -529,9 +533,11 @@ slot.place=Désactiver le placement
 slot.remove=Désactiver le remplacement
 
 spawnpoint.coordinates=Nouveau point d'apparition
+spawnpoint.current=Utiliser la position actuelle du Joueur
 
-spread.distance=Distance entre les Joueurs
+spread.distance=Distance entre les Entités
 spread.range=Distance maximum du centre (carré)
+spread.targets=Entités à répartir
 spread.teams=Téléporter les Entités de la même Équipe ensemble
 spread.x=Centre de la répartition : Position X
 spread.z=Centre de la répartition : Position Z
@@ -552,6 +558,10 @@ stats.stat.AffectedItems=Nombre d'Objets (dans des coffres, inventaires...) affe
 stats.stat.QueryResult=Résultat d'une Commande "requête" (/time query, /worldborder get)
 stats.stat.SuccessCount=Nombre d'éxécutions consécutives
 stats.target=Entités dont les scores sont à mettre à jour
+
+stopsound.all=Arrêter tous les sons
+stopsound.sound=Son à arrêter
+stopsound.source=Chaîne contenant ce son
 
 summon.coordinates=Coordonnées de l'Entité
 summon.entity=Entité à créer
@@ -574,6 +584,7 @@ target.type.player=Un Joueur précis
 
 testforblock.block=Bloc auquel correspondre
 testforblock.coordinates=Coordonnées du Bloc
+testforblock.ignore_data=Ignorer la variante du Bloc
 
 testforblocks.destination=Zone à vérifier : coin nord-ouest
 testforblocks.mode.all=Vérifier tous les Blocs
@@ -642,7 +653,8 @@ variant.marking.white_dots=Points blancs
 variant.markings=Marques
 
 weather.clear=Beau temps
-weather.duration=Durée (facultative)
+weather.duration=Durée (en ticks, facultative)
+weather.duration.random=Durée aléatoire entre 6000 et 18000
 weather.rain=Pluie
 weather.select=Templs à appliquer
 weather.thunder=Orage
@@ -1886,6 +1898,7 @@ command.setworldspawn=Change le point d'apparition des Joueurs du monde.
 command.spawnpoint=Change le point d'apparition d'un Joueur.
 command.spreadplayers=Disperse des Entités à travers le monde.
 command.stats=Permet de mettre à jour des scores quand une source (Entité ou Bloc) éxécute une commande. Le score sera fixé au résultat de la statistique choisie.
+command.stopsound=Arrête un son.
 command.summon=Crée une Entité à des coordonnées.
 command.teleport=Téléporte une Entité à des coordonnées.
 command.tell=Envoie un message à un Joueur.

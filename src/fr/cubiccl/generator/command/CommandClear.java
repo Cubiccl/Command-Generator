@@ -66,6 +66,7 @@ public class CommandClear extends Command implements ActionListener
 		this.checkboxIgnoreData.setSelected(true);
 		this.checkboxAll.setSelected(true);
 		this.panelItem.setTags(new Tag[0]);
+		this.panelItem.setVisible(false);
 	}
 
 	@Override
