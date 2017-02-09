@@ -2,7 +2,7 @@
 ADDITIONS
 - Player NBT Tags
 - NBT Tag selection for /scoreboard players add|remove|set|tag commands
-Save Containers
+- 17w06a content : Concrete, Concrete Powder & Glazed Terracotta
 
 BUGS FIXED
 - Fixed /scoreboard players tag not generating properly
@@ -15,6 +15,24 @@ tag.entity.Inventory
 ADDED TRANSLATIONS
 general.unspecified
 scoreboard.target.nbt
+utils.terra.0, utils.terra.1, utils.terra.2, utils.terra.3
+block.black_glazed_terracotta, block.black_glazed_terracotta.x
+block.blue_glazed_terracotta, block.blue_glazed_terracotta.x
+block.brown_glazed_terracotta, block.brown_glazed_terracotta.x
+block.cyan_glazed_terracotta, block.cyan_glazed_terracotta.x
+block.gray_glazed_terracotta, block.gray_glazed_terracotta.x
+block.green_glazed_terracotta, block.green_glazed_terracotta.x
+block.light_blue_glazed_terracotta, block.light_blue_glazed_terracotta.x
+block.lime_glazed_terracotta, block.lime_glazed_terracotta.x
+block.magenta_glazed_terracotta, block.magenta_glazed_terracotta.x
+block.orange_glazed_terracotta, block.orange_glazed_terracotta.x
+block.pink_glazed_terracotta, block.pink_glazed_terracotta.x
+block.purple_glazed_terracotta, block.purple_glazed_terracotta.x
+block.red_glazed_terracotta, block.red_glazed_terracotta.x
+block.silver_glazed_terracotta, block.silver_glazed_terracotta.x
+block.white_glazed_terracotta, block.white_glazed_terracotta.x
+block.yellow_glazed_terracotta, block.yellow_glazed_terracotta.x
+block.concrete, block.concrete.x, block.concrete_powder, block.concrete_powder.x
 tag.entity.EnderItems, tag.entity.Score, tag.entity.SelectedItem, tag.entity.SelectedItemSlot, tag.entity.SleepTimer, tag.entity.Sleeping, tag.entity.SpawnForced, tag.entity.SpawnX, tag.entity.SpawnY, tag.entity.SpawnZ, tag.entity.XpLevel, tag.entity.XpP, tag.entity.XpSeed, tag.entity.XpTotal, tag.entity.abilities, tag.entity.foodExhaustionLevel, tag.entity.foodLevel, tag.entity.foodSaturationLevel, tag.entity.foodTickLevel, tag.entity.playerGameType
 tag.title.abilities, tag.title.EnderItems, tag.title.Inventory, tag.title.SelectedItem
 abilities.flying, abilities.instabuild, abilities.invulnerable, abilities.may_build, abilities.may_fly

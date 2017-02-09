@@ -84,7 +84,7 @@ public class Settings
 	}
 
 	public static final boolean CHECK_UPDATES = false;
-	public static final String GENERATOR_VERSION = "2.2.0";
+	public static final String GENERATOR_VERSION = "2.2.1";
 	private static Language language;
 	public static boolean testMode = false;
 	private static Version mcversion;

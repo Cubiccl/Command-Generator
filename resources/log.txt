@@ -1,7 +1,7 @@
 Welcome to the Command Generator v2.2.0 by Cubi !
 ---- Creating objects ----
-Successfully created 236 blocks.
-Successfully created 393 items.
+Successfully created 254 blocks.
+Successfully created 411 items.
 Successfully created 83 entities.
 Successfully created 27 effects.
 Successfully created 30 enchantments.
@@ -16,8 +16,4 @@ Successfully created 185 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
-Generating !
-Successfully generated : scoreboard players tag @r @r add TAGGGG {abilities:{mayBuild:1b}}
-Generating !
-Successfully generated : scoreboard players tag @r add add {abilities:{mayBuild:1b}}
 Exiting Command Generator... Bye bye !

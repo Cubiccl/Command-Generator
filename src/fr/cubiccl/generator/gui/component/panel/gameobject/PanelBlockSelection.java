@@ -218,7 +218,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 			}
 	}
 
-	public void setSelected(int selected, boolean sendUpdates)
+	private void setSelected(int selected, boolean sendUpdates)
 	{
 		this.selected = selected;
 		if (sendUpdates) this.comboboxBlock.setSelectedItem(this.selectedBlock().name().toString());
@@ -228,8 +228,8 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		BufferedImage[] images = new BufferedImage[this.selectedBlock().damage.length];
 		for (int i = 0; i < images.length; i++)
 			images[i] = this.selectedBlock().texture(this.selectedBlock().damage[i]);
-		this.damageSelector.setImages(images);
 		this.setDamage(Math.min(this.damage, this.selectedBlock().damage.length - 1));
+		this.damageSelector.setImages(images);
 		this.updateDisplay();
 	}
 
