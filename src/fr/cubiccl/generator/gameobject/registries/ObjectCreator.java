@@ -125,8 +125,10 @@ public class ObjectCreator
 				slots = new Slot[values.length - 2];
 				for (int i = 2; i < values.length; ++i)
 				{
+					int slotID = i - 2;
 					String[] slot = values[i].split(":");
-					slots[i - 2] = new Slot(i - 2, Integer.parseInt(slot[0]), Integer.parseInt(slot[1]));
+					if (slot.length == 3) slotID = Integer.parseInt(slot[2]);
+					slots[i - 2] = new Slot(slotID, Integer.parseInt(slot[0]), Integer.parseInt(slot[1]));
 				}
 			}
 			new Container(values[0], startsAt, values[1].split(":"), slots);
@@ -138,7 +140,8 @@ public class ObjectCreator
 	{
 		if (customTagType.equals("color"))
 		{
-			TemplateNumber tag = id.equals("Base") ? new TemplateNumber(id, applicationType, applicable) : new TemplateNumber(id, applicationType, TagNumber.BYTE, applicable);
+			TemplateNumber tag = id.equals("Base") ? new TemplateNumber(id, applicationType, applicable) : new TemplateNumber(id, applicationType,
+					TagNumber.BYTE, applicable);
 			tag.setNames("color", Utils.WOOL_COLORS);
 		} else if (customTagType.equals("effect"))
 		{

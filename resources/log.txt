@@ -1,23 +1,22 @@
-Welcome to the Command Generator v2.1.0 by Cubi !
+Welcome to the Command Generator v2.2.0 by Cubi !
 ---- Creating objects ----
 Successfully created 236 blocks.
 Successfully created 393 items.
-Successfully created 82 entities.
+Successfully created 83 entities.
 Successfully created 27 effects.
 Successfully created 30 enchantments.
 Successfully created 33 achievements.
 Successfully created 11 attributes.
 Successfully created 48 particles.
 Successfully created 485 sounds.
-Successfully created 35 containers.
+Successfully created 37 containers.
 Successfully created 66 Block NBT Tags.
 Successfully created 21 Item NBT Tags.
-Successfully created 165 Entity NBT Tags.
+Successfully created 185 Entity NBT Tags.
 Successfully created 9 object lists.
+Couldn't find translation for : container.Inventory
 Loading textures...
 ---- Creating window ----
 Generating !
-Successfully generated : achievement give achievement.acquireIron @a
-Generating !
-Successfully generated : gamerule jmlklj 45
+Successfully generated : testfor @e {Inventory:[{id:"minecraft:stone",Damage:0s,Count:1b,Slot:0s,tag:{}},{id:"minecraft:white_shulker_box",Damage:0s,Count:1b,Slot:1s,tag:{}},{id:"minecraft:iron_chestplate",Damage:0s,Count:1b,Slot:102s,tag:{}},{id:"minecraft:shield",Damage:0s,Count:1b,Slot:-106s,tag:{}}]}
 Exiting Command Generator... Bye bye !

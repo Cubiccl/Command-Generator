@@ -121,7 +121,12 @@ public class ContainerPanel extends SlotSelectionPanel implements IStateListener
 	public void setupFrom(ItemStack[] items)
 	{
 		for (int i = 0; i < items.length; ++i)
-			if (items[i] != null) this.items[items[i].slot] = items[i];
+			if (items[i] != null)
+			{
+				for (int j = 0; j < this.container().slots.length; ++j)
+					if (this.container().slots[j].id == items[i].slot) this.items[j] = items[i];
+
+			}
 		this.repaint();
 	}
 
@@ -140,7 +145,7 @@ public class ContainerPanel extends SlotSelectionPanel implements IStateListener
 	public boolean shouldStateClose(PanelItem panel)
 	{
 		this.items[this.currentSlot()] = panel.generate();
-		this.items[this.currentSlot()].slot = this.currentSlot() + this.container().startsAt;
+		this.items[this.currentSlot()].slot = this.container().slots[this.currentSlot()].id + this.container().startsAt;
 		return true;
 	}
 

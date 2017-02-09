@@ -22,7 +22,7 @@ public class SpawnPotentialPanel extends CGPanel
 		GridBagConstraints gbc = this.createGridBagLayout();
 		this.add((this.entryWeight = new CGEntry(new Text("entity.weight"), "1", new Text(">= 1", false))).container, gbc);
 		++gbc.gridy;
-		this.add(this.panelEntity = new PanelEntity("entity.spawn"), gbc);
+		this.add(this.panelEntity = new PanelEntity("entity.spawn", true, true, false), gbc);
 
 		this.entryWeight.addIntFilter();
 	}

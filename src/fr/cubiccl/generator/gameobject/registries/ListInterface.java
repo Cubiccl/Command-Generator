@@ -145,7 +145,7 @@ public abstract class ListInterface<T extends GameObject>
 		@Override
 		public CGPanel createEditionPanel(LivingEntity e)
 		{
-			PanelEntity p = new PanelEntity(null, true, false);
+			PanelEntity p = new PanelEntity(null, true, false, true);
 			if (e != null) p.setupFrom(e);
 			p.setName(new Text("objects.entity"));
 			return p;

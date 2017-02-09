@@ -28,15 +28,15 @@ public class PanelEntity extends CGPanel implements ActionListener, ICustomObjec
 
 	public PanelEntity(String titleID)
 	{
-		this(titleID, true, true);
+		this(titleID, true, true, true);
 	}
 
 	public PanelEntity(String titleID, boolean hasNBT)
 	{
-		this(titleID, hasNBT, true);
+		this(titleID, hasNBT, true, true);
 	}
 
-	public PanelEntity(String titleID, boolean hasNBT, boolean customObjects)
+	public PanelEntity(String titleID, boolean hasNBT, boolean customObjects, boolean includePlayer)
 	{
 		super(titleID);
 		GridBagConstraints gbc = this.createGridBagLayout();
@@ -47,7 +47,7 @@ public class PanelEntity extends CGPanel implements ActionListener, ICustomObjec
 		gbc.gridheight = 1;
 		++gbc.gridx;
 		++gbc.gridwidth;
-		this.add((this.comboboxEntity = new ObjectCombobox<Entity>(ObjectRegistry.entities.list())).container, gbc);
+		this.add((this.comboboxEntity = new ObjectCombobox<Entity>(ObjectRegistry.entities.list(includePlayer))).container, gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
 		this.add(this.labelExplainTagOnly = new CGLabel("entitydata.explain"), gbc);
@@ -65,6 +65,7 @@ public class PanelEntity extends CGPanel implements ActionListener, ICustomObjec
 		if (hasNBT) this.add(this.panelTags, gbc);
 
 		this.labelImage.setImage(this.selectedEntity().texture());
+		this.labelExplainTagOnly.setVisible(false);
 		this.comboboxEntity.addActionListener(this);
 		this.panelTags.setTargetObject(this.selectedEntity());
 	}

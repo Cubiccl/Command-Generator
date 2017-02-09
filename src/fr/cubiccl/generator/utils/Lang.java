@@ -11,6 +11,12 @@ public class Lang
 	private static final HashMap<String, String> dictionnary = new HashMap<String, String>();
 	private static final HashMap<String, String> english = new HashMap<String, String>();
 
+	public static void checkTranslations()
+	{
+		for (String id : FileUtils.readFileAsArray("untranslated.txt"))
+			if (!english.containsKey(id)) CommandGenerator.untranslated.add(id);
+	}
+
 	private static String doTranslate(String textID)
 	{
 		if (Settings.language() != Language.ENGLISH && dictionnary.containsKey(textID)) return dictionnary.get(textID);
@@ -40,7 +46,8 @@ public class Lang
 		if (!keyExists(textID))
 		{
 			CommandGenerator.log("Couldn't find translation for : " + textID);
-			new Exception().printStackTrace();
+			if (!keyExists(textID) && !CommandGenerator.untranslated.contains(textID)) CommandGenerator.untranslated.add(textID);
+			// new Exception().printStackTrace();
 		}
 		return doTranslate(textID);
 	}

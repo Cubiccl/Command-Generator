@@ -1,6 +1,7 @@
 package fr.cubiccl.generator;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import javax.swing.JOptionPane;
 
@@ -20,6 +21,7 @@ public class CommandGenerator
 	private static ArrayList<String> log = new ArrayList<String>();
 	private static Command selected;
 	public static StateManager stateManager;
+	public static ArrayList<String> untranslated = new ArrayList<String>();
 	public static Window window;
 
 	public static void cancelExecute()
@@ -47,6 +49,11 @@ public class CommandGenerator
 		FileUtils.writeToFile("log.txt", log.toArray(new String[log.size()]));
 		Settings.save();
 		ObjectSaver.save();
+		if (Settings.testMode)
+		{
+			untranslated.sort(Comparator.naturalOrder());
+			FileUtils.writeToFile("untranslated.txt", untranslated.toArray(new String[untranslated.size()]));
+		}
 		log("Log, settings and custom objects save successful.");
 	}
 
@@ -125,6 +132,7 @@ public class CommandGenerator
 		log("Welcome to the Command Generator v" + Settings.GENERATOR_VERSION + " by Cubi !");
 		if (!Settings.testMode) FileUtils.checkForUpdates();
 		Settings.loadSettings();
+		if (Settings.testMode) Lang.checkTranslations();
 		log("---- Creating window ----");
 		stateManager = new StateManager();
 		window = new Window();

@@ -4,6 +4,7 @@ import java.util.Stack;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
+import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -64,7 +65,7 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	{
 		for (String app : this.applicable)
 		{
-			if (app.equals("ANY")) return true;
+			if (app.equals("ANY") && object != Entity.PLAYER) return true;
 			if (app.replaceAll("minecraft:", "").equals(object.id().replaceAll("minecraft:", ""))) return true;
 		}
 		return false;

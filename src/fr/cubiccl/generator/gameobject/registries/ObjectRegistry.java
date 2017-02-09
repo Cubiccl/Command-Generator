@@ -24,7 +24,7 @@ public class ObjectRegistry<T extends BaseObject>
 	public static final ContainerRegistry containers = new ContainerRegistry();
 	public static final ObjectRegistry<EffectType> effects = new ObjectRegistry<EffectType>(true, true, EffectType.class);
 	public static final ObjectRegistry<EnchantmentType> enchantments = new ObjectRegistry<EnchantmentType>(true, false, EnchantmentType.class);
-	public static final ObjectRegistry<Entity> entities = new ObjectRegistry<Entity>(false, true, Entity.class);
+	public static final EntityRegistry entities = new EntityRegistry();
 	public static final ObjectRegistry<TemplateTag> entityTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
 	public static final ItemRegistry items = new ItemRegistry();
 	public static final ObjectRegistry<TemplateTag> itemTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
@@ -119,8 +119,9 @@ public class ObjectRegistry<T extends BaseObject>
 		unavailableTags.reset();
 	}
 
-	private final Class<T> c;
-	private final boolean hasNumericalIds, hasTexture;
+	protected final Class<T> c;
+	protected final boolean hasNumericalIds;
+	private final boolean hasTexture;
 	protected final HashMap<Integer, String> ids;
 	protected final HashMap<String, T> registry;
 

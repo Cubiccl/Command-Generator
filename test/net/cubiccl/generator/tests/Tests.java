@@ -1,5 +1,7 @@
 package net.cubiccl.generator.tests;
 
+import org.junit.Test;
+
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
 
 public class Tests
@@ -14,6 +16,7 @@ public class Tests
 		}
 	}
 
+	@Test
 	public void tagSplit()
 	{
 		String[] split = NBTReader.splitTagValues("s:jkl,OM:[kkk,j],klmkm:{\"ww\\\"w\",jkl}");

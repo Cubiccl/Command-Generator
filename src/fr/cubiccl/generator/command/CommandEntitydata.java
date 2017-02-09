@@ -32,7 +32,9 @@ public class CommandEntitydata extends Command
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.ENTITIES_ONLY), gbc);
 		++gbc.gridy;
-		panel.add(this.panelEntity = new PanelEntity(this.id.equals("testfor") ? "entitydata.nbt.test" : "entitydata.nbt"), gbc);
+		panel.add(
+				this.panelEntity = new PanelEntity(this.id.equals("testfor") ? "entitydata.nbt.test" : "entitydata.nbt", true, true, this.id.equals("testfor")),
+				gbc);
 
 		this.panelEntity.setLabelExplainVisible(true);
 		return panel;

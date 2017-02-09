@@ -9,6 +9,12 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateList.DefaultList;
 /** Contains unique and constant NBT Tags. */
 public final class Tags
 {
+	public static final TemplateNumber ABILITIES_FLYING = new TemplateNumber("flying", UNAVAILABLE, TagNumber.BYTE_BOOLEAN);
+	public static final TemplateNumber ABILITIES_INSTABUILD = new TemplateNumber("instabuild", UNAVAILABLE, TagNumber.BYTE_BOOLEAN);
+	public static final TemplateNumber ABILITIES_INVULNERABLE = new TemplateNumber("invulnerable", UNAVAILABLE, TagNumber.BYTE_BOOLEAN);
+	public static final TemplateNumber ABILITIES_MAY_BUILD = new TemplateNumber("mayBuild", UNAVAILABLE, TagNumber.BYTE_BOOLEAN);
+	public static final TemplateNumber ABILITIES_MAY_FLY = new TemplateNumber("mayFly", UNAVAILABLE, TagNumber.BYTE_BOOLEAN);
+
 	public static final TemplateNumber ATTRIBUTE_AMOUNT = new TemplateNumber("Amount", UNAVAILABLE, TagNumber.DOUBLE);
 	public static final TemplateString ATTRIBUTE_ATTRIBUTE_NAME = new TemplateString("AttributeName", UNAVAILABLE);
 	public static final TemplateNumber ATTRIBUTE_BASE = new TemplateNumber("Base", UNAVAILABLE, TagNumber.DOUBLE);

@@ -192,7 +192,7 @@ public class TargetArgument
 			}
 			if (this == TYPE)
 			{
-				Entity[] entities = ObjectRegistry.entities.list();
+				Entity[] entities = ObjectRegistry.entities.list(true);
 				String[] ids = new String[entities.length];
 				for (int i = 0; i < ids.length; ++i)
 					ids[i] = entities[i].id;

@@ -33,7 +33,7 @@ public class CommandSummon extends Command
 		++gbc.gridy;
 		panel.add(this.panelCoordinates = new PanelCoordinates("summon.coordinates"), gbc);
 		++gbc.gridy;
-		panel.add(this.panelEntity = new PanelEntity("summon.entity"), gbc);
+		panel.add(this.panelEntity = new PanelEntity("summon.entity", true, true, false), gbc);
 
 		return panel;
 	}

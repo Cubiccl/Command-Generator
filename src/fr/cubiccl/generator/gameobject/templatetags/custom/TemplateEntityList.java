@@ -42,7 +42,7 @@ public class TemplateEntityList extends TemplateList
 		@Override
 		public CGPanel createAddPanel(int editIndex)
 		{
-			PanelEntity p = new PanelEntity(null);
+			PanelEntity p = new PanelEntity(null, true, true, false);
 			if (editIndex != -1)
 			{
 				p.setEntity(this.entities.get(editIndex).entity);

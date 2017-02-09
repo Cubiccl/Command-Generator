@@ -3,6 +3,7 @@ package fr.cubiccl.generator.gameobject.tags;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 
 public class TagCompound extends TagList
 {
@@ -43,6 +44,11 @@ public class TagCompound extends TagList
 		return available.toArray(new String[available.size()]);
 	}
 
+	public Tag getTag(TemplateTag tag)
+	{
+		return this.getTagFromId(tag.id());
+	}
+
 	public Tag getTagFromId(String id)
 	{
 		for (Tag tag : this.tags)
@@ -55,6 +61,11 @@ public class TagCompound extends TagList
 		for (Tag tag : this.tags)
 			if (tag.id().equals(id)) return true;
 		return false;
+	}
+
+	public boolean hasTag(TemplateTag tag)
+	{
+		return this.hasTag(tag.id());
 	}
 
 	@Override
