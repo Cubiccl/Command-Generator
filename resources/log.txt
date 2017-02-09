@@ -14,9 +14,10 @@ Successfully created 66 Block NBT Tags.
 Successfully created 21 Item NBT Tags.
 Successfully created 185 Entity NBT Tags.
 Successfully created 9 object lists.
-Couldn't find translation for : container.Inventory
 Loading textures...
 ---- Creating window ----
 Generating !
-Successfully generated : testfor @e {Inventory:[{id:"minecraft:stone",Damage:0s,Count:1b,Slot:0s,tag:{}},{id:"minecraft:white_shulker_box",Damage:0s,Count:1b,Slot:1s,tag:{}},{id:"minecraft:iron_chestplate",Damage:0s,Count:1b,Slot:102s,tag:{}},{id:"minecraft:shield",Damage:0s,Count:1b,Slot:-106s,tag:{}}]}
+Successfully generated : scoreboard players tag @r @r add TAGGGG {abilities:{mayBuild:1b}}
+Generating !
+Successfully generated : scoreboard players tag @r add add {abilities:{mayBuild:1b}}
 Exiting Command Generator... Bye bye !

@@ -4,10 +4,14 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEntity;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -21,14 +25,15 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 	private CGCheckBox checkbox;
 	private OptionCombobox comboboxMode, comboboxMode2;
 	private CGEntry entryObjective, entryObjective2, entryScore, entryScore2;
+	private PanelEntity panelEntityTags;
 	private PanelTarget panelTarget, panelTarget2;
 
 	public CommandScoreboardPlayers()
 	{
-		super("scoreboard players", "scoreboard players <add|remove|set> <player> <objective> <score>\n"
+		super("scoreboard players", "scoreboard players <add|remove|set> <player> <objective> <score> [dataTag]\n"
 				+ "scoreboard players <enable|reset> <player> <objective>\n" + "scoreboard players test <player> <objective> <min> [max]\n"
 				+ "scoreboard players operation <target player> <target objective> <operation> <player> <objective>\n"
-				+ "scoreboard players tag <player> <add|remove> <tagName>", 4, 5, 6, 7);
+				+ "scoreboard players tag <player> <add|remove> <tagName> [dataTag]", 4, 5, 6, 7);
 	}
 
 	@Override
@@ -60,6 +65,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		panel.add(this.panelTarget2 = new PanelTarget("target.title.any2", PanelTarget.ALL_ENTITIES), gbc);
 		++gbc.gridy;
 		panel.add((this.entryObjective2 = new CGEntry(new Text("score.name2"), Text.OBJECTIVE)).container, gbc);
+		panel.add(this.panelEntityTags = new PanelEntity("scoreboard.target.nbt", true, true, true), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
 		panel.add(this.checkbox = new CGCheckBox("scoreboard.reset.all"), gbc);
@@ -74,6 +80,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		this.entryObjective2.container.setVisible(false);
 		this.entryScore2.container.setVisible(false);
 		this.comboboxMode2.setVisible(false);
+		this.panelEntityTags.setLabelExplainVisible(true);
 
 		return panel;
 	}
@@ -91,7 +98,8 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		String mode = this.comboboxMode.getValue();
 		String objective = this.entryObjective.getText();
 		if (!mode.equals("reset")) this.entryObjective.checkValue(CGEntry.STRING);
-		if (mode.equals("set") || mode.equals("add") || mode.equals("remove")) return command + objective + " " + this.entryScore.getText();
+		if (mode.equals("set") || mode.equals("add") || mode.equals("remove")) return command + objective + " " + this.entryScore.getText() + " "
+				+ this.panelEntityTags.generate().nbt.valueForCommand();
 
 		if (mode.equals("reset"))
 		{
@@ -112,7 +120,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		if (mode.equals("tag"))
 		{
 			this.entryScore.checkValue(CGEntry.STRING);
-			return command + this.panelTarget.generate().toCommand() + " " + this.comboboxMode2.getValue() + " " + this.entryObjective.getText();
+			return command + this.comboboxMode2.getValue() + " " + this.entryObjective.getText() + " " + this.panelEntityTags.generate().nbt.valueForCommand();
 		}
 
 		return command;
@@ -130,6 +138,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		String mode = this.comboboxMode.getValue();
 		boolean operation = mode.equals("operation"), test = mode.equals("test"), tag = mode.equals("tag");
 		this.entryScore.container.setVisible(!mode.equals("reset") && !mode.equals("enable") && !tag && !operation);
+		this.panelEntityTags.setVisible(mode.equals("add") || mode.equals("reomve") || mode.equals("set") || tag);
 		this.checkbox.setVisible(mode.equals("reset") || test);
 		this.panelTarget2.setVisible(operation);
 		this.entryObjective2.container.setVisible(operation);
@@ -155,17 +164,16 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 			this.entryObjective.label.setTextID(Text.OBJECTIVE);
 			this.entryScore.label.setTextID(Text.VALUE);
 		}
-
 	}
 
 	@Override
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
-		// scoreboard players <add|remove|set> <player> <objective> <score>
+		// scoreboard players <add|remove|set> <player> <objective> <score> [dataTag]
 		// scoreboard players <enable|reset> <player> <objective>
 		// scoreboard players test <player> <objective> <min> [max]
 		// scoreboard players operation <target player> <target objective> <operation> <player> <objective>
-		// scoreboard players tag <player> add <tagName>
+		// scoreboard players tag <player> add <tagName> [dataTag]
 		String mode = fullCommand[1];
 		if (index == 1)
 		{
@@ -190,7 +198,13 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 			this.entryScore2.setText(argument);
 		} catch (Exception e)
 		{}
-		else this.panelTarget.setupFrom(Target.createFrom(argument));
+		else if (mode.equals("add") || mode.equals("remove") || mode.equals("set") || mode.equals("tag"))
+		{
+			TagCompound t = (TagCompound) NBTReader.read(argument, true, false);
+			String[] app = t.findApplications();
+			if (app.length != 0) this.panelEntityTags.setEntity(ObjectRegistry.entities.find(app[0]));
+			this.panelEntityTags.setTags(t.value());
+		} else this.panelTarget.setupFrom(Target.createFrom(argument));
 		if (index == 6) this.entryObjective2.setText(argument);
 	}
 }

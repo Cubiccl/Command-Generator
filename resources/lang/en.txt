@@ -189,7 +189,7 @@ enchant.title=Enchantment
 entity.spawn=Entity to Spawn
 entity.tags=NBT Tags
 entity.weight=Weight (chance to spawn)
-entitydata.explain=Choosing an Entity below will not target those Entities. Use the "type" argument for the target.
+entitydata.explain=Choosing an Entity will not target those Entities. Use the "type" argument for the target.
 entitydata.nbt=NBT Tags to apply
 entitydata.nbt.test=NBT Tags to match
 
@@ -501,6 +501,7 @@ scoreboard.reset.all=Reset all scores
 scoreboard.tag.add=Add tag
 scoreboard.tag.remove=Remove tag
 scoreboard.tag.value=Tag name
+scoreboard.target.nbt=Target NBT Tags to match (optionnal)
 scoreboard.teams.mode.add=Create Team
 scoreboard.teams.mode.empty=Empty Team
 scoreboard.teams.mode.join=Join Team

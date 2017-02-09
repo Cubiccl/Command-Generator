@@ -1,16 +1,20 @@
 ------------------------- VERSION 2.2.1 -------------------------
 ADDITIONS
 - Player NBT Tags
-- NBT Tag selection for /scoreboard commands
+- NBT Tag selection for /scoreboard players add|remove|set|tag commands
+Save Containers
 
 BUGS FIXED
+- Fixed /scoreboard players tag not generating properly
 - Text warning for Entity type in Entity selection always appeared
 
 CHANGED TRANSLATIONS
+entitydata.explain
 tag.entity.Inventory
 
 ADDED TRANSLATIONS
 general.unspecified
+scoreboard.target.nbt
 tag.entity.EnderItems, tag.entity.Score, tag.entity.SelectedItem, tag.entity.SelectedItemSlot, tag.entity.SleepTimer, tag.entity.Sleeping, tag.entity.SpawnForced, tag.entity.SpawnX, tag.entity.SpawnY, tag.entity.SpawnZ, tag.entity.XpLevel, tag.entity.XpP, tag.entity.XpSeed, tag.entity.XpTotal, tag.entity.abilities, tag.entity.foodExhaustionLevel, tag.entity.foodLevel, tag.entity.foodSaturationLevel, tag.entity.foodTickLevel, tag.entity.playerGameType
 tag.title.abilities, tag.title.EnderItems, tag.title.Inventory, tag.title.SelectedItem
 abilities.flying, abilities.instabuild, abilities.invulnerable, abilities.may_build, abilities.may_fly

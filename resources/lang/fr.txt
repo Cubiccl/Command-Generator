@@ -180,7 +180,7 @@ enchant.title=Enchantement
 entity.spawn=Entité à créer
 entity.tags=Données NBT
 entity.weight=Importance (probabilité qu'elle apparaisse)
-entitydata.explain=Choisir une Entité ci-dessous ne ciblera pas de type d'Entité. Utilisez l'argument "type" pour cela.
+entitydata.explain=Choisir une Entité ne ciblera pas de type d'Entité. Utilisez l'argument "type" pour cela.
 entitydata.nbt=Données NBT à appliquer
 entitydata.nbt.test=Données NBT à tester
 
