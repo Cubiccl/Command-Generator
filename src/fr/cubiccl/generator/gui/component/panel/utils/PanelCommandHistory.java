@@ -9,6 +9,7 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import javax.swing.Box;
+import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
@@ -17,6 +18,8 @@ import javax.swing.event.ListSelectionListener;
 import fr.cubi.cubigui.CList;
 import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.GeneratedCommand;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.button.CGButton;
@@ -32,9 +35,9 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 
 	private CTextArea area;
 	private CGButton buttonCopy, buttonLoad, buttonSave;
-	private String[] history, saved = new String[]
-	{ "jkl", "/jiojio j" };
+	private String[] history;
 	private CGList listCommandHistory, listCommandSaved;
+	private GeneratedCommand[] saved;
 	private CGTabbedPane tabbedpane;
 
 	public PanelCommandHistory()
@@ -62,7 +65,7 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 		p.add(this.buttonSave = new CGButton("command.save"), gbc);
 
 		this.tabbedpane.addTab("command.history", (this.listCommandHistory = new CGList(this.history)).scrollPane);
-		this.tabbedpane.addTab("command.saved", (this.listCommandSaved = new CGList(this.saved)).scrollPane);
+		this.tabbedpane.addTab("command.saved", (this.listCommandSaved = new CGList()).scrollPane);
 		this.tabbedpane.addChangeListener(this);
 
 		this.setMainComponent(p);
@@ -102,18 +105,20 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 			public void componentShown(ComponentEvent e)
 			{}
 		});
+
+		this.updateListSaved();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		super.actionPerformed(e);
-		if (e.getSource() == this.buttonCopy) Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(this.area.getText()), null);
+		if (e.getSource() == this.buttonCopy) Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(this.selectedCommand()), null);
 		if (e.getSource() == this.buttonLoad)
 		{
 			try
 			{
-				CommandGenerator.doLoad(this.history[this.listCommandHistory.getSelectedIndex()]);
+				CommandGenerator.doLoad(this.selectedCommand());
 			} catch (CommandGenerationException e1)
 			{
 				CommandGenerator.report(new CommandGenerationException(new Text(
@@ -128,16 +133,26 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 		if (e.getSource() == this.buttonCancel || e.getSource() == this.buttonLoad) CommandGenerator.window.menubar.toggleMenu(true);
 	}
 
-	private void forget(int selectedIndex)
+	private void forget(int index)
 	{
-		// TODO forget command
+		ObjectSaver.commands.removeObject(index);
 		this.updateListSaved();
 	}
 
-	private void save(int selectedIndex)
+	private void save(int index)
 	{
-		// TODO save command
+		GeneratedCommand c = new GeneratedCommand(this.history[this.listCommandHistory.getSelectedIndex()]);
+		c.setCustomName(JOptionPane.showInputDialog(new Text("objects.name")));
+		if (c.customName() == null) return;
+		ObjectSaver.commands.addObject(c);
 		this.updateListSaved();
+		this.buttonSave.setEnabled(false);
+	}
+
+	private String selectedCommand()
+	{
+		return this.tabbedpane.getSelectedIndex() == 0 ? this.history[this.listCommandHistory.getSelectedIndex()] : this.saved[this.listCommandSaved
+				.getSelectedIndex()].command;
 	}
 
 	private CList selectedList()
@@ -155,7 +170,7 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 	{
 		boolean enabled = this.selectedList().getSelectedIndex() != -1;
 		boolean saved = this.tabbedpane.getSelectedIndex() == 1;
-		String selected = enabled ? saved ? this.saved[this.selectedList().getSelectedIndex()] : this.history[this.selectedList().getSelectedIndex()] : null;
+		String selected = enabled ? this.selectedCommand() : null;
 		this.buttonCopy.setEnabled(enabled);
 		this.buttonLoad.setEnabled(enabled);
 		if (!enabled) this.area.setText("");
@@ -165,15 +180,19 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 		if (!saved && enabled)
 		{
 			this.buttonSave.setEnabled(false);
-			for (String command : this.saved)
-				if (command.equals(selected)) return;
+			for (GeneratedCommand command : this.saved)
+				if (command.command.equals(selected)) return;
 			this.buttonSave.setEnabled(true);
 		} else this.buttonSave.setEnabled(enabled);
 	}
 
 	private void updateListSaved()
 	{
-		this.listCommandSaved.setValues(this.saved);
+		this.saved = ObjectSaver.commands.list();
+		String[] names = new String[this.saved.length];
+		for (int i = 0; i < names.length; ++i)
+			names[i] = this.saved[i].customName();
+		this.listCommandSaved.setValues(names);
 	}
 
 	@Override

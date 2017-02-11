@@ -36,6 +36,7 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 			AttributeModifier.class);
 	public static final ObjectSaver<AppliedAttribute> attributes = new ObjectSaver<AppliedAttribute>("attribute", new AttributeList(), AppliedAttribute.class);
 	public static final ObjectSaver<PlacedBlock> blocks = new ObjectSaver<PlacedBlock>("block", new BlockList(), PlacedBlock.class);
+	public static final ObjectSaver<GeneratedCommand> commands = new ObjectSaver<GeneratedCommand>("commands", null, GeneratedCommand.class);
 	public static final ObjectSaver<Coordinates> coordinates = new ObjectSaver<Coordinates>("coordinates", new CoordinatesList(), Coordinates.class);
 	public static final ObjectSaver<Effect> effects = new ObjectSaver<Effect>("effect", new EffectList(), Effect.class);
 	public static final ObjectSaver<Enchantment> enchantments = new ObjectSaver<Enchantment>("enchantment", new EnchantmentList(), Enchantment.class);
@@ -43,7 +44,7 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 	public static final ObjectSaver<ItemStack> items = new ObjectSaver<ItemStack>("item", new ItemList(), ItemStack.class);
 	public static final ObjectSaver<JsonMessage> jsonMessages = new ObjectSaver<JsonMessage>("json", new JsonList(), JsonMessage.class);
 	private static final int MODIFIERS = 0, ATTRIBUTES = 1, BLOCKS = 2, COORDINATES = 3, EFFECTS = 4, ENCHANTMENTS = 5, ENTITIES = 6, ITEMS = 7, JSONS = 8,
-			TRADES = 9, TARGETS = 10;
+			TRADES = 9, TARGETS = 10, COMMANDS = 11;
 	@SuppressWarnings("rawtypes")
 	public static ObjectSaver[] savers;
 	public static final ObjectSaver<Target> targets = new ObjectSaver<Target>("target", new TargetList(), Target.class);
@@ -109,6 +110,10 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 					targets.addObject(Target.createFrom((TagCompound) NBTReader.read(line, true, false)));
 					break;
 
+				case COMMANDS:
+					commands.addObject(GeneratedCommand.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					break;
+
 				default:
 					break;
 			}
@@ -120,6 +125,7 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 		for (@SuppressWarnings("rawtypes")
 		ObjectSaver saver : savers)
 			saver.reset();
+		commands.reset();
 	}
 
 	public static void save()
@@ -135,6 +141,10 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 			for (GameObject object : saver.list())
 				data.add(object.save());
 		}
+		data.add("");
+		data.add("[COMMANDS]");
+		for (GeneratedCommand c : commands.list())
+			data.add(c.save());
 
 		FileUtils.writeToFile("savedObjects.txt", data.toArray(new String[data.size()]));
 	}

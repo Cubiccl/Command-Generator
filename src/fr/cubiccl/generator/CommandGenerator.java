@@ -159,7 +159,6 @@ public class CommandGenerator
 
 	public static void setSelected(Command command)
 	{
-		if (command == selected) return;
 		selected = command;
 		window.setSelected(command);
 		stateManager.clear();

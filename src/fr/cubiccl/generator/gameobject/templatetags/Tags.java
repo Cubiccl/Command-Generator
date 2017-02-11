@@ -30,6 +30,8 @@ public final class Tags
 	public static final TemplateString BLOCK_ID = new TemplateString("id", UNAVAILABLE);
 	public static final DefaultCompound BLOCK_NBT = new DefaultCompound("tag");
 
+	public static final TemplateString COMMAND = new TemplateString("Command", UNAVAILABLE);
+
 	public static final TemplateNumber COORD_X = new TemplateNumber("X", UNAVAILABLE, TagNumber.DOUBLE);
 	public static final TemplateNumber COORD_X_INT = new TemplateNumber("X", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateNumber COORD_Y = new TemplateNumber("Y", UNAVAILABLE, TagNumber.DOUBLE);
