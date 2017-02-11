@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.loottable;
 
+import java.util.ArrayList;
+
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -22,6 +24,13 @@ public class LootTableFunction
 		SET_DATA("set_data", 1),
 		SET_NBT("set_nbt", 0);
 
+		public static Function get(String name)
+		{
+			for (Function f : values())
+				if (f.name.equals(name)) return f;
+			return null;
+		}
+
 		public final String name;
 		public final int priority;
 
@@ -35,6 +44,29 @@ public class LootTableFunction
 		{
 			return this.priority - anotherFunction.priority;
 		}
+	}
+
+	public static LootTableFunction createFrom(TagCompound tag)
+	{
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		ArrayList<LootTableCondition> conditions = new ArrayList<LootTableCondition>();
+		Function f = null;
+
+		for (Tag t : tag.value())
+		{
+			if (t.id().equals(Tags.LOOTTABLE_FUNCTION_NAME.id())) f = Function.get(((TagString) t).value());
+			else if (t.id().equals(Tags.LOOTTABLE_CONDITIONS.id()))
+			{
+				for (Tag con : ((TagList) t).value())
+				{
+					LootTableCondition c = LootTableCondition.createFrom((TagCompound) con);
+					if (c != null) conditions.add(c);
+				}
+			} else tags.add(t);
+		}
+
+		if (f == null) return null;
+		return new LootTableFunction(f, conditions.toArray(new LootTableCondition[conditions.size()]), tags.toArray(new Tag[tags.size()]));
 	}
 
 	protected final LootTableCondition[] conditions;

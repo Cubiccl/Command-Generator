@@ -12,6 +12,24 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 public class LootTable extends GameObject
 {
 
+	public static LootTable createFrom(TagCompound tag)
+	{
+		ArrayList<LootTablePool> pools = new ArrayList<LootTablePool>();
+		if (tag.hasTag(Tags.LOOTTABLE_POOLS))
+		{
+			TagList list = (TagList) tag.getTag(Tags.LOOTTABLE_POOLS);
+			for (Tag t : list.value())
+			{
+				LootTablePool p = LootTablePool.createFrom((TagCompound) t);
+				if (p != null) pools.add(p);
+			}
+		}
+
+		LootTable table = new LootTable(pools.toArray(new LootTablePool[pools.size()]));
+		table.findName(tag);
+		return table;
+	}
+
 	protected final LootTablePool[] pools;
 
 	public LootTable(LootTablePool[] pools)
@@ -37,7 +55,7 @@ public class LootTable extends GameObject
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (LootTablePool pool : this.pools)
 			tags.add(pool.toTag(Tags.DEFAULT_COMPOUND));
-		if (includeName) tags.add(this.nameTag());
+		if (includeName) return new TagCompound(container, new TagList(Tags.LOOTTABLE_POOLS, tags.toArray(new Tag[tags.size()])), this.nameTag());
 		return new TagCompound(container, new TagList(Tags.LOOTTABLE_POOLS, tags.toArray(new Tag[tags.size()])));
 	}
 

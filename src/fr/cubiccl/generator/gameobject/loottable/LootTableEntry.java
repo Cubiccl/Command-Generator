@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.loottable;
 
+import java.util.ArrayList;
+
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
@@ -9,6 +11,48 @@ public class LootTableEntry
 	public static final byte ITEM = 0, LOOT_TABLE = 1, EMPTY = 2;
 	public static final String[] TYPES =
 	{ "item", "loot_table", "empty" };
+
+	public static LootTableEntry createFrom(TagCompound tag)
+	{
+		String name = null;
+		int weight = -1, quality = -1;
+		byte type = EMPTY;
+		ArrayList<LootTableCondition> conditions = new ArrayList<LootTableCondition>();
+		ArrayList<LootTableFunction> functions = new ArrayList<LootTableFunction>();
+
+		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_TYPE))
+		{
+			String t = ((TagString) tag.getTag(Tags.LOOTTABLE_ENTRY_TYPE)).value();
+			if (t.equals("item")) type = ITEM;
+			if (t.equals("loot_table")) type = LOOT_TABLE;
+			if (t.equals("empty")) type = EMPTY;
+		}
+		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_NAME)) name = ((TagString) tag.getTag(Tags.LOOTTABLE_ENTRY_NAME)).value();
+		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_WEIGHT)) weight = ((TagNumber) tag.getTag(Tags.LOOTTABLE_ENTRY_WEIGHT)).value();
+		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_QUALITY)) quality = ((TagNumber) tag.getTag(Tags.LOOTTABLE_ENTRY_QUALITY)).value();
+		if (tag.hasTag(Tags.LOOTTABLE_CONDITIONS))
+		{
+			TagList t = (TagList) tag.getTag(Tags.LOOTTABLE_CONDITIONS);
+			for (Tag con : t.value())
+			{
+				LootTableCondition c = LootTableCondition.createFrom((TagCompound) con);
+				if (c != null) conditions.add(c);
+			}
+		}
+		if (tag.hasTag(Tags.LOOTTABLE_FUNCTIONS))
+		{
+			TagList t = (TagList) tag.getTag(Tags.LOOTTABLE_FUNCTIONS);
+			for (Tag fun : t.value())
+			{
+				LootTableFunction f = LootTableFunction.createFrom((TagCompound) fun);
+				if (f != null) functions.add(f);
+			}
+		}
+
+		if (name == null && type != EMPTY) return null;
+		return new LootTableEntry(conditions.toArray(new LootTableCondition[conditions.size()]), type, name, functions.toArray(new LootTableFunction[functions
+				.size()]), weight, quality);
+	}
 
 	protected final LootTableCondition[] conditions;
 	protected final LootTableFunction[] functions;
@@ -28,6 +72,8 @@ public class LootTableEntry
 
 	public TagCompound toTag(TemplateCompound container)
 	{
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+
 		Tag[] con = new Tag[this.conditions.length];
 		for (int i = 0; i < con.length; ++i)
 			con[i] = this.conditions[i].toTag(Tags.DEFAULT_COMPOUND);
@@ -36,8 +82,13 @@ public class LootTableEntry
 		for (int i = 0; i < fun.length; ++i)
 			fun[i] = this.functions[i].toTag(Tags.DEFAULT_COMPOUND);
 
-		return new TagCompound(container, new TagList(Tags.LOOTTABLE_CONDITIONS, con), new TagString(Tags.LOOTTABLE_ENTRY_TYPE, TYPES[this.type]),
-				new TagString(Tags.LOOTTABLE_ENTRY_NAME, this.name), new TagList(Tags.LOOTTABLE_FUNCTIONS, fun), new TagNumber(Tags.LOOTTABLE_ENTRY_WEIGHT,
-						this.weight), new TagNumber(Tags.LOOTTABLE_ENTRY_QUALITY, this.quality));
+		tags.add(new TagList(Tags.LOOTTABLE_CONDITIONS, con));
+		tags.add(new TagString(Tags.LOOTTABLE_ENTRY_TYPE, TYPES[this.type]));
+		if (this.name != null) tags.add(new TagString(Tags.LOOTTABLE_ENTRY_NAME, this.name));
+		tags.add(new TagList(Tags.LOOTTABLE_FUNCTIONS, fun));
+		if (this.weight != -1) tags.add(new TagNumber(Tags.LOOTTABLE_ENTRY_WEIGHT, this.weight));
+		if (this.quality != -1) tags.add(new TagNumber(Tags.LOOTTABLE_ENTRY_QUALITY, this.quality));
+
+		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
 	}
 }

@@ -16,6 +16,4 @@ Successfully created 185 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
-Generating !
-Successfully generated : achievement give achievement.acquireIron @a
 Exiting Command Generator... Bye bye !

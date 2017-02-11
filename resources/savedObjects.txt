@@ -24,3 +24,6 @@
 [TARGETS]
 
 [COMMANDS]
+
+[LOOT_TABLES]
+{pools:[{rolls:5,bonus_rolls:0.0f,conditions:[{condition:"killed_by_player"}],entries:[{conditions:[],type:"item",name:"minecraft:bow",functions:[{name:"set_count",conditions:[]}]}]}],ObjectName:"Test table"}

@@ -65,7 +65,7 @@ public class TagCompound extends TagList
 
 	public boolean hasTag(TemplateTag tag)
 	{
-		return this.hasTag(tag.id());
+		return this.hasTag(tag.id()) && this.getTag(tag).template.tagType == tag.tagType;
 	}
 
 	@Override

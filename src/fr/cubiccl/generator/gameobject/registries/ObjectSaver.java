@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.*;
+import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.registries.ListInterface.AttributeList;
 import fr.cubiccl.generator.gameobject.registries.ListInterface.BlockList;
 import fr.cubiccl.generator.gameobject.registries.ListInterface.CoordinatesList;
@@ -36,17 +37,18 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 			AttributeModifier.class);
 	public static final ObjectSaver<AppliedAttribute> attributes = new ObjectSaver<AppliedAttribute>("attribute", new AttributeList(), AppliedAttribute.class);
 	public static final ObjectSaver<PlacedBlock> blocks = new ObjectSaver<PlacedBlock>("block", new BlockList(), PlacedBlock.class);
-	public static final ObjectSaver<GeneratedCommand> commands = new ObjectSaver<GeneratedCommand>("commands", null, GeneratedCommand.class);
+	public static final ObjectSaver<GeneratedCommand> commands = new ObjectSaver<GeneratedCommand>(new Text("commands", false), null, GeneratedCommand.class);
 	public static final ObjectSaver<Coordinates> coordinates = new ObjectSaver<Coordinates>("coordinates", new CoordinatesList(), Coordinates.class);
 	public static final ObjectSaver<Effect> effects = new ObjectSaver<Effect>("effect", new EffectList(), Effect.class);
 	public static final ObjectSaver<Enchantment> enchantments = new ObjectSaver<Enchantment>("enchantment", new EnchantmentList(), Enchantment.class);
 	public static final ObjectSaver<LivingEntity> entities = new ObjectSaver<LivingEntity>("entity", new EntityList(), LivingEntity.class);
 	public static final ObjectSaver<ItemStack> items = new ObjectSaver<ItemStack>("item", new ItemList(), ItemStack.class);
 	public static final ObjectSaver<JsonMessage> jsonMessages = new ObjectSaver<JsonMessage>("json", new JsonList(), JsonMessage.class);
+	public static final ObjectSaver<LootTable> lootTables = new ObjectSaver<LootTable>(new Text("loot_tables", false), null, LootTable.class);
 	private static final int MODIFIERS = 0, ATTRIBUTES = 1, BLOCKS = 2, COORDINATES = 3, EFFECTS = 4, ENCHANTMENTS = 5, ENTITIES = 6, ITEMS = 7, JSONS = 8,
-			TRADES = 9, TARGETS = 10, COMMANDS = 11;
+			TRADES = 9, TARGETS = 10, COMMANDS = 11, LOOT_TABLES = 12;
 	@SuppressWarnings("rawtypes")
-	public static ObjectSaver[] savers;
+	public static ObjectSaver[] savers, hiddenSavers;
 	public static final ObjectSaver<Target> targets = new ObjectSaver<Target>("target", new TargetList(), Target.class);
 	public static final ObjectSaver<TradeOffer> trades = new ObjectSaver<TradeOffer>("trade", new TradeList(), TradeOffer.class);
 
@@ -54,6 +56,8 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 	{
 		savers = new ObjectSaver[]
 		{ attributeModifiers, attributes, blocks, coordinates, effects, enchantments, entities, items, jsonMessages, trades, targets };
+		hiddenSavers = new ObjectSaver[]
+		{ commands, lootTables };
 		resetAll();
 		String[] data = FileUtils.readFileAsArray("savedObjects.txt");
 		int current = -1;
@@ -114,6 +118,10 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 					commands.addObject(GeneratedCommand.createFrom((TagCompound) NBTReader.read(line, true, false)));
 					break;
 
+				case LOOT_TABLES:
+					lootTables.addObject(LootTable.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					break;
+
 				default:
 					break;
 			}
@@ -141,10 +149,14 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 			for (GameObject object : saver.list())
 				data.add(object.save());
 		}
-		data.add("");
-		data.add("[COMMANDS]");
-		for (GeneratedCommand c : commands.list())
-			data.add(c.save());
+		for (@SuppressWarnings("rawtypes")
+		ObjectSaver saver : hiddenSavers)
+		{
+			data.add("");
+			data.add("[" + saver.name.toString().toUpperCase() + "]");
+			for (GameObject object : saver.list())
+				data.add(object.save());
+		}
 
 		FileUtils.writeToFile("savedObjects.txt", data.toArray(new String[data.size()]));
 	}
@@ -156,7 +168,12 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 
 	protected ObjectSaver(String nameID, ListInterface<T> list, Class<T> c)
 	{
-		this.name = new Text("objects." + nameID);
+		this(new Text("objects." + nameID), list, c);
+	}
+
+	protected ObjectSaver(Text name, ListInterface<T> list, Class<T> c)
+	{
+		this.name = name;
 		this.list = list;
 		this.c = c;
 		this.savedObjects = new HashMap<String, T>();

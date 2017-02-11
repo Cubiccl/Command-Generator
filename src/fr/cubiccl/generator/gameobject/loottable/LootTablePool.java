@@ -9,6 +9,50 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 public class LootTablePool
 {
 
+	public static LootTablePool createFrom(TagCompound tag)
+	{
+		float bonusMin = 0, bonusMax = -1;
+		int min = 0, max = -1;
+		ArrayList<LootTableCondition> conditions = new ArrayList<LootTableCondition>();
+		ArrayList<LootTableEntry> entries = new ArrayList<LootTableEntry>();
+
+		if (tag.hasTag(Tags.LOOTTABLE_ROLLS)) min = ((TagNumber) tag.getTag(Tags.LOOTTABLE_ROLLS)).value();
+		if (tag.hasTag(Tags.LOOTTABLE_ROLLS_RANGE))
+		{
+			TagCompound t = (TagCompound) tag.getTag(Tags.LOOTTABLE_ROLLS_RANGE);
+			if (t.hasTag(Tags.LOOTTABLE_ROLLS_MIN)) min = ((TagNumber) t.getTag(Tags.LOOTTABLE_ROLLS_MIN)).value();
+			if (t.hasTag(Tags.LOOTTABLE_ROLLS_MAX)) max = ((TagNumber) t.getTag(Tags.LOOTTABLE_ROLLS_MAX)).value();
+		}
+		if (tag.hasTag(Tags.LOOTTABLE_BONUS_ROLLS)) bonusMin = (float) (double) ((TagBigNumber) tag.getTag(Tags.LOOTTABLE_BONUS_ROLLS)).value();
+		if (tag.hasTag(Tags.LOOTTABLE_BONUS_ROLLS_RANGE))
+		{
+			TagCompound t = (TagCompound) tag.getTag(Tags.LOOTTABLE_BONUS_ROLLS_RANGE);
+			if (t.hasTag(Tags.LOOTTABLE_BONUS_ROLLS_MIN)) bonusMin = (float) (double) ((TagBigNumber) t.getTag(Tags.LOOTTABLE_BONUS_ROLLS_MIN)).value();
+			if (t.hasTag(Tags.LOOTTABLE_BONUS_ROLLS_MAX)) bonusMax = (float) (double) ((TagBigNumber) t.getTag(Tags.LOOTTABLE_BONUS_ROLLS_MAX)).value();
+		}
+		if (tag.hasTag(Tags.LOOTTABLE_CONDITIONS))
+		{
+			TagList t = (TagList) tag.getTag(Tags.LOOTTABLE_CONDITIONS);
+			for (Tag con : t.value())
+			{
+				LootTableCondition c = LootTableCondition.createFrom((TagCompound) con);
+				if (c != null) conditions.add(c);
+			}
+		}
+		if (tag.hasTag(Tags.LOOTTABLE_ENTRIES))
+		{
+			TagList t = (TagList) tag.getTag(Tags.LOOTTABLE_ENTRIES);
+			for (Tag ent : t.value())
+			{
+				LootTableEntry e = LootTableEntry.createFrom((TagCompound) ent);
+				if (e != null) entries.add(e);
+			}
+		}
+
+		return new LootTablePool(conditions.toArray(new LootTableCondition[conditions.size()]), min, max, bonusMin, bonusMax,
+				entries.toArray(new LootTableEntry[entries.size()]));
+	}
+
 	public final float bonusRollsMin, bonusRollsMax;
 	protected final LootTableCondition[] conditions;
 	protected final LootTableEntry[] entries;
