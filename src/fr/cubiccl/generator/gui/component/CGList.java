@@ -85,9 +85,11 @@ public class CGList extends CList
 
 	public void setValues(String... values)
 	{
+		int previous = this.getSelectedIndex();
 		this.values.clear();
 		for (String value : values)
 			this.values.add(value);
+		if (previous < this.values.size()) this.setSelectedIndex(previous);
 		this.reload();
 	}
 

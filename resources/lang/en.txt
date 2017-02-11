@@ -90,6 +90,8 @@ command.label=Generated Command
 command.load=Load command
 command.load.details=Type in a Command that the Generator should load.
 command.output=Command output
+command.save=Save Command
+command.saved=Saved Commands
 command.select=Select a Command
 
 container.ArmorItems=Armor Items
