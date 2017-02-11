@@ -39,7 +39,7 @@ public class GeneratedCommand extends GameObject
 	@Override
 	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
-		if (includeName) return new TagCompound(container, new TagString(Tags.COMMAND, this.command), new TagString(Tags.OBJECT_NAME, this.customName()));
+		if (includeName) return new TagCompound(container, new TagString(Tags.COMMAND, this.command), this.nameTag());
 		return new TagCompound(container, new TagString(Tags.COMMAND, this.command));
 	}
 

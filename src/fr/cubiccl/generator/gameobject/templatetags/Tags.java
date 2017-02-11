@@ -91,6 +91,25 @@ public final class Tags
 	public static final TemplateString JSON_TEXT = new TemplateString("text", UNAVAILABLE);
 	public static final TemplateString JSON_TRANSLATE = new TemplateString("translate", UNAVAILABLE);
 
+	public static final TemplateNumber LOOTTABLE_BONUS_ROLLS = new TemplateNumber("bonus_rolls", UNAVAILABLE, TagNumber.FLOAT);
+	public static final TemplateNumber LOOTTABLE_BONUS_ROLLS_MAX = new TemplateNumber("max", UNAVAILABLE, TagNumber.FLOAT);
+	public static final TemplateNumber LOOTTABLE_BONUS_ROLLS_MIN = new TemplateNumber("min", UNAVAILABLE, TagNumber.FLOAT);
+	public static final DefaultCompound LOOTTABLE_BONUS_ROLLS_RANGE = new DefaultCompound("bonus_rolls");
+	public static final TemplateString LOOTTABLE_CONDITION = new TemplateString("condition", UNAVAILABLE);
+	public static final DefaultList LOOTTABLE_CONDITIONS = new DefaultList("conditions");
+	public static final DefaultList LOOTTABLE_ENTRIES = new DefaultList("entries");
+	public static final TemplateString LOOTTABLE_ENTRY_NAME = new TemplateString("name", UNAVAILABLE);
+	public static final TemplateNumber LOOTTABLE_ENTRY_QUALITY = new TemplateNumber("quality", UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateString LOOTTABLE_ENTRY_TYPE = new TemplateString("type", UNAVAILABLE);
+	public static final TemplateNumber LOOTTABLE_ENTRY_WEIGHT = new TemplateNumber("weight", UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateString LOOTTABLE_FUNCTION_NAME = new TemplateString("name", UNAVAILABLE);
+	public static final DefaultList LOOTTABLE_FUNCTIONS = new DefaultList("functions");
+	public static final DefaultList LOOTTABLE_POOLS = new DefaultList("pools");
+	public static final TemplateNumber LOOTTABLE_ROLLS = new TemplateNumber("rolls", UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateNumber LOOTTABLE_ROLLS_MAX = new TemplateNumber("max", UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateNumber LOOTTABLE_ROLLS_MIN = new TemplateNumber("min", UNAVAILABLE, TagNumber.INTEGER);
+	public static final DefaultCompound LOOTTABLE_ROLLS_RANGE = new DefaultCompound("rolls");
+
 	public static final TemplateString OBJECT_NAME = new TemplateString("ObjectName", UNAVAILABLE);
 
 	public static final DefaultCompound OFFER_BUY = new DefaultCompound("buy");

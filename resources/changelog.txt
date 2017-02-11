@@ -3,7 +3,7 @@ ADDITIONS
 - Added a way to save generated Commands in the Command history!
 
 BUGS FIXED
-- Command history would not close when loaded a Command corresponding to the selection in main program
+- Command history would not close when loading a Command corresponding to the selection in main program
 
 CHANGED TRANSLATIONS
 
