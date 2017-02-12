@@ -3,8 +3,9 @@ package fr.cubiccl.generator.gameobject.tags;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.templatetags.Tags;
-import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
+import fr.cubiccl.generator.gameobject.templatetags.*;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateList.DefaultList;
 
 public class NBTReader
 {
@@ -77,12 +78,23 @@ public class NBTReader
 	 * @param isJson - True if it is in a json NBT structure, and thus its ID is surrounded with quotes "". */
 	public static Tag read(String tag, boolean isInList, boolean isJson)
 	{
+		return read(tag, isInList, isJson, false);
+	}
+
+	/** Reads a String NBT Tag and returns its NBT Tag form.
+	 * 
+	 * @param tag - The tag to read.
+	 * @param isInList - True if it is in a TagList, and thus its ID is not present.
+	 * @param isJson - True if it is in a json NBT structure, and thus its ID is surrounded with quotes "".
+	 * @param readUnknown - True if unknown Tags should still be read. */
+	public static Tag read(String tag, boolean isInList, boolean isJson, boolean readUnknown)
+	{
 		if (isInList) return readNamelessTag(determineType(tag), tag, isJson);
 		String id = tag.substring(0, tag.indexOf(":")), value = tag.substring(tag.indexOf(":") + 1);
 		if (isJson && id.startsWith("\"") && id.endsWith("\"")) id = id.substring(1, id.length() - 1);
 		byte type = determineType(value);
 		TemplateTag matching = findMatchingTag(id, type);
-		if (matching == null) return null;
+		if (matching == null) return readUnknown ? readUnknownTag(id, type, value, isJson) : null;
 		return matching.readTag(value, isJson);
 	}
 
@@ -97,15 +109,42 @@ public class NBTReader
 			case Tag.STRING:
 				return Tags.DEFAULT_STRING.readTag(tag, isJson);
 			case Tag.BYTE:
+				return Tags.DEFAULT_BYTE.readTag(tag, isJson);
+			case Tag.SHORT:
+				return Tags.DEFAULT_SHORT.readTag(tag, isJson);
+			case Tag.INT:
+				return Tags.DEFAULT_INTEGER.readTag(tag, isJson);
+			case Tag.LONG:
+				return Tags.DEFAULT_LONG.readTag(tag, isJson);
+			case Tag.FLOAT:
+				return Tags.DEFAULT_FLOAT.readTag(tag, isJson);
+			case Tag.DOUBLE:
+				return Tags.DEFAULT_DOUBLE.readTag(tag, isJson);
+			default:
+				return Tags.DEFAULT_STRING.readTag(tag, isJson);
+		}
+	}
+
+	private static Tag readUnknownTag(String id, byte type, String value, boolean isJson)
+	{
+		switch (type)
+		{
+			case Tag.COMPOUND:
+				return new DefaultCompound(id, Tag.UNKNOWN).readTag(value, isJson);
+			case Tag.LIST:
+				return new DefaultList(id, Tag.UNKNOWN).readTag(value, isJson);
+			case Tag.STRING:
+				return new TemplateString(id, Tag.UNKNOWN).readTag(value, isJson);
+			case Tag.BYTE:
 			case Tag.SHORT:
 			case Tag.INT:
 			case Tag.LONG:
 			case Tag.FLOAT:
 			case Tag.DOUBLE:
-				return Tags.DEFAULT_INTEGER.readTag(tag, isJson);
+				return new TemplateNumber(id, Tag.UNKNOWN, TemplateNumber.numberTypeFor(type)).readTag(value, isJson);
 
 			default:
-				return Tags.DEFAULT_STRING.readTag(tag, isJson);
+				return new TemplateString(id, Tag.UNKNOWN).readTag(value, isJson);
 		}
 	}
 

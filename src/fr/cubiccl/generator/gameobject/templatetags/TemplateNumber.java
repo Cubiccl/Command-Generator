@@ -14,6 +14,13 @@ import fr.cubiccl.generator.utils.Text;
 
 public class TemplateNumber extends TemplateTag
 {
+	public static byte numberTypeFor(byte type)
+	{
+		for (int i = 0; i < TagNumber.TYPE_TRANSITION.length; ++i)
+			if (TagNumber.TYPE_TRANSITION[i] == type) return (byte) i;
+		return type;
+	}
+
 	private boolean isByteBoolean;
 	private double minValue, maxValue;
 	private String[] names;

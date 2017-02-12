@@ -15,7 +15,12 @@ public abstract class TemplateList extends TemplateTag
 
 		public DefaultList(String id)
 		{
-			super(id, Tag.UNAVAILABLE);
+			this(id, Tag.UNAVAILABLE);
+		}
+
+		public DefaultList(String id, byte type)
+		{
+			super(id, type);
 		}
 
 		@Override

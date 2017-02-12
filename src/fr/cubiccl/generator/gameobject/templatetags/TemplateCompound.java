@@ -15,7 +15,12 @@ public abstract class TemplateCompound extends TemplateTag
 
 		public DefaultCompound(String id)
 		{
-			super(id, Tag.UNAVAILABLE);
+			this(id, Tag.UNAVAILABLE);
+		}
+
+		public DefaultCompound(String id, byte type)
+		{
+			super(id, type);
 		}
 
 		@Override

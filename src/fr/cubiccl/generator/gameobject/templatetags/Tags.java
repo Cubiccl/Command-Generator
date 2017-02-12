@@ -39,10 +39,14 @@ public final class Tags
 	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", UNAVAILABLE, TagNumber.DOUBLE);
 	public static final TemplateNumber COORD_Z_INT = new TemplateNumber("Z", UNAVAILABLE, TagNumber.INTEGER);
 
+	public static final TemplateNumber DEFAULT_BYTE = new TemplateNumber("", UNAVAILABLE, TagNumber.BYTE);
 	public static final TemplateCompound DEFAULT_COMPOUND = new DefaultCompound("");
+	public static final TemplateNumber DEFAULT_DOUBLE = new TemplateNumber("", UNAVAILABLE, TagNumber.DOUBLE);
 	public static final TemplateNumber DEFAULT_FLOAT = new TemplateNumber("", UNAVAILABLE, TagNumber.FLOAT);
 	public static final TemplateNumber DEFAULT_INTEGER = new TemplateNumber("", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateList DEFAULT_LIST = new DefaultList("");
+	public static final TemplateNumber DEFAULT_LONG = new TemplateNumber("", UNAVAILABLE, TagNumber.LONG);
+	public static final TemplateNumber DEFAULT_SHORT = new TemplateNumber("", UNAVAILABLE, TagNumber.SHORT);
 	public static final TemplateString DEFAULT_STRING = new TemplateString("", UNAVAILABLE);
 
 	public static final TemplateNumber DISPLAY_COLOR = new TemplateNumber("color", UNAVAILABLE, TagNumber.INTEGER);

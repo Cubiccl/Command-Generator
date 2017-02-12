@@ -1,3 +1,13 @@
+------------------------- VERSION 2.3 -------------------------
+ADDITIONS
+
+BUGS FIXED
+- Fixed crash when reading number Tags in list Tags
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+
 ------------------------- VERSION 2.2.2 -------------------------
 ADDITIONS
 - Added a way to save generated Commands in the Command history!
