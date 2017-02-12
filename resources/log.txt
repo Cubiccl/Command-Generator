@@ -19,14 +19,4 @@ Loading textures...
 Switching to Loot Tables mode.
 Switching to Commands mode.
 Switching to Loot Tables mode.
-Switching to Commands mode.
-Switching to Loot Tables mode.
-Switching to Commands mode.
-Switching to Loot Tables mode.
-Switching to Commands mode.
-Switching to Loot Tables mode.
-Switching to Commands mode.
-Switching to Loot Tables mode.
-Switching to Commands mode.
-Switching to Loot Tables mode.
 Exiting Command Generator... Bye bye !

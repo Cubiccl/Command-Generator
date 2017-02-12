@@ -30,11 +30,13 @@ public class LootTable extends GameObject
 		return table;
 	}
 
-	protected final LootTablePool[] pools;
+	public final ArrayList<LootTablePool> pools;
 
-	public LootTable(LootTablePool[] pools)
+	public LootTable(LootTablePool... pools)
 	{
-		this.pools = pools;
+		this.pools = new ArrayList<LootTablePool>();
+		for (LootTablePool p : pools)
+			this.pools.add(p);
 	}
 
 	@Override

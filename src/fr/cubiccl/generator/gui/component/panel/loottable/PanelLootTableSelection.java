@@ -7,14 +7,19 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.loottable.LootTable;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
+import fr.cubiccl.generator.utils.StateManager.State;
+import fr.cubiccl.generator.utils.Text;
 
 public class PanelLootTableSelection extends CGPanel implements IObjectList, ActionListener
 {
@@ -26,6 +31,7 @@ public class PanelLootTableSelection extends CGPanel implements IObjectList, Act
 	public PanelLootTableSelection()
 	{
 		super();
+
 		this.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 		CGLabel l = new CGLabel("loottable.list");
 		l.setHorizontalAlignment(SwingConstants.CENTER);
@@ -58,36 +64,57 @@ public class PanelLootTableSelection extends CGPanel implements IObjectList, Act
 	@Override
 	public boolean addObject(CGPanel panel, int editIndex)
 	{
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public CGPanel createAddPanel(int editIndex)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		LootTable t;
+		if (editIndex == -1)
+		{
+			t = new LootTable();
+			t.setCustomName(JOptionPane.showInputDialog(new Text("objects.name")));
+			if (t.customName() == null) return null;
+			ObjectSaver.lootTables.addObject(t);
+		} else t = ObjectSaver.lootTables.find(this.list.getSelectedValue());
+		CommandGenerator.stateManager.clear();
+		return new PanelLootTable(t);
 	}
 
 	@Override
 	public Component getDisplayComponent(int index)
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public String[] getValues()
 	{
-		// TODO Auto-generated method stub
-		return new String[0];
+		LootTable[] t = ObjectSaver.lootTables.list();
+		String[] names = new String[t.length];
+		for (int i = 0; i < names.length; ++i)
+			names[i] = t[i].customName();
+		return names;
 	}
 
 	@Override
 	public void removeObject(int index)
 	{
-		// TODO Auto-generated method stub
+		@SuppressWarnings("unchecked")
+		State<PanelLootTable> s = CommandGenerator.stateManager.getState();
+		if (s != null && s.panel.lootTable.customName().equals(ObjectSaver.lootTables.find(this.list.getSelectedValue()).customName())) CommandGenerator.stateManager
+				.clear();
+		ObjectSaver.lootTables.removeObject(index);
+	}
 
+	@Override
+	public void setEnabled(boolean enabled)
+	{
+		super.setEnabled(enabled);
+		this.buttonGenerate.setEnabled(enabled);
+		this.buttonLoad.setEnabled(enabled);
+		this.list.setEnabled(enabled);
 	}
 
 }

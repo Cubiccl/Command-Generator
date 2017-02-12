@@ -23,53 +23,64 @@ public class StateManager
 		}
 	}
 
-	private Stack<State> states;
+	private Stack<State> statesCommand, statesTable;
 
 	public StateManager()
 	{
-		this.states = new Stack<State>();
+		this.statesCommand = new Stack<State>();
+		this.statesTable = new Stack<State>();
 	}
 
 	public void clear()
 	{
-		this.states.clear();
+		this.currentManager().clear();
+		this.updatePanel();
 	}
 
 	@SuppressWarnings("unchecked")
 	public <T extends CGPanel> T clearState(boolean shouldCheck)
 	{
-		if (this.states.isEmpty()) return null;
-		if (shouldCheck && this.states.peek().stateListener != null && !this.states.peek().stateListener.shouldStateClose(this.states.peek().panel)) return null;
-		T panel = (T) this.states.pop().panel;
+		if (this.currentManager().isEmpty()) return null;
+		if (shouldCheck && this.currentManager().peek().stateListener != null
+				&& !this.currentManager().peek().stateListener.shouldStateClose(this.currentManager().peek().panel)) return null;
+		T panel = (T) this.currentManager().pop().panel;
 		this.updatePanel();
 		return panel;
 	}
 
+	private Stack<State> currentManager()
+	{
+		return CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS ? this.statesCommand : this.statesTable;
+	}
+
 	public State getState()
 	{
-		if (this.states.isEmpty()) return null;
-		return this.states.peek();
+		if (this.currentManager().isEmpty()) return null;
+		return this.currentManager().peek();
 	}
 
 	public <T extends CGPanel> void setState(T panel, IStateListener<T> stateListener)
 	{
-		this.states.add(new State<T>(panel, stateListener));
+		this.currentManager().add(new State<T>(panel, stateListener));
 		this.updatePanel();
 	}
 
 	public int stateCount()
 	{
-		return this.states.size();
+		return this.currentManager().size();
+	}
+
+	public void updateMode()
+	{
+		this.updatePanel();
 	}
 
 	private void updatePanel()
 	{
 		State state = this.getState();
-		if (state != null)
-		{
-			state.panel.updateTranslations();
-			if (this.states.size() == 1 || state.isConfirmIncluded) CommandGenerator.window.setMainPanel(state.panel);
-			else CommandGenerator.window.setMainPanel(new ConfirmPanel(state.panel.getStateName(), state.panel, true));
-		}
+		CGPanel p = state == null ? null : state.panel;
+		if (p != null) p.updateTranslations();
+		if (this.currentManager().size() <= 1 || (state != null && state.isConfirmIncluded)) CommandGenerator.window.setMainPanel(p);
+		else CommandGenerator.window.setMainPanel(new ConfirmPanel(state.panel.getStateName(), p, true));
 	}
 }

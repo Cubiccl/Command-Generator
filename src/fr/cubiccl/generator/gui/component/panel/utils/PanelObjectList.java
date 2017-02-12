@@ -6,6 +6,7 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
@@ -15,6 +16,8 @@ import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.IStateListener;
+import fr.cubiccl.generator.utils.Replacement;
+import fr.cubiccl.generator.utils.Text;
 
 public class PanelObjectList extends CGPanel implements ActionListener, ListSelectionListener, IStateListener<CGPanel>
 {
@@ -22,9 +25,9 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 
 	protected CGButton buttonAdd, buttonEdit, buttonRemove;
 	private Component componentDisplay;
-	private int editing = -1;
+	protected int editing = -1;
 	protected CGList list;
-	private IObjectList objectList;
+	protected IObjectList objectList;
 
 	public PanelObjectList(IObjectList objectList)
 	{
@@ -71,12 +74,17 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		if (e.getSource() == this.buttonAdd)
 		{
 			this.editing = -1;
-			CommandGenerator.stateManager.setState(this.objectList.createAddPanel(this.editing), this);
+			CGPanel p = this.objectList.createAddPanel(this.editing);
+			if (p == null) return;
+			CommandGenerator.stateManager.setState(p, this);
 		} else if (e.getSource() == this.buttonEdit)
 		{
 			this.editing = this.selectedIndex();
-			CommandGenerator.stateManager.setState(this.objectList.createAddPanel(this.editing), this);
+			CGPanel p = this.objectList.createAddPanel(this.editing);
+			if (p == null) return;
+			CommandGenerator.stateManager.setState(p, this);
 		} else if (e.getSource() == this.buttonRemove) this.removeSelected();
+		this.updateList();
 	}
 
 	public IObjectList getObjectList()
@@ -84,11 +92,18 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		return this.objectList;
 	}
 
-	private void removeSelected()
+	public String getSelectedValue()
+	{
+		return this.list.getSelectedValue();
+	}
+
+	protected void removeSelected()
 	{
 		int index = this.selectedIndex();
 		if (index != -1)
 		{
+			if (JOptionPane.showConfirmDialog(CommandGenerator.window,
+					new Text("general.delete.confirm", new Replacement("<object>", this.getSelectedValue())), null, JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
 			this.objectList.removeObject(index);
 			this.updateList();
 		}
@@ -97,6 +112,19 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 	public int selectedIndex()
 	{
 		return this.list.getSelectedIndex();
+	}
+
+	@Override
+	public void setEnabled(boolean enabled)
+	{
+		super.setEnabled(enabled);
+		this.buttonAdd.setEnabled(enabled);
+		if (enabled) this.updateDisplay();
+		else
+		{
+			this.buttonEdit.setEnabled(false);
+			this.buttonRemove.setEnabled(false);
+		}
 	}
 
 	public void setList(IObjectList objectList)
@@ -123,7 +151,7 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		else
 		{
 			this.componentDisplay = this.objectList.getDisplayComponent(index);
-			this.add(this.componentDisplay, this.gbc);
+			if (this.componentDisplay != null) this.add(this.componentDisplay, this.gbc);
 		}
 		this.revalidate();
 	}

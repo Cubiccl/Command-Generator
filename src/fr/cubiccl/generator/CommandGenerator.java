@@ -171,11 +171,12 @@ public class CommandGenerator
 		return selected;
 	}
 
-	public static void setCurrentMode(byte currentMode)
+	public static void setCurrentMode(byte mode)
 	{
-		CommandGenerator.currentMode = currentMode;
-		log("Switching to " + (CommandGenerator.currentMode == COMMANDS ? "Commands" : "Loot Tables") + " mode.");
+		currentMode = mode;
+		log("Switching to " + (currentMode == COMMANDS ? "Commands" : "Loot Tables") + " mode.");
 		window.updateMode();
+		stateManager.updateMode();
 	}
 
 	public static void setExecuteInput(String input)
