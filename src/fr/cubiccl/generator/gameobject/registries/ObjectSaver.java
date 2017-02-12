@@ -119,7 +119,7 @@ public class ObjectSaver<T extends GameObject> implements IObjectList
 					break;
 
 				case LOOT_TABLES:
-					lootTables.addObject(LootTable.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					lootTables.addObject(LootTable.createFrom((TagCompound) NBTReader.read(line, true, false, true)));
 					break;
 
 				default:

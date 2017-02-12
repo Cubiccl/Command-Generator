@@ -349,10 +349,13 @@ locate.Stronghold=Stronghold
 locate.Temple=Jungle Temple
 locate.Village=Village
 
+loottable.conditions.description=Each of these conditions needs to be verified for this pool to be used.
 loottable.edit=Edit Loot Table
 loottable.list=Loot Tables
 loottable.load=Read existing Table
 loottable.output=Output :
+loottable.pool=Pool <index>
+loottable.pool.tostring=<items> Entries, <conditions> conditions, <rolls> rolls.
 loottable.pools=Pools
 loottable.pools.description=Each of these pools will generate Items if their conditions are met.
 

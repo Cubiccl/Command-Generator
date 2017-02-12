@@ -1,0 +1,11 @@
+loottable.bonus
+loottable.bonus.exact
+loottable.bonus.max
+loottable.bonus.range
+loottable.conditions
+loottable.entries
+loottable.entries.description
+loottable.rolls
+loottable.rolls.exact
+loottable.rolls.max
+loottable.rolls.range

@@ -17,4 +17,6 @@ Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
 Switching to Loot Tables mode.
+Generating !
+Successfully generated : {pools:[{rolls:5,bonus_rolls:{min:0.0f,max:1.2000000476837158f},conditions:[],entries:[]}]}
 Exiting Command Generator... Bye bye !

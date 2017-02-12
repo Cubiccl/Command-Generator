@@ -3,6 +3,7 @@ package fr.cubiccl.generator.gameobject.loottable;
 import java.awt.Component;
 import java.util.ArrayList;
 
+import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
@@ -10,7 +11,12 @@ import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.loottable.PanelPool;
+import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Replacement;
+import fr.cubiccl.generator.utils.Text;
 
 public class LootTable extends GameObject implements IObjectList
 {
@@ -45,22 +51,35 @@ public class LootTable extends GameObject implements IObjectList
 	@Override
 	public boolean addObject(CGPanel panel, int editIndex)
 	{
-		// TODO Auto-generated method stub
-		return false;
+		try
+		{
+			LootTablePool p = ((PanelPool) panel).generatePool();
+			if (editIndex == -1) this.pools.add(p);
+			else this.pools.set(editIndex, p);
+			return true;
+		} catch (CommandGenerationException e)
+		{
+			CommandGenerator.report(e);
+			return false;
+		}
 	}
 
 	@Override
 	public CGPanel createAddPanel(int editIndex)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		PanelPool p = new PanelPool();
+		if (editIndex != -1)
+		{
+			p.setupFrom(this.pools.get(editIndex));
+			p.setName(new Text("loottable.pool", new Replacement("<index>", Integer.toString(editIndex))));
+		} else p.setName(new Text("loottable.pool", new Replacement("<index>", Integer.toString(this.pools.size() + 1))));
+		return p;
 	}
 
 	@Override
 	public Component getDisplayComponent(int index)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new CGLabel(new Text(this.pools.get(index).toString(), false));
 	}
 
 	@Override
@@ -68,7 +87,7 @@ public class LootTable extends GameObject implements IObjectList
 	{
 		String[] names = new String[this.pools.size()];
 		for (int i = 0; i < names.length; ++i)
-			names[i] = this.pools.get(i).toString();
+			names[i] = new Text("loottable.pool", new Replacement("<index>", Integer.toString(i))).toString();
 		return names;
 	}
 

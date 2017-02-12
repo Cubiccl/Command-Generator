@@ -5,6 +5,8 @@ import java.util.ArrayList;
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.utils.Replacement;
+import fr.cubiccl.generator.utils.Text;
 
 public class LootTablePool
 {
@@ -53,17 +55,17 @@ public class LootTablePool
 				entries.toArray(new LootTableEntry[entries.size()]));
 	}
 
-	public final float bonusRollsMin, bonusRollsMax;
-	protected final LootTableCondition[] conditions;
-	protected final LootTableEntry[] entries;
+	public final double bonusRollsMin, bonusRollsMax;
+	public final LootTableCondition[] conditions;
+	public final LootTableEntry[] entries;
 	public final int rollsMin, rollsMax;
 
-	public LootTablePool(LootTableCondition[] conditions, int rolls, float bonusRolls, LootTableEntry[] entries)
+	public LootTablePool(LootTableCondition[] conditions, int rolls, double bonusRolls, LootTableEntry[] entries)
 	{
 		this(conditions, rolls, -1, bonusRolls, -1, entries);
 	}
 
-	public LootTablePool(LootTableCondition[] conditions, int rollsMin, int rollsMax, float bonusRollsMin, float bonusRollsMax, LootTableEntry[] entries)
+	public LootTablePool(LootTableCondition[] conditions, int rollsMin, int rollsMax, double bonusRollsMin, double bonusRollsMax, LootTableEntry[] entries)
 	{
 		this.conditions = conditions;
 		this.rollsMin = rollsMin;
@@ -76,8 +78,10 @@ public class LootTablePool
 	@Override
 	public String toString()
 	{
-		// TODO Auto-generated method stub
-		return super.toString();
+		String rolls = Integer.toString(this.rollsMin);
+		if (this.rollsMax != -1) rolls = this.rollsMin + "-" + this.rollsMax;
+		return new Text("loottable.pool.tostring", new Replacement("<items>", Integer.toString(this.entries.length)), new Replacement("<conditions>",
+				Integer.toString(this.conditions.length)), new Replacement("<rolls>", rolls)).toString();
 	}
 
 	public TagCompound toTag(TemplateCompound container)
@@ -85,11 +89,11 @@ public class LootTablePool
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
 		if (this.rollsMax == -1) tags.add(new TagNumber(Tags.LOOTTABLE_ROLLS, this.rollsMin));
-		else tags.add(new TagCompound(Tags.LOOTTABLE_BONUS_ROLLS_RANGE, new TagNumber(Tags.LOOTTABLE_ROLLS_MIN, this.rollsMin), new TagNumber(
+		else tags.add(new TagCompound(Tags.LOOTTABLE_ROLLS_RANGE, new TagNumber(Tags.LOOTTABLE_ROLLS_MIN, this.rollsMin), new TagNumber(
 				Tags.LOOTTABLE_ROLLS_MAX, this.rollsMax)));
 
 		if (this.bonusRollsMax == -1) tags.add(new TagBigNumber(Tags.LOOTTABLE_BONUS_ROLLS, this.bonusRollsMin));
-		else tags.add(new TagCompound(Tags.LOOTTABLE_ROLLS_RANGE, new TagBigNumber(Tags.LOOTTABLE_BONUS_ROLLS_MIN, this.bonusRollsMin), new TagBigNumber(
+		else tags.add(new TagCompound(Tags.LOOTTABLE_BONUS_ROLLS_RANGE, new TagBigNumber(Tags.LOOTTABLE_BONUS_ROLLS_MIN, this.bonusRollsMin), new TagBigNumber(
 				Tags.LOOTTABLE_BONUS_ROLLS_MAX, this.bonusRollsMax)));
 
 		Tag[] con = new Tag[this.conditions.length];
