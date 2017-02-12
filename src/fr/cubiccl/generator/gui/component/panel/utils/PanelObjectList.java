@@ -38,6 +38,7 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 
 		GridBagConstraints gbc = this.createGridBagLayout();
 		gbc.gridx = 1;
+		gbc.gridy = 1;
 		gbc.gridheight = 3;
 		this.add((this.list = new CGList()).scrollPane, gbc);
 
@@ -93,7 +94,7 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		}
 	}
 
-	private int selectedIndex()
+	public int selectedIndex()
 	{
 		return this.list.getSelectedIndex();
 	}
@@ -129,6 +130,7 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 
 	public void updateList()
 	{
+		if (this.objectList == null) return;
 		int index = this.selectedIndex();
 		this.list.setValues(this.objectList.getValues());
 		this.list.setSelectedIndex(index);

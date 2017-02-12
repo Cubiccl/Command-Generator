@@ -48,7 +48,7 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonGenerate) CommandGenerator.generate();
+		if (e.getSource() == this.buttonGenerate) CommandGenerator.generateCommand();
 		if (e.getSource() == this.buttonLoadCommand) CommandGenerator.loadCommand();
 		if (e.getSource() == this.buttonCancelExecute) CommandGenerator.cancelExecute();
 		if (e.getSource() == this.comboboxCommands) CommandGenerator.setSelected(Commands.getCommandFromID(this.comboboxCommands.getValue()));

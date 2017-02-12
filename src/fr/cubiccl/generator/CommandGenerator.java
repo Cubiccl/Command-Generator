@@ -17,6 +17,8 @@ import fr.cubiccl.generator.utils.*;
 public class CommandGenerator
 {
 	private static ArrayList<String> commandHistory = new ArrayList<String>();
+	public static final byte COMMANDS = 0, LOOT_TABLES = 1;
+	private static byte currentMode = COMMANDS;
 	private static String executeCommand = "", executeInput = null;
 	private static ArrayList<String> log = new ArrayList<String>();
 	private static Command selected;
@@ -57,7 +59,7 @@ public class CommandGenerator
 		log("Log, settings and custom objects save successful.");
 	}
 
-	public static void generate()
+	public static void generateCommand()
 	{
 		log("Generating !");
 		try
@@ -67,7 +69,7 @@ public class CommandGenerator
 				if (executeCommand.equals("")) executeCommand += command;
 				else executeCommand += command;
 
-				window.showCommand(executeCommand);
+				window.showOutput(executeCommand);
 
 				if (command.startsWith("execute "))
 				{
@@ -96,6 +98,17 @@ public class CommandGenerator
 		}
 	}
 
+	public static void generateTable()
+	{
+		log("Generating !");
+		// TODO generate Table
+	}
+
+	public static byte getCurrentMode()
+	{
+		return currentMode;
+	}
+
 	public static void loadCommand()
 	{
 		Command command;
@@ -118,6 +131,12 @@ public class CommandGenerator
 				report(e);
 			}
 		} while (!done);
+	}
+
+	public static void loadTable()
+	{
+		// TODO load Table
+
 	}
 
 	public static void log(String text)
@@ -150,6 +169,13 @@ public class CommandGenerator
 	public static Command selectedCommand()
 	{
 		return selected;
+	}
+
+	public static void setCurrentMode(byte currentMode)
+	{
+		CommandGenerator.currentMode = currentMode;
+		log("Switching to " + (CommandGenerator.currentMode == COMMANDS ? "Commands" : "Loot Tables") + " mode.");
+		window.updateMode();
 	}
 
 	public static void setExecuteInput(String input)

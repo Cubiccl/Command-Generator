@@ -7,6 +7,7 @@ BUGS FIXED
 CHANGED TRANSLATIONS
 
 ADDED TRANSLATIONS
+menu.command, menu.loot_table
 
 ------------------------- VERSION 2.2.2 -------------------------
 ADDITIONS

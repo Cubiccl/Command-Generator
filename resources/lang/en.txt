@@ -348,7 +348,14 @@ locate.Stronghold=Stronghold
 locate.Temple=Jungle Temple
 locate.Village=Village
 
+loottable.edit=Edit Loot Table
+loottable.list=Loot Tables
+loottable.load=Read existing Table
+loottable.output=Output :
+
+menu.command=Command Generator
 menu.exit=Exit
+menu.loot_table=Loot Tables Generator
 menu.objects=Custom Objects
 menu.settings=Settings
 

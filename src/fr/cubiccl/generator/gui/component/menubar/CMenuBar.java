@@ -17,19 +17,21 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 {
 	private static final long serialVersionUID = 2644541217645898670L;
 
-	private CMenuItem objects, history, settings, exit;
+	private CMenuItem objects, history, mode, settings, exit;
 	private boolean objectsEnabled = true;
 
 	public CMenuBar()
 	{
 		this.add(this.objects = new CMenuItem());
 		this.add(this.history = new CMenuItem());
+		this.add(this.mode = new CMenuItem());
 		this.add(this.settings = new CMenuItem());
 		this.add(Box.createHorizontalGlue());
 		this.add(this.exit = new CMenuItem());
 
 		this.objects.addActionListener(this);
 		this.history.addActionListener(this);
+		this.mode.addActionListener(this);
 		this.settings.addActionListener(this);
 		this.exit.addActionListener(this);
 
@@ -50,6 +52,12 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 			this.toggleMenu(false);
 			CommandGenerator.stateManager.setState(new PanelCommandHistory(), null);
 		}
+		if (e.getSource() == this.mode)
+		{
+			CommandGenerator.setCurrentMode(CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS ? CommandGenerator.LOOT_TABLES
+					: CommandGenerator.COMMANDS);
+			this.mode.setText(Lang.translate(CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS ? "menu.loot_table" : "menu.command"));
+		}
 		if (e.getSource() == this.settings)
 		{
 			this.toggleMenu(false);
@@ -64,6 +72,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		if (enabled) this.objects.setEnabled(this.objectsEnabled);
 		else this.objects.setEnabled(false);
 		this.history.setEnabled(enabled);
+		this.mode.setEnabled(enabled);
 		this.settings.setEnabled(enabled);
 	}
 
@@ -78,6 +87,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 	{
 		this.objects.setText(Lang.translate("menu.objects"));
 		this.history.setText(Lang.translate("command.history"));
+		this.mode.setText(Lang.translate(CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS ? "menu.loot_table" : "menu.command"));
 		this.settings.setText(Lang.translate("menu.settings"));
 		this.exit.setText(Lang.translate("menu.exit"));
 	}
