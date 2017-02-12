@@ -77,7 +77,7 @@ public class PanelLootTableSelection extends CGPanel implements IObjectList, Act
 			t.setCustomName(JOptionPane.showInputDialog(new Text("objects.name")));
 			if (t.customName() == null) return null;
 			ObjectSaver.lootTables.addObject(t);
-		} else t = ObjectSaver.lootTables.find(this.list.getSelectedValue());
+		} else t = this.selectedLootTable();
 		CommandGenerator.stateManager.clear();
 		return new PanelLootTable(t);
 	}
@@ -103,9 +103,13 @@ public class PanelLootTableSelection extends CGPanel implements IObjectList, Act
 	{
 		@SuppressWarnings("unchecked")
 		State<PanelLootTable> s = CommandGenerator.stateManager.getState();
-		if (s != null && s.panel.lootTable.customName().equals(ObjectSaver.lootTables.find(this.list.getSelectedValue()).customName())) CommandGenerator.stateManager
-				.clear();
+		if (s != null && s.panel.lootTable.customName().equals(this.selectedLootTable().customName())) CommandGenerator.stateManager.clear();
 		ObjectSaver.lootTables.removeObject(index);
+	}
+
+	public LootTable selectedLootTable()
+	{
+		return ObjectSaver.lootTables.find(this.list.getSelectedValue());
 	}
 
 	@Override

@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
+import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.LoadingFrame;
@@ -101,7 +102,13 @@ public class CommandGenerator
 	public static void generateTable()
 	{
 		log("Generating !");
-		// TODO generate Table
+		LootTable t = window.panelLootTableSelection.selectedLootTable();
+		if (t != null)
+		{
+			String output = t.toCommand();
+			window.showOutput(output);
+			log("Successfully generated : " + output);
+		}
 	}
 
 	public static byte getCurrentMode()
@@ -136,7 +143,6 @@ public class CommandGenerator
 	public static void loadTable()
 	{
 		// TODO load Table
-
 	}
 
 	public static void log(String text)

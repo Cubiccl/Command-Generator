@@ -11,6 +11,7 @@ import java.awt.event.ComponentListener;
 
 import fr.cubi.cubigui.CTextArea;
 import fr.cubi.cubigui.RoundedCornerBorder;
+import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -24,6 +25,7 @@ public class PanelLootTableOutput extends CGPanel implements ActionListener
 	public final CTextArea areaOutput;
 	private CGButton buttonCopy;
 	private CGCheckBox checkboxEdit;
+	private CScrollPane scrollpane;
 
 	public PanelLootTableOutput()
 	{
@@ -36,10 +38,11 @@ public class PanelLootTableOutput extends CGPanel implements ActionListener
 		++gbc.gridx;
 		gbc.gridy = 0;
 		gbc.gridheight = 3;
-		this.add(this.areaOutput = new CTextArea(""), gbc);
+		this.add(this.scrollpane = new CScrollPane(this.areaOutput = new CTextArea("")), gbc);
 
-		this.areaOutput.setPreferredSize(new Dimension(180, 180));
+		this.areaOutput.setLineWrap(true);
 		this.areaOutput.setBorder(new RoundedCornerBorder(true));
+		this.scrollpane.setPreferredSize(new Dimension(180, 180));
 		this.checkboxEdit.addActionListener(this);
 		this.buttonCopy.addActionListener(this);
 		this.addComponentListener(new ComponentListener()
@@ -56,7 +59,7 @@ public class PanelLootTableOutput extends CGPanel implements ActionListener
 			@Override
 			public void componentResized(ComponentEvent e)
 			{
-				areaOutput.setPreferredSize(new Dimension(getWidth() - Math.max(buttonCopy.getWidth() + 20, checkboxEdit.getWidth() + 20) - 10, HEIGHT - 20));
+				scrollpane.setPreferredSize(new Dimension(getWidth() - Math.max(buttonCopy.getWidth() + 20, checkboxEdit.getWidth() + 20) - 10, HEIGHT - 20));
 				revalidate();
 			}
 

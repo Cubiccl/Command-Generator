@@ -33,7 +33,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	private PanelCommandSelection panelCommandSelection;
 	private CGPanel panelGui;
 	private PanelLootTableOutput panelLootTableOutput;
-	private PanelLootTableSelection panelLootTableSelection;
+	public PanelLootTableSelection panelLootTableSelection;
 	private JScrollPane scrollpane;
 
 	public Window()

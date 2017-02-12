@@ -353,6 +353,8 @@ loottable.edit=Edit Loot Table
 loottable.list=Loot Tables
 loottable.load=Read existing Table
 loottable.output=Output :
+loottable.pools=Pools
+loottable.pools.description=Each of these pools will generate Items if their conditions are met.
 
 menu.command=Command Generator
 menu.exit=Exit

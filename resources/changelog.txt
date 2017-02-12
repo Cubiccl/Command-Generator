@@ -1,5 +1,6 @@
 ------------------------- VERSION 2.3 -------------------------
 ADDITIONS
+- Added a Loot Table Generator mode !
 - Added a warning before you delete an object from a list.
 
 BUGS FIXED
@@ -9,6 +10,7 @@ CHANGED TRANSLATIONS
 
 ADDED TRANSLATIONS
 general.delete.confirm
+loottable.edit, loottable.list, loottable.load, loottable.output, loottable.pools, loottable.pools.description
 menu.command, menu.loot_table
 
 ------------------------- VERSION 2.2.2 -------------------------

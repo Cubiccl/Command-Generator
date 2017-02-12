@@ -26,3 +26,4 @@
 [COMMANDS]
 
 [LOOT_TABLES]
+{pools:[],ObjectName:"Test table"}

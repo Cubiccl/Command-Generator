@@ -73,6 +73,13 @@ public class LootTablePool
 		this.entries = entries;
 	}
 
+	@Override
+	public String toString()
+	{
+		// TODO Auto-generated method stub
+		return super.toString();
+	}
+
 	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
