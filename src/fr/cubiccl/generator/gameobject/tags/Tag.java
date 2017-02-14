@@ -7,8 +7,8 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 public abstract class Tag extends GameObject
 {
 	public static final byte BLOCK = 0, ITEM = 1, ENTITY = 2, UNAVAILABLE = 3, UNKNOWN = 4;
-	public static final byte STRING = 0, BYTE = 1, SHORT = 2, INT = 3, LONG = 4, FLOAT = 5, DOUBLE = 6, LIST = 7, COMPOUND = 8;
-	
+	public static final byte STRING = 0, BYTE = 1, SHORT = 2, INT = 3, LONG = 4, FLOAT = 5, DOUBLE = 6, LIST = 7, COMPOUND = 8, BOOLEAN = 9;
+
 	protected boolean isJson;
 	public final TemplateTag template;
 

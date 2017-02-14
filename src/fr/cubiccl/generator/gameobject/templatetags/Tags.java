@@ -39,6 +39,7 @@ public final class Tags
 	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", UNAVAILABLE, TagNumber.DOUBLE);
 	public static final TemplateNumber COORD_Z_INT = new TemplateNumber("Z", UNAVAILABLE, TagNumber.INTEGER);
 
+	public static final TemplateBoolean DEFAULT_BOOLEAN = new TemplateBoolean("", UNAVAILABLE);
 	public static final TemplateNumber DEFAULT_BYTE = new TemplateNumber("", UNAVAILABLE, TagNumber.BYTE);
 	public static final TemplateCompound DEFAULT_COMPOUND = new DefaultCompound("");
 	public static final TemplateNumber DEFAULT_DOUBLE = new TemplateNumber("", UNAVAILABLE, TagNumber.DOUBLE);
@@ -113,6 +114,16 @@ public final class Tags
 	public static final TemplateNumber LOOTTABLE_ROLLS_MAX = new TemplateNumber("max", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateNumber LOOTTABLE_ROLLS_MIN = new TemplateNumber("min", UNAVAILABLE, TagNumber.INTEGER);
 	public static final DefaultCompound LOOTTABLE_ROLLS_RANGE = new DefaultCompound("rolls");
+
+	public static final TemplateNumber LT_CONDITION_CHANCE = new TemplateNumber("chance", UNAVAILABLE, TagNumber.FLOAT);
+	public static final TemplateString LT_CONDITION_ENTITY = new TemplateString("entity", UNAVAILABLE);
+	public static final TemplateBoolean LT_CONDITION_ENTITY_ONFIRE = new TemplateBoolean("on_fire", UNAVAILABLE);
+	public static final TemplateBoolean LT_CONDITION_KILLED = new TemplateBoolean("inverse", UNAVAILABLE);
+	public static final TemplateNumber LT_CONDITION_LOOTING = new TemplateNumber("looting_multiplier", UNAVAILABLE, TagNumber.FLOAT);
+	public static final DefaultCompound LT_CONDITION_PROPERTIES = new DefaultCompound("properties");
+	public static final DefaultCompound LT_CONDITION_SCORES = new DefaultCompound("scores");
+	public static final TemplateNumber LT_CONDITION_SCORES_MAX = new TemplateNumber("max", UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateNumber LT_CONDITION_SCORES_MIN = new TemplateNumber("min", UNAVAILABLE, TagNumber.INTEGER);
 
 	public static final TemplateString OBJECT_NAME = new TemplateString("ObjectName", UNAVAILABLE);
 

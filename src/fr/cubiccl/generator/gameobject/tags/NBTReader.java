@@ -12,6 +12,7 @@ public class NBTReader
 
 	private static byte determineType(String value)
 	{
+		if (value.equals("true") || value.equals("false")) return Tag.BOOLEAN;
 		if (value.startsWith("\"") && value.endsWith("\"")) return Tag.STRING;
 		if (value.startsWith("{") && value.endsWith("}")) return Tag.COMPOUND;
 		if (value.startsWith("[") && value.endsWith("]")) return Tag.LIST;
@@ -120,6 +121,8 @@ public class NBTReader
 				return Tags.DEFAULT_FLOAT.readTag(tag, isJson);
 			case Tag.DOUBLE:
 				return Tags.DEFAULT_DOUBLE.readTag(tag, isJson);
+			case Tag.BOOLEAN:
+				return Tags.DEFAULT_BOOLEAN.readTag(tag, isJson);
 			default:
 				return Tags.DEFAULT_STRING.readTag(tag, isJson);
 		}

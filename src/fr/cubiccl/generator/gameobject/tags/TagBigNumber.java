@@ -25,7 +25,7 @@ public class TagBigNumber extends Tag
 	{
 		if (((TemplateNumber) this.template).tagType == Tag.LONG) return Utils.doubleToString(this.value())
 				+ TagNumber.SUFFIX[((TemplateNumber) this.template).tagType];
-		return Double.toString(this.value()) + TagNumber.SUFFIX[((TemplateNumber) this.template).tagType];
+		return Utils.doubleToString(this.value()) + TagNumber.SUFFIX[((TemplateNumber) this.template).tagType];
 
 	}
 }

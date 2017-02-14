@@ -1,6 +1,7 @@
 // This file saves Custom Game Objects.
 
 [ATTRIBUTE MODIFIERS]
+{Name:"Test modifier",Operation:0,Amount:0d,UUIDMost:5670856426819278800l,UUIDLeast:-5037813183890887700l,ObjectName:"Test"}
 
 [ATTRIBUTES]
 
@@ -26,4 +27,4 @@
 [COMMANDS]
 
 [LOOT_TABLES]
-{pools:[{rolls:5,bonus_rolls:{min:0.0f,max:1.2000000476837158f},conditions:[],entries:[]}],ObjectName:"Test table"}
+{pools:[{rolls:5,bonus_rolls:{min:0f,max:1.2f},conditions:[{condition:"entity_properties",entity:"this",properties:{on_fire:false}},{condition:"killed_by_player",inverse:true},{condition:"random_chance",chance:1.5f},{condition:"random_chance_with_looting",chance:4.5f,looting_multiplier:666f}],entries:[]}],ObjectName:"Test table"}

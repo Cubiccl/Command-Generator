@@ -7,6 +7,7 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.utils.Text;
 
 public class LootTableCondition
 {
@@ -32,6 +33,11 @@ public class LootTableCondition
 		{
 			this.name = name;
 		}
+
+		public Text translate()
+		{
+			return new Text("lt_condition." + this.name);
+		}
 	}
 
 	public static LootTableCondition createFrom(TagCompound tag)
@@ -50,12 +56,21 @@ public class LootTableCondition
 	}
 
 	public final Condition condition;
-	protected final Tag[] tags;
+	public final Tag[] tags;
 
 	public LootTableCondition(Condition condition, Tag[] tags)
 	{
 		this.condition = condition;
 		this.tags = tags;
+	}
+
+	@Override
+	public String toString()
+	{
+		String display = this.condition.translate().toString();
+		for (Tag tag : this.tags)
+			display += ",\n" + tag.toCommand();
+		return display;
 	}
 
 	public TagCompound toTag(TemplateCompound container)

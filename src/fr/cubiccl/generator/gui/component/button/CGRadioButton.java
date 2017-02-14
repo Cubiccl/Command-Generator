@@ -21,6 +21,12 @@ public class CGRadioButton extends CRadioButton implements ITranslated
 		this.text = text;
 	}
 
+	public void setText(Text text)
+	{
+		this.text = text;
+		this.updateTranslations();
+	}
+
 	@Override
 	public void updateTranslations()
 	{

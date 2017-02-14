@@ -154,6 +154,7 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 			if (this.componentDisplay != null) this.add(this.componentDisplay, this.gbc);
 		}
 		this.revalidate();
+		this.repaint();
 	}
 
 	public void updateList()
