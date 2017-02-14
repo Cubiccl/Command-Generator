@@ -69,7 +69,7 @@ public class LootTableCondition
 	{
 		String display = this.condition.translate().toString();
 		for (Tag tag : this.tags)
-			display += ",\n" + tag.toCommand();
+			display += ",\n" + tag.toCommand(-1);
 		return display;
 	}
 

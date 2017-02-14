@@ -25,7 +25,7 @@ public class TagNumber extends Tag
 	}
 
 	@Override
-	public String valueForCommand()
+	public String valueForCommand(int indent)
 	{
 		return Integer.toString(this.value()) + SUFFIX[((TemplateNumber) this.template).tagType];
 	}

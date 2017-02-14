@@ -22,6 +22,7 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 {
 	private static final long serialVersionUID = 761491984316094420L;
 
+	private CGRadioButton buttonIndentYes, buttonIndentNo;
 	private CGRadioButton buttonSlashYes, buttonSlashNo;
 	private CGRadioButton buttonSortID, buttonSortName;
 	private CGComboBox comboboxLanguage;
@@ -56,6 +57,16 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 		p.add(this.buttonSortName = new CGRadioButton("settings.sort.name"));
 		panelSort.add(p, gbc);
 
+		CGPanel panelIndent = new CGPanel("settings.indent.title");
+		gbc = panelIndent.createGridBagLayout();
+		panelIndent.add(new CGLabel("settings.indent.description"), gbc);
+		++gbc.gridy;
+
+		p = new JPanel(new GridLayout(1, 2));
+		p.add(this.buttonIndentYes = new CGRadioButton("general.yes"));
+		p.add(this.buttonIndentNo = new CGRadioButton("general.no"));
+		panelIndent.add(p, gbc);
+
 		CGPanel panelLang = new CGPanel("settings.lang");
 		panelLang.add(this.comboboxLanguage = new CGComboBox(langs));
 
@@ -65,6 +76,8 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 		++gbc.gridy;
 		panelMain.add(panelSort, gbc);
 		++gbc.gridy;
+		panelMain.add(panelIndent, gbc);
+		++gbc.gridy;
 		panelMain.add(panelLang, gbc);
 		this.setMainComponent(panelMain);
 
@@ -72,14 +85,20 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 		group.add(this.buttonSlashYes);
 		group.add(this.buttonSlashNo);
 		this.buttonSlashYes.setSelected(Boolean.parseBoolean(Settings.getSetting(Settings.SLASH)));
-		this.buttonSlashNo.setSelected(!this.buttonSlashYes.isSelected());
+		this.buttonSlashNo.setSelected(!Boolean.parseBoolean(Settings.getSetting(Settings.SLASH)));
 
 		group = new ButtonGroup();
 		group.add(this.buttonSortID);
 		group.add(this.buttonSortName);
 		this.buttonSortID.setSelected(Byte.parseByte(Settings.getSetting(Settings.SORT_TYPE)) == ObjectRegistry.SORT_ALPHABETICALLY);
-		this.buttonSortName.setSelected(!this.buttonSortID.isSelected());
-		
+		this.buttonSortName.setSelected(Byte.parseByte(Settings.getSetting(Settings.SORT_TYPE)) == ObjectRegistry.SORT_NUMERICALLY);
+
+		group = new ButtonGroup();
+		group.add(this.buttonIndentYes);
+		group.add(this.buttonIndentNo);
+		this.buttonIndentYes.setSelected(Boolean.parseBoolean(Settings.getSetting(Settings.INDENTATION)));
+		this.buttonIndentNo.setSelected(!Boolean.parseBoolean(Settings.getSetting(Settings.INDENTATION)));
+
 		this.comboboxLanguage.setSelectedItem(Settings.language().name);
 	}
 
@@ -93,6 +112,7 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 	@Override
 	public boolean shouldStateClose(PanelSettings panel)
 	{
+		Settings.setSetting(Settings.INDENTATION, Boolean.toString(this.buttonIndentYes.isSelected()));
 		Settings.setSetting(Settings.SLASH, Boolean.toString(this.buttonSlashYes.isSelected()));
 		Settings.setSetting(Settings.SORT_TYPE, Byte.toString(this.buttonSortID.isSelected() ? ObjectRegistry.SORT_ALPHABETICALLY : ObjectRegistry.SORT_NAME));
 		Settings.setSetting(Settings.LANG, this.languages[this.comboboxLanguage.getSelectedIndex()].codeName);

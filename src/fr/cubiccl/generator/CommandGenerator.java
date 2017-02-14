@@ -105,7 +105,7 @@ public class CommandGenerator
 		LootTable t = window.panelLootTableSelection.selectedLootTable();
 		if (t != null)
 		{
-			String output = t.toCommand();
+			String output = t.display();
 			window.showOutput(output);
 			log("Successfully generated : " + output);
 		}

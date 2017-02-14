@@ -2,6 +2,7 @@
 ADDITIONS
 - Added a Loot Table Generator mode !
 - Added a warning before you delete an object from a list.
+- Json format can now be displayed with beautiful indentation. You can disable this in the Settings.
 
 BUGS FIXED
 - Fixed crash when reading number Tags in list Tags

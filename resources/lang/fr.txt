@@ -425,13 +425,6 @@ rotation.z=Rotation Z
 
 say.message=Message à afficher
 
-setblock.block=Bloc à placer
-setblock.block_data=Données NBT
-setblock.coordinates=Coordonnées du Bloc
-setblock.mode.destroy=Détruire le Bloc précédent
-setblock.mode.keep=Garder l'ancien Bloc si ce n'est pas de l'Air
-setblock.mode.replace=Remplacer l'ancien Bloc
-
 score.add.display=Nom d'affichage (facultatif)
 score.add.slot=Affichage
 score.criteria=Critère
@@ -507,6 +500,13 @@ scoreboard.team.option.friendlyfire=Dégâts entre amis
 scoreboard.team.option.nametagVisibility=Noms des Joueurs
 scoreboard.team.option.seeFriendlyInvisibles=Amis invisibles
 scoreboard.test.max=Valeur maximum
+
+setblock.block=Bloc à placer
+setblock.block_data=Données NBT
+setblock.coordinates=Coordonnées du Bloc
+setblock.mode.destroy=Détruire le Bloc précédent
+setblock.mode.keep=Garder l'ancien Bloc si ce n'est pas de l'Air
+setblock.mode.replace=Remplacer l'ancien Bloc
 
 settings.lang=Langue
 settings.save=Sauvegarder

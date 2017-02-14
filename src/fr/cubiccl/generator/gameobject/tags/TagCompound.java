@@ -69,14 +69,32 @@ public class TagCompound extends TagList
 	}
 
 	@Override
-	public String valueForCommand()
+	public String valueForCommand(int indent)
 	{
 		String value = "{";
+
+		if (indent > 0)
+		{
+			value = "\n";
+			for (int i = 0; i < indent; ++i)
+				value += INDENT;
+			value += "{";
+		}
+
 		for (int i = 0; i < this.tags.length; ++i)
 		{
 			if (i != 0) value += ",";
-			value += this.tags[i].toCommand();
+			if (indent != -1) value += "\n";
+			value += this.tags[i].toCommand(indent == -1 ? -1 : indent + 1);
 		}
+
+		if (indent != -1 && this.tags.length != 0)
+		{
+			value += "\n";
+			for (int i = 0; i < indent; ++i)
+				value += INDENT;
+		}
+
 		return value + "}";
 	}
 

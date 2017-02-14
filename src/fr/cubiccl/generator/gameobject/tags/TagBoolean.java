@@ -19,7 +19,7 @@ public class TagBoolean extends Tag
 	}
 
 	@Override
-	public String valueForCommand()
+	public String valueForCommand(int indent)
 	{
 		return Boolean.toString(this.value);
 	}

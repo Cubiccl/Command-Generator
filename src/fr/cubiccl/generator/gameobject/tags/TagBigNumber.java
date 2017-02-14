@@ -21,7 +21,7 @@ public class TagBigNumber extends Tag
 	}
 
 	@Override
-	public String valueForCommand()
+	public String valueForCommand(int indent)
 	{
 		if (((TemplateNumber) this.template).tagType == Tag.LONG) return Utils.doubleToString(this.value())
 				+ TagNumber.SUFFIX[((TemplateNumber) this.template).tagType];

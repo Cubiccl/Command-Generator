@@ -19,7 +19,7 @@ public class TagString extends Tag
 	}
 
 	@Override
-	public String valueForCommand()
+	public String valueForCommand(int indent)
 	{
 		return "\"" + this.value().replace("\\", "\\\\").replace("\"", "\\\"") + "\"";
 	}

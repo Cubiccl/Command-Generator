@@ -1,3 +1,4 @@
+indentation=true
 slash=true
 2.0-pre=null
 sort=0

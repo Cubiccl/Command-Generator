@@ -76,6 +76,11 @@ public class LootTable extends GameObject implements IObjectList
 		return p;
 	}
 
+	public String display()
+	{
+		return this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand(0);
+	}
+
 	@Override
 	public Component getDisplayComponent(int index)
 	{
@@ -115,8 +120,12 @@ public class LootTable extends GameObject implements IObjectList
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (LootTablePool pool : this.pools)
 			tags.add(pool.toTag(Tags.DEFAULT_COMPOUND));
-		if (includeName) return new TagCompound(container, new TagList(Tags.LOOTTABLE_POOLS, tags.toArray(new Tag[tags.size()])), this.nameTag());
-		return new TagCompound(container, new TagList(Tags.LOOTTABLE_POOLS, tags.toArray(new Tag[tags.size()])));
+
+		TagCompound t;
+		if (includeName) t = new TagCompound(container, new TagList(Tags.LOOTTABLE_POOLS, tags.toArray(new Tag[tags.size()])), this.nameTag());
+		else t = new TagCompound(container, new TagList(Tags.LOOTTABLE_POOLS, tags.toArray(new Tag[tags.size()])));
+		t.setJson(true);
+		return t;
 	}
 
 }
