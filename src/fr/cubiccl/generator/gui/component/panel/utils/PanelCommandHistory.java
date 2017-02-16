@@ -9,7 +9,6 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
 import javax.swing.Box;
-import javax.swing.JOptionPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.ListSelectionEvent;
@@ -20,6 +19,7 @@ import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.GeneratedCommand;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.button.CGButton;
@@ -142,7 +142,7 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 	private void save(int index)
 	{
 		GeneratedCommand c = new GeneratedCommand(this.history[this.listCommandHistory.getSelectedIndex()]);
-		c.setCustomName(JOptionPane.showInputDialog(new Text("objects.name")));
+		c.setCustomName(Dialogs.showInputDialog(new Text("objects.name").toString()));
 		if (c.customName() == null) return;
 		ObjectSaver.commands.addObject(c);
 		this.updateListSaved();

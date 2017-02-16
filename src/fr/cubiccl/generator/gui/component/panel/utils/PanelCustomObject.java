@@ -4,11 +4,11 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
@@ -48,7 +48,7 @@ public class PanelCustomObject<T extends GameObject, Y extends IObjectList<Y>> e
 		if (e.getSource() == this.buttonSave) try
 		{
 			T object = this.parent.generate();
-			object.setCustomName(JOptionPane.showInputDialog(new Text("objects.name")));
+			object.setCustomName(Dialogs.showInputDialog("objects.name"));
 			if (object.customName() == null) return;
 			this.saver.addObject(object);
 		} catch (CommandGenerationException e1)

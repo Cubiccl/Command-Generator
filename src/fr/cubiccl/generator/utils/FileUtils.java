@@ -9,9 +9,9 @@ import java.nio.channels.ReadableByteChannel;
 import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
-import javax.swing.JOptionPane;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gui.Dialogs;
 
 public class FileUtils
 {
@@ -28,8 +28,7 @@ public class FileUtils
 		}
 		if (Settings.GENERATOR_VERSION.equals(readFileAsArray("version.txt")[0])) return;
 
-		if (JOptionPane.showConfirmDialog(null, "A new update for the Command Generator has been found ! Would you like to update?", "Update available!",
-				JOptionPane.YES_NO_OPTION) != 0) return;
+		if (!Dialogs.showConfirmMessage("A new update for the Command Generator has been found ! Would you like to update?")) return;
 		File f = new File("updater.jar");
 		if (!f.exists()) CommandGenerator.log("Couldn't update because there is no updater... WTF");
 		else try

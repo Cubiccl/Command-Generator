@@ -80,7 +80,7 @@ command.generate=Générer !
 command.history=Historique des commandes
 command.label=Commande générée
 command.load=Charger une commande
-command.load.details=Entrez une Commande que le Générateur va charger.
+command.load.details=Entrez une Commande que le Générateur va charger
 command.output=Commande
 command.select=Choisissez une commande
 

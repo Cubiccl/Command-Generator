@@ -3,7 +3,6 @@ package fr.cubiccl.generator.gameobject.templatetags.custom;
 import java.awt.GridBagConstraints;
 import java.util.concurrent.ThreadLocalRandom;
 
-import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
@@ -11,11 +10,13 @@ import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelRadio;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Text;
 
 public class TemplateLeash extends TemplateCompound
@@ -49,7 +50,7 @@ public class TemplateLeash extends TemplateCompound
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelRadio p = new PanelRadio(new Text("leash.choose"), "leash", "fence", "entity");
-		DisplayUtils.showPopup(CommandGenerator.window, "", p.component);
+		Dialogs.showConfirmDialog(p.component, Lang.translate("general.confirm"), null);
 
 		if (p.getSelected() == 0) return new PanelCoordinates("leash.coordinates", false);
 		return new LeashEntityPanel();

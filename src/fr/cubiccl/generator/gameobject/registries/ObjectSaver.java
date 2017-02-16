@@ -5,17 +5,15 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-
 import fr.cubiccl.generator.gameobject.*;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.panel.utils.ListListener;
-import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.FileUtils;
+import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Text;
 
 public class ObjectSaver<T extends GameObject> implements ListListener<T>
@@ -203,13 +201,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 	@Override
 	public void onAddition(int index, T object)
 	{
-		String[] options =
-		{ "OK" };
-		JPanel panel = new JPanel();
-		CGEntry txt = new CGEntry("objects.name");
-		panel.add(txt.container);
-		JOptionPane.showOptionDialog(null, panel, "", JOptionPane.NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, options, options[0]);
-		object.setCustomName(txt.getText());
+		object.setCustomName(Dialogs.showInputDialog(new Text("objects.name").toString(), Lang.translate("general.confirm"), null));
 		this.addObject(object);
 	}
 

@@ -3,14 +3,12 @@ package fr.cubiccl.generator;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import javax.swing.JOptionPane;
-
-import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.gui.Window;
 import fr.cubiccl.generator.utils.*;
@@ -74,7 +72,7 @@ public class CommandGenerator
 
 				if (command.startsWith("execute "))
 				{
-					DisplayUtils.showMessage(window, Lang.translate("general.success"), Lang.translate("general.success_execute"));
+					Dialogs.showMessage(Lang.translate("general.success_execute"));
 					if (executeInput != null)
 					{
 						String input = executeInput;
@@ -123,10 +121,10 @@ public class CommandGenerator
 		boolean done = false;
 		do
 		{
-			input = JOptionPane.showInputDialog(window, new Text("command.load.details"), input == null ? "" : input);
+			input = Dialogs.showInputDialog(new Text("command.load.details").toString(), input == null ? "" : input);
 			if (input == null) return;
 			command = Commands.identifyCommand(input);
-			if (command == null) JOptionPane.showMessageDialog(window, new Text("error.command.identify"), "", JOptionPane.ERROR_MESSAGE);
+			if (command == null) Dialogs.showMessage(new Text("error.command.identify").toString());
 			else
 
 			try
@@ -168,7 +166,7 @@ public class CommandGenerator
 
 	public static void report(CommandGenerationException e)
 	{
-		DisplayUtils.showMessage(window, Lang.translate("error.title"), e.getMessage());
+		Dialogs.showMessage(e.getMessage());
 		log("Error : " + e.getMessage());
 	}
 

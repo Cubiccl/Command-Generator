@@ -8,19 +8,16 @@ import java.awt.event.ActionListener;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.IStateListener;
-import fr.cubiccl.generator.utils.Replacement;
-import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.*;
 
 public class PanelObjectList<T extends IObjectList<T>> extends CGPanel implements ActionListener, ListSelectionListener, IStateListener<CGPanel>
 {
@@ -157,8 +154,8 @@ public class PanelObjectList<T extends IObjectList<T>> extends CGPanel implement
 		int index = this.selectedIndex();
 		if (index != -1)
 		{
-			if (JOptionPane.showConfirmDialog(CommandGenerator.window,
-					new Text("general.delete.confirm", new Replacement("<object>", this.getSelectedValue())), null, JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
+			if (!Dialogs.showConfirmMessage(new Text("general.delete.confirm", new Replacement("<object>", this.getSelectedValue())).toString(),
+					Lang.translate("general.yes"), Lang.translate("general.no"))) return;
 			this.delete(index);
 			this.updateList();
 		}

@@ -3,8 +3,6 @@ package fr.cubiccl.generator.gameobject.loottable;
 import java.awt.Component;
 import java.util.ArrayList;
 
-import javax.swing.JOptionPane;
-
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
@@ -12,6 +10,7 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelLootTable;
@@ -59,8 +58,9 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 	{
 		if ((boolean) properties.get("new"))
 		{
-			this.setCustomName(JOptionPane.showInputDialog(new Text("objects.name")));
-			if (this.customName() == null) return null;
+			String name = Dialogs.showInputDialog(new Text("objects.name").toString());
+			if (name != null) this.setCustomName(name);
+			else return null;
 			CommandGenerator.window.panelLootTableSelection.list.add(this);
 		}
 		CommandGenerator.stateManager.clear();

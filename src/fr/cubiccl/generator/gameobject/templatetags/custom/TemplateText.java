@@ -1,6 +1,5 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
-import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.JsonMessage;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
@@ -10,11 +9,13 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelJsonMessage;
 import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelRadio;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Text;
 
 public class TemplateText extends TemplateString
@@ -29,7 +30,7 @@ public class TemplateText extends TemplateString
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelRadio p = new PanelRadio(new Text("text.choose"), "text", "string", "json");
-		DisplayUtils.showPopup(CommandGenerator.window, "", p.component);
+		Dialogs.showConfirmDialog(p.component, Lang.translate("general.confirm"), null);
 
 		if (p.getSelected() == 0) return super.createPanel(object, previousValue);
 
