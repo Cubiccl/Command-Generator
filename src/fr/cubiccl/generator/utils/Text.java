@@ -1,15 +1,27 @@
 package fr.cubiccl.generator.utils;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
-public class Text
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+
+public class Text implements IObjectList<Text>
 {
 	public static final Text INTEGER = new Text("general.integer"), NUMBER = new Text("general.number"), OBJECTIVE = new Text("score.name"), VALUE = new Text(
 			"score.value");
 
-	public final boolean doTranslate;
-	public final String id;
+	public boolean doTranslate;
+	public String id;
 	private ArrayList<Replacement> replacements;
+
+	public Text()
+	{
+		this("", false);
+	}
 
 	public Text(String id, boolean doTranslate, Replacement... replacements)
 	{
@@ -28,6 +40,53 @@ public class Text
 	public void addReplacement(Replacement replacement)
 	{
 		this.replacements.add(replacement);
+	}
+
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		EntryPanel p = new EntryPanel("display.lore");
+		p.entry.setText(this.id);
+		return p;
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		Text t;
+		if (this.toString().length() <= 40) t = this;
+		else t = new Text(this.toString().substring(0, 37) + "...", false);
+		return new CGLabel(t);
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		return this.toString().length() > 20 ? this.toString().substring(0, 17) + "..." : this.toString();
+	}
+
+	public boolean hasReplacement(String pattern)
+	{
+		for (Replacement replacement : this.replacements)
+			if (replacement.pattern.equals(pattern)) return true;
+		return false;
+	}
+
+	public void removeReplacements(String pattern)
+	{
+		ArrayList<Replacement> r = new ArrayList<Replacement>();
+		for (Replacement replacement : this.replacements)
+			if (replacement.pattern.equals(pattern)) r.add(replacement);
+
+		for (Replacement replacement : r)
+			this.replacements.remove(replacement);
+	}
+
+	@Override
+	public Text setupFrom(CGPanel panel) throws CommandGenerationException
+	{
+		this.id = ((EntryPanel) panel).entry.getText();
+		return this;
 	}
 
 	@Override

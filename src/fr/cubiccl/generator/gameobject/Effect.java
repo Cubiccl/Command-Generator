@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
+import java.awt.Component;
+
 import fr.cubiccl.generator.gameobject.baseobjects.EffectType;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
@@ -7,8 +9,16 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.ImageLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEffect;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
-public class Effect extends GameObject
+public class Effect extends GameObject implements IObjectList<Effect>
 {
 
 	public static Effect createFrom(TagCompound tag)
@@ -29,11 +39,16 @@ public class Effect extends GameObject
 	}
 
 	/** Level of Effect (0 = Level 1) */
-	public final int amplifier;
+	public int amplifier;
 	/** Duration in seconds */
-	public final int duration;
-	public final boolean hideParticles;
-	public final EffectType type;
+	public int duration;
+	public boolean hideParticles;
+	public EffectType type;
+
+	public Effect()
+	{
+		this(ObjectRegistry.effects.find("speed"), 0, 0, false);
+	}
 
 	public Effect(EffectType type, int duration, int amplifier, boolean hideParticles)
 	{
@@ -41,6 +56,35 @@ public class Effect extends GameObject
 		this.duration = duration;
 		this.amplifier = amplifier;
 		this.hideParticles = hideParticles;
+	}
+
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		PanelEffect e = new PanelEffect(properties.hasCustomObjects());
+		e.setupFrom(this);
+		return e;
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		CGPanel p = new CGPanel();
+		p.add(new CGLabel(new Text(this.toString())));
+		p.add(new ImageLabel(this.type.texture()));
+		return p;
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.type.name().toString() + " " + this.amplifier;
+	}
+
+	@Override
+	public Effect setupFrom(CGPanel panel) throws CommandGenerationException
+	{
+		return ((PanelEffect) panel).generate();
 	}
 
 	@Override

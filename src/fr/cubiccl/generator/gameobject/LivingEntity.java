@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
@@ -9,8 +10,15 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.ImageLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEntity;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+import fr.cubiccl.generator.utils.CommandGenerationException;
 
-public class LivingEntity extends GameObject
+public class LivingEntity extends GameObject implements IObjectList<LivingEntity>
 {
 	public static LivingEntity createFrom(TagCompound tag)
 	{
@@ -31,10 +39,45 @@ public class LivingEntity extends GameObject
 	public final Entity entity;
 	public final TagCompound nbt;
 
+	public LivingEntity()
+	{
+		this(ObjectRegistry.entities.find("area_effect_cloud"), new TagCompound(Tags.DEFAULT_COMPOUND));
+	}
+
 	public LivingEntity(Entity entity, TagCompound nbt)
 	{
 		this.entity = entity;
 		this.nbt = nbt;
+	}
+
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		PanelEntity p = new PanelEntity(null, true, properties.hasCustomObjects(), false);
+		p.setEntity(this.entity);
+		p.setTags(this.nbt.value());
+		return p;
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		CGPanel p = new CGPanel();
+		p.add(new CGLabel(this.entity.name()));
+		p.add(new ImageLabel(this.entity.texture()));
+		return p;
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.entity.name().toString();
+	}
+
+	@Override
+	public LivingEntity setupFrom(CGPanel panel) throws CommandGenerationException
+	{
+		return ((PanelEntity) panel).generate();
 	}
 
 	@Override

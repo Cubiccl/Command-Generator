@@ -73,7 +73,7 @@ public class TagCompound extends TagList
 	{
 		String value = "{";
 
-		if (indent > 0)
+		if (indent > 0 && this.tags.length != 0)
 		{
 			value = "\n";
 			for (int i = 0; i < indent; ++i)

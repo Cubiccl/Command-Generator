@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject.target;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.GameObject;
@@ -7,8 +8,15 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
-public class Target extends GameObject
+public class Target extends GameObject implements IObjectList<Target>
 {
 
 	public static enum TargetType
@@ -70,9 +78,14 @@ public class Target extends GameObject
 		return names;
 	}
 
-	public final Argument[] arguments;
-	public final String playerName;
-	public final TargetType type;
+	public Argument[] arguments;
+	public String playerName;
+	public TargetType type;
+
+	public Target()
+	{
+		this(TargetType.ALL_PLAYERS);
+	}
 
 	public Target(String playerName)
 	{
@@ -86,6 +99,33 @@ public class Target extends GameObject
 		this.type = type;
 		this.playerName = null;
 		this.arguments = arguments;
+	}
+
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		PanelTarget p = new PanelTarget(null, PanelTarget.ALL_ENTITIES);
+		p.setupFrom(this);
+		p.setName(new Text("target.title.any"));
+		return p;
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		return new CGLabel(new Text(this.toString(), false));
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		return this.customName() == null || this.customName().equals("") ? this.toString() : this.customName();
+	}
+
+	@Override
+	public Target setupFrom(CGPanel panel) throws CommandGenerationException
+	{
+		return ((PanelTarget) panel).generate();
 	}
 
 	public String toCommand()

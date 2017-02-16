@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
@@ -10,8 +11,15 @@ import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.ImageLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+import fr.cubiccl.generator.utils.CommandGenerationException;
 
-public class ItemStack extends GameObject
+public class ItemStack extends GameObject implements IObjectList<ItemStack>
 {
 
 	public static ItemStack createFrom(TagCompound tag)
@@ -40,6 +48,11 @@ public class ItemStack extends GameObject
 	public final TagCompound nbt;
 	public int slot;
 
+	public ItemStack()
+	{
+		this(ObjectRegistry.items.find("stone"), 0, 1);
+	}
+
 	public ItemStack(Item item, int data, int amount)
 	{
 		this(item, data, amount, new TagCompound(Tags.ITEM_NBT));
@@ -61,6 +74,35 @@ public class ItemStack extends GameObject
 		ItemStack is = new ItemStack(item, damage, amount, nbt);
 		is.slot = this.slot;
 		return is;
+	}
+
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		PanelItem p = new PanelItem(null, true, true, properties.hasCustomObjects());
+		p.setupFrom(this);
+		return p;
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		CGPanel p = new CGPanel();
+		p.add(new CGLabel(this.item.name(this.damage)));
+		p.add(new ImageLabel(this.item.texture(this.damage)));
+		return p;
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.item.name(this.damage).toString();
+	}
+
+	@Override
+	public ItemStack setupFrom(CGPanel panel) throws CommandGenerationException
+	{
+		return ((PanelItem) panel).generate();
 	}
 
 	@Override

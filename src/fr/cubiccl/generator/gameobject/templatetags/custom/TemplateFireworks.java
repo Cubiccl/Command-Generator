@@ -1,10 +1,9 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
-import java.awt.Component;
 import java.awt.GridBagConstraints;
-import java.util.ArrayList;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.Explosion;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
@@ -12,10 +11,7 @@ import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
-import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
-import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.tag.ExplosionPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -23,78 +19,31 @@ import fr.cubiccl.generator.utils.Text;
 
 public class TemplateFireworks extends TemplateCompound
 {
-	private class ExplosionList implements IObjectList
-	{
-		private ArrayList<TagCompound> explosions = new ArrayList<TagCompound>();
-
-		@Override
-		public boolean addObject(CGPanel panel, int editIndex)
-		{
-			if (editIndex == -1) this.explosions.add(((ExplosionPanel) panel).generateExplosion(Tags.DEFAULT_COMPOUND));
-			else this.explosions.set(editIndex, ((ExplosionPanel) panel).generateExplosion(Tags.DEFAULT_COMPOUND));
-			return true;
-		}
-
-		@Override
-		public CGPanel createAddPanel(int editIndex)
-		{
-			ExplosionPanel p = new ExplosionPanel();
-			if (editIndex != -1) p.setupFrom(this.explosions.get(editIndex));
-			return p;
-		}
-
-		@Override
-		public Component getDisplayComponent(int index)
-		{
-			return new CGLabel(new Text("Explosion " + index, false));
-		}
-
-		@Override
-		public String[] getValues()
-		{
-			String[] values = new String[this.explosions.size()];
-			for (int i = 0; i < values.length; i++)
-				values[i] = "Explosion " + i;
-			return values;
-		}
-
-		@Override
-		public void removeObject(int index)
-		{
-			this.explosions.remove(index);
-		}
-
-		public void setValues(Tag[] value)
-		{
-			for (Tag t : value)
-				if (t instanceof TagCompound) this.explosions.add((TagCompound) t);
-		}
-
-	}
-
 	private class FireworksPanel extends CGPanel
 	{
 		private static final long serialVersionUID = -2739754221060564022L;
 
 		private CGEntry entryFlight;
-		private ExplosionList explosions;
-		private PanelObjectList panelExplosions;
+		private PanelObjectList<Explosion> panelExplosions;
 
 		public FireworksPanel()
 		{
-			this.explosions = new ExplosionList();
 			GridBagConstraints gbc = this.createGridBagLayout();
 			this.add((this.entryFlight = new CGEntry(new Text("firework.flight"), "1", Text.INTEGER)).container, gbc);
 			++gbc.gridy;
-			this.add(this.panelExplosions = new PanelObjectList(this.explosions), gbc);
+			this.add(this.panelExplosions = new PanelObjectList<Explosion>(null, (String) null, Explosion.class), gbc);
 
 			this.entryFlight.addIntFilter();
 		}
 
 		public TagCompound generateFireworks(TemplateCompound container) throws CommandGenerationException
 		{
+			Explosion[] explosions = this.panelExplosions.values();
+			TagCompound[] tags = new TagCompound[explosions.length];
+			for (int i = 0; i < tags.length; ++i)
+				tags[i] = explosions[i].toTag(Tags.DEFAULT_COMPOUND);
 			return new TagCompound(container, new TagNumber(Tags.FIREWORK_FLIGHT, Integer.parseInt(this.entryFlight.getText())), new TagList(
-					Tags.FIREWORK_EXPLOSIONS, this.explosions.explosions.toArray(new TagCompound[this.explosions.explosions.size()])));
+					Tags.FIREWORK_EXPLOSIONS, tags));
 		}
 
 		public void setupFrom(TagCompound previousValue)
@@ -102,9 +51,15 @@ public class TemplateFireworks extends TemplateCompound
 			for (Tag t : previousValue.value())
 			{
 				if (t.id().equals(Tags.FIREWORK_FLIGHT.id())) this.entryFlight.setText(Integer.toString(((TagNumber) t).value()));
-				if (t.id().equals(Tags.FIREWORK_EXPLOSIONS.id())) this.explosions.setValues(((TagList) t).value());
+				if (t.id().equals(Tags.FIREWORK_EXPLOSIONS.id()))
+				{
+					Tag[] tags = ((TagList) t).value();
+					Explosion[] explosions = new Explosion[tags.length];
+					for (int i = 0; i < tags.length; ++i)
+						explosions[i] = Explosion.createFrom((TagCompound) tags[i]);
+					this.panelExplosions.setValues(explosions);
+				}
 			}
-			this.panelExplosions.updateList();
 		}
 
 	}

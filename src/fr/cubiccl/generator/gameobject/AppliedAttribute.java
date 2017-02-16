@@ -1,7 +1,6 @@
 package fr.cubiccl.generator.gameobject;
 
 import java.awt.Component;
-import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
@@ -9,65 +8,13 @@ import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
-import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.gameobject.PanelAttributeModifier;
-import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelAttribute;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+import fr.cubiccl.generator.utils.CommandGenerationException;
 
-public class AppliedAttribute extends GameObject
+public class AppliedAttribute extends GameObject implements IObjectList<AppliedAttribute>
 {
-	public static class AttributeModifierList implements IObjectList
-	{
-
-		public boolean isApplied = false;
-		public ArrayList<AttributeModifier> modifiers = new ArrayList<AttributeModifier>();
-
-		public AttributeModifierList(boolean isApplied)
-		{
-			this.isApplied = isApplied;
-		}
-
-		@Override
-		public boolean addObject(CGPanel panel, int editIndex)
-		{
-			AttributeModifier m = ((PanelAttributeModifier) panel).generate();
-			if (m == null) return false;
-			if (editIndex == -1) this.modifiers.add(m);
-			else this.modifiers.set(editIndex, m);
-			return true;
-		}
-
-		@Override
-		public CGPanel createAddPanel(int editIndex)
-		{
-			PanelAttributeModifier p = new PanelAttributeModifier(this.isApplied);
-			if (editIndex != -1) p.setupFrom(this.modifiers.get(editIndex));
-			return p;
-		}
-
-		@Override
-		public Component getDisplayComponent(int index)
-		{
-			return new CGLabel(new Text(this.modifiers.get(index).name, false));
-		}
-
-		@Override
-		public String[] getValues()
-		{
-			String[] values = new String[this.modifiers.size()];
-			for (int i = 0; i < values.length; i++)
-				values[i] = this.modifiers.get(i).name;
-			return values;
-		}
-
-		@Override
-		public void removeObject(int index)
-		{
-			this.modifiers.remove(index);
-		}
-
-	}
-
 	public static AppliedAttribute createFrom(TagCompound tag)
 	{
 		Attribute a = ObjectRegistry.attributes.first();
@@ -93,14 +40,47 @@ public class AppliedAttribute extends GameObject
 	}
 
 	public Attribute attribute;
+
 	public double base;
+
 	public AttributeModifier[] modifiers;
+
+	public AppliedAttribute()
+	{
+		this(ObjectRegistry.attributes.find("generic.armor"), 0);
+	}
 
 	public AppliedAttribute(Attribute attribute, double base, AttributeModifier... modifiers)
 	{
 		this.attribute = attribute;
 		this.base = base;
 		this.modifiers = modifiers;
+	}
+
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		PanelAttribute p = new PanelAttribute(properties.hasCustomObjects());
+		p.setupFrom(this);
+		return p;
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		return null;
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.attribute.name().toString();
+	}
+
+	@Override
+	public AppliedAttribute setupFrom(CGPanel panel) throws CommandGenerationException
+	{
+		return ((PanelAttribute) panel).generate();
 	}
 
 	@Override

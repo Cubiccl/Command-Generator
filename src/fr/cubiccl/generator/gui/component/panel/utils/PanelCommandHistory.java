@@ -135,7 +135,7 @@ public class PanelCommandHistory extends ConfirmPanel implements ListSelectionLi
 
 	private void forget(int index)
 	{
-		ObjectSaver.commands.removeObject(index);
+		ObjectSaver.commands.delete(this.saved[index]);
 		this.updateListSaved();
 	}
 

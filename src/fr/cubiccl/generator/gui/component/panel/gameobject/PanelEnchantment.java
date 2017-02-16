@@ -46,7 +46,7 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 
 		++gbc.gridy;
 		gbc.fill = GridBagConstraints.NONE;
-		if (customObjects) this.add(new PanelCustomObject<Enchantment>(this, ObjectSaver.enchantments), gbc);
+		if (customObjects) this.add(new PanelCustomObject<Enchantment, Enchantment>(this, ObjectSaver.enchantments), gbc);
 
 		this.entryLevel.addIntFilter();
 

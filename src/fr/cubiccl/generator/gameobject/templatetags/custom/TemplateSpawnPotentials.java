@@ -1,9 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
 import java.awt.Component;
-import java.util.ArrayList;
 
-import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.LivingEntity;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
@@ -17,13 +15,14 @@ import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.tag.SpawnPotentialPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
 public class TemplateSpawnPotentials extends TemplateList
 {
-	public static class SpawnPotential
+	public static class SpawnPotential implements IObjectList<SpawnPotential>
 	{
 		public static SpawnPotential createFrom(Tag tag)
 		{
@@ -44,10 +43,44 @@ public class TemplateSpawnPotentials extends TemplateList
 		public final LivingEntity entity;
 		public final int weight;
 
+		public SpawnPotential()
+		{
+			this(new LivingEntity(ObjectRegistry.entities.first(), new TagCompound(Tags.DEFAULT_COMPOUND)), 1);
+		}
+
 		public SpawnPotential(LivingEntity entity, int weight)
 		{
 			this.entity = entity;
 			this.weight = weight;
+		}
+
+		@Override
+		public CGPanel createPanel(ListProperties properties)
+		{
+			SpawnPotentialPanel p = new SpawnPotentialPanel();
+			p.setupFrom(this);
+			return p;
+		}
+
+		@Override
+		public Component getDisplayComponent()
+		{
+			CGPanel p = new CGPanel();
+			p.add(new CGLabel(new Text(this.toString(), false)));
+			p.add(new ImageLabel(this.entity.entity.texture()));
+			return p;
+		}
+
+		@Override
+		public String getName(int index)
+		{
+			return this.entity.entity.name().toString();
+		}
+
+		@Override
+		public SpawnPotential setupFrom(CGPanel panel) throws CommandGenerationException
+		{
+			return ((SpawnPotentialPanel) panel).createSpawnPotential();
 		}
 
 		@Override
@@ -65,67 +98,6 @@ public class TemplateSpawnPotentials extends TemplateList
 
 	}
 
-	private class SpawnPotentialList implements IObjectList
-	{
-		private ArrayList<SpawnPotential> spawnPotentials;
-
-		private SpawnPotentialList(SpawnPotential[] potentials)
-		{
-			this.spawnPotentials = new ArrayList<SpawnPotential>();
-			for (SpawnPotential spawnPotential : potentials)
-				this.spawnPotentials.add(spawnPotential);
-		}
-
-		@Override
-		public boolean addObject(CGPanel panel, int editIndex)
-		{
-			try
-			{
-				SpawnPotential s = ((SpawnPotentialPanel) panel).createSpawnPotential();
-				if (editIndex == -1) this.spawnPotentials.add(s);
-				else this.spawnPotentials.set(editIndex, s);
-				return true;
-			} catch (CommandGenerationException e)
-			{
-				CommandGenerator.report(e);
-				return false;
-			}
-		}
-
-		@Override
-		public CGPanel createAddPanel(int editIndex)
-		{
-			SpawnPotentialPanel p = new SpawnPotentialPanel();
-			if (editIndex != -1) p.setupFrom(this.spawnPotentials.get(editIndex));
-			return p;
-		}
-
-		@Override
-		public Component getDisplayComponent(int index)
-		{
-			CGPanel p = new CGPanel();
-			p.add(new CGLabel(new Text(this.spawnPotentials.get(index).toString(), false)));
-			p.add(new ImageLabel(this.spawnPotentials.get(index).entity.entity.texture()));
-			return p;
-		}
-
-		@Override
-		public String[] getValues()
-		{
-			String[] values = new String[this.spawnPotentials.size()];
-			for (int i = 0; i < values.length; i++)
-				values[i] = this.spawnPotentials.get(i).toString();
-			return values;
-		}
-
-		@Override
-		public void removeObject(int index)
-		{
-			this.spawnPotentials.remove(index);
-		}
-
-	}
-
 	public TemplateSpawnPotentials(String id, byte applicationType, String[] applicable)
 	{
 		super(id, applicationType, applicable);
@@ -134,16 +106,13 @@ public class TemplateSpawnPotentials extends TemplateList
 	@Override
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
-		SpawnPotential[] potentials = new SpawnPotential[0];
+		PanelObjectList<SpawnPotential> p = new PanelObjectList<SpawnPotential>(null, (String) null, SpawnPotential.class);
 		if (previousValue != null)
 		{
 			TagList t = ((TagList) previousValue);
-			potentials = new SpawnPotential[t.size()];
-			for (int i = 0; i < potentials.length; ++i)
-				potentials[i] = SpawnPotential.createFrom(t.getTag(i));
+			for (int i = 0; i < t.size(); ++i)
+				p.add(SpawnPotential.createFrom(t.getTag(i)));
 		}
-
-		PanelObjectList p = new PanelObjectList(new SpawnPotentialList(potentials));
 		p.setName(this.title());
 		return p;
 	}
@@ -151,10 +120,11 @@ public class TemplateSpawnPotentials extends TemplateList
 	@Override
 	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
-		ArrayList<SpawnPotential> values = ((SpawnPotentialList) ((PanelObjectList) panel).getObjectList()).spawnPotentials;
-		TagCompound[] tags = new TagCompound[values.size()];
+		@SuppressWarnings("unchecked")
+		SpawnPotential[] values = ((PanelObjectList<SpawnPotential>) panel).values();
+		TagCompound[] tags = new TagCompound[values.length];
 		for (int i = 0; i < tags.length; ++i)
-			tags[i] = values.get(i).toTag(Tags.DEFAULT_COMPOUND);
+			tags[i] = values[i].toTag(Tags.DEFAULT_COMPOUND);
 		return new TagList(this, tags);
 	}
 

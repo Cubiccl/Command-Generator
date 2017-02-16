@@ -1,14 +1,21 @@
 package fr.cubiccl.generator.gameobject.loottable;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.loottable.PanelPool;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
-public class LootTablePool
+public class LootTablePool implements IObjectList<LootTablePool>
 {
 
 	public static LootTablePool createFrom(TagCompound tag)
@@ -55,10 +62,15 @@ public class LootTablePool
 				entries.toArray(new LootTableEntry[entries.size()]));
 	}
 
-	public final double bonusRollsMin, bonusRollsMax;
-	public final LootTableCondition[] conditions;
-	public final LootTableEntry[] entries;
-	public final int rollsMin, rollsMax;
+	public double bonusRollsMin, bonusRollsMax;
+	public LootTableCondition[] conditions;
+	public LootTableEntry[] entries;
+	public int rollsMin, rollsMax;
+
+	public LootTablePool()
+	{
+		this(new LootTableCondition[0], 0, 0, new LootTableEntry[0]);
+	}
 
 	public LootTablePool(LootTableCondition[] conditions, int rolls, double bonusRolls, LootTableEntry[] entries)
 	{
@@ -73,6 +85,32 @@ public class LootTablePool
 		this.bonusRollsMin = bonusRollsMin;
 		this.bonusRollsMax = bonusRollsMax;
 		this.entries = entries;
+	}
+
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		PanelPool p = new PanelPool();
+		p.setupFrom(this);
+		return p;
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		return new CGLabel(new Text(this.toString(), false));
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		return new Text("loottable.pool", new Replacement("<index>", Integer.toString(index + 1))).toString();
+	}
+
+	@Override
+	public LootTablePool setupFrom(CGPanel panel) throws CommandGenerationException
+	{
+		return ((PanelPool) panel).generatePool();
 	}
 
 	@Override

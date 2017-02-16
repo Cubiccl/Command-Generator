@@ -11,13 +11,14 @@ import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.IStateListener;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
-public class PanelCustomObject<T extends GameObject> extends CGPanel implements ActionListener, IStateListener<PanelObjectList>
+public class PanelCustomObject<T extends GameObject, Y extends IObjectList<Y>> extends CGPanel implements ActionListener, IStateListener<PanelObjectList<Y>>
 {
 	private static final long serialVersionUID = -2533903048070707867L;
 
@@ -40,6 +41,7 @@ public class PanelCustomObject<T extends GameObject> extends CGPanel implements 
 		this.updateTranslations();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -57,14 +59,17 @@ public class PanelCustomObject<T extends GameObject> extends CGPanel implements 
 		}
 		if (e.getSource() == this.buttonLoad)
 		{
-			PanelObjectList p = new PanelObjectList(this.saver);
+			PanelObjectList<Y> p = new PanelObjectList<Y>(null, (Text) null, (Class<Y>) this.saver.c, "customObjects", false);
+			T[] list = this.saver.list();
+			for (T t : list)
+				p.add((Y) t);
 			p.setName(new Text("objects.title", new Replacement("<object>", this.saver.name)));
 			CommandGenerator.stateManager.setState(p, this);
 		}
 	}
 
 	@Override
-	public boolean shouldStateClose(PanelObjectList panel)
+	public boolean shouldStateClose(PanelObjectList<Y> panel)
 	{
 		T object = this.saver.find(panel.list.getValue());
 		if (object == null) return false;

@@ -54,7 +54,7 @@ public class PanelCoordinates extends CGPanel implements ICustomObject<Coordinat
 		++gbc.gridwidth;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.CENTER;
-		if (customObjects) this.add(new PanelCustomObject<Coordinates>(this, ObjectSaver.coordinates), gbc);
+		if (customObjects) this.add(new PanelCustomObject<Coordinates, Coordinates>(this, ObjectSaver.coordinates), gbc);
 
 		this.entryX.addNumberFilter();
 		this.entryY.addNumberFilter();

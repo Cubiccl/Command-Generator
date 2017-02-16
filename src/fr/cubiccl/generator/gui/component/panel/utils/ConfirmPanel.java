@@ -22,7 +22,6 @@ public class ConfirmPanel extends CGPanel implements ActionListener
 
 	protected CGButton buttonOK, buttonCancel;
 	public Component component;
-	private GridBagConstraints gbc;
 
 	public ConfirmPanel()
 	{

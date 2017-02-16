@@ -1,32 +1,28 @@
 package fr.cubiccl.generator.gui.component.panel.loottable;
 
-import java.awt.Component;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.component.button.CGButton;
-import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.ListListener;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
-import fr.cubiccl.generator.utils.StateManager.State;
-import fr.cubiccl.generator.utils.Text;
 
-public class PanelLootTableSelection extends CGPanel implements IObjectList, ActionListener
+public class PanelLootTableSelection extends CGPanel implements ActionListener, ListListener<LootTable>
 {
 	private static final long serialVersionUID = 4213073942144876574L;
 
 	private CGButton buttonGenerate, buttonLoad;
-	private PanelObjectList list;
+	private PanelObjectList<LootTable> list;
 
 	public PanelLootTableSelection()
 	{
@@ -42,7 +38,7 @@ public class PanelLootTableSelection extends CGPanel implements IObjectList, Act
 		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(l, gbc);
 		++gbc.gridy;
-		this.add(this.list = new PanelObjectList(this), gbc);
+		this.add(this.list = new PanelObjectList<LootTable>(null, (String) null, LootTable.class), gbc);
 		++gbc.gridy;
 		gbc.gridwidth = 1;
 		this.add(this.buttonGenerate = new CGButton("command.generate"), gbc);
@@ -52,6 +48,7 @@ public class PanelLootTableSelection extends CGPanel implements IObjectList, Act
 		this.buttonGenerate.setFont(this.buttonGenerate.getFont().deriveFont(Font.BOLD, 20));
 		this.buttonGenerate.addActionListener(this);
 		this.buttonLoad.addActionListener(this);
+		this.list.addListListener(this);
 	}
 
 	@Override
@@ -62,49 +59,19 @@ public class PanelLootTableSelection extends CGPanel implements IObjectList, Act
 	}
 
 	@Override
-	public boolean addObject(CGPanel panel, int editIndex)
+	public void onAddition(int index, LootTable object)
 	{
-		return false;
+		ObjectSaver.lootTables.addObject(object);
 	}
 
 	@Override
-	public CGPanel createAddPanel(int editIndex)
-	{
-		LootTable t;
-		if (editIndex == -1)
-		{
-			t = new LootTable();
-			t.setCustomName(JOptionPane.showInputDialog(new Text("objects.name")));
-			if (t.customName() == null) return null;
-			ObjectSaver.lootTables.addObject(t);
-		} else t = this.selectedLootTable();
-		CommandGenerator.stateManager.clear();
-		return new PanelLootTable(t);
-	}
+	public void onChange(int index, LootTable object)
+	{}
 
 	@Override
-	public Component getDisplayComponent(int index)
+	public void onDeletion(int index, LootTable object)
 	{
-		return null;
-	}
-
-	@Override
-	public String[] getValues()
-	{
-		LootTable[] t = ObjectSaver.lootTables.list();
-		String[] names = new String[t.length];
-		for (int i = 0; i < names.length; ++i)
-			names[i] = t[i].customName();
-		return names;
-	}
-
-	@Override
-	public void removeObject(int index)
-	{
-		@SuppressWarnings("unchecked")
-		State<PanelLootTable> s = CommandGenerator.stateManager.getState();
-		if (s != null && s.panel.lootTable.customName().equals(this.selectedLootTable().customName())) CommandGenerator.stateManager.clear();
-		ObjectSaver.lootTables.removeObject(index);
+		ObjectSaver.lootTables.delete(object);
 	}
 
 	public LootTable selectedLootTable()

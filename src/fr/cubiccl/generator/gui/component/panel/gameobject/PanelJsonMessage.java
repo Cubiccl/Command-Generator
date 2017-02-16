@@ -191,7 +191,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener, ICustom
 		this.add(this.panelHoverEvent = new PanelHoverEvent(), gbc);
 		++gbc.gridy;
 		gbc.fill = GridBagConstraints.NONE;
-		if (customObjects) this.add(new PanelCustomObject<JsonMessage>(this, ObjectSaver.jsonMessages), gbc);
+		if (customObjects) this.add(new PanelCustomObject<JsonMessage, JsonMessage>(this, ObjectSaver.jsonMessages), gbc);
 
 		this.comboboxMode.addActionListener(this);
 		this.checkboxClickEvent.addActionListener(this);

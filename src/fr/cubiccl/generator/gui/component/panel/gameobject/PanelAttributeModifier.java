@@ -75,7 +75,7 @@ public class PanelAttributeModifier extends CGPanel implements ICustomObject<Att
 		this.add(new CGLabel("attribute.modifier.uuid.details"), gbc);
 		++gbc.gridy;
 		gbc.fill = GridBagConstraints.NONE;
-		if (customObjects) this.add(new PanelCustomObject<AttributeModifier>(this, ObjectSaver.attributeModifiers), gbc);
+		if (customObjects) this.add(new PanelCustomObject<AttributeModifier, AttributeModifier>(this, ObjectSaver.attributeModifiers), gbc);
 
 		this.entryAmount.addNumberFilter();
 		this.entryUUIDMost.addNumberFilter();

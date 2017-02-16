@@ -26,7 +26,7 @@ import fr.cubiccl.generator.utils.Text;
 
 public class PanelListJsonMessage extends CGPanel implements ActionListener, IStateListener<PanelJsonMessage>
 {
-	class PanelSingleMessage extends JPanel implements ActionListener, ITranslated
+	public static class PanelSingleMessage extends JPanel implements ActionListener, ITranslated
 	{
 		private static final long serialVersionUID = 349507741634702290L;
 
@@ -43,11 +43,14 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 			this.index = index;
 			this.parent = parent;
 			this.add(this.message.displayInLabel(this.labelMessage = new JLabel()));
-			this.add(this.buttonEdit = new IconButton(new ImageIcon("resources/textures/gui/edit.png")));
-			this.add(this.buttonRemove = new IconButton(new ImageIcon("resources/textures/gui/delete.png")));
+			if (parent != null)
+			{
+				this.add(this.buttonEdit = new IconButton(new ImageIcon("resources/textures/gui/edit.png")));
+				this.add(this.buttonRemove = new IconButton(new ImageIcon("resources/textures/gui/delete.png")));
 
-			this.buttonEdit.addActionListener(this);
-			this.buttonRemove.addActionListener(this);
+				this.buttonEdit.addActionListener(this);
+				this.buttonRemove.addActionListener(this);
+			}
 		}
 
 		@Override

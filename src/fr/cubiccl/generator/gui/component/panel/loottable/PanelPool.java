@@ -6,7 +6,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 
-import fr.cubiccl.generator.gameobject.loottable.*;
+import fr.cubiccl.generator.gameobject.loottable.LootTableCondition;
+import fr.cubiccl.generator.gameobject.loottable.LootTableEntry;
+import fr.cubiccl.generator.gameobject.loottable.LootTablePool;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -20,10 +22,9 @@ public class PanelPool extends CGPanel implements ActionListener
 	private static final long serialVersionUID = 5520482302949227591L;
 
 	private CGRadioButton buttonRollsExact, buttonRollsRange, buttonBonusExact, buttonBonusRange;
-	private ConditionList conditions;
-	private EntryList entries;
 	private CGEntry entryRollsMin, entryRollsMax, entryBonusMin, entryBonusMax;
-	private PanelObjectList listConditions, listEntries;
+	private PanelObjectList<LootTableCondition> listConditions;
+	private PanelObjectList<LootTableEntry> listEntries;
 
 	public PanelPool()
 	{
@@ -57,11 +58,11 @@ public class PanelPool extends CGPanel implements ActionListener
 		gbc.gridwidth = 2;
 		this.add(new CGLabel("loottable.conditions.description"), gbc);
 		++gbc.gridy;
-		this.add(this.listConditions = new PanelObjectList("loottable.conditions", this.conditions = new ConditionList()), gbc);
+		this.add(this.listConditions = new PanelObjectList<LootTableCondition>("loottable.conditions", "loottable.condition", LootTableCondition.class), gbc);
 		++gbc.gridy;
 		this.add(new CGLabel("loottable.entries.description"), gbc);
 		++gbc.gridy;
-		this.add(this.listEntries = new PanelObjectList("loottable.entries", this.entries = new EntryList()), gbc);
+		this.add(this.listEntries = new PanelObjectList<LootTableEntry>("loottable.entries", "loottable.entry", LootTableEntry.class), gbc);
 
 		this.buttonRollsExact.addActionListener(this);
 		this.buttonRollsRange.addActionListener(this);
@@ -107,8 +108,7 @@ public class PanelPool extends CGPanel implements ActionListener
 			bonusRollsMax = Double.parseDouble(this.entryBonusMax.getText());
 		}
 
-		return new LootTablePool(this.conditions.conditions.toArray(new LootTableCondition[this.conditions.conditions.size()]), rollsMin, rollsMax,
-				bonusRollsMin, bonusRollsMax, this.entries.entries.toArray(new LootTableEntry[this.entries.entries.size()]));
+		return new LootTablePool(this.listConditions.values(), rollsMin, rollsMax, bonusRollsMin, bonusRollsMax, this.listEntries.values());
 	}
 
 	public void setupFrom(LootTablePool pool)
@@ -134,16 +134,14 @@ public class PanelPool extends CGPanel implements ActionListener
 		this.entryRollsMin.setText(Integer.toString(pool.rollsMin));
 		this.entryBonusMin.setText(Double.toString(pool.bonusRollsMin));
 
-		this.conditions.conditions.clear();
+		this.listConditions.clear();
 		for (LootTableCondition c : pool.conditions)
-			this.conditions.conditions.add(c);
+			this.listConditions.add(c);
 
-		this.entries.entries.clear();
+		this.listEntries.clear();
 		for (LootTableEntry e : pool.entries)
-			this.entries.entries.add(e);
+			this.listEntries.add(e);
 
-		this.listConditions.updateList();
-		this.listEntries.updateList();
 		this.updateDisplay();
 	}
 

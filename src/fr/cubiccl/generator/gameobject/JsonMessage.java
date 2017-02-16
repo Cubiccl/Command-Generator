@@ -3,6 +3,7 @@ package fr.cubiccl.generator.gameobject;
 import static fr.cubiccl.generator.gameobject.templatetags.Tags.*;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.util.ArrayList;
 
 import javax.swing.JLabel;
@@ -11,9 +12,15 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelJsonMessage;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelListJsonMessage.PanelSingleMessage;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Utils;
 
-public class JsonMessage extends GameObject
+public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 {
 	public static final Color[] LABEL_COLOR =
 	{ Color.WHITE, new Color(85, 255, 255), Color.BLACK, new Color(85, 85, 255), new Color(0, 170, 170), new Color(0, 0, 170), new Color(85, 85, 85),
@@ -93,11 +100,24 @@ public class JsonMessage extends GameObject
 	public String target;
 	public String text;
 
+	public JsonMessage()
+	{
+		this((byte) 0, "", 0);
+	}
+
 	public JsonMessage(byte mode, String text, int color)
 	{
 		this.mode = mode;
 		this.text = text;
 		this.color = color;
+	}
+
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		PanelJsonMessage p = new PanelJsonMessage(true, properties.hasCustomObjects());
+		p.setupFrom(this);
+		return p;
 	}
 
 	public JLabel displayInLabel(JLabel label)
@@ -118,6 +138,18 @@ public class JsonMessage extends GameObject
 		return label;
 	}
 
+	@Override
+	public Component getDisplayComponent()
+	{
+		return new PanelSingleMessage(this, 0, null);
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.text;
+	}
+
 	public void setClick(String clickAction, String clickValue)
 	{
 		this.clickAction = clickAction;
@@ -128,6 +160,12 @@ public class JsonMessage extends GameObject
 	{
 		this.hoverAction = hoverAction;
 		this.hoverValue = hoverValue;
+	}
+
+	@Override
+	public JsonMessage setupFrom(CGPanel panel) throws CommandGenerationException
+	{
+		return ((PanelJsonMessage) panel).generate();
 	}
 
 	@Override

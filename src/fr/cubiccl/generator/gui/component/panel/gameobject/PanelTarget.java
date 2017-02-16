@@ -162,7 +162,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		++gbc.gridy;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.CENTER;
-		if (customObjects) this.add(new PanelCustomObject<Target>(this, ObjectSaver.targets), gbc);
+		if (customObjects) this.add(new PanelCustomObject<Target, Target>(this, ObjectSaver.targets), gbc);
 	}
 
 	@Override

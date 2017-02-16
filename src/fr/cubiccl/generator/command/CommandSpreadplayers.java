@@ -1,63 +1,24 @@
 package fr.cubiccl.generator.command;
 
-import java.awt.Component;
 import java.awt.GridBagConstraints;
-import java.util.ArrayList;
 
-import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
-import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
-import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class CommandSpreadplayers extends Command implements IObjectList
+public class CommandSpreadplayers extends Command
 {
 	private CGCheckBox checkboxTeams, checkboxX, checkboxZ;
 	private CGEntry entryX, entryZ, entryDistance, entryRange;
-	private PanelObjectList list;
-	private ArrayList<Target> targets;
+	private PanelObjectList<Target> list;
 
 	public CommandSpreadplayers()
 	{
 		super("spreadplayers", "spreadplayers <x> <z> <spreadDistance> <maxRange> <respectTeams> <entities ...>", -7);
-		this.targets = new ArrayList<Target>();
-	}
-
-	@Override
-	public boolean addObject(CGPanel panel, int editIndex)
-	{
-		try
-		{
-			Target t = ((PanelTarget) panel).generate();
-			if (editIndex == -1) this.targets.add(t);
-			else this.targets.set(editIndex, t);
-		} catch (CommandGenerationException e)
-		{
-			CommandGenerator.report(e);
-			return false;
-		}
-		return true;
-	}
-
-	private void addTarget(Target t)
-	{
-		this.targets.add(t);
-		this.list.updateList();
-	}
-
-	@Override
-	public CGPanel createAddPanel(int editIndex)
-	{
-		PanelTarget p = new PanelTarget(null, PanelTarget.ALL_ENTITIES);
-		if (editIndex != -1) p.setupFrom(this.targets.get(editIndex));
-		p.setName(new Text("target.title.any"));
-		return p;
 	}
 
 	@Override
@@ -87,7 +48,7 @@ public class CommandSpreadplayers extends Command implements IObjectList
 		++gbc.gridy;
 		panel.add(this.checkboxTeams = new CGCheckBox("spread.teams"), gbc);
 		++gbc.gridy;
-		panel.add(this.list = new PanelObjectList("spread.targets", this), gbc);
+		panel.add(this.list = new PanelObjectList<Target>("spread.targets", (String) null, Target.class), gbc);
 
 		this.entryX.addIntFilter();
 		this.entryZ.addIntFilter();
@@ -100,7 +61,7 @@ public class CommandSpreadplayers extends Command implements IObjectList
 	@Override
 	protected void defaultGui()
 	{
-		this.targets.clear();
+		this.list.clear();
 		this.checkboxX.setSelected(false);
 		this.checkboxZ.setSelected(false);
 	}
@@ -117,26 +78,11 @@ public class CommandSpreadplayers extends Command implements IObjectList
 		String command = this.id + " " + (this.checkboxX.isSelected() ? "~" : "") + x + " " + (this.checkboxZ.isSelected() ? "~" : "") + z + " " + d + " " + r
 				+ " " + this.checkboxTeams.isSelected();
 
-		if (this.targets.size() == 0) throw new CommandGenerationException(new Text("error.spread.no_players"));
-		for (Target target : this.targets)
+		if (this.list.length() == 0) throw new CommandGenerationException(new Text("error.spread.no_players"));
+		for (Target target : this.list.values())
 			command += " " + target.toCommand();
 
 		return command;
-	}
-
-	@Override
-	public Component getDisplayComponent(int index)
-	{
-		return new CGLabel(new Text(this.targets.get(index).toString(), false));
-	}
-
-	@Override
-	public String[] getValues()
-	{
-		String[] t = new String[this.targets.size()];
-		for (int i = 0; i < t.length; ++i)
-			t[i] = this.targets.get(i).toString();
-		return t;
 	}
 
 	@Override
@@ -162,13 +108,7 @@ public class CommandSpreadplayers extends Command implements IObjectList
 		if (index == 6)
 		{
 			for (String s : argument.split(" "))
-				this.addTarget(Target.createFrom(s));
+				this.list.add(Target.createFrom(s));
 		}
-	}
-
-	@Override
-	public void removeObject(int index)
-	{
-		this.targets.remove(index);
 	}
 }

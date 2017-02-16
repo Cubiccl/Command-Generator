@@ -358,6 +358,7 @@ loottable.condition=Condition <index>
 loottable.conditions=Conditions
 loottable.conditions.description=Each of these conditions needs to be verified for this pool to be used.
 loottable.edit=Edit Loot Table
+loottable.entry=Entry <index>
 loottable.entries=Entries
 loottable.entries.description=One of these entries will be chosen randomly at each roll and generate its Items.
 loottable.list=Loot Tables

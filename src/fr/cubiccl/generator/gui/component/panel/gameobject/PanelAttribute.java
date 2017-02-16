@@ -1,10 +1,8 @@
 package fr.cubiccl.generator.gui.component.panel.gameobject;
 
 import java.awt.GridBagConstraints;
-import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.AppliedAttribute;
-import fr.cubiccl.generator.gameobject.AppliedAttribute.AttributeModifierList;
 import fr.cubiccl.generator.gameobject.AttributeModifier;
 import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
@@ -25,7 +23,7 @@ public class PanelAttribute extends CGPanel implements ICustomObject<AppliedAttr
 
 	private ObjectCombobox<Attribute> comboboxAttribute;
 	private CGEntry entryBase;
-	private PanelObjectList panelModifiers;
+	private PanelObjectList<AttributeModifier> panelModifiers;
 
 	public PanelAttribute()
 	{
@@ -40,10 +38,10 @@ public class PanelAttribute extends CGPanel implements ICustomObject<AppliedAttr
 		++gbc.gridy;
 		this.add((this.entryBase = new CGEntry(new Text("attribute.base"), "1", Text.NUMBER)).container, gbc);
 		++gbc.gridy;
-		this.add(this.panelModifiers = new PanelObjectList("attribute.modifiers", new AttributeModifierList(true)), gbc);
+		this.add(this.panelModifiers = new PanelObjectList<AttributeModifier>("attribute.modifiers", (String) null, AttributeModifier.class), gbc);
 		++gbc.gridy;
 		gbc.fill = GridBagConstraints.NONE;
-		if (customObjects) this.add(new PanelCustomObject<AppliedAttribute>(this, ObjectSaver.attributes), gbc);
+		if (customObjects) this.add(new PanelCustomObject<AppliedAttribute, AppliedAttribute>(this, ObjectSaver.attributes), gbc);
 
 		this.entryBase.addNumberFilter();
 	}
@@ -51,10 +49,9 @@ public class PanelAttribute extends CGPanel implements ICustomObject<AppliedAttr
 	@Override
 	public AppliedAttribute generate() throws CommandGenerationException
 	{
-		ArrayList<AttributeModifier> modifiers = ((AttributeModifierList) this.panelModifiers.getObjectList()).modifiers;
+		AttributeModifier[] modifiers = this.panelModifiers.values();
 		this.entryBase.checkValue(CGEntry.NUMBER);
-		return new AppliedAttribute(this.comboboxAttribute.getSelectedObject(), Double.parseDouble(this.entryBase.getText()),
-				modifiers.toArray(new AttributeModifier[modifiers.size()]));
+		return new AppliedAttribute(this.comboboxAttribute.getSelectedObject(), Double.parseDouble(this.entryBase.getText()), modifiers);
 	}
 
 	@Override
@@ -62,10 +59,9 @@ public class PanelAttribute extends CGPanel implements ICustomObject<AppliedAttr
 	{
 		this.comboboxAttribute.setSelected(attribute.attribute);
 		this.entryBase.setText(Utils.doubleToString(attribute.base));
-		((AttributeModifierList) this.panelModifiers.getObjectList()).modifiers.clear();
+		this.panelModifiers.clear();
 		for (AttributeModifier m : attribute.modifiers)
-			((AttributeModifierList) this.panelModifiers.getObjectList()).modifiers.add(m);
-		this.panelModifiers.updateList();
+			this.panelModifiers.add(m);
 	}
 
 }

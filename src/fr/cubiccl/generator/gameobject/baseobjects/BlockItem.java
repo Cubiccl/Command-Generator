@@ -38,13 +38,13 @@ public class BlockItem extends BaseObject
 	public BlockItem(boolean type, int idInt, String idString, int... damage)
 	{
 		this.type = type;
-		this.idString = "minecraft:" + idString;
+		this.idString = idString == null ? null : "minecraft:" + idString;
 		this.idInt = idInt;
 		this.damage = damage;
 		this.textureType = 0;
 		this.langType = 0;
 
-		if (this.type == ITEM) ObjectRegistry.items.register((Item) this);
+		if (idString != null) if (this.type == ITEM) ObjectRegistry.items.register((Item) this);
 		else ObjectRegistry.blocks.register((Block) this);
 	}
 

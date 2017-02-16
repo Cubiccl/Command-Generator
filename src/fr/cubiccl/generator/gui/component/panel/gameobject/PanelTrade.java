@@ -45,7 +45,7 @@ public class PanelTrade extends CGPanel implements ICustomObject<TradeOffer>
 		++gbc.gridy;
 		this.add(this.panelOptions, gbc);
 		++gbc.gridy;
-		if (customObjects) this.add(new PanelCustomObject<TradeOffer>(this, ObjectSaver.trades), gbc);
+		if (customObjects) this.add(new PanelCustomObject<TradeOffer, TradeOffer>(this, ObjectSaver.trades), gbc);
 
 		this.entryMaxUses.addIntFilter();
 		this.entryUses.addIntFilter();

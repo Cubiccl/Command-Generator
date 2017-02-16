@@ -54,7 +54,7 @@ public class PanelEntity extends CGPanel implements ActionListener, ICustomObjec
 		++gbc.gridx;
 		gbc.anchor = GridBagConstraints.EAST;
 		gbc.fill = GridBagConstraints.NONE;
-		if (customObjects) this.add(new PanelCustomObject<LivingEntity>(this, ObjectSaver.entities), gbc);
+		if (customObjects) this.add(new PanelCustomObject<LivingEntity, LivingEntity>(this, ObjectSaver.entities), gbc);
 		gbc.anchor = GridBagConstraints.NORTH;
 		gbc.fill = GridBagConstraints.HORIZONTAL;
 

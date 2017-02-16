@@ -16,4 +16,8 @@ Successfully created 185 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
+Generating !
+Error : Please select at least one Entity to spread.
+Generating !
+Successfully generated : spreadplayers 0 0 0 1 true @a
 Exiting Command Generator... Bye bye !

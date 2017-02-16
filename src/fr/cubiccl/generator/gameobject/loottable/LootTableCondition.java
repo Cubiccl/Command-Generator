@@ -1,15 +1,23 @@
 package fr.cubiccl.generator.gameobject.loottable;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
+import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.loottable.PanelCondition;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
-public class LootTableCondition
+public class LootTableCondition implements IObjectList<LootTableCondition>
 {
 
 	public static enum Condition
@@ -58,10 +66,42 @@ public class LootTableCondition
 	public final Condition condition;
 	public final Tag[] tags;
 
-	public LootTableCondition(Condition condition, Tag[] tags)
+	public LootTableCondition()
+	{
+		this(Condition.values()[0]);
+	}
+
+	public LootTableCondition(Condition condition, Tag... tags)
 	{
 		this.condition = condition;
 		this.tags = tags;
+	}
+
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		PanelCondition p = new PanelCondition();
+		p.setupFrom(this);
+		p.setName(new Text("loottable.condition", new Replacement("<index>", (String) properties.get("index"))));
+		return p;
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		return new CTextArea(this.toString());
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		return new Text("loottable.condition", new Replacement("<index>", Integer.toString(index + 1))).toString();
+	}
+
+	@Override
+	public LootTableCondition setupFrom(CGPanel panel) throws CommandGenerationException
+	{
+		return ((PanelCondition) panel).generate();
 	}
 
 	@Override

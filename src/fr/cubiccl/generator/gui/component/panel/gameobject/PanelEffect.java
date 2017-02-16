@@ -49,7 +49,7 @@ public class PanelEffect extends CGPanel implements ActionListener, ICustomObjec
 		++gbc.gridx;
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.EAST;
-		if (customObjects) this.add(new PanelCustomObject<Effect>(this, ObjectSaver.effects), gbc);
+		if (customObjects) this.add(new PanelCustomObject<Effect, Effect>(this, ObjectSaver.effects), gbc);
 		gbc.gridx = 0;
 		++gbc.gridy;
 		gbc.gridwidth = 4;

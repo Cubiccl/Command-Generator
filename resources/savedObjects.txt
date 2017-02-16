@@ -1,7 +1,6 @@
 // This file saves Custom Game Objects.
 
 [ATTRIBUTE MODIFIERS]
-{Name:"Test modifier",Operation:0,Amount:0d,UUIDMost:5670856426819278800l,UUIDLeast:-5037813183890887700l,ObjectName:"Test"}
 
 [ATTRIBUTES]
 

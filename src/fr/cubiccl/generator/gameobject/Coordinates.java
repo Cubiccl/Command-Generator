@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
+import java.awt.Component;
+
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
@@ -7,10 +9,15 @@ import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class Coordinates extends GameObject
+public class Coordinates extends GameObject implements IObjectList<Coordinates>
 {
 
 	public static Coordinates createFrom(String x, String y, String z) throws CommandGenerationException
@@ -82,6 +89,11 @@ public class Coordinates extends GameObject
 	public final float x, y, z;
 	public final boolean xRelative, yRelative, zRelative;
 
+	public Coordinates()
+	{
+		this(0, 0, 0);
+	}
+
 	public Coordinates(float x, float y, float z)
 	{
 		this(x, y, z, false, false, false);
@@ -95,6 +107,32 @@ public class Coordinates extends GameObject
 		this.xRelative = xRelative;
 		this.yRelative = yRelative;
 		this.zRelative = zRelative;
+	}
+
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		PanelCoordinates p = new PanelCoordinates(null, true, properties.hasCustomObjects());
+		p.setupFrom(this);
+		return p;
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		return new CGLabel(new Text(this.toString(), false));
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.toString();
+	}
+
+	@Override
+	public Coordinates setupFrom(CGPanel panel) throws CommandGenerationException
+	{
+		return ((PanelCoordinates) panel).generate();
 	}
 
 	@Override

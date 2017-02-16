@@ -42,7 +42,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this(titleID, ObjectRegistry.items.list(ObjectRegistry.SORT_NUMERICALLY));
 	}
 
-	public PanelItem(String titleID, boolean hasData, boolean hasNBT, boolean customObjects, Item[] items)
+	public PanelItem(String titleID, boolean hasData, boolean hasNBT, boolean customObjects, Item... items)
 	{
 		super(titleID);
 		this.hasData = hasData;
@@ -68,7 +68,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		if (hasNBT) this.add(this.panelTags, gbc);
 		gbc.fill = GridBagConstraints.NONE;
 		++gbc.gridy;
-		if (customObjects) this.add(new PanelCustomObject<ItemStack>(this, ObjectSaver.items), gbc);
+		if (customObjects) this.add(new PanelCustomObject<ItemStack, ItemStack>(this, ObjectSaver.items), gbc);
 
 		this.buttonSelectItem.addActionListener(this);
 		this.panelTags.setTargetObject(this.item);

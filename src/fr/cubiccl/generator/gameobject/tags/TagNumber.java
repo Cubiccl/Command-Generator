@@ -10,7 +10,7 @@ public class TagNumber extends Tag
 	public static final byte[] TYPE_TRANSITION = new byte[]
 	{ Tag.INT, Tag.BYTE, Tag.SHORT, Tag.BYTE, Tag.LONG, Tag.FLOAT, Tag.DOUBLE };
 
-	public final int value;
+	public int value;
 
 	public TagNumber(TemplateNumber template, int value)
 	{

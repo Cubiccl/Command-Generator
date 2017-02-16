@@ -3,6 +3,8 @@ package fr.cubiccl.generator.gameobject.loottable;
 import java.awt.Component;
 import java.util.ArrayList;
 
+import javax.swing.JOptionPane;
+
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
@@ -11,14 +13,13 @@ import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
-import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.loottable.PanelPool;
+import fr.cubiccl.generator.gui.component.panel.loottable.PanelLootTable;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
-public class LootTable extends GameObject implements IObjectList
+public class LootTable extends GameObject implements IObjectList<LootTable>
 {
 
 	public static LootTable createFrom(TagCompound tag)
@@ -41,6 +42,11 @@ public class LootTable extends GameObject implements IObjectList
 
 	public final ArrayList<LootTablePool> pools;
 
+	public LootTable()
+	{
+		this(new LootTablePool[0]);
+	}
+
 	public LootTable(LootTablePool... pools)
 	{
 		this.pools = new ArrayList<LootTablePool>();
@@ -49,31 +55,15 @@ public class LootTable extends GameObject implements IObjectList
 	}
 
 	@Override
-	public boolean addObject(CGPanel panel, int editIndex)
+	public CGPanel createPanel(ListProperties properties)
 	{
-		try
+		if ((boolean) properties.get("new"))
 		{
-			LootTablePool p = ((PanelPool) panel).generatePool();
-			if (editIndex == -1) this.pools.add(p);
-			else this.pools.set(editIndex, p);
-			return true;
-		} catch (CommandGenerationException e)
-		{
-			CommandGenerator.report(e);
-			return false;
+			this.setCustomName(JOptionPane.showInputDialog(new Text("objects.name")));
+			if (this.customName() == null) return null;
 		}
-	}
-
-	@Override
-	public CGPanel createAddPanel(int editIndex)
-	{
-		PanelPool p = new PanelPool();
-		if (editIndex != -1)
-		{
-			p.setupFrom(this.pools.get(editIndex));
-			p.setName(new Text("loottable.pool", new Replacement("<index>", Integer.toString(editIndex))));
-		} else p.setName(new Text("loottable.pool", new Replacement("<index>", Integer.toString(this.pools.size() + 1))));
-		return p;
+		CommandGenerator.stateManager.clear();
+		return new PanelLootTable(this);
 	}
 
 	public String display()
@@ -82,24 +72,21 @@ public class LootTable extends GameObject implements IObjectList
 	}
 
 	@Override
-	public Component getDisplayComponent(int index)
+	public Component getDisplayComponent()
 	{
-		return new CGLabel(new Text(this.pools.get(index).toString(), false));
+		return null;
 	}
 
 	@Override
-	public String[] getValues()
+	public String getName(int index)
 	{
-		String[] names = new String[this.pools.size()];
-		for (int i = 0; i < names.length; ++i)
-			names[i] = new Text("loottable.pool", new Replacement("<index>", Integer.toString(i))).toString();
-		return names;
+		return this.customName();
 	}
 
 	@Override
-	public void removeObject(int index)
+	public LootTable setupFrom(CGPanel panel) throws CommandGenerationException
 	{
-		this.pools.remove(index);
+		return null;
 	}
 
 	@Override

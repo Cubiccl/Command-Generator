@@ -60,7 +60,7 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		if (hasNBT) this.add(this.panelTags, gbc);
 		++gbc.gridy;
 		gbc.fill = GridBagConstraints.NONE;
-		if (customObjects) this.add(new PanelCustomObject<PlacedBlock>(this, ObjectSaver.blocks), gbc);
+		if (customObjects) this.add(new PanelCustomObject<PlacedBlock, PlacedBlock>(this, ObjectSaver.blocks), gbc);
 
 		this.buttonSelectBlock.addActionListener(this);
 		this.updateDisplay();

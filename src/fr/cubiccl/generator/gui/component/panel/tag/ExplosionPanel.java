@@ -1,105 +1,22 @@
 package fr.cubiccl.generator.gui.component.panel.tag;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
 import java.awt.GridBagConstraints;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
 
-import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagList;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
-import fr.cubiccl.generator.gameobject.templatetags.Tags;
-import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.Explosion;
+import fr.cubiccl.generator.gameobject.Explosion.Color;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
-import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.utils.PanelColor;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
-import fr.cubiccl.generator.utils.Text;
 
 public class ExplosionPanel extends CGPanel
 {
-	private class ColorList implements IObjectList
-	{
-		private ArrayList<TagNumber> colors;
-		private String name;
-
-		public ColorList(String nameID)
-		{
-			this.name = nameID;
-			this.colors = new ArrayList<TagNumber>();
-		}
-
-		@Override
-		public boolean addObject(CGPanel panel, int editIndex)
-		{
-			TagNumber t = new TagNumber(Tags.DEFAULT_INTEGER, ((PanelColor) panel).getValue());
-			if (editIndex == -1) this.colors.add(t);
-			else this.colors.set(editIndex, t);
-			return true;
-		}
-
-		@Override
-		public CGPanel createAddPanel(int editIndex)
-		{
-			PanelColor p = new PanelColor(this.name);
-			if (editIndex != -1) p.setupFrom(this.colors.get(editIndex).value);
-			return p;
-		}
-
-		@Override
-		public Component getDisplayComponent(int index)
-		{
-			CGPanel p = new CGPanel();
-			p.add(new CGLabel(new Text(Integer.toString(this.colors.get(index).value()), false)));
-			p.add(new ImageLabel(this.getTexture(index)));
-			return p;
-		}
-
-		public BufferedImage getTexture(int index)
-		{
-			BufferedImage img = new BufferedImage(40, 40, BufferedImage.TYPE_INT_RGB);
-			Graphics g = img.getGraphics();
-			g.setColor(new Color(this.colors.get(index).value()));
-			g.fillRect(0, 0, 40, 40);
-			return img;
-		}
-
-		@Override
-		public String[] getValues()
-		{
-			String[] names = new String[this.colors.size()];
-			for (int i = 0; i < names.length; i++)
-				names[i] = Integer.toString(this.colors.get(i).value());
-			return names;
-		}
-
-		@Override
-		public void removeObject(int index)
-		{
-			this.colors.remove(index);
-		}
-
-		public void setValues(Tag[] value)
-		{
-			for (Tag t : value)
-				if (t instanceof TagNumber) this.colors.add((TagNumber) t);
-		}
-
-	}
-
 	private static final long serialVersionUID = 2699563337471683919L;
 
 	private CGCheckBox boxFlicker, boxTrail;
 	private OptionCombobox comboboxType;
-	private PanelObjectList panelPrimaryColors, panelFadeColors;
-	private ColorList primaryColors, fadeColors;
+	private PanelObjectList<Color> panelPrimaryColors, panelFadeColors;
 
 	public ExplosionPanel()
 	{
@@ -117,33 +34,26 @@ public class ExplosionPanel extends CGPanel
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		this.add(this.panelPrimaryColors = new PanelObjectList("firework.colors.primary", this.primaryColors = new ColorList("firework.colors.primary")), gbc);
+		this.add(this.panelPrimaryColors = new PanelObjectList<Color>("firework.colors.primary", "firework.colors.primary", Color.class), gbc);
 		++gbc.gridy;
-		this.add(this.panelFadeColors = new PanelObjectList("firework.colors.fade", this.fadeColors = new ColorList("firework.colors.fade")), gbc);
+		this.add(this.panelFadeColors = new PanelObjectList<Color>("firework.colors.fade", "firework.colors.fade", Color.class), gbc);
 
 		this.setName("tag.title.Explosion");
 	}
 
-	public TagCompound generateExplosion(TemplateCompound container)
+	public Explosion generateExplosion()
 	{
-		return new TagCompound(container, new TagNumber(Tags.FIREWORK_TYPE, this.comboboxType.getSelectedIndex()), new TagNumber(Tags.FIREWORK_FLICKER,
-				this.boxFlicker.isSelected() ? 1 : 0), new TagNumber(Tags.FIREWORK_TRAIL, this.boxTrail.isSelected() ? 1 : 0), new TagList(
-				Tags.FIREWORK_COLORS, this.primaryColors.colors.toArray(new TagNumber[this.primaryColors.colors.size()])), new TagList(
-				Tags.FIREWORK_FADE_COLORS, this.fadeColors.colors.toArray(new TagNumber[this.fadeColors.colors.size()])));
+		return new Explosion((byte) this.comboboxType.getSelectedIndex(), this.boxFlicker.isSelected(), this.boxTrail.isSelected(),
+				this.panelPrimaryColors.values(), this.panelFadeColors.values());
 	}
 
-	public void setupFrom(TagCompound previousValue)
+	public void setupFrom(Explosion explosion)
 	{
-		for (Tag t : previousValue.value())
-		{
-			if (t.id().equals(Tags.FIREWORK_TYPE.id())) this.comboboxType.setSelectedIndex(((TagNumber) t).value());
-			else if (t.id().equals(Tags.FIREWORK_FLICKER.id())) this.boxFlicker.setSelected(((TagNumber) t).value() == 1);
-			else if (t.id().equals(Tags.FIREWORK_TRAIL.id())) this.boxTrail.setSelected(((TagNumber) t).value() == 1);
-			else if (t.id().equals(Tags.FIREWORK_COLORS.id())) this.primaryColors.setValues(((TagList) t).value());
-			else if (t.id().equals(Tags.FIREWORK_FADE_COLORS.id())) this.fadeColors.setValues(((TagList) t).value());
-		}
-		this.panelFadeColors.updateList();
-		this.panelPrimaryColors.updateList();
+		this.comboboxType.setSelectedIndex(explosion.type);
+		this.boxFlicker.setSelected(explosion.flicker);
+		this.boxTrail.setSelected(explosion.trail);
+		this.panelPrimaryColors.setValues(explosion.primary);
+		this.panelFadeColors.setValues(explosion.fade);
 	}
 
 }

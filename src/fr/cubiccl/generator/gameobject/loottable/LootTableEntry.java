@@ -1,12 +1,17 @@
 package fr.cubiccl.generator.gameobject.loottable;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+import fr.cubiccl.generator.utils.CommandGenerationException;
 
-public class LootTableEntry
+public class LootTableEntry implements IObjectList<LootTableEntry>
 {
 	public static final byte ITEM = 0, LOOT_TABLE = 1, EMPTY = 2;
 	public static final String[] TYPES =
@@ -55,10 +60,16 @@ public class LootTableEntry
 	}
 
 	protected final LootTableCondition[] conditions;
+
 	protected final LootTableFunction[] functions;
 	public final String name;
 	public final byte type;
 	public final int weight, quality;
+
+	public LootTableEntry()
+	{
+		this(new LootTableCondition[0], (byte) 0, "", new LootTableFunction[0], 0, 0);
+	}
 
 	public LootTableEntry(LootTableCondition[] conditions, byte type, String name, LootTableFunction[] functions, int weight, int quality)
 	{
@@ -68,6 +79,34 @@ public class LootTableEntry
 		this.functions = functions;
 		this.weight = weight;
 		this.quality = quality;
+	}
+
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public LootTableEntry setupFrom(CGPanel panel) throws CommandGenerationException
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public TagCompound toTag(TemplateCompound container)

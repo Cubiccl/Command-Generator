@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
 import javax.swing.event.ListSelectionEvent;
@@ -15,29 +17,39 @@ import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.IStateListener;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
-public class PanelObjectList extends CGPanel implements ActionListener, ListSelectionListener, IStateListener<CGPanel>
+public class PanelObjectList<T extends IObjectList<T>> extends CGPanel implements ActionListener, ListSelectionListener, IStateListener<CGPanel>
 {
 	private static final long serialVersionUID = 2923920419688577940L;
 
 	protected CGButton buttonAdd, buttonEdit, buttonRemove;
+	private Class<T> c;
 	private Component componentDisplay;
 	protected int editing = -1;
 	protected CGList list;
-	protected IObjectList objectList;
+	private ArrayList<ListListener<T>> listeners;
+	private T newObject;
+	private ArrayList<T> objects;
+	private Text popupTitle;
+	public final ListProperties properties;
 
-	public PanelObjectList(IObjectList objectList)
+	public PanelObjectList(String titleID, String popupTitleID, Class<T> c, Object... properties)
 	{
-		this(null, objectList);
+		this(titleID, popupTitleID == null ? null : new Text(popupTitleID), c, properties);
 	}
 
-	public PanelObjectList(String titleID, IObjectList objectList)
+	public PanelObjectList(String titleID, Text popupTitle, Class<T> c, Object... properties)
 	{
 		super(titleID);
-		this.objectList = objectList;
+		this.objects = new ArrayList<T>();
+		this.listeners = new ArrayList<ListListener<T>>();
+		this.c = c;
+		this.popupTitle = popupTitle;
+		this.properties = new ListProperties(properties);
 
 		GridBagConstraints gbc = this.createGridBagLayout();
 		gbc.gridx = 1;
@@ -71,30 +83,73 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonAdd)
+		if (e.getSource() == this.buttonAdd) try
 		{
-			this.editing = -1;
-			CGPanel p = this.objectList.createAddPanel(this.editing);
+			this.editing = this.objects.size();
+			this.newObject = this.c.newInstance();
+			this.properties.set("new", true);
+			this.properties.set("index", this.editing);
+			CGPanel p = this.newObject.createPanel(this.properties);
 			if (p == null) return;
+			p.setName(this.setupPopupTitle());
 			CommandGenerator.stateManager.setState(p, this);
-		} else if (e.getSource() == this.buttonEdit)
+		} catch (InstantiationException | IllegalAccessException e1)
+		{
+			e1.printStackTrace();
+		}
+		else if (e.getSource() == this.buttonEdit)
 		{
 			this.editing = this.selectedIndex();
-			CGPanel p = this.objectList.createAddPanel(this.editing);
+			this.properties.set("new", false);
+			this.properties.set("index", this.editing);
+			CGPanel p = this.objects.get(this.editing).createPanel(this.properties);
 			if (p == null) return;
+			p.setName(this.setupPopupTitle());
 			CommandGenerator.stateManager.setState(p, this);
 		} else if (e.getSource() == this.buttonRemove) this.removeSelected();
 		this.updateList();
 	}
 
-	public IObjectList getObjectList()
+	public void add(T object)
 	{
-		return this.objectList;
+		this.objects.add(object);
+		for (ListListener<T> listener : this.listeners)
+			listener.onAddition(this.objects.size() - 1, object);
+		this.updateList();
+	}
+
+	public void addListListener(ListListener<T> listener)
+	{
+		this.listeners.add(listener);
+	}
+
+	public void clear()
+	{
+		this.objects.clear();
+		this.updateList();
+	}
+
+	public void delete(int index)
+	{
+		T object = this.get(index);
+		this.objects.remove(index);
+		for (ListListener<T> listener : this.listeners)
+			listener.onDeletion(index, object);
+	}
+
+	public T get(int index)
+	{
+		return this.objects.get(index);
 	}
 
 	public String getSelectedValue()
 	{
 		return this.list.getSelectedValue();
+	}
+
+	public int length()
+	{
+		return this.objects.size();
 	}
 
 	protected void removeSelected()
@@ -104,7 +159,7 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		{
 			if (JOptionPane.showConfirmDialog(CommandGenerator.window,
 					new Text("general.delete.confirm", new Replacement("<object>", this.getSelectedValue())), null, JOptionPane.YES_NO_OPTION) != JOptionPane.YES_OPTION) return;
-			this.objectList.removeObject(index);
+			this.delete(index);
 			this.updateList();
 		}
 	}
@@ -112,6 +167,14 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 	public int selectedIndex()
 	{
 		return this.list.getSelectedIndex();
+	}
+
+	public void set(int index, T object)
+	{
+		this.objects.set(index, object);
+		for (ListListener<T> listener : this.listeners)
+			listener.onChange(index, object);
+		this.updateList();
 	}
 
 	@Override
@@ -127,18 +190,38 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		}
 	}
 
-	public void setList(IObjectList objectList)
+	private Text setupPopupTitle()
 	{
-		this.objectList = objectList;
-		this.updateList();
+		if (this.popupTitle == null) return null;
+		if (this.popupTitle.hasReplacement("<index>")) this.popupTitle.removeReplacements("<index>");
+		this.popupTitle.addReplacement(new Replacement("<index>", Integer.toString(this.editing + 1)));
+		return this.popupTitle;
+	}
+
+	public void setValues(T[] values)
+	{
+		this.clear();
+		for (T object : values)
+			this.add(object);
 	}
 
 	@Override
 	public boolean shouldStateClose(CGPanel panel)
 	{
-		boolean shouldClose = this.objectList.addObject(panel, this.editing);
-		if (shouldClose) this.updateList();
-		return shouldClose;
+		try
+		{
+			if (this.editing == this.objects.size())
+			{
+				T o = this.newObject.setupFrom(panel);
+				this.objects.add(o);
+			} else this.objects.set(this.editing, this.objects.get(this.editing).setupFrom(panel));
+			this.updateList();
+			return true;
+		} catch (CommandGenerationException e)
+		{
+			CommandGenerator.report(e);
+			return false;
+		}
 	}
 
 	private void updateDisplay()
@@ -150,18 +233,22 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 		if (index == -1) this.componentDisplay = null;
 		else
 		{
-			this.componentDisplay = this.objectList.getDisplayComponent(index);
+			this.componentDisplay = this.objects.get(index).getDisplayComponent();
 			if (this.componentDisplay != null) this.add(this.componentDisplay, this.gbc);
 		}
 		this.revalidate();
 		this.repaint();
 	}
 
-	public void updateList()
+	private void updateList()
 	{
-		if (this.objectList == null) return;
 		int index = this.selectedIndex();
-		this.list.setValues(this.objectList.getValues());
+
+		String[] names = new String[this.objects.size()];
+		for (int i = 0; i < names.length; ++i)
+			names[i] = this.objects.get(i).getName(i);
+
+		this.list.setValues(names);
 		this.list.setSelectedIndex(index);
 
 		this.updateDisplay();
@@ -171,6 +258,12 @@ public class PanelObjectList extends CGPanel implements ActionListener, ListSele
 	public void valueChanged(ListSelectionEvent e)
 	{
 		this.updateDisplay();
+	}
+
+	@SuppressWarnings("unchecked")
+	public T[] values()
+	{
+		return this.objects.toArray((T[]) Array.newInstance(this.c, this.objects.size()));
 	}
 
 }
