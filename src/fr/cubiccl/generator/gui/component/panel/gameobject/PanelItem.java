@@ -42,7 +42,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this(titleID, ObjectRegistry.items.list(ObjectRegistry.SORT_NUMERICALLY));
 	}
 
-	public PanelItem(String titleID, boolean hasData, boolean hasNBT, boolean customObjects, Item... items)
+	public PanelItem(String titleID, boolean hasData, boolean hasNBT, boolean customObjects, Item[] items)
 	{
 		super(titleID);
 		this.hasData = hasData;

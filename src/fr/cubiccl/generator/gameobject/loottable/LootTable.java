@@ -61,6 +61,7 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 		{
 			this.setCustomName(JOptionPane.showInputDialog(new Text("objects.name")));
 			if (this.customName() == null) return null;
+			CommandGenerator.window.panelLootTableSelection.list.add(this);
 		}
 		CommandGenerator.stateManager.clear();
 		return new PanelLootTable(this);

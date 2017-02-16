@@ -82,7 +82,7 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 	{
 		PanelCondition p = new PanelCondition();
 		p.setupFrom(this);
-		p.setName(new Text("loottable.condition", new Replacement("<index>", (String) properties.get("index"))));
+		p.setName(new Text("loottable.condition", new Replacement("<index>", Integer.toString((int) properties.get("index")))));
 		return p;
 	}
 

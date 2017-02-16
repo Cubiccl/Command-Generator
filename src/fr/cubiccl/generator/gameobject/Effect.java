@@ -70,7 +70,7 @@ public class Effect extends GameObject implements IObjectList<Effect>
 	public Component getDisplayComponent()
 	{
 		CGPanel p = new CGPanel();
-		p.add(new CGLabel(new Text(this.toString())));
+		p.add(new CGLabel(new Text(this.toString(), false)));
 		p.add(new ImageLabel(this.type.texture()));
 		return p;
 	}

@@ -38,7 +38,9 @@ public class PanelAttribute extends CGPanel implements ICustomObject<AppliedAttr
 		++gbc.gridy;
 		this.add((this.entryBase = new CGEntry(new Text("attribute.base"), "1", Text.NUMBER)).container, gbc);
 		++gbc.gridy;
-		this.add(this.panelModifiers = new PanelObjectList<AttributeModifier>("attribute.modifiers", (String) null, AttributeModifier.class), gbc);
+		this.add(
+				this.panelModifiers = new PanelObjectList<AttributeModifier>("attribute.modifiers", (String) null, AttributeModifier.class, "isApplied", true),
+				gbc);
 		++gbc.gridy;
 		gbc.fill = GridBagConstraints.NONE;
 		if (customObjects) this.add(new PanelCustomObject<AppliedAttribute, AppliedAttribute>(this, ObjectSaver.attributes), gbc);

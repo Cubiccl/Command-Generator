@@ -27,4 +27,4 @@
 {Command:"/summon minecraft:villager ~ ~ ~ {Offers:{Recipes:[{rewardExp:1b,maxUses:0,uses:0,buy:{id:\"minecraft:dirt\",Damage:0s,Count:1b,tag:{}},sell:{id:\"minecraft:diamond_sword\",Damage:0s,Count:5b,tag:{ench:[{lvl:5s},{lvl:2s}]}}}]}}",ObjectName:"Summon legit trade"}
 
 [LOOT_TABLES]
-{"pools":[{"rolls":5,"bonus_rolls":{"min":6f,"max":7f},"conditions":[],"entries":[]}],"ObjectName":"Test table"}
+{"pools":[{"rolls":0,"bonus_rolls":0f,"conditions":[{"condition":"entity_scores","entity":"killer"}],"entries":[]},{"rolls":0,"bonus_rolls":0f,"conditions":[],"entries":[]}],"ObjectName":"Test table"}

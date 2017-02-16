@@ -211,7 +211,7 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 	public void setSelected(int selected, boolean sendUpdates)
 	{
 		this.selected = selected;
-		if (sendUpdates) this.comboboxItem.setSelectedItem(this.selectedItem().name().toString());
+		if (sendUpdates) this.comboboxItem.setSelectedItem(this.selectedItem().id());
 		this.spinnerDamage.setValues(this.selectedItem().damage);
 		this.itemSelector.repaint();
 

@@ -22,7 +22,7 @@ public class PanelLootTableSelection extends CGPanel implements ActionListener, 
 	private static final long serialVersionUID = 4213073942144876574L;
 
 	private CGButton buttonGenerate, buttonLoad;
-	private PanelObjectList<LootTable> list;
+	public PanelObjectList<LootTable> list;
 
 	public PanelLootTableSelection()
 	{
@@ -48,6 +48,7 @@ public class PanelLootTableSelection extends CGPanel implements ActionListener, 
 		this.buttonGenerate.setFont(this.buttonGenerate.getFont().deriveFont(Font.BOLD, 20));
 		this.buttonGenerate.addActionListener(this);
 		this.buttonLoad.addActionListener(this);
+		this.list.setValues(ObjectSaver.lootTables.list());
 		this.list.addListListener(this);
 	}
 

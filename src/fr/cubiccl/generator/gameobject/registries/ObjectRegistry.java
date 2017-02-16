@@ -168,7 +168,7 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public T first()
 	{
-		return this.registry.values().iterator().next();
+		return this.list()[0];
 	}
 
 	public boolean knows(String id)

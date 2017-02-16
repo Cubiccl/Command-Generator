@@ -15,6 +15,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEnchantment;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class Enchantment extends GameObject implements IObjectList<Enchantment>
 {
@@ -58,7 +59,7 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 	@Override
 	public Component getDisplayComponent()
 	{
-		return new CGLabel(this.toString());
+		return new CGLabel(new Text(this.toString(), false));
 	}
 
 	@Override

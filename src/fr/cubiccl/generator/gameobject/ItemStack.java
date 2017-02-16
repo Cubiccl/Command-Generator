@@ -79,7 +79,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		PanelItem p = new PanelItem(null, true, true, properties.hasCustomObjects());
+		PanelItem p = new PanelItem(null, true, true, properties.hasCustomObjects(), ObjectRegistry.items.list());
 		p.setupFrom(this);
 		return p;
 	}
