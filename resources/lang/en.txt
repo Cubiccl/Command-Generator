@@ -390,6 +390,7 @@ lt_condition.random_chance=Random chance
 lt_condition.random_chance.chance=Chance
 lt_condition.random_chance_with_looting=Random chance, affected by Looting
 lt_condition.random_chance_with_looting.multiplier=Looting multiplier
+lt_condition.scores=Scoreboard values to match
 
 menu.command=Command Generator
 menu.exit=Exit

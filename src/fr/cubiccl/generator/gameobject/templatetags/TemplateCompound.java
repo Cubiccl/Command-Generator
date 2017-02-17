@@ -43,7 +43,7 @@ public abstract class TemplateCompound extends TemplateTag
 	}
 
 	@Override
-	public Tag readTag(String value, boolean isJson)
+	public Tag readTag(String value, boolean isJson, boolean readUnknown)
 	{
 		if (value.startsWith("{") && value.endsWith("}")) value = value.substring(1, value.length() - 1);
 		String[] values = NBTReader.splitTagValues(value);
@@ -51,7 +51,7 @@ public abstract class TemplateCompound extends TemplateTag
 		for (String v : values)
 		{
 			if (v.equals("")) continue;
-			Tag t = NBTReader.read(v, false, isJson);
+			Tag t = NBTReader.read(v, false, isJson, readUnknown);
 			if (t != null) tags.add(t);
 		}
 		return new TagCompound(this, tags.toArray(new Tag[tags.size()]));

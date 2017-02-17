@@ -142,7 +142,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	public Tag readTag(String value, boolean isJson)
+	public Tag readTag(String value, boolean isJson, boolean readUnknown)
 	{
 		if (this.tagType != Tag.INT) value = value.substring(0, value.length() - 1);
 		if (this.isBigNumber()) return new TagBigNumber(this, Double.parseDouble(value));

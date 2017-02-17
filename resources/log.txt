@@ -16,4 +16,36 @@ Successfully created 185 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
+Switching to Loot Tables mode.
+Generating !
+Successfully generated : {
+    "pools":
+    [    
+        {
+            "rolls":4,
+            "bonus_rolls":
+            {
+                "min":1f,
+                "max":3f
+            },
+            "conditions":
+            [            
+                {
+                    "condition":"entity_scores",
+                    "entity":"killer_player",
+                    "scores":
+                    {
+                        "Kappa":24,
+                        "Range":
+                        {
+                            "min":-6,
+                            "max":7
+                        }
+                    }
+                }
+            ],
+            "entries":[]
+        }
+    ]
+}
 Exiting Command Generator... Bye bye !

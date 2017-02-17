@@ -31,7 +31,7 @@ public class TemplateBoolean extends TemplateTag
 	}
 
 	@Override
-	public TagBoolean readTag(String value, boolean isJson)
+	public TagBoolean readTag(String value, boolean isJson, boolean readUnknown)
 	{
 		return new TagBoolean(this, value.equals("true"));
 	}

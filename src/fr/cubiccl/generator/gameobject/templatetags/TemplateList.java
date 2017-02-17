@@ -43,7 +43,7 @@ public abstract class TemplateList extends TemplateTag
 	}
 
 	@Override
-	public TagList readTag(String value, boolean isJson)
+	public TagList readTag(String value, boolean isJson, boolean readUnknown)
 	{
 		if (value.startsWith("[") && value.endsWith("]")) value = value.substring(1, value.length() - 1);
 		String[] values = NBTReader.splitTagValues(value);
@@ -51,7 +51,7 @@ public abstract class TemplateList extends TemplateTag
 		for (String v : values)
 		{
 			if (v.equals("")) continue;
-			Tag t = NBTReader.read(v, true, isJson);
+			Tag t = NBTReader.read(v, true, isJson, readUnknown);
 			if (t != null) tags.add(t);
 		}
 		return new TagList(this, tags.toArray(new Tag[tags.size()]));

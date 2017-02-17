@@ -90,41 +90,41 @@ public class NBTReader
 	 * @param readUnknown - True if unknown Tags should still be read. */
 	public static Tag read(String tag, boolean isInList, boolean isJson, boolean readUnknown)
 	{
-		if (isInList) return readNamelessTag(determineType(tag), tag, isJson);
+		if (isInList) return readNamelessTag(determineType(tag), tag, isJson, readUnknown);
 		String id = tag.substring(0, tag.indexOf(":")), value = tag.substring(tag.indexOf(":") + 1);
 		if (isJson && id.startsWith("\"") && id.endsWith("\"")) id = id.substring(1, id.length() - 1);
 		byte type = determineType(value);
 		TemplateTag matching = findMatchingTag(id, type);
 		if (matching == null) return readUnknown ? readUnknownTag(id, type, value, isJson) : null;
-		return matching.readTag(value, isJson);
+		return matching.readTag(value, isJson, readUnknown);
 	}
 
-	private static Tag readNamelessTag(byte type, String tag, boolean isJson)
+	private static Tag readNamelessTag(byte type, String tag, boolean isJson, boolean readUnknown)
 	{
 		switch (type)
 		{
 			case Tag.COMPOUND:
-				return Tags.DEFAULT_COMPOUND.readTag(tag, isJson);
+				return Tags.DEFAULT_COMPOUND.readTag(tag, isJson, readUnknown);
 			case Tag.LIST:
-				return Tags.DEFAULT_LIST.readTag(tag, isJson);
+				return Tags.DEFAULT_LIST.readTag(tag, isJson, readUnknown);
 			case Tag.STRING:
-				return Tags.DEFAULT_STRING.readTag(tag, isJson);
+				return Tags.DEFAULT_STRING.readTag(tag, isJson, readUnknown);
 			case Tag.BYTE:
-				return Tags.DEFAULT_BYTE.readTag(tag, isJson);
+				return Tags.DEFAULT_BYTE.readTag(tag, isJson, readUnknown);
 			case Tag.SHORT:
-				return Tags.DEFAULT_SHORT.readTag(tag, isJson);
+				return Tags.DEFAULT_SHORT.readTag(tag, isJson, readUnknown);
 			case Tag.INT:
-				return Tags.DEFAULT_INTEGER.readTag(tag, isJson);
+				return Tags.DEFAULT_INTEGER.readTag(tag, isJson, readUnknown);
 			case Tag.LONG:
-				return Tags.DEFAULT_LONG.readTag(tag, isJson);
+				return Tags.DEFAULT_LONG.readTag(tag, isJson, readUnknown);
 			case Tag.FLOAT:
-				return Tags.DEFAULT_FLOAT.readTag(tag, isJson);
+				return Tags.DEFAULT_FLOAT.readTag(tag, isJson, readUnknown);
 			case Tag.DOUBLE:
-				return Tags.DEFAULT_DOUBLE.readTag(tag, isJson);
+				return Tags.DEFAULT_DOUBLE.readTag(tag, isJson, readUnknown);
 			case Tag.BOOLEAN:
-				return Tags.DEFAULT_BOOLEAN.readTag(tag, isJson);
+				return Tags.DEFAULT_BOOLEAN.readTag(tag, isJson, readUnknown);
 			default:
-				return Tags.DEFAULT_STRING.readTag(tag, isJson);
+				return Tags.DEFAULT_STRING.readTag(tag, isJson, readUnknown);
 		}
 	}
 
@@ -133,21 +133,21 @@ public class NBTReader
 		switch (type)
 		{
 			case Tag.COMPOUND:
-				return new DefaultCompound(id, Tag.UNKNOWN).readTag(value, isJson);
+				return new DefaultCompound(id, Tag.UNKNOWN).readTag(value, isJson, true);
 			case Tag.LIST:
-				return new DefaultList(id, Tag.UNKNOWN).readTag(value, isJson);
+				return new DefaultList(id, Tag.UNKNOWN).readTag(value, isJson, true);
 			case Tag.STRING:
-				return new TemplateString(id, Tag.UNKNOWN).readTag(value, isJson);
+				return new TemplateString(id, Tag.UNKNOWN).readTag(value, isJson, true);
 			case Tag.BYTE:
 			case Tag.SHORT:
 			case Tag.INT:
 			case Tag.LONG:
 			case Tag.FLOAT:
 			case Tag.DOUBLE:
-				return new TemplateNumber(id, Tag.UNKNOWN, TemplateNumber.numberTypeFor(type)).readTag(value, isJson);
+				return new TemplateNumber(id, Tag.UNKNOWN, TemplateNumber.numberTypeFor(type)).readTag(value, isJson, true);
 
 			default:
-				return new TemplateString(id, Tag.UNKNOWN).readTag(value, isJson);
+				return new TemplateString(id, Tag.UNKNOWN).readTag(value, isJson, true);
 		}
 	}
 

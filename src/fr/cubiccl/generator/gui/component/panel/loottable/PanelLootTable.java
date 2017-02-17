@@ -35,6 +35,7 @@ public class PanelLootTable extends CGPanel implements ListListener<LootTablePoo
 		++gbc.gridy;
 		this.add(this.listPools = new PanelObjectList<LootTablePool>("loottable.pools", "loottable.pool", LootTablePool.class), gbc);
 
+		this.listPools.setValues(this.lootTable.pools.toArray(new LootTablePool[this.lootTable.pools.size()]));
 		this.listPools.addListListener(this);
 	}
 

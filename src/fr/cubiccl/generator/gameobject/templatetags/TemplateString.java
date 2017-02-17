@@ -45,7 +45,7 @@ public class TemplateString extends TemplateTag
 	}
 
 	@Override
-	public TagString readTag(String value, boolean isJson)
+	public TagString readTag(String value, boolean isJson, boolean readUnknown)
 	{
 		if (value.startsWith("\"") && value.endsWith("\"")) value = value.substring(1, value.length() - 1);
 		return new TagString(this, value.replaceAll(Pattern.quote("\\\""), "\"").replaceAll(Pattern.quote("\\\\"), "\\"));

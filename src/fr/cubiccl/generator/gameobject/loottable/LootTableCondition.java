@@ -77,10 +77,19 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 		this.tags = tags;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		PanelCondition p = new PanelCondition();
+		if (!properties.contains("conditions")) properties.set("conditions", new Condition[0]);
+		PanelCondition p;
+		if ((boolean) properties.get("new")) p = new PanelCondition((ArrayList<Condition>) properties.get("conditions"));
+		else
+		{
+			ArrayList<Condition> conditions = (ArrayList<Condition>) properties.get("conditions");
+			conditions.remove(this.condition);
+			p = new PanelCondition((ArrayList<Condition>) properties.get("conditions"));
+		}
 		p.setupFrom(this);
 		p.setName(new Text("loottable.condition", new Replacement("<index>", Integer.toString((int) properties.get("index")))));
 		return p;

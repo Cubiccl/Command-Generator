@@ -44,8 +44,13 @@ public class CGLabel extends CLabel implements ITranslated
 	@Override
 	public void setText(String text)
 	{
-		this.setTextID(null);
+		this.setTextID((Text) null);
 		super.setText(text);
+	}
+
+	public void setTextID(String textID)
+	{
+		this.setTextID(textID == null ? null : new Text(textID));
 	}
 
 	public void setTextID(Text text)

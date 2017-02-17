@@ -104,7 +104,7 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 		return true;
 	}
 
-	public abstract Tag readTag(String value, boolean isJson);
+	public abstract Tag readTag(String value, boolean isJson, boolean readUnknown);
 
 	@Override
 	public boolean shouldStateClose(CGPanel panel)

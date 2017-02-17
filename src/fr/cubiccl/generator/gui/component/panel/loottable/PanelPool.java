@@ -23,7 +23,7 @@ public class PanelPool extends CGPanel implements ActionListener
 
 	private CGRadioButton buttonRollsExact, buttonRollsRange, buttonBonusExact, buttonBonusRange;
 	private CGEntry entryRollsMin, entryRollsMax, entryBonusMin, entryBonusMax;
-	private PanelObjectList<LootTableCondition> listConditions;
+	private PanelConditionList listConditions;
 	private PanelObjectList<LootTableEntry> listEntries;
 
 	public PanelPool()
@@ -58,7 +58,7 @@ public class PanelPool extends CGPanel implements ActionListener
 		gbc.gridwidth = 2;
 		this.add(new CGLabel("loottable.conditions.description"), gbc);
 		++gbc.gridy;
-		this.add(this.listConditions = new PanelObjectList<LootTableCondition>("loottable.conditions", "loottable.condition", LootTableCondition.class), gbc);
+		this.add(this.listConditions = new PanelConditionList("loottable.conditions", "loottable.condition"), gbc);
 		++gbc.gridy;
 		this.add(new CGLabel("loottable.entries.description"), gbc);
 		++gbc.gridy;
@@ -147,10 +147,10 @@ public class PanelPool extends CGPanel implements ActionListener
 
 	private void updateDisplay()
 	{
-		if (this.buttonRollsExact.isSelected()) this.entryRollsMin.label.setText("loottable.rolls");
-		else this.entryRollsMin.label.setText("loottable.rolls.min");
-		if (this.buttonBonusExact.isSelected()) this.entryBonusMin.label.setText("loottable.bonus");
-		else this.entryBonusMin.label.setText("loottable.bonus.min");
+		if (this.buttonRollsExact.isSelected()) this.entryRollsMin.label.setTextID("loottable.rolls");
+		else this.entryRollsMin.label.setTextID("loottable.rolls.min");
+		if (this.buttonBonusExact.isSelected()) this.entryBonusMin.label.setTextID("loottable.bonus");
+		else this.entryBonusMin.label.setTextID("loottable.bonus.min");
 
 		this.entryBonusMax.container.setVisible(this.buttonBonusRange.isSelected());
 		this.entryRollsMax.container.setVisible(this.buttonRollsRange.isSelected());
