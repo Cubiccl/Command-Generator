@@ -4,7 +4,7 @@ Successfully created 254 blocks.
 Successfully created 411 items.
 Successfully created 83 entities.
 Successfully created 27 effects.
-Successfully created 30 enchantments.
+Successfully created 29 enchantments.
 Successfully created 33 achievements.
 Successfully created 11 attributes.
 Successfully created 48 particles.
@@ -17,63 +17,6 @@ Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
 Switching to Loot Tables mode.
-Generating !
-Successfully generated : {
-    "pools":
-    [    
-        {
-            "rolls":4,
-            "bonus_rolls":
-            {
-                "min":1f,
-                "max":3f
-            },
-            "conditions":
-            [            
-                {
-                    "condition":"entity_scores",
-                    "entity":"killer_player",
-                    "scores":
-                    {
-                        "Kappa":24,
-                        "Range":
-                        {
-                            "min":-6,
-                            "max":7
-                        }
-                    }
-                }
-            ],
-            "entries":
-            [            
-                {
-                    "conditions":
-                    [                    
-                        {
-                            "condition":"entity_properties",
-                            "entity":"killer",
-                            "properties":
-                            {
-                                "on_fire":false
-                            }
-                        }
-                    ],
-                    "type":"item",
-                    "name":"minecraft:structure_void",
-                    "functions":[],
-                    "weight":1,
-                    "quality":9
-                },            
-                {
-                    "conditions":[],
-                    "type":"loot_table",
-                    "name":"fishing/junk",
-                    "functions":[],
-                    "weight":0,
-                    "quality":0
-                }
-            ]
-        }
-    ]
-}
+Couldn't find translation for : lt_function.enchantment.limit
+Couldn't find translation for : lt_function.enchantment.limit
 Exiting Command Generator... Bye bye !

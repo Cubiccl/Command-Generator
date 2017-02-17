@@ -46,7 +46,7 @@ public class PanelConditionScore extends CGPanel implements ActionListener
 
 		this.entryMin.addIntFilter();
 		this.entryMax.addIntFilter();
-		
+
 		this.updateDisplay();
 	}
 
@@ -60,8 +60,9 @@ public class PanelConditionScore extends CGPanel implements ActionListener
 	{
 		this.entryName.checkValue(CGEntry.STRING);
 		this.entryMin.checkValue(CGEntry.INTEGER);
-		if (this.buttonFixed.isSelected()) return new ScoreCondition(this.entryName.getText(), Integer.parseInt(this.entryMin.getText()), 0, false);
-		this.entryMax.checkValue(CGEntry.INTEGER);
+		int min = Integer.parseInt(this.entryMin.getText());
+		if (this.buttonFixed.isSelected()) return new ScoreCondition(this.entryName.getText(), min, 0, false);
+		this.entryMax.checkValueSuperior(CGEntry.INTEGER, min);
 		return new ScoreCondition(this.entryName.getText(), Integer.parseInt(this.entryMin.getText()), Integer.parseInt(this.entryMax.getText()), true);
 	}
 

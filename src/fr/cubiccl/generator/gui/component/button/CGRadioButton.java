@@ -12,7 +12,7 @@ public class CGRadioButton extends CRadioButton implements ITranslated
 
 	public CGRadioButton(String textID)
 	{
-		this(textID.equals("") ? null : new Text(textID));
+		this(textID == null || textID.equals("") ? null : new Text(textID));
 	}
 
 	public CGRadioButton(Text text)

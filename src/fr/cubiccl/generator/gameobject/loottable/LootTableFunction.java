@@ -3,6 +3,7 @@ package fr.cubiccl.generator.gameobject.loottable;
 import java.awt.Component;
 import java.util.ArrayList;
 
+import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -13,6 +14,8 @@ import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Replacement;
+import fr.cubiccl.generator.utils.Text;
 
 public class LootTableFunction implements IObjectList<LootTableFunction>
 {
@@ -48,6 +51,11 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 		public int compareToFunction(Function anotherFunction)
 		{
 			return this.priority - anotherFunction.priority;
+		}
+
+		public Text translate()
+		{
+			return new Text("lt_function." + this.name);
 		}
 	}
 
@@ -93,29 +101,36 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		PanelFunction p = new PanelFunction();
+		p.setupFrom(this);
+		return p;
 	}
 
 	@Override
 	public Component getDisplayComponent()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new CTextArea(this.toString());
 	}
 
 	@Override
 	public String getName(int index)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new Text("loottable.function", new Replacement("<index>", Integer.toString(index + 1))).toString();
 	}
 
 	@Override
 	public LootTableFunction setupFrom(CGPanel panel) throws CommandGenerationException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return ((PanelFunction) panel).generate();
+	}
+
+	@Override
+	public String toString()
+	{
+		String display = this.function.translate().toString();
+		for (Tag tag : this.tags)
+			display += ",\n" + tag.toCommand(-1);
+		return display;
 	}
 
 	public TagCompound toTag(TemplateCompound container)

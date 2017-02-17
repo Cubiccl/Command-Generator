@@ -75,6 +75,7 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
+		// TODO random slots
 		PanelAttributeModifier p = new PanelAttributeModifier(properties.contains("isApplied") && (boolean) properties.get("isApplied"),
 				properties.hasCustomObjects());
 		p.setupFrom(this);

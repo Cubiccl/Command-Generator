@@ -60,7 +60,7 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 		return new Enchantment(this.selectedEnchantment(), Integer.parseInt(this.entryLevel.getText()));
 	}
 
-	private EnchantmentType selectedEnchantment()
+	public EnchantmentType selectedEnchantment()
 	{
 		return this.comboboxEnchant.getSelectedObject();
 	}
@@ -68,6 +68,11 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 	public void setEnchantment(EnchantmentType enchantment)
 	{
 		if (enchantment != null) this.comboboxEnchant.setSelected(enchantment);
+	}
+
+	public void setHasLevel(boolean hasLevel)
+	{
+		this.entryLevel.container.setVisible(hasLevel);
 	}
 
 	public void setLevel(int level)
