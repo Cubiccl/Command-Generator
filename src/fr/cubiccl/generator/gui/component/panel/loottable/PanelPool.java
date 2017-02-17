@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 
-import fr.cubiccl.generator.gameobject.loottable.LootTableCondition;
 import fr.cubiccl.generator.gameobject.loottable.LootTableEntry;
 import fr.cubiccl.generator.gameobject.loottable.LootTablePool;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
@@ -134,13 +133,8 @@ public class PanelPool extends CGPanel implements ActionListener
 		this.entryRollsMin.setText(Integer.toString(pool.rollsMin));
 		this.entryBonusMin.setText(Double.toString(pool.bonusRollsMin));
 
-		this.listConditions.clear();
-		for (LootTableCondition c : pool.conditions)
-			this.listConditions.add(c);
-
-		this.listEntries.clear();
-		for (LootTableEntry e : pool.entries)
-			this.listEntries.add(e);
+		this.listConditions.setValues(pool.conditions);
+		this.listEntries.setValues(pool.entries);
 
 		this.updateDisplay();
 	}

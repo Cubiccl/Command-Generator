@@ -44,7 +44,35 @@ Successfully generated : {
                     }
                 }
             ],
-            "entries":[]
+            "entries":
+            [            
+                {
+                    "conditions":
+                    [                    
+                        {
+                            "condition":"entity_properties",
+                            "entity":"killer",
+                            "properties":
+                            {
+                                "on_fire":false
+                            }
+                        }
+                    ],
+                    "type":"item",
+                    "name":"minecraft:structure_void",
+                    "functions":[],
+                    "weight":1,
+                    "quality":9
+                },            
+                {
+                    "conditions":[],
+                    "type":"loot_table",
+                    "name":"fishing/junk",
+                    "functions":[],
+                    "weight":0,
+                    "quality":0
+                }
+            ]
         }
     ]
 }

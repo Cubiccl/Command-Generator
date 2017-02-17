@@ -8,7 +8,7 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 
 /** Any class implementing this interface should have an empty constructor */
 public interface IObjectList<T>
-{// TODO verify empty constructors
+{
 
 	/** @param properties - The properties of the List.
 	 * @return A panel to display to the user, so that he or she may create or edit an Object. */

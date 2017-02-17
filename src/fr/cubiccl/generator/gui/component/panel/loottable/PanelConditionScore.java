@@ -40,11 +40,14 @@ public class PanelConditionScore extends CGPanel implements ActionListener
 		group.add(this.buttonFixed);
 		group.add(this.buttonRanged);
 
+		this.buttonFixed.setSelected(true);
 		this.buttonFixed.addActionListener(this);
 		this.buttonRanged.addActionListener(this);
 
 		this.entryMin.addIntFilter();
 		this.entryMax.addIntFilter();
+		
+		this.updateDisplay();
 	}
 
 	@Override

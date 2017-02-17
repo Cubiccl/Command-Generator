@@ -81,7 +81,7 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		if (!properties.contains("conditions")) properties.set("conditions", new Condition[0]);
+		if (!properties.contains("conditions")) properties.set("conditions", new ArrayList<Condition>());
 		PanelCondition p;
 		if ((boolean) properties.get("new")) p = new PanelCondition((ArrayList<Condition>) properties.get("conditions"));
 		else
