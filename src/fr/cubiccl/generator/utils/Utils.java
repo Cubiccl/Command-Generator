@@ -156,7 +156,7 @@ public final class Utils
 
 	public static String doubleToString(double d)
 	{
-		return (new DecimalFormat("#.#").format(d)).replaceAll(",", ".");
+		return (new DecimalFormat("#.######").format(d)).replaceAll(",", ".");
 	}
 
 	public static int[] generateArray(int maxValue)

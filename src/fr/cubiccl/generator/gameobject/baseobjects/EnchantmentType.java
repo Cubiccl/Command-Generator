@@ -71,6 +71,7 @@ public class EnchantmentType extends BaseObject implements IObjectList<Enchantme
 	@Override
 	public Text name()
 	{
+		if (this.idString == null) return null;
 		return new Text("enchantment." + this.idString);
 	}
 

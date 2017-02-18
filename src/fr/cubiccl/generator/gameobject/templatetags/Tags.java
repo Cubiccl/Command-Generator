@@ -125,6 +125,24 @@ public final class Tags
 	public static final TemplateNumber LT_CONDITION_SCORES_MAX = new TemplateNumber("max", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateNumber LT_CONDITION_SCORES_MIN = new TemplateNumber("min", UNAVAILABLE, TagNumber.INTEGER);
 
+	public static final TemplateNumber LT_FUNCTION_COUNT = new TemplateNumber("count", UNAVAILABLE, TagNumber.INTEGER);
+	public static final DefaultCompound LT_FUNCTION_COUNT_RANGE = new DefaultCompound("count");
+	public static final TemplateNumber LT_FUNCTION_DAMAGE = new TemplateNumber("damage", UNAVAILABLE, TagNumber.INTEGER);
+	public static final DefaultCompound LT_FUNCTION_DAMAGE_RANGE = new DefaultCompound("damage");
+	public static final TemplateNumber LT_FUNCTION_DATA = new TemplateNumber("data", UNAVAILABLE, TagNumber.INTEGER);
+	public static final DefaultCompound LT_FUNCTION_DATA_RANGE = new DefaultCompound("data");
+	public static final DefaultList LT_FUNCTION_ENCHANTMENTS = new DefaultList("enchantments");
+	public static final TemplateNumber LT_FUNCTION_LEVELS = new TemplateNumber("levels", UNAVAILABLE, TagNumber.INTEGER);
+	public static final DefaultCompound LT_FUNCTION_LEVELS_RANGE = new DefaultCompound("levels");
+	public static final TemplateNumber LT_FUNCTION_LOOTING_LIMIT = new TemplateNumber("limit", UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateNumber LT_FUNCTION_MAX = new TemplateNumber("max", UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateNumber LT_FUNCTION_MAX_FLOAT = new TemplateNumber("max", UNAVAILABLE, TagNumber.FLOAT);
+	public static final TemplateNumber LT_FUNCTION_MIN = new TemplateNumber("min", UNAVAILABLE, TagNumber.INTEGER);
+	public static final TemplateNumber LT_FUNCTION_MIN_FLOAT = new TemplateNumber("min", UNAVAILABLE, TagNumber.FLOAT);
+	public static final DefaultList LT_FUNCTION_MODIFIERS = new DefaultList("modifiers");
+	public static final TemplateString LT_FUNCTION_NBT = new TemplateString("nbt", UNAVAILABLE);
+	public static final TemplateBoolean LT_FUNCTION_TREASURE = new TemplateBoolean("treasure", UNAVAILABLE);
+
 	public static final TemplateString OBJECT_NAME = new TemplateString("ObjectName", UNAVAILABLE);
 
 	public static final DefaultCompound OFFER_BUY = new DefaultCompound("buy");

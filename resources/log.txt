@@ -17,6 +17,4 @@ Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
 Switching to Loot Tables mode.
-Couldn't find translation for : lt_function.enchantment.limit
-Couldn't find translation for : lt_function.enchantment.limit
 Exiting Command Generator... Bye bye !

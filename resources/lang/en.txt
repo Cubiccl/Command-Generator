@@ -402,7 +402,6 @@ lt_entry.quality=Quality (modifies weight according to luck)
 lt_entry.table=Loot Table to use
 lt_entry.weight=Weight (chance to be used)
 
-lt_function.count.limit=Maximum amount
 lt_function.enchant_randomly=Add an Enchantment
 lt_function.enchant_with_levels=Enchantment level
 lt_function.enchantment.treasure=Treasure Enchantments allowed?
@@ -410,12 +409,13 @@ lt_function.enchantments=Available Enchantments
 lt_function.fixed=Fixed value
 lt_function.furnace_smelt=Cook the Item
 lt_function.looting_enchant=Additionnal Luck count
+lt_function.looting.limit=Maximum amount (0 for no limit)
 lt_function.modifiers=Attribute Modifiers
 lt_function.nbt=NBT Tags to set
 lt_function.ranged=Random value
 lt_function.set_attributes=Add Attribute Modifiers
 lt_function.set_count=Set Item count
-lt_function.set_damage=Set Item durability
+lt_function.set_damage=Set Item durability (in percent)
 lt_function.set_data=Set Item data
 lt_function.set_nbt=Add NBT Tags
 
