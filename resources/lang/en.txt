@@ -372,6 +372,7 @@ loottable.functions=Functions
 loottable.functions.description=Each of these functions will modify the generated Item.
 loottable.list=Loot Tables
 loottable.load=Read existing Table
+loottable.load.description=Enter a Loot Table that the Generator should read.
 loottable.output=Output :
 loottable.pool=Pool <index>
 loottable.pool.tostring=<items> Entries, <conditions> conditions, <rolls> rolls.

@@ -1,16 +1,24 @@
 package fr.cubiccl.generator;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
+import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.gui.Window;
+import fr.cubiccl.generator.gui.component.CScrollPane;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.*;
 
 public class CommandGenerator
@@ -140,7 +148,23 @@ public class CommandGenerator
 
 	public static void loadTable()
 	{
-		// TODO load Table
+		CGPanel p = new CGPanel();
+		p.setLayout(new BorderLayout());
+		p.add(new CGLabel("loottable.load.description"), BorderLayout.NORTH);
+		CTextArea area = new CTextArea("");
+		area.setEditable(true);
+		CScrollPane sc = new CScrollPane(area);
+		sc.setPreferredSize(new Dimension(400, 200));
+		p.add(sc, BorderLayout.CENTER);
+		if (!Dialogs.showConfirmDialog(p)) return;
+
+		TagCompound tag = (TagCompound) NBTReader.read(area.getText(), true, true, true);
+		LootTable table = LootTable.createFrom(tag);
+
+		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
+		if (name == null) return;
+		table.setCustomName(name);
+		window.panelLootTableSelection.list.add(table);
 	}
 
 	public static void log(String text)

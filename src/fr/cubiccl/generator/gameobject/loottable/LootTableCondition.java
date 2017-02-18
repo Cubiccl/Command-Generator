@@ -63,8 +63,8 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 		return new LootTableCondition(c, tags.toArray(new Tag[tags.size()]));
 	}
 
-	public final Condition condition;
-	public final Tag[] tags;
+	public Condition condition;
+	public Tag[] tags;
 
 	public LootTableCondition()
 	{
@@ -110,7 +110,10 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 	@Override
 	public LootTableCondition setupFrom(CGPanel panel) throws CommandGenerationException
 	{
-		return ((PanelCondition) panel).generate();
+		LootTableCondition c = ((PanelCondition) panel).generate();
+		this.condition = c.condition;
+		this.tags = c.tags;
+		return this;
 	}
 
 	@Override

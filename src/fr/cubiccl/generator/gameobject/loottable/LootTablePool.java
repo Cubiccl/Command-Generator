@@ -110,7 +110,14 @@ public class LootTablePool implements IObjectList<LootTablePool>
 	@Override
 	public LootTablePool setupFrom(CGPanel panel) throws CommandGenerationException
 	{
-		return ((PanelPool) panel).generatePool();
+		LootTablePool pool = ((PanelPool) panel).generatePool();
+		this.bonusRollsMin = pool.bonusRollsMin;
+		this.bonusRollsMax = pool.bonusRollsMax;
+		this.conditions = pool.conditions;
+		this.entries = pool.entries;
+		this.rollsMin = pool.rollsMin;
+		this.rollsMax = pool.rollsMax;
+		return this;
 	}
 
 	@Override

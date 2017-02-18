@@ -119,7 +119,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.panelGui = gui;
 		this.scrollpane.setViewportView(this.panelGui);
 		this.panelCommandSelection.setEnabled(CommandGenerator.stateManager.stateCount() <= 1);
-		this.panelLootTableSelection.setEnabled(CommandGenerator.stateManager.stateCount() <= 1);
+		//this.panelLootTableSelection.setEnabled(CommandGenerator.stateManager.stateCount() <= 1);
 	}
 
 	public void setSelected(Command command)

@@ -56,7 +56,7 @@ public class PanelLootTableSelection extends CGPanel implements ActionListener, 
 	public void actionPerformed(ActionEvent e)
 	{
 		if (this.list.selectedIndex() != -1) if (e.getSource() == this.buttonGenerate) CommandGenerator.generateTable();
-		else CommandGenerator.loadTable();
+		if (e.getSource() == this.buttonLoad) CommandGenerator.loadTable();
 	}
 
 	@Override

@@ -21,6 +21,7 @@ public class NBTReader
 		if (value.endsWith("l")) return Tag.LONG;
 		if (value.endsWith("f")) return Tag.FLOAT;
 		if (value.endsWith("d")) return Tag.DOUBLE;
+		if (value.contains(".")) return Tag.FLOAT;
 		return Tag.INT;
 	}
 
@@ -56,9 +57,17 @@ public class NBTReader
 		chars.add(']');
 		chars.add('{');
 		chars.add('}');
+		chars.add('\t');
+		chars.add('\n');
+		chars.add(' ');
 
 		for (char c : value.toCharArray())
 		{
+			if (c == '\t' || c == '\n' || c == ' ')
+			{
+				split.add(current);
+				current = "";
+			}
 			current += c;
 			if (chars.contains(c))
 			{
@@ -92,6 +101,7 @@ public class NBTReader
 	{
 		if (isInList) return readNamelessTag(determineType(tag), tag, isJson, readUnknown);
 		String id = tag.substring(0, tag.indexOf(":")), value = tag.substring(tag.indexOf(":") + 1);
+		System.out.println("reading: " + id);
 		if (isJson && id.startsWith("\"") && id.endsWith("\"")) id = id.substring(1, id.length() - 1);
 		byte type = determineType(value);
 		TemplateTag matching = findMatchingTag(id, type);
@@ -162,11 +172,14 @@ public class NBTReader
 		for (String s : split)
 		{
 			if (s.endsWith("[")) ++square;
-			if (s.endsWith("]")) --square;
 			if (s.endsWith("{")) ++curly;
+			if (s.endsWith("]")) --square;
 			if (s.endsWith("}")) --curly;
 			if (s.endsWith("\"")) inString = !inString;
-			current += s;
+			if (!(curly == 0 && square == 0 && !inString && (s.equals("\t") || s.equals(" ") || s.equals("\n"))))
+			{
+				current += s;
+			}
 			if (s.endsWith(",") && curly == 0 && square == 0 && !inString)
 			{
 				current = current.substring(0, current.length() - 1);
@@ -175,6 +188,11 @@ public class NBTReader
 			}
 		}
 		if (curly == 0 && square == 0 && !inString) values.add(current);
+
+		for (String string : values)
+		{
+			System.out.println("value: " + string);
+		}
 
 		return values.toArray(new String[values.size()]);
 	}

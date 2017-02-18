@@ -154,7 +154,7 @@ public class PanelCondition extends CGPanel implements ActionListener
 				else scoreTags.add(new TagNumber(new TemplateNumber(score.objective, Tag.UNKNOWN), score.min));
 			}
 			tags.add(new TagCompound(Tags.LT_CONDITION_SCORES, scoreTags.toArray(new Tag[scoreTags.size()])));
-		} else if (condition == Condition.KILLED_BY_PLAYER) tags.add(new TagBoolean(Tags.LT_CONDITION_KILLED, this.buttonTrue.isSelected()));
+		} else if (condition == Condition.KILLED_BY_PLAYER) tags.add(new TagBoolean(Tags.LT_CONDITION_KILLED, !this.buttonTrue.isSelected())); // reversed because tag is named inverse and stuff
 		else if (condition == Condition.RANDOM_CHANCE || condition == Condition.RANDOM_CHANCE_WITH_LOOTING)
 		{
 			this.entry1.checkValue(CGEntry.FLOAT);
@@ -213,8 +213,9 @@ public class PanelCondition extends CGPanel implements ActionListener
 			}
 		} else if (c == Condition.KILLED_BY_PLAYER && t.hasTag(Tags.LT_CONDITION_KILLED))
 		{
-			this.buttonTrue.setSelected(((TagBoolean) t.getTag(Tags.LT_CONDITION_KILLED)).value());
-			this.buttonFalse.setSelected(!((TagBoolean) t.getTag(Tags.LT_CONDITION_KILLED)).value());
+			// reversed because tag is named inverse and stuff
+			this.buttonTrue.setSelected(!((TagBoolean) t.getTag(Tags.LT_CONDITION_KILLED)).value());
+			this.buttonFalse.setSelected(((TagBoolean) t.getTag(Tags.LT_CONDITION_KILLED)).value());
 		} else if (c == Condition.RANDOM_CHANCE || c == Condition.RANDOM_CHANCE_WITH_LOOTING)
 		{
 			if (t.hasTag(Tags.LT_CONDITION_CHANCE)) this.entry1.setText(Double.toString(((TagBigNumber) t.getTag(Tags.LT_CONDITION_CHANCE)).value()));

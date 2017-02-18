@@ -83,9 +83,9 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 		return new LootTableFunction(f, conditions.toArray(new LootTableCondition[conditions.size()]), tags.toArray(new Tag[tags.size()]));
 	}
 
-	public final LootTableCondition[] conditions;
-	public final Function function;
-	public final Tag[] tags;
+	public LootTableCondition[] conditions;
+	public Function function;
+	public Tag[] tags;
 
 	public LootTableFunction()
 	{
@@ -122,7 +122,11 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 	@Override
 	public LootTableFunction setupFrom(CGPanel panel) throws CommandGenerationException
 	{
-		return ((PanelFunction) panel).generate();
+		LootTableFunction f = ((PanelFunction) panel).generate();
+		this.conditions = f.conditions;
+		this.function = f.function;
+		this.tags = f.tags;
+		return this;
 	}
 
 	@Override

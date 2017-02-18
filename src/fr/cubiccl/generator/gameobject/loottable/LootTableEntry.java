@@ -62,11 +62,11 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 				.size()]), weight, quality);
 	}
 
-	public final LootTableCondition[] conditions;
-	public final LootTableFunction[] functions;
-	public final String name;
-	public final byte type;
-	public final int weight, quality;
+	public LootTableCondition[] conditions;
+	public LootTableFunction[] functions;
+	public String name;
+	public byte type;
+	public int weight, quality;
 
 	public LootTableEntry()
 	{
@@ -106,7 +106,14 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 	@Override
 	public LootTableEntry setupFrom(CGPanel panel) throws CommandGenerationException
 	{
-		return ((PanelEntry) panel).generate();
+		LootTableEntry e = ((PanelEntry) panel).generate();
+		this.conditions = e.conditions;
+		this.functions = e.functions;
+		this.name = e.name;
+		this.type = e.type;
+		this.weight = e.weight;
+		this.quality = e.quality;
+		return this;
 	}
 
 	public TagCompound toTag(TemplateCompound container)
