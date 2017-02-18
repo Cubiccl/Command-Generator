@@ -90,7 +90,7 @@ public final class Utils
 	{
 		try
 		{
-			Float.parseFloat(value);
+			Double.parseDouble(value);
 		} catch (Exception e)
 		{
 			throw new WrongValueException(name, new Text("error.number"), value);

@@ -55,6 +55,14 @@ public class ListProperties
 		return !this.contains("customObjects") || (this.contains("customObjects") && (boolean) this.get("customObjects"));
 	}
 
+	public boolean isTrue(String property)
+	{
+		if (!this.contains(property)) return false;
+		Object p = this.get(property);
+		if (!(p instanceof Boolean)) return false;
+		return (boolean) p;
+	}
+
 	public void remove(String property)
 	{
 		this.map.remove(property);

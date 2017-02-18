@@ -15,13 +15,21 @@ public final class Tags
 	public static final TemplateNumber ABILITIES_MAY_BUILD = new TemplateNumber("mayBuild", UNAVAILABLE, TagNumber.BYTE_BOOLEAN);
 	public static final TemplateNumber ABILITIES_MAY_FLY = new TemplateNumber("mayFly", UNAVAILABLE, TagNumber.BYTE_BOOLEAN);
 
+	public static final TemplateNumber ATTRIBUTE_amount = new TemplateNumber("amount", UNAVAILABLE, TagNumber.DOUBLE);
 	public static final TemplateNumber ATTRIBUTE_AMOUNT = new TemplateNumber("Amount", UNAVAILABLE, TagNumber.DOUBLE);
+	public static final DefaultCompound ATTRIBUTE_amount_range = new DefaultCompound("amount");
+	public static final TemplateString ATTRIBUTE_attribute_name = new TemplateString("attribute", UNAVAILABLE);
 	public static final TemplateString ATTRIBUTE_ATTRIBUTE_NAME = new TemplateString("AttributeName", UNAVAILABLE);
+	public static final TemplateNumber ATTRIBUTE_base = new TemplateNumber("base", UNAVAILABLE, TagNumber.DOUBLE);
 	public static final TemplateNumber ATTRIBUTE_BASE = new TemplateNumber("Base", UNAVAILABLE, TagNumber.DOUBLE);
+	public static final TemplateString ATTRIBUTE_modifier_name = new TemplateString("name", UNAVAILABLE);
 	public static final TemplateString ATTRIBUTE_MODIFIER_NAME = new TemplateString("Name", UNAVAILABLE);
+	public static final DefaultList ATTRIBUTE_modifiers = new DefaultList("modifiers");
 	public static final DefaultList ATTRIBUTE_MODIFIERS = new DefaultList("Modifiers");
+	public static final TemplateNumber ATTRIBUTE_operation = new TemplateNumber("operation", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateNumber ATTRIBUTE_OPERATION = new TemplateNumber("Operation", UNAVAILABLE, TagNumber.INTEGER);
 	public static final TemplateString ATTRIBUTE_SLOT = new TemplateString("Slot", UNAVAILABLE);
+	public static final DefaultList ATTRIBUTE_slots = new DefaultList("slot");
 	public static final TemplateNumber ATTRIBUTE_UUIDLEAST = new TemplateNumber("UUIDLeast", UNAVAILABLE, TagNumber.LONG);
 	public static final TemplateNumber ATTRIBUTE_UUIDMOST = new TemplateNumber("UUIDMost", UNAVAILABLE, TagNumber.LONG);
 

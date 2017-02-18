@@ -27,57 +27,77 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 	public static AttributeModifier createFrom(TagCompound tag)
 	{
 		Attribute a = ObjectRegistry.attributes.first();
-		String n = "", s = SLOTS[0];
+		String n = "";
+		ArrayList<String> s = new ArrayList<String>();
 		byte o = OP_ADD;
-		double am = 0;
+		double am = 0, amm = -1;
 		long um = 0, ul = 0;
 
-		for (Tag t : tag.value())
+		if (tag.hasTag(Tags.ATTRIBUTE_ATTRIBUTE_NAME)) a = ObjectRegistry.attributes.find(((TagString) tag.getTag(Tags.ATTRIBUTE_ATTRIBUTE_NAME)).value());
+		if (tag.hasTag(Tags.ATTRIBUTE_attribute_name)) a = ObjectRegistry.attributes.find(((TagString) tag.getTag(Tags.ATTRIBUTE_attribute_name)).value());
+		if (tag.hasTag(Tags.ATTRIBUTE_MODIFIER_NAME)) n = ((TagString) tag.getTag(Tags.ATTRIBUTE_MODIFIER_NAME)).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_modifier_name)) n = ((TagString) tag.getTag(Tags.ATTRIBUTE_modifier_name)).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_SLOT)) s.add(((TagString) tag.getTag(Tags.ATTRIBUTE_SLOT)).value());
+		if (tag.hasTag(Tags.ATTRIBUTE_slots))
 		{
-			if (t.id().equals(Tags.ATTRIBUTE_ATTRIBUTE_NAME.id())) a = ObjectRegistry.attributes.find(((TagString) t).value());
-			if (t.id().equals(Tags.ATTRIBUTE_MODIFIER_NAME.id())) n = ((TagString) t).value();
-			if (t.id().equals(Tags.ATTRIBUTE_SLOT.id())) s = ((TagString) t).value();
-			if (t.id().equals(Tags.ATTRIBUTE_OPERATION.id())) o = (byte) (int) ((TagNumber) t).value();
-			if (t.id().equals(Tags.ATTRIBUTE_AMOUNT.id())) am = ((TagBigNumber) t).value();
-			if (t.id().equals(Tags.ATTRIBUTE_UUIDMOST.id())) um = (long) (double) ((TagBigNumber) t).value();
-			if (t.id().equals(Tags.ATTRIBUTE_UUIDLEAST.id())) ul = (long) (double) ((TagBigNumber) t).value();
+			for (Tag slot : ((TagList) tag.getTag(Tags.ATTRIBUTE_slots)).value())
+				s.add(((TagString) slot).value());
 		}
+		if (tag.hasTag(Tags.ATTRIBUTE_OPERATION)) o = (byte) (int) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_OPERATION)).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_operation)) o = (byte) (int) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_operation)).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_AMOUNT)) am = ((TagBigNumber) tag.getTag(Tags.ATTRIBUTE_AMOUNT)).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_amount)) am = ((TagBigNumber) tag.getTag(Tags.ATTRIBUTE_amount)).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_amount_range))
+		{
+			TagCompound container = (TagCompound) tag.getTag(Tags.ATTRIBUTE_amount_range);
+			am = ((TagBigNumber) container.getTag(Tags.LT_FUNCTION_MIN_FLOAT)).value();
+			amm = ((TagBigNumber) container.getTag(Tags.LT_FUNCTION_MAX_FLOAT)).value();
+		}
+		if (tag.hasTag(Tags.ATTRIBUTE_UUIDMOST)) um = (long) (double) ((TagBigNumber) tag.getTag(Tags.ATTRIBUTE_UUIDMOST)).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_UUIDLEAST)) ul = (long) (double) ((TagBigNumber) tag.getTag(Tags.ATTRIBUTE_UUIDLEAST)).value();
 
-		AttributeModifier m = new AttributeModifier(a, n, s, o, am, um, ul);
+		AttributeModifier m = new AttributeModifier(a, n, s.toArray(new String[s.size()]), o, am, amm, um, ul);
 		m.findName(tag);
 		return m;
 	}
 
-	public final double amount;
+	public final double amount, amountMax;
 	public final Attribute attribute;
-	public final String name, slot;
+	public final boolean isInLootTable;
+	public final String name;
 	public final byte operation;
+	public final String[] slots;
 	public final long UUIDMost, UUIDLeast;
 
 	public AttributeModifier()
 	{
-		this(ObjectRegistry.attributes.find("generic.armor"), "", "mainhand", (byte) 0, 0, ThreadLocalRandom.current().nextLong(), ThreadLocalRandom.current()
-				.nextLong());
+		this(ObjectRegistry.attributes.find("generic.armor"), "", new String[]
+		{ "mainhand" }, (byte) 0, 0, ThreadLocalRandom.current().nextLong(), ThreadLocalRandom.current().nextLong());
 	}
 
-	public AttributeModifier(Attribute attribute, String name, String slot, byte operation, double amount, long UUIDMost, long UUIDLeast)
+	public AttributeModifier(Attribute attribute, String name, String[] slots, byte operation, double amount, double amountMax, long UUIDMost, long UUIDLeast)
 	{
 		super();
 		this.attribute = attribute;
 		this.name = name;
-		this.slot = slot;
+		this.slots = slots;
 		this.operation = operation;
 		this.amount = amount;
+		this.amountMax = amountMax;
 		this.UUIDMost = UUIDMost;
 		this.UUIDLeast = UUIDLeast;
+		this.isInLootTable = this.slots.length > 1;
+	}
+
+	public AttributeModifier(Attribute attribute, String name, String[] slots, byte operation, double amount, long UUIDMost, long UUIDLeast)
+	{
+		this(attribute, name, slots, operation, amount, -1, UUIDMost, UUIDLeast);
 	}
 
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		// TODO random slots
-		PanelAttributeModifier p = new PanelAttributeModifier(properties.contains("isApplied") && (boolean) properties.get("isApplied"),
-				properties.hasCustomObjects());
+		PanelAttributeModifier p = new PanelAttributeModifier(properties.isTrue("isApplied"), properties.isTrue("random_slots"), properties.hasCustomObjects());
 		p.setupFrom(this);
 		return p;
 	}
@@ -116,24 +136,35 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 	@Deprecated
 	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
-		return this.toTag(container, true, includeName);
+		return this.toTag(container, false, includeName);
 	}
 
 	/** @param isApplied - True if is applied to an entity. Thus attribute and slot won't be included. */
 	public TagCompound toTag(TemplateCompound container, boolean isApplied, boolean includeName)
 	{
+		boolean lt = this.isInLootTable;
 		ArrayList<Tag> tags = new ArrayList<Tag>();
-		tags.add(new TagString(Tags.ATTRIBUTE_MODIFIER_NAME, this.name));
-		tags.add(new TagNumber(Tags.ATTRIBUTE_OPERATION, this.operation));
-		tags.add(new TagBigNumber(Tags.ATTRIBUTE_AMOUNT, this.amount));
-		tags.add(new TagBigNumber(Tags.ATTRIBUTE_UUIDMOST, this.UUIDMost));
-		tags.add(new TagBigNumber(Tags.ATTRIBUTE_UUIDLEAST, this.UUIDLeast));
+		tags.add(new TagString(lt ? Tags.ATTRIBUTE_modifier_name : Tags.ATTRIBUTE_MODIFIER_NAME, this.name));
+		tags.add(new TagNumber(lt ? Tags.ATTRIBUTE_operation : Tags.ATTRIBUTE_OPERATION, this.operation));
+		if (this.amountMax != -1) tags.add(new TagCompound(Tags.ATTRIBUTE_amount_range, new TagBigNumber(Tags.LT_FUNCTION_MIN_FLOAT, this.amount),
+				new TagBigNumber(Tags.LT_FUNCTION_MAX_FLOAT, this.amountMax)));
+		else tags.add(new TagBigNumber(lt ? Tags.ATTRIBUTE_amount : Tags.ATTRIBUTE_AMOUNT, this.amount));
+		if (!lt) tags.add(new TagBigNumber(Tags.ATTRIBUTE_UUIDMOST, this.UUIDMost));
+		if (!lt) tags.add(new TagBigNumber(Tags.ATTRIBUTE_UUIDLEAST, this.UUIDLeast));
 		if (!isApplied)
 		{
-			tags.add(new TagString(Tags.ATTRIBUTE_ATTRIBUTE_NAME, this.attribute.id));
-			tags.add(new TagString(Tags.ATTRIBUTE_SLOT, this.slot));
+			tags.add(new TagString(lt ? Tags.ATTRIBUTE_attribute_name : Tags.ATTRIBUTE_ATTRIBUTE_NAME, this.attribute.id));
+			if (!lt) tags.add(new TagString(Tags.ATTRIBUTE_SLOT, this.slots[0]));
+			else
+			{
+				TagString[] s = new TagString[this.slots.length];
+				for (int i = 0; i < s.length; ++i)
+					s[i] = new TagString(Tags.DEFAULT_STRING, this.slots[i]);
+				tags.add(new TagList(Tags.ATTRIBUTE_slots, s));
+			}
 		}
 		if (includeName) tags.add(this.nameTag());
-		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
+		TagCompound t = new TagCompound(container, tags.toArray(new Tag[tags.size()]));
+		return t;
 	}
 }

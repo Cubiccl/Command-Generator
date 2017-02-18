@@ -12,6 +12,7 @@ import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.loottable.PanelFunction;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Replacement;
@@ -82,9 +83,9 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 		return new LootTableFunction(f, conditions.toArray(new LootTableCondition[conditions.size()]), tags.toArray(new Tag[tags.size()]));
 	}
 
-	protected final LootTableCondition[] conditions;
+	public final LootTableCondition[] conditions;
 	public final Function function;
-	protected final Tag[] tags;
+	public final Tag[] tags;
 
 	public LootTableFunction()
 	{
@@ -129,7 +130,7 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 	{
 		String display = this.function.translate().toString();
 		for (Tag tag : this.tags)
-			display += ",\n" + tag.toCommand(-1);
+			if (!tag.id().equals(Tags.LT_FUNCTION_MODIFIERS.id())) display += ",\n" + tag.toCommand(-1);
 		return display;
 	}
 
