@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.loottable;
 
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -63,7 +64,7 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 	}
 
 	public LootTableCondition[] conditions;
-	public LootTableFunction[] functions;
+	private LootTableFunction[] functions;
 	public String name;
 	public byte type;
 	public int weight, quality;
@@ -78,7 +79,7 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		this.conditions = conditions;
 		this.type = type;
 		this.name = name;
-		this.functions = functions;
+		this.setFunctions(functions);
 		this.weight = weight;
 		this.quality = quality;
 	}
@@ -97,10 +98,32 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		return new CGLabel(new Text(this.name, false));
 	}
 
+	public LootTableFunction[] getFunctions()
+	{
+		return this.functions;
+	}
+
 	@Override
 	public String getName(int index)
 	{
 		return this.name;
+	}
+
+	public void setFunctions(LootTableFunction[] functions)
+	{
+		ArrayList<LootTableFunction> f = new ArrayList<LootTableFunction>();
+		for (LootTableFunction lootTableFunction : functions)
+			f.add(lootTableFunction);
+		f.sort(new Comparator<LootTableFunction>()
+		{
+
+			@Override
+			public int compare(LootTableFunction o1, LootTableFunction o2)
+			{
+				return o1.function.compareToFunction(o2.function);
+			}
+		});
+		this.functions = f.toArray(new LootTableFunction[f.size()]);
 	}
 
 	@Override

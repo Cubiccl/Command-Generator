@@ -44,6 +44,8 @@ public class PanelEntry extends CGPanel implements ActionListener
 		++gbc.gridy;
 		this.add((this.entryQuality = new CGEntry("lt_entry.quality")).container, gbc);
 		++gbc.gridy;
+		this.add(new CGLabel("lt_entry.quality.description"), gbc);
+		++gbc.gridy;
 		this.add(new CGLabel("loottable.conditions.description"), gbc);
 		++gbc.gridy;
 		this.add(this.listConditions = new PanelConditionList("loottable.conditions", "loottable.condition"), gbc);
@@ -99,7 +101,7 @@ public class PanelEntry extends CGPanel implements ActionListener
 		this.entryQuality.setText(Integer.toString(entry.quality));
 
 		this.listConditions.setValues(entry.conditions);
-		this.listFunctions.setValues(entry.functions);
+		this.listFunctions.setValues(entry.getFunctions());
 
 		this.updateDisplay();
 	}

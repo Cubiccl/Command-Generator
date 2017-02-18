@@ -1,4 +1,4 @@
-Welcome to the Command Generator v2.2.1 by Cubi !
+Welcome to the Command Generator v2.3 by Cubi !
 ---- Creating objects ----
 Successfully created 254 blocks.
 Successfully created 411 items.
@@ -16,4 +16,5 @@ Successfully created 185 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
+Switching to Loot Tables mode.
 Exiting Command Generator... Bye bye !

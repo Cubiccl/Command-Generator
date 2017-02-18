@@ -52,6 +52,7 @@ public class Lang
 		return doTranslate(textID);
 	}
 
+	@SuppressWarnings("unused")
 	public static void updateLang()
 	{
 		if (english.size() == 0) loadEnglish();
@@ -65,7 +66,11 @@ public class Lang
 		}
 
 		for (String textID : english.keySet())
-			if (!dictionnary.containsKey(textID)) CommandGenerator.log("Not translated in " + Settings.language().name + " : " + textID);
+			if (!dictionnary.containsKey(textID))
+			{
+				CommandGenerator.log("Not translated in " + Settings.language().name + " : " + textID);
+				if (false) CommandGenerator.untranslated.add(textID);
+			}
 	}
 
 	private Lang()

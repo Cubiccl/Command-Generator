@@ -101,7 +101,6 @@ public class NBTReader
 	{
 		if (isInList) return readNamelessTag(determineType(tag), tag, isJson, readUnknown);
 		String id = tag.substring(0, tag.indexOf(":")), value = tag.substring(tag.indexOf(":") + 1);
-		System.out.println("reading: " + id);
 		if (isJson && id.startsWith("\"") && id.endsWith("\"")) id = id.substring(1, id.length() - 1);
 		byte type = determineType(value);
 		TemplateTag matching = findMatchingTag(id, type);
@@ -188,11 +187,6 @@ public class NBTReader
 			}
 		}
 		if (curly == 0 && square == 0 && !inString) values.add(current);
-
-		for (String string : values)
-		{
-			System.out.println("value: " + string);
-		}
 
 		return values.toArray(new String[values.size()]);
 	}

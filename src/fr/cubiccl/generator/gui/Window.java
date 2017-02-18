@@ -102,8 +102,8 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		} else
 		{
 			Container contentPane = this.getContentPane();
-			this.panelLootTableOutput.setBounds(0, 0, contentPane.getWidth() / 2, PanelLootTableOutput.HEIGHT);
-			this.panelLootTableSelection.setBounds(this.panelLootTableOutput.getWidth(), 0, this.getWidth() / 2, PanelLootTableOutput.HEIGHT);
+			this.panelLootTableSelection.setBounds(0, 0, contentPane.getWidth() / 2, PanelLootTableOutput.HEIGHT);
+			this.panelLootTableOutput.setBounds(this.panelLootTableSelection.getWidth(), 0, this.getWidth() / 2, PanelLootTableOutput.HEIGHT);
 			this.scrollpane.setBounds(0, PanelLootTableOutput.HEIGHT, contentPane.getWidth(), contentPane.getHeight() - this.panelLootTableOutput.getHeight());
 		}
 		this.validate();
@@ -119,7 +119,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.panelGui = gui;
 		this.scrollpane.setViewportView(this.panelGui);
 		this.panelCommandSelection.setEnabled(CommandGenerator.stateManager.stateCount() <= 1);
-		//this.panelLootTableSelection.setEnabled(CommandGenerator.stateManager.stateCount() <= 1);
+		// this.panelLootTableSelection.setEnabled(CommandGenerator.stateManager.stateCount() <= 1);
 	}
 
 	public void setSelected(Command command)

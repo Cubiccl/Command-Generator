@@ -405,12 +405,13 @@ lt_condition.scores=Scoreboard values to match
 lt_entry.item=Item to create
 lt_entry.mode.item=Create a fixed Item
 lt_entry.mode.table=Create an Item from another Loot Table
-lt_entry.quality=Quality (modifies weight according to luck)
+lt_entry.quality=Quality
+lt_entry.quality.description=The Quality modifies the entry's weight based on the player's luck attribute. Formula is floor( weight + (quality * luck))
 lt_entry.table=Loot Table to use
 lt_entry.weight=Weight (chance to be used)
 
-lt_function.enchant_randomly=Add an Enchantment
-lt_function.enchant_with_levels=Enchantment level
+lt_function.enchant_randomly=Add an Enchantment (random level)
+lt_function.enchant_with_levels=Enchantment level (random enchantment)
 lt_function.enchantment.treasure=Treasure Enchantments allowed?
 lt_function.enchantments=Available Enchantments
 lt_function.fixed=Fixed value
