@@ -257,7 +257,7 @@ gamemode.select=Mode de jeu à appliquer
 gamerule.entry=Règle de jeu à changer
 gamerule.main=Règle de jeu
 gamerule.predefined=Règles de jeu prédéfinies...
-gamerule.predefined.select=Choisissez une règle de jeu
+gamerule.predefined.select=Choisissez une règle de jeu :
 gamerule.query=Récupérer la valeur
 
 general.add=Ajouter

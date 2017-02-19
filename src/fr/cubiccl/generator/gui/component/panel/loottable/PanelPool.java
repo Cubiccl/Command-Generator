@@ -10,6 +10,7 @@ import fr.cubiccl.generator.gameobject.loottable.LootTableEntry;
 import fr.cubiccl.generator.gameobject.loottable.LootTablePool;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.HelpLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
@@ -67,6 +68,13 @@ public class PanelPool extends CGPanel implements ActionListener
 		this.buttonRollsRange.addActionListener(this);
 		this.buttonBonusExact.addActionListener(this);
 		this.buttonBonusRange.addActionListener(this);
+
+		this.entryRollsMin.addIntFilter();
+		this.entryRollsMax.addIntFilter();
+		this.entryBonusMin.addIntFilter();
+		this.entryBonusMax.addIntFilter();
+		this.entryRollsMin.addHelpLabel(new HelpLabel("loottable.rolls.help"));
+		this.entryBonusMin.addHelpLabel(new HelpLabel("loottable.bonus.help"));
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(this.buttonRollsExact);

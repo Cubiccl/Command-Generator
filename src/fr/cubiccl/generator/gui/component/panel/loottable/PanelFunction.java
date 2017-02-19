@@ -38,6 +38,7 @@ public class PanelFunction extends CGPanel implements ActionListener
 	private PanelConditionList conditions;
 	private PanelObjectList<EnchantmentType> enchantments;
 	private CGEntry entryMin, entryMax, entryLimit;
+	private CGLabel labelFunction;
 	private PanelItem panelNbt;
 
 	public PanelFunction()
@@ -50,6 +51,8 @@ public class PanelFunction extends CGPanel implements ActionListener
 
 		++gbc.gridwidth;
 		this.add(this.comboboxFunction = new CGComboBox(names), gbc);
+		++gbc.gridy;
+		this.add(this.labelFunction = new CGLabel((String) null), gbc);
 
 		++gbc.gridy;
 		--gbc.gridwidth;
@@ -174,73 +177,76 @@ public class PanelFunction extends CGPanel implements ActionListener
 		Function f = function.function;
 		this.comboboxFunction.setSelectedItem(f.translate().toString());
 		TagCompound t = Tags.DEFAULT_COMPOUND.create(function.tags);
+		if (t.size() != 0)
+		{
 
-		if (f == Function.SET_ATTRIBUTES && t.hasTag(Tags.LT_FUNCTION_MODIFIERS))
-		{
-			Tag[] m = ((TagList) t.getTag(Tags.LT_FUNCTION_MODIFIERS)).value();
-			AttributeModifier[] modifiers = new AttributeModifier[m.length];
-			for (int i = 0; i < m.length; ++i)
-				modifiers[i] = AttributeModifier.createFrom((TagCompound) m[i]);
-			this.attributes.setValues(modifiers);
-		} else if (f == Function.ENCHANT_RANDOMLY && t.hasTag(Tags.LT_FUNCTION_ENCHANTMENTS))
-		{
-			Tag[] e = ((TagList) t.getTag(Tags.LT_FUNCTION_ENCHANTMENTS)).value();
-			EnchantmentType[] enchantments = new EnchantmentType[e.length];
-			for (int i = 0; i < e.length; ++i)
-				enchantments[i] = ObjectRegistry.enchantments.find(((TagString) e[i]).value());
-			this.enchantments.setValues(enchantments);
-		} else if (f == Function.SET_NBT && t.hasTag(Tags.LT_FUNCTION_NBT))
-		{
-			TagCompound tag = (TagCompound) NBTReader.read(((TagString) t.getTag(Tags.LT_FUNCTION_NBT)).value(), true, true);
-			String[] apps = tag.findApplications();
-			if (apps.length != 0) this.panelNbt.setItem(ObjectRegistry.items.find(apps[0]));
-			this.panelNbt.setTags(tag.value());
-		} else if (f != Function.FURNACE_SMELT)
-		{
-			TemplateNumber valueTag = Tags.LT_FUNCTION_LEVELS;
-			if (f == Function.LOOTING_ENCHANT || f == Function.SET_COUNT) valueTag = Tags.LT_FUNCTION_COUNT;
-			else if (f == Function.SET_DAMAGE) valueTag = Tags.LT_FUNCTION_DAMAGE;
-			else if (f == Function.SET_DATA) valueTag = Tags.LT_FUNCTION_DATA;
-			boolean fixed = t.hasTag(valueTag);
-
-			if (fixed)
+			if (f == Function.SET_ATTRIBUTES && t.hasTag(Tags.LT_FUNCTION_MODIFIERS))
 			{
-				this.buttonFixed.setSelected(true);
-				if (f == Function.SET_DAMAGE) this.entryMin.setText(Utils.doubleToString(((TagBigNumber) t.getTag(valueTag)).value() * 100));
-				else this.entryMin.setText(Integer.toString(((TagNumber) t.getTag(valueTag)).value()));
-			} else
+				Tag[] m = ((TagList) t.getTag(Tags.LT_FUNCTION_MODIFIERS)).value();
+				AttributeModifier[] modifiers = new AttributeModifier[m.length];
+				for (int i = 0; i < m.length; ++i)
+					modifiers[i] = AttributeModifier.createFrom((TagCompound) m[i]);
+				this.attributes.setValues(modifiers);
+			} else if (f == Function.ENCHANT_RANDOMLY && t.hasTag(Tags.LT_FUNCTION_ENCHANTMENTS))
 			{
-				this.buttonRange.setSelected(true);
-				TemplateCompound containerTag = Tags.LT_FUNCTION_LEVELS_RANGE;
-				if (f == Function.LOOTING_ENCHANT || f == Function.SET_COUNT) containerTag = Tags.LT_FUNCTION_COUNT_RANGE;
-				if (f == Function.SET_DAMAGE) containerTag = Tags.LT_FUNCTION_DAMAGE_RANGE;
-				if (f == Function.SET_DATA) containerTag = Tags.LT_FUNCTION_DATA_RANGE;
+				Tag[] e = ((TagList) t.getTag(Tags.LT_FUNCTION_ENCHANTMENTS)).value();
+				EnchantmentType[] enchantments = new EnchantmentType[e.length];
+				for (int i = 0; i < e.length; ++i)
+					enchantments[i] = ObjectRegistry.enchantments.find(((TagString) e[i]).value());
+				this.enchantments.setValues(enchantments);
+			} else if (f == Function.SET_NBT && t.hasTag(Tags.LT_FUNCTION_NBT))
+			{
+				TagCompound tag = (TagCompound) NBTReader.read(((TagString) t.getTag(Tags.LT_FUNCTION_NBT)).value(), true, true);
+				String[] apps = tag.findApplications();
+				if (apps.length != 0) this.panelNbt.setItem(ObjectRegistry.items.find(apps[0]));
+				this.panelNbt.setTags(tag.value());
+			} else if (f != Function.FURNACE_SMELT)
+			{
+				TemplateNumber valueTag = Tags.LT_FUNCTION_LEVELS;
+				if (f == Function.LOOTING_ENCHANT || f == Function.SET_COUNT) valueTag = Tags.LT_FUNCTION_COUNT;
+				else if (f == Function.SET_DAMAGE) valueTag = Tags.LT_FUNCTION_DAMAGE;
+				else if (f == Function.SET_DATA) valueTag = Tags.LT_FUNCTION_DATA;
+				boolean fixed = t.hasTag(valueTag);
 
-				TemplateNumber min = Tags.LT_FUNCTION_MIN, max = Tags.LT_FUNCTION_MAX;
-				if (f == Function.SET_DAMAGE)
+				if (fixed)
 				{
-					min = Tags.LT_FUNCTION_MIN_FLOAT;
-					max = Tags.LT_FUNCTION_MAX_FLOAT;
-				}
-
-				TagCompound container = (TagCompound) t.getTag(containerTag);
-
-				if (f == Function.SET_DAMAGE)
-				{
-					this.entryMin.setText(Utils.doubleToString(((TagBigNumber) container.getTag(min)).value() * 100));
-					this.entryMax.setText(Utils.doubleToString(((TagBigNumber) container.getTag(max)).value() * 100));
+					this.buttonFixed.setSelected(true);
+					if (f == Function.SET_DAMAGE) this.entryMin.setText(Utils.doubleToString(((TagBigNumber) t.getTag(valueTag)).value() * 100));
+					else this.entryMin.setText(Integer.toString(((TagNumber) t.getTag(valueTag)).value()));
 				} else
 				{
-					this.entryMin.setText(Integer.toString(((TagNumber) container.getTag(min)).value()));
-					this.entryMax.setText(Integer.toString(((TagNumber) container.getTag(max)).value()));
+					this.buttonRange.setSelected(true);
+					TemplateCompound containerTag = Tags.LT_FUNCTION_LEVELS_RANGE;
+					if (f == Function.LOOTING_ENCHANT || f == Function.SET_COUNT) containerTag = Tags.LT_FUNCTION_COUNT_RANGE;
+					if (f == Function.SET_DAMAGE) containerTag = Tags.LT_FUNCTION_DAMAGE_RANGE;
+					if (f == Function.SET_DATA) containerTag = Tags.LT_FUNCTION_DATA_RANGE;
+
+					TemplateNumber min = Tags.LT_FUNCTION_MIN, max = Tags.LT_FUNCTION_MAX;
+					if (f == Function.SET_DAMAGE)
+					{
+						min = Tags.LT_FUNCTION_MIN_FLOAT;
+						max = Tags.LT_FUNCTION_MAX_FLOAT;
+					}
+
+					TagCompound container = (TagCompound) t.getTag(containerTag);
+
+					if (f == Function.SET_DAMAGE)
+					{
+						this.entryMin.setText(Utils.doubleToString(((TagBigNumber) container.getTag(min)).value() * 100));
+						this.entryMax.setText(Utils.doubleToString(((TagBigNumber) container.getTag(max)).value() * 100));
+					} else
+					{
+						this.entryMin.setText(Integer.toString(((TagNumber) container.getTag(min)).value()));
+						this.entryMax.setText(Integer.toString(((TagNumber) container.getTag(max)).value()));
+					}
 				}
 			}
-		}
 
-		if (f == Function.ENCHANT_WITH_LEVELS && t.hasTag(Tags.LT_FUNCTION_TREASURE)) this.checkboxTreasure.setSelected(((TagBoolean) t
-				.getTag(Tags.LT_FUNCTION_TREASURE)).value());
-		if (f == Function.LOOTING_ENCHANT && t.hasTag(Tags.LT_FUNCTION_LOOTING_LIMIT)) this.entryLimit.setText(Integer.toString(((TagNumber) t
-				.getTag(Tags.LT_FUNCTION_LOOTING_LIMIT)).value()));
+			if (f == Function.ENCHANT_WITH_LEVELS && t.hasTag(Tags.LT_FUNCTION_TREASURE)) this.checkboxTreasure.setSelected(((TagBoolean) t
+					.getTag(Tags.LT_FUNCTION_TREASURE)).value());
+			if (f == Function.LOOTING_ENCHANT && t.hasTag(Tags.LT_FUNCTION_LOOTING_LIMIT)) this.entryLimit.setText(Integer.toString(((TagNumber) t
+					.getTag(Tags.LT_FUNCTION_LOOTING_LIMIT)).value()));
+		}
 
 		this.conditions.setValues(function.conditions);
 		this.updateDisplay();
@@ -249,6 +255,7 @@ public class PanelFunction extends CGPanel implements ActionListener
 	private void updateDisplay()
 	{
 		Function f = this.selectedFunction();
+		this.labelFunction.setTextID("lt_function." + f.name + ".description");
 
 		this.attributes.setVisible(f == Function.SET_ATTRIBUTES);
 		this.panelNbt.setVisible(f == Function.SET_NBT);

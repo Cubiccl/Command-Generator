@@ -18,6 +18,7 @@ import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.HelpLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
@@ -199,6 +200,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener, ICustom
 		this.panelClickEvent.setVisible(false);
 		this.panelHoverEvent.setVisible(false);
 		this.panelTarget.setVisible(false);
+		this.entryInsertion.addHelpLabel(new HelpLabel("json.insertion.help"));
 
 		if (!this.hasEvents)
 		{

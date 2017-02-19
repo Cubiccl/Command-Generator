@@ -13,6 +13,7 @@ achievement.one=One Achievement :
 achievement.take=Remove
 
 attribute.base=Base value
+attribute.base.help=This is the Base value of the Attribute. This value is modified by the Modifiers.
 attribute.modifier.amount=Amount to apply
 attribute.modifier.amount.fixed=Fixed Amount
 attribute.modifier.amount.max=Maximum amount
@@ -265,8 +266,9 @@ gamemode.select=Game mode to apply
 gamerule.entry=Gamerule to change
 gamerule.main=Gamerule
 gamerule.predefined=Predefined gamerules...
-gamerule.predefined.select=Select a predefined gamerule
+gamerule.predefined.select=Select a predefined gamerule :
 gamerule.query=Query gamerule value
+gamerule.query.help=The Gamerule's value can be returned by this Command. It can be used with /stats to store this value in the Scoreboard.
 
 general.add=Add
 general.back=Back
@@ -316,6 +318,7 @@ json.hover.mode.show_entity=Show Entity
 json.hover.mode.show_item=Show Item
 json.hover.mode.show_text=Show Json text
 json.insertion=Insertion (optional)
+json.insertion.help=This Insertion text will be put into the Player's chatbox if they click on this Message.
 json.italic=Italic text
 json.item=Item to show
 json.mode.score=Display scoreboard value
@@ -356,8 +359,10 @@ locate.Temple=Jungle Temple
 locate.Village=Village
 
 loottable.bonus=Bonus rolls
+loottable.bonus.help=Determines the number of rolls added for each point of the Player's Luck.<br/>Formula is : total = rolls + floor (bonus * luck)
 loottable.bonus.exact=Fixed Bonus rolls
 loottable.bonus.max=Maximum Bonus rolls
+loottable.bonus.min=Minimum Bonus rolls
 loottable.bonus.min=Minimum Bonus rolls
 loottable.bonus.range=Random Bonus rolls
 loottable.condition=Condition <index>
@@ -379,6 +384,7 @@ loottable.pool.tostring=<items> Entries, <conditions> conditions, <rolls> rolls.
 loottable.pools=Pools
 loottable.pools.description=Each of these pools will generate Items if their conditions are met.
 loottable.rolls=Rolls
+loottable.rolls.help=Determines the number of times this Pool will generate Items. For each roll, one Item will be generated.
 loottable.rolls.exact=Fixed rolls
 loottable.rolls.max=Maximum rolls
 loottable.rolls.min=Minimum rolls
@@ -400,32 +406,42 @@ lt_condition.random_chance=Random chance
 lt_condition.random_chance.chance=Chance
 lt_condition.random_chance_with_looting=Random chance, affected by Looting
 lt_condition.random_chance_with_looting.multiplier=Looting multiplier
+lt_condition.random_chance_with_looting.multiplier.help=Looting adjustment to the base success rate.<br/>Formula is : total = chance + (looting level * looting multiplier)
 lt_condition.scores=Scoreboard values to match
 
 lt_entry.item=Item to create
 lt_entry.mode.item=Create a fixed Item
 lt_entry.mode.table=Create an Item from another Loot Table
 lt_entry.quality=Quality
-lt_entry.quality.description=The Quality modifies the entry's weight based on the player's luck attribute. Formula is floor( weight + (quality * luck))
+lt_entry.quality.help=The Quality modifies the entry's weight based on the player's luck attribute. Formula is floor( weight + (quality * luck))
 lt_entry.table=Loot Table to use
 lt_entry.weight=Weight (chance to be used)
 
-lt_function.enchant_randomly=Add an Enchantment (random level)
-lt_function.enchant_with_levels=Enchantment level (random enchantment)
+lt_function.enchant_randomly=Add an Enchantment
+lt_function.enchant_randomly.description=Adds an Enchantment to the Item. Enchantment level is random.
+lt_function.enchant_with_levels=Enchantment level
+lt_function.enchant_with_levels.description=Enchants the Item as if it were enchanted with an Enchantment table. Levels is the amount of levels available to enchant.
 lt_function.enchantment.treasure=Treasure Enchantments allowed?
 lt_function.enchantments=Available Enchantments
 lt_function.fixed=Fixed value
 lt_function.furnace_smelt=Cook the Item
+lt_function.furnace_smelt.description=Cooks the Item as if it were in a Furnace.
 lt_function.looting_enchant=Additionnal Luck count
+lt_function.looting_enchant.description=Adjusts the amount of Items. Formula is : total = set_count + min(count * looting, limit)
 lt_function.looting.limit=Maximum amount (0 for no limit)
 lt_function.modifiers=Attribute Modifiers
 lt_function.nbt=NBT Tags to set
 lt_function.ranged=Random value
 lt_function.set_attributes=Add Attribute Modifiers
+lt_function.set_attributes.description=Adds Attribute Modifiers to the Item.
 lt_function.set_count=Set Item count
-lt_function.set_damage=Set Item durability (in percent)
+lt_function.set_count.description=Sets the amount of Items.
+lt_function.set_damage=Set Item durability
+lt_function.set_damage.description=Sets the Item's durability (in percent).
 lt_function.set_data=Set Item data
+lt_function.set_data.description=Sets the Item's data value.
 lt_function.set_nbt=Add NBT Tags
+lt_function.set_nbt.description=Adds NBT Tags to the Item.
 
 menu.command=Command Generator
 menu.exit=Exit
@@ -463,7 +479,9 @@ particle.zd=Particles area: Z size
 
 playsound.coordinates=Coordinates of the sound
 playsound.minimum_volume=Minimum volume
+playsound.minimum_volume.help=Specifies the volume for targets outside the sound's normal audible sphere.<br/>If a target is outside the normal sphere, the sound will instead be centered some short distance from the target (less than four blocks away), and Minimum Volume will determine its volume.
 playsound.pitch=Pitch
+playsound.pitch.help=Values lower than 1.0 lower the pitch and increase the duration; values greater than 1.0 raise the pitch and reduce the duration.<br/>The pitch value is a multiplier applied to the frequency, so if a value between 0.5 and 1.0 is doubled, the pitch will be an octave higher.
 playsound.relative=Relative to the Player
 playsound.sound=Sound to play
 playsound.source=Channel to play the sound in
@@ -478,6 +496,7 @@ playsound.source.record=Jukebox
 playsound.source.voice=Custom Sound
 playsound.source.weather=Weather
 playsound.volume=Volume
+playsound.volume.help=Distance that the sound can be heard. For values less than 1.0, the sound will be quieter and have a smaller sphere within which it may be heard.<br/>For values greater than 1.0, the sound will not actually grow louder, but its audible range (a 16-block radius at 1.0) will be multiplied by volume.
 
 pose.arm.left=Left Arm rotation
 pose.arm.right=Right Arm rotation

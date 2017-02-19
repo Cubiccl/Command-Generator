@@ -13,7 +13,7 @@ public class CGLabel extends CLabel implements ITranslated
 
 	public CGLabel(String textID)
 	{
-		this(textID.equals("") ? null : new Text(textID));
+		this(textID == null || textID.equals("") ? null : new Text(textID));
 	}
 
 	public CGLabel(Text text)

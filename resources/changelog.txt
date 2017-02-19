@@ -1,3 +1,17 @@
+------------------------- VERSION 2.3.1 -------------------------
+ADDITIONS
+- Added a searchbar for Command selection.
+- Added a bunch of Help buttons to describe what the Commands to exactly.
+
+BUGS FIXED
+- Objective name would not show in /scoreboard objectives enable.
+
+CHANGED TRANSLATIONS
+lt_entry.quality.description -> lt_entry.quality.help
+lt_function.enchant_randomly,lt_function.enchant_with_levels
+
+ADDED TRANSLATIONS
+
 ------------------------- VERSION 2.3 -------------------------
 ADDITIONS
 - Added a Loot Table Generator mode !

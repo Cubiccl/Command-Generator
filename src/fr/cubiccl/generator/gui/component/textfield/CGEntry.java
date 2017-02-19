@@ -8,6 +8,7 @@ import java.awt.event.FocusListener;
 import fr.cubi.cubigui.CPanel;
 import fr.cubi.cubigui.RoundedCornerBorder;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.HelpLabel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Utils;
@@ -38,6 +39,7 @@ public class CGEntry extends CGTextField
 		this.container.add(this.label, gbc);
 		++gbc.gridx;
 		this.container.add(this, gbc);
+		++gbc.gridx;
 
 		this.addFocusListener(new FocusListener()
 		{
@@ -57,6 +59,11 @@ public class CGEntry extends CGTextField
 	public CGEntry(Text text, Text suggestedText)
 	{
 		this(text, "", suggestedText);
+	}
+
+	public void addHelpLabel(HelpLabel label)
+	{
+		this.container.add(label, this.container.getGBC());
 	}
 
 	/** @param checkMode - What format to check. See {@link CGEntry#STRING_ID}

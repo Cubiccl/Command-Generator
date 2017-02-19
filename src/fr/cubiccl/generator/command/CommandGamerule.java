@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
+import fr.cubiccl.generator.gui.component.label.HelpLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ComboboxPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
@@ -54,9 +55,12 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 		panel.add(this.buttonPredefined = new CGButton("gamerule.predefined"), gbc);
 		--gbc.gridx;
 		++gbc.gridy;
-		++gbc.gridwidth;
 		panel.add(this.checkboxQuery = new CGCheckBox("gamerule.query"), gbc);
+		++gbc.gridx;
+		panel.add(new HelpLabel("gamerule.query.help"), gbc);
+		--gbc.gridx;
 		++gbc.gridy;
+		++gbc.gridwidth;
 		panel.add((this.entryValue = new CGEntry(Text.VALUE, "0", null)).container, gbc);
 
 		this.buttonPredefined.addActionListener(this);

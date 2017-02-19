@@ -11,6 +11,7 @@ import fr.cubiccl.generator.gameobject.loottable.LootTableFunction;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.HelpLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
@@ -44,8 +45,6 @@ public class PanelEntry extends CGPanel implements ActionListener
 		++gbc.gridy;
 		this.add((this.entryQuality = new CGEntry("lt_entry.quality")).container, gbc);
 		++gbc.gridy;
-		this.add(new CGLabel("lt_entry.quality.description"), gbc);
-		++gbc.gridy;
 		this.add(new CGLabel("loottable.conditions.description"), gbc);
 		++gbc.gridy;
 		this.add(this.listConditions = new PanelConditionList("loottable.conditions", "loottable.condition"), gbc);
@@ -61,6 +60,7 @@ public class PanelEntry extends CGPanel implements ActionListener
 		this.item.setHasAmount(false);
 		this.entryWeight.addIntFilter();
 		this.entryQuality.addIntFilter();
+		this.entryQuality.addHelpLabel(new HelpLabel("lt_entry.quality.help"));
 
 		this.buttonItem.setSelected(true);
 		this.buttonItem.addActionListener(this);

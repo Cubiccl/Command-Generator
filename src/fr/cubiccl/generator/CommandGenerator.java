@@ -5,6 +5,8 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import javax.swing.ToolTipManager;
+
 import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
@@ -183,6 +185,7 @@ public class CommandGenerator
 		log("---- Creating window ----");
 		stateManager = new StateManager();
 		window = new Window();
+		ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
 		window.updateTranslations();
 		setSelected(Commands.getCommandFromID("achievement"));
 		window.setVisible(true);

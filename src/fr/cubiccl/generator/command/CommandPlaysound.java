@@ -9,6 +9,7 @@ import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.HelpLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
@@ -66,6 +67,10 @@ public class CommandPlaysound extends Command
 		this.entryVolume.addNumberFilter();
 		this.entryPitch.addNumberFilter();
 		this.entryMinVolume.addNumberFilter();
+
+		this.entryVolume.addHelpLabel(new HelpLabel("playsound.volume.help"));
+		this.entryPitch.addHelpLabel(new HelpLabel("playsound.pitch.help"));
+		this.entryMinVolume.addHelpLabel(new HelpLabel("playsound.minimum_volume.help"));
 
 		return panel;
 	}

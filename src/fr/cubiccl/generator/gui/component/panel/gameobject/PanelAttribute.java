@@ -9,6 +9,7 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
+import fr.cubiccl.generator.gui.component.label.HelpLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
@@ -46,6 +47,7 @@ public class PanelAttribute extends CGPanel implements ICustomObject<AppliedAttr
 		if (customObjects) this.add(new PanelCustomObject<AppliedAttribute, AppliedAttribute>(this, ObjectSaver.attributes), gbc);
 
 		this.entryBase.addNumberFilter();
+		this.entryBase.addHelpLabel(new HelpLabel("attribute.base.help"));
 	}
 
 	@Override

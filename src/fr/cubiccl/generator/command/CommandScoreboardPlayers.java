@@ -68,8 +68,10 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		panel.add(this.panelEntityTags = new PanelEntity("scoreboard.target.nbt", true, true, true), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
+		gbc.anchor = GridBagConstraints.EAST;
 		panel.add(this.checkbox = new CGCheckBox("scoreboard.reset.all"), gbc);
 		++gbc.gridx;
+		gbc.anchor = GridBagConstraints.WEST;
 		panel.add((this.entryScore2 = new CGEntry(null, "0", Text.NUMBER)).container, gbc);
 
 		this.comboboxMode.addActionListener(this);
@@ -81,6 +83,8 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		this.entryScore2.container.setVisible(false);
 		this.comboboxMode2.setVisible(false);
 		this.panelEntityTags.setLabelExplainVisible(true);
+		
+		this.onModeChange();
 
 		return panel;
 	}
@@ -129,7 +133,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 	private void onCheckbox()
 	{
 		String mode = this.comboboxMode.getValue();
-		this.entryObjective.container.setVisible(!mode.equals("reset") || !this.checkbox.isSelected());
+		this.entryObjective.container.setVisible((!mode.equals("reset") && !mode.equals("enable")) || !this.checkbox.isSelected());
 		this.entryScore2.setEnabled(this.checkbox.isSelected() || !mode.equals("test"));
 	}
 
@@ -164,6 +168,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 			this.entryObjective.label.setTextID(Text.OBJECTIVE);
 			this.entryScore.label.setTextID(Text.VALUE);
 		}
+		this.onCheckbox();
 	}
 
 	@Override

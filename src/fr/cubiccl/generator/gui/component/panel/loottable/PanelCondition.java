@@ -19,6 +19,7 @@ import fr.cubiccl.generator.gui.component.combobox.CGComboBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.label.HelpLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
@@ -122,6 +123,7 @@ public class PanelCondition extends CGPanel implements ActionListener
 
 		this.entry1.addNumberFilter();
 		this.entry2.addNumberFilter();
+		this.entry2.addHelpLabel(new HelpLabel("lt_condition.random_chance_with_looting.multiplier.help"));
 
 		this.comboboxCondition.addActionListener(this);
 		this.buttonTrue.addActionListener(this);
@@ -157,7 +159,7 @@ public class PanelCondition extends CGPanel implements ActionListener
 		} else if (condition == Condition.KILLED_BY_PLAYER) tags.add(Tags.LT_CONDITION_KILLED.create(!this.buttonTrue.isSelected())); // reversed because tag is named inverse and stuff
 		else if (condition == Condition.RANDOM_CHANCE || condition == Condition.RANDOM_CHANCE_WITH_LOOTING)
 		{
-			this.entry1.checkValue(CGEntry.FLOAT);
+			this.entry1.checkValueInBounds(CGEntry.FLOAT, 0, 1);
 			tags.add(Tags.LT_CONDITION_CHANCE.create(Float.parseFloat(this.entry1.getText())));
 			if (condition == Condition.RANDOM_CHANCE_WITH_LOOTING)
 			{

@@ -54,7 +54,7 @@ public class CommandStopsound extends Command implements ActionListener
 		p.add((this.comboboxSound = new ObjectCombobox<Sound>(ObjectRegistry.sounds.list())).container, gbc);
 		--gbc.gridx;
 		++gbc.gridy;
-		p.add(new CGLabel("stopsound.source"), gbc);
+		p.add(new CGLabel("stopsound.source").setHasColumn(true), gbc);
 		++gbc.gridx;
 		p.add(this.comboboxChannel = new OptionCombobox("playsound.source", CommandPlaysound.CHANNELS), gbc);
 
