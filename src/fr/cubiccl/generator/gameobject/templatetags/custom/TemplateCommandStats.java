@@ -58,24 +58,24 @@ public class TemplateCommandStats extends TemplateCompound
 		PanelCommandStats p = (PanelCommandStats) panel;
 		ArrayList<TagString> tags = new ArrayList<TagString>();
 
-		tags.add(new TagString(Tags.STATS_SUCCESS_OBJECTIVE, p.getObjective(PanelCommandStats.SUCCESS_COUNT)));
-		tags.add(new TagString(Tags.STATS_BLOCKS_OBJECTIVE, p.getObjective(PanelCommandStats.AFFECTED_BLOCKS)));
-		tags.add(new TagString(Tags.STATS_ENTITIES_OBJECTIVE, p.getObjective(PanelCommandStats.AFFECTED_ENTITIES)));
-		tags.add(new TagString(Tags.STATS_ITEMS_OBJECTIVE, p.getObjective(PanelCommandStats.AFFECTED_ITEMS)));
-		tags.add(new TagString(Tags.STATS_QUERY_OBJECTIVE, p.getObjective(PanelCommandStats.QUERY_RESULT)));
+		tags.add(Tags.STATS_SUCCESS_OBJECTIVE.create(p.getObjective(PanelCommandStats.SUCCESS_COUNT)));
+		tags.add(Tags.STATS_BLOCKS_OBJECTIVE.create(p.getObjective(PanelCommandStats.AFFECTED_BLOCKS)));
+		tags.add(Tags.STATS_ENTITIES_OBJECTIVE.create(p.getObjective(PanelCommandStats.AFFECTED_ENTITIES)));
+		tags.add(Tags.STATS_ITEMS_OBJECTIVE.create(p.getObjective(PanelCommandStats.AFFECTED_ITEMS)));
+		tags.add(Tags.STATS_QUERY_OBJECTIVE.create(p.getObjective(PanelCommandStats.QUERY_RESULT)));
 
 		Target t = p.getTarget(PanelCommandStats.SUCCESS_COUNT);
-		if (t != null) tags.add(new TagString(Tags.STATS_SUCCESS_NAME, t.toCommand()));
+		if (t != null) tags.add(Tags.STATS_SUCCESS_NAME.create(t.toCommand()));
 		t = p.getTarget(PanelCommandStats.AFFECTED_BLOCKS);
-		if (t != null) tags.add(new TagString(Tags.STATS_BLOCKS_NAME, t.toCommand()));
+		if (t != null) tags.add(Tags.STATS_BLOCKS_NAME.create(t.toCommand()));
 		t = p.getTarget(PanelCommandStats.AFFECTED_ENTITIES);
-		if (t != null) tags.add(new TagString(Tags.STATS_ENTITIES_NAME, t.toCommand()));
+		if (t != null) tags.add(Tags.STATS_ENTITIES_NAME.create(t.toCommand()));
 		t = p.getTarget(PanelCommandStats.AFFECTED_ITEMS);
-		if (t != null) tags.add(new TagString(Tags.STATS_ITEMS_NAME, t.toCommand()));
+		if (t != null) tags.add(Tags.STATS_ITEMS_NAME.create(t.toCommand()));
 		t = p.getTarget(PanelCommandStats.QUERY_RESULT);
-		if (t != null) tags.add(new TagString(Tags.STATS_QUERY_NAME, t.toCommand()));
+		if (t != null) tags.add(Tags.STATS_QUERY_NAME.create(t.toCommand()));
 
-		return new TagCompound(this, tags.toArray(new TagString[tags.size()]));
+		return this.create(tags.toArray(new TagString[tags.size()]));
 	}
 
 	@Override

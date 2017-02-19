@@ -26,7 +26,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	{
 		Item i = ObjectRegistry.items.first();
 		int a = 1, d = 0, s = -1;
-		TagCompound nbt = new TagCompound(Tags.ITEM_NBT);
+		TagCompound nbt = Tags.ITEM_NBT.create();
 
 		for (Tag t : tag.value())
 		{
@@ -55,7 +55,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 
 	public ItemStack(Item item, int data, int amount)
 	{
-		this(item, data, amount, new TagCompound(Tags.ITEM_NBT));
+		this(item, data, amount, Tags.ITEM_NBT.create());
 	}
 
 	public ItemStack(Item item, int data, int amount, TagCompound nbt)
@@ -121,13 +121,13 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
-		tags.add(new TagString(Tags.ITEM_ID, this.item.id()));
-		tags.add(new TagNumber(Tags.ITEM_DAMAGE, this.damage));
-		tags.add(new TagNumber(Tags.ITEM_COUNT, this.amount));
-		if (this.slot != -1) tags.add(new TagNumber(Tags.ITEM_SLOT, this.slot));
+		tags.add(Tags.ITEM_ID.create(this.item.id()));
+		tags.add(Tags.ITEM_DAMAGE.create(this.damage));
+		tags.add(Tags.ITEM_COUNT.create(this.amount));
+		if (this.slot != -1) tags.add(Tags.ITEM_SLOT.create(this.slot));
 		tags.add(this.nbt);
 		if (includeName) tags.add(this.nameTag());
-		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
+		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
 }

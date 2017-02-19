@@ -6,6 +6,7 @@ public class TagList extends Tag
 {
 	protected final Tag[] tags;
 
+	@Deprecated
 	public TagList(TemplateTag template, Tag... tags)
 	{
 		super(template);

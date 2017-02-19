@@ -6,6 +6,7 @@ public class TagBoolean extends Tag
 {
 	private boolean value;
 
+	@Deprecated
 	public TagBoolean(TemplateBoolean template, boolean value)
 	{
 		super(template);

@@ -5,7 +5,6 @@ import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -51,7 +50,7 @@ public class TemplateCoordinates extends TemplateCompound
 			{
 				Coordinates c = ((PanelCoordinates) panel).generate();
 				int x = (int) c.x, y = (int) c.y, z = (int) c.z;
-				return new TagCompound(this, new TagNumber(Tags.COORD_X_INT, x), new TagNumber(Tags.COORD_Y_INT, y), new TagNumber(Tags.COORD_Z_INT, z));
+				return this.create(Tags.COORD_X_INT.create(x), Tags.COORD_Y_INT.create(y), Tags.COORD_Z_INT.create(z));
 			}
 			return ((PanelCoordinates) panel).generate().toTag(this);
 		} catch (CommandGenerationException e)

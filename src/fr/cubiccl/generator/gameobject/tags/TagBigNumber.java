@@ -8,6 +8,7 @@ public class TagBigNumber extends Tag
 
 	public final double value;
 
+	@Deprecated
 	public TagBigNumber(TemplateNumber template, double value)
 	{
 		super(template);

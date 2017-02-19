@@ -31,7 +31,7 @@ public class TemplateAbilities extends TemplateCompound
 	{
 		try
 		{
-			return new TagCompound(this, ((PanelAbilities) panel).generateAbilities());
+			return this.create(((PanelAbilities) panel).generateAbilities());
 		} catch (CommandGenerationException e)
 		{
 			return null;

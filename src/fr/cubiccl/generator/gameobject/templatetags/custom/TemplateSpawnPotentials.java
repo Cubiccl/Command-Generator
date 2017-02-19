@@ -28,7 +28,7 @@ public class TemplateSpawnPotentials extends TemplateList
 		{
 			int w = 1;
 			Entity e = ObjectRegistry.entities.first();
-			TagCompound p = new TagCompound(Tags.DEFAULT_COMPOUND);
+			TagCompound p = Tags.DEFAULT_COMPOUND.create();
 
 			for (Tag t : (Tag[]) tag.value())
 			{
@@ -45,7 +45,7 @@ public class TemplateSpawnPotentials extends TemplateList
 
 		public SpawnPotential()
 		{
-			this(new LivingEntity(ObjectRegistry.entities.first(), new TagCompound(Tags.DEFAULT_COMPOUND)), 1);
+			this(new LivingEntity(ObjectRegistry.entities.first(), Tags.DEFAULT_COMPOUND.create()), 1);
 		}
 
 		public SpawnPotential(LivingEntity entity, int weight)
@@ -91,9 +91,9 @@ public class TemplateSpawnPotentials extends TemplateList
 
 		public TagCompound toTag(TemplateCompound container)
 		{
-			TagString type = new TagString(Tags.ENTITY_TYPE, this.entity.entity.id);
-			TagNumber weight = new TagNumber(Tags.ENTITY_WEIGHT, this.weight);
-			return new TagCompound(container, type, weight, this.entity.toTag(Tags.ENTITY_PROPERTIES));
+			TagString type = Tags.ENTITY_TYPE.create(this.entity.entity.id);
+			TagNumber weight = Tags.ENTITY_WEIGHT.create(this.weight);
+			return container.create(type, weight, this.entity.toTag(Tags.ENTITY_PROPERTIES));
 		}
 
 	}
@@ -125,7 +125,7 @@ public class TemplateSpawnPotentials extends TemplateList
 		TagCompound[] tags = new TagCompound[values.length];
 		for (int i = 0; i < tags.length; ++i)
 			tags[i] = values[i].toTag(Tags.DEFAULT_COMPOUND);
-		return new TagList(this, tags);
+		return this.create(tags);
 	}
 
 }

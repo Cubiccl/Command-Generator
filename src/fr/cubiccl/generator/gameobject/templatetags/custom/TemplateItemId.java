@@ -49,7 +49,7 @@ public class TemplateItemId extends TemplateString
 	public TagString generateTag(BaseObject object, CGPanel panel)
 	{
 		this.damage = ((PanelBlockSelection) panel).selectedDamage();
-		return new TagString(this, ((PanelBlockSelection) panel).selectedBlock().id());
+		return this.create(((PanelBlockSelection) panel).selectedBlock().id());
 	}
 
 	public void setLimited(String[] ids)

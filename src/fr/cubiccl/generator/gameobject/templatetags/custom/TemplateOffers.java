@@ -52,7 +52,7 @@ public class TemplateOffers extends TemplateCompound
 		TagCompound[] tags = new TagCompound[trades.length];
 		for (int i = 0; i < tags.length; i++)
 			tags[i] = trades[i].toTag(Tags.DEFAULT_COMPOUND);
-		return new TagCompound(this, new TagList(Tags.OFFER_RECIPES, tags));
+		return this.create(Tags.OFFER_RECIPES.create(tags));
 	}
 
 	@Override

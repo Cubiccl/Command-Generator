@@ -6,7 +6,6 @@ import java.util.concurrent.ThreadLocalRandom;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
@@ -66,8 +65,8 @@ public class TemplateLeash extends TemplateCompound
 		{
 			e.printStackTrace();
 		}
-		return new TagCompound(this, new TagBigNumber(Tags.ATTRIBUTE_UUIDMOST, Double.parseDouble(((LeashEntityPanel) panel).entryMost.getText())),
-				new TagBigNumber(Tags.ATTRIBUTE_UUIDLEAST, Double.parseDouble(((LeashEntityPanel) panel).entryLeast.getText())));
+		return this.create(Tags.ATTRIBUTE_UUIDMOST.create(Double.parseDouble(((LeashEntityPanel) panel).entryMost.getText())),
+				Tags.ATTRIBUTE_UUIDLEAST.create(Double.parseDouble(((LeashEntityPanel) panel).entryLeast.getText())));
 	}
 
 	@Override

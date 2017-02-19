@@ -93,7 +93,7 @@ public class TemplatePose extends TemplateCompound
 		{
 			e.printStackTrace();
 		}
-		return new TagCompound(this, tags);
+		return this.create(tags);
 	}
 
 	@Override

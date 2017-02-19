@@ -27,7 +27,7 @@ public class TemplateDisabledSlots extends TemplateNumber
 	@Override
 	public TagNumber generateTag(BaseObject object, CGPanel panel)
 	{
-		return new TagNumber(this, ((PanelDisabledSlots) panel).generateValue());
+		return this.create(((PanelDisabledSlots) panel).generateValue());
 	}
 
 	@Override

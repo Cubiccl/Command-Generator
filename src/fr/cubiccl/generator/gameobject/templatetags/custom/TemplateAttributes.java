@@ -42,6 +42,6 @@ public class TemplateAttributes extends TemplateList
 		TagCompound[] tags = new TagCompound[list.length];
 		for (int i = 0; i < tags.length; i++)
 			tags[i] = list[i].toTag(Tags.DEFAULT_COMPOUND);
-		return new TagList(this, tags);
+		return this.create(tags);
 	}
 }

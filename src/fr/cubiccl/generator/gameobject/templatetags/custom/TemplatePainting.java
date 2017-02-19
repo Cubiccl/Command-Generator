@@ -82,7 +82,7 @@ public class TemplatePainting extends TemplateString
 	@Override
 	public TagString generateTag(BaseObject object, CGPanel panel)
 	{
-		return new TagString(this, ((PanelPainting) panel).combobox.getValue());
+		return this.create(((PanelPainting) panel).combobox.getValue());
 	}
 
 	@Override

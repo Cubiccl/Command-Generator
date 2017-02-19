@@ -29,7 +29,7 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (Tag t : nbt.value())
 			if (!t.id().equals(Tags.ENTITY_ID) && !t.id().equals(Tags.OBJECT_NAME)) tags.add(t);
-		nbt = new TagCompound((TemplateCompound) nbt.template, tags.toArray(new Tag[tags.size()]));
+		nbt = ((TemplateCompound) nbt.template).create(tags.toArray(new Tag[tags.size()]));
 
 		LivingEntity en = new LivingEntity(e, nbt);
 		en.findName(tag);
@@ -41,7 +41,7 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 
 	public LivingEntity()
 	{
-		this(ObjectRegistry.entities.find("area_effect_cloud"), new TagCompound(Tags.DEFAULT_COMPOUND));
+		this(ObjectRegistry.entities.find("area_effect_cloud"), Tags.DEFAULT_COMPOUND.create());
 	}
 
 	public LivingEntity(Entity entity, TagCompound nbt)
@@ -96,11 +96,11 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
-		tags.add(new TagString(Tags.ENTITY_ID, this.entity.id()));
+		tags.add(Tags.ENTITY_ID.create(this.entity.id()));
 		for (Tag t : this.nbt.value())
 			tags.add(t);
 		if (includeName) tags.add(this.nameTag());
-		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
+		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
 }

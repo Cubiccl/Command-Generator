@@ -145,11 +145,11 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 			con[i] = this.conditions[i].toTag(Tags.DEFAULT_COMPOUND);
 
 		Tag[] output = new Tag[this.tags.length + 2];
-		output[0] = new TagString(Tags.LOOTTABLE_FUNCTION_NAME, this.function.name);
-		output[1] = new TagList(Tags.LOOTTABLE_CONDITIONS, con);
+		output[0] = Tags.LOOTTABLE_FUNCTION_NAME.create(this.function.name);
+		output[1] = Tags.LOOTTABLE_CONDITIONS.create(con);
 		for (int i = 0; i < this.tags.length; ++i)
 			output[i + 2] = this.tags[i];
 
-		return new TagCompound(container, output);
+		return container.create(output);
 	}
 }

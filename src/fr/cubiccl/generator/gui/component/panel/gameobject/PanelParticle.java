@@ -8,7 +8,6 @@ import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gameobject.baseobjects.Particle;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -83,7 +82,7 @@ public class PanelParticle extends CGPanel implements ActionListener
 	{
 		int id = param1 % 4096;
 		int damage = (param1 - id) / 4096;
-		this.panelBlockParticle.setupFrom(new PlacedBlock(ObjectRegistry.blocks.find(id), damage, new TagCompound(Tags.BLOCK_NBT)));
+		this.panelBlockParticle.setupFrom(new PlacedBlock(ObjectRegistry.blocks.find(id), damage, Tags.BLOCK_NBT.create()));
 		this.panelItemParticle.setupFrom(new ItemStack(ObjectRegistry.items.find(param1), 0, 0));
 	}
 

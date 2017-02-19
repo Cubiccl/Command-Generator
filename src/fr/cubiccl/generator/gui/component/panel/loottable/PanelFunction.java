@@ -109,15 +109,15 @@ public class PanelFunction extends CGPanel implements ActionListener
 			TagCompound[] t = new TagCompound[modifiers.length];
 			for (int i = 0; i < t.length; ++i)
 				t[i] = modifiers[i].toTag(Tags.DEFAULT_COMPOUND);
-			tags.add(new TagList(Tags.LT_FUNCTION_MODIFIERS, t));
+			tags.add(Tags.LT_FUNCTION_MODIFIERS.create(t));
 		} else if (f == Function.ENCHANT_RANDOMLY)
 		{
 			EnchantmentType[] enchants = this.enchantments.values();
 			TagString[] ids = new TagString[enchants.length];
 			for (int i = 0; i < ids.length; ++i)
-				ids[i] = new TagString(Tags.DEFAULT_STRING, enchants[i].id());
-			tags.add(new TagList(Tags.LT_FUNCTION_ENCHANTMENTS, ids));
-		} else if (f == Function.SET_NBT) tags.add(new TagString(Tags.LT_FUNCTION_NBT, this.panelNbt.generate().nbt.valueForCommand()));
+				ids[i] = Tags.DEFAULT_STRING.create(enchants[i].id());
+			tags.add(Tags.LT_FUNCTION_ENCHANTMENTS.create(ids));
+		} else if (f == Function.SET_NBT) tags.add(Tags.LT_FUNCTION_NBT.create(this.panelNbt.generate().nbt.valueForCommand()));
 		else if (f != Function.FURNACE_SMELT)
 		{
 			if (f == Function.SET_DAMAGE) this.entryMin.checkValueInBounds(CGEntry.FLOAT, 0, 100);
@@ -129,8 +129,8 @@ public class PanelFunction extends CGPanel implements ActionListener
 				if (f == Function.SET_DAMAGE) t = Tags.LT_FUNCTION_DAMAGE;
 				if (f == Function.SET_DATA) t = Tags.LT_FUNCTION_DATA;
 
-				if (f == Function.SET_DAMAGE) tags.add(new TagBigNumber(t, Double.parseDouble(this.entryMin.getText()) / 100.0));
-				else tags.add(new TagNumber(t, Integer.parseInt(this.entryMin.getText())));
+				if (f == Function.SET_DAMAGE) tags.add(t.create(Double.parseDouble(this.entryMin.getText()) / 100.0));
+				else tags.add(t.create(Integer.parseInt(this.entryMin.getText())));
 			} else
 			{
 				if (f == Function.SET_DAMAGE) this.entryMax.checkValueInBounds(CGEntry.FLOAT, Double.parseDouble(this.entryMin.getText()), 100);
@@ -146,18 +146,17 @@ public class PanelFunction extends CGPanel implements ActionListener
 					max = Tags.LT_FUNCTION_MAX_FLOAT;
 				}
 
-				if (f == Function.SET_DAMAGE) tags.add(new TagCompound(t, new TagBigNumber(min, Double.parseDouble(this.entryMin.getText()) / 100.0),
-						new TagBigNumber(max, Double.parseDouble(this.entryMax.getText()) / 100.0)));
-				else tags.add(new TagCompound(t, new TagNumber(min, Integer.parseInt(this.entryMin.getText())), new TagNumber(max, Integer
-						.parseInt(this.entryMax.getText()))));
+				if (f == Function.SET_DAMAGE) tags.add(t.create(min.create(Double.parseDouble(this.entryMin.getText()) / 100.0),
+						max.create(Double.parseDouble(this.entryMax.getText()) / 100.0)));
+				else tags.add(t.create(min.create(Integer.parseInt(this.entryMin.getText())), max.create(Integer.parseInt(this.entryMax.getText()))));
 			}
 		}
 
-		if (f == Function.ENCHANT_WITH_LEVELS) tags.add(new TagBoolean(Tags.LT_FUNCTION_TREASURE, this.checkboxTreasure.isSelected()));
+		if (f == Function.ENCHANT_WITH_LEVELS) tags.add(Tags.LT_FUNCTION_TREASURE.create(this.checkboxTreasure.isSelected()));
 		if (f == Function.LOOTING_ENCHANT)
 		{
 			this.entryLimit.checkValueSuperior(CGEntry.INTEGER, 0);
-			tags.add(new TagNumber(Tags.LT_FUNCTION_LOOTING_LIMIT, Integer.parseInt(this.entryLimit.getText())));
+			tags.add(Tags.LT_FUNCTION_LOOTING_LIMIT.create(Integer.parseInt(this.entryLimit.getText())));
 		}
 
 		return new LootTableFunction(f, this.conditions.values(), tags.toArray(new Tag[tags.size()]));
@@ -174,7 +173,7 @@ public class PanelFunction extends CGPanel implements ActionListener
 	{
 		Function f = function.function;
 		this.comboboxFunction.setSelectedItem(f.translate().toString());
-		TagCompound t = new TagCompound(Tags.DEFAULT_COMPOUND, function.tags);
+		TagCompound t = Tags.DEFAULT_COMPOUND.create(function.tags);
 
 		if (f == Function.SET_ATTRIBUTES && t.hasTag(Tags.LT_FUNCTION_MODIFIERS))
 		{

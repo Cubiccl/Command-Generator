@@ -30,7 +30,7 @@ public class TemplatePatterns extends TemplateList
 	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
 		this.base = ((PatternsPanel) panel).getBaseColor();
-		return new TagList(this, ((PatternsPanel) panel).getPatterns());
+		return this.create(((PatternsPanel) panel).getPatterns());
 	}
 
 }

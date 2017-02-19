@@ -46,7 +46,7 @@ public class TemplateText extends TemplateString
 		if (panel instanceof EntryPanel) return super.generateTag(object, panel);
 		try
 		{
-			return new TagString(this, ((PanelJsonMessage) panel).generate().toTag(Tags.JSON_CONTAINER).valueForCommand());
+			return this.create(((PanelJsonMessage) panel).generate().toTag(Tags.JSON_CONTAINER).valueForCommand());
 		} catch (CommandGenerationException e)
 		{
 			CommandGenerator.report(e);

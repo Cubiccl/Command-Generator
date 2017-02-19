@@ -1,7 +1,6 @@
 package fr.cubiccl.generator.gameobject;
 
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
@@ -39,8 +38,8 @@ public class GeneratedCommand extends GameObject
 	@Override
 	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
-		if (includeName) return new TagCompound(container, new TagString(Tags.COMMAND, this.command), this.nameTag());
-		return new TagCompound(container, new TagString(Tags.COMMAND, this.command));
+		if (includeName) return container.create(Tags.COMMAND.create(this.command), this.nameTag());
+		return container.create(Tags.COMMAND.create(this.command));
 	}
 
 }

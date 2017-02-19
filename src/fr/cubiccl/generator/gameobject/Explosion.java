@@ -30,6 +30,7 @@ public class Explosion implements IObjectList<Explosion>
 			this(0);
 		}
 
+		@SuppressWarnings("deprecation")
 		public Color(int value)
 		{
 			super(Tags.DEFAULT_INTEGER, value);
@@ -150,8 +151,7 @@ public class Explosion implements IObjectList<Explosion>
 
 	public TagCompound toTag(TemplateCompound container)
 	{
-		return new TagCompound(container, new TagNumber(Tags.FIREWORK_TYPE, this.type), new TagNumber(Tags.FIREWORK_FLICKER, this.flicker ? 1 : 0),
-				new TagNumber(Tags.FIREWORK_TRAIL, this.trail ? 1 : 0), new TagList(Tags.FIREWORK_COLORS, this.primary), new TagList(Tags.FIREWORK_FADE_COLORS,
-						this.fade));
+		return container.create(Tags.FIREWORK_TYPE.create(this.type), Tags.FIREWORK_FLICKER.create(this.flicker ? 1 : 0),
+				Tags.FIREWORK_TRAIL.create(this.trail ? 1 : 0), Tags.FIREWORK_COLORS.create(this.primary), Tags.FIREWORK_FADE_COLORS.create(this.fade));
 	}
 }

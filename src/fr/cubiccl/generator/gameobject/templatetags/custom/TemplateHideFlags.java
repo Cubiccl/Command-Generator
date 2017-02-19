@@ -2,7 +2,6 @@ package fr.cubiccl.generator.gameobject.templatetags.custom;
 
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.tag.PanelHideFlags;
@@ -27,7 +26,7 @@ public class TemplateHideFlags extends TemplateNumber
 	@Override
 	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
-		return new TagNumber(this, ((PanelHideFlags) panel).getValue());
+		return this.create(((PanelHideFlags) panel).getValue());
 	}
 
 	@Override

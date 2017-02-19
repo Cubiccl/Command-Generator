@@ -62,8 +62,8 @@ public class TemplateDropChances extends TemplateList
 	{
 		TagBigNumber[] tags = new TagBigNumber[this.slotCount];
 		for (int i = 0; i < tags.length; i++)
-			tags[i] = new TagBigNumber(Tags.DEFAULT_FLOAT, Double.parseDouble(((PanelDropChances) panel).entries[i].getText()));
-		return new TagList(this, tags);
+			tags[i] = Tags.DEFAULT_FLOAT.create(Double.parseDouble(((PanelDropChances) panel).entries[i].getText()));
+		return this.create(tags);
 	}
 
 	@Override

@@ -87,7 +87,7 @@ public class PanelAbilities extends CGPanel
 		this.add(panelInstabuild, gbc);
 		++gbc.gridy;
 		this.add(panelInvulnerable, gbc);
-		
+
 		this.buttonMayFlyNull.setSelected(true);
 		this.buttonFlyingNull.setSelected(true);
 		this.buttonMayBuildNull.setSelected(true);
@@ -99,11 +99,11 @@ public class PanelAbilities extends CGPanel
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
-		if (!this.buttonMayFlyNull.isSelected()) tags.add(new TagNumber(Tags.ABILITIES_MAY_FLY, this.buttonMayFlyYes.isSelected() ? 1 : 0));
-		if (!this.buttonFlyingNull.isSelected()) tags.add(new TagNumber(Tags.ABILITIES_FLYING, this.buttonFlyingYes.isSelected() ? 1 : 0));
-		if (!this.buttonMayBuildNull.isSelected()) tags.add(new TagNumber(Tags.ABILITIES_MAY_BUILD, this.buttonMayBuildYes.isSelected() ? 1 : 0));
-		if (!this.buttonInstabuildNull.isSelected()) tags.add(new TagNumber(Tags.ABILITIES_INSTABUILD, this.buttonInstabuildYes.isSelected() ? 1 : 0));
-		if (!this.buttonInvulnerableNull.isSelected()) tags.add(new TagNumber(Tags.ABILITIES_INVULNERABLE, this.buttonInvulnerableYes.isSelected() ? 1 : 0));
+		if (!this.buttonMayFlyNull.isSelected()) tags.add(Tags.ABILITIES_MAY_FLY.create(this.buttonMayFlyYes.isSelected() ? 1 : 0));
+		if (!this.buttonFlyingNull.isSelected()) tags.add(Tags.ABILITIES_FLYING.create(this.buttonFlyingYes.isSelected() ? 1 : 0));
+		if (!this.buttonMayBuildNull.isSelected()) tags.add(Tags.ABILITIES_MAY_BUILD.create(this.buttonMayBuildYes.isSelected() ? 1 : 0));
+		if (!this.buttonInstabuildNull.isSelected()) tags.add(Tags.ABILITIES_INSTABUILD.create(this.buttonInstabuildYes.isSelected() ? 1 : 0));
+		if (!this.buttonInvulnerableNull.isSelected()) tags.add(Tags.ABILITIES_INVULNERABLE.create(this.buttonInvulnerableYes.isSelected() ? 1 : 0));
 
 		return tags.toArray(new Tag[tags.size()]);
 	}

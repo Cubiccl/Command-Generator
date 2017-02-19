@@ -29,7 +29,7 @@ public class TemplateHorseVariant extends TemplateNumber
 	@Override
 	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
-		if (panel instanceof PanelHorseVariant) return new TagNumber(this, ((PanelHorseVariant) panel).generateVariant());
+		if (panel instanceof PanelHorseVariant) return this.create(((PanelHorseVariant) panel).generateVariant());
 		return super.generateTag(object, panel);
 	}
 

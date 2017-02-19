@@ -40,7 +40,7 @@ public class TemplateStringList extends TemplateList
 		Text[] s = ((PanelObjectList<Text>) panel).values();
 		TagString[] tags = new TagString[s.length];
 		for (int i = 0; i < tags.length; i++)
-			tags[i] = new TagString(Tags.DEFAULT_STRING, s[i].toString());
-		return new TagList(this, tags);
+			tags[i] = Tags.DEFAULT_STRING.create(s[i].toString());
+		return this.create(tags);
 	}
 }

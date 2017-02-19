@@ -45,6 +45,18 @@ public class TemplateNumber extends TemplateTag
 		this(id, applicationType, TagNumber.INTEGER, applicable);
 	}
 
+	@SuppressWarnings("deprecation")
+	public TagBigNumber create(double value)
+	{
+		return new TagBigNumber(this, value);
+	}
+
+	@SuppressWarnings("deprecation")
+	public TagNumber create(int value)
+	{
+		return new TagNumber(this, value);
+	}
+
 	@Override
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
@@ -88,18 +100,18 @@ public class TemplateNumber extends TemplateTag
 	@Override
 	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
-		if (this.isByteBoolean) return new TagNumber(this, 1 - ((PanelRadio) panel).getSelected());
+		if (this.isByteBoolean) return this.create(1 - ((PanelRadio) panel).getSelected());
 
 		if (this.names == null)
 		{
-			if (this.isBigNumber()) return new TagBigNumber(this, Double.parseDouble(((EntryPanel) panel).entry.getText()));
-			return new TagNumber(this, Integer.parseInt(((EntryPanel) panel).entry.getText()));
+			if (this.isBigNumber()) return this.create(Double.parseDouble(((EntryPanel) panel).entry.getText()));
+			return this.create(Integer.parseInt(((EntryPanel) panel).entry.getText()));
 		}
 
 		int index = ((ComboboxPanel) panel).combobox.getSelectedIndex();
-		if (this.values == null) return new TagNumber(this, index);
+		if (this.values == null) return this.create(index);
 
-		return new TagNumber(this, this.values[index]);
+		return this.create(this.values[index]);
 	}
 
 	public double getMaxValue()
@@ -145,8 +157,8 @@ public class TemplateNumber extends TemplateTag
 	public Tag readTag(String value, boolean isJson, boolean readUnknown)
 	{
 		if (this.tagType != Tag.INT) value = value.substring(0, value.length() - 1);
-		if (this.isBigNumber()) return new TagBigNumber(this, Double.parseDouble(value));
-		return new TagNumber(this, Integer.parseInt(value));
+		if (this.isBigNumber()) return this.create(Double.parseDouble(value));
+		return this.create(Integer.parseInt(value));
 	}
 
 	public void setBounds(double min, double max)

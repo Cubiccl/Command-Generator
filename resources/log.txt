@@ -17,4 +17,11 @@ Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
 Switching to Loot Tables mode.
+Switching to Commands mode.
+Generating !
+Successfully generated : achievement give achievement.acquireIron @a
+Generating !
+Successfully generated : clear @a minecraft:stone -1 -1 {}
+Generating !
+Successfully generated : clear @a minecraft:stone -1 -1 {display:{Name:"jkjlj",Lore:["kkk"],color:4892437}}
 Exiting Command Generator... Bye bye !

@@ -56,9 +56,9 @@ public class TemplateRotation extends TemplateList
 	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
 		RotationPanel p = (RotationPanel) panel;
-		TagBigNumber y = new TagBigNumber(Tags.DEFAULT_FLOAT, Double.parseDouble(p.entryY.getText()));
-		TagBigNumber x = new TagBigNumber(Tags.DEFAULT_FLOAT, Double.parseDouble(p.entryX.getText()));
-		return new TagList(this, y, x);
+		TagBigNumber y = Tags.DEFAULT_FLOAT.create(Double.parseDouble(p.entryY.getText()));
+		TagBigNumber x = Tags.DEFAULT_FLOAT.create(Double.parseDouble(p.entryX.getText()));
+		return this.create(y, x);
 	}
 
 	@Override

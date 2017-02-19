@@ -6,6 +6,7 @@ public class TagString extends Tag
 {
 	public final String value;
 
+	@Deprecated
 	public TagString(TemplateString template, String value)
 	{
 		super(template);

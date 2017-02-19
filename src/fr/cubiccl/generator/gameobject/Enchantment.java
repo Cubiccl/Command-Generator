@@ -89,9 +89,8 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 	@Override
 	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
-		if (includeName) return new TagCompound(container, new TagNumber(Tags.ENCHANTMENT_ID, this.type.idInt),
-				new TagNumber(Tags.ENCHANTMENT_LVL, this.level), this.nameTag());
-		return new TagCompound(container, new TagNumber(Tags.ENCHANTMENT_ID, this.type.idInt), new TagNumber(Tags.ENCHANTMENT_LVL, this.level));
+		if (includeName) return container.create(Tags.ENCHANTMENT_ID.create(this.type.idInt), Tags.ENCHANTMENT_LVL.create(this.level), this.nameTag());
+		return container.create(Tags.ENCHANTMENT_ID.create(this.type.idInt), Tags.ENCHANTMENT_LVL.create(this.level));
 	}
 
 }

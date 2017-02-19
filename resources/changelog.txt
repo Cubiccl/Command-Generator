@@ -11,8 +11,9 @@ BUGS FIXED
 CHANGED TRANSLATIONS
 
 ADDED TRANSLATIONS
+attribute.modifier.amount.*,attribute.modifier.slots,attribute.modifier.slots.missing
 general.delete.confirm
-loottable.edit, loottable.list, loottable.load, loottable.output, loottable.pools, loottable.pools.description
+loottable.*,lt_condition.*,lt_entry.*,lt_function.*
 menu.command, menu.loot_table
 
 ------------------------- VERSION 2.2.2 -------------------------

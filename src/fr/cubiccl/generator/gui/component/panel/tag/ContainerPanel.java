@@ -63,7 +63,7 @@ public class ContainerPanel extends SlotSelectionPanel implements IStateListener
 		TagCompound[] tags = new TagCompound[generated.length];
 		for (int i = 0; i < tags.length; i++)
 			tags[i] = generated[i].toTag(Tags.DEFAULT_COMPOUND);
-		return new TagList(template, tags);
+		return template.create(tags);
 	}
 
 	@Override

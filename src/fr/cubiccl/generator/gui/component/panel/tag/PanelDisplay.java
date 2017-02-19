@@ -7,7 +7,10 @@ import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 
-import fr.cubiccl.generator.gameobject.tags.*;
+import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.tags.TagList;
+import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateDisplay;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
@@ -75,17 +78,17 @@ public class PanelDisplay extends CGPanel implements ActionListener
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
-		if (this.buttonTranslate.isSelected()) tags.add(new TagString(Tags.DISPLAY_LOCAL, this.entryName.getText()));
-		else if (this.buttonName.isSelected()) tags.add(new TagString(Tags.DISPLAY_NAME, this.entryName.getText()));
+		if (this.buttonTranslate.isSelected()) tags.add(Tags.DISPLAY_LOCAL.create(this.entryName.getText()));
+		else if (this.buttonName.isSelected()) tags.add(Tags.DISPLAY_NAME.create(this.entryName.getText()));
 
 		TagString[] lores = new TagString[this.list.length()];
 		for (int i = 0; i < lores.length; ++i)
-			lores[i] = new TagString(Tags.DEFAULT_STRING, this.list.get(i).toString());
-		tags.add(new TagList(Tags.DISPLAY_LORE, lores));
+			lores[i] = Tags.DEFAULT_STRING.create(this.list.get(i).toString());
+		tags.add(Tags.DISPLAY_LORE.create(lores));
 
-		if (this.checkboxDye.isSelected()) tags.add(new TagNumber(Tags.DISPLAY_COLOR, this.panelColor.getValue()));
+		if (this.checkboxDye.isSelected()) tags.add(Tags.DISPLAY_COLOR.create(this.panelColor.getValue()));
 
-		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
+		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
 	public void setupFrom(TagCompound previousValue)

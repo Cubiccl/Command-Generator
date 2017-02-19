@@ -15,7 +15,6 @@ import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.ITagCreationListener;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
@@ -128,39 +127,39 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		{
 			if (this.tags[i].id().equals("Base") && template instanceof TemplatePatterns && template.id().equals("Patterns"))
 			{
-				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplatePatterns) template).base);
+				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplatePatterns) template).base);
 				((TemplatePatterns) template).base = -1;
 				break;
 			} else if (this.tags[i].id().equals("Data") && template instanceof TemplateItemId
 					&& (template.id().equals("Item") || template.id().equals("Block")))
 			{
-				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateItemId) template).damage);
+				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplateItemId) template).damage);
 				((TemplateItemId) template).damage = -1;
 				break;
 			} else if (this.tags[i].id().equals("carriedData") && template instanceof TemplateBlockId && template.id().equals("carried"))
 			{
-				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateBlockId) template).damage);
+				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplateBlockId) template).damage);
 				((TemplateBlockId) template).damage = -1;
 				break;
 			} else if (this.tags[i].id().equals("blockData") && template instanceof TemplateBlockId && template.id().equals("blockId"))
 			{
-				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateBlockId) template).damage);
+				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplateBlockId) template).damage);
 				((TemplateBlockId) template).damage = -1;
 				break;
 			} else if (this.tags[i].id().equals("DisplayData") && template instanceof TemplateItemId && template.id().equals("DisplayTile"))
 			{
-				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateItemId) template).damage);
+				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplateItemId) template).damage);
 				((TemplateItemId) template).damage = -1;
 				break;
 			} else if (this.tags[i].id().equals("ParticleParam1") && template instanceof TemplateParticle && template.id().equals("Particle"))
 			{
-				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateParticle) template).param1);
+				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplateParticle) template).param1);
 				((TemplateParticle) template).param1 = 0;
 				if (particles) break;
 				particles = true;
 			} else if (this.tags[i].id().equals("ParticleParam2") && template instanceof TemplateParticle && template.id().equals("Particle"))
 			{
-				this.values[i] = new TagNumber((TemplateNumber) this.tags[i], ((TemplateParticle) template).param2);
+				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplateParticle) template).param2);
 				((TemplateParticle) template).param2 = 0;
 				if (particles) break;
 				particles = true;
@@ -174,7 +173,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (Tag tag : this.values)
 			if (tag != null) tags.add(tag);
-		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
+		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
 	public TemplateTag getSelectedTag()

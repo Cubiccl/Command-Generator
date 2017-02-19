@@ -128,12 +128,12 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 	public TagCompound toTag(TemplateCompound container)
 	{
 		Tag[] output = new Tag[this.tags.length + 1];
-		output[0] = new TagString(Tags.LOOTTABLE_CONDITION, this.condition.name);
+		output[0] = Tags.LOOTTABLE_CONDITION.create(this.condition.name);
 
 		for (int i = 0; i < this.tags.length; ++i)
 			output[i + 1] = this.tags[i];
 
-		return new TagCompound(container, output);
+		return container.create(output);
 	}
 
 }

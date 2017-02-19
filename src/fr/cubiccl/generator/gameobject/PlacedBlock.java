@@ -26,7 +26,7 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 	{
 		Block b = ObjectRegistry.blocks.first();
 		int d = 0;
-		TagCompound nbt = new TagCompound(Tags.BLOCK_NBT);
+		TagCompound nbt = Tags.BLOCK_NBT.create();
 
 		for (Tag t : tag.value())
 		{
@@ -46,7 +46,7 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 
 	public PlacedBlock()
 	{
-		this(ObjectRegistry.blocks.find("stone"), 0, new TagCompound(Tags.DEFAULT_COMPOUND));
+		this(ObjectRegistry.blocks.find("stone"), 0, Tags.DEFAULT_COMPOUND.create());
 	}
 
 	public PlacedBlock(Block block, int data, TagCompound nbt)
@@ -101,12 +101,12 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
-		tags.add(new TagString(Tags.BLOCK_ID, this.block.id()));
-		tags.add(new TagNumber(Tags.BLOCK_DATA, this.data));
+		tags.add(Tags.BLOCK_ID.create(this.block.id()));
+		tags.add(Tags.BLOCK_DATA.create(this.data));
 		tags.add(this.nbt);
 		if (includeName) tags.add(this.nameTag());
 
-		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
+		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
 }

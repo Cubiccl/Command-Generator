@@ -91,14 +91,14 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
-		tags.add(new TagNumber(Tags.OFFER_EXP, this.experienceReward ? 1 : 0));
-		tags.add(new TagNumber(Tags.OFFER_MAX_USES, this.maxUses));
-		tags.add(new TagNumber(Tags.OFFER_USES, this.uses));
+		tags.add(Tags.OFFER_EXP.create(this.experienceReward ? 1 : 0));
+		tags.add(Tags.OFFER_MAX_USES.create(this.maxUses));
+		tags.add(Tags.OFFER_USES.create(this.uses));
 		tags.add(this.buy.toTag(Tags.OFFER_BUY));
 		if (this.buySecondary != null) tags.add(this.buySecondary.toTag(Tags.OFFER_BUYB));
 		tags.add(this.sell.toTag(Tags.OFFER_SELL));
 		if (includeName) tags.add(this.nameTag());
-		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
+		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
 }

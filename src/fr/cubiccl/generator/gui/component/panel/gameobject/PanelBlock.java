@@ -154,7 +154,7 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 	@Override
 	public boolean shouldStateClose(PanelBlockSelection panel)
 	{
-		this.setupFrom(new PlacedBlock(panel.selectedBlock(), panel.selectedDamage(), new TagCompound(Tags.BLOCK_NBT)));
+		this.setupFrom(new PlacedBlock(panel.selectedBlock(), panel.selectedDamage(), Tags.BLOCK_NBT.create()));
 		return true;
 	}
 

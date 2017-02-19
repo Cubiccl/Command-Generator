@@ -31,7 +31,7 @@ public class TemplateColor extends TemplateNumber
 	@Override
 	public Tag generateTag(BaseObject object, CGPanel panel)
 	{
-		if (panel instanceof PanelColor) return new TagNumber(this, ((PanelColor) panel).getValue());
+		if (panel instanceof PanelColor) return this.create(((PanelColor) panel).getValue());
 		return super.generateTag(object, panel);
 	}
 

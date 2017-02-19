@@ -140,29 +140,29 @@ public class PanelCondition extends CGPanel implements ActionListener
 		Condition condition = this.selectedCondition();
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
-		if (condition == Condition.ENTITY_PROPERTIES || condition == Condition.ENTITY_SCORES) tags.add(new TagString(Tags.LT_CONDITION_ENTITY,
-				this.comboboxEntity.getValue()));
-		if (condition == Condition.ENTITY_PROPERTIES) tags.add(new TagCompound(Tags.LT_CONDITION_PROPERTIES, new TagBoolean(Tags.LT_CONDITION_ENTITY_ONFIRE,
-				this.buttonTrue.isSelected())));
+		if (condition == Condition.ENTITY_PROPERTIES || condition == Condition.ENTITY_SCORES) tags.add(Tags.LT_CONDITION_ENTITY.create(this.comboboxEntity
+				.getValue()));
+		if (condition == Condition.ENTITY_PROPERTIES) tags.add(Tags.LT_CONDITION_PROPERTIES.create(Tags.LT_CONDITION_ENTITY_ONFIRE.create(this.buttonTrue
+				.isSelected())));
 		else if (condition == Condition.ENTITY_SCORES)
 		{
 			ArrayList<Tag> scoreTags = new ArrayList<Tag>();
 			for (ScoreCondition score : this.scores.values())
 			{
-				if (score.isRange) scoreTags.add(new TagCompound(new DefaultCompound(score.objective, Tag.UNKNOWN), new TagNumber(Tags.LT_CONDITION_SCORES_MIN,
-						score.min), new TagNumber(Tags.LT_CONDITION_SCORES_MAX, score.max)));
-				else scoreTags.add(new TagNumber(new TemplateNumber(score.objective, Tag.UNKNOWN), score.min));
+				if (score.isRange) scoreTags.add(new DefaultCompound(score.objective, Tag.UNKNOWN).create(Tags.LT_CONDITION_SCORES_MIN.create(score.min),
+						Tags.LT_CONDITION_SCORES_MAX.create(score.max)));
+				else scoreTags.add(new TemplateNumber(score.objective, Tag.UNKNOWN).create(score.min));
 			}
-			tags.add(new TagCompound(Tags.LT_CONDITION_SCORES, scoreTags.toArray(new Tag[scoreTags.size()])));
-		} else if (condition == Condition.KILLED_BY_PLAYER) tags.add(new TagBoolean(Tags.LT_CONDITION_KILLED, !this.buttonTrue.isSelected())); // reversed because tag is named inverse and stuff
+			tags.add(Tags.LT_CONDITION_SCORES.create(scoreTags.toArray(new Tag[scoreTags.size()])));
+		} else if (condition == Condition.KILLED_BY_PLAYER) tags.add(Tags.LT_CONDITION_KILLED.create(!this.buttonTrue.isSelected())); // reversed because tag is named inverse and stuff
 		else if (condition == Condition.RANDOM_CHANCE || condition == Condition.RANDOM_CHANCE_WITH_LOOTING)
 		{
 			this.entry1.checkValue(CGEntry.FLOAT);
-			tags.add(new TagBigNumber(Tags.LT_CONDITION_CHANCE, Float.parseFloat(this.entry1.getText())));
+			tags.add(Tags.LT_CONDITION_CHANCE.create(Float.parseFloat(this.entry1.getText())));
 			if (condition == Condition.RANDOM_CHANCE_WITH_LOOTING)
 			{
 				this.entry2.checkValue(CGEntry.FLOAT);
-				tags.add(new TagBigNumber(Tags.LT_CONDITION_LOOTING, Float.parseFloat(this.entry2.getText())));
+				tags.add(Tags.LT_CONDITION_LOOTING.create(Float.parseFloat(this.entry2.getText())));
 			}
 		}
 
@@ -182,7 +182,7 @@ public class PanelCondition extends CGPanel implements ActionListener
 		this.comboboxCondition.setSelectedItem(condition.condition.translate().toString());
 		this.updateDisplay();
 
-		TagCompound t = new TagCompound(Tags.DEFAULT_COMPOUND, condition.tags);
+		TagCompound t = Tags.DEFAULT_COMPOUND.create(condition.tags);
 		Condition c = condition.condition;
 
 		if ((c == Condition.ENTITY_PROPERTIES || c == Condition.ENTITY_SCORES) && t.hasTag(Tags.LT_CONDITION_ENTITY)) this.comboboxEntity

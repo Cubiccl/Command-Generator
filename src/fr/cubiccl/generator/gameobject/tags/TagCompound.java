@@ -8,6 +8,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 public class TagCompound extends TagList
 {
 
+	@Deprecated
 	public TagCompound(TemplateCompound template, Tag... tags)
 	{
 		super(template, tags);

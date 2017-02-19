@@ -42,6 +42,12 @@ public abstract class TemplateCompound extends TemplateTag
 		super(id, Tag.COMPOUND, applicationType, applicable);
 	}
 
+	@SuppressWarnings("deprecation")
+	public TagCompound create(Tag... value)
+	{
+		return new TagCompound(this, value);
+	}
+
 	@Override
 	public Tag readTag(String value, boolean isJson, boolean readUnknown)
 	{
@@ -54,7 +60,7 @@ public abstract class TemplateCompound extends TemplateTag
 			Tag t = NBTReader.read(v, false, isJson, readUnknown);
 			if (t != null) tags.add(t);
 		}
-		return new TagCompound(this, tags.toArray(new Tag[tags.size()]));
+		return this.create(tags.toArray(new Tag[tags.size()]));
 	}
 
 }

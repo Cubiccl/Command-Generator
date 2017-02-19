@@ -133,24 +133,23 @@ public class LootTablePool implements IObjectList<LootTablePool>
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
-		if (this.rollsMax == -1) tags.add(new TagNumber(Tags.LOOTTABLE_ROLLS, this.rollsMin));
-		else tags.add(new TagCompound(Tags.LOOTTABLE_ROLLS_RANGE, new TagNumber(Tags.LOOTTABLE_ROLLS_MIN, this.rollsMin), new TagNumber(
-				Tags.LOOTTABLE_ROLLS_MAX, this.rollsMax)));
+		if (this.rollsMax == -1) tags.add(Tags.LOOTTABLE_ROLLS.create(this.rollsMin));
+		else tags.add(Tags.LOOTTABLE_ROLLS_RANGE.create(Tags.LOOTTABLE_ROLLS_MIN.create(this.rollsMin), Tags.LOOTTABLE_ROLLS_MAX.create(this.rollsMax)));
 
-		if (this.bonusRollsMax == -1) tags.add(new TagBigNumber(Tags.LOOTTABLE_BONUS_ROLLS, this.bonusRollsMin));
-		else tags.add(new TagCompound(Tags.LOOTTABLE_BONUS_ROLLS_RANGE, new TagBigNumber(Tags.LOOTTABLE_BONUS_ROLLS_MIN, this.bonusRollsMin), new TagBigNumber(
-				Tags.LOOTTABLE_BONUS_ROLLS_MAX, this.bonusRollsMax)));
+		if (this.bonusRollsMax == -1) tags.add(Tags.LOOTTABLE_BONUS_ROLLS.create(this.bonusRollsMin));
+		else tags.add(Tags.LOOTTABLE_BONUS_ROLLS_RANGE.create(Tags.LOOTTABLE_BONUS_ROLLS_MIN.create(this.bonusRollsMin),
+				Tags.LOOTTABLE_BONUS_ROLLS_MAX.create(this.bonusRollsMax)));
 
 		Tag[] con = new Tag[this.conditions.length];
 		for (int i = 0; i < con.length; ++i)
 			con[i] = this.conditions[i].toTag(Tags.DEFAULT_COMPOUND);
-		tags.add(new TagList(Tags.LOOTTABLE_CONDITIONS, con));
+		tags.add(Tags.LOOTTABLE_CONDITIONS.create(con));
 
 		Tag[] ent = new Tag[this.entries.length];
 		for (int i = 0; i < ent.length; ++i)
 			ent[i] = this.entries[i].toTag(Tags.DEFAULT_COMPOUND);
-		tags.add(new TagList(Tags.LOOTTABLE_ENTRIES, ent));
+		tags.add(Tags.LOOTTABLE_ENTRIES.create(ent));
 
-		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
+		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 }

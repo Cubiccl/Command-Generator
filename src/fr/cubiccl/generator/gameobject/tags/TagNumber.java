@@ -12,6 +12,7 @@ public class TagNumber extends Tag
 
 	public int value;
 
+	@Deprecated
 	public TagNumber(TemplateNumber template, int value)
 	{
 		super(template);

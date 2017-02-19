@@ -102,11 +102,10 @@ public class Effect extends GameObject implements IObjectList<Effect>
 	@Override
 	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
-		if (includeName) return new TagCompound(container, new TagNumber(Tags.EFFECT_ID, this.type.idInt),
-				new TagNumber(Tags.EFFECT_AMPLIFIER, this.amplifier), new TagNumber(Tags.EFFECT_DURATION, this.duration), new TagNumber(Tags.EFFECT_PARTICLES,
-						this.hideParticles ? 0 : 1), this.nameTag());
-		return new TagCompound(container, new TagNumber(Tags.EFFECT_ID, this.type.idInt), new TagNumber(Tags.EFFECT_AMPLIFIER, this.amplifier), new TagNumber(
-				Tags.EFFECT_DURATION, this.duration), new TagNumber(Tags.EFFECT_PARTICLES, this.hideParticles ? 0 : 1));
+		if (includeName) return container.create(Tags.EFFECT_ID.create(this.type.idInt), Tags.EFFECT_AMPLIFIER.create(this.amplifier),
+				Tags.EFFECT_DURATION.create(this.duration), Tags.EFFECT_PARTICLES.create(this.hideParticles ? 0 : 1), this.nameTag());
+		return container.create(Tags.EFFECT_ID.create(this.type.idInt), Tags.EFFECT_AMPLIFIER.create(this.amplifier),
+				Tags.EFFECT_DURATION.create(this.duration), Tags.EFFECT_PARTICLES.create(this.hideParticles ? 0 : 1));
 	}
 
 }

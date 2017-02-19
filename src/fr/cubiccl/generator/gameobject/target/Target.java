@@ -5,7 +5,6 @@ import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
@@ -151,8 +150,8 @@ public class Target extends GameObject implements IObjectList<Target>
 	@Override
 	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
-		if (includeName) return new TagCompound(container, new TagString(Tags.TARGET, this.toCommand()), this.nameTag());
-		return new TagCompound(container, new TagString(Tags.TARGET, this.toCommand()));
+		if (includeName) return container.create(Tags.TARGET.create(this.toCommand()), this.nameTag());
+		return container.create(Tags.TARGET.create(this.toCommand()));
 	}
 
 }

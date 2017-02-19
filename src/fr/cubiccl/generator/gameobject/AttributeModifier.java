@@ -144,27 +144,27 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 	{
 		boolean lt = this.isInLootTable;
 		ArrayList<Tag> tags = new ArrayList<Tag>();
-		tags.add(new TagString(lt ? Tags.ATTRIBUTE_modifier_name : Tags.ATTRIBUTE_MODIFIER_NAME, this.name));
-		tags.add(new TagNumber(lt ? Tags.ATTRIBUTE_operation : Tags.ATTRIBUTE_OPERATION, this.operation));
-		if (this.amountMax != -1) tags.add(new TagCompound(Tags.ATTRIBUTE_amount_range, new TagBigNumber(Tags.LT_FUNCTION_MIN_FLOAT, this.amount),
-				new TagBigNumber(Tags.LT_FUNCTION_MAX_FLOAT, this.amountMax)));
-		else tags.add(new TagBigNumber(lt ? Tags.ATTRIBUTE_amount : Tags.ATTRIBUTE_AMOUNT, this.amount));
-		if (!lt) tags.add(new TagBigNumber(Tags.ATTRIBUTE_UUIDMOST, this.UUIDMost));
-		if (!lt) tags.add(new TagBigNumber(Tags.ATTRIBUTE_UUIDLEAST, this.UUIDLeast));
+		tags.add((lt ? Tags.ATTRIBUTE_modifier_name : Tags.ATTRIBUTE_MODIFIER_NAME).create(this.name));
+		tags.add((lt ? Tags.ATTRIBUTE_operation : Tags.ATTRIBUTE_OPERATION).create(this.operation));
+		if (this.amountMax != -1) tags.add(Tags.ATTRIBUTE_amount_range.create(Tags.LT_FUNCTION_MIN_FLOAT.create(this.amount),
+				Tags.LT_FUNCTION_MAX_FLOAT.create(this.amountMax)));
+		else tags.add((lt ? Tags.ATTRIBUTE_amount : Tags.ATTRIBUTE_AMOUNT).create(this.amount));
+		if (!lt) tags.add(Tags.ATTRIBUTE_UUIDMOST.create(this.UUIDMost));
+		if (!lt) tags.add(Tags.ATTRIBUTE_UUIDLEAST.create(this.UUIDLeast));
 		if (!isApplied)
 		{
-			tags.add(new TagString(lt ? Tags.ATTRIBUTE_attribute_name : Tags.ATTRIBUTE_ATTRIBUTE_NAME, this.attribute.id));
-			if (!lt) tags.add(new TagString(Tags.ATTRIBUTE_SLOT, this.slots[0]));
+			tags.add((lt ? Tags.ATTRIBUTE_attribute_name : Tags.ATTRIBUTE_ATTRIBUTE_NAME).create(this.attribute.id));
+			if (!lt) tags.add(Tags.ATTRIBUTE_SLOT.create(this.slots[0]));
 			else
 			{
 				TagString[] s = new TagString[this.slots.length];
 				for (int i = 0; i < s.length; ++i)
-					s[i] = new TagString(Tags.DEFAULT_STRING, this.slots[i]);
-				tags.add(new TagList(Tags.ATTRIBUTE_slots, s));
+					s[i] = Tags.DEFAULT_STRING.create(this.slots[i]);
+				tags.add(Tags.ATTRIBUTE_slots.create(s));
 			}
 		}
 		if (includeName) tags.add(this.nameTag());
-		TagCompound t = new TagCompound(container, tags.toArray(new Tag[tags.size()]));
+		TagCompound t = container.create(tags.toArray(new Tag[tags.size()]));
 		return t;
 	}
 }

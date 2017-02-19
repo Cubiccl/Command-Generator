@@ -46,7 +46,7 @@ public class TemplateBlockId extends TemplateNumber
 	public TagNumber generateTag(BaseObject object, CGPanel panel)
 	{
 		this.damage = ((PanelBlockSelection) panel).selectedDamage();
-		return new TagNumber(this, ((PanelBlockSelection) panel).selectedBlock().idNum());
+		return this.create(((PanelBlockSelection) panel).selectedBlock().idNum());
 	}
 
 	@Override

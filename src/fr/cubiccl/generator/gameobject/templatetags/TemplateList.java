@@ -42,6 +42,12 @@ public abstract class TemplateList extends TemplateTag
 		super(id, Tag.LIST, applicationType, applicable);
 	}
 
+	@SuppressWarnings("deprecation")
+	public TagList create(Tag... value)
+	{
+		return new TagList(this, value);
+	}
+
 	@Override
 	public TagList readTag(String value, boolean isJson, boolean readUnknown)
 	{
@@ -54,7 +60,7 @@ public abstract class TemplateList extends TemplateTag
 			Tag t = NBTReader.read(v, true, isJson, readUnknown);
 			if (t != null) tags.add(t);
 		}
-		return new TagList(this, tags.toArray(new Tag[tags.size()]));
+		return this.create(tags.toArray(new Tag[tags.size()]));
 	}
 
 }

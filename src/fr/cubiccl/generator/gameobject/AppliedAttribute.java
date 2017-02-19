@@ -102,10 +102,10 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 		for (int i = 0; i < m.length; i++)
 			m[i] = this.modifiers[i].toTag(Tags.DEFAULT_COMPOUND, true, includeName);
 
-		if (includeName) return new TagCompound(container, new TagString(Tags.ATTRIBUTE_ATTRIBUTE_NAME, this.attribute.id), new TagBigNumber(
-				Tags.ATTRIBUTE_BASE, this.base), this.nameTag(), new TagList(Tags.ATTRIBUTE_MODIFIERS, m));
-		return new TagCompound(container, new TagString(Tags.ATTRIBUTE_ATTRIBUTE_NAME, this.attribute.id), new TagBigNumber(Tags.ATTRIBUTE_BASE, this.base),
-				new TagList(Tags.ATTRIBUTE_MODIFIERS, m));
+		if (includeName) return container.create(Tags.ATTRIBUTE_ATTRIBUTE_NAME.create(this.attribute.id), Tags.ATTRIBUTE_BASE.create(this.base),
+				this.nameTag(), Tags.ATTRIBUTE_MODIFIERS.create(m));
+		return container.create(Tags.ATTRIBUTE_ATTRIBUTE_NAME.create(this.attribute.id), Tags.ATTRIBUTE_BASE.create(this.base),
+				Tags.ATTRIBUTE_MODIFIERS.create(m));
 	}
 
 }

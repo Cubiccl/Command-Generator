@@ -15,6 +15,12 @@ public class TemplateBoolean extends TemplateTag
 		super(id, Tag.BOOLEAN, applicationType, applicable);
 	}
 
+	@SuppressWarnings("deprecation")
+	public TagBoolean create(boolean value)
+	{
+		return new TagBoolean(this, value);
+	}
+
 	@Override
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
@@ -27,13 +33,13 @@ public class TemplateBoolean extends TemplateTag
 	@Override
 	protected TagBoolean generateTag(BaseObject object, CGPanel panel)
 	{
-		return new TagBoolean(this, ((PanelRadio) panel).getSelected() == 0);
+		return this.create(((PanelRadio) panel).getSelected() == 0);
 	}
 
 	@Override
 	public TagBoolean readTag(String value, boolean isJson, boolean readUnknown)
 	{
-		return new TagBoolean(this, value.equals("true"));
+		return this.create(value.equals("true"));
 	}
 
 }

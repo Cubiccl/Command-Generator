@@ -39,7 +39,7 @@ public class TemplateParticle extends TemplateString
 		PanelParticle p = (PanelParticle) panel;
 		this.param1 = p.generateParam1();
 		this.param2 = p.generateParam2();
-		return new TagString(this, p.selectedParticle().id);
+		return this.create(p.selectedParticle().id);
 	}
 
 	@Override

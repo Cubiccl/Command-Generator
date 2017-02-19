@@ -71,6 +71,6 @@ public class Pattern extends GameObject
 	@Override
 	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
-		return new TagCompound(container, new TagString(Tags.PATTERN_SHAPE, this.shape), new TagNumber(Tags.PATTERN_COLOR, this.color));
+		return container.create(Tags.PATTERN_SHAPE.create(this.shape), Tags.PATTERN_COLOR.create(this.color));
 	}
 }

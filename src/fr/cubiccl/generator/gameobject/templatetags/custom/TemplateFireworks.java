@@ -42,8 +42,7 @@ public class TemplateFireworks extends TemplateCompound
 			TagCompound[] tags = new TagCompound[explosions.length];
 			for (int i = 0; i < tags.length; ++i)
 				tags[i] = explosions[i].toTag(Tags.DEFAULT_COMPOUND);
-			return new TagCompound(container, new TagNumber(Tags.FIREWORK_FLIGHT, Integer.parseInt(this.entryFlight.getText())), new TagList(
-					Tags.FIREWORK_EXPLOSIONS, tags));
+			return container.create(Tags.FIREWORK_FLIGHT.create(Integer.parseInt(this.entryFlight.getText())), Tags.FIREWORK_EXPLOSIONS.create(tags));
 		}
 
 		public void setupFrom(TagCompound previousValue)

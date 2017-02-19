@@ -172,16 +172,13 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 	@Override
 	public TagCompound toTag(TemplateCompound container, boolean includeName)
 	{
-		if (includeName) return new TagCompound(container, new TagBigNumber(Tags.COORD_X, this.x), new TagBigNumber(Tags.COORD_Y, this.y), new TagBigNumber(
-				Tags.COORD_Z, this.z), this.nameTag());
-		return new TagCompound(container, new TagBigNumber(Tags.COORD_X, this.x), new TagBigNumber(Tags.COORD_Y, this.y),
-				new TagBigNumber(Tags.COORD_Z, this.z));
+		if (includeName) return container.create(Tags.COORD_X.create(this.x), Tags.COORD_Y.create(this.y), Tags.COORD_Z.create(this.z), this.nameTag());
+		return container.create(Tags.COORD_X.create(this.x), Tags.COORD_Y.create(this.y), Tags.COORD_Z.create(this.z));
 	}
 
 	public TagList toTagList(TemplateList container)
 	{
-		return new TagList(container, new TagBigNumber(Tags.DEFAULT_FLOAT, this.x), new TagBigNumber(Tags.DEFAULT_FLOAT, this.y), new TagBigNumber(
-				Tags.DEFAULT_FLOAT, this.z));
+		return container.create(Tags.DEFAULT_FLOAT.create(this.x), Tags.DEFAULT_FLOAT.create(this.y), Tags.DEFAULT_FLOAT.create(this.z));
 	}
 
 }

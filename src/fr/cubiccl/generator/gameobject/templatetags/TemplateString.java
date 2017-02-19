@@ -20,6 +20,12 @@ public class TemplateString extends TemplateTag
 		this.authorizedValues = null;
 	}
 
+	@SuppressWarnings("deprecation")
+	public TagString create(String value)
+	{
+		return new TagString(this, value);
+	}
+
 	@Override
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
@@ -40,15 +46,15 @@ public class TemplateString extends TemplateTag
 	@Override
 	public TagString generateTag(BaseObject object, CGPanel panel)
 	{
-		if (this.authorizedValues != null) return new TagString(this, ((ComboboxPanel) panel).combobox.getValue());
-		return new TagString(this, ((EntryPanel) panel).entry.getText());
+		if (this.authorizedValues != null) return this.create(((ComboboxPanel) panel).combobox.getValue());
+		return this.create(((EntryPanel) panel).entry.getText());
 	}
 
 	@Override
 	public TagString readTag(String value, boolean isJson, boolean readUnknown)
 	{
 		if (value.startsWith("\"") && value.endsWith("\"")) value = value.substring(1, value.length() - 1);
-		return new TagString(this, value.replaceAll(Pattern.quote("\\\""), "\"").replaceAll(Pattern.quote("\\\\"), "\\"));
+		return this.create(value.replaceAll(Pattern.quote("\\\""), "\"").replaceAll(Pattern.quote("\\\\"), "\\"));
 	}
 
 	public void setValues(String... authorizedValues)

@@ -110,8 +110,8 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 			tags.add(pool.toTag(Tags.DEFAULT_COMPOUND));
 
 		TagCompound t;
-		if (includeName) t = new TagCompound(container, new TagList(Tags.LOOTTABLE_POOLS, tags.toArray(new Tag[tags.size()])), this.nameTag());
-		else t = new TagCompound(container, new TagList(Tags.LOOTTABLE_POOLS, tags.toArray(new Tag[tags.size()])));
+		if (includeName) t = container.create(Tags.LOOTTABLE_POOLS.create(tags.toArray(new Tag[tags.size()])), this.nameTag());
+		else t = container.create(Tags.LOOTTABLE_POOLS.create(tags.toArray(new Tag[tags.size()])));
 		t.setJson(true);
 		return t;
 	}

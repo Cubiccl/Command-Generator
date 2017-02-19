@@ -42,8 +42,8 @@ public class TemplateBlockList extends TemplateList
 		Block[] values = ((PanelObjectList<Block>) panel).values();
 		TagString[] tags = new TagString[values.length];
 		for (int i = 0; i < tags.length; ++i)
-			tags[i] = new TagString(Tags.DEFAULT_STRING, values[i].id());
-		return new TagList(this, tags);
+			tags[i] = Tags.DEFAULT_STRING.create(values[i].id());
+		return this.create(tags);
 	}
 
 }

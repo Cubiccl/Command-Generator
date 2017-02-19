@@ -40,7 +40,7 @@ public class TemplateEntityList extends TemplateList
 		TagCompound[] t = new TagCompound[entities.length];
 		for (int i = 0; i < t.length; i++)
 			t[i] = entities[i].toTag(Tags.DEFAULT_COMPOUND);
-		return new TagList(this, t);
+		return this.create(t);
 	}
 
 }

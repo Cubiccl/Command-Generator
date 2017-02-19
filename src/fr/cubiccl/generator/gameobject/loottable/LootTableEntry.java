@@ -151,13 +151,13 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		for (int i = 0; i < fun.length; ++i)
 			fun[i] = this.functions[i].toTag(Tags.DEFAULT_COMPOUND);
 
-		tags.add(new TagList(Tags.LOOTTABLE_CONDITIONS, con));
-		tags.add(new TagString(Tags.LOOTTABLE_ENTRY_TYPE, TYPES[this.type]));
-		if (this.name != null) tags.add(new TagString(Tags.LOOTTABLE_ENTRY_NAME, this.name));
-		tags.add(new TagList(Tags.LOOTTABLE_FUNCTIONS, fun));
-		if (this.weight != -1) tags.add(new TagNumber(Tags.LOOTTABLE_ENTRY_WEIGHT, this.weight));
-		if (this.quality != -1) tags.add(new TagNumber(Tags.LOOTTABLE_ENTRY_QUALITY, this.quality));
+		tags.add(Tags.LOOTTABLE_CONDITIONS.create(con));
+		tags.add(Tags.LOOTTABLE_ENTRY_TYPE.create(TYPES[this.type]));
+		if (this.name != null) tags.add(Tags.LOOTTABLE_ENTRY_NAME.create(this.name));
+		tags.add(Tags.LOOTTABLE_FUNCTIONS.create(fun));
+		if (this.weight != -1) tags.add(Tags.LOOTTABLE_ENTRY_WEIGHT.create(this.weight));
+		if (this.quality != -1) tags.add(Tags.LOOTTABLE_ENTRY_QUALITY.create(this.quality));
 
-		return new TagCompound(container, tags.toArray(new Tag[tags.size()]));
+		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 }

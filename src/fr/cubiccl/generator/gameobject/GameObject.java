@@ -27,7 +27,7 @@ public abstract class GameObject
 
 	public TagString nameTag()
 	{
-		return new TagString(Tags.OBJECT_NAME, this.customName());
+		return Tags.OBJECT_NAME.create(this.customName());
 	}
 
 	public String save()
