@@ -8,9 +8,14 @@ BUGS FIXED
 
 CHANGED TRANSLATIONS
 lt_entry.quality.description -> lt_entry.quality.help
-lt_function.enchant_randomly,lt_function.enchant_with_levels
+lt_function.enchant_randomly,lt_function.enchant_with_levels,lt_function.set_damage
 
 ADDED TRANSLATIONS
+attribute.base.help,gamerule.query.help,json.insertion.help
+loottable.bonus.help,loottable.rolls.help
+lt_condition.random_chance_with_looting.multiplier.help
+lt_function.enchant_randomly.description,lt_function.enchant_with_levels.description,lt_function.furnace_smelt.description,lt_function.looting_enchant.description,lt_function.set_attributes.description,lt_function.set_count.description,lt_function.set_damage.description,lt_function.set_data.description,lt_function.set_nbt.description
+playsound.minimum_volume.help,playsound.pitch.help,playsound.volume.help
 
 ------------------------- VERSION 2.3 -------------------------
 ADDITIONS

@@ -5,6 +5,7 @@ achievement.one=Un succès :
 achievement.take=Enlever
 
 attribute.base=Valeur de base
+attribute.base.help=Valeur de base de l'Attribut. Cette valeur sera changée par les Modificateurs.
 attribute.modifier.amount=Quantité à appliquer
 attribute.modifier.amount.fixed=Quantité fixée
 attribute.modifier.amount.max=Quantité maximale
@@ -259,6 +260,7 @@ gamerule.main=Règle de jeu
 gamerule.predefined=Règles de jeu prédéfinies...
 gamerule.predefined.select=Choisissez une règle de jeu :
 gamerule.query=Récupérer la valeur
+gamerule.query.help=La valeur de la règle de jeu peut être retournée par cette Commande.<br/>Cela peut être utilisé avec /stats pour la stocker dans le tableau de scores.
 
 general.add=Ajouter
 general.back=Retour
@@ -308,6 +310,7 @@ json.hover.mode.show_entity=Afficher une Entité
 json.hover.mode.show_item=Afficher un Objet
 json.hover.mode.show_text=Afficher du texte Json
 json.insertion=Insertion (facultatif)
+json.insertion.help=Ce texte d'Insertion sera mis dans le chat du Joueur s'il clique sur ce Message.
 json.italic=Texte en italique
 json.item=Objet à afficher
 json.mode.score=Afficher un score
@@ -348,6 +351,7 @@ locate.Temple=Temple de la Jungle
 locate.Village=Village
 
 loottable.bonus=Utilisations bonus
+loottable.bonus.help=Détermine le nombre d'utilisations ajoutées pour chaque point de Chance du Joueur.<br/>Formule : total = utilisations + arrondi (bonus * chance)
 loottable.bonus.exact=Utilisations bonus fixes
 loottable.bonus.max=Utilisations bonus maximales
 loottable.bonus.min=Utilisations bonus minimales
@@ -372,6 +376,7 @@ loottable.pools=Blocs
 loottable.pools.description=Chacun de ces Blocs générera ses Objets si ses Conditions sont vérifiées.
 loottable.rolls=Utilisations
 loottable.rolls.exact=Utilisations fixes
+loottable.rolls.help=Détermine le nombre de fois que ce Bloc générera des Objets. Pour chaque utilisation, un Objet sera généré.
 loottable.rolls.max=Utilisations maximales
 loottable.rolls.min=Utilisations minimales
 loottable.rolls.range=Utilisations aléatoires
@@ -392,32 +397,42 @@ lt_condition.random_chance=Chance aléatoire
 lt_condition.random_chance.chance=Chance
 lt_condition.random_chance_with_looting=Chance aléatoire, affectée par Butin
 lt_condition.random_chance_with_looting.multiplier=Multiplicateur de butin
+lt_condition.random_chance_with_looting.multiplier.help=Ajustement de la chance de base par rapport à l'Enchantement Butin du Joueur.<br/>Formule : total = chance + (niveau de butin * multiplicateur de butin)
 lt_condition.scores=Valeurs du Tableau de scores à vérifier
 
 lt_entry.item=Objet à créer
 lt_entry.mode.item=Créer un Objet prédéfini
 lt_entry.mode.table=Créer un Objet d'une autre Table de Butin
 lt_entry.quality=Qualité
-lt_entry.quality.description=La Qualité modifie l'importance de l'Entrée en fonction de l'attribut Chance du Joueur. La formule est : arrondi( importance + (qualité * chance))
+lt_entry.quality.help=La Qualité modifie l'importance de l'Entrée en fonction de l'attribut Chance du Joueur. La formule est : arrondi( importance + (qualité * chance))
 lt_entry.table=Table de Butin à utiliser
 lt_entry.weight=Importance (chance d'être utilisée)
 
-lt_function.enchant_randomly=Ajouter un Enchantement (niveau aléatoire)
-lt_function.enchant_with_levels=Niveau d'Enchantement (enchantement aléatoire)
+lt_function.enchant_randomly=Ajouter un Enchantement
+lt_function.enchant_randomly.description=Ajoute un Enchantement à l'Objet. Le niveau est aléatoire.
+lt_function.enchant_with_levels=Niveau d'Enchantement
+lt_function.enchant_with_levels.description=Enchante un Objet comme s'il l'était avec une Table d'Enchantement. Niveau représente les niveaux disponibles pour enchanter.
 lt_function.enchantment.treasure=Enchantements Trésor autorisés ?
 lt_function.enchantments=Enchantements disponibles
 lt_function.fixed=Valeur fixe
 lt_function.furnace_smelt=Cuire l'Objet
+lt_function.furnace_smelt.description=Cuit l'Objet comme s'il l'était avec un Fourneau.
 lt_function.looting_enchant=Nombre d'Objets additionnels avec la Chance
+lt_function.looting_enchant.description=Ajuste le nombre d'Objets. Formule : total = changer_nombre + min(additionnels * butin, limite)
 lt_function.looting.limit=Quantité maximale (0 pour aucune limite)
 lt_function.modifiers=Modificateurs d'Attributs
 lt_function.nbt=Données NBT à attribuer
 lt_function.ranged=Valeur aléatoire
 lt_function.set_attributes=Ajouter des Modificateurs d'Attributs
-lt_function.set_count=Changer le nombre d'Objets
-lt_function.set_damage=Changer la durabilité de l'Objet (en pourcent)
-lt_function.set_data=Changer la variante de l'Objet
-lt_function.set_nbt=Ajouter des Données NBT
+lt_function.set_attributes.description=Ajoute des Modificateurs d'Attributs à l'Objet.
+lt_function.set_count=Nombre d'Objets
+lt_function.set_count.description=Change le nombre d'Objets.
+lt_function.set_damage=Durabilité de l'Objet
+lt_function.set_damage.description=Change la durabilité de l'Objet.
+lt_function.set_data=Variante de l'Objet
+lt_function.set_data.description=Change la variante de l'Objet.
+lt_function.set_nbt=Données NBT
+lt_function.set_nbt.description=Ajoute des Données NBT à l'Objet.
 
 menu.command=Générateur de Commandes
 menu.exit=Quitter
@@ -455,7 +470,9 @@ particle.zd=Zone des Particules : Taille Z
 
 playsound.coordinates=Coordonnées du son
 playsound.minimum_volume=Volume minimum
+playsound.minimum_volume.help=Spécifie le volume pour les cibles en dehors de la sphère normale d'audition.<br/>Si une cible est dehors, le son sera placé proche de la cible (à moins de quatre blocs), et le Volume Minimum déterminera son volume.
 playsound.pitch=Hauteur
+playsound.pitch.help=Les valeurs en dessous de 1.0 baissent la hauteur et augmentent la durée ; les valeurs au dessus de 1.0 augmentent la hauteur et réduisent la durée.<br/>La hauteur est un multiplicateur appliqué à la fréquence, donc lorsqu'une valeur entre 0.5 et 1.0 est doublée, la hauteur sera un octave plus haut.
 playsound.relative=Relatif au Joueur
 playsound.sound=Son à jouer
 playsound.source=Chaîne de son dans laquelle jouer ce son
@@ -470,6 +487,7 @@ playsound.source.record=Jukebox
 playsound.source.voice=Sons personnalisés
 playsound.source.weather=Météo
 playsound.volume=Volume
+playsound.volume.help=La distance à laquelle le son peut être entendu. Pour des valeurs en dessous de 1.0, le son sera plus faible et aura une sphère d'audition plus petite.<br/>Pour des valeurs au-dessus de 1.0, le son ne sera pas plus fort, mais sa sphère d'audition (rayon de 16 blocs à 1.0) sera multipliée par ce Volume.
 
 pose.arm.left=Rotation du bras gauche
 pose.arm.right=Rotation du bras droit

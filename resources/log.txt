@@ -17,6 +17,5 @@ Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
 Switching to Loot Tables mode.
-Couldn't find translation for : lt_function.set_data.description
-Couldn't find translation for : lt_function.set_data.description
+Switching to Commands mode.
 Exiting Command Generator... Bye bye !
