@@ -45,6 +45,7 @@ public class PanelCustomObjects extends ConfirmPanel
 
 		GridBagConstraints gbc = panel.createGridBagLayout();
 		gbc.gridwidth = 3;
+		gbc.fill = GridBagConstraints.BOTH;
 		panel.add(this.comboboxType = new OptionCombobox("objects", types), gbc);
 		++gbc.gridy;
 		panel.add(this.modifiers = new PanelObjectList<AttributeModifier>(null, new Text("objects.title", new Replacement("<object>", new Text(

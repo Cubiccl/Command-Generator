@@ -140,6 +140,18 @@ public class ObjectRegistry<T extends BaseObject>
 			object.name().toString();
 	}
 
+	private int doubles(String id)
+	{
+		boolean more = this.registry.containsKey(id);
+		int quantity = more ? 0 : -1;
+		while (more)
+		{
+			if (!this.registry.containsKey(id + "_double_" + quantity)) return quantity;
+			++quantity;
+		}
+		return quantity;
+	}
+
 	public T find(int id)
 	{
 		if (!this.hasNumericalIds) return null;
@@ -161,7 +173,8 @@ public class ObjectRegistry<T extends BaseObject>
 		for (int i = 0; i < ids.length; ++i)
 		{
 			if (this.knows(ids[i])) objects.add(this.find(ids[i]));
-			if (this.knows(ids[i] + "_DOUBLE")) objects.add(this.find(ids[i] + "_DOUBLE"));
+			for (int j = 0; j < this.doubles(ids[i]); ++j)
+				objects.add(this.find(ids[i] + "_double_" + j));
 		}
 		return objects.toArray((T[]) Array.newInstance(this.c, objects.size()));
 	}
@@ -209,7 +222,7 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public void register(T object)
 	{
-		if (this.knows(object.id())) this.registry.put(object.id().replaceAll("minecraft:", "") + "_DOUBLE", object);
+		if (this.knows(object.id())) this.registry.put(object.id().replaceAll("minecraft:", "") + "_double_" + this.doubles(object.id()), object);
 		else this.registry.put(object.id().replaceAll("minecraft:", ""), object);
 		if (this.hasNumericalIds) this.ids.put(object.idNum(), object.id().replaceAll("minecraft:", ""));
 	}

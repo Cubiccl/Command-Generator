@@ -8,7 +8,7 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.tag.ContainerPanel;
+import fr.cubiccl.generator.gui.component.panel.tag.PanelContainer;
 
 public class TemplateItems extends TemplateList
 {
@@ -25,17 +25,17 @@ public class TemplateItems extends TemplateList
 	{
 		Container container = (!this.hasSlot || object == Entity.PLAYER) ? ObjectRegistry.containers.find(this.id()) : ObjectRegistry.containers.find(object
 				.id());
-		ContainerPanel p = new ContainerPanel(container);
+		PanelContainer p = new PanelContainer(container);
 		if (previousValue != null) p.setupFrom((TagList) previousValue);
 		if (object == Entity.PLAYER) p.setName(this.title());
 		else p.setName(container.name());
-		return p;
+		return p.container;
 	}
 
 	@Override
 	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
-		return ((ContainerPanel) panel).generateItems(this, this.hasSlot);
+		return ((PanelContainer) panel.getComponent(0)).generateItems(this, this.hasSlot);
 	}
 
 }

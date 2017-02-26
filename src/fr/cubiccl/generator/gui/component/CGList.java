@@ -37,9 +37,7 @@ public class CGList extends CList
 
 			@Override
 			public void componentResized(ComponentEvent e)
-			{
-				reload();
-			}
+			{}
 
 			@Override
 			public void componentShown(ComponentEvent e)
@@ -71,8 +69,8 @@ public class CGList extends CList
 		if (this.scrollPane == null) return;
 		String[] shownValues = new String[this.values.size()];
 		for (int i = 0; i < shownValues.length; i++)
-			shownValues[i] = this.values.get(i).length() < this.scrollPane.getWidth() / this.getFont().getSize() * 2 ? this.values.get(i) : this.values.get(i)
-					.substring(0, Math.max(0, this.scrollPane.getWidth() / this.getFont().getSize() * 2 - 3)) + "...";
+			shownValues[i] = this.values.get(i).length() < 60 ? this.values.get(i) : this.values.get(i).substring(0, Math.max(0, 60)) + "...";
+
 		super.setValues(shownValues);
 	}
 

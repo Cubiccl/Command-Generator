@@ -3,6 +3,9 @@ package fr.cubiccl.generator.gui.component.panel.tag;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 
 import fr.cubi.cubigui.DisplayUtils;
@@ -15,21 +18,73 @@ import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItems;
 import fr.cubiccl.generator.gui.Dialogs;
+import fr.cubiccl.generator.gui.component.button.CGButton;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
+import fr.cubiccl.generator.gui.component.panel.gameobject.display.PanelItemDisplay;
 import fr.cubiccl.generator.utils.IStateListener;
 import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Text;
 
-public class ContainerPanel extends SlotSelectionPanel implements IStateListener<PanelItem>
+public class PanelContainer extends SlotSelectionPanel implements IStateListener<PanelItem>, ActionListener
 {
 	private static final long serialVersionUID = 8606720961759649878L;
 
+	private CGButton buttonEdit, buttonRemove;
+	public CGPanel container;
 	private ItemStack[] items;
+	private CGPanel panelAction;
+	private PanelItemDisplay panelItemDisplay;
+	private int selected = -1;
 
-	public ContainerPanel(Container container)
+	public PanelContainer(Container container)
 	{
 		super(container);
 		this.items = new ItemStack[this.container().slots.length];
+
+		this.panelAction = new CGPanel();
+		GridBagConstraints gbc = this.panelAction.createGridBagLayout();
+		gbc.gridwidth = 2;
+		gbc.fill = GridBagConstraints.NONE;
+		this.panelAction.add(this.panelItemDisplay = new PanelItemDisplay(), gbc);
+		++gbc.gridy;
+		--gbc.gridwidth;
+		gbc.anchor = GridBagConstraints.WEST;
+		this.panelAction.add(this.buttonEdit = new CGButton("general.edit"), gbc);
+		++gbc.gridx;
+		this.panelAction.add(this.buttonRemove = new CGButton("general.remove"), gbc);
+
+		this.container = new CGPanel();
+		gbc = this.container.createGridBagLayout();
+		this.container.add(this, gbc);
+		++gbc.gridx;
+		this.container.add(this.panelAction, gbc);
+
+		this.buttonEdit.addActionListener(this);
+		this.buttonRemove.addActionListener(this);
+		this.panelAction.setVisible(false);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		if (e.getSource() == this.buttonEdit) this.edit();
+		else if (e.getSource() == this.buttonRemove && this.items[this.selected] != null) this.delete();
+	}
+
+	private void delete()
+	{
+		if (!Dialogs.showConfirmMessage(new Text("container.confirm_deletion").toString(), Lang.translate("general.yes"), Lang.translate("general.no"))) return;
+		this.items[this.selected] = null;
+		this.select(-1);
+		this.repaint();
+	}
+
+	private void edit()
+	{
+		PanelItem p = new PanelItem("general.item");
+		if (this.items[this.selected] != null) p.setupFrom(this.items[this.selected]);
+		CommandGenerator.stateManager.setState(p, this);
 	}
 
 	public void empty()
@@ -71,21 +126,16 @@ public class ContainerPanel extends SlotSelectionPanel implements IStateListener
 	{
 		if (this.currentSlot() != -1)
 		{
-			PanelItem p = new PanelItem("general.item");
-			if (this.items[this.currentSlot()] != null) p.setupFrom(this.items[this.currentSlot()]);
-			CommandGenerator.stateManager.setState(p, this);
+			this.select(this.currentSlot());
+			if (this.items[this.selected] == null) this.edit();
 		}
 	}
 
 	@Override
 	public void onRightClick()
 	{
-		if (this.currentSlot() != -1 && this.items[this.currentSlot()] != null)
-		{
-			if (!Dialogs.showConfirmMessage(new Text("container.confirm_deletion").toString(), Lang.translate("general.yes"), Lang.translate("general.no"))) return;
-			this.items[this.currentSlot()] = null;
-			this.repaint();
-		}
+		if (this.currentSlot() != -1) this.select(this.currentSlot());
+		if (this.currentSlot() != -1 && this.items[this.currentSlot()] != null) this.delete();
 	}
 
 	@Override
@@ -94,6 +144,11 @@ public class ContainerPanel extends SlotSelectionPanel implements IStateListener
 		super.paint(g);
 		if (this.img == null) return;
 		g.drawImage(this.img, 0, 0, this.getWidth(), this.getHeight(), null);
+		if (this.selected != -1)
+		{
+			Slot slot = this.container().slots[this.selected];
+			this.drawer.drawSelection(g, slot.x * MULTIPLIER, slot.y * MULTIPLIER, Slot.SIZE * MULTIPLIER);
+		}
 		for (int i = 0; i < this.items.length; ++i)
 		{
 			ItemStack item = this.items[i];
@@ -115,7 +170,14 @@ public class ContainerPanel extends SlotSelectionPanel implements IStateListener
 			Slot slot = this.container().slots[this.currentSlot()];
 			this.drawer.drawHovering(g, slot.x * MULTIPLIER, slot.y * MULTIPLIER, Slot.SIZE * MULTIPLIER);
 		}
+	}
 
+	private void select(int slot)
+	{
+		this.selected = slot;
+		this.panelAction.setVisible(slot != -1);
+		if (this.selected != -1) this.panelItemDisplay.display(this.items[this.selected]);
+		this.repaint();
 	}
 
 	public void setupFrom(ItemStack[] items)
@@ -144,8 +206,9 @@ public class ContainerPanel extends SlotSelectionPanel implements IStateListener
 	@Override
 	public boolean shouldStateClose(PanelItem panel)
 	{
-		this.items[this.currentSlot()] = panel.generate();
-		this.items[this.currentSlot()].slot = this.container().slots[this.currentSlot()].id + this.container().startsAt;
+		this.items[this.selected] = panel.generate();
+		this.items[this.selected].slot = this.container().slots[this.selected].id + this.container().startsAt;
+		this.panelItemDisplay.display(this.items[this.selected]);
 		return true;
 	}
 

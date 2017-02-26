@@ -129,7 +129,12 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 	@Override
 	public String toString()
 	{
-		return this.name + ", affects " + this.attribute.name().toString();
+		String display = "";
+		if (this.amount >= 0) display += "+";
+		display += this.amount;
+		if (this.operation == OP_MULTIPLY) display += "%";
+		display += " " + this.attribute.name().toString();
+		return display;
 	}
 
 	@Override

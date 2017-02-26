@@ -1,21 +1,16 @@
 package fr.cubiccl.generator.gameobject;
 
-import java.awt.Component;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
-import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
-import fr.cubiccl.generator.gui.component.label.CGLabel;
-import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
+import fr.cubiccl.generator.gui.component.panel.gameobject.display.PanelItemDisplay;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
@@ -84,13 +79,50 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return p;
 	}
 
-	@Override
-	public Component getDisplayComponent()
+	public String displayName()
 	{
-		CGPanel p = new CGPanel();
-		p.add(new CGLabel(this.item.name(this.damage)));
-		p.add(new ImageLabel(this.item.texture(this.damage)));
-		return p;
+		if (this.nbt.hasTag("display"))
+		{
+			TagCompound display = (TagCompound) this.nbt.getTagFromId("display");
+			if (display.hasTag(Tags.DISPLAY_NAME)) return ((TagString) display.getTag(Tags.DISPLAY_NAME)).value();
+		}
+		return this.item.name(this.damage).toString();
+	}
+
+	public Enchantment[] findEnchantments()
+	{
+		if (this.nbt.hasTag("ench"))
+		{
+			TagList ench = (TagList) this.nbt.getTagFromId("ench");
+			Enchantment[] e = new Enchantment[ench.size()];
+			for (int i = 0; i < e.length; ++i)
+				e[i] = Enchantment.createFrom((TagCompound) ench.getTag(i));
+			return e;
+		}
+		return new Enchantment[0];
+	}
+
+	public String[] findLore()
+	{
+		if (this.nbt.hasTag("display"))
+		{
+			TagCompound display = (TagCompound) this.nbt.getTagFromId("display");
+			if (display.hasTag(Tags.DISPLAY_LORE))
+			{
+				TagList lore = (TagList) display.getTag(Tags.DISPLAY_LORE);
+				String[] l = new String[lore.size()];
+				for (int i = 0; i < l.length; ++i)
+					l[i] = ((TagString) lore.getTag(i)).value();
+				return l;
+			}
+		}
+		return new String[0];
+	}
+
+	@Override
+	public PanelItemDisplay getDisplayComponent()
+	{
+		return new PanelItemDisplay(this);
 	}
 
 	@Override

@@ -9,7 +9,7 @@ import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.tag.ContainerPanel;
+import fr.cubiccl.generator.gui.component.panel.tag.PanelContainer;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -21,7 +21,7 @@ public class PanelTrade extends CGPanel implements ICustomObject<TradeOffer>
 
 	private CGCheckBox checkboxReward;
 	private CGEntry entryUses, entryMaxUses;
-	private ContainerPanel panelItems;
+	private PanelContainer panelItems;
 	private CGPanel panelOptions;
 
 	public PanelTrade()
@@ -41,7 +41,7 @@ public class PanelTrade extends CGPanel implements ICustomObject<TradeOffer>
 
 		gbc = this.createGridBagLayout();
 		gbc.fill = GridBagConstraints.NONE;
-		this.add(this.panelItems = new ContainerPanel(ObjectRegistry.containers.find("trade")), gbc);
+		this.add((this.panelItems = new PanelContainer(ObjectRegistry.containers.find("trade"))).container, gbc);
 		++gbc.gridy;
 		this.add(this.panelOptions, gbc);
 		++gbc.gridy;

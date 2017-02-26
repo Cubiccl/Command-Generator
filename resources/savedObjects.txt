@@ -15,11 +15,12 @@
 [ENTITIES]
 
 [ITEMS]
+{id:"minecraft:diamond_shovel",Damage:0s,Count:1b,Slot:0s,tag:{display:{Name:"My Shovel",Lore:["Lore 1"]},ench:[{id:32s,lvl:5s},{id:33s,lvl:1s}]},ObjectName:""}
 
 [JSON MESSAGES]
 
 [VILLAGER TRADES]
-{rewardExp:1b,maxUses:0,uses:0,buy:{id:"minecraft:dirt",Damage:0s,Count:1b,Slot:0s,tag:{}},sell:{id:"minecraft:diamond_sword",Damage:0s,Count:5b,Slot:1s,tag:{ench:[{lvl:5s},{lvl:2s}]}},ObjectName:"Legit trade"}
+{rewardExp:1b,maxUses:0,uses:0,buy:{id:"minecraft:dirt",Damage:0s,Count:1b,Slot:0s,tag:{}},sell:{id:"minecraft:diamond_sword",Damage:0s,Count:5b,Slot:1s,tag:{ench:[{lvl:5s},{lvl:1s}]}},ObjectName:"Legit trade"}
 
 [TARGETS]
 

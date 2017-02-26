@@ -53,11 +53,14 @@ public class PanelObjectList<T extends IObjectList<T>> extends CGPanel implement
 		GridBagConstraints gbc = this.createGridBagLayout();
 		gbc.gridx = 1;
 		gbc.gridy = 1;
-		gbc.gridheight = 3;
+		gbc.gridheight = 4;
+		gbc.fill = GridBagConstraints.BOTH;
 		this.add((this.list = new CGList()).scrollPane, gbc);
 
 		++gbc.gridx;
 		gbc.gridheight = 1;
+		gbc.anchor = GridBagConstraints.NORTH;
+		gbc.fill = GridBagConstraints.HORIZONTAL;
 		this.add(this.buttonAdd = new CGButton("general.add"), gbc);
 		++gbc.gridy;
 		this.add(this.buttonEdit = new CGButton("general.edit"), gbc);
@@ -66,7 +69,7 @@ public class PanelObjectList<T extends IObjectList<T>> extends CGPanel implement
 
 		gbc.gridx = 0;
 		gbc.gridy = 0;
-		gbc.gridheight = 3;
+		gbc.gridheight = 4;
 
 		this.buttonEdit.setEnabled(false);
 		this.buttonRemove.setEnabled(false);
