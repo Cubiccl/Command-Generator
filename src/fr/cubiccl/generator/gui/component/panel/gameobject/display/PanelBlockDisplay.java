@@ -8,32 +8,33 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import fr.cubi.cubigui.DisplayUtils;
-import fr.cubiccl.generator.gameobject.Enchantment;
-import fr.cubiccl.generator.gameobject.ItemStack;
+import fr.cubiccl.generator.gameobject.PlacedBlock;
+import fr.cubiccl.generator.utils.Replacement;
+import fr.cubiccl.generator.utils.Text;
 
-public class PanelItemDisplay extends JPanel
+public class PanelBlockDisplay extends JPanel
 {
-	public static final Color BACKGROUND = Color.BLACK, BORDER = new Color(40, 0, 90);
-	public static final int PIXEL = 5, LINE = PIXEL * 4, MARGIN = PIXEL * 4;
+	private static final Color BACKGROUND = PanelItemDisplay.BACKGROUND, BORDER = PanelItemDisplay.BORDER;
+	private static final int PIXEL = PanelItemDisplay.PIXEL, LINE = PIXEL * 4, MARGIN = PIXEL * 4;
 	private static final long serialVersionUID = -4291911868708274736L;
 
+	private PlacedBlock block;
 	private String[] info;
 	private boolean isResized = false;
-	private ItemStack item;
 
-	public PanelItemDisplay()
+	public PanelBlockDisplay()
 	{
 		this(null);
 	}
 
-	public PanelItemDisplay(ItemStack item)
+	public PanelBlockDisplay(PlacedBlock block)
 	{
-		this.display(item);
+		this.display(block);
 	}
 
-	public void display(ItemStack item)
+	public void display(PlacedBlock block)
 	{
-		this.item = item;
+		this.block = block;
 		this.findInfo();
 		this.isResized = false;
 		this.repaint();
@@ -41,13 +42,13 @@ public class PanelItemDisplay extends JPanel
 
 	private void doResize(Graphics g)
 	{
-		int width = this.item == null ? 0 : this.item.item.texture(this.item.damage).getWidth();
+		int width = this.block == null ? 0 : this.block.block.texture(this.block.data).getWidth();
 		g.setFont(DisplayUtils.FONT);
 		for (String i : info)
 			width = Math.max(width, g.getFontMetrics().stringWidth(i));
 
 		int height = (this.info.length - 1) * LINE + MARGIN * 2;
-		if (this.item != null) height += PIXEL + this.item.item.texture(this.item.damage).getHeight();
+		if (this.block != null) height += PIXEL + this.block.block.texture(this.block.data).getHeight();
 		this.setVisible(false);
 		this.setPreferredSize(new Dimension(width + MARGIN * 2, height));
 		this.setVisible(true);
@@ -58,13 +59,11 @@ public class PanelItemDisplay extends JPanel
 	{
 		ArrayList<String> infos = new ArrayList<String>();
 
-		if (this.item != null)
+		if (this.block != null)
 		{
-			infos.add(this.item.displayName());
-			for (String lore : this.item.findLore())
-				infos.add(lore);
-			for (Enchantment e : this.item.findEnchantments())
-				infos.add(e.toString());
+			infos.add(this.block.block.name(this.block.data).toString());
+			int size = this.block.containerSize();
+			if (size != -1) infos.add(new Text("container.size", new Replacement("<size>", Integer.toString(size))).toString());
 		}
 
 		this.info = infos.toArray(new String[infos.size()]);
@@ -89,9 +88,9 @@ public class PanelItemDisplay extends JPanel
 		g.fillRect(width - PIXEL * 2, PIXEL, PIXEL, height - PIXEL * 2);
 		g.fillRect(PIXEL, height - PIXEL * 2, width - PIXEL * 2, PIXEL);
 
-		if (this.item == null) return;
+		if (this.block == null) return;
 
-		g.drawImage(this.item.item.texture(this.item.damage), MARGIN, MARGIN - PIXEL * 3 / 2, null);
+		g.drawImage(this.block.block.texture(this.block.data), MARGIN, MARGIN - PIXEL * 3 / 2, null);
 
 		this.paintInfo(g);
 	}
@@ -100,7 +99,7 @@ public class PanelItemDisplay extends JPanel
 	{
 		g.setColor(Color.WHITE);
 		g.setFont(DisplayUtils.FONT);
-		int image = this.item.item.texture(this.item.damage).getHeight();
+		int image = this.block.block.texture(this.block.data).getHeight();
 		for (int i = 0; i < this.info.length; ++i)
 		{
 			if (i == 1) g.setColor(Color.GRAY);

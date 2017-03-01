@@ -21,7 +21,10 @@ public interface IObjectList<T>
 	 * @return The name of this Object. */
 	public abstract String getName(int index);
 
-	/** @param panel - The panel the user interacted with to create the Object.
-	 * @return The created object. */
-	public T setupFrom(CGPanel panel) throws CommandGenerationException;
+	/** Should always return this object, except in extreme cases where it is a core object.
+	 * 
+	 * @param panel - The panel the user interacted with to create the Object.
+	 * @return This object, modified according to the user's choices. */
+	public T update(CGPanel panel) throws CommandGenerationException;
+
 }

@@ -69,7 +69,7 @@ public class Explosion implements IObjectList<Explosion>
 		}
 
 		@Override
-		public Color setupFrom(CGPanel panel) throws CommandGenerationException
+		public Color update(CGPanel panel) throws CommandGenerationException
 		{
 			this.value = ((PanelColor) panel).getValue();
 			return this;
@@ -143,15 +143,21 @@ public class Explosion implements IObjectList<Explosion>
 		return "Explosion " + index;
 	}
 
-	@Override
-	public Explosion setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		return ((ExplosionPanel) panel).generateExplosion();
-	}
-
 	public TagCompound toTag(TemplateCompound container)
 	{
 		return container.create(Tags.FIREWORK_TYPE.create(this.type), Tags.FIREWORK_FLICKER.create(this.flicker ? 1 : 0),
 				Tags.FIREWORK_TRAIL.create(this.trail ? 1 : 0), Tags.FIREWORK_COLORS.create(this.primary), Tags.FIREWORK_FADE_COLORS.create(this.fade));
+	}
+
+	@Override
+	public Explosion update(CGPanel panel) throws CommandGenerationException
+	{
+		Explosion e = ((ExplosionPanel) panel).generateExplosion();
+		this.flicker = e.flicker;
+		this.trail = e.trail;
+		this.primary = e.primary;
+		this.fade = e.fade;
+		this.type = e.type;
+		return this;
 	}
 }

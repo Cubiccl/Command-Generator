@@ -71,9 +71,14 @@ public class PanelCondition extends CGPanel implements ActionListener
 		}
 
 		@Override
-		public ScoreCondition setupFrom(CGPanel panel) throws CommandGenerationException
+		public ScoreCondition update(CGPanel panel) throws CommandGenerationException
 		{
-			return ((PanelConditionScore) panel).generate();
+			ScoreCondition c = ((PanelConditionScore) panel).generate();
+			this.isRange = c.isRange;
+			this.max = c.max;
+			this.min = c.min;
+			this.objective = c.objective;
+			return this;
 		}
 
 	}

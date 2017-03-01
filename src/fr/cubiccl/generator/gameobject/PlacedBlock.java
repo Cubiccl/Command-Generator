@@ -5,17 +5,13 @@ import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
-import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
-import fr.cubiccl.generator.gui.component.label.CGLabel;
-import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
+import fr.cubiccl.generator.gui.component.panel.gameobject.display.PanelBlockDisplay;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
@@ -30,7 +26,7 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.BLOCK_ID.id())) ObjectRegistry.blocks.find(((TagString) t).value);
+			if (t.id().equals(Tags.BLOCK_ID.id())) b = ObjectRegistry.blocks.find(((TagString) t).value);
 			if (t.id().equals(Tags.BLOCK_DATA.id())) d = ((TagNumber) t).value;
 			if (t.id().equals(Tags.BLOCK_NBT.id())) nbt = (TagCompound) t;
 		}
@@ -40,13 +36,13 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		return bl;
 	}
 
-	public final Block block;
-	public final int data;
-	public final TagCompound nbt;
+	public Block block;
+	public int data;
+	public TagCompound nbt;
 
 	public PlacedBlock()
 	{
-		this(ObjectRegistry.blocks.find("stone"), 0, Tags.DEFAULT_COMPOUND.create());
+		this(ObjectRegistry.blocks.find("stone"), 0, Tags.BLOCK_NBT.create());
 	}
 
 	public PlacedBlock(Block block, int data, TagCompound nbt)
@@ -54,6 +50,12 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		this.block = block;
 		this.data = data;
 		this.nbt = nbt;
+	}
+
+	public int containerSize()
+	{
+		if (this.nbt.hasTag("Items")) return ((TagList) this.nbt.getTagFromId("Items")).size();
+		return -1;
 	}
 
 	@Override
@@ -67,22 +69,13 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 	@Override
 	public Component getDisplayComponent()
 	{
-		CGPanel p = new CGPanel();
-		p.add(new CGLabel(this.block.name(this.data)));
-		p.add(new ImageLabel(this.block.texture(this.data)));
-		return p;
+		return new PanelBlockDisplay(this);
 	}
 
 	@Override
 	public String getName(int index)
 	{
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.block.name(this.data).toString();
-	}
-
-	@Override
-	public PlacedBlock setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		return ((PanelBlock) panel).generate();
 	}
 
 	public String toCommand()
@@ -107,6 +100,16 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		if (includeName) tags.add(this.nameTag());
 
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public PlacedBlock update(CGPanel panel) throws CommandGenerationException
+	{
+		PlacedBlock b = ((PanelBlock) panel).generate();
+		this.block = b.block;
+		this.data = b.data;
+		this.nbt = b.nbt;
+		return this;
 	}
 
 }

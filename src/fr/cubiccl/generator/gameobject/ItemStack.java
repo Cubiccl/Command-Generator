@@ -38,9 +38,9 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return is;
 	}
 
-	public final int amount, damage;
-	public final Item item;
-	public final TagCompound nbt;
+	public int amount, damage;
+	public Item item;
+	public TagCompound nbt;
 	public int slot;
 
 	public ItemStack()
@@ -86,7 +86,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 			TagCompound display = (TagCompound) this.nbt.getTagFromId("display");
 			if (display.hasTag(Tags.DISPLAY_NAME)) return ((TagString) display.getTag(Tags.DISPLAY_NAME)).value();
 		}
-		return this.item.name(this.damage).toString();
+		return this.amount + " " + this.item.name(this.damage).toString();
 	}
 
 	public Enchantment[] findEnchantments()
@@ -132,12 +132,6 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	}
 
 	@Override
-	public ItemStack setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		return ((PanelItem) panel).generate();
-	}
-
-	@Override
 	public String toCommand()
 	{
 		return this.item.id() + " " + this.amount + " " + this.damage + " " + this.nbt.valueForCommand();
@@ -160,6 +154,18 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		tags.add(this.nbt);
 		if (includeName) tags.add(this.nameTag());
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public ItemStack update(CGPanel panel) throws CommandGenerationException
+	{
+		ItemStack i = ((PanelItem) panel).generate();
+		this.amount = i.amount;
+		this.damage = i.damage;
+		this.item = i.item;
+		this.nbt = i.nbt;
+		this.slot = i.slot;
+		return this;
 	}
 
 }

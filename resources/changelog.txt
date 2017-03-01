@@ -1,6 +1,18 @@
-------------------------- VERSION 2.3.1 -------------------------
+------------------------- VERSION 2.3.2 -------------------------
 ADDITIONS
 - Added a searchbar for Command selection.
+- Added custom display for Items, Blocks and Effects. Also re-worked containers UI.
+- Added a bunch of Help buttons to describe what the Commands to exactly.
+
+BUGS FIXED
+- Fixed various object reading/saving errors.
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+
+------------------------- VERSION 2.3.1 -------------------------
+ADDITIONS
 - Added a bunch of Help buttons to describe what the Commands to exactly.
 
 BUGS FIXED

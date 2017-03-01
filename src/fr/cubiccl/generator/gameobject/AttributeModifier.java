@@ -61,13 +61,13 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		return m;
 	}
 
-	public final double amount, amountMax;
-	public final Attribute attribute;
-	public final boolean isInLootTable;
-	public final String name;
-	public final byte operation;
-	public final String[] slots;
-	public final long UUIDMost, UUIDLeast;
+	public double amount, amountMax;
+	public Attribute attribute;
+	public boolean isInLootTable;
+	public String name;
+	public byte operation;
+	public String[] slots;
+	public long UUIDMost, UUIDLeast;
 
 	public AttributeModifier()
 	{
@@ -112,12 +112,6 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 	public String getName(int index)
 	{
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.name;
-	}
-
-	@Override
-	public AttributeModifier setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		return ((PanelAttributeModifier) panel).generate();
 	}
 
 	@Override
@@ -171,5 +165,21 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		if (includeName) tags.add(this.nameTag());
 		TagCompound t = container.create(tags.toArray(new Tag[tags.size()]));
 		return t;
+	}
+
+	@Override
+	public AttributeModifier update(CGPanel panel) throws CommandGenerationException
+	{
+		AttributeModifier m = ((PanelAttributeModifier) panel).generate();
+		this.amount = m.amount;
+		this.amountMax = m.amountMax;
+		this.attribute = m.attribute;
+		this.isInLootTable = m.isInLootTable;
+		this.name = m.name;
+		this.operation = m.operation;
+		this.slots = m.slots;
+		this.UUIDMost = m.UUIDMost;
+		this.UUIDLeast = m.UUIDLeast;
+		return this;
 	}
 }

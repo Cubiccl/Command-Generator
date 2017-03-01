@@ -78,12 +78,6 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 	}
 
 	@Override
-	public AppliedAttribute setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		return ((PanelAttribute) panel).generate();
-	}
-
-	@Override
 	public String toCommand()
 	{
 		return this.toString();
@@ -106,6 +100,16 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 				this.nameTag(), Tags.ATTRIBUTE_MODIFIERS.create(m));
 		return container.create(Tags.ATTRIBUTE_ATTRIBUTE_NAME.create(this.attribute.id), Tags.ATTRIBUTE_BASE.create(this.base),
 				Tags.ATTRIBUTE_MODIFIERS.create(m));
+	}
+
+	@Override
+	public AppliedAttribute update(CGPanel panel) throws CommandGenerationException
+	{
+		AppliedAttribute a = ((PanelAttribute) panel).generate();
+		this.attribute = a.attribute;
+		this.base = a.base;
+		this.modifiers = a.modifiers;
+		return this;
 	}
 
 }

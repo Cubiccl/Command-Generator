@@ -76,7 +76,7 @@ public class EnchantmentType extends BaseObject implements IObjectList<Enchantme
 	}
 
 	@Override
-	public EnchantmentType setupFrom(CGPanel panel) throws CommandGenerationException
+	public EnchantmentType update(CGPanel panel) throws CommandGenerationException
 	{
 		return ((PanelEnchantment) panel).selectedEnchantment();
 	}

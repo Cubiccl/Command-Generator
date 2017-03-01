@@ -40,8 +40,8 @@ public class TemplateSpawnPotentials extends TemplateList
 			return new SpawnPotential(new LivingEntity(e, p), w);
 		}
 
-		public final LivingEntity entity;
-		public final int weight;
+		public LivingEntity entity;
+		public int weight;
 
 		public SpawnPotential()
 		{
@@ -78,12 +78,6 @@ public class TemplateSpawnPotentials extends TemplateList
 		}
 
 		@Override
-		public SpawnPotential setupFrom(CGPanel panel) throws CommandGenerationException
-		{
-			return ((SpawnPotentialPanel) panel).createSpawnPotential();
-		}
-
-		@Override
 		public String toString()
 		{
 			return this.weight + ", " + this.entity.entity.name().toString();
@@ -94,6 +88,14 @@ public class TemplateSpawnPotentials extends TemplateList
 			TagString type = Tags.ENTITY_TYPE.create(this.entity.entity.id);
 			TagNumber weight = Tags.ENTITY_WEIGHT.create(this.weight);
 			return container.create(type, weight, this.entity.toTag(Tags.ENTITY_PROPERTIES));
+		}
+
+		@Override
+		public SpawnPotential update(CGPanel panel) throws CommandGenerationException
+		{
+			SpawnPotential s= ((SpawnPotentialPanel) panel).createSpawnPotential();
+			this.entity=s.entity;
+			this.weight=s.weight;return this;
 		}
 
 	}

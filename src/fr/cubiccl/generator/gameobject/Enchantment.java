@@ -69,12 +69,6 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 	}
 
 	@Override
-	public Enchantment setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		return ((PanelEnchantment) panel).generate();
-	}
-
-	@Override
 	public String toCommand()
 	{
 		return this.type.idString + " " + this.level;
@@ -91,6 +85,15 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 	{
 		if (includeName) return container.create(Tags.ENCHANTMENT_ID.create(this.type.idInt), Tags.ENCHANTMENT_LVL.create(this.level), this.nameTag());
 		return container.create(Tags.ENCHANTMENT_ID.create(this.type.idInt), Tags.ENCHANTMENT_LVL.create(this.level));
+	}
+
+	@Override
+	public Enchantment update(CGPanel panel) throws CommandGenerationException
+	{
+		Enchantment e = ((PanelEnchantment) panel).generate();
+		this.level = e.level;
+		this.type = e.type;
+		return this;
 	}
 
 }

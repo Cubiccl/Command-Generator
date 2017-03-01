@@ -36,8 +36,8 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 		return en;
 	}
 
-	public final Entity entity;
-	public final TagCompound nbt;
+	public Entity entity;
+	public TagCompound nbt;
 
 	public LivingEntity()
 	{
@@ -75,12 +75,6 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 	}
 
 	@Override
-	public LivingEntity setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		return ((PanelEntity) panel).generate();
-	}
-
-	@Override
 	public String toCommand()
 	{
 		return this.entity.id();
@@ -101,6 +95,15 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 			tags.add(t);
 		if (includeName) tags.add(this.nameTag());
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public LivingEntity update(CGPanel panel) throws CommandGenerationException
+	{
+		LivingEntity e = ((PanelEntity) panel).generate();
+		this.entity = e.entity;
+		this.nbt = e.nbt;
+		return this;
 	}
 
 }

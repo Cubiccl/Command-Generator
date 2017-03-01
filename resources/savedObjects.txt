@@ -5,6 +5,7 @@
 [ATTRIBUTES]
 
 [BLOCKS]
+{id:"minecraft:chest",data:4b,tag:{Items:[{id:"minecraft:stone",Damage:0s,Count:1b,Slot:13s,tag:{}},{id:"minecraft:nether_brick_fence",Damage:0s,Count:4b,Slot:26s,tag:{}}]},ObjectName:"Test Chest"}
 
 [COORDINATES]
 
@@ -15,7 +16,7 @@
 [ENTITIES]
 
 [ITEMS]
-{id:"minecraft:diamond_shovel",Damage:0s,Count:1b,Slot:0s,tag:{display:{Name:"My Shovel",Lore:["Lore 1"]},ench:[{id:32s,lvl:5s},{id:33s,lvl:1s}]},ObjectName:""}
+{id:"minecraft:diamond_shovel",Damage:0s,Count:1b,Slot:0s,tag:{display:{Name:"My Shovel",Lore:["Lore 1"]},ench:[{id:32s,lvl:5s},{id:33s,lvl:1s}]},ObjectName:"My Shovel"}
 
 [JSON MESSAGES]
 

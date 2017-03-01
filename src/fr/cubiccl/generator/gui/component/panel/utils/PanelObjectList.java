@@ -214,9 +214,8 @@ public class PanelObjectList<T extends IObjectList<T>> extends CGPanel implement
 		{
 			if (this.editing == this.objects.size())
 			{
-				T o = this.newObject.setupFrom(panel);
+				T o = this.newObject.update(panel);
 				this.add(o);
-			} else this.set(this.editing, this.objects.get(this.editing).setupFrom(panel));
 			this.updateList();
 			return true;
 		} catch (CommandGenerationException e)

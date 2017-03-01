@@ -33,7 +33,6 @@ public final class Tags
 	public static final TemplateNumber ATTRIBUTE_UUIDLEAST = new TemplateNumber("UUIDLeast", UNAVAILABLE, TagNumber.LONG);
 	public static final TemplateNumber ATTRIBUTE_UUIDMOST = new TemplateNumber("UUIDMost", UNAVAILABLE, TagNumber.LONG);
 
-	public static final DefaultCompound BLOCK = new DefaultCompound("block");
 	public static final TemplateNumber BLOCK_DATA = new TemplateNumber("data", UNAVAILABLE, TagNumber.BYTE);
 	public static final TemplateString BLOCK_ID = new TemplateString("id", UNAVAILABLE);
 	public static final DefaultCompound BLOCK_NBT = new DefaultCompound("tag");

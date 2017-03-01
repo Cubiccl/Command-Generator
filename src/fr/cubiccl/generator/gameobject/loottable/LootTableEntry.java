@@ -126,19 +126,6 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		this.functions = f.toArray(new LootTableFunction[f.size()]);
 	}
 
-	@Override
-	public LootTableEntry setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		LootTableEntry e = ((PanelEntry) panel).generate();
-		this.conditions = e.conditions;
-		this.functions = e.functions;
-		this.name = e.name;
-		this.type = e.type;
-		this.weight = e.weight;
-		this.quality = e.quality;
-		return this;
-	}
-
 	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
@@ -159,5 +146,18 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		if (this.quality != -1) tags.add(Tags.LOOTTABLE_ENTRY_QUALITY.create(this.quality));
 
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public LootTableEntry update(CGPanel panel) throws CommandGenerationException
+	{
+		LootTableEntry e = ((PanelEntry) panel).generate();
+		this.conditions = e.conditions;
+		this.functions = e.functions;
+		this.name = e.name;
+		this.type = e.type;
+		this.weight = e.weight;
+		this.quality = e.quality;
+		return this;
 	}
 }

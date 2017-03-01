@@ -108,19 +108,6 @@ public class LootTablePool implements IObjectList<LootTablePool>
 	}
 
 	@Override
-	public LootTablePool setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		LootTablePool pool = ((PanelPool) panel).generatePool();
-		this.bonusRollsMin = pool.bonusRollsMin;
-		this.bonusRollsMax = pool.bonusRollsMax;
-		this.conditions = pool.conditions;
-		this.entries = pool.entries;
-		this.rollsMin = pool.rollsMin;
-		this.rollsMax = pool.rollsMax;
-		return this;
-	}
-
-	@Override
 	public String toString()
 	{
 		String rolls = Integer.toString(this.rollsMin);
@@ -151,5 +138,18 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		tags.add(Tags.LOOTTABLE_ENTRIES.create(ent));
 
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public LootTablePool update(CGPanel panel) throws CommandGenerationException
+	{
+		LootTablePool pool = ((PanelPool) panel).generatePool();
+		this.bonusRollsMin = pool.bonusRollsMin;
+		this.bonusRollsMax = pool.bonusRollsMax;
+		this.conditions = pool.conditions;
+		this.entries = pool.entries;
+		this.rollsMin = pool.rollsMin;
+		this.rollsMax = pool.rollsMax;
+		return this;
 	}
 }

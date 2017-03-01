@@ -207,9 +207,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 
 	@Override
 	public void onChange(int index, T object)
-	{
-		this.savedObjects.put(object.customName(), object);
-	}
+	{}
 
 	@Override
 	public void onDeletion(int index, T object)

@@ -86,8 +86,8 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 		return new Coordinates(x, y, z);
 	}
 
-	public final float x, y, z;
-	public final boolean xRelative, yRelative, zRelative;
+	public float x, y, z;
+	public boolean xRelative, yRelative, zRelative;
 
 	public Coordinates()
 	{
@@ -127,12 +127,6 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 	public String getName(int index)
 	{
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.toString();
-	}
-
-	@Override
-	public Coordinates setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		return ((PanelCoordinates) panel).generate();
 	}
 
 	@Override
@@ -179,6 +173,19 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 	public TagList toTagList(TemplateList container)
 	{
 		return container.create(Tags.DEFAULT_FLOAT.create(this.x), Tags.DEFAULT_FLOAT.create(this.y), Tags.DEFAULT_FLOAT.create(this.z));
+	}
+
+	@Override
+	public Coordinates update(CGPanel panel) throws CommandGenerationException
+	{
+		Coordinates c = ((PanelCoordinates) panel).generate();
+		this.x = c.x;
+		this.y = c.y;
+		this.z = c.z;
+		this.xRelative = c.xRelative;
+		this.yRelative = c.yRelative;
+		this.zRelative = c.zRelative;
+		return this;
 	}
 
 }

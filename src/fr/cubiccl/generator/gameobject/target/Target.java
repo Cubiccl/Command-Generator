@@ -121,12 +121,6 @@ public class Target extends GameObject implements IObjectList<Target>
 		return this.customName() == null || this.customName().equals("") ? this.toString() : this.customName();
 	}
 
-	@Override
-	public Target setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		return ((PanelTarget) panel).generate();
-	}
-
 	public String toCommand()
 	{
 		if (this.type == TargetType.PLAYER) return this.playerName;
@@ -152,6 +146,16 @@ public class Target extends GameObject implements IObjectList<Target>
 	{
 		if (includeName) return container.create(Tags.TARGET.create(this.toCommand()), this.nameTag());
 		return container.create(Tags.TARGET.create(this.toCommand()));
+	}
+
+	@Override
+	public Target update(CGPanel panel) throws CommandGenerationException
+	{
+		Target t = ((PanelTarget) panel).generate();
+		this.arguments = t.arguments;
+		this.playerName = t.playerName;
+		this.type = t.type;
+		return this;
 	}
 
 }

@@ -70,12 +70,6 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 	}
 
 	@Override
-	public TradeOffer setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		return ((PanelTrade) panel).generate();
-	}
-
-	@Override
 	public String toCommand()
 	{
 		return this.toString();
@@ -99,6 +93,19 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 		tags.add(this.sell.toTag(Tags.OFFER_SELL));
 		if (includeName) tags.add(this.nameTag());
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public TradeOffer update(CGPanel panel) throws CommandGenerationException
+	{
+		TradeOffer t = ((PanelTrade) panel).generate();
+		this.buy = t.buy;
+		this.buySecondary = t.buySecondary;
+		this.sell = t.sell;
+		this.experienceReward = t.experienceReward;
+		this.maxUses = t.maxUses;
+		this.uses = t.uses;
+		return this;
 	}
 
 }

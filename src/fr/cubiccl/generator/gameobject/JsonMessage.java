@@ -162,12 +162,6 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 	}
 
 	@Override
-	public JsonMessage setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		return ((PanelJsonMessage) panel).generate();
-	}
-
-	@Override
 	public String toCommand()
 	{
 		return this.toString();
@@ -216,5 +210,26 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 		TagCompound tag = container.create(tags.toArray(new Tag[tags.size()]));
 		tag.setJson(true);
 		return tag;
+	}
+
+	@Override
+	public JsonMessage update(CGPanel panel) throws CommandGenerationException
+	{
+		JsonMessage m = ((PanelJsonMessage) panel).generate();
+		this.bold = m.bold;
+		this.underlined = m.underlined;
+		this.italic = m.italic;
+		this.strikethrough = m.strikethrough;
+		this.obfuscated = m.obfuscated;
+		this.clickAction = m.clickAction;
+		this.clickValue = m.clickValue;
+		this.color = m.color;
+		this.hoverAction = m.hoverAction;
+		this.hoverValue = m.hoverValue;
+		this.insertion = m.insertion;
+		this.mode = m.mode;
+		this.target = m.target;
+		this.text = m.text;
+		return this;
 	}
 }

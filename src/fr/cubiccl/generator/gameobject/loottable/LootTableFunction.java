@@ -120,16 +120,6 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 	}
 
 	@Override
-	public LootTableFunction setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		LootTableFunction f = ((PanelFunction) panel).generate();
-		this.conditions = f.conditions;
-		this.function = f.function;
-		this.tags = f.tags;
-		return this;
-	}
-
-	@Override
 	public String toString()
 	{
 		String display = this.function.translate().toString();
@@ -151,5 +141,15 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 			output[i + 2] = this.tags[i];
 
 		return container.create(output);
+	}
+
+	@Override
+	public LootTableFunction update(CGPanel panel) throws CommandGenerationException
+	{
+		LootTableFunction f = ((PanelFunction) panel).generate();
+		this.conditions = f.conditions;
+		this.function = f.function;
+		this.tags = f.tags;
+		return this;
 	}
 }

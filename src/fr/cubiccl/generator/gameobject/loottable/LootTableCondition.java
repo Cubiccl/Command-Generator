@@ -108,15 +108,6 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 	}
 
 	@Override
-	public LootTableCondition setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		LootTableCondition c = ((PanelCondition) panel).generate();
-		this.condition = c.condition;
-		this.tags = c.tags;
-		return this;
-	}
-
-	@Override
 	public String toString()
 	{
 		String display = this.condition.translate().toString();
@@ -134,6 +125,15 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 			output[i + 1] = this.tags[i];
 
 		return container.create(output);
+	}
+
+	@Override
+	public LootTableCondition update(CGPanel panel) throws CommandGenerationException
+	{
+		LootTableCondition c = ((PanelCondition) panel).generate();
+		this.condition = c.condition;
+		this.tags = c.tags;
+		return this;
 	}
 
 }

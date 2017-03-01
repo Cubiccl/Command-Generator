@@ -57,7 +57,7 @@ public class Block extends BlockItem implements IObjectList<Block>
 	}
 
 	@Override
-	public Block setupFrom(CGPanel panel) throws CommandGenerationException
+	public Block update(CGPanel panel) throws CommandGenerationException
 	{
 		return ((PanelBlockSelection) panel).selectedBlock();
 	}

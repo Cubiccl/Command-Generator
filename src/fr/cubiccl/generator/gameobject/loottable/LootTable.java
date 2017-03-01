@@ -85,12 +85,6 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 	}
 
 	@Override
-	public LootTable setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		return null;
-	}
-
-	@Override
 	public String toCommand()
 	{
 		return this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand();
@@ -114,6 +108,13 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 		else t = container.create(Tags.LOOTTABLE_POOLS.create(tags.toArray(new Tag[tags.size()])));
 		t.setJson(true);
 		return t;
+	}
+
+	@Deprecated
+	@Override
+	public LootTable update(CGPanel panel) throws CommandGenerationException
+	{
+		return this;
 	}
 
 }

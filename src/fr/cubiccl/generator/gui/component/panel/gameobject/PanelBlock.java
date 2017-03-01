@@ -86,7 +86,7 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 	@Override
 	public PlacedBlock generate() throws CommandGenerationException
 	{
-		return this.generateBlock(Tags.BLOCK);
+		return this.generateBlock(Tags.BLOCK_NBT);
 	}
 
 	public PlacedBlock generateBlock(TemplateCompound container)

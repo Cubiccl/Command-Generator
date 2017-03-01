@@ -114,6 +114,7 @@ container.horse_saddle=Horse saddle
 container.hopper=Hopper
 container.hotbar=Hotbar
 container.Inventory=Player Inventory
+container.size=<size> Items
 container.slot.armor=Armor
 container.slot.brewing_stand=Brewing Stand
 container.slot.chest=Chest or Trapped Chest

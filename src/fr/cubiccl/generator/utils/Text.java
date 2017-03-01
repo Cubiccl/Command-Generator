@@ -83,13 +83,6 @@ public class Text implements IObjectList<Text>
 	}
 
 	@Override
-	public Text setupFrom(CGPanel panel) throws CommandGenerationException
-	{
-		this.id = ((EntryPanel) panel).entry.getText();
-		return this;
-	}
-
-	@Override
 	public String toString()
 	{
 		if (!this.doTranslate) return this.id;
@@ -99,5 +92,12 @@ public class Text implements IObjectList<Text>
 			output = replacement.apply(output);
 
 		return output;
+	}
+
+	@Override
+	public Text update(CGPanel panel) throws CommandGenerationException
+	{
+		this.id = ((EntryPanel) panel).entry.getText();
+		return this;
 	}
 }

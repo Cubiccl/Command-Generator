@@ -82,9 +82,14 @@ public class Effect extends GameObject implements IObjectList<Effect>
 	}
 
 	@Override
-	public Effect setupFrom(CGPanel panel) throws CommandGenerationException
+	public Effect update(CGPanel panel) throws CommandGenerationException
 	{
-		return ((PanelEffect) panel).generate();
+		Effect e = ((PanelEffect) panel).generate();
+		this.amplifier = e.amplifier;
+		this.duration = e.duration;
+		this.hideParticles = e.hideParticles;
+		this.type = e.type;
+		return this;
 	}
 
 	@Override
