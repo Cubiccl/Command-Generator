@@ -216,6 +216,7 @@ public class PanelObjectList<T extends IObjectList<T>> extends CGPanel implement
 			{
 				T o = this.newObject.update(panel);
 				this.add(o);
+			} else this.set(this.editing, this.objects.get(this.editing).update(panel));
 			this.updateList();
 			return true;
 		} catch (CommandGenerationException e)

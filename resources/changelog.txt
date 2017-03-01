@@ -1,7 +1,7 @@
 ------------------------- VERSION 2.3.2 -------------------------
 ADDITIONS
 - Added a searchbar for Command selection.
-- Added custom display for Items, Blocks and Effects. Also re-worked containers UI.
+- Added custom display for Items and Blocks. Also re-worked containers UI.
 - Added a bunch of Help buttons to describe what the Commands to exactly.
 
 BUGS FIXED

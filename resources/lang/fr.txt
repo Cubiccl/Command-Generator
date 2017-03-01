@@ -106,6 +106,7 @@ container.horse_saddle=Selle de cheval
 container.hopper=Entonnoir
 container.hotbar=Barre d'action
 container.Inventory=Inventaire de Joueur
+container.size=<size> Objets
 container.slot.armor=Armure
 container.slot.brewing_stand=Alambic
 container.slot.chest=Coffre ou Coffre piégé

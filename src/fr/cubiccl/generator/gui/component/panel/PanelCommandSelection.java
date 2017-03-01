@@ -4,11 +4,11 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubi.cubigui.SearchCombobox;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
 import fr.cubiccl.generator.gui.component.button.CGButton;
-import fr.cubiccl.generator.gui.component.combobox.CGComboBox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.utils.Text;
 
@@ -19,7 +19,7 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 
 	public CGButton buttonCancelExecute;
 	private CGButton buttonGenerate, buttonLoadCommand;
-	private CGComboBox comboboxCommands;
+	private SearchCombobox comboboxCommands;
 	private CGLabel labelCommand;
 
 	public PanelCommandSelection()
@@ -31,7 +31,7 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 		String[] names = new String[commands.length];
 		for (int i = 0; i < names.length; ++i)
 			names[i] = commands[i].id;
-		this.comboboxCommands = new CGComboBox(names);
+		this.comboboxCommands = new SearchCombobox(names);
 		this.comboboxCommands.addActionListener(this);
 
 		this.buttonGenerate = new CGButton("command.generate");
@@ -64,7 +64,7 @@ public class PanelCommandSelection extends CGPanel implements ActionListener
 
 		this.add(this.labelCommand, gbc);
 		++gbc.gridx;
-		this.add(this.comboboxCommands, gbc);
+		this.add(this.comboboxCommands.container, gbc);
 		++gbc.gridx;
 		this.add(this.buttonGenerate, gbc);
 		++gbc.gridx;
