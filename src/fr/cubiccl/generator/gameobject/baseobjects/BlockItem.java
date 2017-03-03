@@ -2,6 +2,8 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.image.BufferedImage;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Lang;
@@ -10,7 +12,7 @@ import fr.cubiccl.generator.utils.Textures;
 import fr.cubiccl.generator.utils.Utils;
 
 /** Represents a Block or an Item. */
-public class BlockItem extends BaseObject
+public abstract class BlockItem extends BaseObject
 {
 	public static final boolean ITEM = true, BLOCK = false;
 
@@ -58,6 +60,13 @@ public class BlockItem extends BaseObject
 	public int idNum()
 	{
 		return this.idInt;
+	}
+
+	private boolean isDamageCustom()
+	{
+		for (int i = 0; i < damage.length; ++i)
+			if (this.damage[i] != i) return true;
+		return false;
 	}
 
 	public boolean isDataValid(int data)
@@ -121,6 +130,25 @@ public class BlockItem extends BaseObject
 		if (this.textureType == 0) return Textures.getTexture(this.typeName() + "." + this.idString + "_" + damage);
 		if (this.textureType < -1) return Textures.getTexture(this.typeName() + "." + this.idString + "_" + damage / -this.textureType);
 		return Textures.getTexture(this.typeName() + "." + this.idString + "_" + damage % this.textureType);
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = new Element(this.isItem() ? "item" : "block");
+		root.setAttribute("idint", Integer.toString(this.idNum()));
+		root.setAttribute("idstr", this.id().substring("minecraft:".length()));
+		if (this.textureType != 0) root.addContent(new Element("texture").setText(Integer.toString(this.textureType)));
+
+		if (this.isDamageCustom())
+		{
+			String d = "" + this.damage[0];
+			for (int i = 1; i < this.damage.length; ++i)
+				d += ":" + this.damage[i];
+			root.addContent(new Element("customdamage").setText(d));
+		} else if (this.damage.length != 1) root.addContent(new Element("maxdamage").setText(Integer.toString(this.damage.length - 1)));
+
+		return root;
 	}
 
 	private String typeName()

@@ -2,16 +2,22 @@ package fr.cubiccl.generator;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 import javax.swing.ToolTipManager;
+
+import org.jdom2.Document;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
@@ -63,6 +69,7 @@ public class CommandGenerator
 		if (Settings.testMode)
 		{
 			untranslated.sort(Comparator.naturalOrder());
+			saveData();
 			FileUtils.writeToFile("untranslated.txt", untranslated.toArray(new String[untranslated.size()]));
 		}
 		log("Log, settings and custom objects save successful.");
@@ -195,6 +202,18 @@ public class CommandGenerator
 	{
 		Dialogs.showMessage(e.getMessage());
 		log("Error : " + e.getMessage());
+	}
+
+	private static void saveData()
+	{
+		try
+		{
+			Document d = new Document(ObjectRegistry.allToXML());
+			new XMLOutputter(Format.getPrettyFormat()).output(d, new FileOutputStream("resources/data/data_output.xml"));
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	public static Command selectedCommand()

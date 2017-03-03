@@ -2,6 +2,8 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.image.BufferedImage;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
@@ -41,6 +43,12 @@ public class Entity extends BaseObject
 	public String toString()
 	{
 		return this.name().toString();
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return new Element("entity").setAttribute("id", this.id().substring("minecraft:".length()));
 	}
 
 }

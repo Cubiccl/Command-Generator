@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<!-- Basic types -->
+	<xs:simpleType name="idstring">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]|[a-z]|[A-Z]|\.|_)*" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="idint">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]*" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:element name="maxdamage" type="xs:int" />
+	<xs:element name="customdamage" type="xs:string" />
+	<xs:element name="texture" type="xs:int" />
+	<xs:element name="durability" type="xs:int" />
+	<xs:element name="app" type="idstring" />
+	<xs:element name="list" type="idstring" />
+	<xs:element name="customBlock" type="idstring" />
+	<xs:element name="customItem" type="idstring" />
+
+	<!-- Base components -->
+	<xs:element name="slot">
+		<xs:complexType>
+			<xs:attribute name="id" type="idint" />
+			<xs:attribute name="x" type="xs:int" />
+			<xs:attribute name="y" type="xs:int" />
+		</xs:complexType>
+	</xs:element>
+
+	<!-- Lists -->
+	<xs:element name="applicable">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="app" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="intnamed">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="v" type="idstring" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute name="prefix" type="idstring" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="lists">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="list" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="slots">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="slot" minOccurs="2" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="idlist">
+		<xs:sequence>
+			<xs:element name="v" type="idstring" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Base Objects -->
+	<xs:element name="achievement">
+		<xs:complexType>
+			<xs:attribute name="id" type="idstring" use="required" />
+			<xs:attribute name="item" type="idstring" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="attribute">
+		<xs:complexType>
+			<xs:attribute name="id" type="idstring" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="block">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="maxdamage" minOccurs="0" />
+					<xs:element ref="customdamage" minOccurs="0" />
+				</xs:choice>
+				<xs:element ref="texture" minOccurs="0" />
+			</xs:sequence>
+			<xs:attribute name="idint" type="idint" use="required" />
+			<xs:attribute name="idstr" type="idstring" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="container">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="applicable" />
+				<xs:element ref="slots" />
+			</xs:sequence>
+			<xs:attribute name="id" type="idstring" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="effect">
+		<xs:complexType>
+			<xs:attribute name="idint" type="idint" use="required" />
+			<xs:attribute name="idstring" type="idstring" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="enchantment">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="maxlevel" type="idint" />
+			</xs:sequence>
+			<xs:attribute name="idint" type="idint" use="required" />
+			<xs:attribute name="idstring" type="idstring" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="entity">
+		<xs:complexType>
+			<xs:attribute name="id" type="idstring" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="item">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="durability" minOccurs="0" />
+					<xs:element ref="maxdamage" minOccurs="0" />
+					<xs:element ref="customdamage" minOccurs="0" />
+				</xs:choice>
+				<xs:element ref="texture" minOccurs="0" />
+			</xs:sequence>
+			<xs:attribute name="idint" type="idint" use="required" />
+			<xs:attribute name="idstr" type="idstring" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="particle">
+		<xs:complexType>
+			<xs:attribute name="id" type="idstring" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="sound">
+		<xs:complexType>
+			<xs:attribute name="id" type="idstring" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="tag">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element name="type" type="idstring" />
+					<xs:element name="customtype" type="idstring" />
+				</xs:choice>
+				<xs:element ref="applicable" />
+				<xs:choice minOccurs="0">
+					<xs:element name="strvalues" type="idlist" />
+					<xs:element ref="intnamed" />
+					<xs:sequence>
+						<xs:element name="itemautoselect" type="idstring" />
+						<xs:element name="limited" type="idlist" />
+					</xs:sequence>
+					<xs:element name="noSlot" type="xs:boolean" />
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute name="id" type="idstring" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<!-- Main lists -->
+	<xs:element name="blocks">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="block" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="items">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="item" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="entities">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="entity" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="effects">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="effect" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="enchantments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="enchantment" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="achievements">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="achievement" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="attributes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="particles">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="particle" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="sounds">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="sound" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="containers">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="container" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="blocktags">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tag" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="itemtags">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tag" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="entitytags">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="tag" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="data">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="blocks" />
+				<xs:element ref="items" />
+				<xs:element ref="entities" />
+				<xs:element ref="effects" />
+				<xs:element ref="enchantments" />
+				<xs:element ref="achievements" />
+				<xs:element ref="attributes" />
+				<xs:element ref="particles" />
+				<xs:element ref="sounds" />
+				<xs:element ref="containers" />
+				<xs:element ref="blocktags" />
+				<xs:element ref="itemtags" />
+				<xs:element ref="entitytags" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>

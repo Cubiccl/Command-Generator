@@ -2,6 +2,8 @@ package fr.cubiccl.generator.gameobject.templatetags;
 
 import java.util.regex.Pattern;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagString;
@@ -60,6 +62,20 @@ public class TemplateString extends TemplateTag
 	public void setValues(String... authorizedValues)
 	{
 		this.authorizedValues = authorizedValues;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		if (this.authorizedValues != null)
+		{
+			Element values = new Element("strvalues");
+			for (String v : this.authorizedValues)
+				values.addContent(new Element("v").setText(v));
+			root.addContent(values);
+		}
+		return root;
 	}
 
 }

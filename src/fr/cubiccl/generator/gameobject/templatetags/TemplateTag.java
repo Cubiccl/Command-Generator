@@ -2,6 +2,8 @@ package fr.cubiccl.generator.gameobject.templatetags;
 
 import java.util.Stack;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
@@ -15,7 +17,6 @@ import fr.cubiccl.generator.utils.Text;
 
 public abstract class TemplateTag extends BaseObject implements IStateListener<CGPanel>
 {
-
 	private static class TagCreation
 	{
 		public final ITagCreationListener listener;
@@ -35,6 +36,7 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	public final byte applicationType, tagType;
 	/** Need several in case of chest-like recursion */
 	private Stack<TagCreation> creationListeners;
+	public String customTagName = null;
 	private final String id;
 
 	public TemplateTag(String id, byte tagType, byte applicationType, String... applicable)
@@ -122,5 +124,21 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	public Text title()
 	{
 		return new Text("tag.title." + this.id);
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = new Element("tag");
+		root.setAttribute("id", this.id);
+		if (this.customTagName != null) root.addContent(new Element("customtype").setText(this.customTagName));
+		else root.addContent(new Element("type").setText(Integer.toString(this.tagType)));
+
+		Element applicable = new Element("applicable");
+		for (String app : this.applicable)
+			applicable.addContent(new Element("app").setText(app));
+		root.addContent(applicable);
+
+		return root;
 	}
 }

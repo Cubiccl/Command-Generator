@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<data xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="data_schema.xsd">
+	<blocks>
+		<block idint="0" idstr="air" />
+		<block idint="1" idstr="stone">
+			<maxdamage>6</maxdamage>
+		</block>
+	</blocks>
+	<items>
+		<item idint="7" idstr="bedrock" />
+	</items>
+	<entities>
+		<entity id="item" />
+	</entities>
+	<effects>
+		<effect idint="1" idstring="speed" />
+	</effects>
+	<enchantments>
+		<enchantment idint="32" idstring="efficiency">
+			<maxlevel>5</maxlevel>
+		</enchantment>
+	</enchantments>
+	<achievements>
+		<achievement id="openInventory" item="book" />
+	</achievements>
+	<attributes>
+		<attribute id="generic.armor"></attribute>
+	</attributes>
+	<particles>
+		<particle id="angryVillager" />
+	</particles>
+	<sounds>
+		<sound id="ambient.cave" />
+	</sounds>
+	<containers>
+		<container id="ArmorItems">
+			<applicable>
+				<app>ArmorItems</app>
+				<app>slot.armor</app>
+			</applicable>
+			<slots>
+				<slot id="0" x="8" y="8" />
+				<slot id="1" x="8" y="26" />
+				<slot id="2" x="8" y="44" />
+				<slot id="3" x="8" y="62" />
+			</slots>
+		</container>
+	</containers>
+	<blocktags>
+		<tag id="Age">
+			<type>num4</type>
+			<applicable>
+				<app>end_gateway</app>
+			</applicable>
+		</tag>
+	</blocktags>
+	<itemtags>
+		<tag id="AttributeModifiers">
+			<customtype>AttributeModifiers</customtype>
+			<applicable>
+				<app>ANY</app>
+			</applicable>
+		</tag>
+	</itemtags>
+	<entitytags>
+		<tag id="abilities">
+			<customtype>Abilities</customtype>
+			<applicable>
+				<app>player</app>
+			</applicable>
+		</tag>
+	</entitytags>
+
+</data>

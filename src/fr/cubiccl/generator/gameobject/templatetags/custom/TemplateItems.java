@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.baseobjects.Container;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
@@ -36,6 +38,14 @@ public class TemplateItems extends TemplateList
 	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
 		return ((PanelContainer) panel.getComponent(0)).generateItems(this, this.hasSlot);
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		if (!this.hasSlot) root.addContent(new Element("noSlot").setText("true"));
+		return root;
 	}
 
 }

@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.baseobjects;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.utils.Text;
 
 public class Item extends BlockItem
@@ -25,6 +27,14 @@ public class Item extends BlockItem
 	{
 		if (this.hasDurability) return this.name(this.id());
 		return super.name(damage);
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		if (this.hasDurability) root.getChild("maxdamage").setName("durability");
+		return root;
 	}
 
 }

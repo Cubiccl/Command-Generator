@@ -2,6 +2,8 @@ package fr.cubiccl.generator.gameobject.templatetags.custom;
 
 import java.awt.GridBagConstraints;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
@@ -84,6 +86,14 @@ public class TemplateDropChances extends TemplateList
 	public void setSlotCount(int slotCount)
 	{
 		this.slotCount = slotCount;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		root.getChild("customtype").setText(root.getChildText("customtype") + this.slotCount);
+		return root;
 	}
 
 }

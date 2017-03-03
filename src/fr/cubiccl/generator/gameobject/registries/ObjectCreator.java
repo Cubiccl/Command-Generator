@@ -10,6 +10,7 @@ import fr.cubiccl.generator.gameobject.target.TargetArgument;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateDropChances;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItemId;
@@ -143,14 +144,16 @@ public class ObjectCreator
 			TemplateNumber tag = id.equals("Base") ? new TemplateNumber(id, applicationType, applicable) : new TemplateNumber(id, applicationType,
 					TagNumber.BYTE, applicable);
 			tag.setNames("color", Utils.WOOL_COLORS);
+			tag.customTagName = customTagType;
 		} else if (customTagType.equals("effect"))
 		{
 			TemplateNumber tag = new TemplateNumber(id, applicationType, applicable);
 			EffectType[] effects = ObjectRegistry.effects.list(ObjectRegistry.SORT_NUMERICALLY);
 			String[] ids = new String[effects.length];
 			for (int i = 0; i < ids.length; ++i)
-				ids[i] = effects[i].idString;
+				ids[i] = effects[i].idString.substring("minecraft:".length());
 			tag.setNames("effect", ids);
+			tag.customTagName = customTagType;
 		} else if (customTagType.equals("item"))
 		{
 			TemplateItem t = new TemplateItem(id, applicationType, applicable);
@@ -159,18 +162,21 @@ public class ObjectCreator
 				if (data[i].startsWith("limited=")) t.setLimited(data[i].substring("limited=".length()).split(":"));
 				if (data[i].startsWith("autoselect=")) t.setAutoselect(data[i].substring("autoselect=".length()));
 			}
+			t.customTagName = customTagType;
 		} else if (customTagType.equals("item_id"))
 		{
 			TemplateItemId t = new TemplateItemId(id, applicationType, applicable);
 			if (data.length == 4) t.setLimited(data[3].substring("limited=".length()).split(":"));
+			t.customTagName = customTagType;
 		} else if (customTagType.startsWith("DropChances"))
 		{
 			TemplateDropChances t = new TemplateDropChances(id, applicationType, applicable);
 			t.setSlotCount(Integer.parseInt(customTagType.substring("DropChances".length())));
+			t.customTagName = customTagType;
 		} else try
 		{
 			Class<?> c = Class.forName("fr.cubiccl.generator.gameobject.templatetags.custom.Template" + customTagType);
-			c.getConstructors()[0].newInstance(id, applicationType, applicable);
+			((TemplateTag) c.getConstructors()[0].newInstance(id, applicationType, applicable)).customTagName = customTagType;
 		} catch (ClassNotFoundException e)
 		{
 			CommandGenerator.log("Couldn't find Tag class: " + customTagType);
@@ -385,9 +391,7 @@ public class ObjectCreator
 
 		ArrayList<String> app = new ArrayList<String>();
 		for (String a : applicable)
-			if (a.startsWith("list=")) for (String o : ObjectRegistry.getList(a.substring("list=".length())))
-				app.add(o);
-			else app.add(a);
+			app.add(a);
 
 		applicable = app.toArray(new String[app.size()]);
 

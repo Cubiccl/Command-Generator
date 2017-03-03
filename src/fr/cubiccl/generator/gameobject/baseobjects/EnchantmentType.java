@@ -3,6 +3,8 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 import java.awt.Component;
 import java.awt.image.BufferedImage;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -75,15 +77,23 @@ public class EnchantmentType extends BaseObject implements IObjectList<Enchantme
 		return new Text("enchantment." + this.idString);
 	}
 
+	public BufferedImage texture()
+	{
+		return null;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element e = new Element("effect").setAttribute("idint", Integer.toString(this.idInt)).setAttribute("idstr", this.id().substring("minecraft:".length()));
+		e.addContent(new Element("maxlevel").setText(Integer.toString(this.maxLevel)));
+		return e;
+	}
+
 	@Override
 	public EnchantmentType update(CGPanel panel) throws CommandGenerationException
 	{
 		return ((PanelEnchantment) panel).selectedEnchantment();
-	}
-
-	public BufferedImage texture()
-	{
-		return null;
 	}
 
 }

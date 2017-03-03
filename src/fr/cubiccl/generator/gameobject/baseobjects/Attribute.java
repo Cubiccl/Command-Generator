@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.baseobjects;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 
@@ -27,4 +29,9 @@ public class Attribute extends BaseObject
 		return new Text("attribute." + this.id);
 	}
 
+	@Override
+	public Element toXML()
+	{
+		return new Element("achievement").setAttribute("id", this.id().substring("minecraft:".length()));
+	}
 }

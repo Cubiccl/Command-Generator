@@ -3,6 +3,10 @@ package fr.cubiccl.generator.gameobject.registries;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.jdom2.Element;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.*;
@@ -41,6 +45,25 @@ public class ObjectRegistry<T extends BaseObject>
 			if (!objectLists.containsKey(list)) objectLists.put(list, new ArrayList<String>());
 			if (!objectLists.get(list).contains(objectId)) objectLists.get(list).add(objectId);
 		}
+	}
+
+	public static Element allToXML()
+	{
+		Element root = new Element("data");
+		root.addContent(blocks.toXML("blocks"));
+		root.addContent(items.toXML("items"));
+		root.addContent(entities.toXML("entities"));
+		root.addContent(effects.toXML("effects"));
+		root.addContent(enchantments.toXML("enchantments"));
+		root.addContent(achievements.toXML("achievements"));
+		root.addContent(attributes.toXML("attributes"));
+		root.addContent(particles.toXML("particles"));
+		root.addContent(sounds.toXML("sounds"));
+		root.addContent(containers.toXML("containers"));
+		root.addContent(blockTags.toXML("blocktags"));
+		root.addContent(itemTags.toXML("itemtags"));
+		root.addContent(entityTags.toXML("entitytags"));
+		return root;
 	}
 
 	static void checkAllNames()
@@ -197,8 +220,10 @@ public class ObjectRegistry<T extends BaseObject>
 	@SuppressWarnings("unchecked")
 	public T[] list(int sortType)
 	{
+		Set<T> objects = new HashSet<T>();
+		objects.addAll(this.registry.values()); // To prevent duplicate objects (containers)
 		ArrayList<T> a = new ArrayList<T>();
-		a.addAll(this.registry.values());
+		a.addAll(objects);
 
 		if (sortType == SORT_NAME) a.sort(new ObjectComparatorName());
 		else if (sortType == SORT_ALPHABETICALLY) a.sort(new ObjectComparatorID());
@@ -236,6 +261,14 @@ public class ObjectRegistry<T extends BaseObject>
 	public int size()
 	{
 		return this.registry.size();
+	}
+
+	public Element toXML(String name)
+	{
+		Element root = new Element(name);
+		for (T o : this.list(SORT_NUMERICALLY))
+			root.addContent(o.toXML());
+		return root;
 	}
 
 	public void unregister(String ID)

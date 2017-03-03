@@ -3,6 +3,8 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 import java.awt.image.BufferedImage;
 import java.util.Comparator;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.utils.Text;
 
 public abstract class BaseObject
@@ -58,5 +60,8 @@ public abstract class BaseObject
 	{
 		return null;
 	}
+
+	/** @return This Object in XML format. */
+	public abstract Element toXML();
 
 }

@@ -16,5 +16,4 @@ Successfully created 185 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
-Not translated in Français : container.size
 Exiting Command Generator... Bye bye !

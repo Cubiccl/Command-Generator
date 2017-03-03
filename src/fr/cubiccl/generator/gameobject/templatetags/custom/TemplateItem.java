@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
@@ -51,6 +53,21 @@ public class TemplateItem extends TemplateCompound
 	public void setLimited(String[] ids)
 	{
 		this.ids = ids;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		if (this.autoselect != null) root.addContent(new Element("itemautoselect").setText(this.autoselect));
+		if (this.ids != null)
+		{
+			Element limited = new Element("limited");
+			for (String v : this.ids)
+				limited.addContent(new Element("v").setText(v));
+			root.addContent(limited);
+		}
+		return root;
 	}
 
 }

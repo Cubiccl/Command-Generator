@@ -2,6 +2,8 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.image.BufferedImage;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 
@@ -36,6 +38,13 @@ public class Achievement extends BaseObject
 	public BufferedImage texture()
 	{
 		return this.textureItem.texture();
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return new Element("achievement").setAttribute("id", this.id().substring("minecraft:".length())).setAttribute("item",
+				this.textureItem.id().substring("minecraft:".length()));
 	}
 
 }

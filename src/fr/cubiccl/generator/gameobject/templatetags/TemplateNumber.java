@@ -2,6 +2,8 @@ package fr.cubiccl.generator.gameobject.templatetags;
 
 import java.text.DecimalFormat;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
@@ -176,6 +178,21 @@ public class TemplateNumber extends TemplateTag
 	public void setValues(int... values)
 	{
 		this.values = values;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = super.toXML();
+		if (this.names != null)
+		{
+			Element values = new Element("intnamed");
+			values.setAttribute("prefix", this.prefix);
+			for (String v : this.names)
+				values.addContent(new Element("v").setText(v));
+			root.addContent(values);
+		}
+		return root;
 	}
 
 }
