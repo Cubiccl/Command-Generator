@@ -63,6 +63,7 @@ public class ObjectRegistry<T extends BaseObject>
 		root.addContent(blockTags.toXML("blocktags"));
 		root.addContent(itemTags.toXML("itemtags"));
 		root.addContent(entityTags.toXML("entitytags"));
+		root.addContent(listsToXML());
 		return root;
 	}
 
@@ -88,6 +89,20 @@ public class ObjectRegistry<T extends BaseObject>
 	{
 		if (objectLists.containsKey(listId)) return objectLists.get(listId).toArray(new String[objectLists.get(listId).size()]);
 		return new String[0];
+	}
+
+	private static Element listsToXML()
+	{
+		Element lists = new Element("lists");
+		for (String listId : objectLists.keySet())
+		{
+			Element list = new Element("list");
+			list.setAttribute("id", listId);
+			for (String id : objectLists.get(listId))
+				list.addContent(new Element("object").setText(id));
+			lists.addContent(list);
+		}
+		return lists;
 	}
 
 	public static TemplateTag[] listTags(int applicationType)

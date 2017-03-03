@@ -19,11 +19,19 @@
 	<xs:element name="texture" type="xs:int" />
 	<xs:element name="durability" type="xs:int" />
 	<xs:element name="app" type="idstring" />
-	<xs:element name="list" type="idstring" />
 	<xs:element name="customBlock" type="idstring" />
 	<xs:element name="customItem" type="idstring" />
 
 	<!-- Base components -->
+	<xs:element name="list">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="object" type="idstring" />
+			</xs:sequence>
+			<xs:attribute name="id" type="idstring" use="required" />
+		</xs:complexType>
+	</xs:element>
+
 	<xs:element name="slot">
 		<xs:complexType>
 			<xs:attribute name="id" type="idint" />
@@ -47,14 +55,6 @@
 				<xs:element name="v" type="idstring" maxOccurs="unbounded" />
 			</xs:sequence>
 			<xs:attribute name="prefix" type="idstring" />
-		</xs:complexType>
-	</xs:element>
-
-	<xs:element name="lists">
-		<xs:complexType>
-			<xs:sequence>
-				<xs:element ref="list" maxOccurs="unbounded" />
-			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
 
@@ -287,6 +287,14 @@
 		</xs:complexType>
 	</xs:element>
 
+	<xs:element name="lists">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="list" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
 	<xs:element name="data">
 		<xs:complexType>
 			<xs:sequence>
@@ -303,6 +311,7 @@
 				<xs:element ref="blocktags" />
 				<xs:element ref="itemtags" />
 				<xs:element ref="entitytags" />
+				<xs:element ref="lists" />
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
