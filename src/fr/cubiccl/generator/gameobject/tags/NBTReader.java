@@ -153,7 +153,7 @@ public class NBTReader
 			case Tag.LONG:
 			case Tag.FLOAT:
 			case Tag.DOUBLE:
-				return new TemplateNumber(id, Tag.UNKNOWN, TemplateNumber.numberTypeFor(type)).readTag(value, isJson, true);
+				return new TemplateNumber(id, Tag.UNKNOWN, type).readTag(value, isJson, true);
 
 			default:
 				return new TemplateString(id, Tag.UNKNOWN).readTag(value, isJson, true);

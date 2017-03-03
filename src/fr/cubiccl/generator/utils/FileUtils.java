@@ -10,6 +10,9 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import org.jdom2.Element;
+import org.jdom2.input.SAXBuilder;
+
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gui.Dialogs;
 
@@ -114,6 +117,21 @@ public class FileUtils
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	/** @param path - Path to the File, .xml excluded. */
+	public static Element readXMLFile(String path)
+	{
+		File file = new File(resourcesFolder + path + ".xml");
+		SAXBuilder builder = new SAXBuilder();
+		try
+		{
+			return builder.build(file).getRootElement();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	/** @param path - Path to the File

@@ -16,14 +16,7 @@ import fr.cubiccl.generator.utils.Text;
 
 public class TemplateNumber extends TemplateTag
 {
-	public static byte numberTypeFor(byte type)
-	{
-		for (int i = 0; i < TagNumber.TYPE_TRANSITION.length; ++i)
-			if (TagNumber.TYPE_TRANSITION[i] == type) return (byte) i;
-		return type;
-	}
-
-	private boolean isByteBoolean;
+	public boolean isByteBoolean = false;
 	private double minValue, maxValue;
 	private String[] names;
 	private String prefix;
@@ -32,8 +25,7 @@ public class TemplateNumber extends TemplateTag
 	/** @param numberType see {@link TagNumber#INTEGER} */
 	public TemplateNumber(String id, byte applicationType, byte numberType, String... applicable)
 	{
-		super(id, TagNumber.TYPE_TRANSITION[numberType], applicationType, applicable);
-		this.isByteBoolean = numberType == TagNumber.BYTE_BOOLEAN;
+		super(id, numberType, applicationType, applicable);
 		this.minValue = -Double.MAX_VALUE;
 		this.maxValue = Double.MAX_VALUE;
 		this.names = null;
@@ -44,7 +36,7 @@ public class TemplateNumber extends TemplateTag
 	/** defaults to integer */
 	public TemplateNumber(String id, byte applicationType, String... applicable)
 	{
-		this(id, applicationType, TagNumber.INTEGER, applicable);
+		this(id, applicationType, Tag.INT, applicable);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -192,6 +184,7 @@ public class TemplateNumber extends TemplateTag
 				values.addContent(new Element("v").setText(v));
 			root.addContent(values);
 		}
+		if (this.isByteBoolean) root.addContent(new Element("byteboolean").setText("true"));
 		return root;
 	}
 

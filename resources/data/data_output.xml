@@ -11,10 +11,10 @@
     </block>
     <block idint="4" idstr="cobblestone" />
     <block idint="5" idstr="planks">
-      <maxdamage>5</maxdamage>
+      <customblock>Wood</customblock>
     </block>
     <block idint="6" idstr="sapling">
-      <maxdamage>5</maxdamage>
+      <customblock>Wood</customblock>
     </block>
     <block idint="7" idstr="bedrock" />
     <block idint="8" idstr="flowing_water">
@@ -60,10 +60,10 @@
       <maxdamage>15</maxdamage>
     </block>
     <block idint="27" idstr="golden_rail">
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <customblock>Rail</customblock>
     </block>
     <block idint="28" idstr="detector_rail">
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <customblock>Rail</customblock>
     </block>
     <block idint="29" idstr="sticky_piston">
       <texture>-1</texture>
@@ -83,7 +83,7 @@
       <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
     </block>
     <block idint="35" idstr="wool">
-      <maxdamage>15</maxdamage>
+      <customblock>Stained</customblock>
     </block>
     <block idint="36" idstr="piston_extension">
       <texture>-1</texture>
@@ -116,12 +116,10 @@
     <block idint="51" idstr="fire" />
     <block idint="52" idstr="mob_spawner" />
     <block idint="53" idstr="oak_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="54" idstr="chest">
-      <texture>-1</texture>
-      <customdamage>2:3:4:5</customdamage>
+      <customblock>Furniture</customblock>
     </block>
     <block idint="55" idstr="redstone_wire">
       <texture>-1</texture>
@@ -138,35 +136,29 @@
       <maxdamage>7</maxdamage>
     </block>
     <block idint="61" idstr="furnace">
-      <texture>-1</texture>
-      <customdamage>2:3:4:5</customdamage>
+      <customblock>Furniture</customblock>
     </block>
     <block idint="62" idstr="lit_furnace">
-      <texture>-1</texture>
-      <customdamage>2:3:4:5</customdamage>
+      <customblock>Furniture</customblock>
     </block>
     <block idint="63" idstr="standing_sign">
       <texture>-1</texture>
       <maxdamage>15</maxdamage>
     </block>
     <block idint="64" idstr="wooden_door">
-      <texture>-8</texture>
-      <maxdamage>11</maxdamage>
+      <customblock>Door</customblock>
     </block>
     <block idint="65" idstr="ladder">
-      <texture>-1</texture>
-      <customdamage>2:3:4:5</customdamage>
+      <customblock>Furniture</customblock>
     </block>
     <block idint="66" idstr="rail">
       <maxdamage>9</maxdamage>
     </block>
     <block idint="67" idstr="stone_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="68" idstr="wall_sign">
-      <texture>-1</texture>
-      <customdamage>2:3:4:5</customdamage>
+      <customblock>Furniture</customblock>
     </block>
     <block idint="69" idstr="lever">
       <texture>-1</texture>
@@ -177,8 +169,7 @@
       <maxdamage>1</maxdamage>
     </block>
     <block idint="71" idstr="iron_door">
-      <texture>-8</texture>
-      <maxdamage>11</maxdamage>
+      <customblock>Door</customblock>
     </block>
     <block idint="72" idstr="wooden_pressure_plate">
       <texture>-1</texture>
@@ -236,7 +227,7 @@
       <maxdamage>15</maxdamage>
     </block>
     <block idint="95" idstr="stained_glass">
-      <maxdamage>15</maxdamage>
+      <customblock>Stained</customblock>
     </block>
     <block idint="96" idstr="trapdoor">
       <texture>-1</texture>
@@ -272,24 +263,20 @@
       <customdamage>1:2:3:4:5:6:7:8:9:10:11:12:13:14:15</customdamage>
     </block>
     <block idint="107" idstr="fence_gate">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>FenceGate</customblock>
     </block>
     <block idint="108" idstr="brick_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="109" idstr="stone_brick_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="110" idstr="mycelium" />
     <block idint="111" idstr="waterlily" />
     <block idint="112" idstr="nether_brick" />
     <block idint="113" idstr="nether_brick_fence" />
     <block idint="114" idstr="nether_brick_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="115" idstr="nether_wart">
       <maxdamage>3</maxdamage>
@@ -310,7 +297,7 @@
     <block idint="123" idstr="redstone_lamp" />
     <block idint="124" idstr="lit_redstone_lamp" />
     <block idint="125" idstr="double_wooden_slab">
-      <maxdamage>5</maxdamage>
+      <customblock>Wood</customblock>
     </block>
     <block idint="126" idstr="wooden_slab">
       <texture>8</texture>
@@ -321,13 +308,11 @@
       <maxdamage>11</maxdamage>
     </block>
     <block idint="128" idstr="sandstone_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="129" idstr="emerald_ore" />
     <block idint="130" idstr="ender_chest">
-      <texture>-1</texture>
-      <customdamage>2:3:4:5</customdamage>
+      <customblock>Furniture</customblock>
     </block>
     <block idint="131" idstr="tripwire_hook">
       <texture>-1</texture>
@@ -339,16 +324,13 @@
     </block>
     <block idint="133" idstr="emerald_block" />
     <block idint="134" idstr="spruce_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="135" idstr="birch_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="136" idstr="jungle_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="137" idstr="command_block" />
     <block idint="138" idstr="beacon" />
@@ -375,8 +357,7 @@
       <maxdamage>11</maxdamage>
     </block>
     <block idint="146" idstr="trapped_chest">
-      <texture>-1</texture>
-      <customdamage>2:3:4:5</customdamage>
+      <customblock>Furniture</customblock>
     </block>
     <block idint="147" idstr="light_weighted_pressure_plate">
       <texture>-1</texture>
@@ -408,21 +389,20 @@
       <maxdamage>4</maxdamage>
     </block>
     <block idint="156" idstr="quartz_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="157" idstr="activator_rail">
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <customblock>Rail</customblock>
     </block>
     <block idint="158" idstr="dropper">
       <texture>-1</texture>
       <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
     </block>
     <block idint="159" idstr="stained_hardened_clay">
-      <maxdamage>15</maxdamage>
+      <customblock>Stained</customblock>
     </block>
     <block idint="160" idstr="stained_glass_pane">
-      <maxdamage>15</maxdamage>
+      <customblock>Stained</customblock>
     </block>
     <block idint="161" idstr="leaves2">
       <texture>4</texture>
@@ -432,12 +412,10 @@
       <customdamage>0:1:4:5:8:9:12:13</customdamage>
     </block>
     <block idint="163" idstr="acacia_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="164" idstr="dark_oak_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="165" idstr="slime" />
     <block idint="166" idstr="barrier" />
@@ -454,7 +432,7 @@
       <maxdamage>2</maxdamage>
     </block>
     <block idint="171" idstr="carpet">
-      <maxdamage>15</maxdamage>
+      <customblock>Stained</customblock>
     </block>
     <block idint="172" idstr="hardened_clay" />
     <block idint="173" idstr="coal_block" />
@@ -468,8 +446,7 @@
       <maxdamage>15</maxdamage>
     </block>
     <block idint="177" idstr="wall_banner">
-      <texture>-1</texture>
-      <customdamage>2:3:4:5</customdamage>
+      <customblock>Furniture</customblock>
     </block>
     <block idint="178" idstr="daylight_detector_inverted">
       <texture>-1</texture>
@@ -479,8 +456,7 @@
       <maxdamage>2</maxdamage>
     </block>
     <block idint="180" idstr="red_sandstone_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="181" idstr="double_stone_slab2" />
     <block idint="182" idstr="stone_slab2">
@@ -488,24 +464,19 @@
       <customdamage>0:8</customdamage>
     </block>
     <block idint="183" idstr="spruce_fence_gate">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>FenceGate</customblock>
     </block>
     <block idint="184" idstr="birch_fence_gate">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>FenceGate</customblock>
     </block>
     <block idint="185" idstr="jungle_fence_gate">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>FenceGate</customblock>
     </block>
     <block idint="186" idstr="dark_oak_fence_gate">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>FenceGate</customblock>
     </block>
     <block idint="187" idstr="acacia_fence_gate">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>FenceGate</customblock>
     </block>
     <block idint="188" idstr="spruce_fence" />
     <block idint="189" idstr="birch_fence" />
@@ -513,28 +484,22 @@
     <block idint="191" idstr="dark_oak_fence" />
     <block idint="192" idstr="acacia_fence" />
     <block idint="193" idstr="spruce_door">
-      <texture>-8</texture>
-      <maxdamage>11</maxdamage>
+      <customblock>Door</customblock>
     </block>
     <block idint="194" idstr="birch_door">
-      <texture>-8</texture>
-      <maxdamage>11</maxdamage>
+      <customblock>Door</customblock>
     </block>
     <block idint="195" idstr="jungle_door">
-      <texture>-8</texture>
-      <maxdamage>11</maxdamage>
+      <customblock>Door</customblock>
     </block>
     <block idint="196" idstr="acacia_door">
-      <texture>-8</texture>
-      <maxdamage>11</maxdamage>
+      <customblock>Door</customblock>
     </block>
     <block idint="197" idstr="dark_oak_door">
-      <texture>-8</texture>
-      <maxdamage>11</maxdamage>
+      <customblock>Door</customblock>
     </block>
     <block idint="198" idstr="end_rod">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="199" idstr="chorus_plant" />
     <block idint="200" idstr="chorus_flower">
@@ -547,8 +512,7 @@
       <maxdamage>2</maxdamage>
     </block>
     <block idint="203" idstr="purpur_stairs">
-      <texture>-4</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Stairs</customblock>
     </block>
     <block idint="204" idstr="purpur_double_slab" />
     <block idint="205" idstr="purpur_slab">
@@ -572,142 +536,109 @@
     <block idint="216" idstr="bone_block" />
     <block idint="217" idstr="structure_void" />
     <block idint="218" idstr="observer">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="219" idstr="white_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="220" idstr="orange_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="221" idstr="magenta_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="222" idstr="light_blue_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="223" idstr="yellow_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="224" idstr="lime_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="225" idstr="pink_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="226" idstr="gray_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="227" idstr="silver_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="228" idstr="cyan_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="229" idstr="purple_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="230" idstr="blue_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="231" idstr="brown_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="232" idstr="green_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="233" idstr="red_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="234" idstr="black_shulker_box">
-      <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <customblock>Facing</customblock>
     </block>
     <block idint="235" idstr="white_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="236" idstr="orange_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="237" idstr="magenta_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="238" idstr="light_blue_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="239" idstr="yellow_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="240" idstr="lime_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="241" idstr="pink_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="242" idstr="gray_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="243" idstr="silver_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="244" idstr="cyan_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="245" idstr="purple_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="246" idstr="blue_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="247" idstr="brown_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="248" idstr="green_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="249" idstr="red_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="250" idstr="black_glazed_terracotta">
-      <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <customblock>Terracotta</customblock>
     </block>
     <block idint="251" idstr="concrete">
-      <maxdamage>15</maxdamage>
+      <customblock>Stained</customblock>
     </block>
     <block idint="252" idstr="concrete_powder">
-      <maxdamage>15</maxdamage>
+      <customblock>Stained</customblock>
     </block>
     <block idint="255" idstr="structure_block">
       <maxdamage>3</maxdamage>
@@ -723,10 +654,10 @@
     </item>
     <item idint="4" idstr="cobblestone" />
     <item idint="5" idstr="planks">
-      <maxdamage>5</maxdamage>
+      <customitem>Wood</customitem>
     </item>
     <item idint="6" idstr="sapling">
-      <maxdamage>5</maxdamage>
+      <customitem>Wood</customitem>
     </item>
     <item idint="7" idstr="bedrock" />
     <item idint="12" idstr="sand">
@@ -763,7 +694,7 @@
     <item idint="32" idstr="deadbush" />
     <item idint="33" idstr="piston" />
     <item idint="35" idstr="wool">
-      <maxdamage>15</maxdamage>
+      <customitem>Stained</customitem>
     </item>
     <item idint="37" idstr="yellow_flower" />
     <item idint="38" idstr="red_flower">
@@ -813,7 +744,7 @@
     <item idint="89" idstr="glowstone" />
     <item idint="91" idstr="lit_pumpkin" />
     <item idint="95" idstr="stained_glass">
-      <maxdamage>15</maxdamage>
+      <customitem>Stained</customitem>
     </item>
     <item idint="96" idstr="trapdoor" />
     <item idint="97" idstr="monster_egg">
@@ -875,10 +806,10 @@
     <item idint="157" idstr="activator_rail" />
     <item idint="158" idstr="dropper" />
     <item idint="159" idstr="stained_hardened_clay">
-      <maxdamage>15</maxdamage>
+      <customitem>Stained</customitem>
     </item>
     <item idint="160" idstr="stained_glass_pane">
-      <maxdamage>15</maxdamage>
+      <customitem>Stained</customitem>
     </item>
     <item idint="161" idstr="leaves2">
       <maxdamage>1</maxdamage>
@@ -897,7 +828,7 @@
     <item idint="169" idstr="sea_lantern" />
     <item idint="170" idstr="hay_block" />
     <item idint="171" idstr="carpet">
-      <maxdamage>15</maxdamage>
+      <customitem>Stained</customitem>
     </item>
     <item idint="172" idstr="hardened_clay" />
     <item idint="173" idstr="coal_block" />
@@ -971,10 +902,10 @@
     <item idint="249" idstr="red_glazed_terracotta" />
     <item idint="250" idstr="black_glazed_terracotta" />
     <item idint="251" idstr="concrete">
-      <maxdamage>15</maxdamage>
+      <customitem>Stained</customitem>
     </item>
     <item idint="252" idstr="concrete_powder">
-      <maxdamage>15</maxdamage>
+      <customitem>Stained</customitem>
     </item>
     <item idint="255" idstr="structure_block" />
     <item idint="256" idstr="iron_shovel">
@@ -1398,6 +1329,7 @@
     <entity id="painting" />
     <entity id="pig" />
     <entity id="player" />
+    <entity id="player" />
     <entity id="polar_bear" />
     <entity id="potion" />
     <entity id="rabbit" />
@@ -1464,93 +1396,93 @@
     <effect idint="27" idstr="unluck" />
   </effects>
   <enchantments>
-    <effect idint="1" idstr="fire_protection">
+    <enchantment idint="1" idstr="fire_protection">
       <maxlevel>4</maxlevel>
-    </effect>
-    <effect idint="2" idstr="feather_falling">
+    </enchantment>
+    <enchantment idint="2" idstr="feather_falling">
       <maxlevel>4</maxlevel>
-    </effect>
-    <effect idint="3" idstr="blast_protection">
+    </enchantment>
+    <enchantment idint="3" idstr="blast_protection">
       <maxlevel>4</maxlevel>
-    </effect>
-    <effect idint="4" idstr="projectile_protection">
+    </enchantment>
+    <enchantment idint="4" idstr="projectile_protection">
       <maxlevel>4</maxlevel>
-    </effect>
-    <effect idint="5" idstr="respiration">
+    </enchantment>
+    <enchantment idint="5" idstr="respiration">
       <maxlevel>3</maxlevel>
-    </effect>
-    <effect idint="6" idstr="aqua_affinity">
+    </enchantment>
+    <enchantment idint="6" idstr="aqua_affinity">
       <maxlevel>1</maxlevel>
-    </effect>
-    <effect idint="7" idstr="thorns">
+    </enchantment>
+    <enchantment idint="7" idstr="thorns">
       <maxlevel>3</maxlevel>
-    </effect>
-    <effect idint="8" idstr="depth_strider">
+    </enchantment>
+    <enchantment idint="8" idstr="depth_strider">
       <maxlevel>3</maxlevel>
-    </effect>
-    <effect idint="9" idstr="frost_walker">
+    </enchantment>
+    <enchantment idint="9" idstr="frost_walker">
       <maxlevel>2</maxlevel>
-    </effect>
-    <effect idint="10" idstr="binding_curse">
+    </enchantment>
+    <enchantment idint="10" idstr="binding_curse">
       <maxlevel>1</maxlevel>
-    </effect>
-    <effect idint="16" idstr="sharpness">
+    </enchantment>
+    <enchantment idint="16" idstr="sharpness">
       <maxlevel>5</maxlevel>
-    </effect>
-    <effect idint="17" idstr="smite">
+    </enchantment>
+    <enchantment idint="17" idstr="smite">
       <maxlevel>5</maxlevel>
-    </effect>
-    <effect idint="18" idstr="bane_of_arthropods">
+    </enchantment>
+    <enchantment idint="18" idstr="bane_of_arthropods">
       <maxlevel>5</maxlevel>
-    </effect>
-    <effect idint="19" idstr="knockback">
+    </enchantment>
+    <enchantment idint="19" idstr="knockback">
       <maxlevel>2</maxlevel>
-    </effect>
-    <effect idint="20" idstr="fire_aspect">
+    </enchantment>
+    <enchantment idint="20" idstr="fire_aspect">
       <maxlevel>2</maxlevel>
-    </effect>
-    <effect idint="21" idstr="looting">
+    </enchantment>
+    <enchantment idint="21" idstr="looting">
       <maxlevel>3</maxlevel>
-    </effect>
-    <effect idint="22" idstr="sweeping_edge">
+    </enchantment>
+    <enchantment idint="22" idstr="sweeping_edge">
       <maxlevel>3</maxlevel>
-    </effect>
-    <effect idint="32" idstr="efficiency">
+    </enchantment>
+    <enchantment idint="32" idstr="efficiency">
       <maxlevel>5</maxlevel>
-    </effect>
-    <effect idint="33" idstr="silk_touch">
+    </enchantment>
+    <enchantment idint="33" idstr="silk_touch">
       <maxlevel>1</maxlevel>
-    </effect>
-    <effect idint="34" idstr="unbreaking">
+    </enchantment>
+    <enchantment idint="34" idstr="unbreaking">
       <maxlevel>3</maxlevel>
-    </effect>
-    <effect idint="35" idstr="fortune">
+    </enchantment>
+    <enchantment idint="35" idstr="fortune">
       <maxlevel>3</maxlevel>
-    </effect>
-    <effect idint="48" idstr="power">
+    </enchantment>
+    <enchantment idint="48" idstr="power">
       <maxlevel>5</maxlevel>
-    </effect>
-    <effect idint="49" idstr="punch">
+    </enchantment>
+    <enchantment idint="49" idstr="punch">
       <maxlevel>2</maxlevel>
-    </effect>
-    <effect idint="50" idstr="flame">
+    </enchantment>
+    <enchantment idint="50" idstr="flame">
       <maxlevel>1</maxlevel>
-    </effect>
-    <effect idint="51" idstr="infinity">
+    </enchantment>
+    <enchantment idint="51" idstr="infinity">
       <maxlevel>1</maxlevel>
-    </effect>
-    <effect idint="61" idstr="luck_of_the_sea">
+    </enchantment>
+    <enchantment idint="61" idstr="luck_of_the_sea">
       <maxlevel>3</maxlevel>
-    </effect>
-    <effect idint="62" idstr="lure">
+    </enchantment>
+    <enchantment idint="62" idstr="lure">
       <maxlevel>3</maxlevel>
-    </effect>
-    <effect idint="70" idstr="mending">
+    </enchantment>
+    <enchantment idint="70" idstr="mending">
       <maxlevel>1</maxlevel>
-    </effect>
-    <effect idint="71" idstr="vanishing_curse">
+    </enchantment>
+    <enchantment idint="71" idstr="vanishing_curse">
       <maxlevel>1</maxlevel>
-    </effect>
+    </enchantment>
   </enchantments>
   <achievements>
     <achievement id="acquireIron" item="iron_ingot" />
@@ -2409,6 +2341,7 @@
         <app>chain_command_block</app>
         <app>repeating_command_block</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Base">
       <customtype>color</customtype>
@@ -2487,6 +2420,7 @@
         <app>chain_command_block</app>
         <app>repeating_command_block</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="CookTime">
       <type>2</type>
@@ -2536,6 +2470,7 @@
       <applicable>
         <app>end_gateway</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="ExitPortal">
       <customtype>Coordinates</customtype>
@@ -2548,6 +2483,7 @@
       <applicable>
         <app>piston_extension</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="ExtraType">
       <type>0</type>
@@ -2572,6 +2508,7 @@
       <applicable>
         <app>structure_block</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Item">
       <customtype>item_id</customtype>
@@ -2590,7 +2527,7 @@
       </limited>
     </tag>
     <tag id="Items">
-      <type>7</type>
+      <customtype>Items</customtype>
       <applicable>
         <app>brewing_stand</app>
         <app>chest</app>
@@ -2751,6 +2688,7 @@
         <app>noteblock</app>
         <app>repeating_command_block</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Primary">
       <customtype>effect</customtype>
@@ -2978,6 +2916,7 @@
         <app>chain_command_block</app>
         <app>repeating_command_block</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="TransferCooldown">
       <type>3</type>
@@ -3128,6 +3067,10 @@
       <type>0</type>
       <applicable />
     </tag>
+    <tag id="id">
+      <type>0</type>
+      <applicable />
+    </tag>
     <tag id="pages">
       <customtype>Json</customtype>
       <applicable>
@@ -3212,6 +3155,7 @@
       <applicable>
         <app>list=durability</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
   </itemtags>
   <entitytags>
@@ -3236,16 +3180,16 @@
       </applicable>
     </tag>
     <tag id="Age">
+      <type>3</type>
+      <applicable>
+        <app>list=breed</app>
+      </applicable>
+    </tag>
+    <tag id="Age">
       <type>2</type>
       <applicable>
         <app>item</app>
         <app>xp_orb</app>
-      </applicable>
-    </tag>
-    <tag id="Age">
-      <type>3</type>
-      <applicable>
-        <app>list=breed</app>
       </applicable>
     </tag>
     <tag id="Air">
@@ -3266,9 +3210,10 @@
       <applicable>
         <app>wolf</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="ArmorDropChances">
-      <customtype>DropChances44</customtype>
+      <customtype>DropChances4444</customtype>
       <applicable>
         <app>list=mob</app>
       </applicable>
@@ -3285,12 +3230,11 @@
       <itemautoselect>iron_horse_armor</itemautoselect>
     </tag>
     <tag id="ArmorItems">
-      <type>7</type>
+      <customtype>Items</customtype>
       <applicable>
         <app>list=mob</app>
         <app>armor_stand</app>
       </applicable>
-      <noSlot>true</noSlot>
     </tag>
     <tag id="AttachFace">
       <type>2</type>
@@ -3318,6 +3262,7 @@
       <applicable>
         <app>bat</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="BeamTarget">
       <customtype>Coordinates</customtype>
@@ -3339,12 +3284,14 @@
         <app>zombie_pigman</app>
         <app>zombie_villager</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="CanPickUpLoot">
       <type>1</type>
       <applicable>
         <app>list=mob</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Career">
       <type>3</type>
@@ -3389,6 +3336,7 @@
         <app>mule</app>
         <app>llama</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="CollarColor">
       <customtype>color</customtype>
@@ -3466,12 +3414,14 @@
         <app>arrow</app>
         <app>spectral_arrow</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="CustomDisplayTile">
       <type>1</type>
       <applicable>
         <app>list=minecart</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="CustomName">
       <type>0</type>
@@ -3484,6 +3434,7 @@
       <applicable>
         <app>ANY</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="CustomPotionEffects">
       <customtype>EffectList</customtype>
@@ -3584,6 +3535,7 @@
       <applicable>
         <app>falling_block</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Duration">
       <type>3</type>
@@ -3597,6 +3549,7 @@
       <applicable>
         <app>list=horse</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Effects">
       <customtype>EffectList</customtype>
@@ -3615,9 +3568,10 @@
       <applicable>
         <app>hopper_minecart</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="EnderItems">
-      <type>7</type>
+      <customtype>Items</customtype>
       <applicable>
         <app>player</app>
       </applicable>
@@ -3661,6 +3615,7 @@
         <app>list=mob</app>
         <app>armor_stand</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="FallHurtAmount">
       <type>3</type>
@@ -3731,20 +3686,20 @@
         <app>ANY</app>
         <app>player</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="HandDropChances">
-      <customtype>DropChances22</customtype>
+      <customtype>DropChances2222</customtype>
       <applicable>
         <app>list=mob</app>
       </applicable>
     </tag>
     <tag id="HandItems">
-      <type>7</type>
+      <customtype>Items</customtype>
       <applicable>
         <app>list=mob</app>
         <app>armor_stand</app>
       </applicable>
-      <noSlot>true</noSlot>
     </tag>
     <tag id="Health">
       <type>5</type>
@@ -3764,6 +3719,7 @@
       <applicable>
         <app>falling_block</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="HurtTime">
       <type>2</type>
@@ -3777,6 +3733,7 @@
       <applicable>
         <app>creeper</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="InLove">
       <type>3</type>
@@ -3785,7 +3742,7 @@
       </applicable>
     </tag>
     <tag id="Inventory">
-      <type>7</type>
+      <customtype>Items</customtype>
       <applicable>
         <app>villager</app>
         <app>player</app>
@@ -3796,6 +3753,7 @@
       <applicable>
         <app>armor_stand</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Invul">
       <type>3</type>
@@ -3809,6 +3767,7 @@
         <app>ANY</app>
         <app>player</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="IsBaby">
       <type>1</type>
@@ -3818,12 +3777,14 @@
         <app>zombie_pigman</app>
         <app>zombie_villager</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="IsChickenJockey">
       <type>1</type>
       <applicable>
         <app>chicken</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Item">
       <customtype>item</customtype>
@@ -3845,7 +3806,7 @@
       </applicable>
     </tag>
     <tag id="Items">
-      <type>7</type>
+      <customtype>Items</customtype>
       <applicable>
         <app>donkey</app>
         <app>llama</app>
@@ -3859,6 +3820,7 @@
       <applicable>
         <app>vindication_illager</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="LastOutput">
       <type>0</type>
@@ -3877,6 +3839,7 @@
       <applicable>
         <app>list=mob</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="LeftHanded">
       <type>1</type>
@@ -3884,18 +3847,19 @@
         <app>list=mob</app>
         <app>player</app>
       </applicable>
+      <byteboolean>true</byteboolean>
+    </tag>
+    <tag id="Life">
+      <type>3</type>
+      <applicable>
+        <app>fireworks_rocket</app>
+      </applicable>
     </tag>
     <tag id="life">
       <type>2</type>
       <applicable>
         <app>arrow</app>
         <app>spectral_arrow</app>
-      </applicable>
-    </tag>
-    <tag id="Life">
-      <type>3</type>
-      <applicable>
-        <app>fireworks_rocket</app>
       </applicable>
     </tag>
     <tag id="LifeTicks">
@@ -3930,6 +3894,7 @@
       <applicable>
         <app>armor_stand</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="MaxNearbyEntities">
       <type>2</type>
@@ -3968,12 +3933,14 @@
         <app>list=mob</app>
         <app>player</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="NoBasePlate">
       <type>1</type>
       <applicable>
         <app>armor_stand</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="NoGravity">
       <type>1</type>
@@ -3981,6 +3948,7 @@
         <app>ANY</app>
         <app>player</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Offers">
       <customtype>Offers</customtype>
@@ -4053,6 +4021,7 @@
       <applicable>
         <app>list=mob</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="pickup">
       <type>1</type>
@@ -4077,6 +4046,7 @@
       <applicable>
         <app>villager_golem</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="playerGameType">
       <type>3</type>
@@ -4095,6 +4065,7 @@
       <applicable>
         <app>endermite</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="PortalCooldown">
       <type>3</type>
@@ -4129,6 +4100,7 @@
       <applicable>
         <app>creeper</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Profession">
       <type>3</type>
@@ -4150,6 +4122,7 @@
       <applicable>
         <app>snowman</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="PushX">
       <type>6</type>
@@ -4220,6 +4193,7 @@
       <applicable>
         <app>pig</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="SaddleItem">
       <customtype>item</customtype>
@@ -4255,18 +4229,21 @@
       <applicable>
         <app>sheep</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="ShowArms">
       <type>1</type>
       <applicable>
         <app>armor_stand</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="ShowBottom">
       <type>1</type>
       <applicable>
         <app>ender_crystal</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Silent">
       <type>1</type>
@@ -4274,6 +4251,7 @@
         <app>ANY</app>
         <app>player</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Sitting">
       <type>1</type>
@@ -4281,6 +4259,7 @@
         <app>ocelot</app>
         <app>wolf</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Size">
       <type>3</type>
@@ -4294,6 +4273,7 @@
       <applicable>
         <app>skeleton_horse</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="SkeletonTrapTime">
       <type>3</type>
@@ -4306,6 +4286,7 @@
       <applicable>
         <app>player</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="SleepTimer">
       <type>2</type>
@@ -4318,6 +4299,7 @@
       <applicable>
         <app>armor_stand</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="SpawnCount">
       <type>2</type>
@@ -4336,6 +4318,7 @@
       <applicable>
         <app>player</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="SpawnPotentials">
       <customtype>SpawnPotentials</customtype>
@@ -4397,6 +4380,7 @@
       <applicable>
         <app>list=horse</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="Team">
       <customtype>StringList</customtype>
@@ -4433,6 +4417,7 @@
       <applicable>
         <app>commandblock_minecart</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="TransferCooldown">
       <type>3</type>
@@ -4498,6 +4483,7 @@
       <applicable>
         <app>villager</app>
       </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
     <tag id="XpLevel">
       <type>3</type>

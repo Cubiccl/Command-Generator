@@ -14,12 +14,22 @@ public class Container extends BaseObject
 	public final String[] applicable;
 	public final String id;
 	public final Slot[] slots;
-	public final int startsAt;
+
+	// public final int startsAt;
+
+	public Container(String id, String[] applicable, Slot... slots)
+	{
+		this.id = id;
+		// this.startsAt = startsAt; //TODO VERIFY STARTS AT
+		this.applicable = applicable;
+		this.slots = slots;
+		ObjectRegistry.containers.register(this);
+	}
 
 	public Container(String id, int startsAt, String[] applicable, Slot... slots)
 	{
 		this.id = id;
-		this.startsAt = startsAt;
+		// this.startsAt = startsAt; //TODO VERIFY STARTS AT
 		this.applicable = applicable;
 		this.slots = slots;
 		ObjectRegistry.containers.register(this);

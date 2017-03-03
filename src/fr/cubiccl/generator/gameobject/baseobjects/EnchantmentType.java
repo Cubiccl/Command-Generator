@@ -85,7 +85,7 @@ public class EnchantmentType extends BaseObject implements IObjectList<Enchantme
 	@Override
 	public Element toXML()
 	{
-		Element e = new Element("effect").setAttribute("idint", Integer.toString(this.idInt)).setAttribute("idstr", this.id().substring("minecraft:".length()));
+		Element e = new Element("enchantment").setAttribute("idint", Integer.toString(this.idInt)).setAttribute("idstr", this.id().substring("minecraft:".length()));
 		e.addContent(new Element("maxlevel").setText(Integer.toString(this.maxLevel)));
 		return e;
 	}

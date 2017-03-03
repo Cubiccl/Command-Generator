@@ -207,7 +207,7 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 	public boolean shouldStateClose(PanelItem panel)
 	{
 		this.items[this.selected] = panel.generate();
-		this.items[this.selected].slot = this.container().slots[this.selected].id + this.container().startsAt;
+		this.items[this.selected].slot = this.container().slots[this.selected].id;// + this.container().startsAt;
 		this.panelItemDisplay.display(this.items[this.selected]);
 		return true;
 	}

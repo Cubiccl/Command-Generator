@@ -16,6 +16,7 @@ public abstract class BlockItem extends BaseObject
 {
 	public static final boolean ITEM = true, BLOCK = false;
 
+	public String customObjectName = null;
 	/** List of available damage values for this Block/Item. */
 	public final int[] damage;
 	/** Numerical ID of this Block/Item. */
@@ -138,15 +139,19 @@ public abstract class BlockItem extends BaseObject
 		Element root = new Element(this.isItem() ? "item" : "block");
 		root.setAttribute("idint", Integer.toString(this.idNum()));
 		root.setAttribute("idstr", this.id().substring("minecraft:".length()));
-		if (this.textureType != 0) root.addContent(new Element("texture").setText(Integer.toString(this.textureType)));
 
-		if (this.isDamageCustom())
+		if (this.customObjectName == null)
 		{
-			String d = "" + this.damage[0];
-			for (int i = 1; i < this.damage.length; ++i)
-				d += ":" + this.damage[i];
-			root.addContent(new Element("customdamage").setText(d));
-		} else if (this.damage.length != 1) root.addContent(new Element("maxdamage").setText(Integer.toString(this.damage.length - 1)));
+			if (this.textureType != 0) root.addContent(new Element("texture").setText(Integer.toString(this.textureType)));
+
+			if (this.isDamageCustom())
+			{
+				String d = "" + this.damage[0];
+				for (int i = 1; i < this.damage.length; ++i)
+					d += ":" + this.damage[i];
+				root.addContent(new Element("customdamage").setText(d));
+			} else if (this.damage.length != 1) root.addContent(new Element("maxdamage").setText(Integer.toString(this.damage.length - 1)));
+		} else root.addContent(new Element(this.isItem() ? "customitem" : "customblock").setText(this.customObjectName));
 
 		return root;
 	}

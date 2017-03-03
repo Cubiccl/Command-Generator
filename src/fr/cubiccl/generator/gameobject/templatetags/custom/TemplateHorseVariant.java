@@ -12,7 +12,7 @@ public class TemplateHorseVariant extends TemplateNumber
 
 	public TemplateHorseVariant(String id, byte applicationType, String[] applicable)
 	{
-		super(id, applicationType, TagNumber.INTEGER, applicable);
+		super(id, applicationType, Tag.INT, applicable);
 		this.setNames("variant.base", "creamy", "white", "brown", "gray");
 	}
 

@@ -12,7 +12,7 @@ public class TemplateDisabledSlots extends TemplateNumber
 
 	public TemplateDisabledSlots(String id, byte applicationType, String[] applicable)
 	{
-		super(id, applicationType, TagNumber.INTEGER, applicable);
+		super(id, applicationType, Tag.INT, applicable);
 	}
 
 	@Override

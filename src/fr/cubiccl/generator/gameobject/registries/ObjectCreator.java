@@ -2,6 +2,8 @@ package fr.cubiccl.generator.gameobject.registries;
 
 import java.util.ArrayList;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.*;
 import fr.cubiccl.generator.gameobject.tags.Tag;
@@ -23,156 +25,122 @@ import fr.cubiccl.generator.utils.Utils;
 public class ObjectCreator
 {
 
-	public static void createAchievements(String[] data)
+	public static void createAchievements(Element achievements)
 	{
-		for (String a : data)
-		{
-			String[] values = a.split(",");
-			new Achievement(values[0], ObjectRegistry.items.find(values[1]));
-		}
+		for (Element achievement : achievements.getChildren())
+			new Achievement(achievement.getAttributeValue("id"), ObjectRegistry.items.find(achievement.getAttributeValue("item")));
 		CommandGenerator.log("Successfully created " + ObjectRegistry.achievements.size() + " achievements.");
 	}
 
-	public static void createAttributes(String[] data)
+	private static String[] createApplicable(Element applicable)
 	{
-		for (String id : data)
-			new Attribute(id);
+		ArrayList<String> apps = new ArrayList<String>();
+		for (Element app : applicable.getChildren())
+			apps.add(app.getText());
+		return apps.toArray(new String[apps.size()]);
+	}
+
+	public static void createAttributes(Element attributes)
+	{
+		for (Element attribute : attributes.getChildren())
+			new Attribute(attribute.getAttributeValue("id"));
 		CommandGenerator.log("Successfully created " + ObjectRegistry.attributes.size() + " attributes.");
 	}
 
-	public static void createBlocks(String[] data)
+	public static void createBlocks(Element blocks)
 	{
-		for (String block : data)
+		for (Element block : blocks.getChildren())
 		{
-			String[] values = block.split(",");
-			String idString = values[1], damage = null;
-			int idInt = Integer.parseInt(values[0]), maxDamage = 0, textureType = 0;
-			boolean item = true;
-			String custom = null;
+			String idString = block.getAttributeValue("idstr");
+			int idInt = Integer.parseInt(block.getAttributeValue("idint"));
+			Element custom = block.getChild("customblock");
 
-			for (String a : values)
-			{
-				if (a.startsWith("custom=")) custom = a.substring("custom=".length());
-				else if (a.startsWith("damage=")) maxDamage = Integer.parseInt(a.substring("damage=".length()));
-				else if (a.startsWith("texture=")) textureType = Integer.parseInt(a.substring("texture=".length()));
-				else if (a.startsWith("damage_custom=")) damage = a.substring("damage_custom=".length());
-				else if (a.equals("blockOnly")) item = false;
-				else if (a.startsWith("lists=")) ObjectRegistry.addToLists(idString, a.substring("lists=".length()).split(":"));
-			}
-
-			Block b;
 			if (custom != null) try
 			{
-				b = (Block) Class.forName("fr.cubiccl.generator.gameobject.baseobjects.block.Block" + custom).getConstructors()[0].newInstance(idInt, idString);
+				Block b = (Block) Class.forName("fr.cubiccl.generator.gameobject.baseobjects.block.Block" + custom.getText()).getConstructors()[0].newInstance(
+						idInt, idString);
+				b.customObjectName = custom.getText();
 			} catch (Exception e)
 			{
 				e.printStackTrace();
 				System.out.println("Couldn't create custom Block: " + idString);
 				continue;
 			}
-			else if (damage == null) b = new Block(idInt, idString, maxDamage);
-			else b = new Block(idInt, idString, createDamage(damage));
-			if (textureType != 0) b.textureType = textureType;
-
-			if (item)
+			else
 			{
-				Item i;
-				if (custom != null) try
-				{
-					i = (Item) Class.forName("fr.cubiccl.generator.gameobject.baseobjects.item.Item" + custom).getConstructors()[0]
-							.newInstance(idInt, idString);
-				} catch (Exception e)
-				{
-					e.printStackTrace();
-					System.out.println("Couldn't create custom Item: " + idString);
-					continue;
-				}
-				else if (damage == null) i = new Item(idInt, idString, maxDamage);
-				else i = new Item(idInt, idString, createDamage(damage));
-				if (textureType != 0) i.textureType = textureType;
-
-				ObjectRegistry.addToLists(idString, "placeable");
+				Block b;
+				if (block.getChild("customdamage") != null) b = new Block(idInt, idString, createDamage(block.getChildText("customdamage")));
+				else if (block.getChild("maxdamage") != null) b = new Block(idInt, idString, Integer.parseInt(block.getChildText("maxdamage")));
+				else b = new Block(idInt, idString);
+				if (block.getChild("texture") != null) b.textureType = Integer.parseInt(block.getChildText("texture"));
 			}
 		}
 		CommandGenerator.log("Successfully created " + ObjectRegistry.blocks.size() + " blocks.");
 	}
 
-	private static void createContainers(String[] data)
+	private static void createContainers(Element containers)
 	{
-		for (String a : data)
+		for (Element container : containers.getChildren())
 		{
-			String[] values = a.split(",");
-			Slot[] slots;
-			int startsAt = 0;
-			if (values.length == 3)
-			{
-				String[] slotData = values[2].split(":");
-				slots = new Slot[Integer.parseInt(slotData[0])];
+			ArrayList<Slot> slots = new ArrayList<Slot>();
+			for (Element s : container.getChild("slots").getChildren())
+				slots.add(new Slot(Integer.parseInt(s.getAttributeValue("id")), Integer.parseInt(s.getAttributeValue("x")), Integer.parseInt(s
+						.getAttributeValue("y"))));
 
-				int slotsPerLine = Integer.parseInt(slotData[1]), startX = Integer.parseInt(slotData[2]), y = Integer.parseInt(slotData[3]), x = startX;
-				for (int i = 0; i < slots.length; ++i)
-				{
-					slots[i] = new Slot(i, x, y);
-					x += Slot.SIZE + 2;
-					if ((i + 1) % slotsPerLine == 0)
-					{
-						x = startX;
-						y += Slot.SIZE + 2;
-					}
-				}
-				if (slotData.length == 5) startsAt = Integer.parseInt(slotData[4]);
-			} else
-			{
-				slots = new Slot[values.length - 2];
-				for (int i = 2; i < values.length; ++i)
-				{
-					int slotID = i - 2;
-					String[] slot = values[i].split(":");
-					if (slot.length == 3) slotID = Integer.parseInt(slot[2]);
-					slots[i - 2] = new Slot(slotID, Integer.parseInt(slot[0]), Integer.parseInt(slot[1]));
-				}
-			}
-			new Container(values[0], startsAt, values[1].split(":"), slots);
+			new Container(container.getAttributeValue("id"), createApplicable(container.getChild("applicable")), slots.toArray(new Slot[slots.size()]));
 		}
 		CommandGenerator.log("Successfully created " + ObjectRegistry.containers.size() + " containers.");
 	}
 
-	private static void createCustomTag(String id, byte applicationType, String[] applicable, String customTagType, String[] data)
+	private static void createCustomTag(String id, byte applicationType, String[] applicable, String customTagType, Element tag)
 	{
 		if (customTagType.equals("color"))
 		{
-			TemplateNumber tag = id.equals("Base") ? new TemplateNumber(id, applicationType, applicable) : new TemplateNumber(id, applicationType,
+			TemplateNumber t = id.equals("Base") ? new TemplateNumber(id, applicationType, applicable) : new TemplateNumber(id, applicationType,
 					TagNumber.BYTE, applicable);
-			tag.setNames("color", Utils.WOOL_COLORS);
-			tag.customTagName = customTagType;
+			t.setNames("color", Utils.WOOL_COLORS);
+			t.customTagName = customTagType;
 		} else if (customTagType.equals("effect"))
 		{
-			TemplateNumber tag = new TemplateNumber(id, applicationType, applicable);
+			TemplateNumber t = new TemplateNumber(id, applicationType, applicable);
 			EffectType[] effects = ObjectRegistry.effects.list(ObjectRegistry.SORT_NUMERICALLY);
 			String[] ids = new String[effects.length];
 			for (int i = 0; i < ids.length; ++i)
 				ids[i] = effects[i].idString.substring("minecraft:".length());
-			tag.setNames("effect", ids);
-			tag.customTagName = customTagType;
+			t.setNames("effect", ids);
+			t.customTagName = customTagType;
 		} else if (customTagType.equals("item"))
 		{
 			TemplateItem t = new TemplateItem(id, applicationType, applicable);
-			for (int i = 3; i < data.length; ++i)
+			if (tag.getChild("limited") != null)
 			{
-				if (data[i].startsWith("limited=")) t.setLimited(data[i].substring("limited=".length()).split(":"));
-				if (data[i].startsWith("autoselect=")) t.setAutoselect(data[i].substring("autoselect=".length()));
+				ArrayList<String> values = new ArrayList<String>();
+				for (Element v : tag.getChild("limited").getChildren())
+					values.add(v.getText());
+				t.setLimited(values.toArray(new String[values.size()]));
 			}
+			if (tag.getChild("itemautoselect") != null) t.setAutoselect(tag.getChildText("itemautoselect"));
 			t.customTagName = customTagType;
 		} else if (customTagType.equals("item_id"))
 		{
 			TemplateItemId t = new TemplateItemId(id, applicationType, applicable);
-			if (data.length == 4) t.setLimited(data[3].substring("limited=".length()).split(":"));
+			if (tag.getChild("limited") != null)
+			{
+				ArrayList<String> values = new ArrayList<String>();
+				for (Element v : tag.getChild("limited").getChildren())
+					values.add(v.getText());
+				t.setLimited(values.toArray(new String[values.size()]));
+			}
 			t.customTagName = customTagType;
 		} else if (customTagType.startsWith("DropChances"))
 		{
 			TemplateDropChances t = new TemplateDropChances(id, applicationType, applicable);
 			t.setSlotCount(Integer.parseInt(customTagType.substring("DropChances".length())));
 			t.customTagName = customTagType;
+		} else if (customTagType.equals("items"))
+		{
+			TemplateItems ti = new TemplateItems(id, applicationType, applicable);
+			if (tag.getChild("noslot") != null) ti.hasSlot = !Boolean.parseBoolean(tag.getChildText("noslot"));
 		} else try
 		{
 			Class<?> c = Class.forName("fr.cubiccl.generator.gameobject.templatetags.custom.Template" + customTagType);
@@ -197,167 +165,98 @@ public class ObjectCreator
 		return damage;
 	}
 
-	public static void createEffects(String[] data)
+	public static void createEffects(Element effects)
 	{
-		for (String a : data)
-		{
-			String[] values = a.split(",");
-			new EffectType(Integer.parseInt(values[0]), values[1]);
-		}
+		for (Element effect : effects.getChildren())
+			new EffectType(Integer.parseInt(effect.getAttributeValue("idint")), effect.getAttributeValue("idstr"));
 		CommandGenerator.log("Successfully created " + ObjectRegistry.effects.size() + " effects.");
 	}
 
-	public static void createEnchantments(String[] data)
+	public static void createEnchantments(Element enchants)
 	{
-		for (String a : data)
+		for (Element enchant : enchants.getChildren())
 		{
-			String[] values = a.split(",");
-			new EnchantmentType(Integer.parseInt(values[0]), values[1], Integer.parseInt(values[2]));
+			new EnchantmentType(Integer.parseInt(enchant.getAttributeValue("idint")), enchant.getAttributeValue("idstr"), Integer.parseInt(enchant
+					.getChildText("maxlevel")));
 		}
 		CommandGenerator.log("Successfully created " + ObjectRegistry.enchantments.size() + " enchantments.");
 	}
 
-	public static void createEntities(String[] data)
+	public static void createEntities(Element entities)
 	{
-		for (String line : data)
-		{
-			String[] lists = line.split(":").length == 2 ? line.split(":")[1].split(",") : new String[0];
-			for (String id : line.split(":")[0].split(","))
-			{
-				new Entity(id);
-				ObjectRegistry.addToLists(id, lists);
-			}
-		}
+		for (Element entity : entities.getChildren())
+			new Entity(entity.getAttributeValue("id"));
 		CommandGenerator.log("Successfully created " + ObjectRegistry.entities.size() + " entities.");
 	}
 
-	public static void createItems(String[] data)
+	public static void createItems(Element items)
 	{
-		for (String item : data)
+		for (Element item : items.getChildren())
 		{
-			String[] values = item.split(",");
-			String idString = values[1], damage = null;
-			int idInt = Integer.parseInt(values[0]), maxDamage = 0, textureType = 0, langType = 0;
-			boolean durability = false;
+			String idString = item.getAttributeValue("idstr");
+			int idInt = Integer.parseInt(item.getAttributeValue("idint"));
+			Element custom = item.getChild("customitem");
 
-			for (String a : values)
+			if (custom != null) try
 			{
-				if (a.startsWith("durability="))
+				Item i = (Item) Class.forName("fr.cubiccl.generator.gameobject.baseobjects.item.Item" + custom.getText()).getConstructors()[0].newInstance(
+						idInt, idString);
+				i.customObjectName = custom.getText();
+			} catch (Exception e)
+			{
+				e.printStackTrace();
+				System.out.println("Couldn't create custom Item: " + idString);
+				continue;
+			}
+			else
+			{
+				Item i;
+				if (item.getChild("customdamage") != null) i = new Item(idInt, idString, createDamage(item.getChildText("customdamage")));
+				else if (item.getChild("maxdamage") != null) i = new Item(idInt, idString, Integer.parseInt(item.getChildText("maxdamage")));
+				else if (item.getChild("durability") != null)
 				{
-					textureType = -1;
-					langType = -1;
-					maxDamage = Integer.parseInt(a.substring("durability=".length()));
-					durability = true;
-					ObjectRegistry.addToLists(idString, "durability");
-				} else if (a.startsWith("damage=")) maxDamage = Integer.parseInt(a.substring("damage=".length()));
-				else if (a.startsWith("texture=")) textureType = Integer.parseInt(a.substring("texture=".length()));
-				else if (a.startsWith("damage_custom=")) damage = a.substring("damage_custom=".length());
-				else if (a.startsWith("lists=")) ObjectRegistry.addToLists(idString, a.substring("lists=".length()).split(":"));
+					i = new Item(idInt, idString, Integer.parseInt(item.getChildText("durability")));
+					i.hasDurability = true;
+					i.langType = -1;
+				} else i = new Item(idInt, idString);
+				if (item.getChild("texture") != null) i.textureType = Integer.parseInt(item.getChildText("texture"));
 			}
 
-			Item i;
-			if (damage == null) i = new Item(idInt, idString, maxDamage);
-			else i = new Item(idInt, idString, createDamage(damage));
-			i.textureType = textureType;
-			i.hasDurability = durability;
-			i.langType = langType;
 		}
 		CommandGenerator.log("Successfully created " + ObjectRegistry.items.size() + " items.");
+	}
+
+	private static void createLists(Element lists)
+	{
+		for (Element list : lists.getChildren())
+		{
+			String id = list.getAttributeValue("id");
+			for (Element object : list.getChildren())
+				ObjectRegistry.addToLists(object.getText(), id);
+		}
 	}
 
 	public static void createObjects(LoadingFrame frame)
 	{
 		frame.setText("loading.objects");
 		ObjectRegistry.resetAll();
-		String[] data = FileUtils.readFileAsArray("data/" + Settings.version().name + ".txt");
-		ArrayList<String> toRemove = new ArrayList<String>(), blocks = new ArrayList<String>(), items = new ArrayList<String>(), entities = new ArrayList<String>(), effects = new ArrayList<String>(), enchantments = new ArrayList<String>(), achievements = new ArrayList<String>(), attributes = new ArrayList<String>(), particles = new ArrayList<String>(), sounds = new ArrayList<String>(), containers = new ArrayList<String>(), blocktags = new ArrayList<String>(), itemtags = new ArrayList<String>(), entitytags = new ArrayList<String>();
+		Element data = FileUtils.readXMLFile("data/" + Settings.version().name);
 
-		int current = -1;
-		for (String line : data)
-		{
-			if (line.startsWith("["))
-			{
-				++current;
-				continue;
-			}
-			switch (current)
-			{
-				case 0:
-					toRemove.add(line);
-					break;
-
-				case 1:
-					blocks.add(line);
-					break;
-
-				case 2:
-					items.add(line);
-					break;
-
-				case 3:
-					entities.add(line);
-					break;
-
-				case 4:
-					effects.add(line);
-					break;
-
-				case 5:
-					enchantments.add(line);
-					break;
-
-				case 6:
-					achievements.add(line);
-					break;
-
-				case 7:
-					String[] a = line.split(",");
-					for (String attribute : a)
-						attributes.add(attribute);
-					break;
-
-				case 8:
-					String[] p = line.split(",");
-					for (String particle : p)
-						particles.add(particle);
-					break;
-
-				case 9:
-					sounds.add(line);
-					break;
-
-				case 10:
-					containers.add(line);
-					break;
-
-				case 11:
-					blocktags.add(line);
-					break;
-
-				case 12:
-					itemtags.add(line);
-					break;
-
-				case 13:
-					entitytags.add(line);
-					break;
-			}
-		}
-
-		removePrevious(toRemove.toArray(new String[toRemove.size()]));
-		createBlocks(blocks.toArray(new String[blocks.size()]));
-		createItems(items.toArray(new String[items.size()]));
-		createEntities(entities.toArray(new String[entities.size()]));
-		createEffects(effects.toArray(new String[effects.size()]));
-		createEnchantments(enchantments.toArray(new String[enchantments.size()]));
-		createAchievements(achievements.toArray(new String[achievements.size()]));
-		createAttributes(attributes.toArray(new String[attributes.size()]));
-		createParticles(particles.toArray(new String[particles.size()]));
-		createSounds(sounds.toArray(new String[sounds.size()]));
-		createContainers(containers.toArray(new String[containers.size()]));
-		createTags(blocktags.toArray(new String[blocktags.size()]), Tag.BLOCK);
-		createTags(itemtags.toArray(new String[itemtags.size()]), Tag.ITEM);
-		createTags(entitytags.toArray(new String[entitytags.size()]), Tag.ENTITY);
+		// removePrevious(toRemove.toArray(new String[toRemove.size()]));
+		createBlocks(data.getChild("blocks"));
+		createItems(data.getChild("items"));
+		createEntities(data.getChild("entities"));
+		createEffects(data.getChild("effects"));
+		createEnchantments(data.getChild("enchantments"));
+		createAchievements(data.getChild("achievements"));
+		createAttributes(data.getChild("attributes"));
+		createParticles(data.getChild("particles"));
+		createSounds(data.getChild("sounds"));
+		createContainers(data.getChild("containers"));
+		createTags(data.getChild("blocktags"), Tag.BLOCK);
+		createTags(data.getChild("itemtags"), Tag.ITEM);
+		createTags(data.getChild("entitytags"), Tag.ENTITY);
+		createLists(data.getChild("lists"));
 		Tags.create();
 		CommandGenerator.log("Successfully created " + ObjectRegistry.objectLists.size() + " object lists.");
 		TargetArgument.createArguments();
@@ -366,89 +265,67 @@ public class ObjectCreator
 		ObjectRegistry.loadAllTextures(frame);
 	}
 
-	public static void createParticles(String[] data)
+	public static void createParticles(Element particles)
 	{
-		for (String id : data)
-			new Particle(id);
+		for (Element particle : particles.getChildren())
+			new Particle(particle.getAttributeValue("id"));
 		CommandGenerator.log("Successfully created " + ObjectRegistry.particles.size() + " particles.");
 	}
 
-	public static void createSounds(String[] data)
+	public static void createSounds(Element sounds)
 	{
-		for (String category : data)
-		{
-			String prefix = category.substring(0, category.indexOf(':'));
-			for (String id : category.substring(category.indexOf(':') + 1).split(","))
-				new Sound(prefix + "." + id);
-		}
+		for (Element sound : sounds.getChildren())
+			new Sound(sound.getAttributeValue("id"));
 		CommandGenerator.log("Successfully created " + ObjectRegistry.sounds.size() + " sounds.");
 	}
 
-	private static void createTag(byte applicationType, String[] data)
+	private static void createTag(byte applicationType, Element tag)
 	{
-		String id = data[0];
-		String[] applicable = data[2].split(":");
-
-		ArrayList<String> app = new ArrayList<String>();
-		for (String a : applicable)
-			app.add(a);
-
-		applicable = app.toArray(new String[app.size()]);
-
-		switch (data[1].substring(0, 3))
+		String id = tag.getAttributeValue("id");
+		String[] applicable = createApplicable(tag.getChild("applicable"));
+		if (tag.getChild("customtype") != null) createCustomTag(id, applicationType, applicable, tag.getChildText("customtype"), tag);
+		else
 		{
-			case "num":
-				TemplateNumber number = new TemplateNumber(id, applicationType, Byte.parseByte(data[1].substring(3, 4)), applicable);
-				for (int i = 3; i < data.length; ++i)
-				{
-					if (data[i].startsWith("bounds="))
-					{
-						String[] bounds = data[i].substring("bounds=".length()).split(":");
-						number.setBounds(Double.parseDouble(bounds[0]), Double.parseDouble(bounds[1]));
-					} else if (data[i].startsWith("values="))
-					{
-						String[] v = data[i].substring("values=".length()).split(":");
-						int[] values = new int[v.length];
-						for (int j = 0; j < values.length; ++j)
-							values[j] = Integer.parseInt(v[j]);
-						number.setValues(values);
-					} else if (data[i].startsWith("named=")) number.setNames(data[i].substring("named=".length(), data[i].indexOf('^')),
-							data[i].substring(data[i].indexOf('^') + 1).split(":"));
-
-				}
-				break;
-
-			case "ite":
-				TemplateItems ti = new TemplateItems(id, applicationType, applicable);
-				for (String arg : data)
-					if (arg.equals("noSlot")) ti.hasSlot = false;
-				break;
-
-			case "cus":
-				createCustomTag(id, applicationType, applicable, data[1].split(":")[1], data);
-				break;
-
-			case "str":
-			default:
+			byte type = Byte.parseByte(tag.getChildText("type"));
+			if (type == Tag.STRING)
+			{
 				TemplateString t = new TemplateString(id, applicationType, applicable);
-				for (int i = 3; i < data.length; ++i)
+				if (tag.getChild("strvalues") != null)
 				{
-					if (data[i].startsWith("custom=")) t.setValues(data[i].substring("custom=".length()).split(":"));
+					ArrayList<String> values = new ArrayList<String>();
+					for (Element v : tag.getChild("strvalues").getChildren())
+						values.add(v.getText());
+					t.setValues(values.toArray(new String[values.size()]));
 				}
-				break;
+			} else if (type <= Tag.DOUBLE)
+			{
+				TemplateNumber number = new TemplateNumber(id, applicationType, type, applicable);
+				if (tag.getChild("intnamed") != null)
+				{
+					if (tag.getChild("intnamed") != null)
+					{
+						ArrayList<String> values = new ArrayList<String>();
+						for (Element v : tag.getChild("intnamed").getChildren())
+							values.add(v.getText());
+						number.setNames(tag.getChild("intnamed").getAttributeValue("prefix"), values.toArray(new String[values.size()]));
+					}
+				}
+				if (tag.getChild("byteboolean") != null) number.isByteBoolean = Boolean.parseBoolean(tag.getChildText("byteboolean"));
+			}
 		}
 	}
 
-	public static void createTags(String[] data, byte applicationType)
+	public static void createTags(Element tags, byte applicationType)
 	{
-		for (String tag : data)
-			createTag(applicationType, tag.split(","));
+		for (Element tag : tags.getChildren())
+			createTag(applicationType, tag);
 
 		if (applicationType == Tag.BLOCK) CommandGenerator.log("Successfully created " + ObjectRegistry.blockTags.size() + " Block NBT Tags.");
 		else if (applicationType == Tag.ITEM) CommandGenerator.log("Successfully created " + ObjectRegistry.itemTags.size() + " Item NBT Tags.");
 		else if (applicationType == Tag.ENTITY) CommandGenerator.log("Successfully created " + ObjectRegistry.entityTags.size() + " Entity NBT Tags.");
 	}
 
+	@SuppressWarnings("unused")
 	private static void removePrevious(String[] values)
 	{
 		for (String line : values)
