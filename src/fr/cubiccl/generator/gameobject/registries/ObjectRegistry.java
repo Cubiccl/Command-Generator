@@ -91,6 +91,13 @@ public class ObjectRegistry<T extends BaseObject>
 		return new String[0];
 	}
 
+	public static boolean listContains(String list, BaseObject object)
+	{
+		for (String id : getList(list))
+			if (id.replaceAll("minecraft:", "").equals(object.id().replaceAll("minecraft:", ""))) return true;
+		return false;
+	}
+
 	private static Element listsToXML()
 	{
 		Element lists = new Element("lists");
@@ -161,6 +168,7 @@ public class ObjectRegistry<T extends BaseObject>
 	protected final boolean hasNumericalIds;
 	private final boolean hasTexture;
 	protected final HashMap<Integer, String> ids;
+
 	protected final HashMap<String, T> registry;
 
 	ObjectRegistry(boolean hasNumericalIds, boolean hasTexture, Class<T> c)
@@ -282,7 +290,7 @@ public class ObjectRegistry<T extends BaseObject>
 	{
 		Element root = new Element(name);
 		for (T o : this.list(SORT_NUMERICALLY))
-			root.addContent(o.toXML());
+			if (o != Entity.PLAYER) root.addContent(o.toXML());
 		return root;
 	}
 

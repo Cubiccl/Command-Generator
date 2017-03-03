@@ -1328,8 +1328,6 @@
     <entity id="ocelot" />
     <entity id="painting" />
     <entity id="pig" />
-    <entity id="player" />
-    <entity id="player" />
     <entity id="polar_bear" />
     <entity id="potion" />
     <entity id="rabbit" />
@@ -3063,14 +3061,6 @@
         <app>ANY</app>
       </applicable>
     </tag>
-    <tag id="id">
-      <type>0</type>
-      <applicable />
-    </tag>
-    <tag id="id">
-      <type>0</type>
-      <applicable />
-    </tag>
     <tag id="pages">
       <customtype>Json</customtype>
       <applicable>
@@ -3180,16 +3170,16 @@
       </applicable>
     </tag>
     <tag id="Age">
-      <type>3</type>
-      <applicable>
-        <app>list=breed</app>
-      </applicable>
-    </tag>
-    <tag id="Age">
       <type>2</type>
       <applicable>
         <app>item</app>
         <app>xp_orb</app>
+      </applicable>
+    </tag>
+    <tag id="Age">
+      <type>3</type>
+      <applicable>
+        <app>list=breed</app>
       </applicable>
     </tag>
     <tag id="Air">
@@ -3213,7 +3203,7 @@
       <byteboolean>true</byteboolean>
     </tag>
     <tag id="ArmorDropChances">
-      <customtype>DropChances4444</customtype>
+      <customtype>DropChances4</customtype>
       <applicable>
         <app>list=mob</app>
       </applicable>
@@ -3235,6 +3225,7 @@
         <app>list=mob</app>
         <app>armor_stand</app>
       </applicable>
+      <noSlot>true</noSlot>
     </tag>
     <tag id="AttachFace">
       <type>2</type>
@@ -3689,7 +3680,7 @@
       <byteboolean>true</byteboolean>
     </tag>
     <tag id="HandDropChances">
-      <customtype>DropChances2222</customtype>
+      <customtype>DropChances2</customtype>
       <applicable>
         <app>list=mob</app>
       </applicable>
@@ -3700,6 +3691,7 @@
         <app>list=mob</app>
         <app>armor_stand</app>
       </applicable>
+      <noSlot>true</noSlot>
     </tag>
     <tag id="Health">
       <type>5</type>
@@ -3849,17 +3841,17 @@
       </applicable>
       <byteboolean>true</byteboolean>
     </tag>
-    <tag id="Life">
-      <type>3</type>
-      <applicable>
-        <app>fireworks_rocket</app>
-      </applicable>
-    </tag>
     <tag id="life">
       <type>2</type>
       <applicable>
         <app>arrow</app>
         <app>spectral_arrow</app>
+      </applicable>
+    </tag>
+    <tag id="Life">
+      <type>3</type>
+      <applicable>
+        <app>fireworks_rocket</app>
       </applicable>
     </tag>
     <tag id="LifeTicks">

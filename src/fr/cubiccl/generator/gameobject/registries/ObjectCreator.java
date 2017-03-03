@@ -136,11 +136,12 @@ public class ObjectCreator
 		{
 			TemplateDropChances t = new TemplateDropChances(id, applicationType, applicable);
 			t.setSlotCount(Integer.parseInt(customTagType.substring("DropChances".length())));
-			t.customTagName = customTagType;
-		} else if (customTagType.equals("items"))
+			t.customTagName = "DropChances";
+		} else if (customTagType.equals("Items"))
 		{
 			TemplateItems ti = new TemplateItems(id, applicationType, applicable);
 			if (tag.getChild("noslot") != null) ti.hasSlot = !Boolean.parseBoolean(tag.getChildText("noslot"));
+			ti.customTagName = customTagType;
 		} else try
 		{
 			Class<?> c = Class.forName("fr.cubiccl.generator.gameobject.templatetags.custom.Template" + customTagType);

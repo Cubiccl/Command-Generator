@@ -91,7 +91,7 @@ public final class Tags
 	public static final DefaultCompound ITEM = new DefaultCompound("item");
 	public static final TemplateNumber ITEM_COUNT = new TemplateNumber("Count", UNAVAILABLE, Tag.BYTE);
 	public static final TemplateNumber ITEM_DAMAGE = new TemplateNumber("Damage", UNAVAILABLE, Tag.SHORT);
-	public static final TemplateString ITEM_ID = new TemplateString("id", Tag.ITEM);
+	public static final TemplateString ITEM_ID = new TemplateString("id", UNAVAILABLE);
 	public static final DefaultCompound ITEM_NBT = new DefaultCompound("tag");
 	public static final TemplateNumber ITEM_SLOT = new TemplateNumber("Slot", UNAVAILABLE, Tag.SHORT);
 
