@@ -9,10 +9,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.*;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.target.TargetArgument;
-import fr.cubiccl.generator.gameobject.templatetags.Tags;
-import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
-import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
-import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
+import fr.cubiccl.generator.gameobject.templatetags.*;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateDropChances;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItem;
 import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItemId;
@@ -92,7 +89,7 @@ public class ObjectCreator
 		CommandGenerator.log("Successfully created " + ObjectRegistry.containers.size() + " containers.");
 	}
 
-	private static void createCustomTag(String id, byte applicationType, String[] applicable, String customTagType, Element tag)
+	public static void createCustomTag(String id, byte applicationType, String[] applicable, String customTagType, Element tag)
 	{
 		if (customTagType.equals("color"))
 		{
@@ -313,7 +310,7 @@ public class ObjectCreator
 					}
 				}
 				if (tag.getChild("byteboolean") != null) number.isByteBoolean = Boolean.parseBoolean(tag.getChildText("byteboolean"));
-			}
+			} else if (type == Tag.BOOLEAN) new TemplateBoolean(id, applicationType, applicable);
 		}
 	}
 

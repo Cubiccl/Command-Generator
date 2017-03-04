@@ -82,6 +82,11 @@ public class ObjectRegistry<T extends BaseObject>
 		unavailableTags.checkNames();
 	}
 
+	public static void createList(String id)
+	{
+		if (!objectLists.containsKey(id)) objectLists.put(id, new ArrayList<String>());
+	}
+
 	public static String[] getList(String listId)
 	{
 		if (objectLists.containsKey(listId))
@@ -91,6 +96,11 @@ public class ObjectRegistry<T extends BaseObject>
 			return list.toArray(new String[objectLists.get(listId).size()]);
 		}
 		return new String[0];
+	}
+
+	public static String[] getLists()
+	{
+		return objectLists.keySet().toArray(new String[0]);
 	}
 
 	public static boolean listContains(String list, BaseObject object)
@@ -147,6 +157,11 @@ public class ObjectRegistry<T extends BaseObject>
 		unavailableTags.loadTextures();
 	}
 
+	public static void removeList(String id)
+	{
+		objectLists.remove(id);
+	}
+
 	static void resetAll()
 	{
 		achievements.reset();
@@ -169,6 +184,7 @@ public class ObjectRegistry<T extends BaseObject>
 	protected final Class<T> c;
 	protected final boolean hasNumericalIds;
 	private final boolean hasTexture;
+
 	protected final HashMap<Integer, String> ids;
 
 	protected final HashMap<String, T> registry;
@@ -186,6 +202,17 @@ public class ObjectRegistry<T extends BaseObject>
 	{
 		for (T object : this.registry.values())
 			object.name().toString();
+	}
+
+	public void delete(BaseObject object)
+	{
+		this.registry.remove(object.id().replaceAll("minecraft:", ""), object);
+		int quantity = 0;
+		while (this.registry.values().contains(object))
+		{
+			this.registry.remove(object.id().replaceAll("minecraft:", "") + "_double_" + quantity, object);
+			++quantity;
+		}
 	}
 
 	private int doubles(String id)

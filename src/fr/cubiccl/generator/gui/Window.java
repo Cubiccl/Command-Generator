@@ -19,6 +19,7 @@ import fr.cubiccl.generator.gui.component.menubar.CMenuBar;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.PanelCommand;
 import fr.cubiccl.generator.gui.component.panel.PanelCommandSelection;
+import fr.cubiccl.generator.gui.component.panel.data.PanelObjectSelection;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelLootTableOutput;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelLootTableSelection;
 import fr.cubiccl.generator.utils.Settings;
@@ -34,6 +35,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	private CGPanel panelGui;
 	private PanelLootTableOutput panelLootTableOutput;
 	public PanelLootTableSelection panelLootTableSelection;
+	public PanelObjectSelection panelObjectSelection;
 	private JScrollPane scrollpane;
 
 	public Window()
@@ -77,6 +79,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		contentPane.add(this.panelLootTableOutput = new PanelLootTableOutput());
 		contentPane.add(this.panelCommandSelection = new PanelCommandSelection());
 		contentPane.add(this.panelLootTableSelection = new PanelLootTableSelection());
+		contentPane.add(this.panelObjectSelection = new PanelObjectSelection());
 		contentPane.add(this.scrollpane = new CScrollPane(null));
 		this.scrollpane.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 		this.scrollpane.getVerticalScrollBar().setUnitIncrement(20);
@@ -92,19 +95,23 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 
 	private void onResized()
 	{
+		Container contentPane = this.getContentPane();
 		if (CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS)
 		{
-			Container contentPane = this.getContentPane();
 			this.panelCommand.setBounds(0, 0, contentPane.getWidth(), PanelCommand.HEIGHT);
 			this.panelCommandSelection.setBounds(0, this.panelCommand.getHeight(), contentPane.getWidth(), PanelCommandSelection.HEIGHT);
 			this.scrollpane.setBounds(0, this.panelCommand.getHeight() + this.panelCommandSelection.getHeight(), contentPane.getWidth(),
 					contentPane.getHeight() - this.panelCommand.getHeight() - this.panelCommandSelection.getHeight());
-		} else
+		} else if (CommandGenerator.getCurrentMode() == CommandGenerator.DATA)
 		{
-			Container contentPane = this.getContentPane();
 			this.panelLootTableSelection.setBounds(0, 0, contentPane.getWidth() / 2, PanelLootTableOutput.HEIGHT);
 			this.panelLootTableOutput.setBounds(this.panelLootTableSelection.getWidth(), 0, this.getWidth() / 2, PanelLootTableOutput.HEIGHT);
 			this.scrollpane.setBounds(0, PanelLootTableOutput.HEIGHT, contentPane.getWidth(), contentPane.getHeight() - this.panelLootTableOutput.getHeight());
+		} else
+		{
+			this.panelObjectSelection.setBounds(0, 0, contentPane.getWidth(), PanelObjectSelection.HEIGHT);
+			this.scrollpane.setBounds(0, this.panelObjectSelection.getHeight(), contentPane.getWidth(),
+					contentPane.getHeight() - this.panelObjectSelection.getHeight());
 		}
 		this.validate();
 	}
@@ -119,7 +126,6 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.panelGui = gui;
 		this.scrollpane.setViewportView(this.panelGui);
 		this.panelCommandSelection.setEnabled(CommandGenerator.stateManager.stateCount() <= 1);
-		// this.panelLootTableSelection.setEnabled(CommandGenerator.stateManager.stateCount() <= 1);
 	}
 
 	public void setSelected(Command command)
@@ -137,11 +143,13 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	public void updateMode()
 	{
 		boolean commands = CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS;
-		boolean loot_tables = !commands;
+		boolean loot_tables = CommandGenerator.getCurrentMode() == CommandGenerator.LOOT_TABLES;
+		boolean data = CommandGenerator.getCurrentMode() == CommandGenerator.DATA;
 		this.panelCommandSelection.setVisible(commands);
 		this.panelCommand.setVisible(commands);
 		this.panelLootTableOutput.setVisible(loot_tables);
 		this.panelLootTableSelection.setVisible(loot_tables);
+		this.panelObjectSelection.setVisible(data);
 		this.onResized();
 	}
 

@@ -23,12 +23,13 @@ public class StateManager
 		}
 	}
 
-	private Stack<State> statesCommand, statesTable;
+	private Stack<State> statesCommand, statesTable, statesData;
 
 	public StateManager()
 	{
 		this.statesCommand = new Stack<State>();
 		this.statesTable = new Stack<State>();
+		this.statesData = new Stack<State>();
 	}
 
 	public void clear()
@@ -50,7 +51,8 @@ public class StateManager
 
 	private Stack<State> currentManager()
 	{
-		return CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS ? this.statesCommand : this.statesTable;
+		return CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS ? this.statesCommand
+				: CommandGenerator.getCurrentMode() == CommandGenerator.DATA ? this.statesData : this.statesTable;
 	}
 
 	public State getState()
