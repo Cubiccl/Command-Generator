@@ -17,23 +17,27 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 {
 	private static final long serialVersionUID = 2644541217645898670L;
 
-	private CMenuItem objects, history, mode, settings, exit;
+	private CMenuItem objects, history, modeCommands, modeLootTables, settings, exit;
 	private boolean objectsEnabled = true;
 
 	public CMenuBar()
 	{
 		this.add(this.objects = new CMenuItem());
 		this.add(this.history = new CMenuItem());
-		this.add(this.mode = new CMenuItem());
+		this.add(this.modeCommands = new CMenuItem());
+		this.add(this.modeLootTables = new CMenuItem());
 		this.add(this.settings = new CMenuItem());
 		this.add(Box.createHorizontalGlue());
 		this.add(this.exit = new CMenuItem());
 
 		this.objects.addActionListener(this);
 		this.history.addActionListener(this);
-		this.mode.addActionListener(this);
+		this.modeCommands.addActionListener(this);
+		this.modeLootTables.addActionListener(this);
 		this.settings.addActionListener(this);
 		this.exit.addActionListener(this);
+		
+		this.modeLootTables.setVisible(false);
 
 		this.updateTranslations();
 	}
@@ -47,24 +51,30 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 			PanelCustomObjects p = new PanelCustomObjects();
 			CommandGenerator.stateManager.setState(p, null);
 		}
-		if (e.getSource() == this.history)
+		else if (e.getSource() == this.history)
 		{
 			this.toggleMenu(false);
 			CommandGenerator.stateManager.setState(new PanelCommandHistory(), null);
 		}
-		if (e.getSource() == this.mode)
+		else if (e.getSource() == this.modeCommands)
 		{
-			CommandGenerator.setCurrentMode(CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS ? CommandGenerator.LOOT_TABLES
-					: CommandGenerator.COMMANDS);
-			this.mode.setText(Lang.translate(CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS ? "menu.loot_table" : "menu.command"));
+			CommandGenerator.setCurrentMode(CommandGenerator.COMMANDS);
+			this.modeCommands.setVisible(false);
+			this.modeLootTables.setVisible(true);
 		}
-		if (e.getSource() == this.settings)
+		else if (e.getSource() == this.modeLootTables)
+		{
+			CommandGenerator.setCurrentMode(CommandGenerator.LOOT_TABLES);
+			this.modeCommands.setVisible(true);
+			this.modeLootTables.setVisible(false);
+		}
+		else if (e.getSource() == this.settings)
 		{
 			this.toggleMenu(false);
 			PanelSettings p = new PanelSettings();
 			CommandGenerator.stateManager.setState(p, p);
 		}
-		if (e.getSource() == this.exit) CommandGenerator.window.dispose();
+		else if (e.getSource() == this.exit) CommandGenerator.window.dispose();
 	}
 
 	public void toggleMenu(boolean enabled)
@@ -72,7 +82,8 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		if (enabled) this.objects.setEnabled(this.objectsEnabled);
 		else this.objects.setEnabled(false);
 		this.history.setEnabled(enabled);
-		this.mode.setEnabled(enabled);
+		this.modeCommands.setEnabled(enabled);
+		this.modeLootTables.setEnabled(enabled);
 		this.settings.setEnabled(enabled);
 	}
 
@@ -87,7 +98,8 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 	{
 		this.objects.setText(Lang.translate("menu.objects"));
 		this.history.setText(Lang.translate("command.history"));
-		this.mode.setText(Lang.translate(CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS ? "menu.loot_table" : "menu.command"));
+		this.modeCommands.setText(Lang.translate("menu.command"));
+		this.modeLootTables.setText(Lang.translate("menu.loot_table"));
 		this.settings.setText(Lang.translate("menu.settings"));
 		this.exit.setText(Lang.translate("menu.exit"));
 	}

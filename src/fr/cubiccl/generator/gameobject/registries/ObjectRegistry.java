@@ -1,10 +1,7 @@
 package fr.cubiccl.generator.gameobject.registries;
 
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 import org.jdom2.Element;
 
@@ -87,7 +84,12 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public static String[] getList(String listId)
 	{
-		if (objectLists.containsKey(listId)) return objectLists.get(listId).toArray(new String[objectLists.get(listId).size()]);
+		if (objectLists.containsKey(listId))
+		{
+			ArrayList<String> list = objectLists.get(listId);
+			list.sort(Comparator.naturalOrder());
+			return list.toArray(new String[objectLists.get(listId).size()]);
+		}
 		return new String[0];
 	}
 
@@ -105,7 +107,7 @@ public class ObjectRegistry<T extends BaseObject>
 		{
 			Element list = new Element("list");
 			list.setAttribute("id", listId);
-			for (String id : objectLists.get(listId))
+			for (String id : getList(listId))
 				list.addContent(new Element("object").setText(id));
 			lists.addContent(list);
 		}

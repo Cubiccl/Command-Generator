@@ -10,8 +10,11 @@ import java.util.ArrayList;
 
 import javax.imageio.ImageIO;
 
+import org.jdom2.Document;
 import org.jdom2.Element;
 import org.jdom2.input.SAXBuilder;
+import org.jdom2.output.Format;
+import org.jdom2.output.XMLOutputter;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gui.Dialogs;
@@ -132,6 +135,19 @@ public class FileUtils
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/** @param root - The Root XML element to save.
+	 * @param path - Path to the File, .xml excluded. */
+	public static void saveXMLFile(Element root, String path)
+	{
+		try
+		{
+			new XMLOutputter(Format.getPrettyFormat()).output(new Document(root), new FileOutputStream(resourcesFolder + path + ".xml"));
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	/** @param path - Path to the File
