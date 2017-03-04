@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 
+import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.*;
 import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
@@ -50,7 +51,6 @@ public class PanelObjectSelection extends CGPanel implements ActionListener
 	private ObjectCombobox<Particle> comboboxParticle;
 	private ObjectCombobox<Sound> comboboxSound;
 	private OptionCombobox comboboxType;
-	private String editing = null;
 	private int mode = BLOCK;
 
 	public PanelObjectSelection()
@@ -144,6 +144,7 @@ public class PanelObjectSelection extends CGPanel implements ActionListener
 			this.mode = this.comboboxType.getSelectedIndex();
 			this.updateDisplay();
 		} else if (e.getSource() == this.buttonAdd) this.add();
+		else if (e.getSource() == this.buttonEdit) this.edit();
 		else if (e.getSource() == this.buttonRemove)
 		{
 			if (this.mode == LISTS)
@@ -174,34 +175,28 @@ public class PanelObjectSelection extends CGPanel implements ActionListener
 			return;
 		}
 
-		if (this.mode == BLOCK) new Block(idNum, id);
-		if (this.mode == ITEM) new Item(idNum, id);
+		CGPanel panelToShow = null;
+		if (this.mode == BLOCK) panelToShow = new PanelBlockEdition(new Block(idNum, id));
+		if (this.mode == ITEM) panelToShow = new PanelItemEdition(new Item(idNum, id));
 		if (this.mode == ENTITY) new Entity(id);
 		if (this.mode == EFFECT) new EffectType(idNum, id);
-		if (this.mode == ENCHANTMENT)
-		{
-			int level = -1;
-			try
-			{
-				level = Integer.parseInt(Dialogs.showInputDialog("Max level ?"));
-			} catch (NumberFormatException e)
-			{
-				return;
-			}
-			new EnchantmentType(idNum, id, level);
-		}
+		if (this.mode == ENCHANTMENT) panelToShow = new PanelEnchantmentEdition(new EnchantmentType(idNum, id));
 		if (this.mode == ACHIEVEMENT)
 		{
 			String item = Dialogs.showInputDialog("Item id ?");
 			if (item == null) return;
 			Item i = ObjectRegistry.items.find(item);
 			if (i == null) Dialogs.showMessage("Item " + item + " could not be found.");
-			new Achievement(id, i);
+			panelToShow = new PanelAchievementEdition(new Achievement(id, i));
 		}
 		if (this.mode == ATTRIBUTE) new Attribute(id);
 		if (this.mode == PARTICLE) new Particle(id);
 		if (this.mode == SOUND) new Sound(id);
-		if (this.mode == LISTS) ObjectRegistry.createList(id);
+		if (this.mode == LISTS)
+		{
+			ObjectRegistry.createList(id);
+			panelToShow = new PanelListEdition(id);
+		}
 		if (this.mode >= BLOCKTAGS)
 		{
 			byte applicationType = this.mode == BLOCKTAGS ? Tag.BLOCK : this.mode == ITEMTAGS ? Tag.ITEM : Tag.ENTITY;
@@ -220,6 +215,11 @@ public class PanelObjectSelection extends CGPanel implements ActionListener
 			}
 		}
 
+		if (panelToShow != null)
+		{
+			CommandGenerator.stateManager.clear();
+			CommandGenerator.stateManager.setState(panelToShow, null);
+		}
 		this.updateData();
 	}
 
@@ -230,9 +230,22 @@ public class PanelObjectSelection extends CGPanel implements ActionListener
 		this.updateData();
 	}
 
+	private void edit()
+	{
+		CGPanel panel = null;
+		if (this.mode == BLOCK) panel = new PanelBlockEdition((Block) this.selectedObject());
+		if (this.mode == ITEM) panel = new PanelItemEdition((Item) this.selectedObject());
+		if (this.mode == ENCHANTMENT) panel = new PanelEnchantmentEdition((EnchantmentType) this.selectedObject());
+		if (this.mode == ACHIEVEMENT) panel = new PanelAchievementEdition((Achievement) this.selectedObject());
+		if (this.mode == LISTS) panel = new PanelListEdition((String) this.comboboxList.getSelectedItem());
+		CommandGenerator.stateManager.clear();
+		CommandGenerator.stateManager.setState(panel, null);
+	}
+
 	private boolean hasEditing()
 	{
-		return this.mode != ENTITY && this.mode != ATTRIBUTE && this.mode != PARTICLE && this.mode != SOUND;
+		return this.mode != ENTITY && this.mode != EFFECT && this.mode != ATTRIBUTE && this.mode != PARTICLE && this.mode != SOUND && this.mode != BLOCKTAGS
+				&& this.mode != ITEMTAGS && this.mode != ENTITYTAGS;
 	}
 
 	@SuppressWarnings("rawtypes")

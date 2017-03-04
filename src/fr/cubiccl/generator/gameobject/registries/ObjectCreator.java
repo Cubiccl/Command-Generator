@@ -154,7 +154,7 @@ public class ObjectCreator
 
 	}
 
-	private static int[] createDamage(String damageList)
+	public static int[] createDamage(String damageList)
 	{
 		String[] values = damageList.split(":");
 		int[] damage = new int[values.length];
@@ -215,7 +215,6 @@ public class ObjectCreator
 				{
 					i = new Item(idInt, idString, Integer.parseInt(item.getChildText("durability")));
 					i.hasDurability = true;
-					i.langType = -1;
 				} else i = new Item(idInt, idString);
 				if (item.getChild("texture") != null) i.textureType = Integer.parseInt(item.getChildText("texture"));
 			}

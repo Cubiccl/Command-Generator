@@ -23,8 +23,7 @@ public class PanelObjectList<T extends IObjectList<T>> extends CGPanel implement
 {
 	private static final long serialVersionUID = 2923920419688577940L;
 
-	public CGButton buttonAdd;
-	protected CGButton buttonEdit;
+	public CGButton buttonAdd, buttonEdit;
 	protected CGButton buttonRemove;
 	private Class<T> c;
 	private Component componentDisplay;

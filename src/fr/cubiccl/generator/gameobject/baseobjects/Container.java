@@ -1,6 +1,8 @@
 package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 import org.jdom2.Element;
 
@@ -11,28 +13,36 @@ import fr.cubiccl.generator.utils.Textures;
 public class Container extends BaseObject
 {
 
-	public final String[] applicable;
+	public String[] applicable;
 	public final String id;
-	public final Slot[] slots;
-
-	// public final int startsAt;
+	public Slot[] slots;
 
 	public Container(String id, String[] applicable, Slot... slots)
 	{
 		this.id = id;
-		// this.startsAt = startsAt; //TODO VERIFY STARTS AT
 		this.applicable = applicable;
 		this.slots = slots;
 		ObjectRegistry.containers.register(this);
 	}
 
-	public Container(String id, int startsAt, String[] applicable, Slot... slots)
+	public void addApplication(String objectId)
 	{
-		this.id = id;
-		// this.startsAt = startsAt; //TODO VERIFY STARTS AT
-		this.applicable = applicable;
-		this.slots = slots;
-		ObjectRegistry.containers.register(this);
+		ArrayList<String> applicable = new ArrayList<String>();
+		for (String app : this.applicable)
+			applicable.add(app);
+		applicable.add(objectId);
+		applicable.sort(Comparator.naturalOrder());
+		this.applicable = applicable.toArray(new String[0]);
+	}
+
+	public void addSlot(Slot s)
+	{
+		ArrayList<Slot> slots = new ArrayList<Slot>();
+		for (Slot slot : this.slots)
+			slots.add(slot);
+		slots.add(s);
+		slots.sort(Comparator.naturalOrder());
+		this.slots = slots.toArray(new Slot[0]);
 	}
 
 	@Override
@@ -45,6 +55,26 @@ public class Container extends BaseObject
 	public Text name()
 	{
 		return new Text("container." + this.id);
+	}
+
+	public void removeApplication(String objectId)
+	{
+		ArrayList<String> applicable = new ArrayList<String>();
+		for (String app : this.applicable)
+			applicable.add(app);
+		applicable.remove(objectId);
+		applicable.sort(Comparator.naturalOrder());
+		this.applicable = applicable.toArray(new String[0]);
+	}
+
+	public void removeSlot(Slot s)
+	{
+		ArrayList<Slot> slots = new ArrayList<Slot>();
+		for (Slot slot : this.slots)
+			slots.add(slot);
+		slots.remove(s);
+		slots.sort(Comparator.naturalOrder());
+		this.slots = slots.toArray(new Slot[0]);
 	}
 
 	@Override

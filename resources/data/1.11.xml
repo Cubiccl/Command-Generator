@@ -2137,21 +2137,21 @@
         <app>slot.horse.chest</app>
       </applicable>
       <slots>
-        <slot id="0" x="61" y="8" />
-        <slot id="1" x="79" y="8" />
-        <slot id="2" x="97" y="8" />
-        <slot id="3" x="115" y="8" />
-        <slot id="4" x="133" y="8" />
-        <slot id="5" x="61" y="26" />
-        <slot id="6" x="79" y="26" />
-        <slot id="7" x="97" y="26" />
-        <slot id="8" x="115" y="26" />
-        <slot id="9" x="133" y="26" />
-        <slot id="10" x="61" y="44" />
-        <slot id="11" x="79" y="44" />
-        <slot id="12" x="97" y="44" />
-        <slot id="13" x="115" y="44" />
-        <slot id="14" x="133" y="44" />
+        <slot id="2" x="61" y="8" />
+        <slot id="3" x="79" y="8" />
+        <slot id="4" x="97" y="8" />
+        <slot id="5" x="115" y="8" />
+        <slot id="6" x="133" y="8" />
+        <slot id="7" x="61" y="26" />
+        <slot id="8" x="79" y="26" />
+        <slot id="9" x="97" y="26" />
+        <slot id="10" x="115" y="26" />
+        <slot id="11" x="133" y="26" />
+        <slot id="12" x="61" y="44" />
+        <slot id="13" x="79" y="44" />
+        <slot id="14" x="97" y="44" />
+        <slot id="15" x="115" y="44" />
+        <slot id="16" x="133" y="44" />
       </slots>
     </container>
     <container id="horse_armor">

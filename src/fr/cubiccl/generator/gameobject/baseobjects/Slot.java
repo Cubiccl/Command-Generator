@@ -2,17 +2,29 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 
 import org.jdom2.Element;
 
-public class Slot
+public class Slot implements Comparable<Slot>
 {
 	public static final int SIZE = 16;
 
-	public final int x, y, id;
+	public final int id;
+	public int x, y;
+
+	public Slot(int id)
+	{
+		this(id, 0, 0);
+	}
 
 	public Slot(int id, int x, int y)
 	{
 		this.id = id;
 		this.x = x;
 		this.y = y;
+	}
+
+	@Override
+	public int compareTo(Slot o)
+	{
+		return this.id - o.id;
 	}
 
 	public boolean isSelected(int mouseX, int mouseY)

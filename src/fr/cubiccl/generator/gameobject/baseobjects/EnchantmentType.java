@@ -22,11 +22,16 @@ public class EnchantmentType extends BaseObject implements IObjectList<Enchantme
 	/** This Enchantment's text ID. */
 	public final String idString;
 	/** This Enchantment's maximum Level in survival. */
-	public final int maxLevel;
+	public int maxLevel;
 
 	public EnchantmentType()
 	{
-		this(-1, null, 0);
+		this(-1, null);
+	}
+
+	public EnchantmentType(int idInt, String idString)
+	{
+		this(idInt, idString, 1);
 	}
 
 	public EnchantmentType(int idInt, String idString, int maxLevel)

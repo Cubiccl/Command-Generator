@@ -35,7 +35,7 @@ public class ObjectRegistry<T extends BaseObject>
 	public static final ObjectRegistry<Sound> sounds = new ObjectRegistry<Sound>(false, false, Sound.class);
 	public static final ObjectRegistry<TemplateTag> unavailableTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
 
-	static void addToLists(String objectId, String... lists)
+	public static void addToLists(String objectId, String... lists)
 	{
 		for (String list : lists)
 		{
@@ -157,6 +157,11 @@ public class ObjectRegistry<T extends BaseObject>
 		unavailableTags.loadTextures();
 	}
 
+	public static void removeFromList(String objectId, String listId)
+	{
+		objectLists.get(listId).remove(objectId);
+	}
+
 	public static void removeList(String id)
 	{
 		objectLists.remove(id);
@@ -184,9 +189,7 @@ public class ObjectRegistry<T extends BaseObject>
 	protected final Class<T> c;
 	protected final boolean hasNumericalIds;
 	private final boolean hasTexture;
-
 	protected final HashMap<Integer, String> ids;
-
 	protected final HashMap<String, T> registry;
 
 	ObjectRegistry(boolean hasNumericalIds, boolean hasTexture, Class<T> c)

@@ -18,13 +18,13 @@ public abstract class BlockItem extends BaseObject
 
 	public String customObjectName = null;
 	/** List of available damage values for this Block/Item. */
-	public final int[] damage;
+	public int[] damage;
 	/** Numerical ID of this Block/Item. */
 	private final int idInt;
 	/** Text ID of this Block/Item. */
 	private final String idString;
 	/** Defines how to handle language and texture. */
-	public int textureType, langType;
+	public int textureType;
 	/** True if this is an Item, false if this is a Block. */
 	private final boolean type;
 
@@ -45,7 +45,6 @@ public abstract class BlockItem extends BaseObject
 		this.idInt = idInt;
 		this.damage = damage;
 		this.textureType = 0;
-		this.langType = 0;
 
 		if (idString != null) if (this.type == ITEM) ObjectRegistry.items.register((Item) this);
 		else ObjectRegistry.blocks.register((Block) this);
@@ -63,7 +62,7 @@ public abstract class BlockItem extends BaseObject
 		return this.idInt;
 	}
 
-	private boolean isDamageCustom()
+	public boolean isDamageCustom()
 	{
 		for (int i = 0; i < damage.length; ++i)
 			if (this.damage[i] != i) return true;
@@ -104,7 +103,7 @@ public abstract class BlockItem extends BaseObject
 	 * @return The name of this Block/Item for the given damage value. */
 	public Text name(int damage)
 	{
-		if (this.damage.length == 1 || this.langType == -1) return this.name(this.idString);
+		if (this.damage.length == 1) return this.name(this.idString);
 		return this.name(this.idString + "." + damage);
 	}
 
@@ -115,6 +114,11 @@ public abstract class BlockItem extends BaseObject
 		if (Lang.keyExists("block." + nameID)) return new Text("block." + nameID);
 		CommandGenerator.log("Couldn't find translation for : item." + nameID);
 		return new Text("item." + nameID);
+	}
+
+	public void setMaxDamage(int maxDamage)
+	{
+		this.damage = Utils.generateArray(maxDamage);
 	}
 
 	@Override

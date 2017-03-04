@@ -26,7 +26,7 @@
 	<xs:element name="list">
 		<xs:complexType>
 			<xs:sequence>
-				<xs:element name="object" type="idstring" maxOccurs="unbounded"/>
+				<xs:element name="object" type="idstring" maxOccurs="unbounded" />
 			</xs:sequence>
 			<xs:attribute name="id" type="idstring" use="required" />
 		</xs:complexType>

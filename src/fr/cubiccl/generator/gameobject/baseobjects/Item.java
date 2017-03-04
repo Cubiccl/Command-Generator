@@ -29,6 +29,12 @@ public class Item extends BlockItem
 		return super.name(damage);
 	}
 
+	public void setDurability(int durability)
+	{
+		this.hasDurability = durability != -1;
+		this.setMaxDamage(durability);
+	}
+
 	@Override
 	public Element toXML()
 	{
