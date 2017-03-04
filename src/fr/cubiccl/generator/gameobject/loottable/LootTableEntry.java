@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import fr.cubiccl.generator.gameobject.ItemStack;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
@@ -92,6 +94,19 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		return p;
 	}
 
+	public ItemStack generateItem()
+	{
+		if (this.type == EMPTY) return null;
+
+		ItemStack item = new ItemStack();
+		item.item = ObjectRegistry.items.find(this.name);
+
+		for (LootTableFunction function : this.functions)
+			if (function.verifyConditions()) function.applyTo(item);
+
+		return item;
+	}
+
 	@Override
 	public Component getDisplayComponent()
 	{
@@ -159,5 +174,12 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		this.weight = e.weight;
 		this.quality = e.quality;
 		return this;
+	}
+
+	public boolean verifyConditions()
+	{
+		for (LootTableCondition condition : this.conditions)
+			if (!condition.verify()) return false;
+		return true;
 	}
 }

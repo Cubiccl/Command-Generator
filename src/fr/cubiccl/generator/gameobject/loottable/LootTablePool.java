@@ -1,8 +1,9 @@
 package fr.cubiccl.generator.gameobject.loottable;
 
 import java.awt.Component;
-import java.util.ArrayList;
+import java.util.*;
 
+import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
@@ -95,6 +96,42 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		return p;
 	}
 
+	public Set<ItemStack> generateItems()
+	{
+		HashSet<ItemStack> items = new HashSet<ItemStack>();
+
+		int rolls = this.rollsMin;
+		if (this.rollsMax != -1) rolls = new Random().nextInt(this.rollsMax - this.rollsMin + 1) + this.rollsMin;
+
+		ArrayList<LootTableEntry> entries = new ArrayList<LootTableEntry>(); // Entries sorted by weight
+		for (LootTableEntry e : this.entries)
+			entries.add(e);
+		entries.sort(new Comparator<LootTableEntry>()
+		{
+			@Override
+			public int compare(LootTableEntry o1, LootTableEntry o2)
+			{
+				return o1.weight - o2.weight;
+			}
+		});
+
+		for (int i = 0; i < rolls; ++i)
+		{
+			LootTableEntry entry = null;
+
+			for (LootTableEntry e : entries)
+				if (e.type != LootTableEntry.LOOT_TABLE && e.verifyConditions())
+				{
+					entry = e;
+					break;
+				}
+
+			if (entry != null) items.add(entry.generateItem());
+		}
+
+		return items;
+	}
+
 	@Override
 	public Component getDisplayComponent()
 	{
@@ -151,5 +188,12 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		this.rollsMin = pool.rollsMin;
 		this.rollsMax = pool.rollsMax;
 		return this;
+	}
+
+	public boolean verifyConditions()
+	{
+		for (LootTableCondition condition : this.conditions)
+			if (!condition.verify()) return false;
+		return true;
 	}
 }

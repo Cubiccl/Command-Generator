@@ -7,12 +7,15 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.baseobjects.Container;
 import fr.cubiccl.generator.gameobject.baseobjects.Slot;
+import fr.cubiccl.generator.gameobject.loottable.LootTable;
+import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -22,6 +25,7 @@ import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.display.PanelItemDisplay;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.utils.IStateListener;
 import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Text;
@@ -30,7 +34,7 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 {
 	private static final long serialVersionUID = 8606720961759649878L;
 
-	private CGButton buttonEdit, buttonRemove;
+	private CGButton buttonEdit, buttonRemove, buttonGenerate;
 	public CGPanel container;
 	private ItemStack[] items;
 	private CGPanel panelAction;
@@ -56,12 +60,18 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 
 		this.container = new CGPanel();
 		gbc = this.container.createGridBagLayout();
+		gbc.gridheight = 2;
 		this.container.add(this, gbc);
 		++gbc.gridx;
+		gbc.gridheight = 1;
 		this.container.add(this.panelAction, gbc);
+		++gbc.gridy;
+		this.container.add(this.buttonGenerate = new CGButton("container.generate"), gbc);
+		this.buttonGenerate.setVisible(false);
 
 		this.buttonEdit.addActionListener(this);
 		this.buttonRemove.addActionListener(this);
+		this.buttonGenerate.addActionListener(this);
 		this.panelAction.setVisible(false);
 	}
 
@@ -70,6 +80,25 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 	{
 		if (e.getSource() == this.buttonEdit) this.edit();
 		else if (e.getSource() == this.buttonRemove && this.items[this.selected] != null) this.delete();
+		else if (e.getSource() == this.buttonGenerate)
+		{
+			PanelObjectList<LootTable> tables = new PanelObjectList<LootTable>(null, (Text) null, LootTable.class);
+			tables.setName(new Text("container.generate.title"));
+			tables.setValues(ObjectSaver.lootTables.list());
+			tables.buttonAdd.setVisible(false);
+			tables.buttonEdit.setVisible(false);
+			tables.buttonRemove.setVisible(false);
+			CommandGenerator.stateManager.setState(tables, new IStateListener<PanelObjectList<LootTable>>()
+			{
+				@Override
+				public boolean shouldStateClose(PanelObjectList<LootTable> panel)
+				{
+					LootTable table = panel.getSelectedObject();
+					if (table != null) generateFromLootTable(table);
+					return table != null;
+				}
+			});
+		}
 	}
 
 	private void delete()
@@ -92,6 +121,25 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 		for (int i = 0; i < this.items.length; i++)
 			this.items[i] = null;
 		this.repaint();
+	}
+
+	private void generateFromLootTable(LootTable table)
+	{
+		ArrayList<ItemStack> generated = table.generateItems();
+		this.empty();
+		while (!generated.isEmpty())
+		{
+			// Get available slots
+			ArrayList<Integer> slots = new ArrayList<Integer>();
+			for (int i = 0; i < this.items.length; ++i)
+				if (this.items[i] == null) slots.add(i);
+
+			if (slots.size() == -1) return;
+			// Find random slot
+			this.items[slots.get(new Random().nextInt(slots.size()))] = generated.get(0);
+			generated.remove(0); // Remove used Item
+		}
+		this.select(-1);
 	}
 
 	public ItemStack[] generateItems(boolean hasSlot)

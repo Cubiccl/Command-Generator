@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.GameObject;
+import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -70,6 +71,16 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 	public String display()
 	{
 		return this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand(0);
+	}
+
+	public ArrayList<ItemStack> generateItems()
+	{
+		ArrayList<ItemStack> items = new ArrayList<ItemStack>();
+
+		for (LootTablePool pool : this.pools)
+			if (pool.verifyConditions()) items.addAll(pool.generateItems());
+
+		return items;
 	}
 
 	@Override

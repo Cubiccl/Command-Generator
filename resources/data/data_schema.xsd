@@ -136,17 +136,20 @@
 
 	<xs:element name="item">
 		<xs:complexType>
-			<xs:choice>
-				<xs:sequence>
-					<xs:choice>
-						<xs:element ref="durability" minOccurs="0" />
-						<xs:element ref="maxdamage" minOccurs="0" />
-						<xs:element ref="customdamage" minOccurs="0" />
-					</xs:choice>
-					<xs:element ref="texture" minOccurs="0" />
-				</xs:sequence>
-				<xs:element name="customitem" type="idstring" />
-			</xs:choice>
+			<xs:sequence>
+				<xs:choice>
+					<xs:sequence>
+						<xs:choice>
+							<xs:element ref="durability" minOccurs="0" />
+							<xs:element ref="maxdamage" minOccurs="0" />
+							<xs:element ref="customdamage" minOccurs="0" />
+						</xs:choice>
+						<xs:element ref="texture" minOccurs="0" />
+					</xs:sequence>
+					<xs:element name="customitem" type="idstring" />
+				</xs:choice>
+				<xs:element name="cooksto" type="idstring" />
+			</xs:sequence>
 			<xs:attribute name="idint" type="idint" use="required" />
 			<xs:attribute name="idstr" type="idstring" use="required" />
 		</xs:complexType>

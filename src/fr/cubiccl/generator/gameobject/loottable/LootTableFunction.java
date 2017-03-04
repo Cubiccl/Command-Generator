@@ -2,14 +2,16 @@ package fr.cubiccl.generator.gameobject.loottable;
 
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Random;
 
 import fr.cubi.cubigui.CTextArea;
-import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagList;
-import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.ItemStack;
+import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelFunction;
@@ -20,7 +22,6 @@ import fr.cubiccl.generator.utils.Text;
 
 public class LootTableFunction implements IObjectList<LootTableFunction>
 {
-
 	public static enum Function
 	{
 		ENCHANT_RANDOMLY("enchant_randomly", 7),
@@ -99,6 +100,90 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 		this.tags = tags;
 	}
 
+	public void applyTo(ItemStack item)
+	{
+		if (this.function == Function.ENCHANT_RANDOMLY)
+		{
+			EnchantmentType[] enchants = ObjectRegistry.enchantments.list();
+			for (Tag t : this.tags)
+				if (t.template == Tags.LT_FUNCTION_ENCHANTMENTS)
+				{
+					enchants = new EnchantmentType[((TagList) t).size()];
+					for (int i = 0; i < ((TagList) t).size(); ++i)
+						enchants[i] = ObjectRegistry.enchantments.find(((TagString) ((TagList) t).getTag(i)).value());
+					break;
+				}
+			item.enchant(enchants[new Random().nextInt(enchants.length)]);
+		} else if (this.function == Function.FURNACE_SMELT && item.item.cooksTo != null && ObjectRegistry.items.find(item.item.cooksTo) != null) item.item = ObjectRegistry.items
+				.find(item.item.cooksTo);
+		else if (this.function == Function.SET_ATTRIBUTES)
+		{
+			Tag[] modifiers = null;
+			for (Tag t : this.tags)
+				if (t.id().equals("modifiers")) modifiers = ((TagList) t).value();
+
+			if (modifiers == null) return;
+			if (item.nbt.hasTag("AttributeModifiers"))
+			{
+				TagList list = (TagList) item.nbt.getTagFromId("AttributeModifiers");
+				for (Tag tag : modifiers)
+					list.addTag(tag);
+			} else item.nbt.addTag(((TemplateList) ObjectRegistry.itemTags.find("AttributeModifiers")).create(modifiers));
+		} else if (this.function == Function.SET_COUNT) for (Tag t : this.tags)
+		{
+			if (t.template == Tags.LT_FUNCTION_COUNT)
+			{
+				item.amount = ((TagNumber) t).value();
+				break;
+			} else if (t.template == Tags.LT_FUNCTION_COUNT_RANGE)
+			{
+				int min = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MIN)).value();
+				int max = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MAX)).value();
+				item.amount = new Random().nextInt(max - min) + min;
+				break;
+			}
+		}
+		else if (this.function == Function.SET_DAMAGE) for (Tag t : this.tags)
+		{
+			if (t.template == Tags.LT_FUNCTION_DAMAGE)
+			{
+				item.damage = (int) (((TagBigNumber) t).value() * item.item.getDurability());
+				break;
+			} else if (t.template == Tags.LT_FUNCTION_DAMAGE_RANGE)
+			{
+				double min = ((TagBigNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MIN_FLOAT)).value();
+				double max = ((TagBigNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MAX_FLOAT)).value();
+				item.damage = (int) ((new Random().nextDouble() * (max - min) + min) * item.item.getDurability());
+				break;
+			}
+		}
+		else if (this.function == Function.SET_DATA) for (Tag t : this.tags)
+		{
+			if (t.template == Tags.LT_FUNCTION_DATA)
+			{
+				item.damage = ((TagNumber) t).value();
+				break;
+			} else if (t.template == Tags.LT_FUNCTION_DATA_RANGE)
+			{
+				int min = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MIN)).value();
+				int max = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MAX)).value();
+				item.damage = new Random().nextInt(max - min) + min;
+				break;
+			}
+		}
+		else if (this.function == Function.SET_NBT)
+		{
+			String tag = null;
+			for (Tag t : this.tags)
+				if (t.template == Tags.LT_FUNCTION_NBT) tag = ((TagString) t).value();
+			if (tag == null) return;
+
+			TagCompound t = (TagCompound) NBTReader.read(tag, false, false);
+			for (Tag nbt : t.value())
+				item.nbt.addTag(nbt);
+		}
+	}
+
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
@@ -151,5 +236,12 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 		this.function = f.function;
 		this.tags = f.tags;
 		return this;
+	}
+
+	public boolean verifyConditions()
+	{
+		for (LootTableCondition condition : this.conditions)
+			if (!condition.verify()) return false;
+		return true;
 	}
 }

@@ -652,7 +652,9 @@
     <item idint="3" idstr="dirt">
       <maxdamage>2</maxdamage>
     </item>
-    <item idint="4" idstr="cobblestone" />
+    <item idint="4" idstr="cobblestone">
+      <cooksto>stone</cooksto>
+    </item>
     <item idint="5" idstr="planks">
       <customitem>Wood</customitem>
     </item>
@@ -662,13 +664,21 @@
     <item idint="7" idstr="bedrock" />
     <item idint="12" idstr="sand">
       <maxdamage>1</maxdamage>
+      <cooksto>glass</cooksto>
     </item>
     <item idint="13" idstr="gravel" />
-    <item idint="14" idstr="gold_ore" />
-    <item idint="15" idstr="iron_ore" />
-    <item idint="16" idstr="coal_ore" />
+    <item idint="14" idstr="gold_ore">
+      <cooksto>gold_ingot</cooksto>
+    </item>
+    <item idint="15" idstr="iron_ore">
+      <cooksto>iron_ingot</cooksto>
+    </item>
+    <item idint="16" idstr="coal_ore">
+      <cooksto>coal</cooksto>
+    </item>
     <item idint="17" idstr="log">
       <maxdamage>3</maxdamage>
+      <cooksto>coal</cooksto>
     </item>
     <item idint="18" idstr="leaves">
       <maxdamage>3</maxdamage>
@@ -716,7 +726,9 @@
     <item idint="52" idstr="mob_spawner" />
     <item idint="53" idstr="oak_stairs" />
     <item idint="54" idstr="chest" />
-    <item idint="56" idstr="diamond_ore" />
+    <item idint="56" idstr="diamond_ore">
+      <cooksto>diamond</cooksto>
+    </item>
     <item idint="57" idstr="diamond_block" />
     <item idint="58" idstr="crafting_table" />
     <item idint="60" idstr="farmland" />
@@ -728,18 +740,24 @@
     <item idint="69" idstr="lever" />
     <item idint="70" idstr="stone_pressure_plate" />
     <item idint="72" idstr="wooden_pressure_plate" />
-    <item idint="73" idstr="redstone_ore" />
+    <item idint="73" idstr="redstone_ore">
+      <cooksto>redstone</cooksto>
+    </item>
     <item idint="76" idstr="redstone_torch" />
     <item idint="77" idstr="stone_button" />
     <item idint="78" idstr="snow_layer" />
     <item idint="79" idstr="ice" />
     <item idint="80" idstr="snow" />
     <item idint="81" idstr="cactus" />
-    <item idint="82" idstr="clay" />
+    <item idint="82" idstr="clay">
+      <cooksto>hardened_clay</cooksto>
+    </item>
     <item idint="84" idstr="jukebox" />
     <item idint="85" idstr="fence" />
     <item idint="86" idstr="pumpkin" />
-    <item idint="87" idstr="netherrack" />
+    <item idint="87" idstr="netherrack">
+      <cooksto>netherbrick</cooksto>
+    </item>
     <item idint="88" idstr="soul_sand" />
     <item idint="89" idstr="glowstone" />
     <item idint="91" idstr="lit_pumpkin" />
@@ -776,7 +794,9 @@
       <maxdamage>5</maxdamage>
     </item>
     <item idint="128" idstr="sandstone_stairs" />
-    <item idint="129" idstr="emerald_ore" />
+    <item idint="129" idstr="emerald_ore">
+      <cooksto>emerald</cooksto>
+    </item>
     <item idint="130" idstr="ender_chest" />
     <item idint="131" idstr="tripwire_hook" />
     <item idint="133" idstr="emerald_block" />
@@ -797,7 +817,9 @@
     <item idint="148" idstr="heavy_weighted_pressure_plate" />
     <item idint="151" idstr="daylight_detector" />
     <item idint="152" idstr="redstone_block" />
-    <item idint="153" idstr="quartz_ore" />
+    <item idint="153" idstr="quartz_ore">
+      <cooksto>quartz</cooksto>
+    </item>
     <item idint="154" idstr="hopper" />
     <item idint="155" idstr="quartz_block">
       <maxdamage>2</maxdamage>
@@ -816,6 +838,7 @@
     </item>
     <item idint="162" idstr="log2">
       <maxdamage>1</maxdamage>
+      <cooksto>coal</cooksto>
     </item>
     <item idint="163" idstr="acacia_stairs" />
     <item idint="164" idstr="dark_oak_stairs" />
@@ -1114,7 +1137,9 @@
       <durability>92</durability>
     </item>
     <item idint="318" idstr="flint" />
-    <item idint="319" idstr="porkchop" />
+    <item idint="319" idstr="porkchop">
+      <cooksto>cooked_porkchop</cooksto>
+    </item>
     <item idint="320" idstr="cooked_porkchop" />
     <item idint="321" idstr="painting" />
     <item idint="322" idstr="golden_apple">
@@ -1152,6 +1177,7 @@
     <item idint="348" idstr="glowstone_dust" />
     <item idint="349" idstr="fish">
       <maxdamage>3</maxdamage>
+      <cooksto>cooked_fish</cooksto>
     </item>
     <item idint="350" idstr="cooked_fish">
       <maxdamage>1</maxdamage>
@@ -1173,9 +1199,13 @@
     <item idint="360" idstr="melon" />
     <item idint="361" idstr="pumpkin_seeds" />
     <item idint="362" idstr="melon_seeds" />
-    <item idint="363" idstr="beef" />
+    <item idint="363" idstr="beef">
+      <cooksto>cooked_beef</cooksto>
+    </item>
     <item idint="364" idstr="cooked_beef" />
-    <item idint="365" idstr="chicken" />
+    <item idint="365" idstr="chicken">
+      <cooksto>cooked_chicken</cooksto>
+    </item>
     <item idint="366" idstr="cooked_chicken" />
     <item idint="367" idstr="rotten_flesh" />
     <item idint="368" idstr="ender_pearl" />
@@ -1202,7 +1232,9 @@
     <item idint="389" idstr="item_frame" />
     <item idint="390" idstr="flower_pot" />
     <item idint="391" idstr="carrot" />
-    <item idint="392" idstr="potato" />
+    <item idint="392" idstr="potato">
+      <cooksto>cooked_potato</cooksto>
+    </item>
     <item idint="393" idstr="baked_potato" />
     <item idint="394" idstr="poisonous_potato" />
     <item idint="395" idstr="map" />
@@ -1226,7 +1258,9 @@
     <item idint="408" idstr="hopper_minecart" />
     <item idint="409" idstr="prismarine_shard" />
     <item idint="410" idstr="prismarine_crystals" />
-    <item idint="411" idstr="rabbit" />
+    <item idint="411" idstr="rabbit">
+      <cooksto>cooked_rabbit</cooksto>
+    </item>
     <item idint="412" idstr="cooked_rabbit" />
     <item idint="413" idstr="rabbit_stew" />
     <item idint="414" idstr="rabbit_foot" />
@@ -1238,7 +1272,9 @@
     <item idint="420" idstr="lead" />
     <item idint="421" idstr="name_tag" />
     <item idint="422" idstr="command_block_minecart" />
-    <item idint="423" idstr="mutton" />
+    <item idint="423" idstr="mutton">
+      <cooksto>cooked_mutton</cooksto>
+    </item>
     <item idint="424" idstr="cooked_mutton" />
     <item idint="425" idstr="banner" />
     <item idint="426" idstr="end_crystal" />
@@ -1247,7 +1283,9 @@
     <item idint="429" idstr="jungle_door" />
     <item idint="430" idstr="acacia_door" />
     <item idint="431" idstr="dark_oak_door" />
-    <item idint="432" idstr="chorus_fruit" />
+    <item idint="432" idstr="chorus_fruit">
+      <cooksto>popped_chorus_fruit</cooksto>
+    </item>
     <item idint="433" idstr="chorus_fruit_popped" />
     <item idint="434" idstr="beetroot" />
     <item idint="435" idstr="beetroot_seeds" />

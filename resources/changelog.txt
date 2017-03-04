@@ -1,3 +1,12 @@
+------------------------- VERSION 2.3.3 -------------------------
+ADDITIONS
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+
 ------------------------- VERSION 2.3.2 -------------------------
 ADDITIONS
 - Added a searchbar for Command selection.

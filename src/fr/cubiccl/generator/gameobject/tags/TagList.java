@@ -4,13 +4,22 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 
 public class TagList extends Tag
 {
-	protected final Tag[] tags;
+	protected Tag[] tags;
 
 	@Deprecated
 	public TagList(TemplateTag template, Tag... tags)
 	{
 		super(template);
 		this.tags = tags;
+	}
+
+	public void addTag(Tag tag)
+	{
+		Tag[] t = new Tag[this.tags.length + 1];
+		for (int i = 0; i < t.length; ++i)
+			t[i] = this.tags[i];
+		t[this.tags.length] = tag;
+		this.tags = t;
 	}
 
 	public Tag getTag(int index)

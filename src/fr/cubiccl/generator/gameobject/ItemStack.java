@@ -1,12 +1,15 @@
 package fr.cubiccl.generator.gameobject;
 
 import java.util.ArrayList;
+import java.util.Random;
 
+import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
@@ -87,6 +90,14 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 			if (display.hasTag(Tags.DISPLAY_NAME)) return ((TagString) display.getTag(Tags.DISPLAY_NAME)).value();
 		}
 		return this.amount + " " + this.item.name(this.damage).toString();
+	}
+
+	public void enchant(EnchantmentType enchantment)
+	{
+		TagCompound e = Tags.DEFAULT_COMPOUND.create(Tags.ENCHANTMENT_ID.create(enchantment.idNum()),
+				Tags.ENCHANTMENT_LVL.create(new Random().nextInt(enchantment.maxLevel + 1)));
+		if (this.nbt.hasTag("ench")) ((TagList) this.nbt.getTagFromId("ench")).addTag(e);
+		else this.nbt.addTag(((TemplateList) ObjectRegistry.itemTags.find("ench")).create(e));
 	}
 
 	public Enchantment[] findEnchantments()

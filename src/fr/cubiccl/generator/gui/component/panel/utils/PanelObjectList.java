@@ -23,8 +23,7 @@ public class PanelObjectList<T extends IObjectList<T>> extends CGPanel implement
 {
 	private static final long serialVersionUID = 2923920419688577940L;
 
-	public CGButton buttonAdd, buttonEdit;
-	protected CGButton buttonRemove;
+	public CGButton buttonAdd, buttonEdit, buttonRemove;
 	private Class<T> c;
 	private Component componentDisplay;
 	protected int editing = -1;
@@ -141,6 +140,12 @@ public class PanelObjectList<T extends IObjectList<T>> extends CGPanel implement
 	public T get(int index)
 	{
 		return this.objects.get(index);
+	}
+
+	public T getSelectedObject()
+	{
+		if (this.selectedIndex() == -1) return null;
+		return this.get(this.selectedIndex());
 	}
 
 	public String getSelectedValue()

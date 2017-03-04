@@ -6,6 +6,7 @@ import fr.cubiccl.generator.utils.Text;
 
 public class Item extends BlockItem
 {
+	public String cooksTo = null;
 	public boolean hasDurability = false;
 
 	public Item(int idInt, String idString)
@@ -53,6 +54,7 @@ public class Item extends BlockItem
 	{
 		Element root = super.toXML();
 		if (this.hasDurability) root.getChild("maxdamage").setName("durability");
+		if (this.cooksTo != null) root.addContent(new Element("cooksto").setText(this.cooksTo));
 		return root;
 	}
 

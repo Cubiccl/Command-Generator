@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -136,4 +137,13 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 		return this;
 	}
 
+	public boolean verify()
+	{
+		if (this.condition == Condition.RANDOM_CHANCE || this.condition == Condition.RANDOM_CHANCE_WITH_LOOTING)
+		{
+			for (Tag t : this.tags)
+				if (t.template == Tags.LT_CONDITION_CHANCE && Math.random() <= ((TagBigNumber) t).value()) return false;
+		}
+		return true;
+	}
 }

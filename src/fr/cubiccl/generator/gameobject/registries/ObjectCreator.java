@@ -217,6 +217,7 @@ public class ObjectCreator
 					i.hasDurability = true;
 				} else i = new Item(idInt, idString);
 				if (item.getChild("texture") != null) i.textureType = Integer.parseInt(item.getChildText("texture"));
+				if (item.getChild("cooksto") != null) i.cooksTo = item.getChildText("cooksto");
 			}
 
 		}
