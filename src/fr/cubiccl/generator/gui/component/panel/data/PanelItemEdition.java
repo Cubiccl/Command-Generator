@@ -12,7 +12,6 @@ import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.Utils;
 
 public class PanelItemEdition extends CGPanel implements ActionListener
 {
@@ -69,19 +68,21 @@ public class PanelItemEdition extends CGPanel implements ActionListener
 	{
 		if (e.getSource() == this.buttonMaxDamage)
 		{
-			this.item.setMaxDamage(Integer.parseInt(Dialogs.showInputDialog("New max data?", Integer.toString(this.item.damage.length - 1))));
+			this.item.setMaxDamage(Integer.parseInt(Dialogs.showInputDialog("New max data?", Integer.toString(this.item.getMaxDamage()))));
 		}
 		if (e.getSource() == this.buttonDamage) try
 		{
-			String d = Integer.toString(this.item.damage[0]);
-			for (int i = 1; i < this.item.damage.length; ++i)
-				d += " " + this.item.damage[i];
+			int[] damage = this.item.getDamageValues();
+			String d = Integer.toString(damage[0]);
+			for (int i = 1; i < damage.length; ++i)
+				d += " " + damage[i];
 			d = Dialogs.showInputDialog("New data values? Separate with spaces", d);
 			if (d == null) return;
 			String[] values = d.split(" ");
-			this.item.damage = new int[values.length];
+			damage = new int[values.length];
 			for (int i = 0; i < values.length; ++i)
-				this.item.damage[i] = Integer.parseInt(values[i]);
+				damage[i] = Integer.parseInt(values[i]);
+			this.item.setDamageCustom(damage);
 		} catch (Exception e2)
 		{}
 		if (e.getSource() == this.buttonTexture) try
@@ -91,11 +92,10 @@ public class PanelItemEdition extends CGPanel implements ActionListener
 		{}
 		if (e.getSource() == this.buttonDurability) try
 		{
-			int d = Integer.parseInt(Dialogs.showInputDialog("New durability? -1 for no durability", Integer.toString(this.item.damage.length - 1)));
+			int d = Integer.parseInt(Dialogs.showInputDialog("New durability? -1 for no durability", Integer.toString(this.item.getDurability())));
 			this.item.hasDurability = d >= 0;
-			if (this.item.hasDurability) this.item.damage = Utils.generateArray(d);
-			else this.item.damage = new int[]
-			{ 0 };
+			if (this.item.hasDurability) this.item.setDurability(d);
+			else this.item.setMaxDamage(0);
 		} catch (Exception e2)
 		{}
 		if (e.getSource() == this.buttonCustom) try
@@ -117,12 +117,13 @@ public class PanelItemEdition extends CGPanel implements ActionListener
 		if (this.item.hasDurability) this.labelDamage.setText("Data value max: 0");
 		else if (this.item.isDamageCustom())
 		{
-			String d = Integer.toString(this.item.damage[0]);
-			for (int i = 1; i < this.item.damage.length; ++i)
-				d += ", " + this.item.damage[i];
+			int[] damage = this.item.getDamageValues();
+			String d = Integer.toString(damage[0]);
+			for (int i = 1; i < damage.length; ++i)
+				d += ", " + damage[i];
 			this.labelDamage.setText("Data values: " + d);
-		} else this.labelDamage.setText("Data value max: " + (this.item.damage.length - 1));
-		this.labelDurability.setText(this.item.hasDurability ? "Durability: " + (this.item.damage.length - 1) : "No durability");
+		} else this.labelDamage.setText("Data value max: " + (this.item.getMaxDamage()));
+		this.labelDurability.setText(this.item.hasDurability ? "Durability: " + this.item.getDurability() : "No durability");
 		this.labelTexture.setText("Texture type: " + this.item.textureType);
 		this.labelCustom.setText("Custom item type: " + this.item.customObjectName);
 	}

@@ -14,7 +14,7 @@ container.size
 
 ------------------------- VERSION 2.3.1 -------------------------
 ADDITIONS
-- Added a bunch of Help buttons to describe what the Commands to exactly.
+- Added a bunch of Help buttons to describe what the Commands do exactly.
 
 BUGS FIXED
 - Objective name would not show in /scoreboard objectives enable.

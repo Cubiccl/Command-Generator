@@ -16,10 +16,8 @@ public class ItemRegistry extends ObjectRegistry<Item>
 		for (Item i : this.registry.values())
 		{
 			i.mainName().toString();
-			if (!i.hasDurability) for (int d : i.damage)
-			{
+			if (!i.hasDurability) for (int d : i.getDamageValues())
 				i.name(d).toString();
-			}
 		}
 	}
 
@@ -28,7 +26,7 @@ public class ItemRegistry extends ObjectRegistry<Item>
 	{
 		for (Item i : this.registry.values())
 			if (i.hasDurability) i.texture(0);
-			else for (int d : i.damage)
+			else for (int d : i.getDamageValues())
 				i.texture(d);
 	}
 

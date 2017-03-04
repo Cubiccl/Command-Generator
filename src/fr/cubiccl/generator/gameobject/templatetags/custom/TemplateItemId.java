@@ -35,15 +35,7 @@ public class TemplateItemId extends TemplateString
 			previous = ObjectRegistry.blocks.find(((TagString) previousValue).value());
 			p.setSelected(previous);
 		}
-		if (this.damage != -1)
-		{
-			for (int i = 0; i < previous.damage.length; ++i)
-				if (previous.damage[i] == this.damage)
-				{
-					p.setDamage(i);
-					break;
-				}
-		}
+		if (this.damage != -1 && previous.isDamageValid(this.damage)) p.setDamage(this.damage);
 		return p;
 	}
 

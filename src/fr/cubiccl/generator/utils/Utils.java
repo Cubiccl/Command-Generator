@@ -161,6 +161,7 @@ public final class Utils
 
 	public static int[] generateArray(int maxValue)
 	{
+		if (maxValue < 0) return new int[0];
 		return generateArray(0, maxValue);
 	}
 

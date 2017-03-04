@@ -62,7 +62,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		gbc.gridwidth = 3;
 		this.add((this.spinnerAmount = new CGSpinner("item.amount", Utils.generateArray(1, 64))).container, gbc);
 		++gbc.gridy;
-		this.add((this.spinnerDurability = new CGSpinner("item.durability", this.item.damage)).container, gbc);
+		this.add((this.spinnerDurability = new CGSpinner("item.durability", Utils.generateArray(this.item.getDurability()))).container, gbc);
 		++gbc.gridy;
 		this.panelTags = new PanelTags("item.tags", Tag.ITEM);
 		if (hasNBT) this.add(this.panelTags, gbc);
@@ -88,8 +88,9 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 			PanelItemSelection p = new PanelItemSelection(this.hasData);
 			p.setItems(this.availableItems);
 			p.setSelected(this.item);
-			for (int i = 0; i < this.item.damage.length; ++i)
-				if (this.item.damage[i] == this.damage)
+			int[] damage = this.item.getDamageValues();
+			for (int i = 0; i < damage.length; ++i)
+				if (damage[i] == this.damage)
 				{
 					p.setDamage(i);
 					break;
@@ -131,8 +132,8 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 
 	public void setDamage(int damage)
 	{
-		if (this.item.hasDurability && this.item.isDataValid(damage)) this.spinnerDurability.setText(Integer.toString(damage));
-		else if (this.item.isDataValid(damage))
+		if (this.item.hasDurability && this.item.isDamageValid(damage)) this.spinnerDurability.setText(Integer.toString(damage));
+		else if (this.item.isDamageValid(damage))
 		{
 			this.damage = damage;
 			this.updateDisplay();
@@ -184,9 +185,9 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 			}
 		if (!found) return;
 		this.item = item;
-		this.damage = this.item.damage[0];
+		this.damage = this.item.getDamageValues()[0];
 		this.panelTags.setTargetObject(this.item);
-		this.spinnerDurability.setValues(this.item.damage);
+		this.spinnerDurability.setValues(Utils.generateArray(this.item.getDurability()));
 		this.updateDisplay();
 	}
 

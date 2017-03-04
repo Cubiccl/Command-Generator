@@ -53,7 +53,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 		++gbc.gridx;
 		p.add((this.comboboxBlock = new ObjectCombobox<Block>(this.blocks)).container, gbc);
 		++gbc.gridx;
-		p.add((this.spinnerDamage = new CGSpinner("block.data", this.blocks[0].damage)).container, gbc);
+		p.add((this.spinnerDamage = new CGSpinner("block.data", this.blocks[0].getDamageValues())).container, gbc);
 		++gbc.gridx;
 		p.add(this.labelImage = new ImageLabel(), gbc);
 		++gbc.gridx;
@@ -99,7 +99,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 			{
 				int newObject = damage + objectCount;
 				if (newObject < 0) newObject = 0;
-				else if (newObject >= selectedBlock().damage.length) newObject = selectedBlock().damage.length - 1;
+				else if (newObject >= selectedBlock().getDamageValues().length) newObject = selectedBlock().getDamageValues().length - 1;
 				this.selectObject(newObject);
 			}
 
@@ -112,7 +112,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 			@Override
 			public void selectObject(int objectIndex)
 			{
-				if (objectIndex >= 0 && objectIndex < selectedBlock().damage.length) setDamage(objectIndex);
+				if (objectIndex >= 0 && objectIndex < selectedBlock().getDamageValues().length) setDamage(objectIndex);
 			}
 		}), gbc);
 
@@ -183,8 +183,8 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 
 	public int selectedDamage()
 	{
-		if (!this.hasData) return this.selectedBlock().damage[0];
-		return this.selectedBlock().damage[this.damage];
+		if (!this.hasData) return this.selectedBlock().getDamageValues()[0];
+		return this.selectedBlock().getDamageValues()[this.damage];
 	}
 
 	public void setBlocks(Block... blocks)
@@ -221,14 +221,15 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 	private void setSelected(int selected, boolean sendUpdates)
 	{
 		this.selected = selected;
+		int[] damage =this.selectedBlock().getDamageValues();
 		if (sendUpdates) this.comboboxBlock.setSelectedItem(this.selectedBlock().id());
-		this.spinnerDamage.setValues(this.selectedBlock().damage);
+		this.spinnerDamage.setValues(damage);
 		this.blockSelector.repaint();
 
-		BufferedImage[] images = new BufferedImage[this.selectedBlock().damage.length];
+		BufferedImage[] images = new BufferedImage[damage.length];
 		for (int i = 0; i < images.length; i++)
-			images[i] = this.selectedBlock().texture(this.selectedBlock().damage[i]);
-		this.setDamage(Math.min(this.damage, this.selectedBlock().damage.length - 1));
+			images[i] = this.selectedBlock().texture(damage[i]);
+		this.setDamage(Math.min(this.damage, damage.length - 1));
 		this.damageSelector.setImages(images);
 		this.updateDisplay();
 	}

@@ -63,19 +63,21 @@ public class PanelBlockEdition extends CGPanel implements ActionListener
 	{
 		if (e.getSource() == this.buttonMaxDamage)
 		{
-			this.block.setMaxDamage(Integer.parseInt(Dialogs.showInputDialog("New max data?", Integer.toString(this.block.damage.length - 1))));
+			this.block.setMaxDamage(Integer.parseInt(Dialogs.showInputDialog("New max data?", Integer.toString(this.block.getMaxDamage()))));
 		}
 		if (e.getSource() == this.buttonDamage) try
 		{
-			String d = Integer.toString(this.block.damage[0]);
-			for (int i = 1; i < this.block.damage.length; ++i)
-				d += " " + this.block.damage[i];
+			int[] damage = this.block.getDamageValues();
+			String d = Integer.toString(damage[0]);
+			for (int i = 1; i < damage.length; ++i)
+				d += " " + damage[i];
 			d = Dialogs.showInputDialog("New data values? Separate with spaces", d);
 			if (d == null) return;
 			String[] values = d.split(" ");
-			this.block.damage = new int[values.length];
+			damage = new int[values.length];
 			for (int i = 0; i < values.length; ++i)
-				this.block.damage[i] = Integer.parseInt(values[i]);
+				damage[i] = Integer.parseInt(values[i]);
+			this.block.setDamageCustom(damage);
 		} catch (Exception e2)
 		{}
 		if (e.getSource() == this.buttonTexture) try
@@ -101,11 +103,12 @@ public class PanelBlockEdition extends CGPanel implements ActionListener
 	{
 		if (this.block.isDamageCustom())
 		{
-			String d = Integer.toString(this.block.damage[0]);
-			for (int i = 1; i < this.block.damage.length; ++i)
-				d += ", " + this.block.damage[i];
+			int[] damage = this.block.getDamageValues();
+			String d = Integer.toString(damage[0]);
+			for (int i = 1; i < damage.length; ++i)
+				d += ", " + damage[i];
 			this.labelDamage.setText("Data values: " + d);
-		} else this.labelDamage.setText("Data value max: " + (this.block.damage.length - 1));
+		} else this.labelDamage.setText("Data value max: " + this.block.getMaxDamage());
 		this.labelTexture.setText("Texture type: " + this.block.textureType);
 		this.labelCustom.setText("Custom block type: " + this.block.customObjectName);
 	}

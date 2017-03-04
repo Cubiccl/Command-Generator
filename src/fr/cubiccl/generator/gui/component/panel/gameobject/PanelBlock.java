@@ -73,8 +73,9 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		{
 			PanelBlockSelection p = new PanelBlockSelection(this.hasData);
 			p.setSelected(this.block);
-			for (int i = 0; i < this.block.damage.length; ++i)
-				if (this.block.damage[i] == this.damage)
+			int[] damage = this.block.getDamageValues();
+			for (int i = 0; i < damage.length; ++i)
+				if (damage[i] == this.damage)
 				{
 					p.setDamage(i);
 					break;
@@ -119,7 +120,7 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 
 	public void setData(int data)
 	{
-		if (this.hasData && data >= 0 && this.block.isDataValid(data)) this.damage = data;
+		if (this.hasData && data >= 0 && this.block.isDamageValid(data)) this.damage = data;
 		this.updateDisplay();
 	}
 

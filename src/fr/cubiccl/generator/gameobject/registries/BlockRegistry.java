@@ -16,10 +16,8 @@ public class BlockRegistry extends ObjectRegistry<Block>
 		for (Block b : this.registry.values())
 		{
 			b.mainName().toString();
-			for (int d : b.damage)
-			{
+			for (int d : b.getDamageValues())
 				b.name(d).toString();
-			}
 		}
 	}
 
@@ -27,7 +25,7 @@ public class BlockRegistry extends ObjectRegistry<Block>
 	public void loadTextures()
 	{
 		for (Block b : this.registry.values())
-			for (int d : b.damage)
+			for (int d : b.getDamageValues())
 				b.texture(d);
 	}
 

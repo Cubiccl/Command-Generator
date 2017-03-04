@@ -16,7 +16,8 @@ Successfully created 185 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
-Switching to Data mode.
-Switching to Loot Tables mode.
-Switching to Data mode.
+Generating !
+Successfully generated : give @a minecraft:diamond_shovel 1 1562 {}
+Generating !
+Successfully generated : give @a minecraft:nether_wart_block 2 0 {}
 Exiting Command Generator... Bye bye !

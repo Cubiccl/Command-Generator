@@ -23,6 +23,19 @@ public class Item extends BlockItem
 		super(ITEM, idInt, idString, damage);
 	}
 
+	@Override
+	public int[] getDamageValues()
+	{
+		if (this.hasDurability) return new int[]
+		{ 0 };
+		return super.getDamageValues();
+	}
+
+	public int getDurability()
+	{
+		return this.getMaxDamage();
+	}
+
 	public Text name(int damage)
 	{
 		if (this.hasDurability) return this.name(this.id());

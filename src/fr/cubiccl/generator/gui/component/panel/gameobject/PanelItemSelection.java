@@ -53,7 +53,7 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 		++gbc.gridx;
 		p.add((this.comboboxItem = new ObjectCombobox<Item>(this.items)).container, gbc);
 		++gbc.gridx;
-		p.add((this.spinnerDamage = new CGSpinner("item.data", this.items[0].damage)).container, gbc);
+		p.add((this.spinnerDamage = new CGSpinner("item.data", this.items[0].getDamageValues())).container, gbc);
 		++gbc.gridx;
 		p.add(this.labelImage = new ImageLabel(), gbc);
 		++gbc.gridx;
@@ -99,7 +99,7 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 			{
 				int newObject = damage + objectCount;
 				if (newObject < 0) newObject = 0;
-				else if (newObject >= selectedItem().damage.length) newObject = selectedItem().damage.length - 1;
+				else if (newObject >= selectedItem().getDamageValues().length) newObject = selectedItem().getDamageValues().length - 1;
 				this.selectObject(newObject);
 			}
 
@@ -112,7 +112,7 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 			@Override
 			public void selectObject(int objectIndex)
 			{
-				if (objectIndex >= 0 && objectIndex < selectedItem().damage.length) setDamage(objectIndex);
+				if (objectIndex >= 0 && objectIndex < selectedItem().getDamageValues().length) setDamage(objectIndex);
 			}
 		}), gbc);
 
@@ -178,8 +178,8 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 
 	public int selectedDamage()
 	{
-		if (!this.hasData) return this.selectedItem().damage[0];
-		return this.selectedItem().damage[this.damage];
+		if (!this.hasData) return this.selectedItem().getDamageValues()[0];
+		return this.selectedItem().getDamageValues()[this.damage];
 	}
 
 	public Item selectedItem()
@@ -211,15 +211,16 @@ public class PanelItemSelection extends ConfirmPanel implements ComponentListene
 	public void setSelected(int selected, boolean sendUpdates)
 	{
 		this.selected = selected;
+		int[] damage = this.selectedItem().getDamageValues();
 		if (sendUpdates) this.comboboxItem.setSelectedItem(this.selectedItem().id());
-		this.spinnerDamage.setValues(this.selectedItem().damage);
+		this.spinnerDamage.setValues(damage);
 		this.itemSelector.repaint();
 
-		BufferedImage[] images = new BufferedImage[this.selectedItem().hasDurability ? 1 : this.selectedItem().damage.length];
+		BufferedImage[] images = new BufferedImage[damage.length];
 		for (int i = 0; i < images.length; i++)
-			images[i] = this.selectedItem().texture(this.selectedItem().damage[i]);
+			images[i] = this.selectedItem().texture(damage[i]);
 		this.damageSelector.setImages(images);
-		this.setDamage(Math.min(this.damage, this.selectedItem().damage.length - 1));
+		this.setDamage(Math.min(this.damage, damage.length - 1));
 		this.updateDisplay();
 	}
 

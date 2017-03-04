@@ -64,7 +64,7 @@ public class CommandGenerator
 		if (Settings.testMode)
 		{
 			untranslated.sort(Comparator.naturalOrder());
-			FileUtils.saveXMLFile(ObjectRegistry.allToXML(), "data/1.11");
+			FileUtils.saveXMLFile(ObjectRegistry.allToXML(), "data/" + Settings.version().name);
 			FileUtils.writeToFile("untranslated.txt", untranslated.toArray(new String[untranslated.size()]));
 		}
 		log("Log, settings and custom objects save successful.");

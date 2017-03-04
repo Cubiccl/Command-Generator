@@ -1,4 +1,0 @@
-block.stone_sign
-block.stone_sign
-block.stone_sign
-block.stone_sign
