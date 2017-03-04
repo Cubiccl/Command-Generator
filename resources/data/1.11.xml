@@ -1394,93 +1394,35 @@
     <effect idint="27" idstr="unluck" />
   </effects>
   <enchantments>
-    <enchantment idint="1" idstr="fire_protection">
-      <maxlevel>4</maxlevel>
-    </enchantment>
-    <enchantment idint="2" idstr="feather_falling">
-      <maxlevel>4</maxlevel>
-    </enchantment>
-    <enchantment idint="3" idstr="blast_protection">
-      <maxlevel>4</maxlevel>
-    </enchantment>
-    <enchantment idint="4" idstr="projectile_protection">
-      <maxlevel>4</maxlevel>
-    </enchantment>
-    <enchantment idint="5" idstr="respiration">
-      <maxlevel>3</maxlevel>
-    </enchantment>
-    <enchantment idint="6" idstr="aqua_affinity">
-      <maxlevel>1</maxlevel>
-    </enchantment>
-    <enchantment idint="7" idstr="thorns">
-      <maxlevel>3</maxlevel>
-    </enchantment>
-    <enchantment idint="8" idstr="depth_strider">
-      <maxlevel>3</maxlevel>
-    </enchantment>
-    <enchantment idint="9" idstr="frost_walker">
-      <maxlevel>2</maxlevel>
-    </enchantment>
-    <enchantment idint="10" idstr="binding_curse">
-      <maxlevel>1</maxlevel>
-    </enchantment>
-    <enchantment idint="16" idstr="sharpness">
-      <maxlevel>5</maxlevel>
-    </enchantment>
-    <enchantment idint="17" idstr="smite">
-      <maxlevel>5</maxlevel>
-    </enchantment>
-    <enchantment idint="18" idstr="bane_of_arthropods">
-      <maxlevel>5</maxlevel>
-    </enchantment>
-    <enchantment idint="19" idstr="knockback">
-      <maxlevel>2</maxlevel>
-    </enchantment>
-    <enchantment idint="20" idstr="fire_aspect">
-      <maxlevel>2</maxlevel>
-    </enchantment>
-    <enchantment idint="21" idstr="looting">
-      <maxlevel>3</maxlevel>
-    </enchantment>
-    <enchantment idint="22" idstr="sweeping_edge">
-      <maxlevel>3</maxlevel>
-    </enchantment>
-    <enchantment idint="32" idstr="efficiency">
-      <maxlevel>5</maxlevel>
-    </enchantment>
-    <enchantment idint="33" idstr="silk_touch">
-      <maxlevel>1</maxlevel>
-    </enchantment>
-    <enchantment idint="34" idstr="unbreaking">
-      <maxlevel>3</maxlevel>
-    </enchantment>
-    <enchantment idint="35" idstr="fortune">
-      <maxlevel>3</maxlevel>
-    </enchantment>
-    <enchantment idint="48" idstr="power">
-      <maxlevel>5</maxlevel>
-    </enchantment>
-    <enchantment idint="49" idstr="punch">
-      <maxlevel>2</maxlevel>
-    </enchantment>
-    <enchantment idint="50" idstr="flame">
-      <maxlevel>1</maxlevel>
-    </enchantment>
-    <enchantment idint="51" idstr="infinity">
-      <maxlevel>1</maxlevel>
-    </enchantment>
-    <enchantment idint="61" idstr="luck_of_the_sea">
-      <maxlevel>3</maxlevel>
-    </enchantment>
-    <enchantment idint="62" idstr="lure">
-      <maxlevel>3</maxlevel>
-    </enchantment>
-    <enchantment idint="70" idstr="mending">
-      <maxlevel>1</maxlevel>
-    </enchantment>
-    <enchantment idint="71" idstr="vanishing_curse">
-      <maxlevel>1</maxlevel>
-    </enchantment>
+    <enchantment idint="1" idstr="fire_protection" maxlevel="4" />
+    <enchantment idint="2" idstr="feather_falling" maxlevel="4" />
+    <enchantment idint="3" idstr="blast_protection" maxlevel="4" />
+    <enchantment idint="4" idstr="projectile_protection" maxlevel="4" />
+    <enchantment idint="5" idstr="respiration" maxlevel="3" />
+    <enchantment idint="6" idstr="aqua_affinity" maxlevel="1" />
+    <enchantment idint="7" idstr="thorns" maxlevel="3" />
+    <enchantment idint="8" idstr="depth_strider" maxlevel="3" />
+    <enchantment idint="9" idstr="frost_walker" maxlevel="2" />
+    <enchantment idint="10" idstr="binding_curse" maxlevel="1" />
+    <enchantment idint="16" idstr="sharpness" maxlevel="5" />
+    <enchantment idint="17" idstr="smite" maxlevel="5" />
+    <enchantment idint="18" idstr="bane_of_arthropods" maxlevel="5" />
+    <enchantment idint="19" idstr="knockback" maxlevel="2" />
+    <enchantment idint="20" idstr="fire_aspect" maxlevel="2" />
+    <enchantment idint="21" idstr="looting" maxlevel="3" />
+    <enchantment idint="22" idstr="sweeping_edge" maxlevel="3" />
+    <enchantment idint="32" idstr="efficiency" maxlevel="5" />
+    <enchantment idint="33" idstr="silk_touch" maxlevel="1" />
+    <enchantment idint="34" idstr="unbreaking" maxlevel="3" />
+    <enchantment idint="35" idstr="fortune" maxlevel="3" />
+    <enchantment idint="48" idstr="power" maxlevel="5" />
+    <enchantment idint="49" idstr="punch" maxlevel="2" />
+    <enchantment idint="50" idstr="flame" maxlevel="1" />
+    <enchantment idint="51" idstr="infinity" maxlevel="1" />
+    <enchantment idint="61" idstr="luck_of_the_sea" maxlevel="3" />
+    <enchantment idint="62" idstr="lure" maxlevel="3" />
+    <enchantment idint="70" idstr="mending" maxlevel="1" />
+    <enchantment idint="71" idstr="vanishing_curse" maxlevel="1" />
   </enchantments>
   <achievements>
     <achievement id="acquireIron" item="iron_ingot" />

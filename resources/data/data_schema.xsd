@@ -122,11 +122,9 @@
 
 	<xs:element name="enchantment">
 		<xs:complexType>
-			<xs:sequence>
-				<xs:element name="maxlevel" type="idint" />
-			</xs:sequence>
 			<xs:attribute name="idint" type="idint" use="required" />
 			<xs:attribute name="idstring" type="idstring" use="required" />
+			<xs:attribute name="maxlevel" type="idint" use="required" />
 		</xs:complexType>
 	</xs:element>
 

@@ -178,7 +178,7 @@ public class ObjectCreator
 		for (Element enchant : enchants.getChildren())
 		{
 			new EnchantmentType(Integer.parseInt(enchant.getAttributeValue("idint")), enchant.getAttributeValue("idstr"), Integer.parseInt(enchant
-					.getChildText("maxlevel")));
+					.getAttributeValue("maxlevel")));
 		}
 		CommandGenerator.log("Successfully created " + ObjectRegistry.enchantments.size() + " enchantments.");
 	}
@@ -232,6 +232,7 @@ public class ObjectCreator
 		for (Element list : lists.getChildren())
 		{
 			String id = list.getAttributeValue("id");
+			ObjectRegistry.createList(id);
 			for (Element object : list.getChildren())
 				ObjectRegistry.addToLists(object.getText(), id);
 		}
