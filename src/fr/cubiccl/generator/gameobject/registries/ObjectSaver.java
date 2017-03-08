@@ -118,6 +118,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		ObjectSaver saver : savers)
 			saver.reset();
 		commands.reset();
+		lootTables.reset();
 	}
 
 	public static void save()

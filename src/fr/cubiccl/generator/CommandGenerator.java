@@ -64,7 +64,7 @@ public class CommandGenerator
 		if (Settings.testMode)
 		{
 			untranslated.sort(Comparator.naturalOrder());
-			FileUtils.saveXMLFile(ObjectRegistry.allToXML(), "data/" + Settings.version().name);
+			saveVersion();
 			FileUtils.writeToFile("untranslated.txt", untranslated.toArray(new String[untranslated.size()]));
 		}
 		log("Log, settings and custom objects save successful.");
@@ -199,6 +199,11 @@ public class CommandGenerator
 		log("Error : " + e.getMessage());
 	}
 
+	private static void saveVersion()
+	{
+		FileUtils.saveXMLFile(ObjectRegistry.allToXML(), "data/" + Settings.version().codeName);
+	}
+
 	public static Command selectedCommand()
 	{
 		return selected;
@@ -227,12 +232,15 @@ public class CommandGenerator
 
 	public static void updateData()
 	{
+		log("---- VERSION : " + Settings.version().name + " ----");
 		log("---- Creating objects ----");
 
 		LoadingFrame frame = new LoadingFrame(5);
 		ObjectCreator.createObjects(frame);
 		Commands.createCommands(frame);
 		ObjectSaver.load();
+		if (selected != null) setSelected(selected);
+		if (window != null) window.updateTitle();
 		frame.dispose();
 	}
 

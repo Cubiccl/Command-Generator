@@ -9,14 +9,14 @@ import javax.swing.JPanel;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.combobox.CGComboBox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.utils.IStateListener;
-import fr.cubiccl.generator.utils.Settings;
+import fr.cubiccl.generator.utils.*;
 import fr.cubiccl.generator.utils.Settings.Language;
-import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.Settings.Version;
 
 public class PanelSettings extends ConfirmPanel implements IStateListener<PanelSettings>
 {
@@ -25,17 +25,22 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 	private CGRadioButton buttonIndentYes, buttonIndentNo;
 	private CGRadioButton buttonSlashYes, buttonSlashNo;
 	private CGRadioButton buttonSortID, buttonSortName;
-	private CGComboBox comboboxLanguage;
+	private CGComboBox comboboxLanguage, comboboxVersion;
 	private Language[] languages;
+	private Version[] versions;
 
 	public PanelSettings()
 	{
 		super("settings.title", null);
 		this.languages = Language.getLanguages();
+		this.versions = Version.getVersions();
 		this.buttonOK.setText(new Text("settings.save"));
 		String[] langs = new String[this.languages.length];
 		for (int i = 0; i < langs.length; ++i)
 			langs[i] = this.languages[i].name;
+		String[] vs = new String[this.versions.length];
+		for (int i = 0; i < vs.length; ++i)
+			vs[i] = this.versions[i].name;
 
 		CGPanel panelSlash = new CGPanel("settings.slash.title");
 		GridBagConstraints gbc = panelSlash.createGridBagLayout();
@@ -70,6 +75,9 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 		CGPanel panelLang = new CGPanel("settings.lang");
 		panelLang.add(this.comboboxLanguage = new CGComboBox(langs));
 
+		CGPanel panelVersion = new CGPanel("settings.version");
+		panelVersion.add(this.comboboxVersion = new CGComboBox(vs));
+
 		CGPanel panelMain = new CGPanel();
 		gbc = panelMain.createGridBagLayout();
 		panelMain.add(panelSlash, gbc);
@@ -79,6 +87,8 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 		panelMain.add(panelIndent, gbc);
 		++gbc.gridy;
 		panelMain.add(panelLang, gbc);
+		++gbc.gridy;
+		panelMain.add(panelVersion, gbc);
 		this.setMainComponent(panelMain);
 
 		ButtonGroup group = new ButtonGroup();
@@ -100,23 +110,37 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 		this.buttonIndentNo.setSelected(!Boolean.parseBoolean(Settings.getSetting(Settings.INDENTATION)));
 
 		this.comboboxLanguage.setSelectedItem(Settings.language().name);
+		this.comboboxVersion.setSelectedItem(Settings.version().name);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonCancel) CommandGenerator.window.menubar.toggleMenu(true);
-		super.actionPerformed(e);
+		if (e.getSource() == this.buttonCancel) CommandGenerator.stateManager.clearState(false);
+		if (e.getSource() == this.buttonOK)
+		{
+			Version v = Settings.version(), v2 = this.versions[this.comboboxVersion.getSelectedIndex()];
+			if (v != v2)
+			{
+				if (!Dialogs.showConfirmMessage(new Text("settings.version.confirm").toString(), new Text("general.yes").toString(),
+						new Text("general.no").toString())) return;
+				Settings.setSetting(Settings.MINECRAFT_VERSION, v2.codeName);
+			}
+			Settings.setSetting(Settings.INDENTATION, Boolean.toString(this.buttonIndentYes.isSelected()));
+			Settings.setSetting(Settings.SLASH, Boolean.toString(this.buttonSlashYes.isSelected()));
+			Settings.setSetting(Settings.SORT_TYPE,
+					Byte.toString(this.buttonSortID.isSelected() ? ObjectRegistry.SORT_ALPHABETICALLY : ObjectRegistry.SORT_NAME));
+			Settings.setSetting(Settings.LANG, this.languages[this.comboboxLanguage.getSelectedIndex()].codeName);
+			if (v == v2) CommandGenerator.stateManager.clearState(false);
+		}
+		
+		if (e.getSource() == this.buttonOK || e.getSource() == this.buttonCancel)
+			CommandGenerator.window.menubar.toggleMenu(true);
 	}
 
 	@Override
 	public boolean shouldStateClose(PanelSettings panel)
 	{
-		Settings.setSetting(Settings.INDENTATION, Boolean.toString(this.buttonIndentYes.isSelected()));
-		Settings.setSetting(Settings.SLASH, Boolean.toString(this.buttonSlashYes.isSelected()));
-		Settings.setSetting(Settings.SORT_TYPE, Byte.toString(this.buttonSortID.isSelected() ? ObjectRegistry.SORT_ALPHABETICALLY : ObjectRegistry.SORT_NAME));
-		Settings.setSetting(Settings.LANG, this.languages[this.comboboxLanguage.getSelectedIndex()].codeName);
-		CommandGenerator.window.menubar.toggleMenu(true);
 		return true;
 	}
 

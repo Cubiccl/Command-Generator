@@ -239,9 +239,8 @@ public class ObjectCreator
 	{
 		frame.setText("loading.objects");
 		ObjectRegistry.resetAll();
-		Element data = FileUtils.readXMLFile("data/" + Settings.version().name);
+		Element data = FileUtils.readXMLFile("data/" + Settings.version().codeName);
 
-		// removePrevious(toRemove.toArray(new String[toRemove.size()]));
 		createBlocks(data.getChild("blocks"));
 		createItems(data.getChild("items"));
 		createEntities(data.getChild("entities"));

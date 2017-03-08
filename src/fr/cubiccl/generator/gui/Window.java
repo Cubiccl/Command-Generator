@@ -22,7 +22,9 @@ import fr.cubiccl.generator.gui.component.panel.PanelCommandSelection;
 import fr.cubiccl.generator.gui.component.panel.data.PanelObjectSelection;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelLootTableOutput;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelLootTableSelection;
+import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Settings;
+import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
 
 public class Window extends JFrame implements ComponentListener, ITranslated, WindowListener
@@ -40,7 +42,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 
 	public Window()
 	{
-		super("Command Generator v" + Settings.GENERATOR_VERSION);
+		super();
 		this.setSize(800, 600);
 		this.setMinimumSize(new Dimension(800, 400));
 		this.setLocationRelativeTo(null);
@@ -51,6 +53,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.addComponentListener(this);
 		this.addWindowListener(this);
 		this.setIconImage(Textures.getTexture("gui.icon"));
+		this.updateTitle();
 	}
 
 	@Override
@@ -153,6 +156,12 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.onResized();
 	}
 
+	public void updateTitle()
+	{
+		this.setTitle(new Text("general.title", new Replacement("<gen>", Settings.GENERATOR_VERSION), new Replacement("<mc>", Settings.version().name))
+				.toString());
+	}
+
 	@Override
 	public void updateTranslations()
 	{
@@ -160,6 +169,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.panelCommandSelection.updateTranslations();
 		this.menubar.updateTranslations();
 		if (this.panelGui != null) this.panelGui.updateTranslations();
+		this.updateTitle();
 	}
 
 	@Override

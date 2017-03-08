@@ -586,6 +586,60 @@
     <block idint="234" idstr="black_shulker_box">
       <customblock>Facing</customblock>
     </block>
+    <block idint="235" idstr="white_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="236" idstr="orange_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="237" idstr="magenta_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="238" idstr="light_blue_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="239" idstr="yellow_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="240" idstr="lime_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="241" idstr="pink_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="242" idstr="gray_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="243" idstr="silver_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="244" idstr="cyan_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="245" idstr="purple_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="246" idstr="blue_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="247" idstr="brown_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="248" idstr="green_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="249" idstr="red_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="250" idstr="black_glazed_terracotta">
+      <customblock>Terracotta</customblock>
+    </block>
+    <block idint="251" idstr="concrete">
+      <customblock>Stained</customblock>
+    </block>
+    <block idint="252" idstr="concrete_powder">
+      <customblock>Stained</customblock>
+    </block>
     <block idint="255" idstr="structure_block">
       <maxdamage>3</maxdamage>
     </block>
@@ -838,6 +892,44 @@
     <item idint="216" idstr="bone_block" />
     <item idint="217" idstr="structure_void" />
     <item idint="218" idstr="observer" />
+    <item idint="219" idstr="white_shulker_box" />
+    <item idint="220" idstr="orange_shulker_box" />
+    <item idint="221" idstr="magenta_shulker_box" />
+    <item idint="222" idstr="light_blue_shulker_box" />
+    <item idint="223" idstr="yellow_shulker_box" />
+    <item idint="224" idstr="lime_shulker_box" />
+    <item idint="225" idstr="pink_shulker_box" />
+    <item idint="226" idstr="gray_shulker_box" />
+    <item idint="227" idstr="silver_shulker_box" />
+    <item idint="228" idstr="cyan_shulker_box" />
+    <item idint="229" idstr="purple_shulker_box" />
+    <item idint="230" idstr="blue_shulker_box" />
+    <item idint="231" idstr="brown_shulker_box" />
+    <item idint="232" idstr="green_shulker_box" />
+    <item idint="233" idstr="red_shulker_box" />
+    <item idint="234" idstr="black_shulker_box" />
+    <item idint="235" idstr="white_glazed_terracotta" />
+    <item idint="236" idstr="orange_glazed_terracotta" />
+    <item idint="237" idstr="magenta_glazed_terracotta" />
+    <item idint="238" idstr="light_blue_glazed_terracotta" />
+    <item idint="239" idstr="yellow_glazed_terracotta" />
+    <item idint="240" idstr="lime_glazed_terracotta" />
+    <item idint="241" idstr="pink_glazed_terracotta" />
+    <item idint="242" idstr="gray_glazed_terracotta" />
+    <item idint="243" idstr="silver_glazed_terracotta" />
+    <item idint="244" idstr="cyan_glazed_terracotta" />
+    <item idint="245" idstr="purple_glazed_terracotta" />
+    <item idint="246" idstr="blue_glazed_terracotta" />
+    <item idint="247" idstr="brown_glazed_terracotta" />
+    <item idint="248" idstr="green_glazed_terracotta" />
+    <item idint="249" idstr="red_glazed_terracotta" />
+    <item idint="250" idstr="black_glazed_terracotta" />
+    <item idint="251" idstr="concrete">
+      <customitem>Stained</customitem>
+    </item>
+    <item idint="252" idstr="concrete_powder">
+      <customitem>Stained</customitem>
+    </item>
     <item idint="255" idstr="structure_block" />
     <item idint="256" idstr="iron_shovel">
       <texture>-1</texture>
@@ -3058,16 +3150,16 @@
       </applicable>
     </tag>
     <tag id="Age">
-      <type>3</type>
-      <applicable>
-        <app>list=breed</app>
-      </applicable>
-    </tag>
-    <tag id="Age">
       <type>2</type>
       <applicable>
         <app>item</app>
         <app>xp_orb</app>
+      </applicable>
+    </tag>
+    <tag id="Age">
+      <type>3</type>
+      <applicable>
+        <app>list=breed</app>
       </applicable>
     </tag>
     <tag id="Air">
@@ -4533,7 +4625,9 @@
       <object>birch_fence</object>
       <object>birch_fence_gate</object>
       <object>birch_stairs</object>
+      <object>black_glazed_terracotta</object>
       <object>black_shulker_box</object>
+      <object>blue_glazed_terracotta</object>
       <object>blue_shulker_box</object>
       <object>boat</object>
       <object>bone_block</object>
@@ -4542,6 +4636,7 @@
       <object>brewing_stand</object>
       <object>brick_block</object>
       <object>brick_stairs</object>
+      <object>brown_glazed_terracotta</object>
       <object>brown_mushroom</object>
       <object>brown_mushroom_block</object>
       <object>brown_shulker_box</object>
@@ -4567,6 +4662,8 @@
       <object>command_block</object>
       <object>command_block_minecart</object>
       <object>comparator</object>
+      <object>concrete</object>
+      <object>concrete_powder</object>
       <object>cooked_beef</object>
       <object>cooked_chicken</object>
       <object>cooked_fish</object>
@@ -4575,6 +4672,7 @@
       <object>cooked_rabbit</object>
       <object>cookie</object>
       <object>crafting_table</object>
+      <object>cyan_glazed_terracotta</object>
       <object>cyan_shulker_box</object>
       <object>dark_oak_boat</object>
       <object>dark_oak_door</object>
@@ -4640,7 +4738,9 @@
       <object>grass</object>
       <object>grass_path</object>
       <object>gravel</object>
+      <object>gray_glazed_terracotta</object>
       <object>gray_shulker_box</object>
+      <object>green_glazed_terracotta</object>
       <object>green_shulker_box</object>
       <object>hardened_clay</object>
       <object>hay_block</object>
@@ -4673,14 +4773,17 @@
       <object>leaves</object>
       <object>leaves2</object>
       <object>lever</object>
+      <object>light_blue_glazed_terracotta</object>
       <object>light_blue_shulker_box</object>
       <object>light_weighted_pressure_plate</object>
+      <object>lime_glazed_terracotta</object>
       <object>lime_shulker_box</object>
       <object>lingering_potion</object>
       <object>lit_furnace</object>
       <object>lit_pumpkin</object>
       <object>log</object>
       <object>log2</object>
+      <object>magenta_glazed_terracotta</object>
       <object>magenta_shulker_box</object>
       <object>magma</object>
       <object>map</object>
@@ -4704,9 +4807,11 @@
       <object>oak_stairs</object>
       <object>observer</object>
       <object>obsidian</object>
+      <object>orange_glazed_terracotta</object>
       <object>orange_shulker_box</object>
       <object>packed_ice</object>
       <object>painting</object>
+      <object>pink_glazed_terracotta</object>
       <object>pink_shulker_box</object>
       <object>piston</object>
       <object>planks</object>
@@ -4718,6 +4823,7 @@
       <object>pumpkin</object>
       <object>pumpkin_pie</object>
       <object>pumpkin_seeds</object>
+      <object>purple_glazed_terracotta</object>
       <object>purple_shulker_box</object>
       <object>purpur_block</object>
       <object>purpur_double_slab</object>
@@ -4743,6 +4849,7 @@
       <object>record_wait</object>
       <object>record_ward</object>
       <object>red_flower</object>
+      <object>red_glazed_terracotta</object>
       <object>red_mushroom</object>
       <object>red_mushroom_block</object>
       <object>red_nether_brick</object>
@@ -4767,6 +4874,7 @@
       <object>shears</object>
       <object>shield</object>
       <object>sign</object>
+      <object>silver_glazed_terracotta</object>
       <object>silver_shulker_box</object>
       <object>skull</object>
       <object>slime</object>
@@ -4816,6 +4924,7 @@
       <object>water_bucket</object>
       <object>waterlily</object>
       <object>web</object>
+      <object>white_glazed_terracotta</object>
       <object>white_shulker_box</object>
       <object>wooden_axe</object>
       <object>wooden_button</object>
@@ -4830,6 +4939,7 @@
       <object>writable_book</object>
       <object>written_book</object>
       <object>yellow_flower</object>
+      <object>yellow_glazed_terracotta</object>
       <object>yellow_shulker_box</object>
     </list>
     <list id="durability">
@@ -4904,8 +5014,10 @@
       <object>birch_fence</object>
       <object>birch_fence_gate</object>
       <object>birch_stairs</object>
+      <object>black_glazed_terracotta</object>
       <object>black_shulker_box</object>
       <object>blaze_powder</object>
+      <object>blue_glazed_terracotta</object>
       <object>blue_shulker_box</object>
       <object>boat</object>
       <object>bone_block</object>
@@ -4918,6 +5030,7 @@
       <object>brick</object>
       <object>brick_block</object>
       <object>brick_stairs</object>
+      <object>brown_glazed_terracotta</object>
       <object>brown_shulker_box</object>
       <object>bucket</object>
       <object>cake</object>
@@ -4934,6 +5047,7 @@
       <object>cobblestone_wall</object>
       <object>comparator</object>
       <object>compass</object>
+      <object>concrete_powder</object>
       <object>cooked_beef</object>
       <object>cooked_chicken</object>
       <object>cooked_fish</object>
@@ -4942,6 +5056,7 @@
       <object>cooked_rabbit</object>
       <object>cookie</object>
       <object>crafting_table</object>
+      <object>cyan_glazed_terracotta</object>
       <object>cyan_shulker_box</object>
       <object>dark_oak_boat</object>
       <object>dark_oak_door</object>
@@ -5004,7 +5119,9 @@
       <object>golden_rail</object>
       <object>golden_shovel</object>
       <object>golden_sword</object>
+      <object>gray_glazed_terracotta</object>
       <object>gray_shulker_box</object>
+      <object>green_glazed_terracotta</object>
       <object>green_shulker_box</object>
       <object>hardened_clay</object>
       <object>hay_block</object>
@@ -5041,11 +5158,14 @@
       <object>leather_helmet</object>
       <object>leather_leggings</object>
       <object>lever</object>
+      <object>light_blue_glazed_terracotta</object>
       <object>light_blue_shulker_box</object>
       <object>light_weighted_pressure_plate</object>
+      <object>lime_glazed_terracotta</object>
       <object>lime_shulker_box</object>
       <object>lingering_potion</object>
       <object>lit_pumpkin</object>
+      <object>magenta_glazed_terracotta</object>
       <object>magenta_shulker_box</object>
       <object>magma_cream</object>
       <object>map</object>
@@ -5062,9 +5182,11 @@
       <object>noteblock</object>
       <object>oak_stairs</object>
       <object>observer</object>
+      <object>orange_glazed_terracotta</object>
       <object>orange_shulker_box</object>
       <object>painting</object>
       <object>paper</object>
+      <object>pink_glazed_terracotta</object>
       <object>pink_shulker_box</object>
       <object>piston</object>
       <object>planks</object>
@@ -5072,6 +5194,7 @@
       <object>prismarine</object>
       <object>pumpkin_pie</object>
       <object>pumpkin_seeds</object>
+      <object>purple_glazed_terracotta</object>
       <object>purple_shulker_box</object>
       <object>purpur_block</object>
       <object>purpur_pillar</object>
@@ -5082,6 +5205,7 @@
       <object>quartz_stairs</object>
       <object>rabbit_stew</object>
       <object>rail</object>
+      <object>red_glazed_terracotta</object>
       <object>red_nether_brick</object>
       <object>red_sandstone</object>
       <object>red_sandstone_stairs</object>
@@ -5098,6 +5222,7 @@
       <object>shears</object>
       <object>shield</object>
       <object>sign</object>
+      <object>silver_glazed_terracotta</object>
       <object>silver_shulker_box</object>
       <object>slime</object>
       <object>slime_ball</object>
@@ -5138,6 +5263,7 @@
       <object>trapdoor</object>
       <object>trapped_chest</object>
       <object>tripwire_hook</object>
+      <object>white_glazed_terracotta</object>
       <object>white_shulker_box</object>
       <object>wooden_axe</object>
       <object>wooden_button</object>
@@ -5149,6 +5275,7 @@
       <object>wooden_sword</object>
       <object>wool</object>
       <object>writable_book</object>
+      <object>yellow_glazed_terracotta</object>
       <object>yellow_shulker_box</object>
     </list>
     <list id="placeable">
@@ -5171,7 +5298,9 @@
       <object>birch_fence</object>
       <object>birch_fence_gate</object>
       <object>birch_stairs</object>
+      <object>black_glazed_terracotta</object>
       <object>black_shulker_box</object>
+      <object>blue_glazed_terracotta</object>
       <object>blue_shulker_box</object>
       <object>boat</object>
       <object>bone_block</object>
@@ -5179,6 +5308,7 @@
       <object>brewing_stand</object>
       <object>brick_block</object>
       <object>brick_stairs</object>
+      <object>brown_glazed_terracotta</object>
       <object>brown_mushroom</object>
       <object>brown_mushroom_block</object>
       <object>brown_shulker_box</object>
@@ -5201,7 +5331,10 @@
       <object>command_block</object>
       <object>command_block_minecart</object>
       <object>comparator</object>
+      <object>concrete</object>
+      <object>concrete_powder</object>
       <object>crafting_table</object>
+      <object>cyan_glazed_terracotta</object>
       <object>cyan_shulker_box</object>
       <object>dark_oak_boat</object>
       <object>dark_oak_door</object>
@@ -5247,7 +5380,9 @@
       <object>grass</object>
       <object>grass_path</object>
       <object>gravel</object>
+      <object>gray_glazed_terracotta</object>
       <object>gray_shulker_box</object>
+      <object>green_glazed_terracotta</object>
       <object>green_shulker_box</object>
       <object>hardened_clay</object>
       <object>hay_block</object>
@@ -5274,13 +5409,16 @@
       <object>leaves</object>
       <object>leaves2</object>
       <object>lever</object>
+      <object>light_blue_glazed_terracotta</object>
       <object>light_blue_shulker_box</object>
       <object>light_weighted_pressure_plate</object>
+      <object>lime_glazed_terracotta</object>
       <object>lime_shulker_box</object>
       <object>lit_furnace</object>
       <object>lit_pumpkin</object>
       <object>log</object>
       <object>log2</object>
+      <object>magenta_glazed_terracotta</object>
       <object>magenta_shulker_box</object>
       <object>magma</object>
       <object>melon_block</object>
@@ -5300,9 +5438,11 @@
       <object>oak_stairs</object>
       <object>observer</object>
       <object>obsidian</object>
+      <object>orange_glazed_terracotta</object>
       <object>orange_shulker_box</object>
       <object>packed_ice</object>
       <object>painting</object>
+      <object>pink_glazed_terracotta</object>
       <object>pink_shulker_box</object>
       <object>piston</object>
       <object>planks</object>
@@ -5310,6 +5450,7 @@
       <object>prismarine</object>
       <object>pumpkin</object>
       <object>pumpkin_seeds</object>
+      <object>purple_glazed_terracotta</object>
       <object>purple_shulker_box</object>
       <object>purpur_block</object>
       <object>purpur_pillar</object>
@@ -5320,6 +5461,7 @@
       <object>quartz_stairs</object>
       <object>rail</object>
       <object>red_flower</object>
+      <object>red_glazed_terracotta</object>
       <object>red_mushroom</object>
       <object>red_mushroom_block</object>
       <object>red_nether_brick</object>
@@ -5340,6 +5482,7 @@
       <object>sapling</object>
       <object>sea_lantern</object>
       <object>sign</object>
+      <object>silver_glazed_terracotta</object>
       <object>silver_shulker_box</object>
       <object>skull</object>
       <object>slime</object>
@@ -5380,6 +5523,7 @@
       <object>waterlily</object>
       <object>web</object>
       <object>wheat_seeds</object>
+      <object>white_glazed_terracotta</object>
       <object>white_shulker_box</object>
       <object>wooden_button</object>
       <object>wooden_door</object>
@@ -5387,6 +5531,7 @@
       <object>wooden_slab</object>
       <object>wool</object>
       <object>yellow_flower</object>
+      <object>yellow_glazed_terracotta</object>
       <object>yellow_shulker_box</object>
     </list>
     <list id="breed">

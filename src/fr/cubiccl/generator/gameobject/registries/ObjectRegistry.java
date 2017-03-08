@@ -183,7 +183,7 @@ public class ObjectRegistry<T extends BaseObject>
 		particles.reset();
 		sounds.reset();
 		objectLists.clear();
-		unavailableTags.reset();
+		//unavailableTags.reset();
 	}
 
 	protected final Class<T> c;

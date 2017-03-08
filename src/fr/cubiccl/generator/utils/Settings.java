@@ -48,22 +48,39 @@ public class Settings
 
 	public static enum Version
 	{
-		v1d10("1.10", -1),
-		v1d11("1.11", 0);
+		v1d11("1.11", "1.11", 0),
+		v1d12("1.12 - snapshot", "1.12", 1);
 
 		public static Version get(String name)
 		{
 			for (Version v : Version.values())
-				if (v.name.equals(name)) return v;
+				if (v.codeName.equals(name)) return v;
 			return get(Settings.getDefault(MINECRAFT_VERSION));
 		}
 
-		public final String name;
+		public static Version[] getVersions()
+		{
+			ArrayList<Version> vs = new ArrayList<Version>();
+			for (Version version : values())
+				vs.add(version);
+			vs.sort(new Comparator<Version>()
+			{
+				@Override
+				public int compare(Version o1, Version o2)
+				{
+					return o1.compare(o2);
+				}
+			});
+			return vs.toArray(new Version[vs.size()]);
+		}
+
+		public final String name, codeName;
 		public final int order;
 
-		private Version(String name, int order)
+		private Version(String name, String codeName, int order)
 		{
 			this.name = name;
+			this.codeName = codeName;
 			this.order = order;
 		}
 
@@ -74,12 +91,12 @@ public class Settings
 
 		public boolean isAfter(Version anotherVersion)
 		{
-			return this.compareTo(anotherVersion) > 0;
+			return this.compare(anotherVersion) > 0;
 		}
 
 		public boolean isBefore(Version anotherVersion)
 		{
-			return this.compareTo(anotherVersion) < 0;
+			return this.compare(anotherVersion) < 0;
 		}
 	}
 
@@ -96,7 +113,7 @@ public class Settings
 		switch (settingID)
 		{
 			case MINECRAFT_VERSION:
-				return Version.v1d11.name;
+				return Version.v1d11.codeName;
 
 			case LANG:
 				return Language.ENGLISH.codeName;

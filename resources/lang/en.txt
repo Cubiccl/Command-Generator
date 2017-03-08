@@ -290,6 +290,7 @@ general.remove=Remove selected
 general.search=Search
 general.success_execute=The /execute command was successfully generated. Create a command to execute, or click on "Cancel /execute" to cancel.
 general.success=Success
+general.title=Command Generator v<gen> for Minecraft <mc>
 general.unspecified=Not specified
 general.value.add=Add value
 general.value.remove=Remove value
@@ -640,6 +641,8 @@ settings.sort.id=Sort by ID
 settings.sort.name=Sort by Name
 settings.sort.title=Object sorting
 settings.title=Settings
+settings.version=Minecraft version
+settings.version.confirm=Do you really want to change the version? All command setup will be lost.
 
 skull.creeper=Creeper
 skull.dragon=Dragon
