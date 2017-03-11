@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.jdom2.Element;
+
 import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
@@ -59,6 +61,20 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 		{
 			return new Text("lt_function." + this.name);
 		}
+	}
+
+	public static LootTableFunction createFrom(Element function)
+	{
+		LootTableFunction f = new LootTableFunction();
+		f.function = Function.get(function.getChildText("id"));
+		f.tags = ((TagCompound) NBTReader.read(function.getChildText("nbt"), true, false, true)).value();
+
+		ArrayList<LootTableCondition> conditions = new ArrayList<LootTableCondition>();
+		for (Element condition : function.getChild("conditions").getChildren())
+			conditions.add(LootTableCondition.createFrom(condition));
+		f.conditions = conditions.toArray(new LootTableCondition[conditions.size()]);
+
+		return f;
 	}
 
 	public static LootTableFunction createFrom(TagCompound tag)
@@ -226,6 +242,19 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 			output[i + 2] = this.tags[i];
 
 		return container.create(output);
+	}
+
+	public Element toXML()
+	{
+		Element conditions = new Element("conditions");
+		for (LootTableCondition condition : this.conditions)
+			conditions.addContent(condition.toXML());
+
+		Element root = new Element("pool");
+		root.addContent(new Element("id").setText(this.function.name));
+		root.addContent(conditions);
+		root.addContent(new Element("nbt").setText(Tags.DEFAULT_COMPOUND.create(this.tags).valueForCommand()));
+		return root;
 	}
 
 	@Override

@@ -3,6 +3,8 @@ package fr.cubiccl.generator.gameobject;
 import java.awt.Component;
 import java.util.ArrayList;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
@@ -18,6 +20,19 @@ import fr.cubiccl.generator.utils.Text;
 
 public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 {
+
+	public static TradeOffer createFrom(Element trade)
+	{
+		TradeOffer t = new TradeOffer();
+		t.buy = ItemStack.createFrom(trade.getChild("buy"));
+		if (trade.getChild("buy2") != null) t.buySecondary = ItemStack.createFrom(trade.getChild("buy2"));
+		t.sell = ItemStack.createFrom(trade.getChild("sell"));
+		t.experienceReward = Boolean.parseBoolean(trade.getChildText("exp"));
+		t.uses = Integer.parseInt(trade.getChildText("uses"));
+		t.maxUses = Integer.parseInt(trade.getChildText("usesmax"));
+		t.findProperties(trade);
+		return t;
+	}
 
 	public static TradeOffer createFrom(TagCompound tag)
 	{
@@ -82,7 +97,7 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		tags.add(Tags.OFFER_EXP.create(this.experienceReward ? 1 : 0));
@@ -91,8 +106,26 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 		tags.add(this.buy.toTag(Tags.OFFER_BUY));
 		if (this.buySecondary != null) tags.add(this.buySecondary.toTag(Tags.OFFER_BUYB));
 		tags.add(this.sell.toTag(Tags.OFFER_SELL));
-		if (includeName) tags.add(this.nameTag());
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = this.createRoot("trade");
+		root.addContent(this.buy.toXML());
+		root.getChild("item").setName("buy");
+		if (this.buySecondary != null)
+		{
+			root.addContent(this.buySecondary.toXML());
+			root.getChild("item").setName("buy2");
+		}
+		root.addContent(this.sell.toXML());
+		root.getChild("item").setName("sell");
+		root.addContent(new Element("exp").setText(Boolean.toString(this.experienceReward)));
+		root.addContent(new Element("uses").setText(Integer.toString(this.uses)));
+		root.addContent(new Element("usesmax").setText(Integer.toString(this.maxUses)));
+		return root;
 	}
 
 	@Override

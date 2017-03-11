@@ -1,8 +1,9 @@
 ------------------------- VERSION 2.3.3 -------------------------
 ADDITIONS
-Added version support ! You can change the Minecraft version the Generator is
+-Added version support ! You can change the Minecraft version the Generator is
 working for in the Settings. 1.11 and 1.12 snapshot are available. Included the
 selected version in the program title.
+-Changed data saving to XML. Doesn't really help users to know this but why not :)
 
 BUGS FIXED
 - Duration was Short instead of Integer

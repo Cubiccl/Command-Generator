@@ -3,6 +3,8 @@ package fr.cubiccl.generator.gameobject.target;
 import java.awt.Component;
 import java.util.ArrayList;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -26,12 +28,34 @@ public class Target extends GameObject implements IObjectList<Target>
 		PLAYER("player"),
 		RANDOM_PLAYER("@r");
 
+		public static TargetType find(String id)
+		{
+			for (TargetType type : values())
+				if (type.id.equals(id)) return type;
+			return ALL_ENTITIES;
+		}
+
 		public final String id;
 
 		private TargetType(String id)
 		{
 			this.id = id;
 		}
+	}
+
+	public static Target createFrom(Element target)
+	{
+		Target t = new Target(TargetType.find(target.getChildText("type")));
+		if (t.type == TargetType.PLAYER) t.playerName = target.getChildText("playername");
+		else
+		{
+			ArrayList<Argument> a = new ArrayList<Argument>();
+			for (Element argument : target.getChildren("argument"))
+				a.add(Argument.createFrom(argument));
+			t.arguments = a.toArray(new Argument[a.size()]);
+		}
+		t.findProperties(target);
+		return t;
 	}
 
 	public static Target createFrom(String value)
@@ -142,10 +166,23 @@ public class Target extends GameObject implements IObjectList<Target>
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
-		if (includeName) return container.create(Tags.TARGET.create(this.toCommand()), this.nameTag());
 		return container.create(Tags.TARGET.create(this.toCommand()));
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = this.createRoot("target");
+		root.addContent(new Element("type").setText(this.type.id));
+		if (this.type == TargetType.PLAYER) root.addContent(new Element("playername").setText(this.playerName));
+		else
+		{
+			for (Argument argument : this.arguments)
+				root.addContent(argument.toXML());
+		}
+		return root;
 	}
 
 	@Override

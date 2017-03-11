@@ -3,6 +3,8 @@ package fr.cubiccl.generator.gameobject.loottable;
 import java.awt.Component;
 import java.util.ArrayList;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.ItemStack;
@@ -21,6 +23,15 @@ import fr.cubiccl.generator.utils.Text;
 
 public class LootTable extends GameObject implements IObjectList<LootTable>
 {
+
+	public static LootTable createFrom(Element table)
+	{
+		LootTable t = new LootTable();
+		for (Element pool : table.getChild("pools").getChildren())
+		t.pools.add(LootTablePool.createFrom(pool));
+		t.findProperties(table);
+		return t;
+	}
 
 	public static LootTable createFrom(TagCompound tag)
 	{
@@ -108,17 +119,24 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (LootTablePool pool : this.pools)
 			tags.add(pool.toTag(Tags.DEFAULT_COMPOUND));
 
-		TagCompound t;
-		if (includeName) t = container.create(Tags.LOOTTABLE_POOLS.create(tags.toArray(new Tag[tags.size()])), this.nameTag());
-		else t = container.create(Tags.LOOTTABLE_POOLS.create(tags.toArray(new Tag[tags.size()])));
+		TagCompound t = container.create(Tags.LOOTTABLE_POOLS.create(tags.toArray(new Tag[tags.size()])));
 		t.setJson(true);
 		return t;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element pools = new Element("pools");
+		for (LootTablePool pool : this.pools)
+			pools.addContent(pool.toXML());
+		return this.createRoot("table").addContent(pools);
 	}
 
 	@Deprecated

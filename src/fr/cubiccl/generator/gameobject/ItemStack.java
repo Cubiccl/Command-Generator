@@ -3,6 +3,8 @@ package fr.cubiccl.generator.gameobject;
 import java.util.ArrayList;
 import java.util.Random;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
@@ -19,6 +21,18 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 
 public class ItemStack extends GameObject implements IObjectList<ItemStack>
 {
+
+	public static ItemStack createFrom(Element item)
+	{
+		ItemStack i = new ItemStack();
+		i.item = ObjectRegistry.items.find(item.getChildText("id"));
+		i.amount = Integer.parseInt(item.getChildText("amount"));
+		i.damage = Integer.parseInt(item.getChildText("damage"));
+		i.slot = Integer.parseInt(item.getChildText("slot"));
+		i.nbt = (TagCompound) NBTReader.read(item.getChildText("nbt"), true, false, true);
+		i.findProperties(item);
+		return i;
+	}
 
 	public static ItemStack createFrom(TagCompound tag)
 	{
@@ -155,7 +169,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		tags.add(Tags.ITEM_ID.create(this.item.id()));
@@ -163,8 +177,19 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		tags.add(Tags.ITEM_COUNT.create(this.amount));
 		if (this.slot != -1) tags.add(Tags.ITEM_SLOT.create(this.slot));
 		tags.add(this.nbt);
-		if (includeName) tags.add(this.nameTag());
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = this.createRoot("item");
+		root.addContent(new Element("id").setText(this.item.id()));
+		root.addContent(new Element("amount").setText(Integer.toString(this.amount)));
+		root.addContent(new Element("damage").setText(Integer.toString(this.damage)));
+		root.addContent(new Element("slot").setText(Integer.toString(this.slot)));
+		root.addContent(new Element("nbt").setText(this.nbt.valueForCommand()));
+		return root;
 	}
 
 	@Override

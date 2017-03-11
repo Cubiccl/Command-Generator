@@ -3,6 +3,8 @@ package fr.cubiccl.generator.gameobject.loottable;
 import java.awt.Component;
 import java.util.*;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -18,6 +20,36 @@ import fr.cubiccl.generator.utils.Text;
 
 public class LootTablePool implements IObjectList<LootTablePool>
 {
+
+	public static LootTablePool createFrom(Element pool)
+	{
+		LootTablePool p = new LootTablePool();
+
+		ArrayList<LootTableCondition> conditions = new ArrayList<LootTableCondition>();
+		for (Element condition : pool.getChild("conditions").getChildren())
+			conditions.add(LootTableCondition.createFrom(condition));
+		p.conditions = conditions.toArray(new LootTableCondition[conditions.size()]);
+
+		ArrayList<LootTableEntry> entries = new ArrayList<LootTableEntry>();
+		for (Element entry : pool.getChild("entries").getChildren())
+			entries.add(LootTableEntry.createFrom(entry));
+		p.entries = entries.toArray(new LootTableEntry[entries.size()]);
+
+		if (pool.getChild("rolls") != null) p.rollsMin = Integer.parseInt(pool.getChildText("rolls"));
+		else
+		{
+			p.rollsMin = Integer.parseInt(pool.getChildText("minrolls"));
+			p.rollsMax = Integer.parseInt(pool.getChildText("maxrolls"));
+		}
+		if (pool.getChild("bonusrolls") != null) p.bonusRollsMin = Double.parseDouble(pool.getChildText("bonusrolls"));
+		else
+		{
+			p.bonusRollsMin = Double.parseDouble(pool.getChildText("minbonusrolls"));
+			p.bonusRollsMax = Double.parseDouble(pool.getChildText("maxbonusrolls"));
+		}
+
+		return p;
+	}
 
 	public static LootTablePool createFrom(TagCompound tag)
 	{
@@ -175,6 +207,35 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		tags.add(Tags.LOOTTABLE_ENTRIES.create(ent));
 
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	public Element toXML()
+	{
+		Element conditions = new Element("conditions");
+		for (LootTableCondition condition : this.conditions)
+			conditions.addContent(condition.toXML());
+
+		Element entries = new Element("entries");
+		for (LootTableEntry entry : this.entries)
+			entries.addContent(entry.toXML());
+
+		Element root = new Element("pool");
+		root.addContent(conditions);
+		root.addContent(entries);
+		if (this.rollsMax == -1) root.addContent(new Element("rolls").setText(Integer.toString(this.rollsMin)));
+		else
+		{
+			root.addContent(new Element("minrolls").setText(Integer.toString(this.rollsMin)));
+			root.addContent(new Element("maxrolls").setText(Integer.toString(this.rollsMax)));
+		}
+		if (this.bonusRollsMax == -1) root.addContent(new Element("bonusrolls").setText(Double.toString(this.bonusRollsMin)));
+		else
+		{
+			root.addContent(new Element("minbonusrolls").setText(Double.toString(this.bonusRollsMin)));
+			root.addContent(new Element("maxbonusrolls").setText(Double.toString(this.bonusRollsMax)));
+		}
+
+		return root;
 	}
 
 	@Override

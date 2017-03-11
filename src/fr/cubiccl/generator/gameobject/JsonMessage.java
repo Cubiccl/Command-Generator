@@ -8,8 +8,12 @@ import java.util.ArrayList;
 
 import javax.swing.JLabel;
 
+import org.jdom2.Element;
+
+import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -26,6 +30,13 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 			new Color(0, 170, 0), new Color(170, 0, 170), new Color(170, 0, 0), new Color(255, 170, 0), new Color(170, 170, 170), new Color(85, 255, 85),
 			new Color(255, 85, 255), new Color(255, 85, 85), new Color(255, 255, 85) };
 	public static final byte TEXT = 0, TRANSLATE = 1, SCORE = 2, SELECTOR = 3;
+
+	public static JsonMessage createFrom(Element json)
+	{
+		JsonMessage message = createFrom((TagCompound) NBTReader.read(json.getChildText("message"), true, false, true));
+		message.findProperties(json);
+		return message;
+	}
 
 	public static JsonMessage createFrom(TagCompound tag)
 	{
@@ -173,7 +184,7 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 		return this.toTag(DEFAULT_COMPOUND).valueForCommand();
 	}
 
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
@@ -205,11 +216,16 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 		if (this.insertion != null) tags.add(TEXT_INSERTION.create(this.insertion));
 		if (this.clickAction != null) tags.add(EVENT_CLICK.create(EVENT_ACTION.create(this.clickAction), EVENT_VALUE.create(this.clickValue)));
 		if (this.hoverAction != null) tags.add(EVENT_HOVER.create(EVENT_ACTION.create(this.hoverAction), EVENT_VALUE.create(this.hoverValue)));
-		if (includeName) tags.add(this.nameTag());
 
 		TagCompound tag = container.create(tags.toArray(new Tag[tags.size()]));
 		tag.setJson(true);
 		return tag;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return this.createRoot("json").addContent(new Element("message").setText(this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand()));
 	}
 
 	@Override

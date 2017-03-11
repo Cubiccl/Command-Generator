@@ -3,8 +3,11 @@ package fr.cubiccl.generator.gameobject;
 import java.awt.Component;
 import java.util.ArrayList;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
@@ -20,6 +23,15 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 
 public class LivingEntity extends GameObject implements IObjectList<LivingEntity>
 {
+
+	public static LivingEntity createFrom(Element entity)
+	{
+		LivingEntity e = new LivingEntity(ObjectRegistry.entities.find(entity.getChildText("id")), null);
+		e.nbt = (TagCompound) NBTReader.read(entity.getChildText("nbt"), true, false, true);
+		e.findProperties(entity);
+		return e;
+	}
+
 	public static LivingEntity createFrom(TagCompound tag)
 	{
 		Entity e = ObjectRegistry.entities.first();
@@ -87,14 +99,22 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		tags.add(Tags.ENTITY_ID.create(this.entity.id()));
 		for (Tag t : this.nbt.value())
 			tags.add(t);
-		if (includeName) tags.add(this.nameTag());
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = this.createRoot("entity");
+		root.addContent(new Element("id").setText(this.entity.id()));
+		root.addContent(new Element("nbt").setText(this.nbt.valueForCommand()));
+		return root;
 	}
 
 	@Override

@@ -4,6 +4,8 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.concurrent.ThreadLocalRandom;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.*;
@@ -23,6 +25,24 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 
 	public static final String[] SLOTS =
 	{ "mainhand", "offhand", "feet", "legs", "chest", "head" };
+
+	public static AttributeModifier createFrom(Element modifier)
+	{
+		ArrayList<String> slots = new ArrayList<String>();
+		for (Element slot : modifier.getChildren("slot"))
+			slots.add(slot.getText());
+
+		AttributeModifier m = new AttributeModifier(null, null, slots.toArray(new String[slots.size()]), OP_ADD, 0, 0, 0);
+		m.name = modifier.getChildText("name");
+		m.attribute = ObjectRegistry.attributes.find(modifier.getChildText("attribute"));
+		m.operation = Byte.parseByte(modifier.getChildText("operation"));
+		m.amount = Double.parseDouble(modifier.getChildText("amount"));
+		m.amountMax = Double.parseDouble(modifier.getChildText("amountmax"));
+		m.UUIDLeast = Long.parseLong(modifier.getChildText("uuidleast"));
+		m.UUIDMost = Long.parseLong(modifier.getChildText("uuidmost"));
+		m.findProperties(modifier);
+		return m;
+	}
 
 	public static AttributeModifier createFrom(TagCompound tag)
 	{
@@ -67,6 +87,7 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 	public String name;
 	public byte operation;
 	public String[] slots;
+
 	public long UUIDMost, UUIDLeast;
 
 	public AttributeModifier()
@@ -133,13 +154,13 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 
 	@Override
 	@Deprecated
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
-		return this.toTag(container, false, includeName);
+		return this.toTag(container, false);
 	}
 
 	/** @param isApplied - True if is applied to an entity. Thus attribute and slot won't be included. */
-	public TagCompound toTag(TemplateCompound container, boolean isApplied, boolean includeName)
+	public TagCompound toTag(TemplateCompound container, boolean isApplied)
 	{
 		boolean lt = this.isInLootTable;
 		ArrayList<Tag> tags = new ArrayList<Tag>();
@@ -162,9 +183,24 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 				tags.add(Tags.ATTRIBUTE_slots.create(s));
 			}
 		}
-		if (includeName) tags.add(this.nameTag());
 		TagCompound t = container.create(tags.toArray(new Tag[tags.size()]));
 		return t;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = this.createRoot("modifier");
+		root.addContent(new Element("name").setText(this.name));
+		root.addContent(new Element("attribute").setText(this.attribute.id()));
+		root.addContent(new Element("operation").setText(Byte.toString(this.operation)));
+		root.addContent(new Element("amount").setText(Double.toString(this.amount)));
+		root.addContent(new Element("amountmax").setText(Double.toString(this.amountMax)));
+		root.addContent(new Element("uuidleast").setText(Long.toString(this.UUIDLeast)));
+		root.addContent(new Element("uuidmost").setText(Long.toString(this.UUIDMost)));
+		for (String slot : this.slots)
+			root.addContent(new Element("slot").setText(slot));
+		return root;
 	}
 
 	@Override

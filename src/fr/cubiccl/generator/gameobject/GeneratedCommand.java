@@ -1,11 +1,20 @@
 package fr.cubiccl.generator.gameobject;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
 public class GeneratedCommand extends GameObject
 {
+
+	public static GeneratedCommand createFrom(Element command)
+	{
+		GeneratedCommand c = new GeneratedCommand(command.getChildText("value"));
+		c.findProperties(command);
+		return c;
+	}
 
 	public static GeneratedCommand createFrom(TagCompound tag)
 	{
@@ -36,10 +45,15 @@ public class GeneratedCommand extends GameObject
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
-		if (includeName) return container.create(Tags.COMMAND.create(this.command), this.nameTag());
 		return container.create(Tags.COMMAND.create(this.command));
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return this.createRoot("command").addContent(new Element("value").setText(this.command));
 	}
 
 }

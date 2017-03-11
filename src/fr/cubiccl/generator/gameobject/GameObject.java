@@ -1,14 +1,26 @@
 package fr.cubiccl.generator.gameobject;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.utils.Settings;
 
 public abstract class GameObject
 {
-	private String customName = "";
+	private String customName = "", versionMin = Settings.version().codeName;
+
+	/** Creates this Object root XML element, with name and version as attributes. */
+	protected Element createRoot(String id)
+	{
+		Element root = new Element(id);
+		root.setAttribute("objectname", this.customName);
+		root.setAttribute("version", this.versionMin);
+		return root;
+	}
 
 	public String customName()
 	{
@@ -25,14 +37,10 @@ public abstract class GameObject
 			}
 	}
 
-	public TagString nameTag()
+	protected void findProperties(Element element)
 	{
-		return Tags.OBJECT_NAME.create(this.customName());
-	}
-
-	public String save()
-	{
-		return this.toTag(Tags.DEFAULT_COMPOUND, true).valueForCommand();
+		if (element.getAttribute("objectname") != null) this.customName = element.getAttributeValue("objectname");
+		if (element.getAttribute("version") != null) this.versionMin = element.getAttributeValue("version");
 	}
 
 	public void setCustomName(String name)
@@ -48,13 +56,9 @@ public abstract class GameObject
 
 	/** @param container The container Tag.
 	 * @return This Object, as an NBT Tag. */
-	public TagCompound toTag(TemplateCompound container)
-	{
-		return this.toTag(container, false);
-	}
+	public abstract TagCompound toTag(TemplateCompound container);
 
-	/** @param container The container Tag.
-	 * @return This Object, as an NBT Tag. */
-	public abstract TagCompound toTag(TemplateCompound container, boolean includeName);
+	/** @return This Object as an XML object to be saved. */
+	public abstract Element toXML();
 
 }

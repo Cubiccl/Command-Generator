@@ -76,10 +76,10 @@
 					</xs:sequence>
 				</xs:choice>
 				<xs:choice>
-					<xs:element name="bonusrolls" type="xs:int" />
+					<xs:element name="bonusrolls" type="xs:double" />
 					<xs:sequence>
-						<xs:element name="minbonusrolls" type="xs:int" />
-						<xs:element name="maxbonusrolls" type="xs:int" />
+						<xs:element name="minbonusrolls" type="xs:double" />
+						<xs:element name="maxbonusrolls" type="xs:double" />
 					</xs:sequence>
 				</xs:choice>
 			</xs:sequence>
@@ -408,7 +408,7 @@
 				<xs:element ref="attributemodifiers" />
 				<xs:element ref="attributes" />
 				<xs:element ref="blocks" />
-				<xs:element ref="coordinates" />
+				<xs:element ref="coords" />
 				<xs:element ref="effects" />
 				<xs:element ref="enchantments" />
 				<xs:element ref="entities" />

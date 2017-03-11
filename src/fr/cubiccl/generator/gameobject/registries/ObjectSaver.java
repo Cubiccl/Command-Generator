@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
 
+import org.jdom2.Element;
+
+import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.*;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
@@ -43,6 +46,58 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		hiddenSavers = new ObjectSaver[]
 		{ commands, lootTables };
 		resetAll();
+
+		if (!FileUtils.fileExists("savedObjects.xml"))
+		{
+			loadOld();
+			return;
+		}
+
+		Element objects = FileUtils.readXMLFile("savedObjects");
+
+		for (Element modifier : objects.getChild("attributemodifiers").getChildren())
+			attributeModifiers.addObject(AttributeModifier.createFrom(modifier));
+
+		for (Element attribute : objects.getChild("attributes").getChildren())
+			attributes.addObject(AppliedAttribute.createFrom(attribute));
+
+		for (Element block : objects.getChild("blocks").getChildren())
+			blocks.addObject(PlacedBlock.createFrom(block));
+
+		for (Element coord : objects.getChild("coords").getChildren())
+			coordinates.addObject(Coordinates.createFrom(coord));
+
+		for (Element effect : objects.getChild("effects").getChildren())
+			effects.addObject(Effect.createFrom(effect));
+
+		for (Element enchant : objects.getChild("enchantments").getChildren())
+			enchantments.addObject(Enchantment.createFrom(enchant));
+
+		for (Element entity : objects.getChild("entities").getChildren())
+			entities.addObject(LivingEntity.createFrom(entity));
+
+		for (Element item : objects.getChild("items").getChildren())
+			items.addObject(ItemStack.createFrom(item));
+
+		for (Element json : objects.getChild("jsons").getChildren())
+			jsonMessages.addObject(JsonMessage.createFrom(json));
+
+		for (Element target : objects.getChild("targets").getChildren())
+			targets.addObject(Target.createFrom(target));
+
+		for (Element trade : objects.getChild("trades").getChildren())
+			trades.addObject(TradeOffer.createFrom(trade));
+
+		for (Element command : objects.getChild("commands").getChildren())
+			commands.addObject(GeneratedCommand.createFrom(command));
+
+		for (Element table : objects.getChild("tables").getChildren())
+			lootTables.addObject(LootTable.createFrom(table));
+	}
+
+	private static void loadOld()
+	{
+		CommandGenerator.log("Old files detected from v2.3.2, updating.");
 		String[] data = FileUtils.readFileAsArray("savedObjects.txt");
 		int current = -1;
 		for (String line : data)
@@ -110,6 +165,8 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 					break;
 			}
 		}
+		FileUtils.delete("savedObjects.txt");
+		FileUtils.delete("data/1.11.txt");
 	}
 
 	public static void resetAll()
@@ -123,30 +180,26 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 
 	public static void save()
 	{
-		ArrayList<String> data = new ArrayList<String>();
-		data.add("// This file saves Custom Game Objects.");
+		Element root = new Element("objects");
+		root.addContent(attributeModifiers.toXML("attributemodifiers"));
+		root.addContent(attributes.toXML("attributes"));
+		root.addContent(blocks.toXML("blocks"));
+		root.addContent(coordinates.toXML("coords"));
+		root.addContent(effects.toXML("effects"));
+		root.addContent(enchantments.toXML("enchantments"));
+		root.addContent(entities.toXML("entities"));
+		root.addContent(items.toXML("items"));
+		root.addContent(jsonMessages.toXML("jsons"));
+		root.addContent(targets.toXML("targets"));
+		root.addContent(trades.toXML("trades"));
+		root.addContent(commands.toXML("commands"));
+		root.addContent(lootTables.toXML("tables"));
 
-		for (@SuppressWarnings("rawtypes")
-		ObjectSaver saver : savers)
-		{
-			data.add("");
-			data.add("[" + saver.name.toString().toUpperCase() + "]");
-			for (GameObject object : saver.list())
-				data.add(object.save());
-		}
-		for (@SuppressWarnings("rawtypes")
-		ObjectSaver saver : hiddenSavers)
-		{
-			data.add("");
-			data.add("[" + saver.name.toString().toUpperCase() + "]");
-			for (GameObject object : saver.list())
-				data.add(object.save());
-		}
-
-		FileUtils.writeToFile("savedObjects.txt", data.toArray(new String[data.size()]));
+		FileUtils.saveXMLFile(root, "savedObjects");
 	}
 
 	public final Class<T> c;
+
 	public final Text name;
 	private HashMap<String, T> savedObjects;
 
@@ -219,5 +272,13 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 	private void reset()
 	{
 		this.savedObjects.clear();
+	}
+
+	private Element toXML(String rootID)
+	{
+		Element root = new Element(rootID);
+		for (T object : this.list())
+			root.addContent(object.toXML());
+		return root;
 	}
 }

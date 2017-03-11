@@ -111,7 +111,7 @@ public class PanelFunction extends CGPanel implements ActionListener
 			AttributeModifier[] modifiers = this.attributes.values();
 			TagCompound[] t = new TagCompound[modifiers.length];
 			for (int i = 0; i < t.length; ++i)
-				t[i] = modifiers[i].toTag(Tags.DEFAULT_COMPOUND);
+				t[i] = modifiers[i].toTag(Tags.DEFAULT_COMPOUND, false);
 			tags.add(Tags.LT_FUNCTION_MODIFIERS.create(t));
 		} else if (f == Function.ENCHANT_RANDOMLY)
 		{

@@ -48,6 +48,12 @@ public class FileUtils
 		}
 	}
 
+	public static void delete(String path)
+	{
+		File f = new File(resourcesFolder + path);
+		if (f.exists()) f.delete();
+	}
+
 	/** Downloads a single file.
 	 * 
 	 * @return True if the download was successful. */

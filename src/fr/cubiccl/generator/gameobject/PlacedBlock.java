@@ -3,6 +3,8 @@ package fr.cubiccl.generator.gameobject;
 import java.awt.Component;
 import java.util.ArrayList;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.*;
@@ -17,6 +19,16 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 
 public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 {
+
+	public static PlacedBlock createFrom(Element block)
+	{
+		PlacedBlock b = new PlacedBlock();
+		b.block = ObjectRegistry.blocks.find(block.getChildText("id"));
+		b.data = Integer.parseInt(block.getChildText("data"));
+		b.nbt = (TagCompound) NBTReader.read(block.getChildText("nbt"), true, false, true);
+		b.findProperties(block);
+		return b;
+	}
 
 	public static PlacedBlock createFrom(TagCompound tag)
 	{
@@ -90,16 +102,25 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
 		tags.add(Tags.BLOCK_ID.create(this.block.id()));
 		tags.add(Tags.BLOCK_DATA.create(this.data));
 		tags.add(this.nbt);
-		if (includeName) tags.add(this.nameTag());
 
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = this.createRoot("item");
+		root.addContent(new Element("id").setText(this.block.id()));
+		root.addContent(new Element("data").setText(Integer.toString(this.data)));
+		root.addContent(new Element("nbt").setText(this.nbt.valueForCommand()));
+		return root;
 	}
 
 	@Override

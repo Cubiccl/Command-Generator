@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.tags;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
@@ -11,7 +13,6 @@ public abstract class Tag extends GameObject
 	public static final byte STRING = 0, BYTE = 1, SHORT = 2, INT = 3, LONG = 4, FLOAT = 5, DOUBLE = 6, LIST = 7, COMPOUND = 8, BOOLEAN = 9;
 
 	protected boolean isJson;
-
 	public final TemplateTag template;
 
 	public Tag(TemplateTag template)
@@ -58,7 +59,14 @@ public abstract class Tag extends GameObject
 
 	@Override
 	@Deprecated
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
+	{
+		return null;
+	}
+
+	@Override
+	@Deprecated
+	public Element toXML()
 	{
 		return null;
 	}

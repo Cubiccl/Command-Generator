@@ -1,9 +1,20 @@
 package fr.cubiccl.generator.gameobject.target;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.utils.Lang;
 
 public class Argument
 {
+
+	public static Argument createFrom(Element argument)
+	{
+		if (argument.getChild("value2") == null) return new Argument(TargetArgument.getArgumentFromId(argument.getChildText("id")),
+				argument.getChildText("value"), Boolean.parseBoolean(argument.getChildText("reversed")));
+		return new Argument(TargetArgument.getArgumentFromId(argument.getChildText("id")), argument.getChildText("value"), argument.getChildText("value2"),
+				Boolean.parseBoolean(argument.getChildText("reversed")));
+	}
+
 	public static Argument createFrom(String id, String value)
 	{
 		System.out.println(id + "," + value);
@@ -77,5 +88,15 @@ public class Argument
 				+ this.displayValue() + "=" + this.value2;
 
 		return this.argument.name() + this.separator() + this.displayValue();
+	}
+
+	public Element toXML()
+	{
+		Element root = new Element("argument");
+		root.addContent(new Element("id").setText(this.argument.id));
+		root.addContent(new Element("reversed").setText(Boolean.toString(this.reversed)));
+		root.addContent(new Element("value").setText(this.value));
+		if (this.argument == TargetArgument.SCORE || this.argument == TargetArgument.SCORE_MIN) root.addContent(new Element("value2").setText(this.value2));
+		return root;
 	}
 }

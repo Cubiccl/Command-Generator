@@ -3,11 +3,10 @@ package fr.cubiccl.generator.gameobject.loottable;
 import java.awt.Component;
 import java.util.ArrayList;
 
+import org.jdom2.Element;
+
 import fr.cubi.cubigui.CTextArea;
-import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
-import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
@@ -47,6 +46,13 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 		{
 			return new Text("lt_condition." + this.name);
 		}
+	}
+
+	public static LootTableCondition createFrom(Element condition)
+	{
+		LootTableCondition c = new LootTableCondition(Condition.get(condition.getChildText("id")));
+		c.tags = ((TagCompound) NBTReader.read(condition.getChildText("nbt"), true, false, true)).value();
+		return c;
 	}
 
 	public static LootTableCondition createFrom(TagCompound tag)
@@ -126,6 +132,12 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 			output[i + 1] = this.tags[i];
 
 		return container.create(output);
+	}
+
+	public Element toXML()
+	{
+		return new Element("condition").addContent(new Element("id").setText(this.condition.name)).addContent(
+				new Element("nbt").setText(Tags.DEFAULT_COMPOUND.create(this.tags).valueForCommand()));
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package fr.cubiccl.generator.gameobject;
 
 import java.awt.Component;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
@@ -19,6 +21,19 @@ import fr.cubiccl.generator.utils.Text;
 
 public class Coordinates extends GameObject implements IObjectList<Coordinates>
 {
+
+	public static Coordinates createFrom(Element coord)
+	{
+		Coordinates c = new Coordinates();
+		c.x = Float.parseFloat(coord.getChildText("x"));
+		c.y = Float.parseFloat(coord.getChildText("y"));
+		c.z = Float.parseFloat(coord.getChildText("z"));
+		c.xRelative = Boolean.parseBoolean(coord.getChildText("xr"));
+		c.yRelative = Boolean.parseBoolean(coord.getChildText("yr"));
+		c.zRelative = Boolean.parseBoolean(coord.getChildText("zr"));
+		c.findProperties(coord);
+		return c;
+	}
 
 	public static Coordinates createFrom(String x, String y, String z) throws CommandGenerationException
 	{
@@ -164,15 +179,27 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
-		if (includeName) return container.create(Tags.COORD_X.create(this.x), Tags.COORD_Y.create(this.y), Tags.COORD_Z.create(this.z), this.nameTag());
 		return container.create(Tags.COORD_X.create(this.x), Tags.COORD_Y.create(this.y), Tags.COORD_Z.create(this.z));
 	}
 
 	public TagList toTagList(TemplateList container)
 	{
 		return container.create(Tags.DEFAULT_FLOAT.create(this.x), Tags.DEFAULT_FLOAT.create(this.y), Tags.DEFAULT_FLOAT.create(this.z));
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = this.createRoot("coordinates");
+		root.addContent(new Element("x").setText(Float.toString(this.x)));
+		root.addContent(new Element("y").setText(Float.toString(this.y)));
+		root.addContent(new Element("z").setText(Float.toString(this.z)));
+		root.addContent(new Element("xr").setText(Boolean.toString(this.xRelative)));
+		root.addContent(new Element("yr").setText(Boolean.toString(this.yRelative)));
+		root.addContent(new Element("zr").setText(Boolean.toString(this.zRelative)));
+		return root;
 	}
 
 	@Override

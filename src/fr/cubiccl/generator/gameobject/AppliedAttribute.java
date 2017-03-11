@@ -1,6 +1,9 @@
 package fr.cubiccl.generator.gameobject;
 
 import java.awt.Component;
+import java.util.ArrayList;
+
+import org.jdom2.Element;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
@@ -15,6 +18,20 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 
 public class AppliedAttribute extends GameObject implements IObjectList<AppliedAttribute>
 {
+	public static AppliedAttribute createFrom(Element attribute)
+	{
+		ArrayList<AttributeModifier> modifiers = new ArrayList<AttributeModifier>();
+		for (Element m : attribute.getChild("modifiers").getChildren())
+			modifiers.add(AttributeModifier.createFrom(m));
+
+		AppliedAttribute a = new AppliedAttribute();
+		a.attribute = ObjectRegistry.attributes.find(attribute.getChildText("attribute"));
+		a.base = Double.parseDouble(attribute.getChildText("base"));
+		a.modifiers = modifiers.toArray(new AttributeModifier[modifiers.size()]);
+		a.findProperties(attribute);
+		return a;
+	}
+
 	public static AppliedAttribute createFrom(TagCompound tag)
 	{
 		Attribute a = ObjectRegistry.attributes.first();
@@ -88,16 +105,28 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
 		TagCompound[] m = new TagCompound[this.modifiers.length];
 		for (int i = 0; i < m.length; i++)
-			m[i] = this.modifiers[i].toTag(Tags.DEFAULT_COMPOUND, true, includeName);
+			m[i] = this.modifiers[i].toTag(Tags.DEFAULT_COMPOUND, true);
 
-		if (includeName) return container.create(Tags.ATTRIBUTE_ATTRIBUTE_NAME.create(this.attribute.id), Tags.ATTRIBUTE_BASE.create(this.base),
-				this.nameTag(), Tags.ATTRIBUTE_MODIFIERS.create(m));
 		return container.create(Tags.ATTRIBUTE_ATTRIBUTE_NAME.create(this.attribute.id), Tags.ATTRIBUTE_BASE.create(this.base),
 				Tags.ATTRIBUTE_MODIFIERS.create(m));
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = this.createRoot("attribute");
+		root.addContent(new Element("id").setText(this.attribute.id));
+		root.addContent(new Element("base").setText(Double.toString(this.base)));
+
+		Element modifiers = new Element("modifiers");
+		for (AttributeModifier modifier : this.modifiers)
+			modifiers.addContent(modifier.toXML());
+
+		return root.addContent(modifiers);
 	}
 
 	@Override

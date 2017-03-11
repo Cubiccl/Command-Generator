@@ -2,6 +2,8 @@ package fr.cubiccl.generator.gameobject;
 
 import java.awt.Component;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
@@ -19,6 +21,13 @@ import fr.cubiccl.generator.utils.Text;
 
 public class Enchantment extends GameObject implements IObjectList<Enchantment>
 {
+
+	public static Enchantment createFrom(Element enchant)
+	{
+		Enchantment e = new Enchantment(ObjectRegistry.enchantments.find(enchant.getChildText("id")), Integer.parseInt(enchant.getChildText("level")));
+		e.findProperties(enchant);
+		return e;
+	}
 
 	public static Enchantment createFrom(TagCompound tag)
 	{
@@ -81,10 +90,18 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
-		if (includeName) return container.create(Tags.ENCHANTMENT_ID.create(this.type.idInt), Tags.ENCHANTMENT_LVL.create(this.level), this.nameTag());
 		return container.create(Tags.ENCHANTMENT_ID.create(this.type.idInt), Tags.ENCHANTMENT_LVL.create(this.level));
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = this.createRoot("enchantment");
+		root.addContent(new Element("id").setText(this.type.id()));
+		root.addContent(new Element("level").setText(Integer.toString(this.level)));
+		return root;
 	}
 
 	@Override

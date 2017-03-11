@@ -14,7 +14,7 @@ import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Utils;
 
-public class Pattern extends GameObject
+public class Pattern
 {
 	public static final Color[] COLORS =
 	{ Color.WHITE, new Color(216, 127, 51), new Color(178, 76, 216), new Color(102, 153, 216), new Color(229, 229, 51), new Color(127, 204, 25),
@@ -57,19 +57,12 @@ public class Pattern extends GameObject
 	}
 
 	@Override
-	public String toCommand()
-	{
-		return this.toString();
-	}
-
-	@Override
 	public String toString()
 	{
 		return new Text("color." + Utils.WOOL_COLORS[this.color]) + " " + new Text("pattern." + this.shape).toString().toLowerCase();
 	}
 
-	@Override
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
 		return container.create(Tags.PATTERN_SHAPE.create(this.shape), Tags.PATTERN_COLOR.create(this.color));
 	}

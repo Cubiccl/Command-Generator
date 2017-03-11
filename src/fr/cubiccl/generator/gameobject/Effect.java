@@ -2,6 +2,8 @@ package fr.cubiccl.generator.gameobject;
 
 import java.awt.Component;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.baseobjects.EffectType;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
@@ -20,6 +22,17 @@ import fr.cubiccl.generator.utils.Text;
 
 public class Effect extends GameObject implements IObjectList<Effect>
 {
+
+	public static Effect createFrom(Element effect)
+	{
+		Effect e = new Effect();
+		e.type = ObjectRegistry.effects.find(effect.getChildText("id"));
+		e.amplifier = Integer.parseInt(effect.getChildText("amplifier"));
+		e.duration = Integer.parseInt(effect.getChildText("duration"));
+		e.hideParticles = Boolean.parseBoolean(effect.getChildText("hideparticles"));
+		e.findProperties(effect);
+		return e;
+	}
 
 	public static Effect createFrom(TagCompound tag)
 	{
@@ -82,17 +95,6 @@ public class Effect extends GameObject implements IObjectList<Effect>
 	}
 
 	@Override
-	public Effect update(CGPanel panel) throws CommandGenerationException
-	{
-		Effect e = ((PanelEffect) panel).generate();
-		this.amplifier = e.amplifier;
-		this.duration = e.duration;
-		this.hideParticles = e.hideParticles;
-		this.type = e.type;
-		return this;
-	}
-
-	@Override
 	public String toCommand()
 	{
 		return this.type.idString + " " + this.duration + " " + this.amplifier + " " + this.hideParticles;
@@ -105,12 +107,32 @@ public class Effect extends GameObject implements IObjectList<Effect>
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container, boolean includeName)
+	public TagCompound toTag(TemplateCompound container)
 	{
-		if (includeName) return container.create(Tags.EFFECT_ID.create(this.type.idInt), Tags.EFFECT_AMPLIFIER.create(this.amplifier),
-				Tags.EFFECT_DURATION.create(this.duration), Tags.EFFECT_PARTICLES.create(this.hideParticles ? 0 : 1), this.nameTag());
 		return container.create(Tags.EFFECT_ID.create(this.type.idInt), Tags.EFFECT_AMPLIFIER.create(this.amplifier),
 				Tags.EFFECT_DURATION.create(this.duration), Tags.EFFECT_PARTICLES.create(this.hideParticles ? 0 : 1));
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = this.createRoot("effect");
+		root.addContent(new Element("id").setText(this.type.id()));
+		root.addContent(new Element("amplifier").setText(Integer.toString(this.amplifier)));
+		root.addContent(new Element("duration").setText(Integer.toString(this.duration)));
+		root.addContent(new Element("hideparticles").setText(Boolean.toString(this.hideParticles)));
+		return root;
+	}
+
+	@Override
+	public Effect update(CGPanel panel) throws CommandGenerationException
+	{
+		Effect e = ((PanelEffect) panel).generate();
+		this.amplifier = e.amplifier;
+		this.duration = e.duration;
+		this.hideParticles = e.hideParticles;
+		this.type = e.type;
+		return this;
 	}
 
 }
