@@ -15,9 +15,8 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.panel.utils.ListListener;
-import fr.cubiccl.generator.utils.FileUtils;
-import fr.cubiccl.generator.utils.Lang;
-import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.*;
+import fr.cubiccl.generator.utils.Settings.Version;
 
 public class ObjectSaver<T extends GameObject> implements ListListener<T>
 {
@@ -53,46 +52,48 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 			return;
 		}
 
+		// TODO but they will not stay saved !!!
+
 		Element objects = FileUtils.readXMLFile("savedObjects");
 
 		for (Element modifier : objects.getChild("attributemodifiers").getChildren())
-			attributeModifiers.addObject(AttributeModifier.createFrom(modifier));
+			if (shouldLoad(modifier)) attributeModifiers.addObject(AttributeModifier.createFrom(modifier));
 
 		for (Element attribute : objects.getChild("attributes").getChildren())
-			attributes.addObject(AppliedAttribute.createFrom(attribute));
+			if (shouldLoad(attribute)) attributes.addObject(AppliedAttribute.createFrom(attribute));
 
 		for (Element block : objects.getChild("blocks").getChildren())
-			blocks.addObject(PlacedBlock.createFrom(block));
+			if (shouldLoad(block)) blocks.addObject(PlacedBlock.createFrom(block));
 
 		for (Element coord : objects.getChild("coords").getChildren())
-			coordinates.addObject(Coordinates.createFrom(coord));
+			if (shouldLoad(coord)) coordinates.addObject(Coordinates.createFrom(coord));
 
 		for (Element effect : objects.getChild("effects").getChildren())
-			effects.addObject(Effect.createFrom(effect));
+			if (shouldLoad(effect)) effects.addObject(Effect.createFrom(effect));
 
 		for (Element enchant : objects.getChild("enchantments").getChildren())
-			enchantments.addObject(Enchantment.createFrom(enchant));
+			if (shouldLoad(enchant)) enchantments.addObject(Enchantment.createFrom(enchant));
 
 		for (Element entity : objects.getChild("entities").getChildren())
-			entities.addObject(LivingEntity.createFrom(entity));
+			if (shouldLoad(entity)) entities.addObject(LivingEntity.createFrom(entity));
 
 		for (Element item : objects.getChild("items").getChildren())
-			items.addObject(ItemStack.createFrom(item));
+			if (shouldLoad(item)) items.addObject(ItemStack.createFrom(item));
 
 		for (Element json : objects.getChild("jsons").getChildren())
-			jsonMessages.addObject(JsonMessage.createFrom(json));
+			if (shouldLoad(json)) jsonMessages.addObject(JsonMessage.createFrom(json));
 
 		for (Element target : objects.getChild("targets").getChildren())
-			targets.addObject(Target.createFrom(target));
+			if (shouldLoad(target)) targets.addObject(Target.createFrom(target));
 
 		for (Element trade : objects.getChild("trades").getChildren())
-			trades.addObject(TradeOffer.createFrom(trade));
+			if (shouldLoad(trade)) trades.addObject(TradeOffer.createFrom(trade));
 
 		for (Element command : objects.getChild("commands").getChildren())
-			commands.addObject(GeneratedCommand.createFrom(command));
+			if (shouldLoad(command)) commands.addObject(GeneratedCommand.createFrom(command));
 
 		for (Element table : objects.getChild("tables").getChildren())
-			lootTables.addObject(LootTable.createFrom(table));
+			if (shouldLoad(table)) lootTables.addObject(LootTable.createFrom(table));
 	}
 
 	private static void loadOld()
@@ -196,6 +197,12 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		root.addContent(lootTables.toXML("tables"));
 
 		FileUtils.saveXMLFile(root, "savedObjects");
+	}
+
+	private static boolean shouldLoad(Element modifier)
+	{
+		if (modifier.getAttribute("version") == null) return false;
+		return !Settings.version().isAfter(Version.get(modifier.getAttributeValue("version")));
 	}
 
 	public final Class<T> c;

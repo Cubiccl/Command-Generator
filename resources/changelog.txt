@@ -1,4 +1,4 @@
-------------------------- VERSION 2.3.3 -------------------------
+------------------------- VERSION 2.4 -------------------------
 ADDITIONS
 -Added version support ! You can change the Minecraft version the Generator is
 working for in the Settings. 1.11 and 1.12 snapshot are available. Included the

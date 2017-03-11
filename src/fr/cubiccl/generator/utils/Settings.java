@@ -51,10 +51,10 @@ public class Settings
 		v1d11("1.11", "1.11", 0),
 		v1d12("1.12 - snapshot", "1.12", 1);
 
-		public static Version get(String name)
+		public static Version get(String id)
 		{
 			for (Version v : Version.values())
-				if (v.codeName.equals(name)) return v;
+				if (v.codeName.equals(id)) return v;
 			return get(Settings.getDefault(MINECRAFT_VERSION));
 		}
 
@@ -101,7 +101,7 @@ public class Settings
 	}
 
 	public static final boolean CHECK_UPDATES = false;
-	public static final String GENERATOR_VERSION = "2.3.2";
+	public static final String GENERATOR_VERSION = "2.4";
 	private static Language language;
 	private static Version mcversion;
 	public static final String MINECRAFT_VERSION = "mcversion", LANG = "lang", SLASH = "slash", SORT_TYPE = "sort", INDENTATION = "indentation";
