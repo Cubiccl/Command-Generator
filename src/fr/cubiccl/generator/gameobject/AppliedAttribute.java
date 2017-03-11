@@ -40,9 +40,7 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 	}
 
 	public Attribute attribute;
-
 	public double base;
-
 	public AttributeModifier[] modifiers;
 
 	public AppliedAttribute()

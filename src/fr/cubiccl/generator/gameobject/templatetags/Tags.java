@@ -62,7 +62,7 @@ public final class Tags
 	public static final TemplateString DISPLAY_NAME = new TemplateString("Name", UNAVAILABLE);
 
 	public static final TemplateNumber EFFECT_AMPLIFIER = new TemplateNumber("Amplifier", UNAVAILABLE, Tag.BYTE);
-	public static final TemplateNumber EFFECT_DURATION = new TemplateNumber("Duration", UNAVAILABLE, Tag.BYTE);
+	public static final TemplateNumber EFFECT_DURATION = new TemplateNumber("Duration", UNAVAILABLE, Tag.INT);
 	public static final TemplateNumber EFFECT_ID = new TemplateNumber("Id", UNAVAILABLE, Tag.BYTE);
 	public static final TemplateNumber EFFECT_PARTICLES = new TemplateNumber("ShowParticles", UNAVAILABLE, Tag.BYTE);
 

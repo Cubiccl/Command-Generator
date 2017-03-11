@@ -1,11 +1,17 @@
 ------------------------- VERSION 2.3.3 -------------------------
 ADDITIONS
+Added version support ! You can change the Minecraft version the Generator is
+working for in the Settings. 1.11 and 1.12 snapshot are available. Included the
+selected version in the program title.
 
 BUGS FIXED
+- Duration was Short instead of Integer
 
 CHANGED TRANSLATIONS
 
 ADDED TRANSLATIONS
+general.title
+settings.version,settings.version.confirm
 
 ------------------------- VERSION 2.3.2 -------------------------
 ADDITIONS

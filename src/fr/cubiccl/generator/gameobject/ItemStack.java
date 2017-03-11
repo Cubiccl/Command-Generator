@@ -62,7 +62,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		this.item = item;
 		this.damage = data;
 		this.amount = amount;
-		this.slot = 0;
+		this.slot = -1;
 		this.nbt = nbt;
 	}
 

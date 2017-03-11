@@ -1,0 +1,425 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+	<!-- Basic types -->
+	<xs:simpleType name="idstring">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9]|[a-z]|[A-Z]|\.|_)*" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="idint">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[0-9]*" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:attribute name="objectname" type="idstring" />
+	<xs:attribute name="version" type="idstring" />
+	<xs:element name="id" type="idstring" />
+	<xs:element name="nbt" type="xs:string" />
+
+	<!-- Base Objects -->
+	<xs:element name="argument">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="id" />
+				<xs:element name="reversed" type="xs:boolean" />
+				<xs:element name="value" type="idstring" />
+				<xs:element name="value2" type="idstring" minOccurs="0" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="condition">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="id" />
+				<xs:element ref="nbt" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="entry">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="idstring" />
+				<xs:element name="type" type="xs:byte" />
+				<xs:element name="weight" type="xs:int" />
+				<xs:element name="quality" type="xs:int" />
+				<xs:element ref="conditions" />
+				<xs:element ref="functions" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="function">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="id" />
+				<xs:element ref="conditions" />
+				<xs:element ref="nbt" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="pool">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="conditions" />
+				<xs:element ref="entries" />
+				<xs:choice>
+					<xs:element name="rolls" type="xs:int" />
+					<xs:sequence>
+						<xs:element name="minrolls" type="xs:int" />
+						<xs:element name="maxrolls" type="xs:int" />
+					</xs:sequence>
+				</xs:choice>
+				<xs:choice>
+					<xs:element name="bonusrolls" type="xs:int" />
+					<xs:sequence>
+						<xs:element name="minbonusrolls" type="xs:int" />
+						<xs:element name="maxbonusrolls" type="xs:int" />
+					</xs:sequence>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<!-- Lists -->
+	<xs:element name="conditions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="condition" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="entries">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="entry" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="functions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="function" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="modifiers">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="modifier" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="pools">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="pool" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="strlist">
+		<xs:sequence>
+			<xs:element name="v" type="idstring" maxOccurs="unbounded" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Saved Objects -->
+	<xs:element name="attribute">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="id" />
+				<xs:element name="base" type="xs:double" />
+				<xs:element ref="modifiers" />
+			</xs:sequence>
+			<xs:attribute ref="objectname" use="required" />
+			<xs:attribute ref="version" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="block">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="id" />
+				<xs:element name="data" type="xs:int" />
+				<xs:element ref="nbt" />
+			</xs:sequence>
+			<xs:attribute ref="objectname" use="required" />
+			<xs:attribute ref="version" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="coordinates">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="x" type="xs:float" />
+				<xs:element name="y" type="xs:float" />
+				<xs:element name="z" type="xs:float" />
+				<xs:element name="xr" type="xs:boolean" />
+				<xs:element name="yr" type="xs:boolean" />
+				<xs:element name="zr" type="xs:boolean" />
+			</xs:sequence>
+			<xs:attribute ref="objectname" use="required" />
+			<xs:attribute ref="version" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="command">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="value" type="xs:string" />
+			</xs:sequence>
+			<xs:attribute ref="objectname" use="required" />
+			<xs:attribute ref="version" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="effect">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="id" />
+				<xs:element name="amplifier" type="xs:int" />
+				<xs:element name="duration" type="xs:int" />
+				<xs:element name="hideparticles" type="xs:boolean" />
+			</xs:sequence>
+			<xs:attribute ref="objectname" use="required" />
+			<xs:attribute ref="version" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="enchantment">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="id" />
+				<xs:element name="level" type="xs:int" />
+			</xs:sequence>
+			<xs:attribute ref="objectname" use="required" />
+			<xs:attribute ref="version" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="entity">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="id" />
+				<xs:element ref="nbt" />
+			</xs:sequence>
+			<xs:attribute ref="objectname" use="required" />
+			<xs:attribute ref="version" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:complexType name="item">
+		<xs:sequence>
+			<xs:element ref="id" />
+			<xs:element name="amount" type="xs:int" />
+			<xs:element name="damage" type="xs:int" />
+			<xs:element name="slot" type="xs:int" minOccurs="0" />
+			<xs:element ref="nbt" />
+		</xs:sequence>
+		<xs:attribute ref="objectname" use="required" />
+		<xs:attribute ref="version" use="required" />
+	</xs:complexType>
+
+	<xs:element name="json">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="message" type="xs:string" />
+			</xs:sequence>
+			<xs:attribute ref="objectname" use="required" />
+			<xs:attribute ref="version" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="modifier">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="name" type="xs:string" />
+				<xs:element name="attribute" type="idstring" />
+				<xs:element name="operation" type="xs:byte" />
+				<xs:element name="amount" type="xs:double" />
+				<xs:element name="amoutmax" type="xs:double" />
+				<xs:element name="uuidleast" type="xs:long" />
+				<xs:element name="uuidmost" type="xs:long" />
+				<xs:element name="slot" maxOccurs="unbounded" />
+			</xs:sequence>
+			<xs:attribute ref="objectname" use="required" />
+			<xs:attribute ref="version" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="table">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="pools" />
+			</xs:sequence>
+			<xs:attribute ref="objectname" use="required" />
+			<xs:attribute ref="version" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="target">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="type" type="idstring" />
+				<xs:choice>
+					<xs:element name="playername" type="idstring" />
+					<xs:element ref="argument" minOccurs="0" maxOccurs="unbounded" />
+				</xs:choice>
+			</xs:sequence>
+			<xs:attribute ref="objectname" use="required" />
+			<xs:attribute ref="version" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="trade">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="buy" type="item" />
+				<xs:element name="buy2" type="item" minOccurs="0" />
+				<xs:element name="sell" type="item" />
+				<xs:element name="exp" type="xs:boolean" />
+				<xs:element name="uses" type="xs:int" />
+				<xs:element name="usesmax" type="xs:int" />
+			</xs:sequence>
+			<xs:attribute ref="objectname" use="required" />
+			<xs:attribute ref="version" use="required" />
+		</xs:complexType>
+	</xs:element>
+
+	<!-- Main lists -->
+	<xs:element name="attributemodifiers">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="modifier" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="attributes">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="attribute" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="blocks">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="block" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="coords">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="coordinates" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="effects">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="effect" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="enchantments">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="enchantment" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="entities">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="entity" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="items">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="item" type="item" minOccurs="0"
+					maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="jsons">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="json" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="targets">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="target" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="trades">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="trade" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="commands">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="command" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="tables">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="table" minOccurs="0" maxOccurs="unbounded" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+	<xs:element name="objects">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="attributemodifiers" />
+				<xs:element ref="attributes" />
+				<xs:element ref="blocks" />
+				<xs:element ref="coordinates" />
+				<xs:element ref="effects" />
+				<xs:element ref="enchantments" />
+				<xs:element ref="entities" />
+				<xs:element ref="items" />
+				<xs:element ref="jsons" />
+				<xs:element ref="targets" />
+				<xs:element ref="trades" />
+				<xs:element ref="commands" />
+				<xs:element ref="tables" />
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+
+</xs:schema>
