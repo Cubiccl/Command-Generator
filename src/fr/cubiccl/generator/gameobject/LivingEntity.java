@@ -113,7 +113,7 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 	{
 		Element root = this.createRoot("entity");
 		root.addContent(new Element("id").setText(this.entity.id()));
-		root.addContent(new Element("nbt").setText(this.nbt.valueForCommand()));
+		root.addContent(new Element("nbt").setText(this.nbt.toCommand(false)));
 		return root;
 	}
 

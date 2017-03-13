@@ -28,7 +28,7 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 	{
 		LootTable t = new LootTable();
 		for (Element pool : table.getChild("pools").getChildren())
-		t.pools.add(LootTablePool.createFrom(pool));
+			t.pools.add(LootTablePool.createFrom(pool));
 		t.findProperties(table);
 		return t;
 	}
@@ -81,7 +81,7 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 
 	public String display()
 	{
-		return this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand(0);
+		return this.toTag(Tags.DEFAULT_COMPOUND).toCommand(true);
 	}
 
 	public ArrayList<ItemStack> generateItems()
@@ -109,7 +109,7 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 	@Override
 	public String toCommand()
 	{
-		return this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand();
+		return this.toTag(Tags.DEFAULT_COMPOUND).toCommand(false);
 	}
 
 	@Override

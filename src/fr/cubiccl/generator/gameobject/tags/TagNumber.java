@@ -1,5 +1,8 @@
 package fr.cubiccl.generator.gameobject.tags;
 
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonValue;
+
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 
 public class TagNumber extends Tag
@@ -17,15 +20,15 @@ public class TagNumber extends Tag
 	}
 
 	@Override
-	public Integer value()
+	public JsonValue toJson()
 	{
-		return this.value;
+		return Json.value(Integer.toString(this.value()) + SUFFIX[((TemplateNumber) this.template).tagType]);
 	}
 
 	@Override
-	public String valueForCommand(int indent)
+	public Integer value()
 	{
-		return Integer.toString(this.value()) + SUFFIX[((TemplateNumber) this.template).tagType];
+		return this.value;
 	}
 
 }

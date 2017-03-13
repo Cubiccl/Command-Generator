@@ -119,7 +119,7 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 	{
 		String display = this.condition.translate().toString();
 		for (Tag tag : this.tags)
-			display += ",\n" + tag.toCommand(-1);
+			display += ",\n" + tag.toCommand(false);
 		return display;
 	}
 
@@ -137,7 +137,7 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 	public Element toXML()
 	{
 		return new Element("condition").addContent(new Element("id").setText(this.condition.name)).addContent(
-				new Element("nbt").setText(Tags.DEFAULT_COMPOUND.create(this.tags).valueForCommand()));
+				new Element("nbt").setText(Tags.DEFAULT_COMPOUND.create(this.tags).toCommand(false)));
 	}
 
 	@Override

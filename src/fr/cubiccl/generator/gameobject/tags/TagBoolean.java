@@ -1,5 +1,8 @@
 package fr.cubiccl.generator.gameobject.tags;
 
+import com.eclipsesource.json.Json;
+import com.eclipsesource.json.JsonValue;
+
 import fr.cubiccl.generator.gameobject.templatetags.TemplateBoolean;
 
 public class TagBoolean extends Tag
@@ -14,15 +17,15 @@ public class TagBoolean extends Tag
 	}
 
 	@Override
-	public Boolean value()
+	public JsonValue toJson()
 	{
-		return this.value;
+		return Json.value(this.value);
 	}
 
 	@Override
-	public String valueForCommand(int indent)
+	public Boolean value()
 	{
-		return Boolean.toString(this.value);
+		return this.value;
 	}
 
 }

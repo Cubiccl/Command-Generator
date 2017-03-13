@@ -119,7 +119,7 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		Element root = this.createRoot("item");
 		root.addContent(new Element("id").setText(this.block.id()));
 		root.addContent(new Element("data").setText(Integer.toString(this.data)));
-		root.addContent(new Element("nbt").setText(this.nbt.valueForCommand()));
+		root.addContent(new Element("nbt").setText(this.nbt.toCommand(false)));
 		return root;
 	}
 

@@ -159,7 +159,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public String toCommand()
 	{
-		return this.item.id() + " " + this.amount + " " + this.damage + " " + this.nbt.valueForCommand();
+		return this.item.id() + " " + this.amount + " " + this.damage + " " + this.nbt.toCommand(false);
 	}
 
 	@Override
@@ -188,7 +188,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		root.addContent(new Element("amount").setText(Integer.toString(this.amount)));
 		root.addContent(new Element("damage").setText(Integer.toString(this.damage)));
 		root.addContent(new Element("slot").setText(Integer.toString(this.slot)));
-		root.addContent(new Element("nbt").setText(this.nbt.valueForCommand()));
+		root.addContent(new Element("nbt").setText(this.nbt.toCommand(false)));
 		return root;
 	}
 

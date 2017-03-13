@@ -83,7 +83,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		this.entryScore2.container.setVisible(false);
 		this.comboboxMode2.setVisible(false);
 		this.panelEntityTags.setLabelExplainVisible(true);
-		
+
 		this.onModeChange();
 
 		return panel;
@@ -103,7 +103,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		String objective = this.entryObjective.getText();
 		if (!mode.equals("reset")) this.entryObjective.checkValue(CGEntry.STRING);
 		if (mode.equals("set") || mode.equals("add") || mode.equals("remove")) return command + objective + " " + this.entryScore.getText() + " "
-				+ this.panelEntityTags.generate().nbt.valueForCommand();
+				+ this.panelEntityTags.generate().nbt.toCommand(false);
 
 		if (mode.equals("reset"))
 		{
@@ -124,7 +124,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		if (mode.equals("tag"))
 		{
 			this.entryScore.checkValue(CGEntry.STRING);
-			return command + this.comboboxMode2.getValue() + " " + this.entryObjective.getText() + " " + this.panelEntityTags.generate().nbt.valueForCommand();
+			return command + this.comboboxMode2.getValue() + " " + this.entryObjective.getText() + " " + this.panelEntityTags.generate().nbt.toCommand(false);
 		}
 
 		return command;
