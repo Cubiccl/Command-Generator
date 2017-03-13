@@ -1,11 +1,6 @@
 package fr.cubiccl.generator.utils;
 
-import java.io.IOException;
-import java.io.StringWriter;
 import java.text.DecimalFormat;
-
-import com.eclipsesource.json.JsonValue;
-import com.eclipsesource.json.PrettyPrint;
 
 public final class Utils
 {
@@ -182,22 +177,4 @@ public final class Utils
 		return array;
 	}
 
-	public static String jsonToString(JsonValue json, boolean shouldIndent)
-	{
-		return jsonToString(json, shouldIndent, null);
-	}
-
-	public static String jsonToString(JsonValue json, boolean shouldIndent, String id)
-	{
-		boolean indentation = shouldIndent && Boolean.parseBoolean(Settings.getSetting(Settings.INDENTATION));
-		StringWriter w = new StringWriter();
-		try
-		{
-			json.writeTo(w, indentation ? PrettyPrint.PRETTY_PRINT : PrettyPrint.MINIMAL);
-		} catch (IOException e)
-		{
-			e.printStackTrace();
-		}
-		return id == null || id.equals("") ? w.toString() : id + ":" + (indentation ? " " : "") + w.toString();
-	}
 }

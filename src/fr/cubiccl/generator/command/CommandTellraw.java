@@ -42,7 +42,7 @@ public class CommandTellraw extends Command
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		return this.id + " " + this.panelTarget.generate().toCommand() + " " + this.panelJson.generateMessage(Tags.JSON_LIST).toCommand(false);
+		return this.id + " " + this.panelTarget.generate().toCommand() + " " + this.panelJson.generateMessage(Tags.JSON_LIST).valueForCommand();
 	}
 
 	@Override

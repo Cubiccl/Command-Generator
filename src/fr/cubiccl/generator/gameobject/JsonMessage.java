@@ -181,7 +181,7 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 	@Override
 	public String toString()
 	{
-		return this.toTag(DEFAULT_COMPOUND).toCommand(false);
+		return this.toTag(DEFAULT_COMPOUND).valueForCommand();
 	}
 
 	public TagCompound toTag(TemplateCompound container)
@@ -225,7 +225,7 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 	@Override
 	public Element toXML()
 	{
-		return this.createRoot("json").addContent(new Element("message").setText(this.toTag(Tags.DEFAULT_COMPOUND).toCommand(true)));
+		return this.createRoot("json").addContent(new Element("message").setText(this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand()));
 	}
 
 	@Override

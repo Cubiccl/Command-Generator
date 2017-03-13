@@ -2,10 +2,6 @@ package fr.cubiccl.generator.gameobject.tags;
 
 import java.util.ArrayList;
 
-import com.eclipsesource.json.Json;
-import com.eclipsesource.json.JsonObject;
-import com.eclipsesource.json.JsonValue;
-
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 
@@ -74,14 +70,33 @@ public class TagCompound extends TagList
 	}
 
 	@Override
-	public JsonValue toJson()
+	public String valueForCommand(int indent)
 	{
-		JsonObject compound = Json.object();
+		String value = "{";
 
-		for (Tag tag : this.tags)
-			compound.add(tag.id(), tag.toJson());
+		if (indent > 0 && this.tags.length != 0)
+		{
+			value = "\n";
+			for (int i = 0; i < indent; ++i)
+				value += INDENT;
+			value += "{";
+		}
 
-		return compound;
+		for (int i = 0; i < this.tags.length; ++i)
+		{
+			if (i != 0) value += ",";
+			if (indent != -1) value += "\n";
+			value += this.tags[i].toCommand(indent == -1 ? -1 : indent + 1);
+		}
+
+		if (indent != -1 && this.tags.length != 0)
+		{
+			value += "\n";
+			for (int i = 0; i < indent; ++i)
+				value += INDENT;
+		}
+
+		return value + "}";
 	}
 
 }

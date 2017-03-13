@@ -1,13 +1,3 @@
-------------------------- VERSION 2.4.1 -------------------------
-ADDITIONS
-
-BUGS FIXED
-- Fixed bug where recent saved objects would be forgotten in previous versions.
-
-CHANGED TRANSLATIONS
-
-ADDED TRANSLATIONS
-
 ------------------------- VERSION 2.4 -------------------------
 ADDITIONS
 -Added version support ! You can change the Minecraft version the Generator is

@@ -2,16 +2,14 @@ package fr.cubiccl.generator.gameobject.tags;
 
 import org.jdom2.Element;
 
-import com.eclipsesource.json.JsonValue;
-
 import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
-import fr.cubiccl.generator.utils.Utils;
 
 public abstract class Tag extends GameObject
 {
 	public static final byte BLOCK = 0, ITEM = 1, ENTITY = 2, UNAVAILABLE = 3, UNKNOWN = 4;
+	protected static final String INDENT = "    ";
 	public static final byte STRING = 0, BYTE = 1, SHORT = 2, INT = 3, LONG = 4, FLOAT = 5, DOUBLE = 6, LIST = 7, COMPOUND = 8, BOOLEAN = 9;
 
 	protected boolean isJson;
@@ -36,18 +34,24 @@ public abstract class Tag extends GameObject
 	@Deprecated
 	public String toCommand()
 	{
-		return this.toCommand(false);
+		return this.toCommand(-1);
 	}
 
-	public String toCommand(boolean shouldIndent)
+	/** @param indent - The current indentation. -1 if no indentation. */
+	public String toCommand(int indent)
 	{
-		return Utils.jsonToString(this.toJson(), shouldIndent, this.template.tagType == COMPOUND || this.template.tagType == LIST ? null : this.template.id());
-	}
+		String display = "";
+		if (indent != -1) for (int i = 0; i < indent; ++i)
+			display += INDENT;
 
-	public abstract JsonValue toJson();
+		if (this.isJson) display += "\"";
+		display += this.id();
+		if (this.isJson) display += "\"";
+		display += ":" + this.valueForCommand(indent);
+		return display;
+	}
 
 	@Override
-	@Deprecated
 	public String toString()
 	{
 		return this.toCommand();
@@ -73,5 +77,12 @@ public abstract class Tag extends GameObject
 	}
 
 	public abstract Object value();
+
+	public String valueForCommand()
+	{
+		return this.valueForCommand(-1);
+	}
+
+	public abstract String valueForCommand(int indent);
 
 }

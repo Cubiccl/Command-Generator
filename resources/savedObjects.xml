@@ -6,7 +6,7 @@
     <item objectname="Test Chest" version="1.11">
       <id>minecraft:chest</id>
       <data>4</data>
-      <nbt>{"Items":[{"id":"minecraft:stone","Damage":"0s","Count":"1b","Slot":"13s","tag":{}},{"id":"minecraft:nether_brick_fence","Damage":"0s","Count":"4b","Slot":"26s","tag":{}}]}</nbt>
+      <nbt>{Items:[{id:"minecraft:stone",Damage:0s,Count:1b,Slot:13s,tag:{}},{id:"minecraft:nether_brick_fence",Damage:0s,Count:4b,Slot:26s,tag:{}}]}</nbt>
     </item>
   </blocks>
   <coords />
@@ -19,7 +19,7 @@
       <amount>1</amount>
       <damage>0</damage>
       <slot>0</slot>
-      <nbt>{"display":{"Name":"My Shovel","Lore":["Lore 1"]},"ench":[{"id":"32s","lvl":"5s"},{"id":"33s","lvl":"1s"}]}</nbt>
+      <nbt>{display:{Name:"My Shovel",Lore:["Lore 1"]},ench:[{id:32s,lvl:5s},{id:33s,lvl:1s}]}</nbt>
     </item>
   </items>
   <jsons />
@@ -38,7 +38,7 @@
         <amount>5</amount>
         <damage>0</damage>
         <slot>1</slot>
-        <nbt>{"ench":[{"lvl":"5s"},{"lvl":"1s"}]}</nbt>
+        <nbt>{ench:[{lvl:5s},{lvl:1s}]}</nbt>
       </sell>
       <exp>true</exp>
       <uses>0</uses>
@@ -72,11 +72,11 @@
           <conditions>
             <condition>
               <id>killed_by_player</id>
-              <nbt>{"inverse":true}</nbt>
+              <nbt>{inverse:true}</nbt>
             </condition>
             <condition>
               <id>random_chance_with_looting</id>
-              <nbt>{"chance":"0.02f","looting_multiplier":"0f"}</nbt>
+              <nbt>{chance:0.02f,looting_multiplier:0f}</nbt>
             </condition>
           </conditions>
           <entries>

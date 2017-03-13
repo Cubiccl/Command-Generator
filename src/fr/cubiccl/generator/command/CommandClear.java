@@ -87,7 +87,7 @@ public class CommandClear extends Command implements ActionListener
 		int data = item.damage, amount = item.amount;
 		if (this.checkboxIgnoreData.isSelected()) data = -1;
 		if (this.checkboxAll.isSelected()) amount = -1;
-		return this.id + " " + this.panelTarget.generate().toCommand() + " " + item.item.id() + " " + data + " " + amount + " " + item.nbt.toCommand(false);
+		return this.id + " " + this.panelTarget.generate().toCommand() + " " + item.item.id() + " " + data + " " + amount + " " + item.nbt.valueForCommand();
 	}
 
 	@Override

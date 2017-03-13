@@ -225,7 +225,7 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 	{
 		String display = this.function.translate().toString();
 		for (Tag tag : this.tags)
-			if (!tag.id().equals(Tags.LT_FUNCTION_MODIFIERS.id())) display += ",\n" + tag.toCommand(false);
+			if (!tag.id().equals(Tags.LT_FUNCTION_MODIFIERS.id())) display += ",\n" + tag.toCommand(-1);
 		return display;
 	}
 
@@ -253,7 +253,7 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 		Element root = new Element("pool");
 		root.addContent(new Element("id").setText(this.function.name));
 		root.addContent(conditions);
-		root.addContent(new Element("nbt").setText(Tags.DEFAULT_COMPOUND.create(this.tags).toCommand(false)));
+		root.addContent(new Element("nbt").setText(Tags.DEFAULT_COMPOUND.create(this.tags).valueForCommand()));
 		return root;
 	}
 

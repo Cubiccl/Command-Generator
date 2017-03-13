@@ -1,8 +1,5 @@
 package fr.cubiccl.generator.gameobject.tags;
 
-import com.eclipsesource.json.JsonArray;
-import com.eclipsesource.json.JsonValue;
-
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 
 public class TagList extends Tag
@@ -45,20 +42,46 @@ public class TagList extends Tag
 	}
 
 	@Override
-	public JsonValue toJson()
-	{
-		JsonArray compound = new JsonArray();
-
-		for (Tag tag : this.tags)
-			compound.add(tag.toJson());
-
-		return compound;
-	}
-
-	@Override
 	public Tag[] value()
 	{
 		return this.tags;
+	}
+
+	@Override
+	public String valueForCommand(int indent)
+	{
+		String value = "";
+
+		if (indent != -1 && this.tags.length != 0)
+		{
+			value += "\n";
+			for (int i = 0; i < indent; ++i)
+				value += INDENT;
+		}
+
+		value += "[";
+
+		for (int i = 0; i < this.tags.length; ++i)
+		{
+			if (i != 0) value += ",";
+			if (indent != -1 && !(this.tags[i] instanceof TagCompound)) value += "\n";
+			for (int j = 0; j < indent; ++j)
+				value += INDENT;
+			if (this.isJson)
+			{
+				if (this.tags[i] instanceof TagCompound || this.tags[i] instanceof TagList || this.tags[i] instanceof TagString) value += this.tags[i]
+						.valueForCommand(indent == -1 ? -1 : indent + 1);
+				else value += "\"" + this.tags[i].valueForCommand(indent == -1 ? -1 : indent + 1) + "\"";
+			} else value += this.tags[i].valueForCommand(indent == -1 ? -1 : indent + 1);
+		}
+
+		if (indent != -1 && this.tags.length != 0)
+		{
+			value += "\n";
+			for (int i = 0; i < indent; ++i)
+				value += INDENT;
+		}
+		return value + "]";
 	}
 
 }

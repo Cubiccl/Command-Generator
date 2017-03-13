@@ -29,6 +29,7 @@ import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.Lang;
+import fr.cubiccl.generator.utils.Settings;
 
 public class PanelTags extends CGPanel implements ListSelectionListener, ActionListener, ITagCreationListener
 {
@@ -229,7 +230,8 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		if (this.listTags.getSelectedIndex() == -1 || this.shownTags.size() == -1) return;
 		Tag value = this.selectedValue();
 		if (value == null) this.areaValue.setText(this.getSelectedTag().description(this.currentObject) + "\n" + Lang.translate("tag.no_value"));
-		else this.areaValue.setText(value.template.description(this.currentObject) + "\n" + value.toCommand(true));
+		else this.areaValue.setText(value.template.description(this.currentObject) + "\n"
+				+ value.toCommand(Settings.getSetting(Settings.INDENTATION).equals("true") ? 0 : -1));
 	}
 
 	@Override
