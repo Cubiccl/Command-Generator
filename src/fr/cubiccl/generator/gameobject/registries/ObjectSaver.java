@@ -52,48 +52,59 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 			return;
 		}
 
-		// TODO but they will not stay saved !!!
-
 		Element objects = FileUtils.readXMLFile("savedObjects");
 
 		for (Element modifier : objects.getChild("attributemodifiers").getChildren())
 			if (shouldLoad(modifier)) attributeModifiers.addObject(AttributeModifier.createFrom(modifier));
+			else attributeModifiers.recentObjects.add(modifier);
 
 		for (Element attribute : objects.getChild("attributes").getChildren())
 			if (shouldLoad(attribute)) attributes.addObject(AppliedAttribute.createFrom(attribute));
+			else attributes.recentObjects.add(attribute);
 
 		for (Element block : objects.getChild("blocks").getChildren())
 			if (shouldLoad(block)) blocks.addObject(PlacedBlock.createFrom(block));
+			else blocks.recentObjects.add(block);
 
 		for (Element coord : objects.getChild("coords").getChildren())
 			if (shouldLoad(coord)) coordinates.addObject(Coordinates.createFrom(coord));
+			else coordinates.recentObjects.add(coord);
 
 		for (Element effect : objects.getChild("effects").getChildren())
 			if (shouldLoad(effect)) effects.addObject(Effect.createFrom(effect));
+			else effects.recentObjects.add(effect);
 
 		for (Element enchant : objects.getChild("enchantments").getChildren())
 			if (shouldLoad(enchant)) enchantments.addObject(Enchantment.createFrom(enchant));
+			else enchantments.recentObjects.add(enchant);
 
 		for (Element entity : objects.getChild("entities").getChildren())
 			if (shouldLoad(entity)) entities.addObject(LivingEntity.createFrom(entity));
+			else entities.recentObjects.add(entity);
 
 		for (Element item : objects.getChild("items").getChildren())
 			if (shouldLoad(item)) items.addObject(ItemStack.createFrom(item));
+			else items.recentObjects.add(item);
 
 		for (Element json : objects.getChild("jsons").getChildren())
 			if (shouldLoad(json)) jsonMessages.addObject(JsonMessage.createFrom(json));
+			else jsonMessages.recentObjects.add(json);
 
 		for (Element target : objects.getChild("targets").getChildren())
 			if (shouldLoad(target)) targets.addObject(Target.createFrom(target));
+			else targets.recentObjects.add(target);
 
 		for (Element trade : objects.getChild("trades").getChildren())
 			if (shouldLoad(trade)) trades.addObject(TradeOffer.createFrom(trade));
+			else trades.recentObjects.add(trade);
 
 		for (Element command : objects.getChild("commands").getChildren())
 			if (shouldLoad(command)) commands.addObject(GeneratedCommand.createFrom(command));
+			else commands.recentObjects.add(command);
 
 		for (Element table : objects.getChild("tables").getChildren())
 			if (shouldLoad(table)) lootTables.addObject(LootTable.createFrom(table));
+			else lootTables.recentObjects.add(table);
 	}
 
 	private static void loadOld()
@@ -208,6 +219,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 	public final Class<T> c;
 
 	public final Text name;
+	private ArrayList<Element> recentObjects;
 	private HashMap<String, T> savedObjects;
 
 	protected ObjectSaver(String nameID, Class<T> c)
@@ -220,6 +232,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		this.name = name;
 		this.c = c;
 		this.savedObjects = new HashMap<String, T>();
+		this.recentObjects = new ArrayList<Element>();
 	}
 
 	public void addObject(T object)
@@ -286,6 +299,8 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		Element root = new Element(rootID);
 		for (T object : this.list())
 			root.addContent(object.toXML());
+		for (Element e : this.recentObjects)
+			root.addContent(e);
 		return root;
 	}
 }
