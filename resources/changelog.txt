@@ -1,3 +1,17 @@
+------------------------- VERSION 2.4.1 -------------------------
+ADDITIONS
+- Commands descriptions are now adapted to your selection.
+
+BUGS FIXED
+- Custom Objects with version newer than selected would be forgotten.
+
+CHANGED TRANSLATIONS
+All command translations have been changed and more added, below // COMMANDS
+
+ADDED TRANSLATIONS
+stats.stat.tostring.*
+target.type.tostring.*
+
 ------------------------- VERSION 2.4 -------------------------
 ADDITIONS
 -Added version support ! You can change the Minecraft version the Generator is
