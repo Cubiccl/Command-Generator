@@ -63,6 +63,24 @@ public class CommandScoreboardTeams extends Command implements ActionListener
 	}
 
 	@Override
+	protected Text description()
+	{
+		Text d = this.defaultDescription();
+		if (!this.comboboxMode.getValue().equals("add")) d = new Text("command." + this.id + "." + this.comboboxMode.getValue());
+
+		String team = this.entryTeam.getText();
+		try
+		{
+			Utils.checkStringId(null, team);
+		} catch (Exception e)
+		{
+			team = "???";
+		}
+
+		return d.addReplacement("<team>", team).addReplacement("<target>", this.panelTarget.displayTarget());
+	}
+
+	@Override
 	protected void finishReading()
 	{
 		this.onModeChange();

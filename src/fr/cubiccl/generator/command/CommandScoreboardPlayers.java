@@ -16,6 +16,7 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.Utils;
 
 public class CommandScoreboardPlayers extends Command implements ActionListener
 {
@@ -83,10 +84,44 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		this.entryScore2.container.setVisible(false);
 		this.comboboxMode2.setVisible(false);
 		this.panelEntityTags.setLabelExplainVisible(true);
-		
+
 		this.onModeChange();
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		Text d = this.defaultDescription();
+		if (!this.comboboxMode.getValue().equals("add")) d = new Text("command." + this.id + "." + this.comboboxMode.getValue());
+		if (this.comboboxMode.getValue().equals("test") && this.checkbox.isSelected()) d = new Text("command." + this.id + ".test.bounds");
+
+		String objective = this.entryObjective.getText(), value = this.entryScore.getText(), value2 = this.entryScore2.getText();
+		try
+		{
+			Utils.checkStringId(null, objective);
+		} catch (Exception e)
+		{
+			objective = "???";
+		}
+		try
+		{
+			Utils.checkInteger(null, value);
+		} catch (Exception e)
+		{
+			value = "???";
+		}
+		try
+		{
+			Utils.checkInteger(null, value2);
+		} catch (Exception e)
+		{
+			value2 = "???";
+		}
+
+		return d.addReplacement("<target>", this.panelTarget.displayTarget()).addReplacement("<objective>", objective).addReplacement("<value>", value)
+				.addReplacement("<value2>", value2).addReplacement("<target2>", this.panelTarget2.displayTarget());
 	}
 
 	@Override
