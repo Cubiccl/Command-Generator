@@ -7,10 +7,12 @@ import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandBlockdata extends Command
 {
@@ -35,6 +37,21 @@ public class CommandBlockdata extends Command
 		panel.add(this.panelBlock = new PanelBlock("setblock.block_data"), gbc);
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		Text d = this.defaultDescription();
+		try
+		{
+			d.addReplacement("<coordinates>", this.panelCoordinates.generate().toString());
+		} catch (CommandGenerationException e)
+		{
+			d.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
+		}
+		d.addReplacement("<nbt>", this.panelBlock.getNBT(Tags.DEFAULT_COMPOUND).valueForCommand());
+		return d;
 	}
 
 	@Override

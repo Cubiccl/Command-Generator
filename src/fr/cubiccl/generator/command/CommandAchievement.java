@@ -16,6 +16,9 @@ import fr.cubiccl.generator.utils.Text;
 
 public class CommandAchievement extends Command implements ActionListener
 {
+	private static final byte GIVE = 0, TAKE = 1;
+	private static final byte ONE = 0, ALL = 1;
+
 	private OptionCombobox comboboxMode, comboboxNumber;
 	private PanelAchievement panelAchievement;
 	private PanelTarget panelTarget;
@@ -63,13 +66,13 @@ public class CommandAchievement extends Command implements ActionListener
 	protected Text description()
 	{
 		Text description = this.defaultDescription();
-		if (this.comboboxMode.getValue().equals("take"))
+		if (this.mode() == TAKE)
 		{
-			if (this.comboboxNumber.getValue().equals("all")) description = new Text("command." + this.id + ".take.all");
+			if (this.numberMode() == ALL) description = new Text("command." + this.id + ".take.all");
 			else description = new Text("command." + this.id + ".take");
-		} else if (this.comboboxNumber.getValue().equals("all")) description = new Text("command." + this.id + ".all");
+		} else if (this.numberMode() == ALL) description = new Text("command." + this.id + ".all");
 
-		if (this.comboboxNumber.getValue().equals("one")) description.addReplacement("<achievement>", this.panelAchievement.getAchievement().id);
+		if (this.numberMode() == ONE) description.addReplacement("<achievement>", this.panelAchievement.getAchievement().toString());
 		try
 		{
 			Target t = this.panelTarget.generate();
@@ -87,10 +90,22 @@ public class CommandAchievement extends Command implements ActionListener
 	public String generate() throws CommandGenerationException
 	{
 		String command = this.id + " " + this.comboboxMode.getValue() + " ";
-		if (this.comboboxNumber.getValue().equals("all")) command += "* ";
+		if (this.numberMode() == ALL) command += "* ";
 		else command += "achievement." + this.panelAchievement.getAchievement().id.substring("minecraft:".length()) + " ";
 
 		return command + this.panelTarget.generate().toCommand();
+	}
+
+	private byte mode()
+	{
+		if (this.comboboxMode == null) return GIVE;
+		return (byte) this.comboboxMode.getSelectedIndex();
+	}
+
+	private byte numberMode()
+	{
+		if (this.comboboxMode == null) return ONE;
+		return (byte) this.comboboxMode.getSelectedIndex();
 	}
 
 	@Override

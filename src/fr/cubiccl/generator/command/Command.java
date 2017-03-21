@@ -64,6 +64,7 @@ public abstract class Command implements ITranslated
 			this.panel = this.createGUI();
 			this.defaultGui();
 		}
+		this.updateTranslations();
 		return this.panel;
 	}
 
@@ -76,7 +77,6 @@ public abstract class Command implements ITranslated
 	{
 		this.labelDescription = new CGLabel("command." + this.id);
 		this.labelDescription.setBorder(BorderFactory.createRaisedBevelBorder());
-		this.updateTranslations();
 		return this.labelDescription;
 	}
 

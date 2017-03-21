@@ -71,6 +71,39 @@ public class PanelCoordinates extends CGPanel implements ICustomObject<Coordinat
 		}
 	}
 
+	public String displayCoordinates()
+	{
+		String coords = "X=";
+
+		try
+		{
+			coords += (this.checkboxX.isSelected() ? "~" : "") + Float.parseFloat(this.entryX.getText());
+		} catch (NumberFormatException e)
+		{
+			coords += "???";
+		}
+
+		coords += ", Y=";
+		try
+		{
+			coords += (this.checkboxY.isSelected() ? "~" : "") + Float.parseFloat(this.entryY.getText());
+		} catch (NumberFormatException e)
+		{
+			coords += "???";
+		}
+
+		coords += ", Z=";
+		try
+		{
+			coords += (this.checkboxZ.isSelected() ? "~" : "") + Float.parseFloat(this.entryZ.getText());
+		} catch (NumberFormatException e)
+		{
+			coords += "???";
+		}
+
+		return coords;
+	}
+
 	@Override
 	public Coordinates generate() throws CommandGenerationException
 	{
