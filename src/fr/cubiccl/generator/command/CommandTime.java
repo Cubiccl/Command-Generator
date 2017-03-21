@@ -54,6 +54,28 @@ public class CommandTime extends Command implements ActionListener
 	}
 
 	@Override
+	protected Text description()
+	{
+		if (this.comboboxMode.getValue().equals("query")) return new Text("command." + this.id + ".query");
+		if (this.comboboxMode.getValue().equals("set")) try
+		{
+			Integer.parseInt(this.entryValue.getText());
+			return new Text("command." + this.id + ".set").addReplacement("<time>", this.entryValue.getText());
+		} catch (Exception e)
+		{
+			return new Text("command." + this.id + ".set").addReplacement("<time>", "???");
+		}
+		try
+		{
+			Integer.parseInt(this.entryValue.getText());
+			return this.defaultDescription().addReplacement("<time>", this.entryValue.getText());
+		} catch (Exception e)
+		{
+			return this.defaultDescription().addReplacement("<time>", "???");
+		}
+	}
+
+	@Override
 	protected void finishReading()
 	{
 		boolean query = this.comboboxMode.getValue().equals("query");

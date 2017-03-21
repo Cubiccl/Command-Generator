@@ -7,6 +7,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.Utils;
 
 public class CommandTrigger extends Command
 {
@@ -36,6 +37,31 @@ public class CommandTrigger extends Command
 		this.entryValue.addIntFilter();
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		String obj = this.entryObjective.getText(), value = this.entryValue.getText();
+
+		try
+		{
+			Utils.checkStringId(null, obj);
+		} catch (CommandGenerationException e)
+		{
+			obj = "???";
+		}
+		try
+		{
+			Utils.checkInteger(null, value);
+		} catch (CommandGenerationException e)
+		{
+			value = "???";
+		}
+
+		if (this.comboboxMode.getValue().equals("add")) return new Text("command." + this.id + ".add").addReplacement("<value>", value).addReplacement(
+				"<objective>", obj);
+		return this.defaultDescription().addReplacement("<value>", value).addReplacement("<objective>", obj);
 	}
 
 	@Override

@@ -9,6 +9,7 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.Utils;
 
 public class CommandXp extends Command
 {
@@ -42,11 +43,32 @@ public class CommandXp extends Command
 	}
 
 	@Override
+	protected Text description()
+	{
+		String value = this.entryAmount.getText();
+		try
+		{
+			Utils.checkInteger(null, value);
+		} catch (CommandGenerationException e)
+		{
+			value = "???";
+		}
+		if (this.isLevels()) return new Text("command." + this.id + ".levels").addReplacement("<target>", this.panelTarget.displayTarget()).addReplacement(
+				"<value>", value);
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget()).addReplacement("<value>", value);
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		this.entryAmount.checkValue(CGEntry.INTEGER);
-		if (!this.checkboxLevel.isSelected()) this.entryAmount.checkValueSuperior(CGEntry.INTEGER, 0);
-		return this.id + " " + this.entryAmount.getText() + (this.checkboxLevel.isSelected() ? "L " : " ") + this.panelTarget.generate().toCommand();
+		if (!this.isLevels()) this.entryAmount.checkValueSuperior(CGEntry.INTEGER, 0);
+		return this.id + " " + this.entryAmount.getText() + (this.isLevels() ? "L " : " ") + this.panelTarget.generate().toCommand();
+	}
+
+	private boolean isLevels()
+	{
+		return this.checkboxLevel.isSelected();
 	}
 
 	@Override

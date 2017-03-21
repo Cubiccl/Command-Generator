@@ -67,6 +67,12 @@ public class CommandSpreadplayers extends Command
 	}
 
 	@Override
+	protected Text description()
+	{
+		return this.defaultDescription();
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String x = this.entryX.getText(), z = this.entryZ.getText(), d = this.entryDistance.getText(), r = this.entryRange.getText();
