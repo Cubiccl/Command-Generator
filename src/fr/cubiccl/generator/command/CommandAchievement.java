@@ -6,11 +6,13 @@ import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.target.Target;
+import fr.cubiccl.generator.gameobject.target.Target.TargetType;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelAchievement;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandAchievement extends Command implements ActionListener
 {
@@ -55,6 +57,30 @@ public class CommandAchievement extends Command implements ActionListener
 		this.comboboxNumber.addActionListener(this);
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		Text description = this.defaultDescription();
+		if (this.comboboxMode.getValue().equals("take"))
+		{
+			if (this.comboboxNumber.getValue().equals("all")) description = new Text("command." + this.id + ".take.all");
+			else description = new Text("command." + this.id + ".take");
+		} else if (this.comboboxNumber.getValue().equals("all")) description = new Text("command." + this.id + ".all");
+
+		if (this.comboboxNumber.getValue().equals("one")) description.addReplacement("<achievement>", this.panelAchievement.getAchievement().id);
+		try
+		{
+			Target t = this.panelTarget.generate();
+			if (t.type == TargetType.PLAYER && t.playerName.equals("")) description.addReplacement("<target>", "???");
+			else description.addReplacement("<target>", this.panelTarget.generate().toString());
+		} catch (CommandGenerationException e)
+		{
+			description.addReplacement("<target>", "???");
+		}
+
+		return description;
 	}
 
 	@Override

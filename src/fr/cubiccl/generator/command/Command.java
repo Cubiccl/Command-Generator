@@ -4,13 +4,14 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 
+import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
-public abstract class Command
+public abstract class Command implements ITranslated
 {
 	public final String id, structure;
 	private CGLabel labelDescription;
@@ -75,7 +76,7 @@ public abstract class Command
 	{
 		this.labelDescription = new CGLabel("command." + this.id);
 		this.labelDescription.setBorder(BorderFactory.createRaisedBevelBorder());
-		this.updateDescription();
+		this.updateTranslations();
 		return this.labelDescription;
 	}
 
@@ -135,8 +136,9 @@ public abstract class Command
 		return values.toArray(new String[values.size()]);
 	}
 
-	protected void updateDescription()
+	@Override
+	public void updateTranslations()
 	{
-		this.labelDescription.setTextID(this.description());
+		if (this.labelDescription != null) this.labelDescription.setTextID(this.description());
 	}
 }

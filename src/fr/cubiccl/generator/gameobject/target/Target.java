@@ -162,7 +162,19 @@ public class Target extends GameObject implements IObjectList<Target>
 	@Override
 	public String toString()
 	{
-		return this.toCommand();
+		if (this.type == TargetType.PLAYER) return this.playerName;
+		String s = new Text("target.type." + this.type.id).toString();
+		if (this.arguments.length != 0)
+		{
+			s += " (";
+			for (int i = 0; i < this.arguments.length; ++i)
+			{
+				if (i != 0) s += ",";
+				s += this.arguments[i].toCommand();
+			}
+			s += ")";
+		}
+		return s;
 	}
 
 	@Override

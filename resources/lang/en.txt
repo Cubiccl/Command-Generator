@@ -2039,7 +2039,10 @@ block.yellow_shulker_box=Yellow Shulker Box
 block.yellow_shulker_box.x=Yellow Shulker Box (<facing>)
 
 // COMMANDS
-command.achievement=Gives/removes one or all achievement(s) to/from a Player.
+command.achievement=Gives achievement <achievement> to <target>.
+command.achievement.all=Gives all achievements to <target>.
+command.achievement.take=Removes achievement <achievement> from <target>.
+command.achievement.take.all=Removes all achievements from <target>.
 command.blockdata=Changes the NBT Tags of a Block.
 command.clear=Removes Items from a Player's inventory.
 command.clone=Copies a region of blocks to a destination.
