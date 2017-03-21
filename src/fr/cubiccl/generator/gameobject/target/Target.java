@@ -163,7 +163,7 @@ public class Target extends GameObject implements IObjectList<Target>
 	public String toString()
 	{
 		if (this.type == TargetType.PLAYER) return this.playerName;
-		String s = new Text("target.type." + this.type.id).toString();
+		String s = new Text("target.type.tostring." + this.type.id).toString();
 		if (this.arguments.length != 0)
 		{
 			s += " (";

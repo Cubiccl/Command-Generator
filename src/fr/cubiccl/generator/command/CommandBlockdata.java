@@ -7,7 +7,6 @@ import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
@@ -50,7 +49,6 @@ public class CommandBlockdata extends Command
 		{
 			d.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
 		}
-		d.addReplacement("<nbt>", this.panelBlock.getNBT(Tags.DEFAULT_COMPOUND).valueForCommand());
 		return d;
 	}
 
