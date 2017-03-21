@@ -8,6 +8,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEnchantment;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandEnchant extends Command
 {
@@ -32,6 +33,13 @@ public class CommandEnchant extends Command
 		panel.add(this.panelEnchant = new PanelEnchantment(true), gbc);
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget())
+				.addReplacement("<enchantment>", this.panelEnchant.selectedEnchantment().name());
 	}
 
 	@Override

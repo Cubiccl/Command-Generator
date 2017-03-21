@@ -35,6 +35,12 @@ public class CommandTell extends Command
 	}
 
 	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget());
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		return this.id + " " + this.panelTarget.generate().toCommand() + " " + this.entryMessage.getText();

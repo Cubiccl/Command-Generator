@@ -11,6 +11,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEntity;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandEntitydata extends Command
 {
@@ -38,6 +39,12 @@ public class CommandEntitydata extends Command
 
 		this.panelEntity.setLabelExplainVisible(true);
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget());
 	}
 
 	@Override

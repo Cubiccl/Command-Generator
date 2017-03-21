@@ -30,6 +30,12 @@ public class CommandSay extends Command
 	}
 
 	@Override
+	protected Text description()
+	{
+		return this.defaultDescription();
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		return this.id + " " + this.entryMessage.getText();
