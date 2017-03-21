@@ -7,6 +7,7 @@ import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandTestforblocks extends Command
 {
@@ -37,6 +38,10 @@ public class CommandTestforblocks extends Command
 		++gbc.gridx;
 		panel.add(this.comboboxMode = new OptionCombobox("testforblocks.mode", "all", "masked"), gbc);
 
+		this.panelCoordinatesSourceStart.addArgumentChangeListener(this);
+		this.panelCoordinatesSourceEnd.addArgumentChangeListener(this);
+		this.panelCoordinatesDestination.addArgumentChangeListener(this);
+
 		return panel;
 	}
 
@@ -44,6 +49,16 @@ public class CommandTestforblocks extends Command
 	protected void defaultGui()
 	{
 		this.comboboxMode.setValue("all");
+	}
+
+	@Override
+	protected Text description()
+	{
+		Text d = this.defaultDescription();
+		d.addReplacement("<source_start>", this.panelCoordinatesSourceStart.displayCoordinates());
+		d.addReplacement("<source_end>", this.panelCoordinatesSourceEnd.displayCoordinates());
+		d.addReplacement("<destination>", this.panelCoordinatesDestination.displayCoordinates());
+		return d;
 	}
 
 	@Override

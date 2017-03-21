@@ -15,6 +15,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandFill extends Command implements ActionListener
 {
@@ -34,6 +35,7 @@ public class CommandFill extends Command implements ActionListener
 	{
 		if (e.getSource() == this.comboboxMode) this.finishReading();
 		else this.panelBlockReplace.setHasData(!this.checkboxData.isSelected());
+		this.updateTranslations();
 	}
 
 	@Override
@@ -60,6 +62,12 @@ public class CommandFill extends Command implements ActionListener
 		this.panelBlockReplace.setHasNBT(false);
 		this.comboboxMode.addActionListener(this);
 		this.checkboxData.addActionListener(this);
+
+		this.panelCoordinatesStart.addArgumentChangeListener(this);
+		this.panelCoordinatesEnd.addArgumentChangeListener(this);
+		this.panelBlockFill.addArgumentChangeListener(this);
+		this.panelBlockReplace.addArgumentChangeListener(this);
+
 		return panel;
 	}
 
@@ -74,9 +82,23 @@ public class CommandFill extends Command implements ActionListener
 	}
 
 	@Override
+	protected Text description()
+	{
+		if (this.isFiltering()) { return new Text("command." + this.id + ".filter")
+				.addReplacement("<block>", this.panelBlockFill.selectedBlock().name(this.panelBlockFill.selectedDamage()))
+				.addReplacement("<filter>", this.panelBlockReplace.selectedBlock().name(this.panelBlockFill.selectedDamage()))
+				.addReplacement("<source_start>", this.panelCoordinatesStart.displayCoordinates())
+				.addReplacement("<source_end>", this.panelCoordinatesEnd.displayCoordinates()); }
+
+		return this.defaultDescription().addReplacement("<block>", this.panelBlockFill.selectedBlock().name(this.panelBlockFill.selectedDamage()))
+				.addReplacement("<source_start>", this.panelCoordinatesStart.displayCoordinates())
+				.addReplacement("<source_end>", this.panelCoordinatesEnd.displayCoordinates());
+	}
+
+	@Override
 	protected void finishReading()
 	{
-		boolean filter = this.comboboxMode.getValue().equals("filter");
+		boolean filter = this.isFiltering();
 		this.panelBlockReplace.setVisible(filter);
 		this.panelBlockFill.setHasNBT(!filter);
 		this.checkboxData.setVisible(filter);
@@ -89,7 +111,7 @@ public class CommandFill extends Command implements ActionListener
 		String command = this.id + " " + this.panelCoordinatesStart.generate().toCommand() + " " + this.panelCoordinatesEnd.generate().toCommand() + " "
 				+ block.block.id() + " " + block.data + " ";
 
-		if (!this.comboboxMode.getValue().equals("filter"))
+		if (!this.isFiltering())
 		{
 			String nbt = block.nbt.valueForCommand();
 			return command + this.comboboxMode.getValue() + (nbt.equals("{}") ? "" : " " + nbt);
@@ -97,6 +119,11 @@ public class CommandFill extends Command implements ActionListener
 
 		PlacedBlock block2 = this.panelBlockReplace.generate();
 		return command + " replace " + block2.block.id() + (this.checkboxData.isSelected() ? "" : " " + block2.data);
+	}
+
+	private boolean isFiltering()
+	{
+		return this.comboboxMode.getValue().equals("filter");
 	}
 
 	@Override

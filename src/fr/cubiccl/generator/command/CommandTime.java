@@ -3,6 +3,8 @@ package fr.cubiccl.generator.command;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -25,6 +27,7 @@ public class CommandTime extends Command implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		this.finishReading();
+		this.updateTranslations();
 	}
 
 	@Override
@@ -49,8 +52,46 @@ public class CommandTime extends Command implements ActionListener
 		this.comboboxMode.addActionListener(this);
 		this.comboboxQuery.setVisible(false);
 		this.entryValue.addIntFilter();
+		this.entryValue.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
+			{}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				updateTranslations();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{}
+		});
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		if (this.comboboxMode.getValue().equals("query")) return new Text("command." + this.id + ".query");
+		if (this.comboboxMode.getValue().equals("set")) try
+		{
+			Integer.parseInt(this.entryValue.getText());
+			return new Text("command." + this.id + ".set").addReplacement("<time>", this.entryValue.getText());
+		} catch (Exception e)
+		{
+			return new Text("command." + this.id + ".set").addReplacement("<time>", "???");
+		}
+		try
+		{
+			Integer.parseInt(this.entryValue.getText());
+			return this.defaultDescription().addReplacement("<time>", this.entryValue.getText());
+		} catch (Exception e)
+		{
+			return this.defaultDescription().addReplacement("<time>", "???");
+		}
 	}
 
 	@Override

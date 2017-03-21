@@ -37,9 +37,22 @@ public class Text implements IObjectList<Text>
 		this(id, true, replacements);
 	}
 
-	public void addReplacement(Replacement replacement)
+	public Text addReplacement(Replacement replacement)
 	{
 		this.replacements.add(replacement);
+		return this;
+	}
+
+	public Text addReplacement(String pattern, String replacement)
+	{
+		this.addReplacement(new Replacement(pattern, replacement));
+		return this;
+	}
+
+	public Text addReplacement(String pattern, Text replacement)
+	{
+		this.addReplacement(new Replacement(pattern, replacement));
+		return this;
 	}
 
 	@Override

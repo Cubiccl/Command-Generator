@@ -33,9 +33,10 @@ public class CommandExecute extends Command implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		boolean block = this.checkboxBlock.isSelected();
+		boolean block = this.isDetecting();
 		this.panelBlock.setVisible(block);
 		this.panelBlockCoordinates.setVisible(block);
+		this.updateTranslations();
 	}
 
 	@Override
@@ -62,19 +63,43 @@ public class CommandExecute extends Command implements ActionListener
 		this.panelBlockCoordinates.setVisible(false);
 		this.checkboxBlock.addActionListener(this);
 
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelBlock.addArgumentChangeListener(this);
+		this.panelBlockCoordinates.addArgumentChangeListener(this);
+
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		Text d = this.defaultDescription();
+		if (this.isDetecting())
+		{
+			d = new Text("command." + this.id + ".detect");
+			d.addReplacement("<block>", this.panelBlock.selectedBlock().name(this.panelBlock.selectedDamage()));
+			d.addReplacement("<coordinates>", this.panelBlockCoordinates.displayCoordinates());
+		}
+		d.addReplacement("<target>", this.panelTarget.displayTarget());
+		return d;
 	}
 
 	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String command = this.id + " " + this.panelTarget.generate().toCommand() + " " + this.panelCoordinates.generate().toCommand() + " ";
-		if (this.checkboxBlock.isSelected())
+		if (this.isDetecting())
 		{
 			PlacedBlock block = this.panelBlock.generate();
 			command += "detect " + this.panelBlockCoordinates.generate().toCommand() + " " + block.block.id() + " " + block.data + " ";
 		}
 		return command;
+	}
+
+	private boolean isDetecting()
+	{
+		return this.checkboxBlock.isSelected();
 	}
 
 	@Override

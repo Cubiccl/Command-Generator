@@ -41,6 +41,12 @@ public class Achievement extends BaseObject
 	}
 
 	@Override
+	public String toString()
+	{
+		return this.name().toString();
+	}
+
+	@Override
 	public Element toXML()
 	{
 		return new Element("achievement").setAttribute("id", this.id().substring("minecraft:".length())).setAttribute("item",

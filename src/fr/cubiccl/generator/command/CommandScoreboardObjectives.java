@@ -3,6 +3,8 @@ package fr.cubiccl.generator.command;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
@@ -12,6 +14,7 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCriteria;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.Utils;
 
 public class CommandScoreboardObjectives extends Command implements ActionListener
 {
@@ -36,6 +39,7 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 	public void actionPerformed(ActionEvent e)
 	{
 		this.finishReading();
+		this.updateTranslations();
 	}
 
 	@Override
@@ -74,6 +78,23 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 		this.checkboxClearSlot.setVisible(false);
 		this.labelSlot.setVisible(false);
 
+		this.entryObjective.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
+			{}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				updateTranslations();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{}
+		});
+
 		return panel;
 	}
 
@@ -82,6 +103,25 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 	{
 		this.checkboxClearSlot.setSelected(true);
 		this.entryObjective.container.setVisible(false);
+	}
+
+	@Override
+	protected Text description()
+	{
+		Text d = this.defaultDescription();
+
+		if (!this.comboboxMode.getValue().equals("add")) d = new Text("command." + this.id + "." + this.comboboxMode.getValue());
+
+		String obj = this.entryObjective.getText();
+		try
+		{
+			Utils.checkStringId(null, obj);
+		} catch (Exception e)
+		{
+			obj = "???";
+		}
+
+		return d.addReplacement("<objective>", obj);
 	}
 
 	@Override

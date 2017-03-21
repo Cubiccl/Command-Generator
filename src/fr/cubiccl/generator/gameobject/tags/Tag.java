@@ -30,6 +30,7 @@ public abstract class Tag extends GameObject
 		this.isJson = isJson;
 	}
 
+	/** No indentation. */
 	@Override
 	@Deprecated
 	public String toCommand()

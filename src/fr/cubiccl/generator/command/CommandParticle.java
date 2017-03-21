@@ -1,6 +1,8 @@
 package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.baseobjects.Particle;
@@ -69,6 +71,16 @@ public class CommandParticle extends Command
 		this.entrySpeed.addIntFilter();
 		this.entryCount.addIntFilter();
 
+		this.panelParticle.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				updateTranslations();
+			}
+		});
+		this.panelCoordinates.addArgumentChangeListener(this);
+
 		return panel;
 	}
 
@@ -79,6 +91,13 @@ public class CommandParticle extends Command
 		this.checkboxForce.setSelected(false);
 		this.panelParticle.setParam1(0);
 		this.panelParticle.setParam2(0);
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<particle>", this.panelParticle.selectedParticle().name())
+				.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
 	}
 
 	@Override

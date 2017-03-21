@@ -1,24 +1,32 @@
 package fr.cubiccl.generator.gui.component.panel.gameobject;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.HashSet;
+import java.util.Set;
 
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
+import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class PanelCoordinates extends CGPanel implements ICustomObject<Coordinates>
+public class PanelCoordinates extends CGPanel implements ICustomObject<Coordinates>, ActionListener, KeyListener
 {
 	private static final long serialVersionUID = -6721007750575550659L;
 
 	private boolean canBeRelative;
 	private CGCheckBox checkboxX, checkboxY, checkboxZ;
 	private CGEntry entryX, entryY, entryZ;
+	private Set<ITranslated> listeners;
 
 	public PanelCoordinates(String titleID)
 	{
@@ -34,6 +42,7 @@ public class PanelCoordinates extends CGPanel implements ICustomObject<Coordinat
 	{
 		super(titleID);
 		this.canBeRelative = canBeRelative;
+		this.listeners = new HashSet<ITranslated>();
 
 		GridBagConstraints gbc = this.createGridBagLayout();
 		this.add((this.entryX = new CGEntry(new Text("coordinate.x"), "0", Text.NUMBER)).container, gbc);
@@ -69,6 +78,67 @@ public class PanelCoordinates extends CGPanel implements ICustomObject<Coordinat
 			this.checkboxY.setVisible(false);
 			this.checkboxZ.setVisible(false);
 		}
+
+		this.entryX.addKeyListener(this);
+		this.entryY.addKeyListener(this);
+		this.entryZ.addKeyListener(this);
+		this.checkboxX.addActionListener(this);
+		this.checkboxY.addActionListener(this);
+		this.checkboxZ.addActionListener(this);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e)
+	{
+		for (ITranslated listener : this.listeners)
+			listener.updateTranslations();
+	}
+
+	public void addArgumentChangeListener(ITranslated listener)
+	{
+		this.listeners.add(listener);
+	}
+
+	public String displayCoordinates()
+	{
+		try
+		{
+			return this.generate().toString();
+		} catch (CommandGenerationException e)
+		{}
+
+		String coords = "X=";
+
+		try
+		{
+			float f = Float.parseFloat(this.entryX.getText());
+			coords += (this.checkboxX.isSelected() ? "~" : "") + (f == 0 && this.checkboxX.isSelected() ? "" : f);
+		} catch (NumberFormatException e)
+		{
+			coords += "???";
+		}
+
+		coords += ", Y=";
+		try
+		{
+			float f = Float.parseFloat(this.entryY.getText());
+			coords += (this.checkboxY.isSelected() ? "~" : "") + (f == 0 && this.checkboxY.isSelected() ? "" : f);
+		} catch (NumberFormatException e)
+		{
+			coords += "???";
+		}
+
+		coords += ", Z=";
+		try
+		{
+			float f = Float.parseFloat(this.entryZ.getText());
+			coords += (this.checkboxZ.isSelected() ? "~" : "") + (f == 0 && this.checkboxZ.isSelected() ? "" : f);
+		} catch (NumberFormatException e)
+		{
+			coords += "???";
+		}
+
+		return coords;
 	}
 
 	@Override
@@ -79,6 +149,26 @@ public class PanelCoordinates extends CGPanel implements ICustomObject<Coordinat
 		this.entryZ.checkValue(CGEntry.FLOAT);
 		float x = Float.parseFloat(this.entryX.getText()), y = Float.parseFloat(this.entryY.getText()), z = Float.parseFloat(this.entryZ.getText());
 		return new Coordinates(x, y, z, this.checkboxX.isSelected(), this.checkboxY.isSelected(), this.checkboxZ.isSelected());
+	}
+
+	@Override
+	public void keyPressed(KeyEvent e)
+	{}
+
+	@Override
+	public void keyReleased(KeyEvent e)
+	{
+		for (ITranslated listener : this.listeners)
+			listener.updateTranslations();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e)
+	{}
+
+	public void removeArgumentChangeListener(ITranslated listener)
+	{
+		this.listeners.remove(listener);
 	}
 
 	/** Changes the text of the coordinate entries. */

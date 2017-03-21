@@ -15,6 +15,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandTestforblock extends Command implements ActionListener
 {
@@ -49,6 +50,9 @@ public class CommandTestforblock extends Command implements ActionListener
 
 		this.checkboxIgnoreData.addActionListener(this);
 
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelBlock.addArgumentChangeListener(this);
+
 		return panel;
 	}
 
@@ -59,6 +63,15 @@ public class CommandTestforblock extends Command implements ActionListener
 		this.panelBlock.setData(0);
 		this.panelBlock.setHasData(true);
 		this.checkboxIgnoreData.setSelected(false);
+	}
+
+	@Override
+	protected Text description()
+	{
+		Text d = this.defaultDescription();
+		d.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
+		d.addReplacement("<block>", this.panelBlock.selectedBlock().name(this.panelBlock.selectedDamage()));
+		return d;
 	}
 
 	@Override

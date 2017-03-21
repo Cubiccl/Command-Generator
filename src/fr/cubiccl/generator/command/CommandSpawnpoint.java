@@ -11,6 +11,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandSpawnpoint extends Command implements ActionListener
 {
@@ -44,6 +45,8 @@ public class CommandSpawnpoint extends Command implements ActionListener
 		panel.add(this.panelCoordinates = new PanelCoordinates("spawnpoint.coordinates"), gbc);
 
 		this.checkbox.addActionListener(this);
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelCoordinates.addArgumentChangeListener(this);
 
 		return panel;
 	}
@@ -53,6 +56,13 @@ public class CommandSpawnpoint extends Command implements ActionListener
 	{
 		this.checkbox.setSelected(true);
 		this.panelCoordinates.setVisible(false);
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget())
+				.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
 	}
 
 	@Override

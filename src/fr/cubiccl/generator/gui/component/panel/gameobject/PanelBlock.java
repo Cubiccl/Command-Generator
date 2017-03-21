@@ -3,6 +3,8 @@ package fr.cubiccl.generator.gui.component.panel.gameobject;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.HashSet;
+import java.util.Set;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
@@ -15,6 +17,7 @@ import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
+import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -32,6 +35,7 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 	private boolean hasData;
 	private CGLabel labelName;
 	private ImageLabel labelTexture;
+	private Set<ITranslated> listeners;
 	private PanelTags panelTags;
 
 	public PanelBlock(String titleID)
@@ -45,6 +49,7 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		this.hasData = hasData;
 		this.block = ObjectRegistry.blocks.find("stone");
 		this.damage = 0;
+		this.listeners = new HashSet<ITranslated>();
 
 		GridBagConstraints gbc = this.createGridBagLayout();
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -84,6 +89,11 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		}
 	}
 
+	public void addArgumentChangeListener(ITranslated listener)
+	{
+		this.listeners.add(listener);
+	}
+
 	@Override
 	public PlacedBlock generate() throws CommandGenerationException
 	{
@@ -98,6 +108,11 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 	public TagCompound getNBT(TemplateCompound container)
 	{
 		return this.panelTags.generateTags(container);
+	}
+
+	public void removeArgumentChangeListener(ITranslated listener)
+	{
+		this.listeners.remove(listener);
 	}
 
 	public Block selectedBlock()
@@ -164,6 +179,8 @@ public class PanelBlock extends CGPanel implements ActionListener, IStateListene
 		if (this.hasData) this.labelName.setText(this.selectedBlock().name(this.damage).toString());
 		else this.labelName.setText(this.selectedBlock().mainName().toString());
 		this.labelTexture.setImage(this.selectedBlock().texture(this.damage));
+		for (ITranslated listener : this.listeners)
+			listener.updateTranslations();
 	}
 
 	@Override

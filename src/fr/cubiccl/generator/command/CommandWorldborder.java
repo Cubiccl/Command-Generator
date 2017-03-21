@@ -3,6 +3,8 @@ package fr.cubiccl.generator.command;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -10,8 +12,9 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.Utils;
 
-public class CommandWorldborder extends Command implements ActionListener
+public class CommandWorldborder extends Command implements ActionListener, KeyListener
 {
 	private OptionCombobox comboboxMode, comboboxMode2;
 	private CGEntry entryValue, entryValue2;
@@ -29,6 +32,7 @@ public class CommandWorldborder extends Command implements ActionListener
 		{
 			this.finishReading();
 		}
+		this.updateTranslations();
 	}
 
 	@Override
@@ -59,8 +63,33 @@ public class CommandWorldborder extends Command implements ActionListener
 
 		this.entryValue.addNumberFilter();
 		this.entryValue2.addNumberFilter();
+		this.entryValue.addKeyListener(this);
+		this.entryValue2.addKeyListener(this);
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		String value = this.entryValue.getText(), value2 = this.entryValue.getText();
+		try
+		{
+			Utils.checkInteger(null, value);
+		} catch (Exception e)
+		{
+			value = "???";
+		}
+		try
+		{
+			Utils.checkInteger(null, value2);
+		} catch (Exception e)
+		{
+			value2 = "???";
+		}
+		if (!this.comboboxMode.getValue().equals("set")) return new Text("command." + this.id + "." + this.comboboxMode.getValue()).addReplacement("<value>",
+				value).addReplacement("<value2>", value2);
+		return this.defaultDescription().addReplacement("<value>", value);
 	}
 
 	@Override
@@ -118,6 +147,20 @@ public class CommandWorldborder extends Command implements ActionListener
 				return command;
 		}
 	}
+
+	@Override
+	public void keyPressed(KeyEvent e)
+	{}
+
+	@Override
+	public void keyReleased(KeyEvent e)
+	{
+		this.updateTranslations();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e)
+	{}
 
 	@Override
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException

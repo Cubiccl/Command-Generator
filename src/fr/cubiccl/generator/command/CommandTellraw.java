@@ -13,6 +13,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelListJsonMessage;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandTellraw extends Command
 {
@@ -36,7 +37,15 @@ public class CommandTellraw extends Command
 		++gbc.gridy;
 		panel.add(this.panelJson = new PanelListJsonMessage(), gbc);
 
+		this.panelTarget.addArgumentChangeListener(this);
+
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget());
 	}
 
 	@Override

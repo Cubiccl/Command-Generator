@@ -15,6 +15,8 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Replacement;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandClear extends Command implements ActionListener
 {
@@ -31,6 +33,17 @@ public class CommandClear extends Command implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == this.checkboxAllItem || e.getSource() == this.checkboxIgnoreData || e.getSource() == this.checkboxAll) this.finishReading();
+		this.updateTranslations();
+	}
+
+	private boolean clearAll()
+	{
+		return this.checkboxAll.isSelected();
+	}
+
+	private boolean clearAllItems()
+	{
+		return this.checkboxAllItem.isSelected();
 	}
 
 	@Override
@@ -56,6 +69,12 @@ public class CommandClear extends Command implements ActionListener
 		this.checkboxIgnoreData.addActionListener(this);
 		this.checkboxAll.addActionListener(this);
 
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelItem.addArgumentChangeListener(this);
+		this.checkboxAll.addActionListener(this);
+		this.checkboxAllItem.addActionListener(this);
+		this.checkboxIgnoreData.addActionListener(this);
+
 		return panel;
 	}
 
@@ -70,9 +89,27 @@ public class CommandClear extends Command implements ActionListener
 	}
 
 	@Override
+	protected Text description()
+	{
+		String target = this.panelTarget.displayTarget();
+
+		if (this.clearAllItems()) return new Text("command." + this.id + ".all", new Replacement("<target>", target));
+		Text d = this.defaultDescription();
+		if (!this.clearAll())
+		{
+			d = new Text("command." + this.id + ".quantity");
+			d.addReplacement("<quantity>", Integer.toString(this.panelItem.selectedAmount()));
+		}
+		if (this.ignoreData()) d.addReplacement("<item>", this.panelItem.selectedItem().name());
+		else d.addReplacement("<item>", this.panelItem.selectedItem().name(this.panelItem.selectedDamage()));
+		d.addReplacement("<target>", target);
+		return d;
+	}
+
+	@Override
 	protected void finishReading()
 	{
-		boolean item = !this.checkboxAllItem.isSelected();
+		boolean item = !this.clearAllItems();
 		this.panelItem.setVisible(item);
 		this.checkboxIgnoreData.setVisible(item);
 		this.checkboxAll.setVisible(item);
@@ -83,11 +120,16 @@ public class CommandClear extends Command implements ActionListener
 	public String generate() throws CommandGenerationException
 	{
 		ItemStack item = this.panelItem.generate();
-		if (this.checkboxAllItem.isSelected()) return "/clear " + this.panelTarget.generate().toCommand();
+		if (this.clearAllItems()) return "/clear " + this.panelTarget.generate().toCommand();
 		int data = item.damage, amount = item.amount;
-		if (this.checkboxIgnoreData.isSelected()) data = -1;
-		if (this.checkboxAll.isSelected()) amount = -1;
+		if (this.ignoreData()) data = -1;
+		if (this.clearAll()) amount = -1;
 		return this.id + " " + this.panelTarget.generate().toCommand() + " " + item.item.id() + " " + data + " " + amount + " " + item.nbt.valueForCommand();
+	}
+
+	private boolean ignoreData()
+	{
+		return this.checkboxIgnoreData.isSelected();
 	}
 
 	@Override
@@ -110,7 +152,7 @@ public class CommandClear extends Command implements ActionListener
 		} else if (index == 4)
 		{
 			this.checkboxAll.setSelected(argument.equals("-1"));
-			if (!this.checkboxAll.isSelected()) try
+			if (this.clearAll()) try
 			{
 				this.panelItem.setCount(Integer.parseInt(argument));
 			} catch (NumberFormatException e)

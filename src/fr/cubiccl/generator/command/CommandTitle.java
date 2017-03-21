@@ -36,6 +36,7 @@ public class CommandTitle extends Command implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		this.finishReading();
+		this.updateTranslations();
 	}
 
 	@Override
@@ -66,7 +67,17 @@ public class CommandTitle extends Command implements ActionListener
 		this.entryStay.addIntFilter();
 		this.entryFadeOut.addIntFilter();
 
+		this.panelTarget.addArgumentChangeListener(this);
+
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		if (this.comboboxMode.getValue().equals("times") || this.comboboxMode.getValue().equals("reset")) return new Text("command." + this.id + ".times")
+				.addReplacement("<target>", this.panelTarget.displayTarget());
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget());
 	}
 
 	@Override

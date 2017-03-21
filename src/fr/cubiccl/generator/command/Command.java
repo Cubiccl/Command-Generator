@@ -4,15 +4,17 @@ import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 
+import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
-public abstract class Command
+public abstract class Command implements ITranslated
 {
 	public final String id, structure;
+	private CGLabel labelDescription;
 	private final int[] lengths;
 	private CGPanel panel;
 
@@ -38,9 +40,16 @@ public abstract class Command
 
 	protected abstract CGPanel createGUI();
 
+	protected Text defaultDescription()
+	{
+		return new Text("command." + this.id);
+	}
+
 	/** Called when creating the GUI. Also called before the first argument is read. */
 	protected void defaultGui()
 	{}
+
+	protected abstract Text description();
 
 	/** Called after the last argument is read. */
 	protected void finishReading()
@@ -55,6 +64,7 @@ public abstract class Command
 			this.panel = this.createGUI();
 			this.defaultGui();
 		}
+		this.updateTranslations();
 		return this.panel;
 	}
 
@@ -65,9 +75,9 @@ public abstract class Command
 
 	protected CGLabel labelDescription()
 	{
-		CGLabel l = new CGLabel("command." + this.id);
-		l.setBorder(BorderFactory.createRaisedBevelBorder());
-		return l;
+		this.labelDescription = new CGLabel("command." + this.id);
+		this.labelDescription.setBorder(BorderFactory.createRaisedBevelBorder());
+		return this.labelDescription;
 	}
 
 	/** This method is called when loading a Command, for each argument. Should read the argument and load the part corresponding to it.
@@ -124,5 +134,11 @@ public abstract class Command
 
 		if (l != -1) values.add(current);
 		return values.toArray(new String[values.size()]);
+	}
+
+	@Override
+	public void updateTranslations()
+	{
+		if (this.labelDescription != null) this.labelDescription.setTextID(this.description());
 	}
 }

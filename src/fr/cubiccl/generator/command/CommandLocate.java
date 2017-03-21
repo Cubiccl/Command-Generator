@@ -1,11 +1,14 @@
 package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandLocate extends Command
 {
@@ -31,7 +34,22 @@ public class CommandLocate extends Command
 		panel.add(this.comboboxStructure = new OptionCombobox("locate", "EndCity", "Fortress", "Mansion", "Mineshaft", "Monument", "Stronghold", "Temple",
 				"Village"), gbc);
 
+		this.comboboxStructure.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				updateTranslations();
+			}
+		});
+
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<structure>", new Text("locate." + this.comboboxStructure.getValue()));
 	}
 
 	@Override

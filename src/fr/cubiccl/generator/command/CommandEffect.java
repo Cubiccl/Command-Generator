@@ -11,6 +11,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEffect;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandEffect extends Command implements ActionListener
 {
@@ -27,6 +28,7 @@ public class CommandEffect extends Command implements ActionListener
 	public void actionPerformed(ActionEvent arg0)
 	{
 		this.panelEffect.setVisible(this.comboboxMode.getValue().equals("apply"));
+		this.updateTranslations();
 	}
 
 	@Override
@@ -44,6 +46,8 @@ public class CommandEffect extends Command implements ActionListener
 		panel.add(this.panelEffect = new PanelEffect(), gbc);
 
 		this.comboboxMode.addActionListener(this);
+		this.panelEffect.addActionListener(this);
+		this.panelTarget.addArgumentChangeListener(this);
 
 		return panel;
 	}
@@ -58,13 +62,26 @@ public class CommandEffect extends Command implements ActionListener
 	}
 
 	@Override
+	protected Text description()
+	{
+		String target = this.panelTarget.displayTarget();
+		if (this.isClearing()) return new Text("command." + this.id + ".clear").addReplacement("<target>", target);
+		return this.defaultDescription().addReplacement("<target>", target).addReplacement("<effect>", this.panelEffect.selectedEffect().name());
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String command = this.id + " " + this.panelTarget.generate().toCommand() + " ";
 
-		if (this.comboboxMode.getValue().equals("clear")) return command + "clear";
+		if (this.isClearing()) return command + "clear";
 
 		return command + this.panelEffect.generate().toCommand();
+	}
+
+	private boolean isClearing()
+	{
+		return this.comboboxMode.getSelectedIndex() == 1;
 	}
 
 	@Override

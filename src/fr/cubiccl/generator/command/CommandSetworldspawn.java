@@ -6,6 +6,7 @@ import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandSetworldspawn extends Command
 {
@@ -25,8 +26,15 @@ public class CommandSetworldspawn extends Command
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		panel.add(this.panelCoordinates = new PanelCoordinates("spawnpoint.coordinates"), gbc);
+		this.panelCoordinates.addArgumentChangeListener(this);
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
 	}
 
 	@Override

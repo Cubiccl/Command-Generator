@@ -167,13 +167,15 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 	{
 		String text = "X=";
 		if (this.xRelative) text += "~";
-		text += this.x + ", Y=";
+		if (!this.xRelative || this.x != 0) text += this.x;
 
+		text += ", Y=";
 		if (this.yRelative) text += "~";
-		text += this.y + " ,Z=";
+		if (!this.yRelative || this.y != 0) text += this.y;
 
+		text += ", Z=";
 		if (this.zRelative) text += "~";
-		text += this.z;
+		if (!this.zRelative || this.z != 0) text += this.z;
 
 		return text;
 	}

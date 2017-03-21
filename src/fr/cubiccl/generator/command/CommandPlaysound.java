@@ -1,6 +1,8 @@
 package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.baseobjects.Sound;
@@ -72,6 +74,16 @@ public class CommandPlaysound extends Command
 		this.entryPitch.addHelpLabel(new HelpLabel("playsound.pitch.help"));
 		this.entryMinVolume.addHelpLabel(new HelpLabel("playsound.minimum_volume.help"));
 
+		this.comboboxSound.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				updateTranslations();
+			}
+		});
+		this.panelTarget.addArgumentChangeListener(this);
+
 		return panel;
 	}
 
@@ -85,6 +97,13 @@ public class CommandPlaysound extends Command
 	}
 
 	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<sound>", this.comboboxSound.getSelectedObject().id())
+				.addReplacement("<target>", this.panelTarget.displayTarget());
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String v = this.entryVolume.getText(), p = this.entryPitch.getText(), mv = this.entryMinVolume.getText();
@@ -93,8 +112,8 @@ public class CommandPlaysound extends Command
 		this.entryPitch.checkValueInBounds(CGEntry.FLOAT, 0, 2);
 		this.entryMinVolume.checkValueSuperior(CGEntry.FLOAT, 0);
 
-		return this.id + " " + this.comboboxSound.getSelectedObject().id() + " " + this.comboboxSource.getValue() + " " + this.panelTarget.generate().toCommand()
-				+ this.panelCoordinates.generate().toCommand() + " " + v + " " + p + " " + mv;
+		return this.id + " " + this.comboboxSound.getSelectedObject().id() + " " + this.comboboxSource.getValue() + " "
+				+ this.panelTarget.generate().toCommand() + this.panelCoordinates.generate().toCommand() + " " + v + " " + p + " " + mv;
 	}
 
 	@Override

@@ -59,7 +59,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		boolean block = this.comboboxMode.getValue().equals("block");
+		boolean block = this.isBlock();
 		if (e.getSource() == this.comboboxMode)
 		{
 			this.finishReading();
@@ -69,6 +69,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 			p.showContainerFor(block ? this.selectedBlockSlot : this.selectedEntitySlot);
 			CommandGenerator.stateManager.setState(p, this);
 		}
+		this.updateTranslations();
 	}
 
 	@Override
@@ -98,6 +99,10 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 		this.buttonSlot.addActionListener(this);
 		this.panelTarget.setVisible(false);
 
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelItem.addArgumentChangeListener(this);
+
 		return panel;
 	}
 
@@ -110,9 +115,18 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 	}
 
 	@Override
+	protected Text description()
+	{
+		if (this.isBlock()) return new Text("command." + this.id + ".block").addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates())
+				.addReplacement("<item>", this.panelItem.selectedItem().name(this.panelItem.selectedDamage()));
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget())
+				.addReplacement("<item>", this.panelItem.selectedItem().name(this.panelItem.selectedDamage()));
+	}
+
+	@Override
 	protected void finishReading()
 	{
-		boolean block = this.comboboxMode.getValue().equals("block");
+		boolean block = this.isBlock();
 		this.panelCoordinates.setVisible(block);
 		this.panelTarget.setVisible(!block);
 		if (block) this.labelSlot.setTextID(new Text("replaceitem.slot.selected", new Replacement("<slot>", this.selectedBlockSlot)));
@@ -123,9 +137,14 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 	public String generate() throws CommandGenerationException
 	{
 		String command = this.id + " " + this.comboboxMode.getValue() + " ";
-		if (this.comboboxMode.getValue().equals("block")) command += this.panelCoordinates.generate().toCommand() + " " + this.selectedBlockSlot;
+		if (this.isBlock()) command += this.panelCoordinates.generate().toCommand() + " " + this.selectedBlockSlot;
 		else command += this.panelTarget.generate().toCommand() + " " + this.selectedEntitySlot;
 		return command + " " + this.panelItem.generate().toCommand();
+	}
+
+	private boolean isBlock()
+	{
+		return this.comboboxMode.getValue().equals("block");
 	}
 
 	@Override

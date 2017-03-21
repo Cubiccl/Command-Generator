@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gui.component.panel.gameobject;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.Enchantment;
 import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
@@ -51,6 +52,11 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 		this.entryLevel.addIntFilter();
 
 		this.updateTranslations();
+	}
+
+	public void addActionListener(ActionListener actionListener)
+	{
+		this.comboboxEnchant.addActionListener(actionListener);
 	}
 
 	public Enchantment generate() throws CommandGenerationException

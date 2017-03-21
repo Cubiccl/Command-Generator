@@ -14,49 +14,54 @@ public class Commands
 	public static void createCommands(LoadingFrame frame)
 	{
 		frame.setText("loading.commands");
-		new CommandAchievement();
-		new CommandBlockdata();
-		new CommandClear();
-		new CommandClone();
-		new CommandDefaultgamemode();
-		new CommandDifficulty();
-		new CommandEffect();
-		new CommandEnchant();
-		new CommandEntitydata("entitydata");
-		new CommandExecute();
-		new CommandFill();
-		new CommandGamemode();
-		new CommandGamerule();
-		new CommandGive();
-		new CommandKill();
-		new CommandLocate();
-		new CommandParticle();
-		new CommandPlaysound();
-		new CommandReplaceitem();
-		new CommandSay();
-		new CommandScoreboardObjectives();
-		new CommandScoreboardPlayers();
-		new CommandScoreboardTeams();
-		new CommandSetblock();
-		new CommandSetworldspawn();
-		new CommandSpawnpoint();
-		new CommandSpreadplayers();
-		new CommandStats();
-		new CommandStopsound();
-		new CommandSummon();
-		new CommandTeleport();
-		new CommandTell();
-		new CommandTellraw();
-		new CommandEntitydata("testfor");
-		new CommandTestforblock();
-		new CommandTestforblocks();
-		new CommandTime();
-		new CommandTitle();
-		new CommandTp();
-		new CommandTrigger();
-		new CommandWeather();
-		new CommandWorldborder();
-		new CommandXp();
+		// TODO remove try catch
+		try
+		{
+			new CommandAchievement();
+			new CommandBlockdata();
+			new CommandClear();
+			new CommandClone();
+			new CommandDefaultgamemode();
+			new CommandDifficulty();
+			new CommandEffect();
+			new CommandEnchant();
+			new CommandEntitydata("entitydata");
+			new CommandExecute();
+			new CommandFill();
+			new CommandGamemode();
+			new CommandGamerule();
+			new CommandGive();
+			new CommandKill();
+			new CommandLocate();
+			new CommandParticle();
+			new CommandPlaysound();
+			new CommandReplaceitem();
+			new CommandSay();
+			new CommandScoreboardObjectives();
+			new CommandScoreboardPlayers();
+			new CommandScoreboardTeams();
+			new CommandSetblock();
+			new CommandSetworldspawn();
+			new CommandSpawnpoint();
+			new CommandSpreadplayers();
+			new CommandStats();
+			new CommandStopsound();
+			new CommandSummon();
+			new CommandTeleport();
+			new CommandTell();
+			new CommandTellraw();
+			new CommandEntitydata("testfor");
+			new CommandTestforblock();
+			new CommandTestforblocks();
+			new CommandTime();
+			new CommandTitle();
+			new CommandTp();
+			new CommandTrigger();
+			new CommandWeather();
+			new CommandWorldborder();
+			new CommandXp();
+		} catch (Exception e)
+		{}
 	}
 
 	public static Command getCommandFromID(String id)

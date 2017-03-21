@@ -3,6 +3,8 @@ package fr.cubiccl.generator.command;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
@@ -31,6 +33,7 @@ public class CommandScoreboardTeams extends Command implements ActionListener
 	{
 		if (e.getSource() == this.comboboxMode) this.onModeChange();
 		else this.onOptionChange();
+		this.updateTranslations();
 	}
 
 	@Override
@@ -59,7 +62,43 @@ public class CommandScoreboardTeams extends Command implements ActionListener
 		this.comboboxMode.addActionListener(this);
 		this.comboboxOptionName.addActionListener(this);
 
+		this.panelTarget.addArgumentChangeListener(this);
+		this.entryTeam.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
+			{}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				updateTranslations();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{}
+		});
+
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		Text d = this.defaultDescription();
+		if (!this.comboboxMode.getValue().equals("add")) d = new Text("command." + this.id + "." + this.comboboxMode.getValue());
+
+		String team = this.entryTeam.getText();
+		try
+		{
+			Utils.checkStringId(null, team);
+		} catch (Exception e)
+		{
+			team = "???";
+		}
+
+		return d.addReplacement("<team>", team).addReplacement("<target>", this.panelTarget.displayTarget());
 	}
 
 	@Override

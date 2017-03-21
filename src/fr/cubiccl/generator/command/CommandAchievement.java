@@ -11,9 +11,13 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelAchievement;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandAchievement extends Command implements ActionListener
 {
+	private static final byte GIVE = 0, TAKE = 1;
+	private static final byte ONE = 0, ALL = 1;
+
 	private OptionCombobox comboboxMode, comboboxNumber;
 	private PanelAchievement panelAchievement;
 	private PanelTarget panelTarget;
@@ -27,6 +31,7 @@ public class CommandAchievement extends Command implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		this.panelAchievement.setVisible(!this.comboboxNumber.getValue().equals("all"));
+		this.updateTranslations();
 	}
 
 	@Override
@@ -52,19 +57,50 @@ public class CommandAchievement extends Command implements ActionListener
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget("target.title.player", PanelTarget.PLAYERS_ONLY), gbc);
 
+		this.comboboxMode.addActionListener(this);
 		this.comboboxNumber.addActionListener(this);
+		this.panelAchievement.addArgumentChangeListener(this);
+		this.panelTarget.addArgumentChangeListener(this);
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		Text description = this.defaultDescription();
+		if (this.mode() == TAKE)
+		{
+			if (this.numberMode() == ALL) description = new Text("command." + this.id + ".take.all");
+			else description = new Text("command." + this.id + ".take");
+		} else if (this.numberMode() == ALL) description = new Text("command." + this.id + ".all");
+
+		if (this.numberMode() == ONE) description.addReplacement("<achievement>", this.panelAchievement.getAchievement().toString());
+		description.addReplacement("<target>", this.panelTarget.displayTarget());
+
+		return description;
 	}
 
 	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String command = this.id + " " + this.comboboxMode.getValue() + " ";
-		if (this.comboboxNumber.getValue().equals("all")) command += "* ";
+		if (this.numberMode() == ALL) command += "* ";
 		else command += "achievement." + this.panelAchievement.getAchievement().id.substring("minecraft:".length()) + " ";
 
 		return command + this.panelTarget.generate().toCommand();
+	}
+
+	private byte mode()
+	{
+		if (this.comboboxMode == null) return GIVE;
+		return (byte) this.comboboxMode.getSelectedIndex();
+	}
+
+	private byte numberMode()
+	{
+		if (this.comboboxNumber == null) return ONE;
+		return (byte) this.comboboxNumber.getSelectedIndex();
 	}
 
 	@Override

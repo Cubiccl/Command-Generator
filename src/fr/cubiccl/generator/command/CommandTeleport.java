@@ -54,6 +54,9 @@ public class CommandTeleport extends Command
 		this.entryXRot.addNumberFilter();
 		this.entryYRot.addNumberFilter();
 
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelTarget.addArgumentChangeListener(this);
+
 		return panel;
 	}
 
@@ -64,6 +67,13 @@ public class CommandTeleport extends Command
 		this.entryYRot.setText("0");
 		this.checkboxXRot.setSelected(true);
 		this.checkboxXRot.setSelected(true);
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget())
+				.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
 	}
 
 	@Override

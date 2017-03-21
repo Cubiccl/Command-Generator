@@ -1,8 +1,9 @@
 package fr.cubiccl.generator.gui.component.panel.gameobject;
 
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
+import java.awt.event.*;
+import java.util.HashSet;
+import java.util.Set;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.ItemStack;
@@ -15,6 +16,7 @@ import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
+import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -34,6 +36,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 	private Item item;
 	private CGLabel labelName;
 	private ImageLabel labelTexture;
+	private Set<ITranslated> listeners;
 	private PanelTags panelTags;
 	private CGSpinner spinnerAmount, spinnerDurability;
 
@@ -49,6 +52,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this.availableItems = items;
 		this.item = this.availableItems[0];
 		this.damage = 0;
+		this.listeners = new HashSet<ITranslated>();
 
 		GridBagConstraints gbc = this.createGridBagLayout();
 		gbc.anchor = GridBagConstraints.CENTER;
@@ -72,6 +76,20 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 
 		this.buttonSelectItem.addActionListener(this);
 		this.panelTags.setTargetObject(this.item);
+		this.spinnerAmount.addFocusListener(new FocusListener()
+		{
+
+			@Override
+			public void focusGained(FocusEvent e)
+			{}
+
+			@Override
+			public void focusLost(FocusEvent e)
+			{
+				for (ITranslated listener : listeners)
+					listener.updateTranslations();
+			}
+		});
 		this.updateDisplay();
 	}
 
@@ -99,6 +117,11 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		}
 	}
 
+	public void addArgumentChangeListener(ITranslated listener)
+	{
+		this.listeners.add(listener);
+	}
+
 	@Override
 	public ItemStack generate()
 	{
@@ -108,6 +131,11 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 	public TagCompound getNBT(TemplateCompound container)
 	{
 		return this.panelTags.generateTags(container);
+	}
+
+	public void removeArgumentChangeListener(ITranslated listener)
+	{
+		this.listeners.remove(listener);
 	}
 
 	public int selectedAmount()
@@ -224,6 +252,8 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this.labelTexture.setImage(this.selectedItem().texture(this.damage));
 
 		this.spinnerDurability.container.setVisible(this.hasData && this.hasDurability && this.item.hasDurability);
+		for (ITranslated listener : this.listeners)
+			listener.updateTranslations();
 	}
 
 	@Override

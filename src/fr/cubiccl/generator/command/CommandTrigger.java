@@ -1,12 +1,17 @@
 package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.Utils;
 
 public class CommandTrigger extends Command
 {
@@ -34,8 +39,57 @@ public class CommandTrigger extends Command
 		panel.add((this.entryValue = new CGEntry(Text.VALUE, "0", Text.INTEGER)).container, gbc);
 
 		this.entryValue.addIntFilter();
+		this.entryValue.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
+			{}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				updateTranslations();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{}
+		});
+		this.comboboxMode.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				updateTranslations();
+			}
+		});
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		String obj = this.entryObjective.getText(), value = this.entryValue.getText();
+
+		try
+		{
+			Utils.checkStringId(null, obj);
+		} catch (CommandGenerationException e)
+		{
+			obj = "???";
+		}
+		try
+		{
+			Utils.checkInteger(null, value);
+		} catch (CommandGenerationException e)
+		{
+			value = "???";
+		}
+
+		if (this.comboboxMode.getValue().equals("add")) return new Text("command." + this.id + ".add").addReplacement("<value>", value).addReplacement(
+				"<objective>", obj);
+		return this.defaultDescription().addReplacement("<value>", value).addReplacement("<objective>", obj);
 	}
 
 	@Override

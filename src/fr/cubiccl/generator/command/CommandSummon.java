@@ -1,6 +1,8 @@
 package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.LivingEntity;
@@ -12,6 +14,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEntity;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandSummon extends Command
 {
@@ -35,6 +38,16 @@ public class CommandSummon extends Command
 		++gbc.gridy;
 		panel.add(this.panelEntity = new PanelEntity("summon.entity", true, true, false), gbc);
 
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelEntity.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				updateTranslations();
+			}
+		});
+
 		return panel;
 	}
 
@@ -43,6 +56,13 @@ public class CommandSummon extends Command
 	{
 		this.panelCoordinates.setupFrom(new Coordinates(0, 0, 0, true, true, true));
 		this.panelEntity.setTags(new Tag[0]);
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<entity>", this.panelEntity.selectedEntity().name())
+				.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
 	}
 
 	@Override

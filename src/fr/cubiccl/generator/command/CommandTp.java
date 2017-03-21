@@ -34,10 +34,11 @@ public class CommandTp extends Command implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent arg0)
 	{
-		boolean coords = this.comboboxMode.getValue().equals("coordinates");
+		boolean coords = this.toCoordinates();
 		this.panelDestination.setVisible(!coords);
 		this.panelCoordinates.setVisible(coords);
 		this.panelRotation.setVisible(coords);
+		this.updateTranslations();
 	}
 
 	@Override
@@ -75,6 +76,10 @@ public class CommandTp extends Command implements ActionListener
 		this.entryXRot.addNumberFilter();
 		this.entryYRot.addNumberFilter();
 
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelDestination.addArgumentChangeListener(this);
+
 		return panel;
 	}
 
@@ -88,10 +93,19 @@ public class CommandTp extends Command implements ActionListener
 	}
 
 	@Override
+	protected Text description()
+	{
+		if (this.toCoordinates()) return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget())
+				.addReplacement("<destination>", this.panelCoordinates.displayCoordinates());
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget())
+				.addReplacement("<destination>", this.panelDestination.displayTarget());
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String command = this.id + " " + this.panelTarget.generate().toCommand() + " ";
-		if (this.comboboxMode.getValue().equals("entity")) return command + this.panelDestination.generate().toCommand();
+		if (!this.toCoordinates()) return command + this.panelDestination.generate().toCommand();
 
 		String y = this.entryYRot.getText(), x = this.entryXRot.getText();
 		boolean rotation = !y.equals("") || !x.equals("");
@@ -155,5 +169,10 @@ public class CommandTp extends Command implements ActionListener
 			} catch (Exception e)
 			{}
 		}
+	}
+
+	private boolean toCoordinates()
+	{
+		return this.comboboxMode.getValue().equals("coordinates");
 	}
 }

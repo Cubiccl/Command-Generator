@@ -3,6 +3,8 @@ package fr.cubiccl.generator.command;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.target.Target;
@@ -12,10 +14,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
-import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.MissingValueException;
-import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
+import fr.cubiccl.generator.utils.*;
 
 public class CommandStats extends Command implements ActionListener
 {
@@ -46,6 +45,7 @@ public class CommandStats extends Command implements ActionListener
 			this.panelCoordinates.setVisible(block);
 			this.panelSource.setVisible(!block);
 		}
+		this.updateTranslations();
 	}
 
 	@Override
@@ -81,7 +81,55 @@ public class CommandStats extends Command implements ActionListener
 		this.comboboxSourceMode.addActionListener(this);
 		this.comboboxMode.addActionListener(this);
 
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelSource.addArgumentChangeListener(this);
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.entryObjective.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
+			{}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				updateTranslations();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{}
+		});
+		this.comboboxStat.addActionListener(this);
+
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		Text d = this.defaultDescription();
+		if (this.comboboxSourceMode.getValue().equals("block"))
+		{
+			if (this.comboboxMode.getValue().equals("clear")) d = new Text("command." + this.id + ".block.clear");
+			else d = new Text("command." + this.id + ".block");
+		} else if (this.comboboxMode.getValue().equals("clear")) d = new Text("command." + this.id + ".clear");
+
+		String obj = this.entryObjective.getText();
+		try
+		{
+			Utils.checkStringId(null, obj);
+		} catch (Exception e)
+		{
+			obj = "???";
+		}
+
+		d.addReplacement("<source>", this.panelSource.displayTarget());
+		d.addReplacement("<target>", this.panelTarget.displayTarget());
+		d.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
+		d.addReplacement("<stat>", new Text("stats.stat.tostring" + this.comboboxStat.getValue()));
+		d.addReplacement("<objective>", obj);
+		return d;
 	}
 
 	@Override
