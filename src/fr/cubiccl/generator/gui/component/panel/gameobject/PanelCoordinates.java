@@ -73,11 +73,18 @@ public class PanelCoordinates extends CGPanel implements ICustomObject<Coordinat
 
 	public String displayCoordinates()
 	{
+		try
+		{
+			return this.generate().toString();
+		} catch (CommandGenerationException e)
+		{}
+
 		String coords = "X=";
 
 		try
 		{
-			coords += (this.checkboxX.isSelected() ? "~" : "") + Float.parseFloat(this.entryX.getText());
+			float f = Float.parseFloat(this.entryX.getText());
+			coords += (this.checkboxX.isSelected() ? "~" : "") + (f == 0 && this.checkboxX.isSelected() ? "" : f);
 		} catch (NumberFormatException e)
 		{
 			coords += "???";
@@ -86,7 +93,8 @@ public class PanelCoordinates extends CGPanel implements ICustomObject<Coordinat
 		coords += ", Y=";
 		try
 		{
-			coords += (this.checkboxY.isSelected() ? "~" : "") + Float.parseFloat(this.entryY.getText());
+			float f = Float.parseFloat(this.entryY.getText());
+			coords += (this.checkboxY.isSelected() ? "~" : "") + (f == 0 && this.checkboxY.isSelected() ? "" : f);
 		} catch (NumberFormatException e)
 		{
 			coords += "???";
@@ -95,7 +103,8 @@ public class PanelCoordinates extends CGPanel implements ICustomObject<Coordinat
 		coords += ", Z=";
 		try
 		{
-			coords += (this.checkboxZ.isSelected() ? "~" : "") + Float.parseFloat(this.entryZ.getText());
+			float f = Float.parseFloat(this.entryZ.getText());
+			coords += (this.checkboxZ.isSelected() ? "~" : "") + (f == 0 && this.checkboxZ.isSelected() ? "" : f);
 		} catch (NumberFormatException e)
 		{
 			coords += "???";

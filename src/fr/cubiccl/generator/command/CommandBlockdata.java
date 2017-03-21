@@ -42,13 +42,7 @@ public class CommandBlockdata extends Command
 	protected Text description()
 	{
 		Text d = this.defaultDescription();
-		try
-		{
-			d.addReplacement("<coordinates>", this.panelCoordinates.generate().toString());
-		} catch (CommandGenerationException e)
-		{
-			d.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
-		}
+		d.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
 		return d;
 	}
 
