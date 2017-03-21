@@ -70,6 +70,14 @@ public class CommandTitle extends Command implements ActionListener
 	}
 
 	@Override
+	protected Text description()
+	{
+		if (this.comboboxMode.getValue().equals("times") || this.comboboxMode.getValue().equals("reset")) return new Text("command." + this.id + ".times")
+				.addReplacement("<target>", this.panelTarget.displayTarget());
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget());
+	}
+
+	@Override
 	protected void finishReading()
 	{
 		String mode = this.comboboxMode.getValue();

@@ -10,6 +10,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.Utils;
 
 public class CommandWorldborder extends Command implements ActionListener
 {
@@ -61,6 +62,29 @@ public class CommandWorldborder extends Command implements ActionListener
 		this.entryValue2.addNumberFilter();
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		String value = this.entryValue.getText(), value2 = this.entryValue.getText();
+		try
+		{
+			Utils.checkInteger(null, value);
+		} catch (Exception e)
+		{
+			value = "???";
+		}
+		try
+		{
+			Utils.checkInteger(null, value2);
+		} catch (Exception e)
+		{
+			value2 = "???";
+		}
+		if (!this.comboboxMode.getValue().equals("set")) return new Text("command." + this.id + "." + this.comboboxMode.getValue()).addReplacement("<value>",
+				value).addReplacement("<value2>", value2);
+		return this.defaultDescription().addReplacement("<value>", value);
 	}
 
 	@Override

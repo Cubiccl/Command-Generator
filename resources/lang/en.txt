@@ -2100,12 +2100,17 @@ command.testforblocks=Tests if the region from <source_start> to <source_end> ma
 command.time=Sets the current time to <time>.
 command.time.add=Adds <time> to the current time.
 command.time.query=Returns the current time.
-command.title=Displays a message on target players' screen, or changes title properties.
+command.title=Displays a message on <target>'s screen.
+command.title.times=Changes <target>'s title properties.
 command.tp=Teleports <target> to <destination>.
 command.trigger=Used in Json text to let players set their <objective> score to <value>.
 command.trigger.add=Used in Json text to let players add <value> to their <objective> score.
 command.weather=Changes the weather to <weather>.
-command.worldborder=Manipulates the worldborder. Can change its center, its diameter, and the warning and damage properties.
+command.worldborder.add=Adds <value> to the worldborder's diameter.
+command.worldborder.center=Changes the worldborder's center to X=<value>, Z=<value2>.
+command.worldborder.damage=Changes the damage properties of the worldborder.
+command.worldborder.set=Sets the worldborder's diameter to <value>.
+command.worldborder.warning=Changes the warning properties of the worldborder.
 command.xp=Gives <value> experience to <target>.
 command.xp.levels=Gives <value> experience levels to <target>.
 
