@@ -42,6 +42,16 @@ public class Text implements IObjectList<Text>
 		this.replacements.add(replacement);
 	}
 
+	public void addReplacement(String pattern, String replacement)
+	{
+		this.addReplacement(new Replacement(pattern, replacement));
+	}
+
+	public void addReplacement(String pattern, Text replacement)
+	{
+		this.addReplacement(new Replacement(pattern, replacement));
+	}
+
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
