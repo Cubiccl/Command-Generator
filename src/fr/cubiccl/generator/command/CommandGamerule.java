@@ -77,6 +77,16 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	}
 
 	@Override
+	protected Text description()
+	{
+		Text d = this.defaultDescription();
+		if (this.checkboxQuery.isSelected()) d = new Text("command." + this.id + ".query");
+		else d.addReplacement("<value>", this.entryValue.getText());
+		d.addReplacement("<gamerule>", this.entryGamerule.getText());
+		return null;
+	}
+
+	@Override
 	protected void finishReading()
 	{
 		this.onCheckbox();

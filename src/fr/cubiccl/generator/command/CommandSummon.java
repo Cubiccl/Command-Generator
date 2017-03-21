@@ -12,6 +12,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEntity;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandSummon extends Command
 {
@@ -43,6 +44,13 @@ public class CommandSummon extends Command
 	{
 		this.panelCoordinates.setupFrom(new Coordinates(0, 0, 0, true, true, true));
 		this.panelEntity.setTags(new Tag[0]);
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<entity>", this.panelEntity.selectedEntity().name())
+				.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
 	}
 
 	@Override

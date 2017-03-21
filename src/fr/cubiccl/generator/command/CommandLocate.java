@@ -6,6 +6,7 @@ import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandLocate extends Command
 {
@@ -32,6 +33,12 @@ public class CommandLocate extends Command
 				"Village"), gbc);
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<structure>", new Text("locate." + this.comboboxStructure.getValue()));
 	}
 
 	@Override

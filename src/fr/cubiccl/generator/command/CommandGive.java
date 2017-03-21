@@ -12,6 +12,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandGive extends Command
 {
@@ -44,6 +45,14 @@ public class CommandGive extends Command
 		this.panelItem.setCount(1);
 		this.panelItem.setDamage(0);
 		this.panelItem.setTags(new Tag[0]);
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget())
+				.addReplacement("<item>", this.panelItem.selectedItem().name(this.panelItem.selectedDamage()))
+				.addReplacement("<quantity>", Integer.toString(this.panelItem.selectedAmount()));
 	}
 
 	@Override

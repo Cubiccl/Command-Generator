@@ -67,6 +67,13 @@ public class CommandTeleport extends Command
 	}
 
 	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget())
+				.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String command = this.id + " " + this.panelTarget.generate().toCommand() + " " + this.panelCoordinates.generate().toCommand();

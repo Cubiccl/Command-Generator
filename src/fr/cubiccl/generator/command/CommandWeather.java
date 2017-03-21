@@ -62,6 +62,12 @@ public class CommandWeather extends Command implements ActionListener
 	}
 
 	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<weather>", new Text("weather." + this.comboboxWeather.getValue()));
+	}
+
+	@Override
 	protected void finishReading()
 	{
 		this.entryDuration.container.setVisible(!this.checkboxRandomDuration.isSelected());

@@ -85,6 +85,13 @@ public class CommandPlaysound extends Command
 	}
 
 	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<sound>", this.comboboxSound.getSelectedObject().id())
+				.addReplacement("<target>", this.panelTarget.displayTarget());
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String v = this.entryVolume.getText(), p = this.entryPitch.getText(), mv = this.entryMinVolume.getText();
@@ -93,8 +100,8 @@ public class CommandPlaysound extends Command
 		this.entryPitch.checkValueInBounds(CGEntry.FLOAT, 0, 2);
 		this.entryMinVolume.checkValueSuperior(CGEntry.FLOAT, 0);
 
-		return this.id + " " + this.comboboxSound.getSelectedObject().id() + " " + this.comboboxSource.getValue() + " " + this.panelTarget.generate().toCommand()
-				+ this.panelCoordinates.generate().toCommand() + " " + v + " " + p + " " + mv;
+		return this.id + " " + this.comboboxSound.getSelectedObject().id() + " " + this.comboboxSource.getValue() + " "
+				+ this.panelTarget.generate().toCommand() + this.panelCoordinates.generate().toCommand() + " " + v + " " + p + " " + mv;
 	}
 
 	@Override

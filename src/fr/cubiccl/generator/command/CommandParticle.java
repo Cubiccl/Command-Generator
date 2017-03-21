@@ -82,6 +82,13 @@ public class CommandParticle extends Command
 	}
 
 	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<particle>", this.panelParticle.selectedParticle().name())
+				.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
+	}
+
+	@Override
 	public String generate() throws CommandGenerationException
 	{
 		Particle particle = this.panelParticle.selectedParticle();

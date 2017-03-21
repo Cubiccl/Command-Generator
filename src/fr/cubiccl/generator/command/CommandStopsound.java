@@ -14,6 +14,7 @@ import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandStopsound extends Command implements ActionListener
 {
@@ -70,6 +71,13 @@ public class CommandStopsound extends Command implements ActionListener
 		this.comboboxSound.container.setVisible(false);
 		this.labelSound.setVisible(false);
 		this.comboboxChannel.setValue("master");
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<sound>", this.comboboxSound.getSelectedObject().id())
+				.addReplacement("<target>", this.panelTarget.displayTarget());
 	}
 
 	@Override
