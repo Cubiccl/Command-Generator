@@ -6,6 +6,7 @@ import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandDifficulty extends Command
 {
@@ -37,6 +38,12 @@ public class CommandDifficulty extends Command
 		panel.add(this.comboboxDifficulty = new OptionCombobox("difficulty", "peaceful", "easy", "normal", "hard"), gbc);
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<difficulty>", new Text("difficulty." + this.comboboxDifficulty.getValue()));
 	}
 
 	@Override

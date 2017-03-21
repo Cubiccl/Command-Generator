@@ -165,6 +165,19 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		if (customObjects) this.add(new PanelCustomObject<Target, Target>(this, ObjectSaver.targets), gbc);
 	}
 
+	public String displayTarget()
+	{
+		try
+		{
+			Target t = this.generate();
+			if (t.type == TargetType.PLAYER && t.playerName.equals("")) return "???";
+			return t.toString();
+		} catch (CommandGenerationException e)
+		{
+			return "???";
+		}
+	}
+
 	@Override
 	public Target generate() throws CommandGenerationException
 	{

@@ -6,6 +6,7 @@ import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class CommandDefaultgamemode extends Command
 {
@@ -37,6 +38,12 @@ public class CommandDefaultgamemode extends Command
 		panel.add(this.comboboxGamemode = new OptionCombobox("gamemode", "survival", "creative", "adventure", "spectator"), gbc);
 
 		return panel;
+	}
+
+	@Override
+	protected Text description()
+	{
+		return this.defaultDescription().addReplacement("<mode>", new Text("gamemode." + this.comboboxGamemode.getValue()));
 	}
 
 	@Override

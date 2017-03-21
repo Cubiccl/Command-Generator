@@ -6,7 +6,6 @@ import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.target.Target;
-import fr.cubiccl.generator.gameobject.target.Target.TargetType;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelAchievement;
@@ -73,15 +72,7 @@ public class CommandAchievement extends Command implements ActionListener
 		} else if (this.numberMode() == ALL) description = new Text("command." + this.id + ".all");
 
 		if (this.numberMode() == ONE) description.addReplacement("<achievement>", this.panelAchievement.getAchievement().toString());
-		try
-		{
-			Target t = this.panelTarget.generate();
-			if (t.type == TargetType.PLAYER && t.playerName.equals("")) description.addReplacement("<target>", "???");
-			else description.addReplacement("<target>", this.panelTarget.generate().toString());
-		} catch (CommandGenerationException e)
-		{
-			description.addReplacement("<target>", "???");
-		}
+		description.addReplacement("<target>", this.panelTarget.displayTarget());
 
 		return description;
 	}

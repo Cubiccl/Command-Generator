@@ -84,12 +84,7 @@ public class CommandClear extends Command implements ActionListener
 	@Override
 	protected Text description()
 	{
-		String target = "???";
-		try
-		{
-			target = this.panelTarget.generate().toString();
-		} catch (CommandGenerationException e)
-		{}
+		String target = this.panelTarget.displayTarget();
 
 		if (this.clearAllItems()) return new Text("command." + this.id + ".all", new Replacement("<target>", target));
 		Text d = this.defaultDescription();

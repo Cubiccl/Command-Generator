@@ -72,7 +72,7 @@ public class PanelEffect extends CGPanel implements ActionListener, ICustomObjec
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		this.labelTexture.setImage(this.comboboxEffect.getSelectedObject().texture());
+		this.labelTexture.setImage(this.selectedEffect().texture());
 	}
 
 	@Override
@@ -81,8 +81,13 @@ public class PanelEffect extends CGPanel implements ActionListener, ICustomObjec
 		this.entryDuration.checkValueSuperior(CGEntry.INTEGER, 0);
 		this.entryLevel.checkValueInBounds(CGEntry.INTEGER, 0, 255);
 
-		return new Effect(this.comboboxEffect.getSelectedObject(), Integer.parseInt(this.entryDuration.getText()), Integer.parseInt(this.entryLevel.getText()),
+		return new Effect(this.selectedEffect(), Integer.parseInt(this.entryDuration.getText()), Integer.parseInt(this.entryLevel.getText()),
 				this.checkboxHideParticles.isSelected());
+	}
+
+	public EffectType selectedEffect()
+	{
+		return this.comboboxEffect.getSelectedObject();
 	}
 
 	public void setAmplifier(int amplifier)
@@ -117,7 +122,7 @@ public class PanelEffect extends CGPanel implements ActionListener, ICustomObjec
 	{
 		this.setHideParticles(effect.hideParticles);
 		this.comboboxEffect.setSelected(effect.type);
-		this.labelTexture.setImage(this.comboboxEffect.getSelectedObject().texture());
+		this.labelTexture.setImage(this.selectedEffect().texture());
 		this.setDuration(effect.duration);
 		this.setAmplifier(effect.amplifier);
 	}
