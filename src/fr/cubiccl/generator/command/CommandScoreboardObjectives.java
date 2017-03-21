@@ -3,6 +3,8 @@ package fr.cubiccl.generator.command;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
@@ -37,6 +39,7 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 	public void actionPerformed(ActionEvent e)
 	{
 		this.finishReading();
+		this.updateTranslations();
 	}
 
 	@Override
@@ -74,6 +77,23 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 		this.comboboxDisplaySlot.setVisible(false);
 		this.checkboxClearSlot.setVisible(false);
 		this.labelSlot.setVisible(false);
+
+		this.entryObjective.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
+			{}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				updateTranslations();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{}
+		});
 
 		return panel;
 	}

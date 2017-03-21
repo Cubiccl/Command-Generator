@@ -1,6 +1,10 @@
 package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
@@ -37,7 +41,33 @@ public class CommandXp extends Command
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.PLAYERS_ONLY), gbc);
 
 		this.entryAmount.addIntFilter();
+		this.entryAmount.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
+			{}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				updateTranslations();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{}
+		});
 		this.checkboxLevel.setSelected(true);
+		this.checkboxLevel.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				updateTranslations();
+			}
+		});
+
+		this.panelTarget.addArgumentChangeListener(this);
 
 		return panel;
 	}

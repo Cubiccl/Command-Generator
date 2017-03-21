@@ -37,6 +37,8 @@ public class CommandTellraw extends Command
 		++gbc.gridy;
 		panel.add(this.panelJson = new PanelListJsonMessage(), gbc);
 
+		this.panelTarget.addArgumentChangeListener(this);
+
 		return panel;
 	}
 

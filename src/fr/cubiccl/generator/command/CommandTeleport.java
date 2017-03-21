@@ -54,6 +54,9 @@ public class CommandTeleport extends Command
 		this.entryXRot.addNumberFilter();
 		this.entryYRot.addNumberFilter();
 
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelTarget.addArgumentChangeListener(this);
+
 		return panel;
 	}
 

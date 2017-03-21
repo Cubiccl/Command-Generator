@@ -28,6 +28,7 @@ public class CommandEffect extends Command implements ActionListener
 	public void actionPerformed(ActionEvent arg0)
 	{
 		this.panelEffect.setVisible(this.comboboxMode.getValue().equals("apply"));
+		this.updateTranslations();
 	}
 
 	@Override
@@ -45,6 +46,8 @@ public class CommandEffect extends Command implements ActionListener
 		panel.add(this.panelEffect = new PanelEffect(), gbc);
 
 		this.comboboxMode.addActionListener(this);
+		this.panelEffect.addActionListener(this);
+		this.panelTarget.addArgumentChangeListener(this);
 
 		return panel;
 	}

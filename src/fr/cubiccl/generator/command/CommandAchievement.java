@@ -31,6 +31,7 @@ public class CommandAchievement extends Command implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		this.panelAchievement.setVisible(!this.comboboxNumber.getValue().equals("all"));
+		this.updateTranslations();
 	}
 
 	@Override
@@ -56,7 +57,10 @@ public class CommandAchievement extends Command implements ActionListener
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget("target.title.player", PanelTarget.PLAYERS_ONLY), gbc);
 
+		this.comboboxMode.addActionListener(this);
 		this.comboboxNumber.addActionListener(this);
+		this.panelAchievement.addArgumentChangeListener(this);
+		this.panelTarget.addArgumentChangeListener(this);
 
 		return panel;
 	}
@@ -95,8 +99,8 @@ public class CommandAchievement extends Command implements ActionListener
 
 	private byte numberMode()
 	{
-		if (this.comboboxMode == null) return ONE;
-		return (byte) this.comboboxMode.getSelectedIndex();
+		if (this.comboboxNumber == null) return ONE;
+		return (byte) this.comboboxNumber.getSelectedIndex();
 	}
 
 	@Override

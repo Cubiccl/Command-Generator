@@ -77,6 +77,11 @@ public class PanelEntity extends CGPanel implements ActionListener, ICustomObjec
 		this.panelTags.setTargetObject(this.selectedEntity());
 	}
 
+	public void addActionListener(ActionListener actionListener)
+	{
+		this.comboboxEntity.addActionListener(actionListener);
+	}
+
 	@Override
 	public LivingEntity generate()
 	{

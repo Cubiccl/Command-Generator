@@ -1,6 +1,8 @@
 package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
@@ -25,6 +27,23 @@ public class CommandSay extends Command
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		panel.add((this.entryMessage = new CGEntry(new Text("say.message"), new Text("say.message"))).container, gbc);
+
+		this.entryMessage.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
+			{}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				updateTranslations();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{}
+		});
 
 		return panel;
 	}

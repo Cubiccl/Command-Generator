@@ -67,6 +67,10 @@ public class CommandClone extends Command implements ActionListener
 		this.panelBlock.setHasNBT(false);
 		this.comboboxMaskMode.addActionListener(this);
 
+		this.panelCoordinatesSourceStart.addArgumentChangeListener(this);
+		this.panelCoordinatesSourceEnd.addArgumentChangeListener(this);
+		this.panelCoordinatesDestination.addArgumentChangeListener(this);
+
 		return panel;
 	}
 

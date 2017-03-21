@@ -3,6 +3,8 @@ package fr.cubiccl.generator.command;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gui.component.button.CGButton;
@@ -38,6 +40,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 		if (e.getSource() == this.buttonPredefined) CommandGenerator.stateManager.setState(new ComboboxPanel(new Text("gamerule.predefined.select"),
 				"gamerule", GAMERULES), this);
 		else this.onCheckbox();
+		this.updateTranslations();
 	}
 
 	@Override
@@ -65,6 +68,22 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 
 		this.buttonPredefined.addActionListener(this);
 		this.checkboxQuery.addActionListener(this);
+		this.entryValue.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
+			{}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				updateTranslations();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{}
+		});
 
 		return panel;
 	}

@@ -50,6 +50,9 @@ public class CommandTestforblock extends Command implements ActionListener
 
 		this.checkboxIgnoreData.addActionListener(this);
 
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelBlock.addArgumentChangeListener(this);
+
 		return panel;
 	}
 

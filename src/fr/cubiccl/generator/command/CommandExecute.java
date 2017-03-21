@@ -36,6 +36,7 @@ public class CommandExecute extends Command implements ActionListener
 		boolean block = this.isDetecting();
 		this.panelBlock.setVisible(block);
 		this.panelBlockCoordinates.setVisible(block);
+		this.updateTranslations();
 	}
 
 	@Override
@@ -61,6 +62,11 @@ public class CommandExecute extends Command implements ActionListener
 		this.panelBlock.setVisible(false);
 		this.panelBlockCoordinates.setVisible(false);
 		this.checkboxBlock.addActionListener(this);
+
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelBlock.addArgumentChangeListener(this);
+		this.panelBlockCoordinates.addArgumentChangeListener(this);
 
 		return panel;
 	}

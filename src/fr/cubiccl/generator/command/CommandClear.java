@@ -33,6 +33,7 @@ public class CommandClear extends Command implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == this.checkboxAllItem || e.getSource() == this.checkboxIgnoreData || e.getSource() == this.checkboxAll) this.finishReading();
+		this.updateTranslations();
 	}
 
 	private boolean clearAll()
@@ -67,6 +68,12 @@ public class CommandClear extends Command implements ActionListener
 		this.checkboxAllItem.addActionListener(this);
 		this.checkboxIgnoreData.addActionListener(this);
 		this.checkboxAll.addActionListener(this);
+
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelItem.addArgumentChangeListener(this);
+		this.checkboxAll.addActionListener(this);
+		this.checkboxAllItem.addActionListener(this);
+		this.checkboxIgnoreData.addActionListener(this);
 
 		return panel;
 	}

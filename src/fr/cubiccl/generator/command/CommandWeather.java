@@ -52,6 +52,15 @@ public class CommandWeather extends Command implements ActionListener
 		this.entryDuration.addIntFilter();
 		this.checkboxRandomDuration.addActionListener(this);
 
+		this.comboboxWeather.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				updateTranslations();
+			}
+		});
+
 		return panel;
 	}
 

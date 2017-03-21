@@ -69,6 +69,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 			p.showContainerFor(block ? this.selectedBlockSlot : this.selectedEntitySlot);
 			CommandGenerator.stateManager.setState(p, this);
 		}
+		this.updateTranslations();
 	}
 
 	@Override
@@ -97,6 +98,10 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 		this.comboboxMode.addActionListener(this);
 		this.buttonSlot.addActionListener(this);
 		this.panelTarget.setVisible(false);
+
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelItem.addArgumentChangeListener(this);
 
 		return panel;
 	}

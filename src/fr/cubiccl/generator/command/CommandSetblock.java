@@ -40,6 +40,9 @@ public class CommandSetblock extends Command
 		++gbc.gridy;
 		panel.add(this.comboboxMode = new OptionCombobox("setblock.mode", "destroy", "keep", "replace"), gbc);
 
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelBlock.addArgumentChangeListener(this);
+
 		return panel;
 	}
 

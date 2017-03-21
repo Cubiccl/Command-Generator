@@ -38,6 +38,10 @@ public class CommandTestforblocks extends Command
 		++gbc.gridx;
 		panel.add(this.comboboxMode = new OptionCombobox("testforblocks.mode", "all", "masked"), gbc);
 
+		this.panelCoordinatesSourceStart.addArgumentChangeListener(this);
+		this.panelCoordinatesSourceEnd.addArgumentChangeListener(this);
+		this.panelCoordinatesDestination.addArgumentChangeListener(this);
+
 		return panel;
 	}
 

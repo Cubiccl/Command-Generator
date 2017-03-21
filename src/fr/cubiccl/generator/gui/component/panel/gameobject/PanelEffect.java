@@ -75,6 +75,11 @@ public class PanelEffect extends CGPanel implements ActionListener, ICustomObjec
 		this.labelTexture.setImage(this.selectedEffect().texture());
 	}
 
+	public void addActionListener(ActionListener listener)
+	{
+		this.comboboxEffect.addActionListener(listener);
+	}
+
 	@Override
 	public Effect generate() throws CommandGenerationException
 	{

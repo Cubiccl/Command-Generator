@@ -1,6 +1,8 @@
 package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.target.Target;
@@ -31,6 +33,16 @@ public class CommandEnchant extends Command
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.PLAYERS_ONLY), gbc);
 		++gbc.gridy;
 		panel.add(this.panelEnchant = new PanelEnchantment(true), gbc);
+
+		this.panelEnchant.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				updateTranslations();
+			}
+		});
+		this.panelTarget.addArgumentChangeListener(this);
 
 		return panel;
 	}

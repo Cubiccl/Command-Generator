@@ -36,6 +36,7 @@ public class CommandTitle extends Command implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		this.finishReading();
+		this.updateTranslations();
 	}
 
 	@Override
@@ -65,6 +66,8 @@ public class CommandTitle extends Command implements ActionListener
 		this.entryFadeIn.addIntFilter();
 		this.entryStay.addIntFilter();
 		this.entryFadeOut.addIntFilter();
+
+		this.panelTarget.addArgumentChangeListener(this);
 
 		return panel;
 	}

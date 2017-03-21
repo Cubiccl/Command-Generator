@@ -1,6 +1,8 @@
 package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.baseobjects.Sound;
@@ -71,6 +73,16 @@ public class CommandPlaysound extends Command
 		this.entryVolume.addHelpLabel(new HelpLabel("playsound.volume.help"));
 		this.entryPitch.addHelpLabel(new HelpLabel("playsound.pitch.help"));
 		this.entryMinVolume.addHelpLabel(new HelpLabel("playsound.minimum_volume.help"));
+
+		this.comboboxSound.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				updateTranslations();
+			}
+		});
+		this.panelTarget.addArgumentChangeListener(this);
 
 		return panel;
 	}

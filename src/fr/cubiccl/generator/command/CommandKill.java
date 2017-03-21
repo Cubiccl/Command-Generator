@@ -26,6 +26,8 @@ public class CommandKill extends Command
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.ALL_ENTITIES), gbc);
+		
+		this.panelTarget.addArgumentChangeListener(this);
 
 		return panel;
 	}

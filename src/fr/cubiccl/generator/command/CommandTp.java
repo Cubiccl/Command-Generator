@@ -38,6 +38,7 @@ public class CommandTp extends Command implements ActionListener
 		this.panelDestination.setVisible(!coords);
 		this.panelCoordinates.setVisible(coords);
 		this.panelRotation.setVisible(coords);
+		this.updateTranslations();
 	}
 
 	@Override
@@ -74,6 +75,10 @@ public class CommandTp extends Command implements ActionListener
 
 		this.entryXRot.addNumberFilter();
 		this.entryYRot.addNumberFilter();
+
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelDestination.addArgumentChangeListener(this);
 
 		return panel;
 	}

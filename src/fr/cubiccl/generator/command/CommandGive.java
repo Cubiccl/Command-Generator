@@ -36,6 +36,9 @@ public class CommandGive extends Command
 		++gbc.gridy;
 		panel.add(this.panelItem = new PanelItem("give.item"), gbc);
 
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelItem.addArgumentChangeListener(this);
+
 		return panel;
 	}
 

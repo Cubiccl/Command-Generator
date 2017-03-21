@@ -1,6 +1,8 @@
 package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.LivingEntity;
@@ -35,6 +37,16 @@ public class CommandSummon extends Command
 		panel.add(this.panelCoordinates = new PanelCoordinates("summon.coordinates"), gbc);
 		++gbc.gridy;
 		panel.add(this.panelEntity = new PanelEntity("summon.entity", true, true, false), gbc);
+
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelEntity.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				updateTranslations();
+			}
+		});
 
 		return panel;
 	}

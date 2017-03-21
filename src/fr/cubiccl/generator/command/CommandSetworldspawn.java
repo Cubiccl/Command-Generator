@@ -26,6 +26,7 @@ public class CommandSetworldspawn extends Command
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		panel.add(this.panelCoordinates = new PanelCoordinates("spawnpoint.coordinates"), gbc);
+		this.panelCoordinates.addArgumentChangeListener(this);
 
 		return panel;
 	}

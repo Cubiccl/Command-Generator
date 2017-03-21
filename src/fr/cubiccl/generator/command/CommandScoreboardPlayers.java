@@ -3,6 +3,8 @@ package fr.cubiccl.generator.command;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
@@ -18,7 +20,7 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Utils;
 
-public class CommandScoreboardPlayers extends Command implements ActionListener
+public class CommandScoreboardPlayers extends Command implements ActionListener, KeyListener
 {
 	public static final String[] OPERATIONS =
 	{ "+#", "-#", "*#", "/#", "%#", "#", "<", ">", "><" };
@@ -42,6 +44,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 	{
 		if (e.getSource() == this.comboboxMode) this.onModeChange();
 		else this.onCheckbox();
+		this.updateTranslations();
 	}
 
 	@Override
@@ -86,6 +89,11 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 		this.panelEntityTags.setLabelExplainVisible(true);
 
 		this.onModeChange();
+		this.entryObjective.addKeyListener(this);
+		this.entryScore.addKeyListener(this);
+		this.entryScore2.addKeyListener(this);
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelTarget2.addArgumentChangeListener(this);
 
 		return panel;
 	}
@@ -164,6 +172,20 @@ public class CommandScoreboardPlayers extends Command implements ActionListener
 
 		return command;
 	}
+
+	@Override
+	public void keyPressed(KeyEvent e)
+	{}
+
+	@Override
+	public void keyReleased(KeyEvent e)
+	{
+		this.updateTranslations();
+	}
+
+	@Override
+	public void keyTyped(KeyEvent e)
+	{}
 
 	private void onCheckbox()
 	{

@@ -35,6 +35,9 @@ public class CommandBlockdata extends Command
 		++gbc.gridy;
 		panel.add(this.panelBlock = new PanelBlock("setblock.block_data"), gbc);
 
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.panelBlock.addArgumentChangeListener(this);
+
 		return panel;
 	}
 

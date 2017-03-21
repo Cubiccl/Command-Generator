@@ -3,6 +3,8 @@ package fr.cubiccl.generator.command;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.target.Target;
@@ -43,6 +45,7 @@ public class CommandStats extends Command implements ActionListener
 			this.panelCoordinates.setVisible(block);
 			this.panelSource.setVisible(!block);
 		}
+		this.updateTranslations();
 	}
 
 	@Override
@@ -77,6 +80,27 @@ public class CommandStats extends Command implements ActionListener
 		this.panelSource.setVisible(false);
 		this.comboboxSourceMode.addActionListener(this);
 		this.comboboxMode.addActionListener(this);
+
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelSource.addArgumentChangeListener(this);
+		this.panelCoordinates.addArgumentChangeListener(this);
+		this.entryObjective.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
+			{}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				updateTranslations();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{}
+		});
+		this.comboboxStat.addActionListener(this);
 
 		return panel;
 	}

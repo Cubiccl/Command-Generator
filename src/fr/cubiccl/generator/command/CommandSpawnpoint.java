@@ -45,6 +45,8 @@ public class CommandSpawnpoint extends Command implements ActionListener
 		panel.add(this.panelCoordinates = new PanelCoordinates("spawnpoint.coordinates"), gbc);
 
 		this.checkbox.addActionListener(this);
+		this.panelTarget.addArgumentChangeListener(this);
+		this.panelCoordinates.addArgumentChangeListener(this);
 
 		return panel;
 	}

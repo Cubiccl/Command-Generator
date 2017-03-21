@@ -31,6 +31,8 @@ public class CommandTell extends Command
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget(PanelTarget.PLAYERS_ONLY), gbc);
 
+		this.panelTarget.addArgumentChangeListener(this);
+
 		return panel;
 	}
 

@@ -35,6 +35,7 @@ public class CommandFill extends Command implements ActionListener
 	{
 		if (e.getSource() == this.comboboxMode) this.finishReading();
 		else this.panelBlockReplace.setHasData(!this.checkboxData.isSelected());
+		this.updateTranslations();
 	}
 
 	@Override
@@ -61,6 +62,12 @@ public class CommandFill extends Command implements ActionListener
 		this.panelBlockReplace.setHasNBT(false);
 		this.comboboxMode.addActionListener(this);
 		this.checkboxData.addActionListener(this);
+
+		this.panelCoordinatesStart.addArgumentChangeListener(this);
+		this.panelCoordinatesEnd.addArgumentChangeListener(this);
+		this.panelBlockFill.addArgumentChangeListener(this);
+		this.panelBlockReplace.addArgumentChangeListener(this);
+
 		return panel;
 	}
 

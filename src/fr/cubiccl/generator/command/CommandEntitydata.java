@@ -38,6 +38,7 @@ public class CommandEntitydata extends Command
 				gbc);
 
 		this.panelEntity.setLabelExplainVisible(true);
+		this.panelTarget.addArgumentChangeListener(this);
 		return panel;
 	}
 

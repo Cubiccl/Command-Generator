@@ -1,6 +1,8 @@
 package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
@@ -37,6 +39,16 @@ public class CommandGamemode extends Command
 		++gbc.gridy;
 		++gbc.gridwidth;
 		panel.add(this.panelTarget = new PanelTarget("target.title.player", PanelTarget.PLAYERS_ONLY), gbc);
+
+		this.comboboxGamemode.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e)
+			{
+				updateTranslations();
+			}
+		});
+		this.panelTarget.addArgumentChangeListener(this);
 
 		return panel;
 	}

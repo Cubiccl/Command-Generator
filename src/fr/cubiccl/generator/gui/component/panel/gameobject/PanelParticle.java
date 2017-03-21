@@ -49,6 +49,11 @@ public class PanelParticle extends CGPanel implements ActionListener
 		this.onParticleChange();
 	}
 
+	public void addActionListener(ActionListener listener)
+	{
+		this.comboboxParticle.addActionListener(listener);
+	}
+
 	public int generateParam1()
 	{
 		Particle p = this.selectedParticle();

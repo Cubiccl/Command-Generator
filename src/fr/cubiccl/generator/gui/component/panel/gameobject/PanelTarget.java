@@ -4,8 +4,12 @@ import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -20,6 +24,7 @@ import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
+import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
@@ -46,6 +51,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 	private CGEntry entryName;
 	private CGLabel labelType, labelArguments;
 	private CGList listArguments;
+	private Set<ITranslated> listeners;
 	private int mode;
 
 	public PanelTarget(int mode)
@@ -65,6 +71,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		super(titleID);
 		this.mode = mode;
 		this.arguments = new ArrayList<Argument>();
+		this.listeners = new HashSet<ITranslated>();
 		this.setPreferredSize(new Dimension(450, 300));
 
 		this.labelArguments = new CGLabel("target.arguments").setHasColumn(true);
@@ -106,6 +113,8 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 			this.buttonAddArgument.setVisible(!player);
 			this.buttonRemoveArgument.setVisible(!player);
 			this.listArguments.scrollPane.setVisible(!player);
+			for (ITranslated listener : this.listeners)
+				listener.updateTranslations();
 		} else if (e.getSource() == this.comboboxArgument) this.buttonAddArgument.setEnabled(this.canAddArgument(this.getSelectedArgument()));
 		else if (e.getSource() == this.buttonAddArgument)
 		{
@@ -119,6 +128,11 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 			this.onArgumentChange();
 			this.listArguments.setSelectedIndex(index == this.arguments.size() ? index - 1 : index);
 		}
+	}
+
+	public void addArgumentChangeListener(ITranslated listener)
+	{
+		this.listeners.add(listener);
 	}
 
 	private boolean canAddArgument(TargetArgument argument)
@@ -163,6 +177,24 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		gbc.fill = GridBagConstraints.NONE;
 		gbc.anchor = GridBagConstraints.CENTER;
 		if (customObjects) this.add(new PanelCustomObject<Target, Target>(this, ObjectSaver.targets), gbc);
+
+		this.entryName.addKeyListener(new KeyListener()
+		{
+			@Override
+			public void keyPressed(KeyEvent e)
+			{}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				for (ITranslated listener : listeners)
+					listener.updateTranslations();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{}
+		});
 	}
 
 	public String displayTarget()
@@ -210,12 +242,19 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		for (Argument argument : this.arguments)
 			this.listArguments.addValue(argument.toString());
 		this.comboboxArgument.setSelectedIndex(this.comboboxArgument.getSelectedIndex()); // Trigger Add button update
+		for (ITranslated listener : this.listeners)
+			listener.updateTranslations();
 	}
 
 	/** @return True if the target type is a Player. */
 	private boolean player()
 	{
 		return this.comboboxType.getValue().equals(TargetType.PLAYER.id);
+	}
+
+	public void removeArgumentChangeListener(ITranslated listener)
+	{
+		this.listeners.remove(listener);
 	}
 
 	@Override
