@@ -17,4 +17,5 @@ Successfully created 185 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
+Switching to Data mode.
 Exiting Command Generator... Bye bye !

@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject.loottable;
 
 import java.awt.Component;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Comparator;
 
@@ -42,7 +43,7 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		for (Element function : entry.getChild("functions").getChildren())
 			functions.add(LootTableFunction.createFrom(function));
 		e.functions = functions.toArray(new LootTableFunction[functions.size()]);
-		
+
 		return e;
 	}
 
@@ -141,10 +142,22 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		return this.functions;
 	}
 
+	public BufferedImage getIcon()
+	{
+		if (this.type != ITEM) return null;
+		return ObjectRegistry.items.find(this.name).texture();
+	}
+
 	@Override
 	public String getName(int index)
 	{
 		return this.name;
+	}
+
+	public String name()
+	{
+		if (this.type != ITEM) return this.name;
+		return ObjectRegistry.items.find(this.name).name().toString();
 	}
 
 	public void setFunctions(LootTableFunction[] functions)

@@ -107,14 +107,14 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 					contentPane.getHeight() - this.panelCommand.getHeight() - this.panelCommandSelection.getHeight());
 		} else if (CommandGenerator.getCurrentMode() == CommandGenerator.DATA)
 		{
-			this.panelLootTableSelection.setBounds(0, 0, contentPane.getWidth() / 2, PanelLootTableOutput.HEIGHT);
-			this.panelLootTableOutput.setBounds(this.panelLootTableSelection.getWidth(), 0, this.getWidth() / 2, PanelLootTableOutput.HEIGHT);
-			this.scrollpane.setBounds(0, PanelLootTableOutput.HEIGHT, contentPane.getWidth(), contentPane.getHeight() - this.panelLootTableOutput.getHeight());
-		} else
-		{
 			this.panelObjectSelection.setBounds(0, 0, contentPane.getWidth(), PanelObjectSelection.HEIGHT);
 			this.scrollpane.setBounds(0, this.panelObjectSelection.getHeight(), contentPane.getWidth(),
 					contentPane.getHeight() - this.panelObjectSelection.getHeight());
+		} else
+		{
+			this.panelLootTableSelection.setBounds(0, 0, contentPane.getWidth() / 2, PanelLootTableOutput.HEIGHT);
+			this.panelLootTableOutput.setBounds(this.panelLootTableSelection.getWidth(), 0, this.getWidth() / 2, PanelLootTableOutput.HEIGHT);
+			this.scrollpane.setBounds(0, PanelLootTableOutput.HEIGHT, contentPane.getWidth(), contentPane.getHeight() - this.panelLootTableOutput.getHeight());
 		}
 		this.validate();
 	}

@@ -17,6 +17,7 @@ public class PanelLootTable extends CGPanel implements ListListener<LootTablePoo
 {
 	private static final long serialVersionUID = -8542900975171049623L;
 
+	private PanelLTDisplay display;
 	private PanelObjectList<LootTablePool> listPools;
 	public final LootTable lootTable;
 
@@ -29,11 +30,15 @@ public class PanelLootTable extends CGPanel implements ListListener<LootTablePoo
 		l.setHorizontalAlignment(SwingConstants.CENTER);
 
 		GridBagConstraints gbc = this.createGridBagLayout();
+		gbc.anchor = GridBagConstraints.CENTER;
 		this.add(l, gbc);
 		++gbc.gridy;
 		this.add(new CGLabel("loottable.pools.description"), gbc);
 		++gbc.gridy;
 		this.add(this.listPools = new PanelObjectList<LootTablePool>("loottable.pools", "loottable.pool", LootTablePool.class), gbc);
+		++gbc.gridy;
+		gbc.fill = GridBagConstraints.NONE;
+		this.add(this.display = new PanelLTDisplay(this.lootTable), gbc);
 
 		this.listPools.setValues(this.lootTable.pools.toArray(new LootTablePool[this.lootTable.pools.size()]));
 		this.listPools.addListListener(this);
@@ -43,18 +48,21 @@ public class PanelLootTable extends CGPanel implements ListListener<LootTablePoo
 	public void onAddition(int index, LootTablePool object)
 	{
 		this.lootTable.pools.add(object);
+		this.display.update();
 	}
 
 	@Override
 	public void onChange(int index, LootTablePool object)
 	{
 		this.lootTable.pools.set(index, object);
+		this.display.update();
 	}
 
 	@Override
 	public void onDeletion(int index, LootTablePool object)
 	{
 		this.lootTable.pools.remove(object);
+		this.display.update();
 	}
 
 }

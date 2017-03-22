@@ -1,3 +1,14 @@
+------------------------- VERSION 2.4.2 -------------------------
+ADDITIONS
+- Added a diagram for Loot Tables, summarizing the table.
+
+BUGS FIXED
+- UI being glitchy in Loot Tables mode.
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+
 ------------------------- VERSION 2.4.1 -------------------------
 ADDITIONS
 - Commands descriptions are now adapted to your selection.
