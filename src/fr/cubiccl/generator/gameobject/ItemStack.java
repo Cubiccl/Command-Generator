@@ -145,9 +145,9 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return new String[0];
 	}
 
-	public ItemStackS forSpeedrun(byte importance)
+	public ItemStackS forSpeedrun(boolean importance)
 	{
-		ItemStackS stack = new ItemStackS(item, this.damage, importance, nbt);
+		ItemStackS stack = new ItemStackS(item, this.damage, this.amount, nbt);
 		stack.importance = importance;
 		return stack;
 	}

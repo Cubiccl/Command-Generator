@@ -31,7 +31,7 @@ public class ItemMove
 		return this.to == OUT;
 	}
 
-	public boolean isTransfering()
+	public boolean isTransferring()
 	{
 		return !this.isAdding() && !this.isDeleting();
 	}

@@ -1,14 +1,17 @@
 package fr.cubiccl.generator.gameobject.speedrun;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 
 public class ItemStackS extends ItemStack
 {
-	public static final byte KEY = 0, RESOURCE = 1, OPTIONNAL = 2;
+	public static final boolean FORCED = true, OPTIONNAL = false;
 
-	public byte importance = RESOURCE;
+	public boolean importance = OPTIONNAL;
 
 	public ItemStackS()
 	{
@@ -34,9 +37,9 @@ public class ItemStackS extends ItemStack
 		return i;
 	}
 
-	public boolean isKey()
+	public boolean isForced()
 	{
-		return this.importance == KEY;
+		return this.importance == FORCED;
 	}
 
 	public boolean isOptionnal()
@@ -44,9 +47,26 @@ public class ItemStackS extends ItemStack
 		return this.importance == OPTIONNAL;
 	}
 
-	public boolean isResource()
+	public List<ItemStackS> splitQuantity()
 	{
-		return this.importance == RESOURCE;
+		// TODO maxStackSize
+		ArrayList<ItemStackS> split = new ArrayList<ItemStackS>();
+		int quantity = this.amount, remove = 0;
+		while (quantity > 0)
+		{
+			remove = quantity >= 64 ? 64 : quantity;
+			quantity -= remove;
+			try
+			{
+				ItemStackS i = this.clone();
+				i.amount = remove;
+				split.add(i);
+			} catch (CloneNotSupportedException e)
+			{
+				e.printStackTrace();
+			}
+		}
+		return split;
 	}
 
 }

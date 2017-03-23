@@ -1,14 +1,21 @@
 package fr.cubiccl.generator.gameobject.speedrun;
 
+import java.util.List;
+
 public class MissingSpaceError extends MissingItemsError
 {
 
 	public final int missingSlots;
 
-	public MissingSpaceError(int missingSlots, ItemStackS... blockedItems)
+	public MissingSpaceError(ItemStackS... blockedItems)
 	{
 		super(blockedItems);
-		this.missingSlots = missingSlots;
+		this.missingSlots = blockedItems.length;
+	}
+
+	public MissingSpaceError(List<ItemStackS> blocked)
+	{
+		this(blocked.toArray(new ItemStackS[blocked.size()]));
 	}
 
 }
