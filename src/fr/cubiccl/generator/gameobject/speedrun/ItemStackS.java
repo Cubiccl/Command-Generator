@@ -25,6 +25,15 @@ public class ItemStackS extends ItemStack
 		super(item, data, amount, nbt);
 	}
 
+	@Override
+	public ItemStackS clone() throws CloneNotSupportedException
+	{
+		ItemStackS i = new ItemStackS(item, damage, amount, nbt);
+		i.slot = this.slot;
+		i.importance = this.importance;
+		return i;
+	}
+
 	public boolean isKey()
 	{
 		return this.importance == KEY;

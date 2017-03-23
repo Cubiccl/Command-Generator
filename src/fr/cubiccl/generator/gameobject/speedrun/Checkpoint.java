@@ -19,6 +19,18 @@ public class Checkpoint
 
 	}
 
-	public Speedrun speedrun;
+	public Inventory currentInventory;
+	public CheckpointResult result;
+	public final Speedrun speedrun;
+
+	public Checkpoint(Speedrun speedrun)
+	{
+		this.speedrun = speedrun;
+	}
+
+	private void onChange()
+	{
+		this.speedrun.verify();
+	}
 
 }

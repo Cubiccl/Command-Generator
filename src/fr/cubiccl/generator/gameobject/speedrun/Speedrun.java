@@ -26,12 +26,22 @@ public class Speedrun
 	public void addCheckpoint(Checkpoint checkpoint)
 	{
 		this.checkpoints.add(checkpoint);
-		checkpoint.speedrun = this;
+		this.verify();
 	}
 
 	public boolean isValid()
 	{
 		return this.isValid;
+	}
+
+	public MissingItemsError[] missingItems()
+	{
+		return this.missingItems.toArray(new MissingItemsError[this.missingItems.size()]);
+	}
+
+	public MissingSpaceError[] missingSpace()
+	{
+		return this.missingSpace.toArray(new MissingSpaceError[this.missingSpace.size()]);
 	}
 
 	public void moveCheckpointLeft(Checkpoint checkpoint)
@@ -42,6 +52,7 @@ public class Speedrun
 		Checkpoint previous = this.checkpoints.get(i - 1);
 		this.checkpoints.set(i - 1, checkpoint);
 		this.checkpoints.set(i, previous);
+		this.verify();
 	}
 
 	public void moveCheckpointRight(Checkpoint checkpoint)
@@ -52,12 +63,18 @@ public class Speedrun
 		Checkpoint previous = this.checkpoints.get(i + 1);
 		this.checkpoints.set(i + 1, checkpoint);
 		this.checkpoints.set(i, previous);
+		this.verify();
 	}
 
 	public void removeCheckpoint(Checkpoint checkpoint)
 	{
 		this.checkpoints.remove(checkpoint);
-		checkpoint.speedrun = null;
+		this.verify();
+	}
+
+	public ThrownItemsWarning[] thrownItems()
+	{
+		return this.thrownItems.toArray(new ThrownItemsWarning[this.thrownItems.size()]);
 	}
 
 	public void verify()
@@ -71,6 +88,14 @@ public class Speedrun
 			if (result.missingItems != null) this.missingItems.add(result.missingItems);
 			if (result.missingSpace != null) this.missingSpace.add(result.missingSpace);
 			if (result.thrownItems != null) this.thrownItems.add(result.thrownItems);
+			try
+			{
+				checkpoint.currentInventory = inventory.clone();
+			} catch (CloneNotSupportedException e)
+			{
+				e.printStackTrace();
+			}
+			checkpoint.result = result;
 		}
 
 		this.isValid = this.missingItems.isEmpty() && this.missingSpace.isEmpty();
