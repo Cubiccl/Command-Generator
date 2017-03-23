@@ -17,9 +17,9 @@ public class PanelItemEdition extends CGPanel implements ActionListener
 {
 	private static final long serialVersionUID = 8814888562936761232L;
 
-	private CGButton buttonMaxDamage, buttonDamage, buttonDurability, buttonTexture, buttonCustom, buttonCook;
+	private CGButton buttonMaxDamage, buttonDamage, buttonDurability, buttonTexture, buttonCustom, buttonStack, buttonCook;
 	private final Item item;
-	private JLabel labelDamage, labelTexture, labelDurability, labelCustom, labelCook;
+	private JLabel labelDamage, labelTexture, labelDurability, labelCustom, labelStack, labelCook;
 
 	public PanelItemEdition(Item item)
 	{
@@ -38,6 +38,8 @@ public class PanelItemEdition extends CGPanel implements ActionListener
 		++gbc.gridy;
 		this.add(this.labelTexture = new JLabel(), gbc);
 		++gbc.gridy;
+		this.add(this.labelStack = new JLabel(), gbc);
+		++gbc.gridy;
 		this.add(this.labelCook = new JLabel(), gbc);
 		++gbc.gridy;
 		this.add(this.labelCustom = new JLabel(), gbc);
@@ -54,6 +56,8 @@ public class PanelItemEdition extends CGPanel implements ActionListener
 		++gbc.gridy;
 		this.add(this.buttonTexture = new CGButton(new Text("Edit", false)), gbc);
 		++gbc.gridy;
+		this.add(this.buttonStack = new CGButton(new Text("Edit", false)), gbc);
+		++gbc.gridy;
 		this.add(this.buttonCook = new CGButton(new Text("Edit", false)), gbc);
 		++gbc.gridy;
 		this.add(this.buttonCustom = new CGButton(new Text("Edit", false)), gbc);
@@ -62,6 +66,7 @@ public class PanelItemEdition extends CGPanel implements ActionListener
 		this.buttonDamage.addActionListener(this);
 		this.buttonDurability.addActionListener(this);
 		this.buttonTexture.addActionListener(this);
+		this.buttonStack.addActionListener(this);
 		this.buttonCook.addActionListener(this);
 		this.buttonCustom.addActionListener(this);
 
@@ -103,6 +108,12 @@ public class PanelItemEdition extends CGPanel implements ActionListener
 			else this.item.setMaxDamage(0);
 		} catch (Exception e2)
 		{}
+		if (e.getSource() == this.buttonDurability) try
+		{
+			int s = Integer.parseInt(Dialogs.showInputDialog("New stack size ?", Integer.toString(this.item.getDurability())));
+			this.item.maxStackSize = s;
+		} catch (Exception e2)
+		{}
 		if (e.getSource() == this.buttonCustom)
 		{
 			String custom = Dialogs.showInputDialog("New custom item type? Effective after restart. null for normal item.", this.item.customObjectName);
@@ -138,6 +149,7 @@ public class PanelItemEdition extends CGPanel implements ActionListener
 		} else this.labelDamage.setText("Data value max: " + (this.item.getMaxDamage()));
 		this.labelDurability.setText(this.item.hasDurability ? "Durability: " + this.item.getDurability() : "No durability");
 		this.labelTexture.setText("Texture type: " + this.item.textureType);
+		this.labelStack.setText("Max stack size: " + this.item.maxStackSize);
 		this.labelCook.setText("Cooks to: " + this.item.cooksTo);
 		this.labelCustom.setText("Custom item type: " + this.item.customObjectName);
 	}
