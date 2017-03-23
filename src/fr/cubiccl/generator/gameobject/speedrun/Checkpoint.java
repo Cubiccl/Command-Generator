@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject.speedrun;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Checkpoint
 {
@@ -32,10 +33,31 @@ public class Checkpoint
 		this.moves = new ArrayList<ItemMove>();
 	}
 
+	public List<ItemMove> additions()
+	{
+		ArrayList<ItemMove> additions = new ArrayList<ItemMove>();
+		for (ItemMove move : this.moves)
+			if (move.isAdding()) additions.add(move);
+		return additions;
+	}
+
 	public void addMove(ItemMove move)
 	{
 		this.moves.add(move);
 		this.onChange();
+	}
+
+	public List<ItemMove> deletions()
+	{
+		ArrayList<ItemMove> deletions = new ArrayList<ItemMove>();
+		for (ItemMove move : this.moves)
+			if (move.isDeleting()) deletions.add(move);
+		return deletions;
+	}
+
+	void onChange()
+	{
+		this.speedrun.verify();
 	}
 
 	public void removeMove(ItemMove move)
@@ -44,9 +66,12 @@ public class Checkpoint
 		this.onChange();
 	}
 
-	void onChange()
+	public List<ItemMove> transfers()
 	{
-		this.speedrun.verify();
+		ArrayList<ItemMove> transfers = new ArrayList<ItemMove>();
+		for (ItemMove move : this.moves)
+			if (move.isTransferring()) transfers.add(move);
+		return transfers;
 	}
 
 }

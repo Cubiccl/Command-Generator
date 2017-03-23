@@ -47,6 +47,11 @@ public class ItemStackS extends ItemStack
 		return this.importance == OPTIONNAL;
 	}
 
+	public boolean matches(ItemStackS item)
+	{
+		return item.item == item.item && item.damage == item.damage;
+	}
+
 	public List<ItemStackS> splitQuantity()
 	{
 		// TODO maxStackSize
@@ -54,7 +59,7 @@ public class ItemStackS extends ItemStack
 		int quantity = this.amount, remove = 0;
 		while (quantity > 0)
 		{
-			remove = quantity >= 64 ? 64 : quantity;
+			remove = quantity >= Inventory.STACKSIZE ? Inventory.STACKSIZE : quantity;
 			quantity -= remove;
 			try
 			{
