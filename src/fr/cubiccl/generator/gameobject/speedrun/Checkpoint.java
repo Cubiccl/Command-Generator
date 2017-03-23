@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.speedrun;
 
+import java.util.ArrayList;
+
 public class Checkpoint
 {
 	public static class CheckpointResult
@@ -20,15 +22,29 @@ public class Checkpoint
 	}
 
 	public Inventory currentInventory;
+	private ArrayList<ItemMove> moves;
 	public CheckpointResult result;
 	public final Speedrun speedrun;
 
 	public Checkpoint(Speedrun speedrun)
 	{
 		this.speedrun = speedrun;
+		this.moves = new ArrayList<ItemMove>();
 	}
 
-	private void onChange()
+	public void addMove(ItemMove move)
+	{
+		this.moves.add(move);
+		this.onChange();
+	}
+
+	public void removeMove(ItemMove move)
+	{
+		this.moves.remove(move);
+		this.onChange();
+	}
+
+	void onChange()
 	{
 		this.speedrun.verify();
 	}

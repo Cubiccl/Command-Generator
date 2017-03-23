@@ -84,10 +84,10 @@ public class Speedrun
 		Inventory inventory = new Inventory(this.isPost19 ? 37 : 36);
 		for (Checkpoint checkpoint : this.checkpoints)
 		{
-			CheckpointResult result = inventory.apply(checkpoint); // TODO change to isEmpty()
-			if (result.missingItems != null) this.missingItems.add(result.missingItems);
-			if (result.missingSpace != null) this.missingSpace.add(result.missingSpace);
-			if (result.thrownItems != null) this.thrownItems.add(result.thrownItems);
+			CheckpointResult result = inventory.apply(checkpoint);
+			if (!result.missingItems.isEmpty()) this.missingItems.add(result.missingItems);
+			if (!result.missingSpace.isEmpty()) this.missingSpace.add(result.missingSpace);
+			if (!result.thrownItems.isEmpty()) this.thrownItems.add(result.thrownItems);
 			try
 			{
 				checkpoint.currentInventory = inventory.clone();
