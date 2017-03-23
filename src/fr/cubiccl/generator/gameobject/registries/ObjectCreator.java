@@ -215,7 +215,9 @@ public class ObjectCreator
 				{
 					i = new Item(idInt, idString, Integer.parseInt(item.getChildText("durability")));
 					i.hasDurability = true;
+					i.maxStackSize = 1;
 				} else i = new Item(idInt, idString);
+				if (item.getChild("stacksize") != null) i.maxStackSize = Integer.parseInt(item.getChildText("stacksize"));
 				if (item.getChild("texture") != null) i.textureType = Integer.parseInt(item.getChildText("texture"));
 				if (item.getChild("cooksto") != null) i.cooksTo = item.getChildText("cooksto");
 			}

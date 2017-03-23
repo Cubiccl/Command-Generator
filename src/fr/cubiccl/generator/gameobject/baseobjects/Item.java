@@ -8,6 +8,7 @@ public class Item extends BlockItem
 {
 	public String cooksTo = null;
 	public boolean hasDurability = false;
+	public int maxStackSize = 64;
 
 	public Item(int idInt, String idString)
 	{
@@ -53,6 +54,7 @@ public class Item extends BlockItem
 	public Element toXML()
 	{
 		Element root = super.toXML();
+		if (this.maxStackSize != 64 && !this.hasDurability) root.addContent(new Element("stacksize").setText(Integer.toString(this.maxStackSize)));
 		if (this.hasDurability) root.getChild("maxdamage").setName("durability");
 		if (this.cooksTo != null) root.addContent(new Element("cooksto").setText(this.cooksTo));
 		return root;

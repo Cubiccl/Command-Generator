@@ -148,6 +148,7 @@
 					</xs:sequence>
 					<xs:element name="customitem" type="idstring" />
 				</xs:choice>
+				<xs:element name="stacksize" type="idint" minOccurs="0" />
 				<xs:element name="cooksto" type="idstring" />
 			</xs:sequence>
 			<xs:attribute name="idint" type="idint" use="required" />
