@@ -1,3 +1,22 @@
+------------------------- VERSION 2.4.3 -------------------------
+ADDITIONS
+- Added all content from 17w13a.
+* Parrot mob
+* Knowledge Book item
+* New Glazed Terracotta textures
+-> Advancements
+-> Recipes
+-> recipeBook
+* doLimitedCrafting gamerule
+
+BUGS FIXED
+- Fixed Custom Objects not loading their exact version.
+
+CHANGED TRANSLATIONS
+tag.title.Variant
+
+ADDED TRANSLATIONS
+
 ------------------------- VERSION 2.4.2 -------------------------
 ADDITIONS
 - Added a diagram for Loot Tables, summarizing the table.

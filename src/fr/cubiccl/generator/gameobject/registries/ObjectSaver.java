@@ -213,7 +213,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 	private static boolean shouldLoad(Element modifier)
 	{
 		if (modifier.getAttribute("version") == null) return false;
-		return !Settings.version().isAfter(Version.get(modifier.getAttributeValue("version")));
+		return Settings.version().isBefore(Version.get(modifier.getAttributeValue("version")));
 	}
 
 	public final Class<T> c;
@@ -300,7 +300,10 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		for (T object : this.list())
 			root.addContent(object.toXML());
 		for (Element e : this.recentObjects)
+		{
+			e.detach();
 			root.addContent(e);
+		}
 		return root;
 	}
 }

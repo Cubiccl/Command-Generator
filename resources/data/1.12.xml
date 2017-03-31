@@ -1146,39 +1146,39 @@
       <texture>-1</texture>
       <maxdamage>1</maxdamage>
     </item>
-    <item idint="323" idstr="sign" >
+    <item idint="323" idstr="sign">
       <stacksize>16</stacksize>
     </item>
-    <item idint="324" idstr="wooden_door" >
+    <item idint="324" idstr="wooden_door">
       <stacksize>16</stacksize>
     </item>
-    <item idint="325" idstr="bucket" >
+    <item idint="325" idstr="bucket">
       <stacksize>16</stacksize>
     </item>
-    <item idint="326" idstr="water_bucket" >
+    <item idint="326" idstr="water_bucket">
       <stacksize>1</stacksize>
     </item>
-    <item idint="327" idstr="lava_bucket" >
+    <item idint="327" idstr="lava_bucket">
       <stacksize>1</stacksize>
     </item>
-    <item idint="328" idstr="minecart" >
+    <item idint="328" idstr="minecart">
       <stacksize>1</stacksize>
     </item>
-    <item idint="329" idstr="saddle" >
+    <item idint="329" idstr="saddle">
       <stacksize>1</stacksize>
     </item>
-    <item idint="330" idstr="iron_door" >
+    <item idint="330" idstr="iron_door">
       <stacksize>16</stacksize>
     </item>
     <item idint="331" idstr="redstone" />
-    <item idint="332" idstr="snowball" >
+    <item idint="332" idstr="snowball">
       <stacksize>16</stacksize>
     </item>
-    <item idint="333" idstr="boat" >
+    <item idint="333" idstr="boat">
       <stacksize>1</stacksize>
     </item>
     <item idint="334" idstr="leather" />
-    <item idint="335" idstr="milk_bucket" >
+    <item idint="335" idstr="milk_bucket">
       <stacksize>1</stacksize>
     </item>
     <item idint="336" idstr="brick" />
@@ -1187,13 +1187,13 @@
     <item idint="339" idstr="paper" />
     <item idint="340" idstr="book" />
     <item idint="341" idstr="slime_ball" />
-    <item idint="342" idstr="chest_minecart" >
+    <item idint="342" idstr="chest_minecart">
       <stacksize>1</stacksize>
     </item>
-    <item idint="343" idstr="furnace_minecart" >
+    <item idint="343" idstr="furnace_minecart">
       <stacksize>1</stacksize>
     </item>
-    <item idint="344" idstr="egg" >
+    <item idint="344" idstr="egg">
       <stacksize>16</stacksize>
     </item>
     <item idint="345" idstr="compass" />
@@ -1215,15 +1215,15 @@
     </item>
     <item idint="352" idstr="bone" />
     <item idint="353" idstr="sugar" />
-    <item idint="354" idstr="cake" >
+    <item idint="354" idstr="cake">
       <stacksize>1</stacksize>
     </item>
-    <item idint="355" idstr="bed" >
+    <item idint="355" idstr="bed">
       <stacksize>1</stacksize>
     </item>
     <item idint="356" idstr="repeater" />
     <item idint="357" idstr="cookie" />
-    <item idint="358" idstr="filled_map" >
+    <item idint="358" idstr="filled_map">
       <stacksize>1</stacksize>
     </item>
     <item idint="359" idstr="shears">
@@ -1242,14 +1242,14 @@
     </item>
     <item idint="366" idstr="cooked_chicken" />
     <item idint="367" idstr="rotten_flesh" />
-    <item idint="368" idstr="ender_pearl" >
+    <item idint="368" idstr="ender_pearl">
       <stacksize>16</stacksize>
     </item>
     <item idint="369" idstr="blaze_rod" />
     <item idint="370" idstr="ghast_tear" />
     <item idint="371" idstr="gold_nugget" />
     <item idint="372" idstr="nether_wart" />
-    <item idint="373" idstr="potion" >
+    <item idint="373" idstr="potion">
       <stacksize>1</stacksize>
     </item>
     <item idint="374" idstr="glass_bottle" />
@@ -1264,10 +1264,10 @@
     <item idint="383" idstr="spawn_egg" />
     <item idint="384" idstr="experience_bottle" />
     <item idint="385" idstr="fire_charge" />
-    <item idint="386" idstr="writable_book" >
+    <item idint="386" idstr="writable_book">
       <stacksize>1</stacksize>
     </item>
-    <item idint="387" idstr="written_book" >
+    <item idint="387" idstr="written_book">
       <stacksize>1</stacksize>
     </item>
     <item idint="388" idstr="emerald" />
@@ -1296,10 +1296,10 @@
     <item idint="404" idstr="comparator" />
     <item idint="405" idstr="netherbrick" />
     <item idint="406" idstr="quartz" />
-    <item idint="407" idstr="tnt_minecart" >
+    <item idint="407" idstr="tnt_minecart">
       <stacksize>1</stacksize>
     </item>
-    <item idint="408" idstr="hopper_minecart" >
+    <item idint="408" idstr="hopper_minecart">
       <stacksize>1</stacksize>
     </item>
     <item idint="409" idstr="prismarine_shard" />
@@ -1312,18 +1312,18 @@
     <item idint="414" idstr="rabbit_foot" />
     <item idint="415" idstr="rabbit_hide" />
     <item idint="416" idstr="armor_stand" />
-    <item idint="417" idstr="iron_horse_armor" >
+    <item idint="417" idstr="iron_horse_armor">
       <stacksize>1</stacksize>
     </item>
-    <item idint="418" idstr="golden_horse_armor" >
+    <item idint="418" idstr="golden_horse_armor">
       <stacksize>1</stacksize>
     </item>
-    <item idint="419" idstr="diamond_horse_armor" >
+    <item idint="419" idstr="diamond_horse_armor">
       <stacksize>1</stacksize>
     </item>
     <item idint="420" idstr="lead" />
     <item idint="421" idstr="name_tag" />
-    <item idint="422" idstr="command_block_minecart" >
+    <item idint="422" idstr="command_block_minecart">
       <stacksize>1</stacksize>
     </item>
     <item idint="423" idstr="mutton">
@@ -1332,19 +1332,19 @@
     <item idint="424" idstr="cooked_mutton" />
     <item idint="425" idstr="banner" />
     <item idint="426" idstr="end_crystal" />
-    <item idint="427" idstr="spruce_door" >
+    <item idint="427" idstr="spruce_door">
       <stacksize>16</stacksize>
     </item>
-    <item idint="428" idstr="birch_door" >
+    <item idint="428" idstr="birch_door">
       <stacksize>16</stacksize>
     </item>
-    <item idint="429" idstr="jungle_door" >
+    <item idint="429" idstr="jungle_door">
       <stacksize>16</stacksize>
     </item>
-    <item idint="430" idstr="acacia_door" >
+    <item idint="430" idstr="acacia_door">
       <stacksize>16</stacksize>
     </item>
-    <item idint="431" idstr="dark_oak_door" >
+    <item idint="431" idstr="dark_oak_door">
       <stacksize>16</stacksize>
     </item>
     <item idint="432" idstr="chorus_fruit">
@@ -1355,74 +1355,75 @@
     <item idint="435" idstr="beetroot_seeds" />
     <item idint="436" idstr="beetroot_soup" />
     <item idint="437" idstr="dragon_breath" />
-    <item idint="438" idstr="splash_potion" >
+    <item idint="438" idstr="splash_potion">
       <stacksize>1</stacksize>
     </item>
     <item idint="439" idstr="spectral_arrow" />
     <item idint="440" idstr="tipped_arrow" />
-    <item idint="441" idstr="lingering_potion" >
+    <item idint="441" idstr="lingering_potion">
       <stacksize>1</stacksize>
     </item>
-    <item idint="442" idstr="shield" >
+    <item idint="442" idstr="shield">
       <texture>-1</texture>
       <durability>26</durability>
     </item>
-    <item idint="443" idstr="elytra" >
+    <item idint="443" idstr="elytra">
       <texture>-1</texture>
       <durability>431</durability>
     </item>
-    <item idint="444" idstr="spruce_boat" >
+    <item idint="444" idstr="spruce_boat">
       <stacksize>1</stacksize>
     </item>
-    <item idint="445" idstr="birch_boat" >
+    <item idint="445" idstr="birch_boat">
       <stacksize>1</stacksize>
     </item>
-    <item idint="446" idstr="jungle_boat" >
+    <item idint="446" idstr="jungle_boat">
       <stacksize>1</stacksize>
     </item>
-    <item idint="447" idstr="acacia_boat" >
+    <item idint="447" idstr="acacia_boat">
       <stacksize>1</stacksize>
     </item>
-    <item idint="448" idstr="dark_oak_boat" >
+    <item idint="448" idstr="dark_oak_boat">
       <stacksize>1</stacksize>
     </item>
     <item idint="449" idstr="totem_of_undying" />
     <item idint="450" idstr="shulker_shell" />
     <item idint="452" idstr="iron_nugget" />
-    <item idint="2256" idstr="record_13" >
+    <item idint="453" idstr="knowledge_book" />
+    <item idint="2256" idstr="record_13">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2257" idstr="record_cat" >
+    <item idint="2257" idstr="record_cat">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2258" idstr="record_blocks" >
+    <item idint="2258" idstr="record_blocks">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2259" idstr="record_chirp" >
+    <item idint="2259" idstr="record_chirp">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2260" idstr="record_far" >
+    <item idint="2260" idstr="record_far">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2261" idstr="record_mall" >
+    <item idint="2261" idstr="record_mall">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2262" idstr="record_mellohi" >
+    <item idint="2262" idstr="record_mellohi">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2263" idstr="record_stal" >
+    <item idint="2263" idstr="record_stal">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2264" idstr="record_strad" >
+    <item idint="2264" idstr="record_strad">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2265" idstr="record_ward" >
+    <item idint="2265" idstr="record_ward">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2266" idstr="record_11" >
+    <item idint="2266" idstr="record_11">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2267" idstr="record_wait" >
+    <item idint="2267" idstr="record_wait">
       <stacksize>1</stacksize>
     </item>
   </items>
@@ -1473,6 +1474,7 @@
     <entity id="mule" />
     <entity id="ocelot" />
     <entity id="painting" />
+    <entity id="parrot" />
     <entity id="pig" />
     <entity id="polar_bear" />
     <entity id="potion" />
@@ -3204,6 +3206,12 @@
         <v>luck</v>
       </strvalues>
     </tag>
+    <tag id="Recipes">
+      <customtype>ItemList</customtype>
+      <applicable>
+        <app>knowledge_book</app>
+      </applicable>
+    </tag>
     <tag id="RepairCost">
       <type>3</type>
       <applicable>
@@ -3258,16 +3266,16 @@
       </applicable>
     </tag>
     <tag id="Age">
+      <type>3</type>
+      <applicable>
+        <app>list=breed</app>
+      </applicable>
+    </tag>
+    <tag id="Age">
       <type>2</type>
       <applicable>
         <app>item</app>
         <app>xp_orb</app>
-      </applicable>
-    </tag>
-    <tag id="Age">
-      <type>3</type>
-      <applicable>
-        <app>list=breed</app>
       </applicable>
     </tag>
     <tag id="Air">
@@ -3927,17 +3935,17 @@
       </applicable>
       <byteboolean>true</byteboolean>
     </tag>
+    <tag id="Life">
+      <type>3</type>
+      <applicable>
+        <app>fireworks_rocket</app>
+      </applicable>
+    </tag>
     <tag id="life">
       <type>2</type>
       <applicable>
         <app>arrow</app>
         <app>spectral_arrow</app>
-      </applicable>
-    </tag>
-    <tag id="Life">
-      <type>3</type>
-      <applicable>
-        <app>fireworks_rocket</app>
       </applicable>
     </tag>
     <tag id="LifeTicks">
@@ -4290,6 +4298,13 @@
         <app>player</app>
       </applicable>
     </tag>
+    <tag id="seenCredits">
+      <type>1</type>
+      <applicable>
+        <app>player</app>
+      </applicable>
+      <byteboolean>true</byteboolean>
+    </tag>
     <tag id="SelectedItem">
       <customtype>item</customtype>
       <applicable>
@@ -4308,6 +4323,18 @@
         <app>sheep</app>
       </applicable>
       <byteboolean>true</byteboolean>
+    </tag>
+    <tag id="ShoulderEntityLeft">
+      <customtype>EntityTag</customtype>
+      <applicable>
+        <app>player</app>
+      </applicable>
+    </tag>
+    <tag id="ShoulderEntityRight">
+      <customtype>EntityTag</customtype>
+      <applicable>
+        <app>player</app>
+      </applicable>
     </tag>
     <tag id="ShowArms">
       <type>1</type>
@@ -4548,6 +4575,19 @@
         <v>white</v>
         <v>brown</v>
         <v>gray</v>
+      </intnamed>
+    </tag>
+    <tag id="Variant">
+      <type>3</type>
+      <applicable>
+        <app>parrot</app>
+      </applicable>
+      <intnamed prefix="parrot">
+        <v>red</v>
+        <v>blue</v>
+        <v>green</v>
+        <v>cyan</v>
+        <v>silver</v>
       </intnamed>
     </tag>
     <tag id="Warmup">
@@ -5651,6 +5691,7 @@
       <object>mooshroom</object>
       <object>mule</object>
       <object>ocelot</object>
+      <object>parrot</object>
       <object>pig</object>
       <object>polar_bear</object>
       <object>rabbit</object>

@@ -89,14 +89,16 @@ public class Settings
 			return this.order - anotherVersion.order;
 		}
 
+		/** @return true if this Version is after or equal to another Version. */
 		public boolean isAfter(Version anotherVersion)
 		{
-			return this.compare(anotherVersion) > 0;
+			return this.compare(anotherVersion) >= 0;
 		}
 
+		/** @return true if this Version is before or equal to another Version. */
 		public boolean isBefore(Version anotherVersion)
 		{
-			return this.compare(anotherVersion) < 0;
+			return this.compare(anotherVersion) <= 0;
 		}
 	}
 
