@@ -3935,17 +3935,17 @@
       </applicable>
       <byteboolean>true</byteboolean>
     </tag>
-    <tag id="Life">
-      <type>3</type>
-      <applicable>
-        <app>fireworks_rocket</app>
-      </applicable>
-    </tag>
     <tag id="life">
       <type>2</type>
       <applicable>
         <app>arrow</app>
         <app>spectral_arrow</app>
+      </applicable>
+    </tag>
+    <tag id="Life">
+      <type>3</type>
+      <applicable>
+        <app>fireworks_rocket</app>
       </applicable>
     </tag>
     <tag id="LifeTicks">
@@ -4261,6 +4261,12 @@
         <app>area_effect_cloud</app>
       </applicable>
     </tag>
+    <tag id="recipeBook">
+      <customtype>RecipeBook</customtype>
+      <applicable>
+        <app>player</app>
+      </applicable>
+    </tag>
     <tag id="RequiredPlayerRange">
       <type>2</type>
       <applicable>
@@ -4565,19 +4571,6 @@
       </applicable>
     </tag>
     <tag id="Variant">
-      <customtype>HorseVariant</customtype>
-      <applicable>
-        <app>horse</app>
-        <app>llama</app>
-      </applicable>
-      <intnamed prefix="variant.base">
-        <v>creamy</v>
-        <v>white</v>
-        <v>brown</v>
-        <v>gray</v>
-      </intnamed>
-    </tag>
-    <tag id="Variant">
       <type>3</type>
       <applicable>
         <app>parrot</app>
@@ -4588,6 +4581,19 @@
         <v>green</v>
         <v>cyan</v>
         <v>silver</v>
+      </intnamed>
+    </tag>
+    <tag id="Variant">
+      <customtype>HorseVariant</customtype>
+      <applicable>
+        <app>horse</app>
+        <app>llama</app>
+      </applicable>
+      <intnamed prefix="variant.base">
+        <v>creamy</v>
+        <v>white</v>
+        <v>brown</v>
+        <v>gray</v>
       </intnamed>
     </tag>
     <tag id="Warmup">

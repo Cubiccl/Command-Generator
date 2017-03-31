@@ -57,6 +57,9 @@ public class CommandRecipe extends Command implements ActionListener
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget("target.title.player", PanelTarget.PLAYERS_ONLY), gbc);
 
+		this.panelItem.setHasAmount(false);
+		this.panelItem.setHasData(false);
+		this.panelItem.setHasNBT(false);
 		this.comboboxMode.addActionListener(this);
 		this.comboboxNumber.addActionListener(this);
 		this.panelItem.addArgumentChangeListener(this);

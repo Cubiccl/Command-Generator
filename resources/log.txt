@@ -13,16 +13,10 @@ Successfully created 485 sounds.
 Successfully created 37 containers.
 Successfully created 66 Block NBT Tags.
 Successfully created 22 Item NBT Tags.
-Successfully created 189 Entity NBT Tags.
+Successfully created 190 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
 Generating !
-Successfully generated : recipe give achievement.minecraft:stone @a
-Generating !
-Successfully generated : recipe take achievement.minecraft:stone @a
-Generating !
-Successfully generated : recipe take * @a
-Generating !
-Successfully generated : recipe give * @a
+Successfully generated : testfor @e {recipeBook:{minecraft:beacon:{unlocked:true,displayed:false}}}
 Exiting Command Generator... Bye bye !

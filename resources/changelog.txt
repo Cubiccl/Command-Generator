@@ -1,13 +1,14 @@
 ------------------------- VERSION 2.4.3 -------------------------
 ADDITIONS
 - Added all content from 17w13a.
-* Parrot mob
-* Knowledge Book item
+* Parrot mob, with Variant NBT tag
+* Knowledge Book item, with Recipes NBT tag
 * New Glazed Terracotta textures
--> Advancements
--> Recipes
--> recipeBook
+* /recipe command
+* recipeBook NBT tag
 * doLimitedCrafting gamerule
+(The Advancements are planned for a future update, since there is a lot to do and
+very few info is available on the Internet.)
 
 BUGS FIXED
 - Fixed Custom Objects not loading their exact version.

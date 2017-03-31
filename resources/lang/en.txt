@@ -518,8 +518,10 @@ pose.leg.left=Left Leg rotation
 pose.leg.right=Right Leg rotation
 
 recipe.all=All Recipes
+recipe.displayed=Has the Player seen this Recipe?
 recipe.item=Item which Recipe will be given/taken
 recipe.one=One Recipe :
+recipe.unlocked=Has the Player unlocked this Recipe?
 
 replaceitem.block=Coordinates of the Block
 replaceitem.item=Item to place
@@ -2901,6 +2903,7 @@ tag.entity.Radius=The radius of the Effect Area.
 tag.entity.RadiusOnUse=The amount the radius grows upon applying the effect. Should be negative.
 tag.entity.RadiusPerTick=The amount the radius grows each tick. Should be negative.
 tag.entity.ReapplicationDelay=The number of ticks before reapplying the Effect.
+tag.entity.recipeBook=Describes the Recipes this Player has unlocked.
 tag.entity.RequiredPlayerRange=The radius of the Player detection sphere of this Spawner. Will only be active once a Player enters it.
 tag.entity.Rotation=The rotation of this <o>.
 tag.entity.Saddle=If true, this Pig has a Saddle.
@@ -3072,6 +3075,7 @@ tag.title.Passengers=Passengers
 tag.title.Pos=Entity position
 tag.title.Pose=Armor Stand pose
 tag.title.Potion=Thrown Potion
+tag.title.recipeBook=Recipes
 tag.title.Recipes=Recipes
 tag.title.RecordItem=Record
 tag.title.Rotation=Entity rotation
