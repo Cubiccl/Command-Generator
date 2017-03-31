@@ -1578,6 +1578,7 @@
     <particle id="wake" />
     <particle id="witchMagic" />
   </particles>
+  <recipes></recipes>
   <sounds>
     <sound id="ambient.cave" />
     <sound id="block.anvil.break" />

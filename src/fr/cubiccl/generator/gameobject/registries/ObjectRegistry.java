@@ -32,6 +32,7 @@ public class ObjectRegistry<T extends BaseObject>
 	static final HashMap<String, ArrayList<String>> objectLists = new HashMap<String, ArrayList<String>>();
 	public static final ObjectRegistry<Particle> particles = new ObjectRegistry<Particle>(false, false, Particle.class);
 	public static final byte SORT_ALPHABETICALLY = 0, SORT_NUMERICALLY = 1, SORT_NAME = 2;
+	public static final ObjectRegistry<RecipeType> recipes = new ObjectRegistry<RecipeType>(false, false, RecipeType.class);
 	public static final ObjectRegistry<Sound> sounds = new ObjectRegistry<Sound>(false, false, Sound.class);
 	public static final ObjectRegistry<TemplateTag> unavailableTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
 
@@ -55,6 +56,7 @@ public class ObjectRegistry<T extends BaseObject>
 		root.addContent(achievements.toXML("achievements"));
 		root.addContent(attributes.toXML("attributes"));
 		root.addContent(particles.toXML("particles"));
+		root.addContent(recipes.toXML("recipes"));
 		root.addContent(sounds.toXML("sounds"));
 		root.addContent(containers.toXML("containers"));
 		root.addContent(blockTags.toXML("blocktags"));
@@ -78,6 +80,7 @@ public class ObjectRegistry<T extends BaseObject>
 		items.checkNames();
 		itemTags.checkNames();
 		particles.checkNames();
+		recipes.checkNames();
 		sounds.checkNames();
 		unavailableTags.checkNames();
 	}
@@ -153,6 +156,7 @@ public class ObjectRegistry<T extends BaseObject>
 		entityTags.loadTextures();
 		itemTags.loadTextures();
 		particles.loadTextures();
+		recipes.loadTextures();
 		sounds.loadTextures();
 		unavailableTags.loadTextures();
 	}
@@ -181,6 +185,7 @@ public class ObjectRegistry<T extends BaseObject>
 		items.reset();
 		itemTags.reset();
 		particles.reset();
+		recipes.reset();
 		sounds.reset();
 		objectLists.clear();
 		//unavailableTags.reset();
