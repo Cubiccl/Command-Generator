@@ -189,7 +189,7 @@ public class CommandGenerator
 		window = new Window();
 		ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
 		window.updateTranslations();
-		setSelected(Commands.getCommandFromID("achievement"));
+		setSelected(Commands.getCommands()[0]);
 		window.setVisible(true);
 	}
 

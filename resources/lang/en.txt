@@ -517,6 +517,10 @@ pose.head=Head rotation
 pose.leg.left=Left Leg rotation
 pose.leg.right=Right Leg rotation
 
+recipe.all=All Recipes
+recipe.item=Item which Recipe will be given/taken
+recipe.one=One Recipe :
+
 replaceitem.block=Coordinates of the Block
 replaceitem.item=Item to place
 replaceitem.mode.block=Place in a Block
@@ -2075,6 +2079,10 @@ command.kill=Kills <target>.
 command.locate=Shows the coordinate of the closest <structure>.
 command.particle=Shows <particle> particles at <coordinates>.
 command.playsound=Plays the <sound> sound to <target>.
+command.recipe=Gives recipe  for <item> to <target>.
+command.recipe.all=Gives all recipes to <target>.
+command.recipe.take=Removes recipe for <item> from <target>.
+command.recipe.take.all=Removes all recipes from <target>.
 command.replaceitem=Places a <item> Item in <target>'s inventory.
 command.replaceitem.block=Places a <item> Item in the Block at <coordinates>.
 command.say=Prints a message in the chat.

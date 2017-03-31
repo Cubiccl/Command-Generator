@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import fr.cubiccl.generator.gui.LoadingFrame;
+import fr.cubiccl.generator.utils.Settings;
+import fr.cubiccl.generator.utils.Settings.Version;
 
 public class Commands
 {
@@ -14,54 +16,58 @@ public class Commands
 	public static void createCommands(LoadingFrame frame)
 	{
 		frame.setText("loading.commands");
-		// TODO remove try catch
-		try
+		new CommandBlockdata();
+		new CommandClear();
+		new CommandClone();
+		new CommandDefaultgamemode();
+		new CommandDifficulty();
+		new CommandEffect();
+		new CommandEnchant();
+		new CommandEntitydata("entitydata");
+		new CommandExecute();
+		new CommandFill();
+		new CommandGamemode();
+		new CommandGamerule();
+		new CommandGive();
+		new CommandKill();
+		new CommandLocate();
+		new CommandParticle();
+		new CommandPlaysound();
+		new CommandReplaceitem();
+		new CommandSay();
+		new CommandScoreboardObjectives();
+		new CommandScoreboardPlayers();
+		new CommandScoreboardTeams();
+		new CommandSetblock();
+		new CommandSetworldspawn();
+		new CommandSpawnpoint();
+		new CommandSpreadplayers();
+		new CommandStats();
+		new CommandStopsound();
+		new CommandSummon();
+		new CommandTeleport();
+		new CommandTell();
+		new CommandTellraw();
+		new CommandEntitydata("testfor");
+		new CommandTestforblock();
+		new CommandTestforblocks();
+		new CommandTime();
+		new CommandTitle();
+		new CommandTp();
+		new CommandTrigger();
+		new CommandWeather();
+		new CommandWorldborder();
+		new CommandXp();
+
+		if (Settings.version().isBefore(Version.v1d11))
 		{
 			new CommandAchievement();
-			new CommandBlockdata();
-			new CommandClear();
-			new CommandClone();
-			new CommandDefaultgamemode();
-			new CommandDifficulty();
-			new CommandEffect();
-			new CommandEnchant();
-			new CommandEntitydata("entitydata");
-			new CommandExecute();
-			new CommandFill();
-			new CommandGamemode();
-			new CommandGamerule();
-			new CommandGive();
-			new CommandKill();
-			new CommandLocate();
-			new CommandParticle();
-			new CommandPlaysound();
-			new CommandReplaceitem();
-			new CommandSay();
-			new CommandScoreboardObjectives();
-			new CommandScoreboardPlayers();
-			new CommandScoreboardTeams();
-			new CommandSetblock();
-			new CommandSetworldspawn();
-			new CommandSpawnpoint();
-			new CommandSpreadplayers();
-			new CommandStats();
-			new CommandStopsound();
-			new CommandSummon();
-			new CommandTeleport();
-			new CommandTell();
-			new CommandTellraw();
-			new CommandEntitydata("testfor");
-			new CommandTestforblock();
-			new CommandTestforblocks();
-			new CommandTime();
-			new CommandTitle();
-			new CommandTp();
-			new CommandTrigger();
-			new CommandWeather();
-			new CommandWorldborder();
-			new CommandXp();
-		} catch (Exception e)
-		{}
+		}
+
+		if (Settings.version().isAfter(Version.v1d12))
+		{
+			new CommandRecipe();
+		}
 	}
 
 	public static Command getCommandFromID(String id)

@@ -18,5 +18,11 @@ Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
 Generating !
-Successfully generated : give @a minecraft:knowledge_book 1 0 {Recipes:["minecraft:brick","minecraft:trapped_chest"]}
+Successfully generated : recipe give achievement.minecraft:stone @a
+Generating !
+Successfully generated : recipe take achievement.minecraft:stone @a
+Generating !
+Successfully generated : recipe take * @a
+Generating !
+Successfully generated : recipe give * @a
 Exiting Command Generator... Bye bye !

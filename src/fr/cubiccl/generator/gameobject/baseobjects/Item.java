@@ -88,6 +88,12 @@ public class Item extends BlockItem implements IObjectList<Item>
 	}
 
 	@Override
+	public String toString()
+	{
+		return this.mainName().toString();
+	}
+
+	@Override
 	public Element toXML()
 	{
 		Element root = super.toXML();
