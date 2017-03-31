@@ -38,7 +38,6 @@ public class PanelLTDisplay extends JPanel
 			this.children = children;
 			this.icon = icon;
 
-			// TODO calculate dimensions
 			width = DisplayUtils.textWidth(this.name) * 3 / 4 + MARGIN * 2;
 			height = ELEMENTH;
 
@@ -47,7 +46,6 @@ public class PanelLTDisplay extends JPanel
 
 		public void paint(Graphics g)
 		{
-			// TODO paint element
 			g.setColor(Color.GRAY);
 			g.drawRect(x, y, width, height);
 			g.setColor(Color.BLACK);

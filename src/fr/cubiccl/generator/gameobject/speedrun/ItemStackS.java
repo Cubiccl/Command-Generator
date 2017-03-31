@@ -54,12 +54,11 @@ public class ItemStackS extends ItemStack
 
 	public List<ItemStackS> splitQuantity()
 	{
-		// TODO maxStackSize
 		ArrayList<ItemStackS> split = new ArrayList<ItemStackS>();
 		int quantity = this.amount, remove = 0;
 		while (quantity > 0)
 		{
-			remove = quantity >= Inventory.STACKSIZE ? Inventory.STACKSIZE : quantity;
+			remove = quantity >= this.item.maxStackSize ? this.item.maxStackSize : quantity;
 			quantity -= remove;
 			try
 			{

@@ -7,7 +7,7 @@ import fr.cubiccl.generator.gameobject.speedrun.Checkpoint.CheckpointResult;
 
 public class Inventory
 {
-	public static final int ENDERCHEST_SIZE = 27, STACKSIZE = 64;
+	public static final int ENDERCHEST_SIZE = 27;
 
 	public final ItemStackS[] armor;
 	private ArrayList<ItemStackS> failed;
@@ -57,7 +57,7 @@ public class Inventory
 			if (inventory[index] == null) inventory[index] = item.clone();
 			int previous = inventory[index].amount;
 			inventory[index].amount += quantity;
-			if (inventory[index].amount > STACKSIZE) inventory[index].amount = STACKSIZE;
+			if (inventory[index].amount > inventory[index].item.maxStackSize) inventory[index].amount = inventory[index].item.maxStackSize;
 			quantity -= inventory[index].amount - previous;
 		} catch (Exception e)
 		{}
