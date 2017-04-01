@@ -19,6 +19,7 @@ import fr.cubiccl.generator.utils.Textures;
 public class ObjectRegistry<T extends BaseObject>
 {
 	public static final ObjectRegistry<Achievement> achievements = new ObjectRegistry<Achievement>(false, false, Achievement.class);
+	public static final ObjectRegistry<DefaultAdvancement> advancements = new ObjectRegistry<DefaultAdvancement>(false, false, DefaultAdvancement.class);
 	public static final ObjectRegistry<Attribute> attributes = new ObjectRegistry<Attribute>(false, false, Attribute.class);
 	public static final BlockRegistry blocks = new BlockRegistry();
 	public static final ObjectRegistry<TemplateTag> blockTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
@@ -54,6 +55,7 @@ public class ObjectRegistry<T extends BaseObject>
 		root.addContent(effects.toXML("effects"));
 		root.addContent(enchantments.toXML("enchantments"));
 		root.addContent(achievements.toXML("achievements"));
+		root.addContent(advancements.toXML("advancements"));
 		root.addContent(attributes.toXML("attributes"));
 		root.addContent(particles.toXML("particles"));
 		root.addContent(recipes.toXML("recipes"));
@@ -69,6 +71,7 @@ public class ObjectRegistry<T extends BaseObject>
 	static void checkAllNames()
 	{
 		achievements.checkNames();
+		advancements.checkNames();
 		attributes.checkNames();
 		blocks.checkNames();
 		blockTags.checkNames();
@@ -147,6 +150,7 @@ public class ObjectRegistry<T extends BaseObject>
 
 		frame.setText("loading.textures.other");
 		achievements.loadTextures();
+		advancements.loadTextures();
 		attributes.loadTextures();
 		blockTags.loadTextures();
 		containers.loadTextures();
@@ -174,6 +178,7 @@ public class ObjectRegistry<T extends BaseObject>
 	static void resetAll()
 	{
 		achievements.reset();
+		advancements.reset();
 		attributes.reset();
 		blocks.reset();
 		blockTags.reset();

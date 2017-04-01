@@ -1607,6 +1607,62 @@
     <achievement id="theEnd" item="eye_of_ender" />
     <achievement id="theEnd2" item="dragon_egg" />
   </achievements>
+  <advancements>
+    <advancement id="brew_potion" item="glass_bottle">
+      <criterion>potion</criterion>
+    </advancement>
+    <advancement id="create_beacon" item="beacon" />
+    <advancement id="create_full_beacon" item="beacon" />
+    <advancement id="deflect_arrow" item="shield">
+      <criterion>deflected_projectile</criterion>
+    </advancement>
+    <advancement id="elytra" item="elytra" />
+    <advancement id="enchant_item" item="enchanted_book">
+      <criterion>enchanted_item</criterion>
+    </advancement>
+    <advancement id="enter_end_gateway" item="ender_pearl">
+      <criterion>enter_end_gateway</criterion>
+    </advancement>
+    <advancement id="enter_the_end" item="end_stone">
+      <criterion>enter_end_portal</criterion>
+    </advancement>
+    <advancement id="enter_the_nether" item="flint_and_steel">
+      <criterion>enter_nether_portal</criterion>
+    </advancement>
+    <advancement id="follow_ender_eye" item="eye_of_ender">
+      <criterion>near_stronghold</criterion>
+    </advancement>
+    <advancement id="form_obsidian" item="obsidian" />
+    <advancement id="iron_tools" item="iron_pickaxe" />
+    <advancement id="lava_bucket" item="lava_bucket" />
+    <advancement id="mine_diamond" item="diamond" />
+    <advancement id="mine_stone" item="wooden_pickaxe">
+      <criterion>get_stone</criterion>
+    </advancement>
+    <advancement id="obtain_armor" item="iron_chestplate">
+      <criterion>iron_helmet</criterion>
+      <criterion>iron_chestplate</criterion>
+      <criterion>iron_leggings</criterion>
+      <criterion>iron_boots</criterion>
+    </advancement>
+    <advancement id="obtain_blaze_rod" item="blaze_rod" />
+    <advancement id="root" item="grass">
+      <criterion>crafting_table</criterion>
+    </advancement>
+    <advancement id="shiny_gear" item="diamond_chestplate">
+      <criterion>diamond_helmet</criterion>
+      <criterion>diamond_chestplate</criterion>
+      <criterion>diamond_leggings</criterion>
+      <criterion>diamond_boots</criterion>
+    </advancement>
+    <advancement id="smelt_iron" item="iron_ingot">
+      <criterion>iron</criterion>
+    </advancement>
+    <advancement id="summon_wither" item="nether_star">
+      <criterion>summoned</criterion>
+    </advancement>
+    <advancement id="upgrade_tools" item="stone_pickaxe" />
+  </advancements>
   <attributes>
     <achievement id="generic.armor" />
     <achievement id="generic.armorToughness" />

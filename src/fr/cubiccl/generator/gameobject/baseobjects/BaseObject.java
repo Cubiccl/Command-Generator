@@ -61,6 +61,12 @@ public abstract class BaseObject
 		return null;
 	}
 
+	@Override
+	public String toString()
+	{
+		return this.name().toString();
+	}
+
 	/** @return This Object in XML format. */
 	public abstract Element toXML();
 

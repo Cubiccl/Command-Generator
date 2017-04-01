@@ -29,6 +29,20 @@ public class ObjectCreator
 		CommandGenerator.log("Successfully created " + ObjectRegistry.achievements.size() + " achievements.");
 	}
 
+	private static void createAdvancements(Element advancements)
+	{
+		for (Element advancement : advancements.getChildren())
+		{
+			ArrayList<String> criteria = new ArrayList<String>();
+			for (Element criterion : advancement.getChildren("criterion"))
+				criteria.add(criterion.getText());
+			if (criteria.size() == 0) criteria.add(advancement.getAttributeValue("item"));
+			new DefaultAdvancement(advancement.getAttributeValue("id"), ObjectRegistry.items.find(advancement.getAttributeValue("item")),
+					criteria.toArray(new String[criteria.size()]));
+		}
+		CommandGenerator.log("Successfully created " + ObjectRegistry.advancements.size() + " advancements.");
+	}
+
 	private static String[] createApplicable(Element applicable)
 	{
 		ArrayList<String> apps = new ArrayList<String>();
@@ -249,6 +263,7 @@ public class ObjectCreator
 		createEffects(data.getChild("effects"));
 		createEnchantments(data.getChild("enchantments"));
 		createAchievements(data.getChild("achievements"));
+		createAdvancements(data.getChild("advancements"));
 		createAttributes(data.getChild("attributes"));
 		createParticles(data.getChild("particles"));
 		createRecipes(data.getChild("recipes"));
