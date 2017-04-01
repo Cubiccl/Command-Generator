@@ -12,6 +12,13 @@ achievement.give=Give
 achievement.one=One Achievement :
 achievement.take=Remove
 
+advancement.criterion=Only this Criterion :
+advancement.grant=Grant Advancement
+advancement.name=Advancement
+advancement.predefined=Predefined Advancements...
+advancement.revoke=Revoke Advancement
+advancement.test=Test Advancement
+
 attribute.base=Base value
 attribute.base.help=This is the Base value of the Attribute. This value is modified by the Modifiers.
 attribute.modifier.amount=Amount to apply
@@ -936,6 +943,30 @@ achievement.snipeSkeleton=Sniper Duel
 achievement.spawnWither=The Beginning?
 achievement.theEnd=The End?
 achievement.theEnd2=The End.
+
+// ADVANCEMENTS
+advancement.brew_potion=Brew a potion
+advancement.create_beacon=Create a beacon
+advancement.create_full_beacon=Create a full beacon
+advancement.deflect_arrow=Deflect an Arrow
+advancement.elytra=Learn to Fly
+advancement.enchant_item=Enchant an item
+advancement.enter_end_gateway=Enter a Gateway
+advancement.enter_the_end=Enter the End
+advancement.enter_the_nether=Enter the Nether
+advancement.follow_ender_eye=Follow an Ender Eye
+advancement.form_obsidian=Form obsidian
+advancement.iron_tools=Iron tools
+advancement.lava_bucket=Bucket of lava
+advancement.mine_diamond=Diamonds!
+advancement.mine_stone=Mine stone
+advancement.obtain_armor=Obtain armor
+advancement.obtain_blaze_rod=Obtain a Blaze Rod
+advancement.root=Minecraft
+advancement.shiny_gear=Shiny grea
+advancement.smelt_iron=Smelt iron
+advancement.summon_wither=Summon the Wither
+advancement.upgrade_tools=Upgrade tools
 
 // ARGUMENTS
 argument.description.c=The number of Entities to target
@@ -2057,6 +2088,12 @@ command.achievement=Gives achievement <achievement> to <target>.
 command.achievement.all=Gives all achievements to <target>.
 command.achievement.take=Removes achievement <achievement> from <target>.
 command.achievement.take.all=Removes all achievements from <target>.
+command.advancement=Grants advancement <advancement> to <target>.
+command.advancement.revoke=Revokes advancement <advancement> from <target>.
+command.advancement.test=Tests if <target> has advancement <advancement>.
+command.advancement.criterion=Grants criterion <criterion> from advancement <advancement> to <target>.
+command.advancement.revoke.criterion=Revokes criterion <criterion> from advancement <advancement> from <target>.
+command.advancement.test.criterion=Tests if <target> has criterion <criterion> from advancement <advancement>.
 command.blockdata=Applies NBT Tags to the Block at <coordinates>.
 command.clear=Removes all <item> Items from <target>'s inventory.
 command.clear.all=Removes all Items from <target>'s inventory.

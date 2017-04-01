@@ -66,6 +66,7 @@ public class Commands
 
 		if (Settings.version().isAfter(Version.v1d12))
 		{
+			new CommandAdvancement();
 			new CommandRecipe();
 		}
 	}
