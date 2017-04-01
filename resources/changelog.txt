@@ -17,6 +17,15 @@ CHANGED TRANSLATIONS
 tag.title.Variant
 
 ADDED TRANSLATIONS
+command.recipe.*
+entity.parrot
+gamerule.doLimitedCrafting
+item.knowledge_book
+parrot.*
+recipe.* (in //MAIN and //RECIPES)
+tag.entity.ShoulderEntityLeft,tag.entity.ShoulderEntityRight,tag.entity.recipeBook,tag.entity.seenCredits
+tag.item.Recipes
+tag.title.Recipes,tag.title.recipeBook
 
 ------------------------- VERSION 2.4.2 -------------------------
 ADDITIONS

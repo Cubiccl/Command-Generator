@@ -2,7 +2,7 @@ package fr.cubiccl.generator.gameobject;
 
 import java.awt.Component;
 
-import fr.cubiccl.generator.gameobject.baseobjects.Item;
+import fr.cubiccl.generator.gameobject.baseobjects.RecipeType;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagBoolean;
@@ -20,7 +20,7 @@ public class Recipe implements IObjectList<Recipe>
 
 	public static Recipe fromNBT(TagCompound tag)
 	{
-		Item i = ObjectRegistry.items.find(tag.id());
+		RecipeType r = ObjectRegistry.recipes.find(tag.id());
 		boolean u = true, d = true;
 
 		for (Tag t : tag.value())
@@ -29,21 +29,21 @@ public class Recipe implements IObjectList<Recipe>
 			else if (t.id().equals(Tags.RECIPE_UNLOCKED.id())) u = ((TagBoolean) t).value();
 		}
 
-		return new Recipe(i, u, d);
+		return new Recipe(r, u, d);
 
 	}
 
-	public Item item;
+	public RecipeType recipe;
 	public boolean unlocked, displayed;
 
 	public Recipe()
 	{
-		this(ObjectRegistry.items.find("stone"), true, true);
+		this(ObjectRegistry.recipes.first(), true, true);
 	}
 
-	public Recipe(Item item, boolean unlocked, boolean displayed)
+	public Recipe(RecipeType recipe, boolean unlocked, boolean displayed)
 	{
-		this.item = item;
+		this.recipe = recipe;
 		this.unlocked = unlocked;
 		this.displayed = displayed;
 	}
@@ -57,26 +57,26 @@ public class Recipe implements IObjectList<Recipe>
 	@Override
 	public Component getDisplayComponent()
 	{
-		return this.item.getDisplayComponent();
+		return this.recipe.getDisplayComponent();
 	}
 
 	@Override
 	public String getName(int index)
 	{
-		return this.item.getName(index);
+		return this.recipe.item.getName(index);
 	}
 
 	public TagCompound toNBT()
 	{
-		return new DefaultCompound(this.item.id(), Tag.UNKNOWN)
-				.create(Tags.RECIPE_UNLOCKED.create(this.unlocked), Tags.RECIPE_DISPLAYED.create(this.displayed));
+		return new DefaultCompound(this.recipe.id(), Tag.UNKNOWN).create(Tags.RECIPE_UNLOCKED.create(this.unlocked),
+				Tags.RECIPE_DISPLAYED.create(this.displayed));
 	}
 
 	@Override
 	public Recipe update(CGPanel panel) throws CommandGenerationException
 	{
 		RecipePanel p = (RecipePanel) panel;
-		this.item = p.selectedItem();
+		this.recipe = p.selectedRecipe();
 		this.unlocked = p.isUnlocked();
 		this.displayed = p.isDisplayed();
 		return this;

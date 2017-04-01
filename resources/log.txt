@@ -1,4 +1,4 @@
-Welcome to the Command Generator v2.4.2 by Cubi !
+Welcome to the Command Generator v2.4.3 by Cubi !
 ---- VERSION : 1.12 - snapshot ----
 ---- Creating objects ----
 Successfully created 254 blocks.
@@ -18,8 +18,4 @@ Successfully created 190 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
-Generating !
-Successfully generated : recipe give @a minecraft:comparator
-Generating !
-Successfully generated : recipe give @a minecraft:light_gray_dye_from_oxeye_daisy
 Exiting Command Generator... Bye bye !

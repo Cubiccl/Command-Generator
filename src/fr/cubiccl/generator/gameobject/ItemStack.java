@@ -103,7 +103,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 			TagCompound display = (TagCompound) this.nbt.getTagFromId("display");
 			if (display.hasTag(Tags.DISPLAY_NAME)) return ((TagString) display.getTag(Tags.DISPLAY_NAME)).value();
 		}
-		return this.amount + " " + this.item.name(this.damage).toString();
+		return (this.amount == 0 ? "" : this.amount + " ") + this.item.name(this.damage).toString();
 	}
 
 	public void enchant(EnchantmentType enchantment)

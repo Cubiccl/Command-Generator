@@ -4145,7 +4145,7 @@
       </strvalues>
     </tag>
     <tag id="Recipes">
-      <customtype>ItemList</customtype>
+      <customtype>RecipeList</customtype>
       <applicable>
         <app>knowledge_book</app>
       </applicable>
@@ -4204,16 +4204,16 @@
       </applicable>
     </tag>
     <tag id="Age">
-      <type>3</type>
-      <applicable>
-        <app>list=breed</app>
-      </applicable>
-    </tag>
-    <tag id="Age">
       <type>2</type>
       <applicable>
         <app>item</app>
         <app>xp_orb</app>
+      </applicable>
+    </tag>
+    <tag id="Age">
+      <type>3</type>
+      <applicable>
+        <app>list=breed</app>
       </applicable>
     </tag>
     <tag id="Air">
