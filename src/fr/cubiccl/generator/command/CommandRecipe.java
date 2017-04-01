@@ -4,11 +4,12 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import fr.cubiccl.generator.gameobject.baseobjects.RecipeType;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.target.Target;
+import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
@@ -19,7 +20,7 @@ public class CommandRecipe extends Command implements ActionListener
 	private static final byte ONE = 0, ALL = 1;
 
 	private OptionCombobox comboboxMode, comboboxNumber;
-	private PanelItem panelItem;
+	private ObjectCombobox<RecipeType> comboboxRecipe;
 	private PanelTarget panelTarget;
 
 	public CommandRecipe()
@@ -30,7 +31,7 @@ public class CommandRecipe extends Command implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		this.panelItem.setVisible(!this.comboboxNumber.getValue().equals("all"));
+		this.comboboxRecipe.setVisible(!this.comboboxNumber.getValue().equals("all"));
 		this.updateTranslations();
 	}
 
@@ -53,16 +54,13 @@ public class CommandRecipe extends Command implements ActionListener
 		--gbc.gridx;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		panel.add(this.panelItem = new PanelItem("recipe.item"), gbc);
+		panel.add((this.comboboxRecipe = new ObjectCombobox<RecipeType>(ObjectRegistry.recipes.list())).container, gbc);
 		++gbc.gridy;
 		panel.add(this.panelTarget = new PanelTarget("target.title.player", PanelTarget.PLAYERS_ONLY), gbc);
 
-		this.panelItem.setHasAmount(false);
-		this.panelItem.setHasData(false);
-		this.panelItem.setHasNBT(false);
 		this.comboboxMode.addActionListener(this);
 		this.comboboxNumber.addActionListener(this);
-		this.panelItem.addArgumentChangeListener(this);
+		this.comboboxRecipe.addActionListener(this);
 		this.panelTarget.addArgumentChangeListener(this);
 
 		return panel;
@@ -78,7 +76,7 @@ public class CommandRecipe extends Command implements ActionListener
 			else description = new Text("command." + this.id + ".take");
 		} else if (this.numberMode() == ALL) description = new Text("command." + this.id + ".all");
 
-		if (this.numberMode() == ONE) description.addReplacement("<item>", this.panelItem.selectedItem().toString());
+		if (this.numberMode() == ONE) description.addReplacement("<item>", this.comboboxRecipe.getSelectedObject().toString());
 		description.addReplacement("<target>", this.panelTarget.displayTarget());
 
 		return description;
@@ -87,11 +85,10 @@ public class CommandRecipe extends Command implements ActionListener
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = this.id + " " + this.comboboxMode.getValue() + " ";
-		if (this.numberMode() == ALL) command += "* ";
-		else command += "achievement." + this.panelItem.selectedItem().id() + " ";
-
-		return command + this.panelTarget.generate().toCommand();
+		String command = this.id + " " + this.comboboxMode.getValue() + " " + this.panelTarget.generate().toCommand();
+		if (this.numberMode() == ALL) command += " *";
+		else command += " " + this.comboboxRecipe.getSelectedObject().id();
+		return command;
 	}
 
 	private byte mode()
@@ -117,7 +114,7 @@ public class CommandRecipe extends Command implements ActionListener
 			else
 			{
 				this.comboboxNumber.setValue("one");
-				this.panelItem.setItem(ObjectRegistry.items.find(argument));
+				this.comboboxRecipe.setSelected(ObjectRegistry.recipes.find(argument));
 			}
 		}
 	}

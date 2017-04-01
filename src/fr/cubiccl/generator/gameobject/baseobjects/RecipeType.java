@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import org.jdom2.Element;
 
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Text;
 
 public class RecipeType extends BaseObject
@@ -36,6 +37,7 @@ public class RecipeType extends BaseObject
 
 	public Text name()
 	{
+		if (Lang.keyExists("recipe." + this.id)) return new Text("recipe." + this.id);
 		if (this.damage == -1) return this.item.mainName();
 		return this.item.name(this.damage);
 	}
@@ -44,6 +46,12 @@ public class RecipeType extends BaseObject
 	{
 		if (this.damage == -1) return this.item.texture();
 		return this.item.texture(this.damage);
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.name().toString();
 	}
 
 	@Override

@@ -264,9 +264,6 @@ public class ObjectCreator
 
 		ObjectRegistry.checkAllNames();
 		ObjectRegistry.loadAllTextures(frame);
-
-		for (Item i : ObjectRegistry.items.list())
-			new RecipeType(i.id().substring("minecraft:".length()), i);
 	}
 
 	public static void createParticles(Element particles)

@@ -9,7 +9,7 @@ Successfully created 29 enchantments.
 Successfully created 33 achievements.
 Successfully created 11 attributes.
 Successfully created 48 particles.
-Successfully created 400 recipes.
+Successfully created 399 recipes.
 Successfully created 485 sounds.
 Successfully created 37 containers.
 Successfully created 66 Block NBT Tags.
@@ -18,4 +18,8 @@ Successfully created 190 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
+Generating !
+Successfully generated : recipe give @a minecraft:comparator
+Generating !
+Successfully generated : recipe give @a minecraft:light_gray_dye_from_oxeye_daisy
 Exiting Command Generator... Bye bye !

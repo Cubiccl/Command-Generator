@@ -2640,6 +2640,38 @@ pattern.tts=Top Small Triangles
 pattern.vh=Left Half
 pattern.vhr=Right Half
 
+// RECIPES
+recipe.bone_meal_from_block=Bone Meal (from Bone Block)
+recipe.bone_meal_from_bone=Bone Meal (from Bone)
+recipe.gold_ingot_from_block=Gold Ingot (from Gold Block)
+recipe.gold_ingot_from_nugget=Gold Nugget (from Gold Nugget)
+recipe.iron_ingot_from_block=Iron Ingot (from Iron Block)
+recipe.iron_ingot_from_nugget=Iron Nugget (from Iron Nugget)
+recipe.light_gray_dye_from_azure_bluet=Light Gray Dye (from Azure Bluet)
+recipe.light_gray_dye_from_gray_bonemeal=Light Gray Dye (from Gray Dye and Bone Meal)
+recipe.light_gray_dye_from_ink_bonemeal=Light Gray Dye (from Ink and Bone Meal)
+recipe.light_gray_dye_from_oxeye_daisy=Light Gray Dye (from Oxeye Daisy)
+recipe.light_gray_dye_from_white_tulip=Light Gray Dye (from White Tulip)
+recipe.magenta_dye_from_allium=Magenta Dye (from Allium)
+recipe.magenta_dye_from_lapis_ink_bonemeal=Magenta Dye (from Lapis, Ink and Bone Meal)
+recipe.magenta_dye_from_lapis_red_pink=Magenta Dye (from Lapis, Red and Pink Dyes)
+recipe.magenta_dye_from_lilac=Magenta Dye (from Lilac)
+recipe.magenta_dye_from_purple_and_pink=Magenta Dye (from Purple and Pink Dyes)
+recipe.orange_dye_from_orange_tulip=Orange Dye (from Orange Tulip)
+recipe.orange_dye_from_red_yellow=Orange Dye (from Red and Yellow Dyes)
+recipe.pink_dye_from_peony=Pink Dye (from Peony)
+recipe.pink_dye_from_pink_tulip=Pink Dye (from Pink Tulip)
+recipe.pink_dye_from_red_bonemeal=Pink Dye (from Red Dye and Bone Meal)
+recipe.rabbit_stew_from_brown_mushroom=Rabbit Stew (from Brown Mushroom)
+recipe.rabbit_stew_from_red_mushroom=Rabbit Stew (from Red Mushroom)
+recipe.red_dye_from_beetroot=Red Dye (from Beetroot)
+recipe.red_dye_from_poppy=Red Dye (from Poppy)
+recipe.red_dye_from_rose_bush=Red Dye (from Rose Bush)
+recipe.red_dye_from_tulip=Red Dye (from Red Tulip)
+recipe.shulkerboxcoloring=Shulker Box Coloring
+recipe.yellow_dye_from_dandelion=Yellow Dye (from Dandelion)
+recipe.yellow_dye_from_sunflower=Yellow Dye (from Sunflower)
+
 // STATS
 stat.animalsBred=Increments for each Animal bred
 stat.armorCleaned=Increments for each armor cleaned

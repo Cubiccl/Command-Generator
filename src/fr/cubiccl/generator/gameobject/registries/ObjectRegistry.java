@@ -188,7 +188,7 @@ public class ObjectRegistry<T extends BaseObject>
 		recipes.reset();
 		sounds.reset();
 		objectLists.clear();
-		//unavailableTags.reset();
+		// unavailableTags.reset();
 	}
 
 	protected final Class<T> c;
@@ -307,8 +307,11 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public void register(T object)
 	{
-		if (this.knows(object.id())) this.registry.put(object.id().replaceAll("minecraft:", "") + "_double_" + this.doubles(object.id()), object);
-		else this.registry.put(object.id().replaceAll("minecraft:", ""), object);
+		if (this.knows(object.id()))
+		{
+			if (this != blockTags && this != itemTags && this != entityTags) return;
+			this.registry.put(object.id().replaceAll("minecraft:", "") + "_double_" + this.doubles(object.id()), object);
+		} else this.registry.put(object.id().replaceAll("minecraft:", ""), object);
 		if (this.hasNumericalIds) this.ids.put(object.idNum(), object.id().replaceAll("minecraft:", ""));
 	}
 
