@@ -3,6 +3,8 @@ package fr.cubiccl.generator.gameobject.speedrun;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
@@ -71,6 +73,12 @@ public class ItemStackS extends ItemStack
 			}
 		}
 		return split;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		return super.toXML().setAttribute("importance", Boolean.toString(this.importance));
 	}
 
 }

@@ -27,7 +27,6 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	private boolean isValid, isPost19;
 	private ArrayList<MissingItemsError> missingItems;
 	private ArrayList<MissingSpaceError> missingSpace;
-
 	private ArrayList<ThrownItemsWarning> thrownItems;
 
 	public Speedrun()
@@ -36,8 +35,8 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 		this.missingItems = new ArrayList<MissingItemsError>();
 		this.missingSpace = new ArrayList<MissingSpaceError>();
 		this.thrownItems = new ArrayList<ThrownItemsWarning>();
-		this.isValid = true;
 		this.isPost19 = true;
+		this.verify();
 	}
 
 	public void addCheckpoint(Checkpoint checkpoint)
@@ -65,6 +64,11 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	{
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	public boolean isPost19()
+	{
+		return this.isPost19;
 	}
 
 	public boolean isValid()
@@ -110,6 +114,12 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 		this.verify();
 	}
 
+	public void setPost19(boolean isPost19)
+	{
+		this.isPost19 = isPost19;
+		this.verify();
+	}
+
 	public ThrownItemsWarning[] thrownItems()
 	{
 		return this.thrownItems.toArray(new ThrownItemsWarning[this.thrownItems.size()]);
@@ -139,8 +149,18 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	@Override
 	public Element toXML()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Element root = new Element("speedrun");
+		root.setAttribute("name", this.customName());
+		root.setAttribute("ispost19", Boolean.toString(this.isPost19));
+		for (Checkpoint c : this.checkpoints)
+		{
+			Element checkpoint = new Element("checkpoint");
+			checkpoint.setAttribute("position", Integer.toString(c.position));
+			for (ItemMove m : c.moves())
+				checkpoint.addContent(m.toXML());
+			root.addContent(checkpoint);
+		}
+		return root;
 	}
 
 	@Override
@@ -153,6 +173,8 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	public void verify()
 	{
 		this.missingItems.clear();
+		for (int i = 0; i < this.checkpoints.size(); ++i)
+			this.checkpoints.get(i).position = i;
 
 		Inventory inventory = new Inventory(this.isPost19 ? 37 : 36);
 		for (Checkpoint checkpoint : this.checkpoints)

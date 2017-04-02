@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.speedrun;
 
+import org.jdom2.Element;
+
 public class ItemMove
 {
 	public static final byte OUT = -1, INVENTORY = 0, ENDERCHEST = 1, HEAD = 2, CHEST = 3, LEGS = 4, BOOTS = 5;
@@ -40,6 +42,15 @@ public class ItemMove
 	{
 		this.stack = item;
 		this.checkpoint.onChange();
+	}
+
+	public Element toXML()
+	{
+		Element root = new Element("move");
+		root.setAttribute("from", Byte.toString(this.from));
+		root.setAttribute("to", Byte.toString(this.to));
+		root.addContent(this.stack.toXML());
+		return root;
 	}
 
 }

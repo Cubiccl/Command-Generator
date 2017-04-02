@@ -24,6 +24,7 @@ public class Checkpoint
 
 	public Inventory currentInventory;
 	private ArrayList<ItemMove> moves;
+	public int position = 0;
 	public CheckpointResult result;
 	public final Speedrun speedrun;
 
@@ -53,6 +54,11 @@ public class Checkpoint
 		for (ItemMove move : this.moves)
 			if (move.isDeleting()) deletions.add(move);
 		return deletions;
+	}
+
+	public List<ItemMove> moves()
+	{
+		return this.moves;
 	}
 
 	void onChange()
