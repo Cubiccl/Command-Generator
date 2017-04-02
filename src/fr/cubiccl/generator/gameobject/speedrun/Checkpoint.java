@@ -3,7 +3,9 @@ package fr.cubiccl.generator.gameobject.speedrun;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Checkpoint
+import org.jdom2.Element;
+
+public class Checkpoint implements Comparable<Checkpoint>
 {
 	public static class CheckpointResult
 	{
@@ -20,6 +22,15 @@ public class Checkpoint
 			this.thrownItems = thrownItems;
 		}
 
+	}
+
+	public static Checkpoint createFrom(Speedrun speedrun, Element checkpoint)
+	{
+		Checkpoint c = new Checkpoint(speedrun);
+		c.position = Integer.parseInt(checkpoint.getAttributeValue("position"));
+		for (Element move : checkpoint.getChildren("move"))
+			c.addMove(ItemMove.createFrom(c, move));
+		return c;
 	}
 
 	public Inventory currentInventory;
@@ -46,6 +57,12 @@ public class Checkpoint
 	{
 		this.moves.add(move);
 		this.onChange();
+	}
+
+	@Override
+	public int compareTo(Checkpoint o)
+	{
+		return this.position - o.position;
 	}
 
 	public List<ItemMove> deletions()

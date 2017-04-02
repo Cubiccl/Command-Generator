@@ -108,7 +108,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 			if (shouldLoad(table)) lootTables.addObject(LootTable.createFrom(table));
 			else lootTables.recentObjects.add(table);
 
-		for (Element speedrun : objects.getChild("speedruns").getChildren())
+		if (objects.getChild("speedruns") != null) for (Element speedrun : objects.getChild("speedruns").getChildren())
 			if (shouldLoad(speedrun)) speedruns.addObject(Speedrun.createFrom(speedrun));
 			else speedruns.recentObjects.add(speedrun);
 	}

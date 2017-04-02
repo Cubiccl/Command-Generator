@@ -18,6 +18,7 @@ import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 
 public class PanelSpeedrunSelection extends CGPanel implements ActionListener, ListListener<Speedrun>
 {
+	public static final int HEIGHT = 220;
 	private static final long serialVersionUID = 7092228745512002166L;
 
 	private CGButton buttonLoad;
@@ -28,7 +29,7 @@ public class PanelSpeedrunSelection extends CGPanel implements ActionListener, L
 		super();
 
 		this.setBorder(BorderFactory.createLoweredSoftBevelBorder());
-		CGLabel l = new CGLabel("loottable.list");
+		CGLabel l = new CGLabel("speedrun.list");
 		l.setHorizontalAlignment(SwingConstants.CENTER);
 		l.setFont(l.getFont().deriveFont(Font.BOLD, 30));
 

@@ -6,6 +6,15 @@ public class ItemMove
 {
 	public static final byte OUT = -1, INVENTORY = 0, ENDERCHEST = 1, HEAD = 2, CHEST = 3, LEGS = 4, BOOTS = 5;
 
+	public static ItemMove createFrom(Checkpoint checkpoint, Element move)
+	{
+		ItemStackS item = ItemStackS.createFrom(move);
+		ItemMove m = new ItemMove(checkpoint, item);
+		m.from = Byte.parseByte(move.getAttributeValue("from"));
+		m.to = Byte.parseByte(move.getAttributeValue("to"));
+		return m;
+	}
+
 	public final Checkpoint checkpoint;
 	public byte from, to;
 	private ItemStackS stack;

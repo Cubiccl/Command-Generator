@@ -72,14 +72,15 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		{
 			CommandGenerator.setCurrentMode(CommandGenerator.LOOT_TABLES);
 			this.modeCommands.setVisible(true);
-			this.modeLootTables.setVisible(true);
-			this.modeSpeedrun.setVisible(false);
+			this.modeLootTables.setVisible(false);
+			this.modeSpeedrun.setVisible(true);
 			this.modeData.setVisible(Settings.testMode);
 		} else if (e.getSource() == this.modeSpeedrun)
 		{
 			CommandGenerator.setCurrentMode(CommandGenerator.SPEEDRUN);
 			this.modeCommands.setVisible(true);
-			this.modeLootTables.setVisible(false);
+			this.modeLootTables.setVisible(true);
+			this.modeSpeedrun.setVisible(false);
 			// this.modeData.setVisible(Settings.testMode);
 		} else if (e.getSource() == this.modeData)
 		{

@@ -13,6 +13,13 @@ public class ItemStackS extends ItemStack
 {
 	public static final boolean FORCED = true, OPTIONNAL = false;
 
+	public static ItemStackS createFrom(Element item)
+	{
+		ItemStackS i = new ItemStackS(ItemStack.createFrom(item));
+		i.importance = Boolean.parseBoolean(item.getAttributeValue("importance"));
+		return i;
+	}
+
 	public boolean importance = OPTIONNAL;
 
 	public ItemStackS()
@@ -28,6 +35,13 @@ public class ItemStackS extends ItemStack
 	public ItemStackS(Item item, int data, int amount, TagCompound nbt)
 	{
 		super(item, data, amount, nbt);
+	}
+
+	public ItemStackS(ItemStack item)
+	{
+		super(item.item, item.damage, item.amount, item.nbt);
+		this.slot = item.slot;
+		this.setCustomName(item.customName());
 	}
 
 	@Override

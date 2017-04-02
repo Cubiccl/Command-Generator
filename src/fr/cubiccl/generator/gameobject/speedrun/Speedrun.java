@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.speedrun;
 
 import java.awt.Component;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 import org.jdom2.Element;
 
@@ -10,17 +11,24 @@ import fr.cubiccl.generator.gameobject.speedrun.Checkpoint.CheckpointResult;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class Speedrun extends GameObject implements IObjectList<Speedrun>
 {
 
 	public static Speedrun createFrom(Element speedrun)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Speedrun s = new Speedrun();
+		s.isPost19 = Boolean.parseBoolean(speedrun.getAttributeValue("ispost19"));
+		s.findProperties(speedrun);
+		for (Element checkpoint : speedrun.getChildren("checkpoint"))
+			s.addCheckpoint(Checkpoint.createFrom(s, checkpoint));
+		s.checkpoints.sort(Comparator.naturalOrder());
+		return s;
 	}
 
 	private ArrayList<Checkpoint> checkpoints;
@@ -48,22 +56,20 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		// TODO Speedrun.createPanel(properties)
+		return new CGPanel();
 	}
 
 	@Override
 	public Component getDisplayComponent()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new CGLabel(new Text(this.customName(), false));
 	}
 
 	@Override
 	public String getName(int index)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this.customName();
 	}
 
 	public boolean isPost19()
@@ -126,31 +132,29 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	}
 
 	@Override
+	@Deprecated
 	public String toCommand()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this.toString();
 	}
 
 	@Override
 	public String toString()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return this.customName();
 	}
 
+	@Deprecated
 	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
-		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
 	public Element toXML()
 	{
-		Element root = new Element("speedrun");
-		root.setAttribute("name", this.customName());
+		Element root = this.createRoot("speedrun");
 		root.setAttribute("ispost19", Boolean.toString(this.isPost19));
 		for (Checkpoint c : this.checkpoints)
 		{
@@ -166,8 +170,8 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	@Override
 	public Speedrun update(CGPanel panel) throws CommandGenerationException
 	{
-		// TODO Auto-generated method stub
-		return null;
+		// TODO Speedrun.update(panel)
+		return this;
 	}
 
 	public void verify()

@@ -459,6 +459,7 @@ menu.exit=Exit
 menu.loot_table=Loot Tables Generator
 menu.objects=Custom Objects
 menu.settings=Settings
+menu.speedrun=Speedrun mode
 
 objects.achievement=Achievements
 objects.attribute=Attributes
@@ -675,6 +676,9 @@ slot.remove=Disable removing
 
 spawnpoint.coordinates=New spawn point
 spawnpoint.current=Use Player's current location
+
+speedrun.list=Speedruns
+speedrun.load=Load Speedrun
 
 spread.distance=Distance between each entity
 spread.range=Maximum distance from the center (square)
