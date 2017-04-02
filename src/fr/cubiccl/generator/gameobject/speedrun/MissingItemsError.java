@@ -5,16 +5,18 @@ import java.util.List;
 public class MissingItemsError
 {
 
+	public final Checkpoint checkpoint;
 	public final ItemStackS[] items;
 
-	public MissingItemsError(ItemStackS[] items)
+	public MissingItemsError(Checkpoint checkpoint, ItemStackS... items)
 	{
+		this.checkpoint = checkpoint;
 		this.items = items;
 	}
 
-	public MissingItemsError(List<ItemStackS> missing)
+	public MissingItemsError(Checkpoint checkpoint, List<ItemStackS> missing)
 	{
-		this(missing.toArray(new ItemStackS[missing.size()]));
+		this(checkpoint, missing.toArray(new ItemStackS[missing.size()]));
 	}
 
 	public boolean isEmpty()

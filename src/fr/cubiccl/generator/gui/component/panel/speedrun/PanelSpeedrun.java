@@ -13,14 +13,18 @@ import fr.cubiccl.generator.utils.Text;
 
 public class PanelSpeedrun extends CGPanel
 {
+	public static PanelSpeedrun instance;
+
 	private static final long serialVersionUID = 5199029123151332585L;
 
 	private PanelCheckpoint panelCheckpoint;
 	private PanelCheckpointSelection panelCheckpointSelection;
+	private PanelProblems panelProblems;
 	public final Speedrun speedrun;
 
 	public PanelSpeedrun(Speedrun speedrun)
 	{
+		instance = this;
 		this.speedrun = speedrun;
 		CGLabel l = new CGLabel(new Text(speedrun.customName(), false));
 		l.setFont(l.getFont().deriveFont(Font.BOLD, 30));
@@ -32,12 +36,25 @@ public class PanelSpeedrun extends CGPanel
 		this.add(this.panelCheckpointSelection = new PanelCheckpointSelection(this.speedrun, this), gbc);
 		++gbc.gridy;
 		this.add(this.panelCheckpoint = new PanelCheckpoint(), gbc);
+		++gbc.gridy;
+		this.add(this.panelProblems = new PanelProblems(this.speedrun, this), gbc);
 	}
 
 	public void displayCheckpoint(Checkpoint checkpoint)
 	{
 		this.panelCheckpoint.setCheckpoint(checkpoint);
 		this.panelCheckpoint.setVisible(checkpoint != null);
+	}
+
+	public void onSpeedrunUpdate()
+	{
+		this.panelCheckpointSelection.onSpeedrunUpdate();
+		this.panelProblems.onSpeedrunUpdate();
+	}
+
+	public void selectCheckpoint(Checkpoint checkpoint)
+	{
+		this.panelCheckpointSelection.setSelected(checkpoint);
 	}
 
 }

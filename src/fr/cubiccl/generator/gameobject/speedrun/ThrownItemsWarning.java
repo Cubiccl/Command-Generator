@@ -5,14 +5,14 @@ import java.util.List;
 public class ThrownItemsWarning extends MissingItemsError
 {
 
-	public ThrownItemsWarning(ItemStackS[] items)
+	public ThrownItemsWarning(Checkpoint checkpoint, ItemStackS... items)
 	{
-		super(items);
+		super(checkpoint, items);
 	}
 
-	public ThrownItemsWarning(List<ItemStackS> items)
+	public ThrownItemsWarning(Checkpoint checkpoint, List<ItemStackS> items)
 	{
-		this(items.toArray(new ItemStackS[items.size()]));
+		this(checkpoint, items.toArray(new ItemStackS[items.size()]));
 	}
 
 }

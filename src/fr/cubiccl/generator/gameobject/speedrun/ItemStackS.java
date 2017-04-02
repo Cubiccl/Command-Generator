@@ -11,16 +11,16 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 
 public class ItemStackS extends ItemStack
 {
-	public static final boolean FORCED = true, OPTIONNAL = false;
+	public static final byte FORCED = 0, RESOURCE = 1, OPTIONNAL = 2;
 
 	public static ItemStackS createFrom(Element item)
 	{
 		ItemStackS i = new ItemStackS(ItemStack.createFrom(item));
-		i.importance = Boolean.parseBoolean(item.getAttributeValue("importance"));
+		i.importance = Byte.parseByte(item.getAttributeValue("importance"));
 		return i;
 	}
 
-	public boolean importance = OPTIONNAL;
+	public byte importance = RESOURCE;
 
 	public ItemStackS()
 	{
@@ -63,6 +63,11 @@ public class ItemStackS extends ItemStack
 		return this.importance == OPTIONNAL;
 	}
 
+	public boolean isResource()
+	{
+		return this.importance == RESOURCE;
+	}
+
 	public boolean matches(ItemStackS item)
 	{
 		return item.getItem() == item.getItem() && item.getDamage() == item.getDamage();
@@ -92,7 +97,7 @@ public class ItemStackS extends ItemStack
 	@Override
 	public Element toXML()
 	{
-		return super.toXML().setAttribute("importance", Boolean.toString(this.importance));
+		return super.toXML().setAttribute("importance", Byte.toString(this.importance));
 	}
 
 }

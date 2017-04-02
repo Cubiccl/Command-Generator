@@ -53,7 +53,6 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	public void addCheckpoint(Checkpoint checkpoint)
 	{
 		this.checkpoints.add(checkpoint);
-		this.onChange();
 		this.verify();
 	}
 
@@ -71,6 +70,11 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 		return new PanelSpeedrun(this);
 	}
 
+	public Checkpoint getCheckpoint(int index)
+	{
+		return this.checkpoints.get(index);
+	}
+
 	@Override
 	public Component getDisplayComponent()
 	{
@@ -81,6 +85,12 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	public String getName(int index)
 	{
 		return this.customName();
+	}
+
+	public void insertCheckpoint(int index, Checkpoint checkpoint)
+	{
+		this.checkpoints.add(index, checkpoint);
+		this.verify();
 	}
 
 	public boolean isPost19()
@@ -123,6 +133,13 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 		this.checkpoints.set(i + 1, checkpoint);
 		this.checkpoints.set(i, previous);
 		this.verify();
+	}
+
+	@Override
+	public void onChange()
+	{
+		super.onChange();
+		PanelSpeedrun.instance.onSpeedrunUpdate();
 	}
 
 	public void removeCheckpoint(Checkpoint checkpoint)
@@ -209,5 +226,6 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 		}
 
 		this.isValid = this.missingItems.isEmpty() && this.missingSpace.isEmpty();
+		this.onChange();
 	}
 }

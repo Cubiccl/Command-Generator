@@ -7,15 +7,15 @@ public class MissingSpaceError extends MissingItemsError
 
 	public final int missingSlots;
 
-	public MissingSpaceError(ItemStackS... blockedItems)
+	public MissingSpaceError(Checkpoint checkpoint, ItemStackS... blockedItems)
 	{
-		super(blockedItems);
+		super(checkpoint, blockedItems);
 		this.missingSlots = blockedItems.length;
 	}
 
-	public MissingSpaceError(List<ItemStackS> blocked)
+	public MissingSpaceError(Checkpoint checkpoint, List<ItemStackS> blocked)
 	{
-		this(blocked.toArray(new ItemStackS[blocked.size()]));
+		this(checkpoint, blocked.toArray(new ItemStackS[blocked.size()]));
 	}
 
 }
