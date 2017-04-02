@@ -111,5 +111,7 @@
       </pools>
     </table>
   </tables>
-  <speedruns />
+  <speedruns>
+    <speedrun objectname="My Speedrun" version="1.12" ispost19="true" />
+  </speedruns>
 </objects>

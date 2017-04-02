@@ -65,6 +65,12 @@ public class StateManager
 		return this.currentManager().peek();
 	}
 
+	public <T extends CGPanel> void setCommandState(T panel, IStateListener<T> stateListener)
+	{
+		this.statesCommand.add(new State<T>(panel, stateListener));
+		this.updatePanel();
+	}
+
 	public <T extends CGPanel> void setState(T panel, IStateListener<T> stateListener)
 	{
 		this.currentManager().add(new State<T>(panel, stateListener));

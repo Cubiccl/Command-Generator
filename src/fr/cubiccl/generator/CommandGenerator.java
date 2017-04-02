@@ -236,7 +236,7 @@ public class CommandGenerator
 		selected = command;
 		window.setSelected(command);
 		stateManager.clear();
-		stateManager.setState(selectedCommand().getGUI(), null);
+		stateManager.setCommandState(selectedCommand().getGUI(), null);
 	}
 
 	public static void updateData()
