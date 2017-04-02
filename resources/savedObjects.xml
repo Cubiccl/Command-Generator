@@ -110,64 +110,6 @@
         </pool>
       </pools>
     </table>
-    <table objectname="Zombie" version="1.11">
-      <pools>
-        <pool>
-          <conditions />
-          <entries>
-            <pool>
-              <name>minecraft:rotten_flesh</name>
-              <type>0</type>
-              <weight>1</weight>
-              <quality>-1</quality>
-              <conditions />
-              <functions />
-            </pool>
-          </entries>
-          <rolls>1</rolls>
-          <bonusrolls>0.0</bonusrolls>
-        </pool>
-        <pool>
-          <conditions>
-            <condition>
-              <id>killed_by_player</id>
-              <nbt>{"inverse":"true"}</nbt>
-            </condition>
-            <condition>
-              <id>random_chance_with_looting</id>
-              <nbt>{"chance":0.02f,"looting_multiplier":0f}</nbt>
-            </condition>
-          </conditions>
-          <entries>
-            <pool>
-              <name>minecraft:iron_ingot</name>
-              <type>0</type>
-              <weight>1</weight>
-              <quality>-1</quality>
-              <conditions />
-              <functions />
-            </pool>
-            <pool>
-              <name>minecraft:carrot</name>
-              <type>0</type>
-              <weight>1</weight>
-              <quality>-1</quality>
-              <conditions />
-              <functions />
-            </pool>
-            <pool>
-              <name>minecraft:potato</name>
-              <type>0</type>
-              <weight>1</weight>
-              <quality>-1</quality>
-              <conditions />
-              <functions />
-            </pool>
-          </entries>
-          <rolls>1</rolls>
-          <bonusrolls>0.0</bonusrolls>
-        </pool>
-      </pools>
-    </table>
   </tables>
+  <speedruns />
 </objects>

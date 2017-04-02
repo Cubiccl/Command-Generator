@@ -51,10 +51,10 @@ public class Settings
 		v1d11("1.11", "1.11", 0),
 		v1d12("1.12 - snapshot", "1.12", 1);
 
-		public static Version get(String id)
+		public static Version get(String codeName)
 		{
 			for (Version v : Version.values())
-				if (v.codeName.equals(id)) return v;
+				if (v.codeName.equals(codeName)) return v;
 			return get(Settings.getDefault(MINECRAFT_VERSION));
 		}
 

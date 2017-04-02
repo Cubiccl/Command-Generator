@@ -2,26 +2,22 @@ package fr.cubiccl.generator.gui.component.panel.speedrun;
 
 import java.awt.Font;
 import java.awt.GridBagConstraints;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.SwingConstants;
 
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gameobject.speedrun.Speedrun;
-import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ListListener;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 
-public class PanelSpeedrunSelection extends CGPanel implements ActionListener, ListListener<Speedrun>
+public class PanelSpeedrunSelection extends CGPanel implements ListListener<Speedrun>
 {
-	public static final int HEIGHT = 220;
+	public static final int HEIGHT = 190;
 	private static final long serialVersionUID = 7092228745512002166L;
 
-	private CGButton buttonLoad;
 	public PanelObjectList<Speedrun> list;
 
 	public PanelSpeedrunSelection()
@@ -39,47 +35,31 @@ public class PanelSpeedrunSelection extends CGPanel implements ActionListener, L
 		this.add(l, gbc);
 		++gbc.gridy;
 		this.add(this.list = new PanelObjectList<Speedrun>(null, (String) null, Speedrun.class), gbc);
-		++gbc.gridy;
-		this.add(this.buttonLoad = new CGButton("speedrun.load"), gbc);
 
-		this.buttonLoad.addActionListener(this);
 		this.list.setValues(ObjectSaver.speedruns.list());
 		this.list.addListListener(this);
 	}
 
 	@Override
-	public void actionPerformed(ActionEvent e)
-	{
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
 	public void onAddition(int index, Speedrun object)
 	{
-		// TODO Auto-generated method stub
-
+		ObjectSaver.speedruns.addObject(object);
 	}
 
 	@Override
 	public void onChange(int index, Speedrun object)
-	{
-		// TODO Auto-generated method stub
-
-	}
+	{}
 
 	@Override
 	public void onDeletion(int index, Speedrun object)
 	{
-		// TODO Auto-generated method stub
-
+		ObjectSaver.speedruns.delete(object);
 	}
 
 	@Override
 	public void setEnabled(boolean enabled)
 	{
 		super.setEnabled(enabled);
-		this.buttonLoad.setEnabled(enabled);
 		this.list.setEnabled(enabled);
 	}
 

@@ -6,13 +6,16 @@ import java.util.Comparator;
 
 import org.jdom2.Element;
 
+import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.speedrun.Checkpoint.CheckpointResult;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.speedrun.PanelSpeedrun;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
@@ -56,8 +59,15 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		// TODO Speedrun.createPanel(properties)
-		return new CGPanel();
+		if ((boolean) properties.get("new"))
+		{
+			String name = Dialogs.showInputDialog(new Text("objects.name").toString());
+			if (name != null) this.setCustomName(name);
+			else return null;
+			CommandGenerator.window.panelSpeedrunSelection.list.add(this);
+		}
+		CommandGenerator.stateManager.clear();
+		return new PanelSpeedrun(this);
 	}
 
 	@Override
@@ -167,10 +177,10 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 		return root;
 	}
 
+	@Deprecated
 	@Override
 	public Speedrun update(CGPanel panel) throws CommandGenerationException
 	{
-		// TODO Speedrun.update(panel)
 		return this;
 	}
 

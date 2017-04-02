@@ -4260,16 +4260,16 @@
       </applicable>
     </tag>
     <tag id="Age">
+      <type>3</type>
+      <applicable>
+        <app>list=breed</app>
+      </applicable>
+    </tag>
+    <tag id="Age">
       <type>2</type>
       <applicable>
         <app>item</app>
         <app>xp_orb</app>
-      </applicable>
-    </tag>
-    <tag id="Age">
-      <type>3</type>
-      <applicable>
-        <app>list=breed</app>
       </applicable>
     </tag>
     <tag id="Air">
@@ -4929,17 +4929,17 @@
       </applicable>
       <byteboolean>true</byteboolean>
     </tag>
-    <tag id="Life">
-      <type>3</type>
-      <applicable>
-        <app>fireworks_rocket</app>
-      </applicable>
-    </tag>
     <tag id="life">
       <type>2</type>
       <applicable>
         <app>arrow</app>
         <app>spectral_arrow</app>
+      </applicable>
+    </tag>
+    <tag id="Life">
+      <type>3</type>
+      <applicable>
+        <app>fireworks_rocket</app>
       </applicable>
     </tag>
     <tag id="LifeTicks">

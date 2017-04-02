@@ -245,12 +245,13 @@ public class CommandGenerator
 		log("---- Creating objects ----");
 
 		LoadingFrame frame = new LoadingFrame(5);
+		Settings.save();
+		ObjectSaver.save();
 		ObjectCreator.createObjects(frame);
 		Commands.createCommands(frame);
 		ObjectSaver.load();
 		if (window != null)
 		{
-			isReloading = true;
 			window.dispose();
 			SwingUtilities.invokeLater(new Runnable()
 			{

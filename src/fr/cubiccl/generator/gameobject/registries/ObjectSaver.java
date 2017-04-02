@@ -39,9 +39,11 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 	public static final ObjectSaver<Speedrun> speedruns = new ObjectSaver<Speedrun>(new Text("speedruns", false), Speedrun.class);
 	public static final ObjectSaver<Target> targets = new ObjectSaver<Target>("target", Target.class);
 	public static final ObjectSaver<TradeOffer> trades = new ObjectSaver<TradeOffer>("trade", TradeOffer.class);
+	private static boolean wasLoaded = false;
 
 	public static void load()
 	{
+		wasLoaded = true;
 		savers = new ObjectSaver[]
 		{ attributeModifiers, attributes, blocks, coordinates, effects, enchantments, entities, items, jsonMessages, trades, targets };
 		hiddenSavers = new ObjectSaver[]
@@ -198,6 +200,9 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 
 	public static void save()
 	{
+		if (!wasLoaded) return;
+		wasLoaded = false; // Prevent save before loading
+
 		Element root = new Element("objects");
 		root.addContent(attributeModifiers.toXML("attributemodifiers"));
 		root.addContent(attributes.toXML("attributes"));
@@ -220,7 +225,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 	private static boolean shouldLoad(Element modifier)
 	{
 		if (modifier.getAttribute("version") == null) return false;
-		return Settings.version().isBefore(Version.get(modifier.getAttributeValue("version")));
+		return Settings.version().isAfter(Version.get(modifier.getAttributeValue("version")));
 	}
 
 	public final Class<T> c;

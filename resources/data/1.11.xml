@@ -3839,17 +3839,17 @@
       </applicable>
       <byteboolean>true</byteboolean>
     </tag>
+    <tag id="Life">
+      <type>3</type>
+      <applicable>
+        <app>fireworks_rocket</app>
+      </applicable>
+    </tag>
     <tag id="life">
       <type>2</type>
       <applicable>
         <app>arrow</app>
         <app>spectral_arrow</app>
-      </applicable>
-    </tag>
-    <tag id="Life">
-      <type>3</type>
-      <applicable>
-        <app>fireworks_rocket</app>
       </applicable>
     </tag>
     <tag id="LifeTicks">
