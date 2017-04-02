@@ -1,16 +1,21 @@
 package fr.cubiccl.generator.gameobject.speedrun;
 
 import java.awt.Component;
+import java.awt.GridBagConstraints;
 
 import org.jdom2.Element;
 
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class ItemMove implements IObjectList<ItemMove>
 {
+	public static final String[] LOCATIONS =
+	{ "inventory", "enderchest", "head", "chest", "legs", "boots" };
 	public static final byte OUT = -1, INVENTORY = 0, ENDERCHEST = 1, HEAD = 2, CHEST = 3, LEGS = 4, BOOTS = 5;
 
 	public static ItemMove createFrom(Checkpoint checkpoint, Element move)
@@ -37,15 +42,28 @@ public class ItemMove implements IObjectList<ItemMove>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		// TODO ItemMove.createPanel(properties)
-		return null;
+		return new ItemMovePanel(this);
+	}
+
+	private Text description()
+	{
+		Text t = new Text("speedrun.move.desc");
+		if (this.from == OUT) t = new Text("speedrun.move.desc.from");
+		else t.addReplacement("<from>", new Text("speedrun.move." + LOCATIONS[this.from]));
+		if (this.to == OUT) t = new Text("speedrun.move.desc.to");
+		else t.addReplacement("<to>", new Text("speedrun.move." + LOCATIONS[this.to]));
+		return t;
 	}
 
 	@Override
 	public Component getDisplayComponent()
 	{
-		// TODO ItemMove.getDisplayComponent()
-		return this.stack.getDisplayComponent();
+		CGPanel panel = new CGPanel();
+		GridBagConstraints gbc = panel.createGridBagLayout();
+		panel.add(this.stack.getDisplayComponent(), gbc);
+		++gbc.gridy;
+		panel.add(new CGLabel(this.description()));
+		return panel;
 	}
 
 	public ItemStackS getItem()
@@ -92,8 +110,11 @@ public class ItemMove implements IObjectList<ItemMove>
 	@Override
 	public ItemMove update(CGPanel panel) throws CommandGenerationException
 	{
-		// ItemMove.update(panel)
-		return null;
+		ItemMovePanel p = (ItemMovePanel) panel;
+		this.stack = p.generateItem();
+		this.from = p.getFrom();
+		this.to = p.getTo();
+		return this;
 	}
 
 }

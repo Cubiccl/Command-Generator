@@ -683,6 +683,15 @@ speedrun.help=<html>Each Speedrun is represented as a list of Checkpoint. At eac
 speedrun.help.button=How does this work?
 speedrun.list=Speedruns
 speedrun.load=Load Speedrun
+speedrun.move.boots=boots slot
+speedrun.move.chest=chestplate slot
+speedrun.move.desc=Moved from <from> to <to>
+speedrun.move.desc.from=Obtained, put in <to>
+speedrun.move.desc.to=Thrown from <from>
+speedrun.move.enderchest=enderchest
+speedrun.move.head=helmet slot
+speedrun.move.inventory=inventory
+speedrun.move.legs=leggings slot
 speedrun.problems=Problems
 speedrun.problems.nothing=Everything is fine! Your speedrun has no problems.
 

@@ -55,6 +55,13 @@ public class ItemStackS extends ItemStack
 		return i;
 	}
 
+	@Override
+	public String getName(int index)
+	{
+		if (this.name != null) return this.name;
+		return super.getName(index);
+	}
+
 	public boolean isForced()
 	{
 		return this.importance == FORCED;
