@@ -28,6 +28,7 @@ public class Checkpoint implements Comparable<Checkpoint>
 	{
 		Checkpoint c = new Checkpoint(speedrun);
 		c.position = Integer.parseInt(checkpoint.getAttributeValue("position"));
+		c.name = checkpoint.getAttributeValue("name");
 		for (Element move : checkpoint.getChildren("move"))
 			c.addMove(ItemMove.createFrom(c, move));
 		return c;
@@ -35,6 +36,7 @@ public class Checkpoint implements Comparable<Checkpoint>
 
 	public Inventory currentInventory;
 	private ArrayList<ItemMove> moves;
+	private String name;
 	public int position = 0;
 	public CheckpointResult result;
 	public final Speedrun speedrun;
@@ -73,6 +75,11 @@ public class Checkpoint implements Comparable<Checkpoint>
 		return deletions;
 	}
 
+	public String getName()
+	{
+		return this.name;
+	}
+
 	public List<ItemMove> moves()
 	{
 		return this.moves;
@@ -81,13 +88,28 @@ public class Checkpoint implements Comparable<Checkpoint>
 	void onChange()
 	{
 		this.speedrun.verify();
-		this.speedrun.onChange();
 	}
 
 	public void removeMove(ItemMove move)
 	{
 		this.moves.remove(move);
 		this.onChange();
+	}
+
+	public void setName(String name)
+	{
+		this.name = name;
+		this.onChange();
+	}
+
+	public Element toXML()
+	{
+		Element root = new Element("checkpoint");
+		root.setAttribute("position", Integer.toString(this.position));
+		root.setAttribute("name", this.name);
+		for (ItemMove m : this.moves())
+			root.addContent(m.toXML());
+		return root;
 	}
 
 	public List<ItemMove> transfers()

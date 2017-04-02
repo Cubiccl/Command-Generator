@@ -112,6 +112,9 @@
     </table>
   </tables>
   <speedruns>
-    <speedrun objectname="My Speedrun" version="1.12" ispost19="true" />
+    <speedrun objectname="My Speedrun" version="1.12" ispost19="true">
+      <checkpoint position="0" name="First" />
+      <checkpoint position="1" name="Second" />
+    </speedrun>
   </speedruns>
 </objects>

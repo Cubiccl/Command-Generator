@@ -80,11 +80,11 @@ public class Inventory
 
 	public CheckpointResult apply(Checkpoint checkpoint)
 	{
-		MissingItemsError missing = this.applyDeletions(checkpoint.deletions());
+		MissingItemsError missing = this.applyDeletions(checkpoint, checkpoint.deletions());
 
 		ArrayList<ItemStackS> thrown = new ArrayList<ItemStackS>(), blocked = new ArrayList<ItemStackS>();
 
-		int missingSpace = this.applyTransfers(checkpoint.transfers());
+		int missingSpace = this.applyTransfers(checkpoint, checkpoint.transfers());
 		if (missingSpace == -1) thrown.addAll(this.failed);
 		else if (missingSpace > 0) blocked.addAll(this.failed);
 		this.failed.clear();
@@ -93,7 +93,7 @@ public class Inventory
 		if (missingSpace == -1) thrown.addAll(this.failed);
 		else if (missingSpace > 0) blocked.addAll(this.failed);
 		this.failed.clear();
-		return new CheckpointResult(missing, new MissingSpaceError(blocked), new ThrownItemsWarning(thrown));
+		return new CheckpointResult(missing, new MissingSpaceError(checkpoint, blocked), new ThrownItemsWarning(checkpoint, thrown));
 	}
 
 	private int applyAdditions(List<ItemMove> additions)
@@ -109,7 +109,7 @@ public class Inventory
 		return this.failed.size();
 	}
 
-	private MissingItemsError applyDeletions(List<ItemMove> deletions)
+	private MissingItemsError applyDeletions(Checkpoint checkpoint, List<ItemMove> deletions)
 	{
 		ArrayList<ItemStackS> missing = new ArrayList<ItemStackS>();
 
@@ -119,12 +119,12 @@ public class Inventory
 			if (m.amount > 0) missing.add(m);
 		}
 
-		return new MissingItemsError(missing);
+		return new MissingItemsError(checkpoint, missing);
 	}
 
-	private int applyTransfers(List<ItemMove> transfers)
+	private int applyTransfers(Checkpoint checkpoint, List<ItemMove> transfers)
 	{
-		this.applyDeletions(transfers);
+		this.applyDeletions(checkpoint, transfers);
 		this.applyAdditions(transfers);
 		return this.failed.size();
 	}
@@ -134,11 +134,14 @@ public class Inventory
 	{
 		Inventory i = new Inventory(this.inventory.length);
 		for (int j = 0; j < this.inventory.length; j++)
-			i.inventory[j] = this.inventory[j].clone();
+			if (this.inventory[j] == null) i.inventory[j] = null;
+			else i.inventory[j] = this.inventory[j].clone();
 		for (int j = 0; j < this.enderchest.length; j++)
-			i.enderchest[j] = this.enderchest[j].clone();
+			if (this.enderchest[j] == null) i.enderchest[j] = null;
+			else i.enderchest[j] = this.enderchest[j].clone();
 		for (int j = 0; j < this.armor.length; j++)
-			i.armor[j] = this.armor[j].clone();
+			if (this.armor[j] == null) i.armor[j] = null;
+			else i.armor[j] = this.armor[j].clone();
 		return i;
 	}
 

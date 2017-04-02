@@ -38,10 +38,13 @@ public class PanelSpeedrun extends CGPanel
 		this.add(this.panelCheckpoint = new PanelCheckpoint(), gbc);
 		++gbc.gridy;
 		this.add(this.panelProblems = new PanelProblems(this.speedrun, this), gbc);
+
+		this.panelCheckpoint.setVisible(false);
 	}
 
 	public void displayCheckpoint(Checkpoint checkpoint)
 	{
+		if (this.panelCheckpoint == null) return;
 		this.panelCheckpoint.setCheckpoint(checkpoint);
 		this.panelCheckpoint.setVisible(checkpoint != null);
 	}
