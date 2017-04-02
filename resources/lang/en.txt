@@ -677,8 +677,14 @@ slot.remove=Disable removing
 spawnpoint.coordinates=New spawn point
 spawnpoint.current=Use Player's current location
 
+speedrun.checkpoint=Selected Checkpoint
+speedrun.checkpoints=Checkpoints
+speedrun.help=<html>Each Speedrun is represented as a list of Checkpoint. At each of those Checkpoints, you can obtain, move or use/throw items (these are called "Item moves").<br />You can enter all this data as you like, and the Generator will warn you if there are any problems in the "Problems" box at the bottom.</html>
+speedrun.help.button=How does this work?
 speedrun.list=Speedruns
 speedrun.load=Load Speedrun
+speedrun.problems=Problems
+speedrun.problems.nothing=Everything is fine! Your speedrun has no problems.
 
 spread.distance=Distance between each entity
 spread.range=Maximum distance from the center (square)

@@ -17,10 +17,12 @@ public class ItemStackS extends ItemStack
 	{
 		ItemStackS i = new ItemStackS(ItemStack.createFrom(item));
 		i.importance = Byte.parseByte(item.getAttributeValue("importance"));
+		if (item.getChild("name") != null) i.name = item.getChildText("name");
 		return i;
 	}
 
 	public byte importance = RESOURCE;
+	public String name = null;
 
 	public ItemStackS()
 	{
@@ -97,7 +99,9 @@ public class ItemStackS extends ItemStack
 	@Override
 	public Element toXML()
 	{
-		return super.toXML().setAttribute("importance", Byte.toString(this.importance));
+		Element root = super.toXML().setAttribute("importance", Byte.toString(this.importance));
+		if (this.name != null) root.addContent(new Element("name").setText(this.name));
+		return root;
 	}
 
 }

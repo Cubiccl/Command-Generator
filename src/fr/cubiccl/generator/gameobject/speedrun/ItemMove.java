@@ -1,8 +1,15 @@
 package fr.cubiccl.generator.gameobject.speedrun;
 
+import java.awt.Component;
+
 import org.jdom2.Element;
 
-public class ItemMove
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+import fr.cubiccl.generator.utils.CommandGenerationException;
+
+public class ItemMove implements IObjectList<ItemMove>
 {
 	public static final byte OUT = -1, INVENTORY = 0, ENDERCHEST = 1, HEAD = 2, CHEST = 3, LEGS = 4, BOOTS = 5;
 
@@ -27,9 +34,29 @@ public class ItemMove
 		this.to = INVENTORY;
 	}
 
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		// TODO ItemMove.createPanel(properties)
+		return null;
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		// TODO ItemMove.getDisplayComponent()
+		return this.stack.getDisplayComponent();
+	}
+
 	public ItemStackS getItem()
 	{
 		return this.stack;
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		return this.stack.getName(index);
 	}
 
 	public boolean isAdding()
@@ -60,6 +87,13 @@ public class ItemMove
 		root.setAttribute("to", Byte.toString(this.to));
 		root.addContent(this.stack.toXML());
 		return root;
+	}
+
+	@Override
+	public ItemMove update(CGPanel panel) throws CommandGenerationException
+	{
+		// ItemMove.update(panel)
+		return null;
 	}
 
 }

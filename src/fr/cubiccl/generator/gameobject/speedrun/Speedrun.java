@@ -231,7 +231,7 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 			checkpoint.result = result;
 		}
 
-		this.isValid = this.missingItems.isEmpty() && this.missingSpace.isEmpty();
+		this.isValid = this.missingItems.isEmpty() && this.missingSpace.isEmpty() && this.thrownItems.isEmpty();
 		this.onChange();
 	}
 }

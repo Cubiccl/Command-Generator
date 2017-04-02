@@ -1,8 +1,12 @@
 package fr.cubiccl.generator.gui.component.panel.speedrun;
 
+import java.awt.GridBagConstraints;
+
 import fr.cubiccl.generator.gameobject.speedrun.Checkpoint;
+import fr.cubiccl.generator.gameobject.speedrun.ItemMove;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.utils.Text;
 
 public class PanelCheckpoint extends CGPanel
@@ -11,20 +15,30 @@ public class PanelCheckpoint extends CGPanel
 
 	private Checkpoint checkpoint = null;
 	private CGLabel labelName;
+	private PanelObjectList<ItemMove> listMoves;
 
 	public PanelCheckpoint()
 	{
 		super("speedrun.checkpoint");
-		// TODO Auto-generated constructor stub
-		this.add(this.labelName = new CGLabel(new Text("", false)));
+
+		GridBagConstraints gbc = new GridBagConstraints();
+		this.add(this.labelName = new CGLabel(new Text("", false)), gbc);
+		++gbc.gridy;
+		this.add(this.listMoves = new PanelObjectList<ItemMove>(null, (String) null, ItemMove.class));
 	}
 
 	public void setCheckpoint(Checkpoint checkpoint)
 	{
 		this.checkpoint = checkpoint;
-		// TODO Auto-generated method stub
-		if (this.checkpoint == null) this.labelName.setTextID(new Text("", false));
-		else this.labelName.setTextID(new Text(this.checkpoint.getName(), false));
+		if (this.checkpoint == null)
+		{
+			this.labelName.setTextID(new Text("", false));
+			this.listMoves.setValues(new ItemMove[0]);
+		} else
+		{
+			this.labelName.setTextID(new Text(this.checkpoint.getName(), false));
+			this.listMoves.setValues(checkpoint.moves().toArray(new ItemMove[checkpoint.moves().size()]));
+		}
 	}
 
 }
