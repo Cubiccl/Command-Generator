@@ -1,16 +1,33 @@
 package fr.cubiccl.generator.gameobject.speedrun;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
-import fr.cubiccl.generator.gameobject.speedrun.Checkpoint.CheckpointResult;
+import org.jdom2.Element;
 
-public class Speedrun
+import fr.cubiccl.generator.gameobject.GameObject;
+import fr.cubiccl.generator.gameobject.speedrun.Checkpoint.CheckpointResult;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+import fr.cubiccl.generator.utils.CommandGenerationException;
+
+public class Speedrun extends GameObject implements IObjectList<Speedrun>
 {
+
+	public static Speedrun createFrom(Element speedrun)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 	private ArrayList<Checkpoint> checkpoints;
 	private boolean isValid, isPost19;
 	private ArrayList<MissingItemsError> missingItems;
 	private ArrayList<MissingSpaceError> missingSpace;
+
 	private ArrayList<ThrownItemsWarning> thrownItems;
 
 	public Speedrun()
@@ -27,6 +44,27 @@ public class Speedrun
 	{
 		this.checkpoints.add(checkpoint);
 		this.verify();
+	}
+
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public boolean isValid()
@@ -75,6 +113,41 @@ public class Speedrun
 	public ThrownItemsWarning[] thrownItems()
 	{
 		return this.thrownItems.toArray(new ThrownItemsWarning[this.thrownItems.size()]);
+	}
+
+	@Override
+	public String toCommand()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String toString()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public TagCompound toTag(TemplateCompound container)
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Speedrun update(CGPanel panel) throws CommandGenerationException
+	{
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public void verify()

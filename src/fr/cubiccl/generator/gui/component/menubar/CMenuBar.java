@@ -18,7 +18,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 {
 	private static final long serialVersionUID = 2644541217645898670L;
 
-	private CMenuItem objects, history, modeCommands, modeLootTables, modeData, settings, exit;
+	private CMenuItem objects, history, modeCommands, modeLootTables, modeSpeedrun, modeData, settings, exit;
 	private boolean objectsEnabled = true;
 
 	public CMenuBar()
@@ -27,6 +27,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.add(this.history = new CMenuItem());
 		this.add(this.modeCommands = new CMenuItem());
 		this.add(this.modeLootTables = new CMenuItem());
+		this.add(this.modeSpeedrun = new CMenuItem());
 		this.add(this.modeData = new CMenuItem());
 		this.add(this.settings = new CMenuItem());
 		this.add(Box.createHorizontalGlue());
@@ -37,11 +38,12 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.modeCommands.addActionListener(this);
 		this.modeLootTables.addActionListener(this);
 		this.modeData.addActionListener(this);
+		this.modeSpeedrun.addActionListener(this);
 		this.settings.addActionListener(this);
 		this.exit.addActionListener(this);
 
 		this.modeData.setText("Data mode");
-		this.modeData.setVisible(Settings.testMode);
+		this.modeData.setVisible(false);
 		this.modeCommands.setVisible(false);
 
 		this.updateTranslations();
@@ -64,19 +66,28 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 			CommandGenerator.setCurrentMode(CommandGenerator.COMMANDS);
 			this.modeCommands.setVisible(false);
 			this.modeLootTables.setVisible(true);
-			this.modeData.setVisible(Settings.testMode);
+			this.modeSpeedrun.setVisible(true);
+			// this.modeData.setVisible(Settings.testMode);
 		} else if (e.getSource() == this.modeLootTables)
 		{
 			CommandGenerator.setCurrentMode(CommandGenerator.LOOT_TABLES);
 			this.modeCommands.setVisible(true);
-			this.modeLootTables.setVisible(false);
+			this.modeLootTables.setVisible(true);
+			this.modeSpeedrun.setVisible(false);
 			this.modeData.setVisible(Settings.testMode);
-		}  else if (e.getSource() == this.modeData)
+		} else if (e.getSource() == this.modeSpeedrun)
+		{
+			CommandGenerator.setCurrentMode(CommandGenerator.SPEEDRUN);
+			this.modeCommands.setVisible(true);
+			this.modeLootTables.setVisible(false);
+			// this.modeData.setVisible(Settings.testMode);
+		} else if (e.getSource() == this.modeData)
 		{
 			CommandGenerator.setCurrentMode(CommandGenerator.DATA);
 			this.modeCommands.setVisible(true);
 			this.modeLootTables.setVisible(true);
-			this.modeData.setVisible(false);
+			this.modeSpeedrun.setVisible(true);
+			// this.modeData.setVisible(false);
 		} else if (e.getSource() == this.settings)
 		{
 			this.toggleMenu(false);
@@ -92,6 +103,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.history.setEnabled(enabled);
 		this.modeCommands.setEnabled(enabled);
 		this.modeLootTables.setEnabled(enabled);
+		this.modeSpeedrun.setEnabled(enabled);
 		this.modeData.setEnabled(enabled);
 		this.settings.setEnabled(enabled);
 	}
@@ -109,6 +121,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.history.setText(Lang.translate("command.history"));
 		this.modeCommands.setText(Lang.translate("menu.command"));
 		this.modeLootTables.setText(Lang.translate("menu.loot_table"));
+		this.modeSpeedrun.setText(Lang.translate("menu.speedrun"));
 		this.settings.setText(Lang.translate("menu.settings"));
 		this.exit.setText(Lang.translate("menu.exit"));
 	}

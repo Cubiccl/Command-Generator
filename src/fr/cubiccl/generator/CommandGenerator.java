@@ -28,11 +28,13 @@ import fr.cubiccl.generator.utils.*;
 public class CommandGenerator
 {
 	private static ArrayList<String> commandHistory = new ArrayList<String>();
-	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2;
+	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, SPEEDRUN = 3;
 	private static byte currentMode = COMMANDS;
 	private static String executeCommand = "", executeInput = null;
 	private static boolean isReloading = false;
 	private static ArrayList<String> log = new ArrayList<String>();
+	private static final String[] MODE_NAMES =
+	{ "Commands", "Loot tables", "Data", "Speedruns", "Recipes", "Advancements" };
 	private static Command selected;
 	public static StateManager stateManager;
 	public static ArrayList<String> untranslated = new ArrayList<String>();
@@ -219,7 +221,7 @@ public class CommandGenerator
 	public static void setCurrentMode(byte mode)
 	{
 		currentMode = mode;
-		log("Switching to " + (currentMode == COMMANDS ? "Commands" : currentMode == DATA ? "Data" : "Loot Tables") + " mode.");
+		log("Switching to " + MODE_NAMES[mode] + " mode.");
 		window.updateMode();
 		stateManager.updateMode();
 	}

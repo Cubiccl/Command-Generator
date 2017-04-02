@@ -17,11 +17,12 @@ import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.menubar.CMenuBar;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.PanelCommand;
-import fr.cubiccl.generator.gui.component.panel.PanelCommandSelection;
 import fr.cubiccl.generator.gui.component.panel.data.PanelObjectSelection;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelLootTableOutput;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelLootTableSelection;
+import fr.cubiccl.generator.gui.component.panel.mainwindow.PanelCommand;
+import fr.cubiccl.generator.gui.component.panel.mainwindow.PanelCommandSelection;
+import fr.cubiccl.generator.gui.component.panel.speedrun.PanelSpeedrunSelection;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Settings;
 import fr.cubiccl.generator.utils.Text;
@@ -38,6 +39,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	private PanelLootTableOutput panelLootTableOutput;
 	public PanelLootTableSelection panelLootTableSelection;
 	public PanelObjectSelection panelObjectSelection;
+	public PanelSpeedrunSelection panelSpeedrunSelection;
 	private JScrollPane scrollpane;
 
 	public Window()
@@ -82,6 +84,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		contentPane.add(this.panelLootTableOutput = new PanelLootTableOutput());
 		contentPane.add(this.panelCommandSelection = new PanelCommandSelection());
 		contentPane.add(this.panelLootTableSelection = new PanelLootTableSelection());
+		contentPane.add(this.panelSpeedrunSelection = new PanelSpeedrunSelection());
 		contentPane.add(this.panelObjectSelection = new PanelObjectSelection());
 		contentPane.add(this.scrollpane = new CScrollPane(null));
 		this.scrollpane.setBorder(BorderFactory.createLoweredSoftBevelBorder());
@@ -110,11 +113,15 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 			this.panelObjectSelection.setBounds(0, 0, contentPane.getWidth(), PanelObjectSelection.HEIGHT);
 			this.scrollpane.setBounds(0, this.panelObjectSelection.getHeight(), contentPane.getWidth(),
 					contentPane.getHeight() - this.panelObjectSelection.getHeight());
-		} else
+		} else if (CommandGenerator.getCurrentMode() == CommandGenerator.LOOT_TABLES)
 		{
 			this.panelLootTableSelection.setBounds(0, 0, contentPane.getWidth() / 2, PanelLootTableOutput.HEIGHT);
 			this.panelLootTableOutput.setBounds(this.panelLootTableSelection.getWidth(), 0, this.getWidth() / 2, PanelLootTableOutput.HEIGHT);
 			this.scrollpane.setBounds(0, PanelLootTableOutput.HEIGHT, contentPane.getWidth(), contentPane.getHeight() - this.panelLootTableOutput.getHeight());
+		} else if (CommandGenerator.getCurrentMode() == CommandGenerator.SPEEDRUN)
+		{
+			this.panelSpeedrunSelection.setBounds(0, 0, contentPane.getWidth(), PanelSpeedrunSelection.HEIGHT);
+			this.scrollpane.setBounds(0, PanelSpeedrunSelection.HEIGHT, contentPane.getWidth(), contentPane.getHeight() - PanelSpeedrunSelection.HEIGHT);
 		}
 		this.validate();
 	}
@@ -152,6 +159,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.panelCommand.setVisible(commands);
 		this.panelLootTableOutput.setVisible(loot_tables);
 		this.panelLootTableSelection.setVisible(loot_tables);
+		this.panelSpeedrunSelection.setVisible(CommandGenerator.getCurrentMode() == CommandGenerator.SPEEDRUN);
 		this.panelObjectSelection.setVisible(data);
 		this.onResized();
 	}
@@ -169,6 +177,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.panelCommandSelection.updateTranslations();
 		this.panelLootTableOutput.updateTranslations();
 		this.panelLootTableSelection.updateTranslations();
+		this.panelSpeedrunSelection.updateTranslations();
 		this.menubar.updateTranslations();
 		if (this.panelGui != null) this.panelGui.updateTranslations();
 		this.updateTitle();

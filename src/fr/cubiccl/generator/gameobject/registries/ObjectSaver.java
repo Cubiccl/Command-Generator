@@ -10,6 +10,7 @@ import org.jdom2.Element;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.*;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
+import fr.cubiccl.generator.gameobject.speedrun.Speedrun;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
@@ -35,6 +36,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 			TRADES = 9, TARGETS = 10, COMMANDS = 11, LOOT_TABLES = 12;
 	@SuppressWarnings("rawtypes")
 	public static ObjectSaver[] savers, hiddenSavers;
+	public static final ObjectSaver<Speedrun> speedruns = new ObjectSaver<Speedrun>(new Text("speedruns", false), Speedrun.class);
 	public static final ObjectSaver<Target> targets = new ObjectSaver<Target>("target", Target.class);
 	public static final ObjectSaver<TradeOffer> trades = new ObjectSaver<TradeOffer>("trade", TradeOffer.class);
 
@@ -43,7 +45,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		savers = new ObjectSaver[]
 		{ attributeModifiers, attributes, blocks, coordinates, effects, enchantments, entities, items, jsonMessages, trades, targets };
 		hiddenSavers = new ObjectSaver[]
-		{ commands, lootTables };
+		{ commands, lootTables, speedruns };
 		resetAll();
 
 		if (!FileUtils.fileExists("savedObjects.xml"))
@@ -105,6 +107,10 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		for (Element table : objects.getChild("tables").getChildren())
 			if (shouldLoad(table)) lootTables.addObject(LootTable.createFrom(table));
 			else lootTables.recentObjects.add(table);
+
+		for (Element speedrun : objects.getChild("speedruns").getChildren())
+			if (shouldLoad(speedrun)) speedruns.addObject(Speedrun.createFrom(speedrun));
+			else speedruns.recentObjects.add(speedrun);
 	}
 
 	private static void loadOld()
@@ -181,13 +187,13 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		FileUtils.delete("data/1.11.txt");
 	}
 
+	@SuppressWarnings("rawtypes")
 	public static void resetAll()
 	{
-		for (@SuppressWarnings("rawtypes")
-		ObjectSaver saver : savers)
+		for (ObjectSaver saver : savers)
 			saver.reset();
-		commands.reset();
-		lootTables.reset();
+		for (ObjectSaver saver : hiddenSavers)
+			saver.reset();
 	}
 
 	public static void save()
@@ -206,6 +212,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		root.addContent(trades.toXML("trades"));
 		root.addContent(commands.toXML("commands"));
 		root.addContent(lootTables.toXML("tables"));
+		root.addContent(speedruns.toXML("speedruns"));
 
 		FileUtils.saveXMLFile(root, "savedObjects");
 	}

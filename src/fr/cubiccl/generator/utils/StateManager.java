@@ -23,13 +23,18 @@ public class StateManager
 		}
 	}
 
-	private Stack<State> statesCommand, statesTable, statesData;
+	private Stack<State>[] states;
+	private Stack<State> statesCommand, statesTable, statesData, statesSpeedrun;
 
+	@SuppressWarnings("unchecked")
 	public StateManager()
 	{
 		this.statesCommand = new Stack<State>();
 		this.statesTable = new Stack<State>();
+		this.statesSpeedrun = new Stack<State>();
 		this.statesData = new Stack<State>();
+		this.states = new Stack[]
+		{ this.statesCommand, this.statesTable, this.statesData, this.statesSpeedrun };
 	}
 
 	public void clear()
@@ -51,8 +56,7 @@ public class StateManager
 
 	private Stack<State> currentManager()
 	{
-		return CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS ? this.statesCommand
-				: CommandGenerator.getCurrentMode() == CommandGenerator.DATA ? this.statesData : this.statesTable;
+		return this.states[CommandGenerator.getCurrentMode()];
 	}
 
 	public State getState()
