@@ -20,7 +20,7 @@ public class ItemMove implements IObjectList<ItemMove>
 
 	public static ItemMove createFrom(Checkpoint checkpoint, Element move)
 	{
-		ItemStackS item = ItemStackS.createFrom(move);
+		ItemStackS item = ItemStackS.createFrom(move.getChild("item"));
 		ItemMove m = new ItemMove(checkpoint, item);
 		m.from = Byte.parseByte(move.getAttributeValue("from"));
 		m.to = Byte.parseByte(move.getAttributeValue("to"));
@@ -30,6 +30,11 @@ public class ItemMove implements IObjectList<ItemMove>
 	public final Checkpoint checkpoint;
 	public byte from, to;
 	private ItemStackS stack;
+
+	public ItemMove()
+	{
+		this(null, new ItemStackS());
+	}
 
 	public ItemMove(Checkpoint checkpoint, ItemStackS item)
 	{
@@ -62,7 +67,7 @@ public class ItemMove implements IObjectList<ItemMove>
 		GridBagConstraints gbc = panel.createGridBagLayout();
 		panel.add(this.stack.getDisplayComponent(), gbc);
 		++gbc.gridy;
-		panel.add(new CGLabel(this.description()));
+		panel.add(new CGLabel(this.description()), gbc);
 		return panel;
 	}
 

@@ -57,6 +57,7 @@ public class Checkpoint implements Comparable<Checkpoint>
 
 	public void addMove(ItemMove move)
 	{
+		if (this.moves.contains(move)) return;
 		this.moves.add(move);
 		this.onChange();
 	}

@@ -28,6 +28,11 @@ public class CGEntry extends CGTextField
 		this(textID == null ? null : new Text(textID), null);
 	}
 
+	public CGEntry(String textID, String suggestedTextID)
+	{
+		this(new Text(textID), new Text(suggestedTextID));
+	}
+
 	public CGEntry(Text text, String defaultValue, Text suggestedText)
 	{
 		super(suggestedText);

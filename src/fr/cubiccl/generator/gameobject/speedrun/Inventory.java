@@ -152,7 +152,7 @@ public class Inventory
 			if (allowNull)
 			{
 				if (inventory[i] == null || inventory[i].matches(item)) matching.add(i);
-			} else if (inventory[i] != null || inventory[i].matches(item)) matching.add(i);
+			} else if (inventory[i] != null && inventory[i].matches(item)) matching.add(i);
 
 		int[] m = new int[matching.size()];
 		for (int i = 0; i < m.length; ++i)
@@ -183,6 +183,7 @@ public class Inventory
 			return missing;
 		} catch (Exception e)
 		{
+			e.printStackTrace();
 			return null;
 		}
 	}

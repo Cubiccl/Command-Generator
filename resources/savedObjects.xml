@@ -113,8 +113,30 @@
   </tables>
   <speedruns>
     <speedrun objectname="My Speedrun" version="1.12" ispost19="true">
-      <checkpoint position="0" name="First" />
-      <checkpoint position="1" name="Second" />
+      <checkpoint position="0" name="First">
+        <move from="-1" to="0">
+          <item objectname="" version="1.12" importance="0">
+            <id>minecraft:diamond_pickaxe</id>
+            <amount>1</amount>
+            <damage>0</damage>
+            <slot>-1</slot>
+            <nbt>{}</nbt>
+            <name>The pick</name>
+          </item>
+        </move>
+      </checkpoint>
+      <checkpoint position="1" name="Second">
+        <move from="1" to="-1">
+          <item objectname="" version="1.12" importance="1">
+            <id>minecraft:golden_apple</id>
+            <amount>1</amount>
+            <damage>0</damage>
+            <slot>-1</slot>
+            <nbt>{}</nbt>
+            <name>Eat da gapple</name>
+          </item>
+        </move>
+      </checkpoint>
     </speedrun>
   </speedruns>
 </objects>
