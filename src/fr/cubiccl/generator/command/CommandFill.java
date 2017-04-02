@@ -109,16 +109,16 @@ public class CommandFill extends Command implements ActionListener
 	{
 		PlacedBlock block = this.panelBlockFill.generate();
 		String command = this.id + " " + this.panelCoordinatesStart.generate().toCommand() + " " + this.panelCoordinatesEnd.generate().toCommand() + " "
-				+ block.block.id() + " " + block.data + " ";
+				+ block.getBlock().id() + " " + block.getData() + " ";
 
 		if (!this.isFiltering())
 		{
-			String nbt = block.nbt.valueForCommand();
+			String nbt = block.getNbt().valueForCommand();
 			return command + this.comboboxMode.getValue() + (nbt.equals("{}") ? "" : " " + nbt);
 		}
 
 		PlacedBlock block2 = this.panelBlockReplace.generate();
-		return command + " replace " + block2.block.id() + (this.checkboxData.isSelected() ? "" : " " + block2.data);
+		return command + " replace " + block2.getBlock().id() + (this.checkboxData.isSelected() ? "" : " " + block2.getBlock());
 	}
 
 	private boolean isFiltering()

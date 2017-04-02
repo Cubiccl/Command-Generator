@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
 import java.awt.Component;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import org.jdom2.Element;
@@ -48,9 +49,9 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		return bl;
 	}
 
-	public Block block;
-	public int data;
-	public TagCompound nbt;
+	private Block block;
+	private int data;
+	private TagCompound nbt;
 
 	public PlacedBlock()
 	{
@@ -78,6 +79,16 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		return p;
 	}
 
+	public Block getBlock()
+	{
+		return block;
+	}
+
+	public int getData()
+	{
+		return data;
+	}
+
 	@Override
 	public Component getDisplayComponent()
 	{
@@ -88,6 +99,34 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 	public String getName(int index)
 	{
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.block.name(this.data).toString();
+	}
+
+	public TagCompound getNbt()
+	{
+		return nbt;
+	}
+
+	public void setBlock(Block block)
+	{
+		this.block = block;
+		this.onChange();
+	}
+
+	public void setData(int data)
+	{
+		this.data = data;
+		this.onChange();
+	}
+
+	public void setNbt(TagCompound nbt)
+	{
+		this.nbt = nbt;
+		this.onChange();
+	}
+
+	public BufferedImage texture()
+	{
+		return this.block.texture(this.data);
 	}
 
 	public String toCommand()

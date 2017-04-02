@@ -62,8 +62,8 @@ public class CommandGive extends Command
 	public String generate() throws CommandGenerationException
 	{
 		ItemStack item = this.panelItem.generate();
-		return this.id + " " + this.panelTarget.generate().toCommand() + " " + item.item.id() + " " + item.amount + " " + item.damage + " "
-				+ item.nbt.valueForCommand();
+		return this.id + " " + this.panelTarget.generate().toCommand() + " " + item.getItem().id() + " " + item.amount + " " + item.getDamage() + " "
+				+ item.getNbt().valueForCommand();
 	}
 
 	@Override

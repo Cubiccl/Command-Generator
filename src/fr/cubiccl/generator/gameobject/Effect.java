@@ -56,7 +56,7 @@ public class Effect extends GameObject implements IObjectList<Effect>
 	/** Duration in seconds */
 	public int duration;
 	public boolean hideParticles;
-	public EffectType type;
+	private EffectType type;
 
 	public Effect()
 	{
@@ -92,6 +92,17 @@ public class Effect extends GameObject implements IObjectList<Effect>
 	public String getName(int index)
 	{
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.type.name().toString() + " " + this.amplifier;
+	}
+
+	public EffectType getType()
+	{
+		return type;
+	}
+
+	public void setType(EffectType type)
+	{
+		this.type = type;
+		this.onChange();
 	}
 
 	@Override

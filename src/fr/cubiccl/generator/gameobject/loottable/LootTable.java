@@ -28,7 +28,7 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 	{
 		LootTable t = new LootTable();
 		for (Element pool : table.getChild("pools").getChildren())
-		t.pools.add(LootTablePool.createFrom(pool));
+			t.pools.add(LootTablePool.createFrom(pool));
 		t.findProperties(table);
 		return t;
 	}
@@ -51,7 +51,7 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 		return table;
 	}
 
-	public final ArrayList<LootTablePool> pools;
+	private final ArrayList<LootTablePool> pools;
 
 	public LootTable()
 	{
@@ -63,6 +63,12 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 		this.pools = new ArrayList<LootTablePool>();
 		for (LootTablePool p : pools)
 			this.pools.add(p);
+	}
+
+	public void add(LootTablePool pool)
+	{
+		this.pools.add(pool);
+		this.onChange();
 	}
 
 	@Override
@@ -94,6 +100,11 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 		return items;
 	}
 
+	public LootTablePool get(int i)
+	{
+		return this.pools.get(i);
+	}
+
 	@Override
 	public Component getDisplayComponent()
 	{
@@ -104,6 +115,27 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 	public String getName(int index)
 	{
 		return this.customName();
+	}
+
+	public LootTablePool[] getPools()
+	{
+		return this.pools.toArray(new LootTablePool[this.pools.size()]);
+	}
+
+	public void remove(LootTablePool pool)
+	{
+		this.pools.remove(pool);
+	}
+
+	public void set(int index, LootTablePool pool)
+	{
+		this.pools.set(index, pool);
+		this.onChange();
+	}
+
+	public int size()
+	{
+		return this.pools.size();
 	}
 
 	@Override

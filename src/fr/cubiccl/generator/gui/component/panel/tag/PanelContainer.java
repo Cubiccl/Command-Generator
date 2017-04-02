@@ -203,7 +203,7 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 			if (item != null)
 			{
 				int x = this.container().slots[i].x * MULTIPLIER, y = this.container().slots[i].y * MULTIPLIER, size = Slot.SIZE * MULTIPLIER;
-				g.drawImage(item.item.texture(item.damage), x, y, size, size, null);
+				g.drawImage(item.texture(), x, y, size, size, null);
 				if (item.amount > 1)
 				{
 					g.setFont(DisplayUtils.FONT.deriveFont(Font.BOLD, 25));

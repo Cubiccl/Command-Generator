@@ -57,7 +57,7 @@ public class Inventory
 			if (inventory[index] == null) inventory[index] = item.clone();
 			int previous = inventory[index].amount;
 			inventory[index].amount += quantity;
-			if (inventory[index].amount > inventory[index].item.maxStackSize) inventory[index].amount = inventory[index].item.maxStackSize;
+			if (inventory[index].amount > inventory[index].getItem().maxStackSize) inventory[index].amount = inventory[index].getItem().maxStackSize;
 			quantity -= inventory[index].amount - previous;
 		} catch (Exception e)
 		{}

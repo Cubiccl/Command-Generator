@@ -120,7 +120,7 @@ public class PanelFunction extends CGPanel implements ActionListener
 			for (int i = 0; i < ids.length; ++i)
 				ids[i] = Tags.DEFAULT_STRING.create(enchants[i].id());
 			tags.add(Tags.LT_FUNCTION_ENCHANTMENTS.create(ids));
-		} else if (f == Function.SET_NBT) tags.add(Tags.LT_FUNCTION_NBT.create(this.panelNbt.generate().nbt.valueForCommand()));
+		} else if (f == Function.SET_NBT) tags.add(Tags.LT_FUNCTION_NBT.create(this.panelNbt.generate().getNbt().valueForCommand()));
 		else if (f != Function.FURNACE_SMELT)
 		{
 			if (f == Function.SET_DAMAGE) this.entryMin.checkValueInBounds(CGEntry.FLOAT, 0, 100);

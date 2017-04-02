@@ -52,7 +52,7 @@ public class CommandEntitydata extends Command
 	public String generate() throws CommandGenerationException
 	{
 		LivingEntity e = this.panelEntity.generate();
-		return this.id + " " + this.panelTarget.generate().toCommand() + " " + e.nbt.valueForCommand();
+		return this.id + " " + this.panelTarget.generate().toCommand() + " " + e.getNbt().valueForCommand();
 	}
 
 	@Override

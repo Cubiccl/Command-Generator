@@ -146,7 +146,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener,
 		String objective = this.entryObjective.getText();
 		if (!mode.equals("reset")) this.entryObjective.checkValue(CGEntry.STRING);
 		if (mode.equals("set") || mode.equals("add") || mode.equals("remove")) return command + objective + " " + this.entryScore.getText() + " "
-				+ this.panelEntityTags.generate().nbt.valueForCommand();
+				+ this.panelEntityTags.generate().getNbt().valueForCommand();
 
 		if (mode.equals("reset"))
 		{
@@ -167,7 +167,8 @@ public class CommandScoreboardPlayers extends Command implements ActionListener,
 		if (mode.equals("tag"))
 		{
 			this.entryScore.checkValue(CGEntry.STRING);
-			return command + this.comboboxMode2.getValue() + " " + this.entryObjective.getText() + " " + this.panelEntityTags.generate().nbt.valueForCommand();
+			return command + this.comboboxMode2.getValue() + " " + this.entryObjective.getText() + " "
+					+ this.panelEntityTags.generate().getNbt().valueForCommand();
 		}
 
 		return command;

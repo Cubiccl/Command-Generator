@@ -39,7 +39,7 @@ public class ItemStackS extends ItemStack
 
 	public ItemStackS(ItemStack item)
 	{
-		super(item.item, item.damage, item.amount, item.nbt);
+		super(item.getItem(), item.getDamage(), item.amount, item.getNbt());
 		this.slot = item.slot;
 		this.setCustomName(item.customName());
 	}
@@ -47,7 +47,7 @@ public class ItemStackS extends ItemStack
 	@Override
 	public ItemStackS clone() throws CloneNotSupportedException
 	{
-		ItemStackS i = new ItemStackS(item, damage, amount, nbt);
+		ItemStackS i = new ItemStackS(this.getItem(), this.getDamage(), amount, this.getNbt());
 		i.slot = this.slot;
 		i.importance = this.importance;
 		return i;
@@ -65,7 +65,7 @@ public class ItemStackS extends ItemStack
 
 	public boolean matches(ItemStackS item)
 	{
-		return item.item == item.item && item.damage == item.damage;
+		return item.getItem() == item.getItem() && item.getDamage() == item.getDamage();
 	}
 
 	public List<ItemStackS> splitQuantity()
@@ -74,7 +74,7 @@ public class ItemStackS extends ItemStack
 		int quantity = this.amount, remove = 0;
 		while (quantity > 0)
 		{
-			remove = quantity >= this.item.maxStackSize ? this.item.maxStackSize : quantity;
+			remove = quantity >= this.getItem().maxStackSize ? this.getItem().maxStackSize : quantity;
 			quantity -= remove;
 			try
 			{

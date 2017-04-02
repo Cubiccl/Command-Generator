@@ -81,6 +81,7 @@ public class Checkpoint implements Comparable<Checkpoint>
 	void onChange()
 	{
 		this.speedrun.verify();
+		this.speedrun.onChange();
 	}
 
 	public void removeMove(ItemMove move)

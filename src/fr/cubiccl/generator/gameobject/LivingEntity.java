@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject;
 
 import java.awt.Component;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import org.jdom2.Element;
@@ -20,6 +21,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEntity;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class LivingEntity extends GameObject implements IObjectList<LivingEntity>
 {
@@ -48,8 +50,8 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 		return en;
 	}
 
-	public Entity entity;
-	public TagCompound nbt;
+	private Entity entity;
+	private TagCompound nbt;
 
 	public LivingEntity()
 	{
@@ -80,10 +82,42 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 		return p;
 	}
 
+	public Entity getEntity()
+	{
+		return entity;
+	}
+
 	@Override
 	public String getName(int index)
 	{
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.entity.name().toString();
+	}
+
+	public TagCompound getNbt()
+	{
+		return nbt;
+	}
+
+	public Text name()
+	{
+		return this.entity.name();
+	}
+
+	public void setEntity(Entity entity)
+	{
+		this.entity = entity;
+		this.onChange();
+	}
+
+	public void setNbt(TagCompound nbt)
+	{
+		this.nbt = nbt;
+		this.onChange();
+	}
+
+	public BufferedImage texture()
+	{
+		return this.entity.texture();
 	}
 
 	@Override
@@ -123,6 +157,7 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 		LivingEntity e = ((PanelEntity) panel).generate();
 		this.entity = e.entity;
 		this.nbt = e.nbt;
+		this.onChange();
 		return this;
 	}
 

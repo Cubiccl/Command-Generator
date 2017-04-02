@@ -123,7 +123,7 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		if (this.type == EMPTY) return null;
 
 		ItemStack item = new ItemStack();
-		item.item = ObjectRegistry.items.find(this.name);
+		item.setItem(ObjectRegistry.items.find(this.name));
 
 		for (LootTableFunction function : this.functions)
 			if (function.verifyConditions()) function.applyTo(item);

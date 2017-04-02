@@ -67,25 +67,25 @@ public class TemplateSpawnPotentials extends TemplateList
 		{
 			CGPanel p = new CGPanel();
 			p.add(new CGLabel(new Text(this.toString(), false)));
-			p.add(new ImageLabel(this.entity.entity.texture()));
+			p.add(new ImageLabel(this.entity.texture()));
 			return p;
 		}
 
 		@Override
 		public String getName(int index)
 		{
-			return this.entity.entity.name().toString();
+			return this.entity.name().toString();
 		}
 
 		@Override
 		public String toString()
 		{
-			return this.weight + ", " + this.entity.entity.name().toString();
+			return this.weight + ", " + this.entity.name().toString();
 		}
 
 		public TagCompound toTag(TemplateCompound container)
 		{
-			TagString type = Tags.ENTITY_TYPE.create(this.entity.entity.id);
+			TagString type = Tags.ENTITY_TYPE.create(this.entity.getEntity().id);
 			TagNumber weight = Tags.ENTITY_WEIGHT.create(this.weight);
 			return container.create(type, weight, this.entity.toTag(Tags.ENTITY_PROPERTIES));
 		}

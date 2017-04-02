@@ -82,7 +82,7 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 	}
 
 	public double amount, amountMax;
-	public Attribute attribute;
+	private Attribute attribute;
 	public boolean isInLootTable;
 	public String name;
 	public byte operation;
@@ -123,6 +123,11 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		return p;
 	}
 
+	public Attribute getAttribute()
+	{
+		return attribute;
+	}
+
 	@Override
 	public Component getDisplayComponent()
 	{
@@ -133,6 +138,12 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 	public String getName(int index)
 	{
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.name;
+	}
+
+	public void setAttribute(Attribute attribute)
+	{
+		this.attribute = attribute;
+		this.onChange();
 	}
 
 	@Override

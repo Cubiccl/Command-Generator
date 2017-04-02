@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject;
 
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -56,9 +57,10 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return is;
 	}
 
-	public int amount, damage;
-	public Item item;
-	public TagCompound nbt;
+	public int amount;
+	private int damage;
+	private Item item;
+	private TagCompound nbt;
 	public int slot;
 
 	public ItemStack()
@@ -152,16 +154,54 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return stack;
 	}
 
+	public int getDamage()
+	{
+		return damage;
+	}
+
 	@Override
 	public PanelItemDisplay getDisplayComponent()
 	{
 		return new PanelItemDisplay(this);
 	}
 
+	public Item getItem()
+	{
+		return item;
+	}
+
 	@Override
 	public String getName(int index)
 	{
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.item.name(this.damage).toString();
+	}
+
+	public TagCompound getNbt()
+	{
+		return nbt;
+	}
+
+	public void setDamage(int damage)
+	{
+		this.damage = damage;
+		this.onChange();
+	}
+
+	public void setItem(Item item)
+	{
+		this.item = item;
+		this.onChange();
+	}
+
+	public void setNbt(TagCompound nbt)
+	{
+		this.nbt = nbt;
+		this.onChange();
+	}
+
+	public BufferedImage texture()
+	{
+		return this.item.texture(this.damage);
 	}
 
 	@Override

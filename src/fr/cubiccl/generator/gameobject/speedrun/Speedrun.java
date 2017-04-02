@@ -53,6 +53,7 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	public void addCheckpoint(Checkpoint checkpoint)
 	{
 		this.checkpoints.add(checkpoint);
+		this.onChange();
 		this.verify();
 	}
 
