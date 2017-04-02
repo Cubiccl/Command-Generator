@@ -29,6 +29,20 @@ public class ObjectCreator
 		CommandGenerator.log("Successfully created " + ObjectRegistry.achievements.size() + " achievements.");
 	}
 
+	private static void createAdvancements(Element advancements)
+	{
+		for (Element advancement : advancements.getChildren())
+		{
+			ArrayList<String> criteria = new ArrayList<String>();
+			for (Element criterion : advancement.getChildren("criterion"))
+				criteria.add(criterion.getText());
+			if (criteria.size() == 0) criteria.add(advancement.getAttributeValue("item"));
+			new DefaultAdvancement(advancement.getAttributeValue("id"), ObjectRegistry.items.find(advancement.getAttributeValue("item")),
+					criteria.toArray(new String[criteria.size()]));
+		}
+		CommandGenerator.log("Successfully created " + ObjectRegistry.advancements.size() + " advancements.");
+	}
+
 	private static String[] createApplicable(Element applicable)
 	{
 		ArrayList<String> apps = new ArrayList<String>();
@@ -249,8 +263,10 @@ public class ObjectCreator
 		createEffects(data.getChild("effects"));
 		createEnchantments(data.getChild("enchantments"));
 		createAchievements(data.getChild("achievements"));
+		createAdvancements(data.getChild("advancements"));
 		createAttributes(data.getChild("attributes"));
 		createParticles(data.getChild("particles"));
+		createRecipes(data.getChild("recipes"));
 		createSounds(data.getChild("sounds"));
 		createContainers(data.getChild("containers"));
 		createTags(data.getChild("blocktags"), Tag.BLOCK);
@@ -270,6 +286,20 @@ public class ObjectCreator
 		for (Element particle : particles.getChildren())
 			new Particle(particle.getAttributeValue("id"));
 		CommandGenerator.log("Successfully created " + ObjectRegistry.particles.size() + " particles.");
+	}
+
+	public static void createRecipes(Element recipes)
+	{
+		for (Element recipe : recipes.getChildren())
+		{
+			String id = recipe.getAttributeValue("id");
+			Item i = ObjectRegistry.items.find(id);
+			int d = -1;
+			if (recipe.getChild("item") != null) i = ObjectRegistry.items.find(recipe.getChildText("item"));
+			if (recipe.getChild("damage") != null) d = Integer.parseInt(recipe.getChildText("damage"));
+			new RecipeType(id, i, d);
+		}
+		CommandGenerator.log("Successfully created " + ObjectRegistry.recipes.size() + " recipes.");
 	}
 
 	public static void createSounds(Element sounds)
@@ -363,6 +393,10 @@ public class ObjectCreator
 
 				case "particle":
 					ObjectRegistry.particles.unregister(id);
+					break;
+
+				case "recipe":
+					ObjectRegistry.recipes.unregister(id);
 					break;
 
 				case "sound":

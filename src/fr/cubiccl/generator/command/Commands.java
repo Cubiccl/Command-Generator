@@ -5,6 +5,8 @@ import java.util.Comparator;
 import java.util.HashMap;
 
 import fr.cubiccl.generator.gui.LoadingFrame;
+import fr.cubiccl.generator.utils.Settings;
+import fr.cubiccl.generator.utils.Settings.Version;
 
 public class Commands
 {
@@ -13,8 +15,8 @@ public class Commands
 
 	public static void createCommands(LoadingFrame frame)
 	{
+		commands.clear();
 		frame.setText("loading.commands");
-		new CommandAchievement();
 		new CommandBlockdata();
 		new CommandClear();
 		new CommandClone();
@@ -57,6 +59,18 @@ public class Commands
 		new CommandWeather();
 		new CommandWorldborder();
 		new CommandXp();
+		
+		if (Settings.version().isBefore(Version.v1d11))
+		{
+			new CommandAchievement();
+		}
+
+		if (Settings.version().isAfter(Version.v1d12))
+		{
+			new CommandAdvancement();
+			new CommandRecipe();
+		}
+		
 	}
 
 	public static Command getCommandFromID(String id)

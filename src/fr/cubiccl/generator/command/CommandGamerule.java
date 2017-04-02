@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gui.component.button.CGButton;
@@ -13,32 +15,47 @@ import fr.cubiccl.generator.gui.component.label.HelpLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ComboboxPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
-import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.IStateListener;
-import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
+import fr.cubiccl.generator.utils.*;
+import fr.cubiccl.generator.utils.Settings.Version;
 
 public class CommandGamerule extends Command implements ActionListener, IStateListener<ComboboxPanel>
 {
-	public static final String[] GAMERULES =
+	public static final String[] GAMERULES_1d11 =
 	{ "commandBlockOutput", "disableElytraMovementCheck", "doDaylightCycle", "doEntityDrops", "doFireTick", "doMobLoot", "doMobSpawning", "doTileDrops",
 			"keepInventory", "logAdminCommands", "mobGriefing", "naturalRegeneration", "randomTickSpeed", "reducedDebugInfo", "sendCommandFeedback",
-			"showDeathMessages", "spawnRadius", "spectatorsGenerateChunks" };
+			"showDeathMessages", "spawnRadius", "spectatorsGenerateChunks" }, GAMERULES_1d12 =
+	{ "doLimitedCrafting" };
+
+	private static String[] gamerules()
+	{
+		ArrayList<String> gamerules = new ArrayList<String>();
+
+		for (String string : GAMERULES_1d11)
+			gamerules.add(string);
+		if (Settings.version().isAfter(Version.v1d12)) for (String string : GAMERULES_1d12)
+			gamerules.add(string);
+
+		gamerules.sort(Comparator.naturalOrder());
+		return gamerules.toArray(new String[gamerules.size()]);
+	}
 
 	private CGButton buttonPredefined;
 	private CGCheckBox checkboxQuery;
 	private CGEntry entryGamerule, entryValue;
 
+	private String[] gamerules;
+
 	public CommandGamerule()
 	{
 		super("gamerule", "gamerule <rule> [value]", 2, 3);
+		this.gamerules = gamerules();
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == this.buttonPredefined) CommandGenerator.stateManager.setState(new ComboboxPanel(new Text("gamerule.predefined.select"),
-				"gamerule", GAMERULES), this);
+				"gamerule", this.gamerules), this);
 		else this.onCheckbox();
 		this.updateTranslations();
 	}
@@ -119,7 +136,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 		this.entryGamerule.checkValue(CGEntry.STRING);
 
 		boolean predefined = false;
-		for (String rule : GAMERULES)
+		for (String rule : this.gamerules)
 			if (rule.equals(gamerule))
 			{
 				predefined = true;

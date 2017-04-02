@@ -19,6 +19,7 @@ import fr.cubiccl.generator.utils.Textures;
 public class ObjectRegistry<T extends BaseObject>
 {
 	public static final ObjectRegistry<Achievement> achievements = new ObjectRegistry<Achievement>(false, false, Achievement.class);
+	public static final ObjectRegistry<DefaultAdvancement> advancements = new ObjectRegistry<DefaultAdvancement>(false, false, DefaultAdvancement.class);
 	public static final ObjectRegistry<Attribute> attributes = new ObjectRegistry<Attribute>(false, false, Attribute.class);
 	public static final BlockRegistry blocks = new BlockRegistry();
 	public static final ObjectRegistry<TemplateTag> blockTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
@@ -32,6 +33,7 @@ public class ObjectRegistry<T extends BaseObject>
 	static final HashMap<String, ArrayList<String>> objectLists = new HashMap<String, ArrayList<String>>();
 	public static final ObjectRegistry<Particle> particles = new ObjectRegistry<Particle>(false, false, Particle.class);
 	public static final byte SORT_ALPHABETICALLY = 0, SORT_NUMERICALLY = 1, SORT_NAME = 2;
+	public static final ObjectRegistry<RecipeType> recipes = new ObjectRegistry<RecipeType>(false, false, RecipeType.class);
 	public static final ObjectRegistry<Sound> sounds = new ObjectRegistry<Sound>(false, false, Sound.class);
 	public static final ObjectRegistry<TemplateTag> unavailableTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
 
@@ -53,8 +55,10 @@ public class ObjectRegistry<T extends BaseObject>
 		root.addContent(effects.toXML("effects"));
 		root.addContent(enchantments.toXML("enchantments"));
 		root.addContent(achievements.toXML("achievements"));
+		root.addContent(advancements.toXML("advancements"));
 		root.addContent(attributes.toXML("attributes"));
 		root.addContent(particles.toXML("particles"));
+		root.addContent(recipes.toXML("recipes"));
 		root.addContent(sounds.toXML("sounds"));
 		root.addContent(containers.toXML("containers"));
 		root.addContent(blockTags.toXML("blocktags"));
@@ -67,6 +71,7 @@ public class ObjectRegistry<T extends BaseObject>
 	static void checkAllNames()
 	{
 		achievements.checkNames();
+		advancements.checkNames();
 		attributes.checkNames();
 		blocks.checkNames();
 		blockTags.checkNames();
@@ -78,6 +83,7 @@ public class ObjectRegistry<T extends BaseObject>
 		items.checkNames();
 		itemTags.checkNames();
 		particles.checkNames();
+		recipes.checkNames();
 		sounds.checkNames();
 		unavailableTags.checkNames();
 	}
@@ -144,6 +150,7 @@ public class ObjectRegistry<T extends BaseObject>
 
 		frame.setText("loading.textures.other");
 		achievements.loadTextures();
+		advancements.loadTextures();
 		attributes.loadTextures();
 		blockTags.loadTextures();
 		containers.loadTextures();
@@ -153,6 +160,7 @@ public class ObjectRegistry<T extends BaseObject>
 		entityTags.loadTextures();
 		itemTags.loadTextures();
 		particles.loadTextures();
+		recipes.loadTextures();
 		sounds.loadTextures();
 		unavailableTags.loadTextures();
 	}
@@ -170,6 +178,7 @@ public class ObjectRegistry<T extends BaseObject>
 	static void resetAll()
 	{
 		achievements.reset();
+		advancements.reset();
 		attributes.reset();
 		blocks.reset();
 		blockTags.reset();
@@ -181,9 +190,10 @@ public class ObjectRegistry<T extends BaseObject>
 		items.reset();
 		itemTags.reset();
 		particles.reset();
+		recipes.reset();
 		sounds.reset();
 		objectLists.clear();
-		//unavailableTags.reset();
+		// unavailableTags.reset();
 	}
 
 	protected final Class<T> c;
@@ -302,8 +312,11 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public void register(T object)
 	{
-		if (this.knows(object.id())) this.registry.put(object.id().replaceAll("minecraft:", "") + "_double_" + this.doubles(object.id()), object);
-		else this.registry.put(object.id().replaceAll("minecraft:", ""), object);
+		if (this.knows(object.id()))
+		{
+			if (this != blockTags && this != itemTags && this != entityTags) return;
+			this.registry.put(object.id().replaceAll("minecraft:", "") + "_double_" + this.doubles(object.id()), object);
+		} else this.registry.put(object.id().replaceAll("minecraft:", ""), object);
 		if (this.hasNumericalIds) this.ids.put(object.idNum(), object.id().replaceAll("minecraft:", ""));
 	}
 

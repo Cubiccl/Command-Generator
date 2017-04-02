@@ -1515,6 +1515,7 @@
     <achievement id="theEnd" item="eye_of_ender" />
     <achievement id="theEnd2" item="dragon_egg" />
   </achievements>
+  <advancements />
   <attributes>
     <achievement id="generic.armor" />
     <achievement id="generic.armorToughness" />
@@ -1578,6 +1579,7 @@
     <particle id="wake" />
     <particle id="witchMagic" />
   </particles>
+  <recipes />
   <sounds>
     <sound id="ambient.cave" />
     <sound id="block.anvil.break" />
@@ -3168,16 +3170,16 @@
       </applicable>
     </tag>
     <tag id="Age">
+      <type>3</type>
+      <applicable>
+        <app>list=breed</app>
+      </applicable>
+    </tag>
+    <tag id="Age">
       <type>2</type>
       <applicable>
         <app>item</app>
         <app>xp_orb</app>
-      </applicable>
-    </tag>
-    <tag id="Age">
-      <type>3</type>
-      <applicable>
-        <app>list=breed</app>
       </applicable>
     </tag>
     <tag id="Air">

@@ -170,6 +170,9 @@ public final class Tags
 	public static final DefaultList POSE_LEG_LEFT = new DefaultList("LeftLeg");
 	public static final DefaultList POSE_LEG_RIGHT = new DefaultList("RightLeg");
 
+	public static final TemplateBoolean RECIPE_DISPLAYED = new TemplateBoolean("displayed", UNAVAILABLE);
+	public static final TemplateBoolean RECIPE_UNLOCKED = new TemplateBoolean("unlocked", UNAVAILABLE);
+
 	public static final TemplateString SCORE_OBJECTIVE = new TemplateString("objective", UNAVAILABLE);
 	public static final TemplateString SCORE_TARGET = new TemplateString("name", UNAVAILABLE);
 

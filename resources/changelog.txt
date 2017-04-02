@@ -1,3 +1,44 @@
+------------------------- VERSION 2.4.4 -------------------------
+ADDITIONS
+- Added /advancement.
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+advancement.* (in // MAIN and // ADVANCEMENTS)
+command.advancement.*
+
+------------------------- VERSION 2.4.3 -------------------------
+ADDITIONS
+- Added all content from 17w13a.
+* Parrot mob, with Variant NBT tag
+* Knowledge Book item, with Recipes NBT tag
+* New Glazed Terracotta textures
+* /recipe command
+* recipeBook NBT tag
+* doLimitedCrafting gamerule
+(The Advancements are planned for a future update, since there is a lot to do and
+very few info is available on the Internet.)
+
+BUGS FIXED
+- Fixed Custom Objects not loading their exact version.
+
+CHANGED TRANSLATIONS
+tag.title.Variant
+
+ADDED TRANSLATIONS
+command.recipe.*
+entity.parrot
+gamerule.doLimitedCrafting
+item.knowledge_book
+parrot.*
+recipe.* (in //MAIN and //RECIPES)
+tag.entity.ShoulderEntityLeft,tag.entity.ShoulderEntityRight,tag.entity.recipeBook,tag.entity.seenCredits
+tag.item.Recipes
+tag.title.Recipes,tag.title.recipeBook
+
 ------------------------- VERSION 2.4.2 -------------------------
 ADDITIONS
 - Added a diagram for Loot Tables, summarizing the table.

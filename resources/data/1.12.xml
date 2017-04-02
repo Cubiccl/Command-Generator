@@ -1146,39 +1146,39 @@
       <texture>-1</texture>
       <maxdamage>1</maxdamage>
     </item>
-    <item idint="323" idstr="sign" >
+    <item idint="323" idstr="sign">
       <stacksize>16</stacksize>
     </item>
-    <item idint="324" idstr="wooden_door" >
+    <item idint="324" idstr="wooden_door">
       <stacksize>16</stacksize>
     </item>
-    <item idint="325" idstr="bucket" >
+    <item idint="325" idstr="bucket">
       <stacksize>16</stacksize>
     </item>
-    <item idint="326" idstr="water_bucket" >
+    <item idint="326" idstr="water_bucket">
       <stacksize>1</stacksize>
     </item>
-    <item idint="327" idstr="lava_bucket" >
+    <item idint="327" idstr="lava_bucket">
       <stacksize>1</stacksize>
     </item>
-    <item idint="328" idstr="minecart" >
+    <item idint="328" idstr="minecart">
       <stacksize>1</stacksize>
     </item>
-    <item idint="329" idstr="saddle" >
+    <item idint="329" idstr="saddle">
       <stacksize>1</stacksize>
     </item>
-    <item idint="330" idstr="iron_door" >
+    <item idint="330" idstr="iron_door">
       <stacksize>16</stacksize>
     </item>
     <item idint="331" idstr="redstone" />
-    <item idint="332" idstr="snowball" >
+    <item idint="332" idstr="snowball">
       <stacksize>16</stacksize>
     </item>
-    <item idint="333" idstr="boat" >
+    <item idint="333" idstr="boat">
       <stacksize>1</stacksize>
     </item>
     <item idint="334" idstr="leather" />
-    <item idint="335" idstr="milk_bucket" >
+    <item idint="335" idstr="milk_bucket">
       <stacksize>1</stacksize>
     </item>
     <item idint="336" idstr="brick" />
@@ -1187,13 +1187,13 @@
     <item idint="339" idstr="paper" />
     <item idint="340" idstr="book" />
     <item idint="341" idstr="slime_ball" />
-    <item idint="342" idstr="chest_minecart" >
+    <item idint="342" idstr="chest_minecart">
       <stacksize>1</stacksize>
     </item>
-    <item idint="343" idstr="furnace_minecart" >
+    <item idint="343" idstr="furnace_minecart">
       <stacksize>1</stacksize>
     </item>
-    <item idint="344" idstr="egg" >
+    <item idint="344" idstr="egg">
       <stacksize>16</stacksize>
     </item>
     <item idint="345" idstr="compass" />
@@ -1215,15 +1215,15 @@
     </item>
     <item idint="352" idstr="bone" />
     <item idint="353" idstr="sugar" />
-    <item idint="354" idstr="cake" >
+    <item idint="354" idstr="cake">
       <stacksize>1</stacksize>
     </item>
-    <item idint="355" idstr="bed" >
+    <item idint="355" idstr="bed">
       <stacksize>1</stacksize>
     </item>
     <item idint="356" idstr="repeater" />
     <item idint="357" idstr="cookie" />
-    <item idint="358" idstr="filled_map" >
+    <item idint="358" idstr="filled_map">
       <stacksize>1</stacksize>
     </item>
     <item idint="359" idstr="shears">
@@ -1242,14 +1242,14 @@
     </item>
     <item idint="366" idstr="cooked_chicken" />
     <item idint="367" idstr="rotten_flesh" />
-    <item idint="368" idstr="ender_pearl" >
+    <item idint="368" idstr="ender_pearl">
       <stacksize>16</stacksize>
     </item>
     <item idint="369" idstr="blaze_rod" />
     <item idint="370" idstr="ghast_tear" />
     <item idint="371" idstr="gold_nugget" />
     <item idint="372" idstr="nether_wart" />
-    <item idint="373" idstr="potion" >
+    <item idint="373" idstr="potion">
       <stacksize>1</stacksize>
     </item>
     <item idint="374" idstr="glass_bottle" />
@@ -1264,10 +1264,10 @@
     <item idint="383" idstr="spawn_egg" />
     <item idint="384" idstr="experience_bottle" />
     <item idint="385" idstr="fire_charge" />
-    <item idint="386" idstr="writable_book" >
+    <item idint="386" idstr="writable_book">
       <stacksize>1</stacksize>
     </item>
-    <item idint="387" idstr="written_book" >
+    <item idint="387" idstr="written_book">
       <stacksize>1</stacksize>
     </item>
     <item idint="388" idstr="emerald" />
@@ -1296,10 +1296,10 @@
     <item idint="404" idstr="comparator" />
     <item idint="405" idstr="netherbrick" />
     <item idint="406" idstr="quartz" />
-    <item idint="407" idstr="tnt_minecart" >
+    <item idint="407" idstr="tnt_minecart">
       <stacksize>1</stacksize>
     </item>
-    <item idint="408" idstr="hopper_minecart" >
+    <item idint="408" idstr="hopper_minecart">
       <stacksize>1</stacksize>
     </item>
     <item idint="409" idstr="prismarine_shard" />
@@ -1312,18 +1312,18 @@
     <item idint="414" idstr="rabbit_foot" />
     <item idint="415" idstr="rabbit_hide" />
     <item idint="416" idstr="armor_stand" />
-    <item idint="417" idstr="iron_horse_armor" >
+    <item idint="417" idstr="iron_horse_armor">
       <stacksize>1</stacksize>
     </item>
-    <item idint="418" idstr="golden_horse_armor" >
+    <item idint="418" idstr="golden_horse_armor">
       <stacksize>1</stacksize>
     </item>
-    <item idint="419" idstr="diamond_horse_armor" >
+    <item idint="419" idstr="diamond_horse_armor">
       <stacksize>1</stacksize>
     </item>
     <item idint="420" idstr="lead" />
     <item idint="421" idstr="name_tag" />
-    <item idint="422" idstr="command_block_minecart" >
+    <item idint="422" idstr="command_block_minecart">
       <stacksize>1</stacksize>
     </item>
     <item idint="423" idstr="mutton">
@@ -1332,19 +1332,19 @@
     <item idint="424" idstr="cooked_mutton" />
     <item idint="425" idstr="banner" />
     <item idint="426" idstr="end_crystal" />
-    <item idint="427" idstr="spruce_door" >
+    <item idint="427" idstr="spruce_door">
       <stacksize>16</stacksize>
     </item>
-    <item idint="428" idstr="birch_door" >
+    <item idint="428" idstr="birch_door">
       <stacksize>16</stacksize>
     </item>
-    <item idint="429" idstr="jungle_door" >
+    <item idint="429" idstr="jungle_door">
       <stacksize>16</stacksize>
     </item>
-    <item idint="430" idstr="acacia_door" >
+    <item idint="430" idstr="acacia_door">
       <stacksize>16</stacksize>
     </item>
-    <item idint="431" idstr="dark_oak_door" >
+    <item idint="431" idstr="dark_oak_door">
       <stacksize>16</stacksize>
     </item>
     <item idint="432" idstr="chorus_fruit">
@@ -1355,74 +1355,75 @@
     <item idint="435" idstr="beetroot_seeds" />
     <item idint="436" idstr="beetroot_soup" />
     <item idint="437" idstr="dragon_breath" />
-    <item idint="438" idstr="splash_potion" >
+    <item idint="438" idstr="splash_potion">
       <stacksize>1</stacksize>
     </item>
     <item idint="439" idstr="spectral_arrow" />
     <item idint="440" idstr="tipped_arrow" />
-    <item idint="441" idstr="lingering_potion" >
+    <item idint="441" idstr="lingering_potion">
       <stacksize>1</stacksize>
     </item>
-    <item idint="442" idstr="shield" >
+    <item idint="442" idstr="shield">
       <texture>-1</texture>
       <durability>26</durability>
     </item>
-    <item idint="443" idstr="elytra" >
+    <item idint="443" idstr="elytra">
       <texture>-1</texture>
       <durability>431</durability>
     </item>
-    <item idint="444" idstr="spruce_boat" >
+    <item idint="444" idstr="spruce_boat">
       <stacksize>1</stacksize>
     </item>
-    <item idint="445" idstr="birch_boat" >
+    <item idint="445" idstr="birch_boat">
       <stacksize>1</stacksize>
     </item>
-    <item idint="446" idstr="jungle_boat" >
+    <item idint="446" idstr="jungle_boat">
       <stacksize>1</stacksize>
     </item>
-    <item idint="447" idstr="acacia_boat" >
+    <item idint="447" idstr="acacia_boat">
       <stacksize>1</stacksize>
     </item>
-    <item idint="448" idstr="dark_oak_boat" >
+    <item idint="448" idstr="dark_oak_boat">
       <stacksize>1</stacksize>
     </item>
     <item idint="449" idstr="totem_of_undying" />
     <item idint="450" idstr="shulker_shell" />
     <item idint="452" idstr="iron_nugget" />
-    <item idint="2256" idstr="record_13" >
+    <item idint="453" idstr="knowledge_book" />
+    <item idint="2256" idstr="record_13">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2257" idstr="record_cat" >
+    <item idint="2257" idstr="record_cat">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2258" idstr="record_blocks" >
+    <item idint="2258" idstr="record_blocks">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2259" idstr="record_chirp" >
+    <item idint="2259" idstr="record_chirp">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2260" idstr="record_far" >
+    <item idint="2260" idstr="record_far">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2261" idstr="record_mall" >
+    <item idint="2261" idstr="record_mall">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2262" idstr="record_mellohi" >
+    <item idint="2262" idstr="record_mellohi">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2263" idstr="record_stal" >
+    <item idint="2263" idstr="record_stal">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2264" idstr="record_strad" >
+    <item idint="2264" idstr="record_strad">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2265" idstr="record_ward" >
+    <item idint="2265" idstr="record_ward">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2266" idstr="record_11" >
+    <item idint="2266" idstr="record_11">
       <stacksize>1</stacksize>
     </item>
-    <item idint="2267" idstr="record_wait" >
+    <item idint="2267" idstr="record_wait">
       <stacksize>1</stacksize>
     </item>
   </items>
@@ -1473,6 +1474,7 @@
     <entity id="mule" />
     <entity id="ocelot" />
     <entity id="painting" />
+    <entity id="parrot" />
     <entity id="pig" />
     <entity id="polar_bear" />
     <entity id="potion" />
@@ -1605,6 +1607,62 @@
     <achievement id="theEnd" item="eye_of_ender" />
     <achievement id="theEnd2" item="dragon_egg" />
   </achievements>
+  <advancements>
+    <advancement id="brew_potion" item="glass_bottle">
+      <criterion>potion</criterion>
+    </advancement>
+    <advancement id="create_beacon" item="beacon" />
+    <advancement id="create_full_beacon" item="beacon" />
+    <advancement id="deflect_arrow" item="shield">
+      <criterion>deflected_projectile</criterion>
+    </advancement>
+    <advancement id="elytra" item="elytra" />
+    <advancement id="enchant_item" item="enchanted_book">
+      <criterion>enchanted_item</criterion>
+    </advancement>
+    <advancement id="enter_end_gateway" item="ender_pearl">
+      <criterion>enter_end_gateway</criterion>
+    </advancement>
+    <advancement id="enter_the_end" item="end_stone">
+      <criterion>enter_end_portal</criterion>
+    </advancement>
+    <advancement id="enter_the_nether" item="flint_and_steel">
+      <criterion>enter_nether_portal</criterion>
+    </advancement>
+    <advancement id="follow_ender_eye" item="eye_of_ender">
+      <criterion>near_stronghold</criterion>
+    </advancement>
+    <advancement id="form_obsidian" item="obsidian" />
+    <advancement id="iron_tools" item="iron_pickaxe" />
+    <advancement id="lava_bucket" item="lava_bucket" />
+    <advancement id="mine_diamond" item="diamond" />
+    <advancement id="mine_stone" item="wooden_pickaxe">
+      <criterion>get_stone</criterion>
+    </advancement>
+    <advancement id="obtain_armor" item="iron_chestplate">
+      <criterion>iron_helmet</criterion>
+      <criterion>iron_chestplate</criterion>
+      <criterion>iron_leggings</criterion>
+      <criterion>iron_boots</criterion>
+    </advancement>
+    <advancement id="obtain_blaze_rod" item="blaze_rod" />
+    <advancement id="root" item="grass">
+      <criterion>crafting_table</criterion>
+    </advancement>
+    <advancement id="shiny_gear" item="diamond_chestplate">
+      <criterion>diamond_helmet</criterion>
+      <criterion>diamond_chestplate</criterion>
+      <criterion>diamond_leggings</criterion>
+      <criterion>diamond_boots</criterion>
+    </advancement>
+    <advancement id="smelt_iron" item="iron_ingot">
+      <criterion>iron</criterion>
+    </advancement>
+    <advancement id="summon_wither" item="nether_star">
+      <criterion>summoned</criterion>
+    </advancement>
+    <advancement id="upgrade_tools" item="stone_pickaxe" />
+  </advancements>
   <attributes>
     <achievement id="generic.armor" />
     <achievement id="generic.armorToughness" />
@@ -1668,6 +1726,944 @@
     <particle id="wake" />
     <particle id="witchMagic" />
   </particles>
+  <recipes>
+    <recipe id="acacia_boat" />
+    <recipe id="acacia_door" />
+    <recipe id="acacia_fence" />
+    <recipe id="acacia_fence_gate" />
+    <recipe id="acacia_planks">
+      <item>planks</item>
+      <damage>4</damage>
+    </recipe>
+    <recipe id="acacia_stairs" />
+    <recipe id="acacia_wooden_slab">
+      <item>wooden_slab</item>
+      <damage>4</damage>
+    </recipe>
+    <recipe id="activator_rail" />
+    <recipe id="andesite">
+      <item>stone</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="anvil" />
+    <recipe id="armor_stand" />
+    <recipe id="arrow" />
+    <recipe id="beacon" />
+    <recipe id="bed" />
+    <recipe id="beetroot_soup" />
+    <recipe id="birch_boat" />
+    <recipe id="birch_door" />
+    <recipe id="birch_fence" />
+    <recipe id="birch_fence_gate" />
+    <recipe id="birch_planks">
+      <item>planks</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="birch_stairs" />
+    <recipe id="birch_wooden_slab">
+      <item>wooden_slab</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="black_banner">
+      <item>banner</item>
+      <damage>0</damage>
+    </recipe>
+    <recipe id="black_carpet">
+      <item>carpet</item>
+      <damage>15</damage>
+    </recipe>
+    <recipe id="black_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>15</damage>
+    </recipe>
+    <recipe id="black_stained_glass">
+      <item>stained_glass</item>
+      <damage>15</damage>
+    </recipe>
+    <recipe id="black_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>15</damage>
+    </recipe>
+    <recipe id="black_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>15</damage>
+    </recipe>
+    <recipe id="black_wool">
+      <item>wool</item>
+      <damage>15</damage>
+    </recipe>
+    <recipe id="blaze_powder" />
+    <recipe id="blue_banner">
+      <item>banner</item>
+      <damage>4</damage>
+    </recipe>
+    <recipe id="blue_carpet">
+      <item>carpet</item>
+      <damage>11</damage>
+    </recipe>
+    <recipe id="blue_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>11</damage>
+    </recipe>
+    <recipe id="blue_stained_glass">
+      <item>stained_glass</item>
+      <damage>11</damage>
+    </recipe>
+    <recipe id="blue_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>11</damage>
+    </recipe>
+    <recipe id="blue_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>11</damage>
+    </recipe>
+    <recipe id="blue_wool">
+      <item>wool</item>
+      <damage>11</damage>
+    </recipe>
+    <recipe id="boat" />
+    <recipe id="bone_block" />
+    <recipe id="bone_meal_from_block">
+      <item>dye</item>
+      <damage>15</damage>
+    </recipe>
+    <recipe id="bone_meal_from_bone">
+      <item>dye</item>
+      <damage>15</damage>
+    </recipe>
+    <recipe id="bookshelf" />
+    <recipe id="bow" />
+    <recipe id="bowl" />
+    <recipe id="bread" />
+    <recipe id="brewing_stand" />
+    <recipe id="brick_block" />
+    <recipe id="brick_slab">
+      <item>stone_slab</item>
+      <damage>4</damage>
+    </recipe>
+    <recipe id="brick_stairs" />
+    <recipe id="brown_banner">
+      <item>banner</item>
+      <damage>3</damage>
+    </recipe>
+    <recipe id="brown_carpet">
+      <item>carpet</item>
+      <damage>12</damage>
+    </recipe>
+    <recipe id="brown_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>12</damage>
+    </recipe>
+    <recipe id="brown_stained_glass">
+      <item>stained_glass</item>
+      <damage>12</damage>
+    </recipe>
+    <recipe id="brown_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>12</damage>
+    </recipe>
+    <recipe id="brown_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>12</damage>
+    </recipe>
+    <recipe id="brown_wool">
+      <item>wool</item>
+      <damage>12</damage>
+    </recipe>
+    <recipe id="bucket" />
+    <recipe id="cake" />
+    <recipe id="carrot_on_a_stick" />
+    <recipe id="cauldron" />
+    <recipe id="chest" />
+    <recipe id="chest_minecart" />
+    <recipe id="chiseled_quartz_block">
+      <item>quartz_block</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="chiseled_red_sandstone">
+      <item>red_sandstone</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="chiseled_sandstone">
+      <item>sandstone</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="chiseled_stonebrick">
+      <item>stonebrick</item>
+      <damage>3</damage>
+    </recipe>
+    <recipe id="clay" />
+    <recipe id="clock" />
+    <recipe id="coal" />
+    <recipe id="coal_block" />
+    <recipe id="coarse_dirt">
+      <item>dirt</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="cobblestone_wall" />
+    <recipe id="comparator" />
+    <recipe id="compass" />
+    <recipe id="cookie" />
+    <recipe id="crafting_table" />
+    <recipe id="cyan_banner">
+      <item>banner</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="cyan_carpet">
+      <item>carpet</item>
+      <damage>8</damage>
+    </recipe>
+    <recipe id="cyan_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>8</damage>
+    </recipe>
+    <recipe id="cyan_dye">
+      <item>dye</item>
+      <damage>6</damage>
+    </recipe>
+    <recipe id="cyan_stained_glass">
+      <item>stained_glass</item>
+      <damage>8</damage>
+    </recipe>
+    <recipe id="cyan_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>8</damage>
+    </recipe>
+    <recipe id="cyan_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>8</damage>
+    </recipe>
+    <recipe id="cyan_wool">
+      <item>wool</item>
+      <damage>8</damage>
+    </recipe>
+    <recipe id="dark_oak_boat" />
+    <recipe id="dark_oak_door" />
+    <recipe id="dark_oak_fence" />
+    <recipe id="dark_oak_fence_gate" />
+    <recipe id="dark_oak_planks">
+      <item>planks</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="dark_oak_stairs" />
+    <recipe id="dark_oak_wooden_slab">
+      <item>wooden_slab</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="dark_primsarine">
+      <item>prismarine</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="daylight_detector" />
+    <recipe id="detector_rail" />
+    <recipe id="diamond" />
+    <recipe id="diamond_axe" />
+    <recipe id="diamond_block" />
+    <recipe id="diamond_boots" />
+    <recipe id="diamond_chestplate" />
+    <recipe id="diamond_helmet" />
+    <recipe id="diamond_hoe" />
+    <recipe id="diamond_leggings" />
+    <recipe id="diamond_ore" />
+    <recipe id="diamond_pickaxe" />
+    <recipe id="diamond_shovel" />
+    <recipe id="diamond_sword" />
+    <recipe id="diorite">
+      <item>stone</item>
+      <damage>3</damage>
+    </recipe>
+    <recipe id="dispenser" />
+    <recipe id="dropper" />
+    <recipe id="emerald" />
+    <recipe id="emerald_block" />
+    <recipe id="enchanting_table" />
+    <recipe id="end_bricks" />
+    <recipe id="end_crystal" />
+    <recipe id="end_rod" />
+    <recipe id="ender_chest" />
+    <recipe id="ender_eye">
+      <item>eye_of_ender</item>
+    </recipe>
+    <recipe id="fence" />
+    <recipe id="fence_gate" />
+    <recipe id="fermented_spider_eye" />
+    <recipe id="fire_charge" />
+    <recipe id="fireworks" />
+    <recipe id="fishing_rod" />
+    <recipe id="flint_and_steel" />
+    <recipe id="flower_pot" />
+    <recipe id="furnace" />
+    <recipe id="furnace_minecart" />
+    <recipe id="glass_bottle" />
+    <recipe id="glass_pane" />
+    <recipe id="glowstone" />
+    <recipe id="gold_block" />
+    <recipe id="gold_ingot_from_block">
+      <item>gold_ingot</item>
+    </recipe>
+    <recipe id="gold_ingot_from_nugget">
+      <item>gold_ingot</item>
+    </recipe>
+    <recipe id="gold_nugget" />
+    <recipe id="golden_apple" />
+    <recipe id="golden_axe" />
+    <recipe id="golden_boots" />
+    <recipe id="golden_carrot" />
+    <recipe id="golden_chestplate" />
+    <recipe id="golden_helmet" />
+    <recipe id="golden_hoe" />
+    <recipe id="golden_leggings" />
+    <recipe id="golden_pickaxe" />
+    <recipe id="golden_rail" />
+    <recipe id="golden_shovel" />
+    <recipe id="golden_sword" />
+    <recipe id="granite">
+      <item>stone</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="gray_banner">
+      <item>banner</item>
+      <damage>8</damage>
+    </recipe>
+    <recipe id="gray_carpet">
+      <item>carpet</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="gray_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="gray_dye">
+      <item>dye</item>
+      <damage>8</damage>
+    </recipe>
+    <recipe id="gray_stained_glass">
+      <item>stained_glass</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="gray_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="gray_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="gray_wool">
+      <item>wool</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="green_banner">
+      <item>banner</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="green_carpet">
+      <item>carpet</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="green_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="green_stained_glass">
+      <item>stained_glass</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="green_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="green_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="green_wool">
+      <item>wool</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="hay_block" />
+    <recipe id="heavy_weighted_pressure_plate" />
+    <recipe id="hopper" />
+    <recipe id="hopper_minecart" />
+    <recipe id="iron_axe" />
+    <recipe id="iron_bars" />
+    <recipe id="iron_block" />
+    <recipe id="iron_boots" />
+    <recipe id="iron_chestplate" />
+    <recipe id="iron_door" />
+    <recipe id="iron_helmet" />
+    <recipe id="iron_hoe" />
+    <recipe id="iron_ingot_from_block">
+      <item>iron_ingot</item>
+    </recipe>
+    <recipe id="iron_ingot_from_nugget">
+      <item>iron_ingot</item>
+    </recipe>
+    <recipe id="iron_leggings" />
+    <recipe id="iron_nugget" />
+    <recipe id="iron_pickaxe" />
+    <recipe id="iron_shovel" />
+    <recipe id="iron_sword" />
+    <recipe id="iron_trapdoor" />
+    <recipe id="item_frame" />
+    <recipe id="jukebox" />
+    <recipe id="jungle_boat" />
+    <recipe id="jungle_door" />
+    <recipe id="jungle_fence" />
+    <recipe id="jungle_fence_gate" />
+    <recipe id="jungle_planks">
+      <item>planks</item>
+      <damage>3</damage>
+    </recipe>
+    <recipe id="jungle_stairs" />
+    <recipe id="jungle_wooden_slab">
+      <item>wooden_slab</item>
+      <damage>3</damage>
+    </recipe>
+    <recipe id="ladder" />
+    <recipe id="lapis_block" />
+    <recipe id="lapis_lazuli">
+      <item>dye</item>
+      <damage>4</damage>
+    </recipe>
+    <recipe id="lead" />
+    <recipe id="leather" />
+    <recipe id="leather_boots" />
+    <recipe id="leather_chestplate" />
+    <recipe id="leather_helmet" />
+    <recipe id="leather_leggings" />
+    <recipe id="lever" />
+    <recipe id="light_blue_banner">
+      <item>banner</item>
+      <damage>12</damage>
+    </recipe>
+    <recipe id="light_blue_carpet">
+      <item>carpet</item>
+      <damage>3</damage>
+    </recipe>
+    <recipe id="light_blue_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>3</damage>
+    </recipe>
+    <recipe id="light_blue_dye_from_blue_orchid">
+      <item>dye</item>
+      <damage>12</damage>
+    </recipe>
+    <recipe id="light_blue_dye_from_lapis_bonemeal">
+      <item>dye</item>
+      <damage>12</damage>
+    </recipe>
+    <recipe id="light_blue_stained_glass">
+      <item>stained_glass</item>
+      <damage>3</damage>
+    </recipe>
+    <recipe id="light_blue_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>3</damage>
+    </recipe>
+    <recipe id="light_blue_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>3</damage>
+    </recipe>
+    <recipe id="light_blue_wool">
+      <item>wool</item>
+      <damage>3</damage>
+    </recipe>
+    <recipe id="light_gray_banner">
+      <item>banner</item>
+      <damage>8</damage>
+    </recipe>
+    <recipe id="light_gray_carpet">
+      <item>carpet</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="light_gray_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="light_gray_dye_from_azure_bluet">
+      <item>dye</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="light_gray_dye_from_gray_bonemeal">
+      <item>dye</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="light_gray_dye_from_ink_bonemeal">
+      <item>dye</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="light_gray_dye_from_oxeye_daisy">
+      <item>dye</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="light_gray_dye_from_white_tulip">
+      <item>dye</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="light_gray_stained_glass">
+      <item>stained_glass</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="light_gray_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="light_gray_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="light_gray_wool">
+      <item>wool</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="light_weighted_pressure_plate" />
+    <recipe id="lime_banner">
+      <item>banner</item>
+      <damage>10</damage>
+    </recipe>
+    <recipe id="lime_carpet">
+      <item>carpet</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="lime_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="lime_dye">
+      <item>dye</item>
+      <damage>10</damage>
+    </recipe>
+    <recipe id="lime_stained_glass">
+      <item>stained_glass</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="lime_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="lime_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="lime_wool">
+      <item>wool</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="lit_pumpkin" />
+    <recipe id="magenta_banner">
+      <item>banner</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="magenta_carpet">
+      <item>carpet</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="magenta_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="magenta_dye_from_allium">
+      <item>dye</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="magenta_dye_from_lapis_ink_bonemeal">
+      <item>dye</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="magenta_dye_from_lapis_red_pink">
+      <item>dye</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="magenta_dye_from_lilac">
+      <item>dye</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="magenta_dye_from_purple_and_pink">
+      <item>dye</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="magenta_stained_glass">
+      <item>stained_glass</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="magenta_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="magenta_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="magenta_wool">
+      <item>wool</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="magma" />
+    <recipe id="magma_cream" />
+    <recipe id="map" />
+    <recipe id="melon_block" />
+    <recipe id="melon_seeds" />
+    <recipe id="minecart" />
+    <recipe id="mossy_cobblestone" />
+    <recipe id="mossy_cobblestone_wall">
+      <item>cobblestone_wall</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="mossy_stonebrick">
+      <item>stonebrick</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="mushroom_stew" />
+    <recipe id="nether_brick" />
+    <recipe id="nether_brick_fence" />
+    <recipe id="nether_brick_slab">
+      <item>stone_slab</item>
+      <damage>6</damage>
+    </recipe>
+    <recipe id="nether_brick_stairs" />
+    <recipe id="nether_wart_block" />
+    <recipe id="noteblock" />
+    <recipe id="oak_planks">
+      <item>planks</item>
+      <damage>0</damage>
+    </recipe>
+    <recipe id="oak_stairs" />
+    <recipe id="oak_wooden_slab">
+      <item>wooden_slab</item>
+      <damage>0</damage>
+    </recipe>
+    <recipe id="observer" />
+    <recipe id="orange_banner">
+      <item>banner</item>
+      <damage>14</damage>
+    </recipe>
+    <recipe id="orange_carpet">
+      <item>carpet</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="orange_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="orange_dye_from_orange_tulip">
+      <item>dye</item>
+      <damage>14</damage>
+    </recipe>
+    <recipe id="orange_dye_from_red_yellow">
+      <item>dye</item>
+      <damage>14</damage>
+    </recipe>
+    <recipe id="orange_stained_glass">
+      <item>stained_glass</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="orange_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="orange_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="orange_wool">
+      <item>wool</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="painting" />
+    <recipe id="paper" />
+    <recipe id="pink_banner">
+      <item>banner</item>
+      <damage>9</damage>
+    </recipe>
+    <recipe id="pink_carpet">
+      <item>carpet</item>
+      <damage>6</damage>
+    </recipe>
+    <recipe id="pink_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>6</damage>
+    </recipe>
+    <recipe id="pink_dye_from_peony">
+      <item>dye</item>
+      <damage>9</damage>
+    </recipe>
+    <recipe id="pink_dye_from_pink_tulip">
+      <item>dye</item>
+      <damage>9</damage>
+    </recipe>
+    <recipe id="pink_dye_from_red_bonemeal">
+      <item>dye</item>
+      <damage>9</damage>
+    </recipe>
+    <recipe id="pink_stained_glass">
+      <item>stained_glass</item>
+      <damage>6</damage>
+    </recipe>
+    <recipe id="pink_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>6</damage>
+    </recipe>
+    <recipe id="pink_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>6</damage>
+    </recipe>
+    <recipe id="pink_wool">
+      <item>wool</item>
+      <damage>6</damage>
+    </recipe>
+    <recipe id="piston" />
+    <recipe id="prismarine" />
+    <recipe id="prismarine_bricks">
+      <item>prismarine</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="pumpkin_pie" />
+    <recipe id="pumpkin_seeds" />
+    <recipe id="purple_banner">
+      <item>banner</item>
+      <damage>6</damage>
+    </recipe>
+    <recipe id="purple_carpet">
+      <item>carpet</item>
+      <damage>9</damage>
+    </recipe>
+    <recipe id="purple_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>9</damage>
+    </recipe>
+    <recipe id="purple_dye">
+      <item>dye</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="purple_shulker_box" />
+    <recipe id="purple_stained_glass">
+      <item>stained_glass</item>
+      <damage>9</damage>
+    </recipe>
+    <recipe id="purple_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>9</damage>
+    </recipe>
+    <recipe id="purple_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>9</damage>
+    </recipe>
+    <recipe id="purple_wool">
+      <item>wool</item>
+      <damage>9</damage>
+    </recipe>
+    <recipe id="purpur_block" />
+    <recipe id="purpur_pillar" />
+    <recipe id="purpur_slab" />
+    <recipe id="purpur_stairs" />
+    <recipe id="quartz_block" />
+    <recipe id="quartz_stairs" />
+    <recipe id="rabbit_stew_from_brown_mushroom">
+      <item>dye</item>
+    </recipe>
+    <recipe id="rabbit_stew_from_red_mushroom">
+      <item>dye</item>
+    </recipe>
+    <recipe id="rail" />
+    <recipe id="red_banner">
+      <item>banner</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="red_carpet">
+      <item>carpet</item>
+      <damage>14</damage>
+    </recipe>
+    <recipe id="red_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>14</damage>
+    </recipe>
+    <recipe id="red_dye_from_beetroot">
+      <item>dye</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="red_dye_from_poppy">
+      <item>dye</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="red_dye_from_rose_bush">
+      <item>dye</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="red_dye_from_tulip">
+      <item>dye</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="red_nether_brick" />
+    <recipe id="red_sandstone">
+      <damage>0</damage>
+    </recipe>
+    <recipe id="red_sandstone_slab">
+      <item>stone_slab2</item>
+    </recipe>
+    <recipe id="red_sandstone_stairs" />
+    <recipe id="red_stained_glass">
+      <item>stained_glass</item>
+      <damage>14</damage>
+    </recipe>
+    <recipe id="red_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>14</damage>
+    </recipe>
+    <recipe id="red_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>14</damage>
+    </recipe>
+    <recipe id="red_wool">
+      <item>wool</item>
+      <damage>14</damage>
+    </recipe>
+    <recipe id="redstone" />
+    <recipe id="redstone_block" />
+    <recipe id="redstone_lamp" />
+    <recipe id="redstone_torch" />
+    <recipe id="repeater" />
+    <recipe id="sandstone">
+      <damage>0</damage>
+    </recipe>
+    <recipe id="sandstone_stairs" />
+    <recipe id="sea_lantern" />
+    <recipe id="shears" />
+    <recipe id="shield" />
+    <recipe id="shulkerboxcoloring">
+      <item>purple_shulker_box</item>
+    </recipe>
+    <recipe id="sign" />
+    <recipe id="slime" />
+    <recipe id="slime_ball" />
+    <recipe id="smooth_red_sandstone">
+      <item>red_sandstone</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="smooth_sandstone">
+      <item>sandstone</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="snow" />
+    <recipe id="snow_layer" />
+    <recipe id="speckled_melon" />
+    <recipe id="spectral_arrow" />
+    <recipe id="spruce_boat" />
+    <recipe id="spruce_door" />
+    <recipe id="spruce_fence" />
+    <recipe id="spruce_fence_gate" />
+    <recipe id="spruce_planks">
+      <item>planks</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="spruce_stairs" />
+    <recipe id="spruce_wooden_slab">
+      <item>wooden_slab</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="stick" />
+    <recipe id="sticky_piston" />
+    <recipe id="stone_axe" />
+    <recipe id="stone_brick_slab">
+      <item>stone_slab</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="stone_brick_stairs" />
+    <recipe id="stone_button" />
+    <recipe id="stone_hoe" />
+    <recipe id="stone_pickaxe" />
+    <recipe id="stone_pressure_plate" />
+    <recipe id="stone_shovel" />
+    <recipe id="stone_slab" />
+    <recipe id="stone_slab2" />
+    <recipe id="stone_stairs" />
+    <recipe id="stone_sword" />
+    <recipe id="stonebrick" />
+    <recipe id="string_to_wool">
+      <item>wool</item>
+    </recipe>
+    <recipe id="sugar" />
+    <recipe id="tnt" />
+    <recipe id="tnt_minecart" />
+    <recipe id="torch" />
+    <recipe id="trapdoor" />
+    <recipe id="trapped_chest" />
+    <recipe id="tripwire_hook" />
+    <recipe id="white_banner">
+      <item>banner</item>
+      <damage>15</damage>
+    </recipe>
+    <recipe id="white_carpet">
+      <item>carpet</item>
+      <damage>0</damage>
+    </recipe>
+    <recipe id="white_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>0</damage>
+    </recipe>
+    <recipe id="white_stained_glass">
+      <item>stained_glass</item>
+      <damage>0</damage>
+    </recipe>
+    <recipe id="white_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>0</damage>
+    </recipe>
+    <recipe id="white_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>0</damage>
+    </recipe>
+    <recipe id="white_wool">
+      <item>wool</item>
+      <damage>0</damage>
+    </recipe>
+    <recipe id="wooden_axe" />
+    <recipe id="wooden_button" />
+    <recipe id="wooden_door" />
+    <recipe id="wooden_hoe" />
+    <recipe id="wooden_pickaxe" />
+    <recipe id="wooden_pressure_plate" />
+    <recipe id="wooden_shovel" />
+    <recipe id="wooden_slab" />
+    <recipe id="wooden_sword" />
+    <recipe id="writable_book" />
+    <recipe id="yellow_banner">
+      <item>banner</item>
+      <damage>11</damage>
+    </recipe>
+    <recipe id="yellow_carpet">
+      <item>carpet</item>
+      <damage>4</damage>
+    </recipe>
+    <recipe id="yellow_concrete_powder">
+      <item>concrete_powder</item>
+      <damage>4</damage>
+    </recipe>
+    <recipe id="yellow_dye_from_dandelion">
+      <item>dye</item>
+      <damage>11</damage>
+    </recipe>
+    <recipe id="yellow_dye_from_sunflower">
+      <item>dye</item>
+      <damage>11</damage>
+    </recipe>
+    <recipe id="yellow_stained_glass">
+      <item>stained_glass</item>
+      <damage>4</damage>
+    </recipe>
+    <recipe id="yellow_stained_glass_pane">
+      <item>stained_glass_pane</item>
+      <damage>4</damage>
+    </recipe>
+    <recipe id="yellow_stained_hardened_clay">
+      <item>stained_hardened_clay</item>
+      <damage>4</damage>
+    </recipe>
+    <recipe id="yellow_wool">
+      <item>wool</item>
+      <damage>4</damage>
+    </recipe>
+  </recipes>
   <sounds>
     <sound id="ambient.cave" />
     <sound id="block.anvil.break" />
@@ -3204,6 +4200,12 @@
         <v>luck</v>
       </strvalues>
     </tag>
+    <tag id="Recipes">
+      <customtype>RecipeList</customtype>
+      <applicable>
+        <app>knowledge_book</app>
+      </applicable>
+    </tag>
     <tag id="RepairCost">
       <type>3</type>
       <applicable>
@@ -3927,17 +4929,17 @@
       </applicable>
       <byteboolean>true</byteboolean>
     </tag>
+    <tag id="Life">
+      <type>3</type>
+      <applicable>
+        <app>fireworks_rocket</app>
+      </applicable>
+    </tag>
     <tag id="life">
       <type>2</type>
       <applicable>
         <app>arrow</app>
         <app>spectral_arrow</app>
-      </applicable>
-    </tag>
-    <tag id="Life">
-      <type>3</type>
-      <applicable>
-        <app>fireworks_rocket</app>
       </applicable>
     </tag>
     <tag id="LifeTicks">
@@ -4253,6 +5255,12 @@
         <app>area_effect_cloud</app>
       </applicable>
     </tag>
+    <tag id="recipeBook">
+      <customtype>RecipeBook</customtype>
+      <applicable>
+        <app>player</app>
+      </applicable>
+    </tag>
     <tag id="RequiredPlayerRange">
       <type>2</type>
       <applicable>
@@ -4290,6 +5298,13 @@
         <app>player</app>
       </applicable>
     </tag>
+    <tag id="seenCredits">
+      <type>1</type>
+      <applicable>
+        <app>player</app>
+      </applicable>
+      <byteboolean>true</byteboolean>
+    </tag>
     <tag id="SelectedItem">
       <customtype>item</customtype>
       <applicable>
@@ -4308,6 +5323,18 @@
         <app>sheep</app>
       </applicable>
       <byteboolean>true</byteboolean>
+    </tag>
+    <tag id="ShoulderEntityLeft">
+      <customtype>EntityTag</customtype>
+      <applicable>
+        <app>player</app>
+      </applicable>
+    </tag>
+    <tag id="ShoulderEntityRight">
+      <customtype>EntityTag</customtype>
+      <applicable>
+        <app>player</app>
+      </applicable>
     </tag>
     <tag id="ShowArms">
       <type>1</type>
@@ -4548,6 +5575,19 @@
         <v>white</v>
         <v>brown</v>
         <v>gray</v>
+      </intnamed>
+    </tag>
+    <tag id="Variant">
+      <type>3</type>
+      <applicable>
+        <app>parrot</app>
+      </applicable>
+      <intnamed prefix="parrot">
+        <v>red</v>
+        <v>blue</v>
+        <v>green</v>
+        <v>cyan</v>
+        <v>silver</v>
       </intnamed>
     </tag>
     <tag id="Warmup">
@@ -5651,6 +6691,7 @@
       <object>mooshroom</object>
       <object>mule</object>
       <object>ocelot</object>
+      <object>parrot</object>
       <object>pig</object>
       <object>polar_bear</object>
       <object>rabbit</object>
