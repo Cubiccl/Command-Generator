@@ -3,4 +3,4 @@ slash=true
 2.0-pre=null
 sort=0
 lang=en
-mcversion=1.12
+mcversion=1.11

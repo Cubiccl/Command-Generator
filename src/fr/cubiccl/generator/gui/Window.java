@@ -167,6 +167,8 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	{
 		this.panelCommand.updateTranslations();
 		this.panelCommandSelection.updateTranslations();
+		this.panelLootTableOutput.updateTranslations();
+		this.panelLootTableSelection.updateTranslations();
 		this.menubar.updateTranslations();
 		if (this.panelGui != null) this.panelGui.updateTranslations();
 		this.updateTitle();
@@ -179,13 +181,13 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	@Override
 	public void windowClosed(WindowEvent arg0)
 	{
-		CommandGenerator.exit();
+		if (!CommandGenerator.isReloading()) CommandGenerator.exit();
 	}
 
 	@Override
 	public void windowClosing(WindowEvent arg0)
 	{
-		CommandGenerator.exit();
+		if (!CommandGenerator.isReloading()) CommandGenerator.exit();
 	}
 
 	@Override

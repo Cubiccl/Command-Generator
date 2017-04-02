@@ -1,3 +1,15 @@
+------------------------- VERSION 2.4.4 -------------------------
+ADDITIONS
+- Added /advancement.
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+advancement.* (in // MAIN and // ADVANCEMENTS)
+command.advancement.*
+
 ------------------------- VERSION 2.4.3 -------------------------
 ADDITIONS
 - Added all content from 17w13a.

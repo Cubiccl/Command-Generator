@@ -4,6 +4,13 @@ achievement.give=Donner
 achievement.one=Un succès :
 achievement.take=Enlever
 
+advancement.criterion=Uniquement ce Critère
+advancement.grant=Donner l'Avancement
+advancement.name=Avancement
+advancement.predefined=Avancements prédéfinis...
+advancement.revoke=Retirer l'Avancement
+advancement.test=Tester l'Avancement
+
 attribute.base=Valeur de base
 attribute.base.help=Valeur de base de l'Attribut. Cette valeur sera changée par les Modificateurs.
 attribute.modifier.amount=Quantité à appliquer
@@ -927,6 +934,30 @@ achievement.snipeSkeleton=Duel de snipers
 achievement.spawnWither=Le commencement?
 achievement.theEnd=Fin?
 achievement.theEnd2=Fin.
+
+// ADVANCEMENTS
+advancement.brew_potion=Préparer une potion
+advancement.create_beacon=Créer une balise
+advancement.create_full_beacon=Créer une balise complète
+advancement.deflect_arrow=Dévier une flèche
+advancement.elytra=Apprendre à voler
+advancement.enchant_item=Enchanter un objet
+advancement.enter_end_gateway=Entrer dans une passerelle
+advancement.enter_the_end=Entrer le Néant
+advancement.enter_the_nether=Entrer le Nether
+advancement.follow_ender_eye=Suivre un Oeil d'Ender
+advancement.form_obsidian=Créer de l'obsidienne
+advancement.iron_tools=Outils en fer
+advancement.lava_bucket=Seau de lave
+advancement.mine_diamond=Diamants !
+advancement.mine_stone=Miner de la pierre
+advancement.obtain_armor=Obtenir une armure
+advancement.obtain_blaze_rod=Obtenir un Bâton de Blaze
+advancement.root=Minecraft
+advancement.shiny_gear=Équipement brillant
+advancement.smelt_iron=Fondre du fer
+advancement.summon_wither=Invoquer le Wither
+advancement.upgrade_tools=Améliorer les outils
 
 // ARGUMENTS
 argument.description.c=Nombre d'Entités à cibler
@@ -2046,8 +2077,14 @@ block.yellow_shulker_box.x=Boîte de Shulker Jaune (<facing>)
 // COMMANDS
 command.achievement=Donne le succès <achievement> à <target>.
 command.achievement.all=Donne tous les succès à <target>.
-command.achievement.take=Retirer le succès <achievement> de <target>.
+command.achievement.take=Retire le succès <achievement> de <target>.
 command.achievement.take.all=Retire tous les succès de <target>.
+command.advancement=Donne l'avancement <advancement> à <target>.
+command.advancement.revoke=Retire l'avancement <advancement> de <target>.
+command.advancement.test=Teste si <target> a l'avancement <advancement>.
+command.advancement.criterion=Donne le critère <criterion> de l'avancement <advancement> à <target>.
+command.advancement.revoke.criterion=Retire le critère <criterion> de l'avancement <advancement> de <target>.
+command.advancement.test.criterion=Teste si <target> a le critère <criterion> de l'avancement <advancement>.
 command.blockdata=Applique des Données NBT au Bloc à <coordinates>.
 command.clear=Retire tous les Objets <item> de l'inventaire de <target>.
 command.clear.all=Retire tous les Objets de l'inventaire de <target>.

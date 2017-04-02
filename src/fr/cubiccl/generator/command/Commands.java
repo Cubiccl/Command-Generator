@@ -15,6 +15,7 @@ public class Commands
 
 	public static void createCommands(LoadingFrame frame)
 	{
+		commands.clear();
 		frame.setText("loading.commands");
 		new CommandBlockdata();
 		new CommandClear();

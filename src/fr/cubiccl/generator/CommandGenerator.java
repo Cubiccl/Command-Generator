@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Comparator;
 
+import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 
 import fr.cubi.cubigui.CTextArea;
@@ -30,6 +31,7 @@ public class CommandGenerator
 	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2;
 	private static byte currentMode = COMMANDS;
 	private static String executeCommand = "", executeInput = null;
+	private static boolean isReloading = false;
 	private static ArrayList<String> log = new ArrayList<String>();
 	private static Command selected;
 	public static StateManager stateManager;
@@ -124,6 +126,11 @@ public class CommandGenerator
 	public static byte getCurrentMode()
 	{
 		return currentMode;
+	}
+
+	public static boolean isReloading()
+	{
+		return isReloading;
 	}
 
 	public static void loadCommand()
@@ -239,8 +246,22 @@ public class CommandGenerator
 		ObjectCreator.createObjects(frame);
 		Commands.createCommands(frame);
 		ObjectSaver.load();
-		if (selected != null) setSelected(selected);
-		if (window != null) window.updateTitle();
+		if (window != null)
+		{
+			isReloading = true;
+			window.dispose();
+			SwingUtilities.invokeLater(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					window = new Window();
+					window.setVisible(true);
+					setSelected(Commands.getCommands()[0]);
+					isReloading = false;
+				}
+			});
+		}
 		frame.dispose();
 	}
 
