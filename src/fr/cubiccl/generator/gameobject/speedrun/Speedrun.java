@@ -38,6 +38,7 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	private ArrayList<MissingItemsError> missingItems;
 	private ArrayList<MissingSpaceError> missingSpace;
 	private ArrayList<ThrownItemsWarning> thrownItems;
+	private UnusedItemsWarning unusedItems;
 
 	public Speedrun()
 	{
@@ -120,6 +121,7 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 		list.addAll(this.missingItems);
 		list.addAll(this.missingSpace);
 		list.addAll(this.thrownItems);
+		list.add(this.unusedItems);
 		return list.toArray(new MissingItemsError[list.size()]);
 	}
 
@@ -218,6 +220,7 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 
 	public void verify()
 	{
+		System.out.println("Start verification ------------------");
 		this.missingItems.clear();
 		this.missingSpace.clear();
 		this.thrownItems.clear();
@@ -239,8 +242,9 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 				e.printStackTrace();
 			}
 		}
+		this.unusedItems = inventory.unusedItems();
 
-		this.isValid = this.missingItems.isEmpty() && this.missingSpace.isEmpty() && this.thrownItems.isEmpty();
+		this.isValid = this.missingItems.isEmpty() && this.missingSpace.isEmpty() && this.thrownItems.isEmpty() && this.unusedItems.isEmpty();
 		this.onChange();
 	}
 }

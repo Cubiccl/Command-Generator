@@ -460,7 +460,7 @@ menu.exit=Exit
 menu.loot_table=Loot Tables Generator
 menu.objects=Custom Objects
 menu.settings=Settings
-menu.speedrun=Speedrun mode
+menu.speedrun=Speedruns (WIP)
 
 objects.achievement=Achievements
 objects.attribute=Attributes
@@ -694,7 +694,7 @@ speedrun.move.from=Item moved from
 speedrun.move.head=Helmet slot
 speedrun.move.importance=Importance
 speedrun.move.importance.forced=Forced
-speedrun.move.importance.help=<html><>Describes how important this Item is.<br />Forced is something you need during all the run (e.g. a pickaxe), the Generator can't throw it to make room for other Items.<br />Resource is something you are supposed to spend (e.g. building blocks), if you have some remaining at the end of the run, the Generator will warn you (they were useless).<br />It may also throw Resource items if you need more space and if you are not using them later.<br />Optionnal is something you may or may not use (e.g. health potions), the Generator can make room for new items and throw those (it will warn you).</html>
+speedrun.move.importance.help=<html><>Describes how important this Item is.<br />Forced is something you need during all the run (e.g. a pickaxe), the Generator can't throw it to make room for other Items.<br />Resource is something you are supposed to spend (e.g. building blocks), if you have some remaining at the end of the run, the Generator will warn you (they were useless).<br />It may also throw Resource items if you need more space and if you are not using them later.<br />Optionnal is something you may or may not use (e.g. health potions), the Generator can make room for new items and throw those (WIP).</html>
 speedrun.move.importance.optionnal=Optionnal
 speedrun.move.importance.resource=Resource
 speedrun.move.inventory=Inventory
@@ -712,6 +712,8 @@ speedrun.problems.missing_space=Inventory full at <checkpoint>
 speedrun.problems.missing_space.desc=Checkpoint "<checkpoint>": Your inventory is full, but you need <slots> more slot(s) to store Items:
 speedrun.problems.thrown=Thrown Items at <checkpoint>
 speedrun.problems.thrown.desc=Checkpoint "<checkpoint>": Some optionnal Items have been thrown to make room for other Items:
+speedrun.problems.unused=<items> unused Item(s)
+speedrun.problems.unused.desc=<items> Item(s) are not used during your run:
 speedrun.problems.nothing=Everything is fine! Your speedrun has no problems.
 speedrun.problems.see=Go to Checkpoint
 

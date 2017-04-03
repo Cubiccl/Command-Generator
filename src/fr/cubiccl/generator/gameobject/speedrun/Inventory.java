@@ -55,15 +55,16 @@ public class Inventory
 
 		try
 		{
-			int previous;
 			if (inventory[index] == null)
 			{
 				inventory[index] = item.clone();
-				previous = 0;
-			} else previous = inventory[index].amount;
+				inventory[index].amount = 0;
+			}
+			int previous = inventory[index].amount;
 			inventory[index].amount += quantity;
 			if (inventory[index].amount > inventory[index].getItem().maxStackSize) inventory[index].amount = inventory[index].getItem().maxStackSize;
 			quantity -= inventory[index].amount - previous;
+			System.out.println("Added " + (-previous + inventory[index].amount) + " " + item.getItem().name());
 		} catch (Exception e)
 		{
 			e.printStackTrace();
@@ -204,7 +205,8 @@ public class Inventory
 		inventory[index].amount -= quantity;
 		if (inventory[index].amount < 0) inventory[index].amount = 0;
 		quantity -= previous - inventory[index].amount;
-		if (inventory[index].amount <= 0) inventory[index] = null;
+		System.out.println("Removed " + (previous - inventory[index].amount) + " " + item.getItem().name());
+		if (inventory[index].amount == 0) inventory[index] = null;
 
 		return quantity < 0 ? 0 : quantity;
 	}
@@ -216,10 +218,22 @@ public class Inventory
 		int missing = item.amount, index = 0;
 		while (missing > 0 && index < matching.length)
 		{
-			missing -= this.remove(inventory, matching[index], item, missing) - inventory[matching[index]].amount;
+			missing = this.remove(inventory, matching[index], item, missing);
 			++index;
 		}
 
 		return missing < 0 ? 0 : missing;
+	}
+
+	public UnusedItemsWarning unusedItems()
+	{
+		ArrayList<ItemStackS> items = new ArrayList<ItemStackS>();
+		for (int i = 0; i < this.armor.length; ++i)
+			if (this.armor[i] != null && !this.armor[i].isForced()) items.add(this.armor[i]);
+		for (int i = 0; i < this.inventory.length; ++i)
+			if (this.inventory[i] != null && !this.inventory[i].isForced()) items.add(this.inventory[i]);
+		for (int i = 0; i < this.enderchest.length; ++i)
+			if (this.enderchest[i] != null && !this.enderchest[i].isForced()) items.add(this.enderchest[i]);
+		return new UnusedItemsWarning(null, items);
 	}
 }

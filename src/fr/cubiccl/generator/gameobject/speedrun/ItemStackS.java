@@ -79,7 +79,7 @@ public class ItemStackS extends ItemStack
 
 	public boolean matches(ItemStackS item)
 	{
-		return item.getItem() == item.getItem() && item.getDamage() == item.getDamage();
+		return this.getItem() == item.getItem() && this.getDamage() == item.getDamage();
 	}
 
 	public List<ItemStackS> splitQuantity()

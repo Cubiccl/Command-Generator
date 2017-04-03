@@ -65,7 +65,7 @@ public class PanelProblems extends CGPanel implements ListSelectionListener, Act
 	{
 		if (this.selectedProblem() == null) this.areaDescription.setText("");
 		else this.areaDescription.setText(this.selectedProblem().description());
-		this.buttonSee.setEnabled(this.selectedProblem() != null);
+		this.buttonSee.setEnabled(this.selectedProblem() != null && this.selectedProblem().checkpoint != null);
 	}
 
 	public void onSpeedrunUpdate()
