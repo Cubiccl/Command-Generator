@@ -39,7 +39,7 @@ public class PanelCheckpoint extends CGPanel implements ListListener<ItemMove>
 	@Override
 	public void onChange(int index, ItemMove object)
 	{
-		this.checkpoint.speedrun.onChange();
+		this.checkpoint.speedrun.verify();
 	}
 
 	@Override

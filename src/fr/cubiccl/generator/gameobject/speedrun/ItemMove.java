@@ -54,9 +54,9 @@ public class ItemMove implements IObjectList<ItemMove>
 	{
 		Text t = new Text("speedrun.move.desc");
 		if (this.from == OUT) t = new Text("speedrun.move.desc.from");
-		else t.addReplacement("<from>", new Text("speedrun.move." + LOCATIONS[this.from]));
 		if (this.to == OUT) t = new Text("speedrun.move.desc.to");
-		else t.addReplacement("<to>", new Text("speedrun.move." + LOCATIONS[this.to]));
+		if (this.from != OUT) t.addReplacement("<from>", new Text("speedrun.move." + LOCATIONS[this.from]));
+		if (this.to != OUT) t.addReplacement("<to>", new Text("speedrun.move." + LOCATIONS[this.to]));
 		return t;
 	}
 

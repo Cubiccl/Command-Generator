@@ -8,7 +8,6 @@ import org.jdom2.Element;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.GameObject;
-import fr.cubiccl.generator.gameobject.speedrun.Checkpoint.CheckpointResult;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.Dialogs;
@@ -115,6 +114,15 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 		return this.isValid;
 	}
 
+	public MissingItemsError[] listProblems()
+	{
+		ArrayList<MissingItemsError> list = new ArrayList<MissingItemsError>();
+		list.addAll(this.missingItems);
+		list.addAll(this.missingSpace);
+		list.addAll(this.thrownItems);
+		return list.toArray(new MissingItemsError[list.size()]);
+	}
+
 	public MissingItemsError[] missingItems()
 	{
 		return this.missingItems.toArray(new MissingItemsError[this.missingItems.size()]);
@@ -211,16 +219,18 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 	public void verify()
 	{
 		this.missingItems.clear();
+		this.missingSpace.clear();
+		this.thrownItems.clear();
 		for (int i = 0; i < this.checkpoints.size(); ++i)
 			this.checkpoints.get(i).position = i;
 
 		Inventory inventory = new Inventory(this.isPost19 ? 37 : 36);
 		for (Checkpoint checkpoint : this.checkpoints)
 		{
-			CheckpointResult result = inventory.apply(checkpoint);
-			if (!result.missingItems.isEmpty()) this.missingItems.add(result.missingItems);
-			if (!result.missingSpace.isEmpty()) this.missingSpace.add(result.missingSpace);
-			if (!result.thrownItems.isEmpty()) this.thrownItems.add(result.thrownItems);
+			checkpoint.result = inventory.apply(checkpoint);
+			if (!checkpoint.result.missingItems.isEmpty()) this.missingItems.add(checkpoint.result.missingItems);
+			if (!checkpoint.result.missingSpace.isEmpty()) this.missingSpace.add(checkpoint.result.missingSpace);
+			if (!checkpoint.result.thrownItems.isEmpty()) this.thrownItems.add(checkpoint.result.thrownItems);
 			try
 			{
 				checkpoint.currentInventory = inventory.clone();
@@ -228,7 +238,6 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 			{
 				e.printStackTrace();
 			}
-			checkpoint.result = result;
 		}
 
 		this.isValid = this.missingItems.isEmpty() && this.missingSpace.isEmpty() && this.thrownItems.isEmpty();

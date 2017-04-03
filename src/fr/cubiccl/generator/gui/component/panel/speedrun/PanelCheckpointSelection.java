@@ -62,7 +62,11 @@ public class PanelCheckpointSelection extends CGPanel implements ActionListener
 	public void setSelected(Checkpoint checkpoint)
 	{
 		if (checkpoint == null) this.selected = -1;
-		else this.selected = checkpoint.position;
+		else
+		{
+			this.selected = checkpoint.position;
+			this.ui_comboboxSearch.setSelectedIndex(this.selected);
+		}
 		this.updateParent();
 	}
 

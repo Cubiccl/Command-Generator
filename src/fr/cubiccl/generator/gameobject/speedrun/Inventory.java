@@ -44,6 +44,7 @@ public class Inventory
 			return missing;
 		} catch (Exception e)
 		{
+			e.printStackTrace();
 			return null;
 		}
 	}
@@ -54,13 +55,20 @@ public class Inventory
 
 		try
 		{
-			if (inventory[index] == null) inventory[index] = item.clone();
-			int previous = inventory[index].amount;
+			int previous;
+			if (inventory[index] == null)
+			{
+				inventory[index] = item.clone();
+				previous = 0;
+			} else previous = inventory[index].amount;
 			inventory[index].amount += quantity;
 			if (inventory[index].amount > inventory[index].getItem().maxStackSize) inventory[index].amount = inventory[index].getItem().maxStackSize;
 			quantity -= inventory[index].amount - previous;
 		} catch (Exception e)
-		{}
+		{
+			e.printStackTrace();
+		}
+
 		return quantity < 0 ? 0 : quantity;
 	}
 
