@@ -26,9 +26,8 @@ public class Checkpoint implements Comparable<Checkpoint>
 
 	public static Checkpoint createFrom(Speedrun speedrun, Element checkpoint)
 	{
-		Checkpoint c = new Checkpoint(speedrun);
+		Checkpoint c = new Checkpoint(speedrun, checkpoint.getAttributeValue("name"));
 		c.position = Integer.parseInt(checkpoint.getAttributeValue("position"));
-		c.name = checkpoint.getAttributeValue("name");
 		for (Element move : checkpoint.getChildren("move"))
 			c.addMove(ItemMove.createFrom(c, move));
 		return c;
@@ -41,9 +40,10 @@ public class Checkpoint implements Comparable<Checkpoint>
 	public CheckpointResult result;
 	public final Speedrun speedrun;
 
-	public Checkpoint(Speedrun speedrun)
+	public Checkpoint(Speedrun speedrun, String name)
 	{
 		this.speedrun = speedrun;
+		this.name = name;
 		this.moves = new ArrayList<ItemMove>();
 	}
 
