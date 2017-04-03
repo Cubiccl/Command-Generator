@@ -59,7 +59,7 @@ public class Commands
 		new CommandWeather();
 		new CommandWorldborder();
 		new CommandXp();
-
+		
 		if (Settings.version().isBefore(Version.v1d11))
 		{
 			new CommandAchievement();
@@ -70,6 +70,7 @@ public class Commands
 			new CommandAdvancement();
 			new CommandRecipe();
 		}
+		
 	}
 
 	public static Command getCommandFromID(String id)

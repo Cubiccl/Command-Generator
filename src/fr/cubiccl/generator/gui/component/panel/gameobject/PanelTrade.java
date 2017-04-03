@@ -66,23 +66,23 @@ public class PanelTrade extends CGPanel implements ICustomObject<TradeOffer>
 		{
 			if (item.slot == 0)
 			{
-				trade.buy = item;
-				trade.buy.slot = -1;
+				trade.setBuy(item);
+				trade.getBuy().slot = -1;
 			} else if (item.slot == 1)
 			{
-				trade.sell = item;
-				trade.sell.slot = -1;
+				trade.setSell(item);
+				trade.getSell().slot = -1;
 			} else if (item.slot == 2)
 			{
-				trade.buySecondary = item;
-				trade.buySecondary.slot = -1;
+				trade.setBuySecondary(item);
+				trade.getBuySecondary().slot = -1;
 			}
 		}
 
-		if (trade.buy == null && trade.buySecondary != null)
+		if (trade.getBuy() == null && trade.getBuySecondary() != null)
 		{
-			trade.buy = trade.buySecondary;
-			trade.buySecondary = null;
+			trade.setBuy(trade.getBuySecondary());
+			trade.setBuySecondary(null);
 		}
 
 		if (!trade.isValid()) throw new CommandGenerationException(new Text("error.trade.incomplete"));
@@ -98,7 +98,7 @@ public class PanelTrade extends CGPanel implements ICustomObject<TradeOffer>
 		this.entryUses.setText(Integer.toString(trade.uses));
 
 		ItemStack[] items = new ItemStack[]
-		{ trade.buy, trade.sell, trade.buySecondary };
+		{ trade.getBuy(), trade.getSell(), trade.getBuySecondary() };
 		for (int i = 0; i < items.length; i++)
 			if (items[i] != null) items[i].slot = i;
 		this.panelItems.empty();

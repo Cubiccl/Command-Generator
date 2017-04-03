@@ -227,13 +227,13 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 	@Override
 	public void setupFrom(ItemStack itemStack)
 	{
-		if (itemStack.item == null) return;
-		this.setItem(itemStack.item);
-		if (this.hasData) this.damage = itemStack.damage;
+		if (itemStack.getItem() == null) return;
+		this.setItem(itemStack.getItem());
+		if (this.hasData) this.damage = itemStack.getDamage();
 		this.updateDisplay();
 		if (this.spinnerAmount.isVisible()) this.spinnerAmount.setText(Integer.toString(itemStack.amount));
-		if (this.hasDurability) this.spinnerDurability.setText(Integer.toString(itemStack.damage));
-		if (this.panelTags.isVisible()) this.panelTags.setTags(itemStack.nbt.value());
+		if (this.hasDurability) this.spinnerDurability.setText(Integer.toString(itemStack.getDamage()));
+		if (this.panelTags.isVisible()) this.panelTags.setTags(itemStack.getNbt().value());
 	}
 
 	@Override

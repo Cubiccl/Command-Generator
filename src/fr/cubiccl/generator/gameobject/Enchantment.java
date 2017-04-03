@@ -43,8 +43,8 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 		return e;
 	}
 
-	public int level;
-	public EnchantmentType type;
+	private int level;
+	private EnchantmentType type;
 
 	public Enchantment()
 	{
@@ -71,10 +71,32 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 		return new CGLabel(new Text(this.toString(), false));
 	}
 
+	public int getLevel()
+	{
+		return level;
+	}
+
 	@Override
 	public String getName(int index)
 	{
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.toString();
+	}
+
+	public EnchantmentType getType()
+	{
+		return type;
+	}
+
+	public void setLevel(int level)
+	{
+		this.level = level;
+		this.onChange();
+	}
+
+	public void setType(EnchantmentType type)
+	{
+		this.type = type;
+		this.onChange();
 	}
 
 	@Override

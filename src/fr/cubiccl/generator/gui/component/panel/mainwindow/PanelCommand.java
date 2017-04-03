@@ -1,4 +1,4 @@
-package fr.cubiccl.generator.gui.component.panel;
+package fr.cubiccl.generator.gui.component.panel.mainwindow;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGTextField;
 
 public class PanelCommand extends CGPanel implements ActionListener

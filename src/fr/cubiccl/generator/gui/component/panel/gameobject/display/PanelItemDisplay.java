@@ -41,13 +41,13 @@ public class PanelItemDisplay extends JPanel
 
 	private void doResize(Graphics g)
 	{
-		int width = this.item == null ? 0 : this.item.item.texture(this.item.damage).getWidth();
+		int width = this.item == null ? 0 : this.item.texture().getWidth();
 		g.setFont(DisplayUtils.FONT);
 		for (String i : info)
 			width = Math.max(width, g.getFontMetrics().stringWidth(i));
 
 		int height = (this.info.length - 1) * LINE + MARGIN * 2;
-		if (this.item != null) height += PIXEL + this.item.item.texture(this.item.damage).getHeight();
+		if (this.item != null) height += PIXEL + this.item.texture().getHeight();
 		this.setVisible(false);
 		this.setPreferredSize(new Dimension(width + MARGIN * 2, height));
 		this.setVisible(true);
@@ -91,7 +91,7 @@ public class PanelItemDisplay extends JPanel
 
 		if (this.item == null) return;
 
-		g.drawImage(this.item.item.texture(this.item.damage), MARGIN, MARGIN - PIXEL * 3 / 2, null);
+		g.drawImage(this.item.texture(), MARGIN, MARGIN - PIXEL * 3 / 2, null);
 
 		this.paintInfo(g);
 	}
@@ -100,7 +100,7 @@ public class PanelItemDisplay extends JPanel
 	{
 		g.setColor(Color.WHITE);
 		g.setFont(DisplayUtils.FONT);
-		int image = this.item.item.texture(this.item.damage).getHeight();
+		int image = this.item.texture().getHeight();
 		for (int i = 0; i < this.info.length; ++i)
 		{
 			if (i == 1) g.setColor(Color.GRAY);

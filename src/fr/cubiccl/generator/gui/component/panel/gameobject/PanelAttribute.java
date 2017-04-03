@@ -61,7 +61,7 @@ public class PanelAttribute extends CGPanel implements ICustomObject<AppliedAttr
 	@Override
 	public void setupFrom(AppliedAttribute attribute)
 	{
-		this.comboboxAttribute.setSelected(attribute.attribute);
+		this.comboboxAttribute.setSelected(attribute.getAttribute());
 		this.entryBase.setText(Utils.doubleToString(attribute.base));
 		this.panelModifiers.clear();
 		for (AttributeModifier m : attribute.modifiers)

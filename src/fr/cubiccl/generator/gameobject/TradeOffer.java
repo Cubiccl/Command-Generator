@@ -52,7 +52,7 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 		return trade;
 	}
 
-	public ItemStack buy = null, buySecondary = null, sell = null;
+	private ItemStack buy = null, buySecondary = null, sell = null;
 	public boolean experienceReward = false;
 	public int maxUses = 0, uses = 0;
 
@@ -67,6 +67,16 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 		return p;
 	}
 
+	public ItemStack getBuy()
+	{
+		return buy;
+	}
+
+	public ItemStack getBuySecondary()
+	{
+		return buySecondary;
+	}
+
 	@Override
 	public Component getDisplayComponent()
 	{
@@ -79,9 +89,32 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 		return this.customName() == null || this.customName().equals("") ? "Trade " + (index + 1) : this.customName();
 	}
 
+	public ItemStack getSell()
+	{
+		return sell;
+	}
+
 	public boolean isValid()
 	{
 		return this.buy != null && this.sell != null;
+	}
+
+	public void setBuy(ItemStack buy)
+	{
+		this.buy = buy;
+		this.onChange();
+	}
+
+	public void setBuySecondary(ItemStack buySecondary)
+	{
+		this.buySecondary = buySecondary;
+		this.onChange();
+	}
+
+	public void setSell(ItemStack sell)
+	{
+		this.sell = sell;
+		this.onChange();
 	}
 
 	@Override

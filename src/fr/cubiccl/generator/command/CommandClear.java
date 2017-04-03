@@ -121,10 +121,11 @@ public class CommandClear extends Command implements ActionListener
 	{
 		ItemStack item = this.panelItem.generate();
 		if (this.clearAllItems()) return "/clear " + this.panelTarget.generate().toCommand();
-		int data = item.damage, amount = item.amount;
+		int data = item.getDamage(), amount = item.amount;
 		if (this.ignoreData()) data = -1;
 		if (this.clearAll()) amount = -1;
-		return this.id + " " + this.panelTarget.generate().toCommand() + " " + item.item.id() + " " + data + " " + amount + " " + item.nbt.valueForCommand();
+		return this.id + " " + this.panelTarget.generate().toCommand() + " " + item.getItem().id() + " " + data + " " + amount + " "
+				+ item.getNbt().valueForCommand();
 	}
 
 	private boolean ignoreData()

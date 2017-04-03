@@ -114,8 +114,8 @@ public class PanelEntity extends CGPanel implements ActionListener, ICustomObjec
 	@Override
 	public void setupFrom(LivingEntity entity)
 	{
-		this.setEntity(entity.entity);
-		if (this.panelTags.isVisible()) this.setTags(entity.nbt.value());
+		this.setEntity(entity.getEntity());
+		if (this.panelTags.isVisible()) this.setTags(entity.getNbt().value());
 	}
 
 }

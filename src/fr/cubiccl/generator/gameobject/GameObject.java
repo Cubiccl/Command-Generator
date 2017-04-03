@@ -8,17 +8,19 @@ import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.utils.Settings;
+import fr.cubiccl.generator.utils.Settings.Version;
 
 public abstract class GameObject
 {
-	private String customName = "", versionMin = Settings.version().codeName;
+	private String customName = "";
+	private Version versionMin = Settings.version();
 
 	/** Creates this Object root XML element, with name and version as attributes. */
 	protected Element createRoot(String id)
 	{
 		Element root = new Element(id);
 		root.setAttribute("objectname", this.customName);
-		root.setAttribute("version", this.versionMin);
+		root.setAttribute("version", this.versionMin.codeName);
 		return root;
 	}
 
@@ -40,7 +42,12 @@ public abstract class GameObject
 	protected void findProperties(Element element)
 	{
 		if (element.getAttribute("objectname") != null) this.customName = element.getAttributeValue("objectname");
-		if (element.getAttribute("version") != null) this.versionMin = element.getAttributeValue("version");
+		if (element.getAttribute("version") != null) this.versionMin = Version.get(element.getAttributeValue("version"));
+	}
+
+	public void onChange()
+	{
+		if (this.versionMin.isBefore(Settings.version())) this.versionMin = Settings.version();
 	}
 
 	public void setCustomName(String name)
@@ -60,5 +67,4 @@ public abstract class GameObject
 
 	/** @return This Object as an XML object to be saved. */
 	public abstract Element toXML();
-
 }

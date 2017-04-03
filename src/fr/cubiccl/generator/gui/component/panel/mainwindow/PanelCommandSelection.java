@@ -1,4 +1,4 @@
-package fr.cubiccl.generator.gui.component.panel;
+package fr.cubiccl.generator.gui.component.panel.mainwindow;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,6 +10,7 @@ import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.Text;
 
 public class PanelCommandSelection extends CGPanel implements ActionListener

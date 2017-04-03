@@ -88,8 +88,8 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 
 	public void setupFrom(Enchantment enchantment)
 	{
-		this.setEnchantment(enchantment.type);
-		this.setLevel(enchantment.level);
+		this.setEnchantment(enchantment.getType());
+		this.setLevel(enchantment.getLevel());
 	}
 
 }

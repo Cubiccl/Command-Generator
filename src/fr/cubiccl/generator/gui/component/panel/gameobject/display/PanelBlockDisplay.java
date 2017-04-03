@@ -42,13 +42,13 @@ public class PanelBlockDisplay extends JPanel
 
 	private void doResize(Graphics g)
 	{
-		int width = this.block == null ? 0 : this.block.block.texture(this.block.data).getWidth();
+		int width = this.block == null ? 0 : this.block.texture().getWidth();
 		g.setFont(DisplayUtils.FONT);
 		for (String i : info)
 			width = Math.max(width, g.getFontMetrics().stringWidth(i));
 
 		int height = (this.info.length - 1) * LINE + MARGIN * 2;
-		if (this.block != null) height += PIXEL + this.block.block.texture(this.block.data).getHeight();
+		if (this.block != null) height += PIXEL + this.block.texture().getHeight();
 		this.setVisible(false);
 		this.setPreferredSize(new Dimension(width + MARGIN * 2, height));
 		this.setVisible(true);
@@ -61,7 +61,7 @@ public class PanelBlockDisplay extends JPanel
 
 		if (this.block != null)
 		{
-			infos.add(this.block.block.name(this.block.data).toString());
+			infos.add(this.block.getBlock().name(this.block.getData()).toString());
 			int size = this.block.containerSize();
 			if (size != -1) infos.add(new Text("container.size", new Replacement("<size>", Integer.toString(size))).toString());
 		}
@@ -90,7 +90,7 @@ public class PanelBlockDisplay extends JPanel
 
 		if (this.block == null) return;
 
-		g.drawImage(this.block.block.texture(this.block.data), MARGIN, MARGIN - PIXEL * 3 / 2, null);
+		g.drawImage(this.block.texture(), MARGIN, MARGIN - PIXEL * 3 / 2, null);
 
 		this.paintInfo(g);
 	}
@@ -99,7 +99,7 @@ public class PanelBlockDisplay extends JPanel
 	{
 		g.setColor(Color.WHITE);
 		g.setFont(DisplayUtils.FONT);
-		int image = this.block.block.texture(this.block.data).getHeight();
+		int image = this.block.texture().getHeight();
 		for (int i = 0; i < this.info.length; ++i)
 		{
 			if (i == 1) g.setColor(Color.GRAY);

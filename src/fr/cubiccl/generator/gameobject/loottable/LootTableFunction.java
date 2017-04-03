@@ -130,8 +130,8 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 					break;
 				}
 			item.enchant(enchants[new Random().nextInt(enchants.length)]);
-		} else if (this.function == Function.FURNACE_SMELT && item.item.cooksTo != null && ObjectRegistry.items.find(item.item.cooksTo) != null) item.item = ObjectRegistry.items
-				.find(item.item.cooksTo);
+		} else if (this.function == Function.FURNACE_SMELT && item.getItem().cooksTo != null && ObjectRegistry.items.find(item.getItem().cooksTo) != null) item
+				.setItem(ObjectRegistry.items.find(item.getItem().cooksTo));
 		else if (this.function == Function.SET_ATTRIBUTES)
 		{
 			Tag[] modifiers = null;
@@ -139,12 +139,12 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 				if (t.id().equals("modifiers")) modifiers = ((TagList) t).value();
 
 			if (modifiers == null) return;
-			if (item.nbt.hasTag("AttributeModifiers"))
+			if (item.getNbt().hasTag("AttributeModifiers"))
 			{
-				TagList list = (TagList) item.nbt.getTagFromId("AttributeModifiers");
+				TagList list = (TagList) item.getNbt().getTagFromId("AttributeModifiers");
 				for (Tag tag : modifiers)
 					list.addTag(tag);
-			} else item.nbt.addTag(((TemplateList) ObjectRegistry.itemTags.find("AttributeModifiers")).create(modifiers));
+			} else item.getNbt().addTag(((TemplateList) ObjectRegistry.itemTags.find("AttributeModifiers")).create(modifiers));
 		} else if (this.function == Function.SET_COUNT) for (Tag t : this.tags)
 		{
 			if (t.template == Tags.LT_FUNCTION_COUNT)
@@ -163,13 +163,13 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 		{
 			if (t.template == Tags.LT_FUNCTION_DAMAGE)
 			{
-				item.damage = (int) (((TagBigNumber) t).value() * item.item.getDurability());
+				item.setDamage((int) (((TagBigNumber) t).value() * item.getItem().getDurability()));
 				break;
 			} else if (t.template == Tags.LT_FUNCTION_DAMAGE_RANGE)
 			{
 				double min = ((TagBigNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MIN_FLOAT)).value();
 				double max = ((TagBigNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MAX_FLOAT)).value();
-				item.damage = (int) ((new Random().nextDouble() * (max - min) + min) * item.item.getDurability());
+				item.setDamage((int) ((new Random().nextDouble() * (max - min) + min) * item.getItem().getDurability()));
 				break;
 			}
 		}
@@ -177,13 +177,13 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 		{
 			if (t.template == Tags.LT_FUNCTION_DATA)
 			{
-				item.damage = ((TagNumber) t).value();
+				item.setDamage(((TagNumber) t).value());
 				break;
 			} else if (t.template == Tags.LT_FUNCTION_DATA_RANGE)
 			{
 				int min = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MIN)).value();
 				int max = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MAX)).value();
-				item.damage = new Random().nextInt(max - min) + min;
+				item.setDamage(new Random().nextInt(max - min) + min);
 				break;
 			}
 		}
@@ -196,7 +196,7 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 
 			TagCompound t = (TagCompound) NBTReader.read(tag, false, false);
 			for (Tag nbt : t.value())
-				item.nbt.addTag(nbt);
+				item.getNbt().addTag(nbt);
 		}
 	}
 

@@ -179,7 +179,7 @@ public class PanelAttributeModifier extends CGPanel implements ICustomObject<Att
 	@Override
 	public void setupFrom(AttributeModifier modifier)
 	{
-		if (!this.isApplied) this.comboboxAttribute.setSelected(modifier.attribute);
+		if (!this.isApplied) this.comboboxAttribute.setSelected(modifier.getAttribute());
 		this.comboboxOperation.setSelectedIndex(modifier.operation);
 		if (!this.isApplied)
 		{

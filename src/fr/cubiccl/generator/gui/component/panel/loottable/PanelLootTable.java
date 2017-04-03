@@ -40,28 +40,28 @@ public class PanelLootTable extends CGPanel implements ListListener<LootTablePoo
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(this.display = new PanelLTDisplay(this.lootTable), gbc);
 
-		this.listPools.setValues(this.lootTable.pools.toArray(new LootTablePool[this.lootTable.pools.size()]));
+		this.listPools.setValues(this.lootTable.getPools());
 		this.listPools.addListListener(this);
 	}
 
 	@Override
 	public void onAddition(int index, LootTablePool object)
 	{
-		this.lootTable.pools.add(object);
+		this.lootTable.add(object);
 		this.display.update();
 	}
 
 	@Override
 	public void onChange(int index, LootTablePool object)
 	{
-		this.lootTable.pools.set(index, object);
+		this.lootTable.set(index, object);
 		this.display.update();
 	}
 
 	@Override
 	public void onDeletion(int index, LootTablePool object)
 	{
-		this.lootTable.pools.remove(object);
+		this.lootTable.remove(object);
 		this.display.update();
 	}
 

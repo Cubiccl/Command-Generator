@@ -126,7 +126,7 @@ public class PanelEffect extends CGPanel implements ActionListener, ICustomObjec
 	public void setupFrom(Effect effect)
 	{
 		this.setHideParticles(effect.hideParticles);
-		this.comboboxEffect.setSelected(effect.type);
+		this.comboboxEffect.setSelected(effect.getType());
 		this.labelTexture.setImage(this.selectedEffect().texture());
 		this.setDuration(effect.duration);
 		this.setAmplifier(effect.amplifier);

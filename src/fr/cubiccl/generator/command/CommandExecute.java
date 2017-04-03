@@ -92,7 +92,7 @@ public class CommandExecute extends Command implements ActionListener
 		if (this.isDetecting())
 		{
 			PlacedBlock block = this.panelBlock.generate();
-			command += "detect " + this.panelBlockCoordinates.generate().toCommand() + " " + block.block.id() + " " + block.data + " ";
+			command += "detect " + this.panelBlockCoordinates.generate().toCommand() + " " + block.getBlock().id() + " " + block.getData() + " ";
 		}
 		return command;
 	}

@@ -84,9 +84,9 @@ public class CommandTestforblock extends Command implements ActionListener
 	public String generate() throws CommandGenerationException
 	{
 		PlacedBlock block = this.panelBlock.generate();
-		String nbt = block.nbt.valueForCommand();
-		return this.id + " " + this.panelCoordinates.generate().toCommand() + " " + block.block.id() + " "
-				+ (this.checkboxIgnoreData.isSelected() ? "-1" : block.data) + (nbt.equals("{}") ? "" : " " + nbt);
+		String nbt = block.getNbt().valueForCommand();
+		return this.id + " " + this.panelCoordinates.generate().toCommand() + " " + block.getBlock().id() + " "
+				+ (this.checkboxIgnoreData.isSelected() ? "-1" : block.getData()) + (nbt.equals("{}") ? "" : " " + nbt);
 	}
 
 	@Override

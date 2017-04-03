@@ -56,7 +56,7 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 		return at;
 	}
 
-	public Attribute attribute;
+	private Attribute attribute;
 	public double base;
 	public AttributeModifier[] modifiers;
 
@@ -80,6 +80,11 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 		return p;
 	}
 
+	public Attribute getAttribute()
+	{
+		return attribute;
+	}
+
 	@Override
 	public Component getDisplayComponent()
 	{
@@ -90,6 +95,12 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 	public String getName(int index)
 	{
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.attribute.name().toString();
+	}
+
+	public void setAttribute(Attribute attribute)
+	{
+		this.attribute = attribute;
+		this.onChange();
 	}
 
 	@Override
@@ -136,6 +147,7 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 		this.attribute = a.attribute;
 		this.base = a.base;
 		this.modifiers = a.modifiers;
+		this.onChange();
 		return this;
 	}
 

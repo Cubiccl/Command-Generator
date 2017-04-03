@@ -28,11 +28,13 @@ import fr.cubiccl.generator.utils.*;
 public class CommandGenerator
 {
 	private static ArrayList<String> commandHistory = new ArrayList<String>();
-	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2;
+	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, SPEEDRUN = 3;
 	private static byte currentMode = COMMANDS;
 	private static String executeCommand = "", executeInput = null;
 	private static boolean isReloading = false;
 	private static ArrayList<String> log = new ArrayList<String>();
+	private static final String[] MODE_NAMES =
+	{ "Commands", "Loot tables", "Data", "Speedruns", "Recipes", "Advancements" };
 	private static Command selected;
 	public static StateManager stateManager;
 	public static ArrayList<String> untranslated = new ArrayList<String>();
@@ -219,7 +221,7 @@ public class CommandGenerator
 	public static void setCurrentMode(byte mode)
 	{
 		currentMode = mode;
-		log("Switching to " + (currentMode == COMMANDS ? "Commands" : currentMode == DATA ? "Data" : "Loot Tables") + " mode.");
+		log("Switching to " + MODE_NAMES[mode] + " mode.");
 		window.updateMode();
 		stateManager.updateMode();
 	}
@@ -234,7 +236,7 @@ public class CommandGenerator
 		selected = command;
 		window.setSelected(command);
 		stateManager.clear();
-		stateManager.setState(selectedCommand().getGUI(), null);
+		stateManager.setCommandState(selectedCommand().getGUI(), null);
 	}
 
 	public static void updateData()
@@ -243,12 +245,13 @@ public class CommandGenerator
 		log("---- Creating objects ----");
 
 		LoadingFrame frame = new LoadingFrame(5);
+		Settings.save();
+		ObjectSaver.save();
 		ObjectCreator.createObjects(frame);
 		Commands.createCommands(frame);
 		ObjectSaver.load();
 		if (window != null)
 		{
-			isReloading = true;
 			window.dispose();
 			SwingUtilities.invokeLater(new Runnable()
 			{
