@@ -25,9 +25,10 @@ public abstract class Tag extends GameObject
 		return this.template.id();
 	}
 
-	public void setJson(boolean isJson)
+	public Tag setJson(boolean isJson)
 	{
 		this.isJson = isJson;
+		return this;
 	}
 
 	/** No indentation. */

@@ -29,11 +29,12 @@ public class TagList extends Tag
 	}
 
 	@Override
-	public void setJson(boolean isJson)
+	public TagList setJson(boolean isJson)
 	{
 		super.setJson(isJson);
 		for (Tag tag : this.tags)
 			tag.setJson(isJson);
+		return this;
 	}
 
 	public int size()

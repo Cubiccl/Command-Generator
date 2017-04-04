@@ -25,6 +25,12 @@ public class NBTReader
 		return Tag.INT;
 	}
 
+	private static String findId(String tag)
+	{
+		if (tag.startsWith("\"")) return tag.substring(1, tag.substring(1).indexOf("\"") + 1);
+		return tag.substring(0, tag.indexOf(":"));
+	}
+
 	private static TemplateTag findMatchingTag(String id, byte type)
 	{
 		TemplateTag[] tags = ObjectRegistry.blockTags.find(new String[]
@@ -44,6 +50,12 @@ public class NBTReader
 		for (TemplateTag t : tags)
 			if (t.tagType == type) return t;
 		return null;
+	}
+
+	private static String findValue(String tag)
+	{
+		if (tag.startsWith("\"")) return tag.substring(tag.substring(1).indexOf("\"") + 3);
+		return tag.substring(tag.indexOf(":") + 1);
 	}
 
 	public static String[] multisplit(String value)
@@ -100,12 +112,12 @@ public class NBTReader
 	public static Tag read(String tag, boolean isInList, boolean isJson, boolean readUnknown)
 	{
 		if (isInList) return readNamelessTag(determineType(tag), tag, isJson, readUnknown);
-		String id = tag.substring(0, tag.indexOf(":")), value = tag.substring(tag.indexOf(":") + 1);
+		String id = findId(tag), value = findValue(tag);
 		if (isJson && id.startsWith("\"") && id.endsWith("\"")) id = id.substring(1, id.length() - 1);
 		byte type = determineType(value);
 		TemplateTag matching = findMatchingTag(id, type);
 		if (matching == null) return readUnknown ? readUnknownTag(id, type, value, isJson) : null;
-		return matching.readTag(value, isJson, readUnknown);
+		return matching.readTag(value, isJson, readUnknown).setJson(isJson);
 	}
 
 	private static Tag readNamelessTag(byte type, String tag, boolean isJson, boolean readUnknown)

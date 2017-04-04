@@ -15,10 +15,10 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.RecipePanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
-public class Recipe implements IObjectList<Recipe>
+public class PlayerRecipe implements IObjectList<PlayerRecipe>
 {
 
-	public static Recipe fromNBT(TagCompound tag)
+	public static PlayerRecipe fromNBT(TagCompound tag)
 	{
 		RecipeType r = ObjectRegistry.recipes.find(tag.id());
 		boolean u = true, d = true;
@@ -29,19 +29,19 @@ public class Recipe implements IObjectList<Recipe>
 			else if (t.id().equals(Tags.RECIPE_UNLOCKED.id())) u = ((TagBoolean) t).value();
 		}
 
-		return new Recipe(r, u, d);
+		return new PlayerRecipe(r, u, d);
 
 	}
 
 	public RecipeType recipe;
 	public boolean unlocked, displayed;
 
-	public Recipe()
+	public PlayerRecipe()
 	{
 		this(ObjectRegistry.recipes.first(), true, true);
 	}
 
-	public Recipe(RecipeType recipe, boolean unlocked, boolean displayed)
+	public PlayerRecipe(RecipeType recipe, boolean unlocked, boolean displayed)
 	{
 		this.recipe = recipe;
 		this.unlocked = unlocked;
@@ -73,7 +73,7 @@ public class Recipe implements IObjectList<Recipe>
 	}
 
 	@Override
-	public Recipe update(CGPanel panel) throws CommandGenerationException
+	public PlayerRecipe update(CGPanel panel) throws CommandGenerationException
 	{
 		RecipePanel p = (RecipePanel) panel;
 		this.recipe = p.selectedRecipe();
