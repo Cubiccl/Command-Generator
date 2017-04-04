@@ -12,13 +12,12 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCustomObjects;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelCommandHistory;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelSettings;
 import fr.cubiccl.generator.utils.Lang;
-import fr.cubiccl.generator.utils.Settings;
 
 public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 {
 	private static final long serialVersionUID = 2644541217645898670L;
 
-	private CMenuItem objects, history, modeCommands, modeLootTables, modeSpeedrun, modeData, settings, exit;
+	private CMenuItem objects, history, modeCommands, modeLootTables, modeRecipes, modeSpeedrun, modeData, settings, exit;
 	private boolean objectsEnabled = true;
 
 	public CMenuBar()
@@ -27,6 +26,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.add(this.history = new CMenuItem());
 		this.add(this.modeCommands = new CMenuItem());
 		this.add(this.modeLootTables = new CMenuItem());
+		this.add(this.modeRecipes = new CMenuItem());
 		this.add(this.modeSpeedrun = new CMenuItem());
 		this.add(this.modeData = new CMenuItem());
 		this.add(this.settings = new CMenuItem());
@@ -37,8 +37,9 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.history.addActionListener(this);
 		this.modeCommands.addActionListener(this);
 		this.modeLootTables.addActionListener(this);
-		this.modeData.addActionListener(this);
+		this.modeRecipes.addActionListener(this);
 		this.modeSpeedrun.addActionListener(this);
+		this.modeData.addActionListener(this);
 		this.settings.addActionListener(this);
 		this.exit.addActionListener(this);
 
@@ -61,40 +62,22 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		{
 			this.toggleMenu(false);
 			CommandGenerator.stateManager.setState(new PanelCommandHistory(), null);
-		} else if (e.getSource() == this.modeCommands)
-		{
-			CommandGenerator.setCurrentMode(CommandGenerator.COMMANDS);
-			this.modeCommands.setVisible(false);
-			this.modeLootTables.setVisible(true);
-			this.modeSpeedrun.setVisible(true);
-			// this.modeData.setVisible(Settings.testMode);
-		} else if (e.getSource() == this.modeLootTables)
-		{
-			CommandGenerator.setCurrentMode(CommandGenerator.LOOT_TABLES);
-			this.modeCommands.setVisible(true);
-			this.modeLootTables.setVisible(false);
-			this.modeSpeedrun.setVisible(true);
-			this.modeData.setVisible(Settings.testMode);
-		} else if (e.getSource() == this.modeSpeedrun)
-		{
-			CommandGenerator.setCurrentMode(CommandGenerator.SPEEDRUN);
-			this.modeCommands.setVisible(true);
-			this.modeLootTables.setVisible(true);
-			this.modeSpeedrun.setVisible(false);
-			// this.modeData.setVisible(Settings.testMode);
-		} else if (e.getSource() == this.modeData)
-		{
-			CommandGenerator.setCurrentMode(CommandGenerator.DATA);
-			this.modeCommands.setVisible(true);
-			this.modeLootTables.setVisible(true);
-			this.modeSpeedrun.setVisible(true);
-			// this.modeData.setVisible(false);
-		} else if (e.getSource() == this.settings)
+		} else if (e.getSource() == this.modeCommands) CommandGenerator.setCurrentMode(CommandGenerator.COMMANDS);
+		else if (e.getSource() == this.modeLootTables) CommandGenerator.setCurrentMode(CommandGenerator.LOOT_TABLES);
+		else if (e.getSource() == this.modeRecipes) CommandGenerator.setCurrentMode(CommandGenerator.RECIPES);
+		else if (e.getSource() == this.modeSpeedrun) CommandGenerator.setCurrentMode(CommandGenerator.SPEEDRUN);
+		else if (e.getSource() == this.modeData) CommandGenerator.setCurrentMode(CommandGenerator.DATA);
+		else if (e.getSource() == this.settings)
 		{
 			this.toggleMenu(false);
 			PanelSettings p = new PanelSettings();
 			CommandGenerator.stateManager.setState(p, p);
 		} else if (e.getSource() == this.exit) CommandGenerator.window.dispose();
+
+		this.modeCommands.setVisible(CommandGenerator.getCurrentMode() != CommandGenerator.COMMANDS);
+		this.modeLootTables.setVisible(CommandGenerator.getCurrentMode() != CommandGenerator.LOOT_TABLES);
+		this.modeRecipes.setVisible(CommandGenerator.getCurrentMode() != CommandGenerator.RECIPES);
+		this.modeSpeedrun.setVisible(CommandGenerator.getCurrentMode() != CommandGenerator.SPEEDRUN);
 	}
 
 	public void toggleMenu(boolean enabled)
@@ -104,6 +87,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.history.setEnabled(enabled);
 		this.modeCommands.setEnabled(enabled);
 		this.modeLootTables.setEnabled(enabled);
+		this.modeRecipes.setEnabled(enabled);
 		this.modeSpeedrun.setEnabled(enabled);
 		this.modeData.setEnabled(enabled);
 		this.settings.setEnabled(enabled);
@@ -122,6 +106,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.history.setText(Lang.translate("command.history"));
 		this.modeCommands.setText(Lang.translate("menu.command"));
 		this.modeLootTables.setText(Lang.translate("menu.loot_table"));
+		this.modeRecipes.setText(Lang.translate("menu.recipe"));
 		this.modeSpeedrun.setText(Lang.translate("menu.speedrun"));
 		this.settings.setText(Lang.translate("menu.settings"));
 		this.exit.setText(Lang.translate("menu.exit"));

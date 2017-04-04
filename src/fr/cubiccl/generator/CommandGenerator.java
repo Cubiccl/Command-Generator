@@ -28,7 +28,7 @@ import fr.cubiccl.generator.utils.*;
 public class CommandGenerator
 {
 	private static ArrayList<String> commandHistory = new ArrayList<String>();
-	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, SPEEDRUN = 3;
+	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, SPEEDRUN = 3, RECIPES = 4;
 	private static byte currentMode = COMMANDS;
 	private static String executeCommand = "", executeInput = null;
 	private static boolean isReloading = false;
