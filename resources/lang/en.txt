@@ -380,7 +380,7 @@ loottable.bonus.range=Random Bonus rolls
 loottable.condition=Condition <index>
 loottable.conditions=Conditions
 loottable.conditions.description=Each of these conditions needs to be verified for this to be used.
-loottable.edit=Edit Loot Table
+loottable.edit=Edit Output
 loottable.entry=Entry <index>
 loottable.entries=Entries
 loottable.entries.description=One of these entries will be chosen randomly at each roll and generate its Items.
@@ -459,6 +459,7 @@ menu.command=Command Generator
 menu.exit=Exit
 menu.loot_table=Loot Tables Generator
 menu.objects=Custom Objects
+menu.recipe=Recipe Generator
 menu.settings=Settings
 menu.speedrun=Speedruns (WIP)
 
@@ -528,7 +529,13 @@ pose.leg.right=Right Leg rotation
 
 recipe.all=All Recipes
 recipe.displayed=Has the Player seen this Recipe?
+recipe.invalid=Invalid recipe !
+recipe.list=Recipes
+recipe.load=Read existing Recipe
+recipe.load.description=Enter a Recipe that the Generator should read.
 recipe.one=One Recipe :
+recipe.shapeless=Shapeless Recipe
+recipe.shapeless.help=If the Recipe is shapeless, Items can be arranged in any pattern on the crafting grid.
 recipe.unlocked=Has the Player unlocked this Recipe?
 
 replaceitem.block=Coordinates of the Block

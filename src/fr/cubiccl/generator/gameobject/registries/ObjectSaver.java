@@ -34,6 +34,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 	public static final ObjectSaver<LootTable> lootTables = new ObjectSaver<LootTable>(new Text("loot_tables", false), LootTable.class);
 	private static final int MODIFIERS = 0, ATTRIBUTES = 1, BLOCKS = 2, COORDINATES = 3, EFFECTS = 4, ENCHANTMENTS = 5, ENTITIES = 6, ITEMS = 7, JSONS = 8,
 			TRADES = 9, TARGETS = 10, COMMANDS = 11, LOOT_TABLES = 12;
+	public static final ObjectSaver<Recipe> recipes = new ObjectSaver<Recipe>(new Text("recipes", false), Recipe.class);
 	@SuppressWarnings("rawtypes")
 	public static ObjectSaver[] savers, hiddenSavers;
 	public static final ObjectSaver<Speedrun> speedruns = new ObjectSaver<Speedrun>(new Text("speedruns", false), Speedrun.class);
@@ -113,6 +114,10 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		if (objects.getChild("speedruns") != null) for (Element speedrun : objects.getChild("speedruns").getChildren())
 			if (shouldLoad(speedrun)) speedruns.addObject(Speedrun.createFrom(speedrun));
 			else speedruns.recentObjects.add(speedrun);
+
+		if (objects.getChild("recipes") != null) for (Element recipe : objects.getChild("recipes").getChildren())
+			if (shouldLoad(recipe)) recipes.addObject(Recipe.createFrom(recipe));
+			else recipes.recentObjects.add(recipe);
 	}
 
 	private static void loadOld()
@@ -218,6 +223,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		root.addContent(commands.toXML("commands"));
 		root.addContent(lootTables.toXML("tables"));
 		root.addContent(speedruns.toXML("speedruns"));
+		root.addContent(recipes.toXML("recipes"));
 
 		FileUtils.saveXMLFile(root, "savedObjects");
 	}

@@ -2,26 +2,26 @@ package fr.cubiccl.generator.gui.component.panel.gameobject;
 
 import java.awt.GridBagConstraints;
 
-import fr.cubiccl.generator.gameobject.Recipe;
+import fr.cubiccl.generator.gameobject.PlayerRecipe;
 import fr.cubiccl.generator.gameobject.baseobjects.RecipeType;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
-public class RecipePanel extends CGPanel
+public class PanelPlayerRecipe extends CGPanel
 {
 	private static final long serialVersionUID = 3420268951142556238L;
 
 	private CGCheckBox checkboxUnlocked, checkboxDisplayed;
 	private ObjectCombobox<RecipeType> comboboxRecipe;
 
-	public RecipePanel()
+	public PanelPlayerRecipe()
 	{
 		this(null);
 	}
 
-	public RecipePanel(Recipe recipe)
+	public PanelPlayerRecipe(PlayerRecipe recipe)
 	{
 		super();
 
@@ -50,7 +50,7 @@ public class RecipePanel extends CGPanel
 		return this.comboboxRecipe.getSelectedObject();
 	}
 
-	private void setupFrom(Recipe recipe)
+	private void setupFrom(PlayerRecipe recipe)
 	{
 		this.comboboxRecipe.setSelected(recipe.recipe);
 		this.checkboxUnlocked.setSelected(recipe.unlocked);

@@ -64,7 +64,7 @@ public class Inventory
 			inventory[index].amount += quantity;
 			if (inventory[index].amount > inventory[index].getItem().maxStackSize) inventory[index].amount = inventory[index].getItem().maxStackSize;
 			quantity -= inventory[index].amount - previous;
-			System.out.println("Added " + (-previous + inventory[index].amount) + " " + item.getItem().name());
+			// System.out.println("Added " + (-previous + inventory[index].amount) + " " + item.getItem().name());
 		} catch (Exception e)
 		{
 			e.printStackTrace();
@@ -205,7 +205,7 @@ public class Inventory
 		inventory[index].amount -= quantity;
 		if (inventory[index].amount < 0) inventory[index].amount = 0;
 		quantity -= previous - inventory[index].amount;
-		System.out.println("Removed " + (previous - inventory[index].amount) + " " + item.getItem().name());
+		// System.out.println("Removed " + (previous - inventory[index].amount) + " " + item.getItem().name());
 		if (inventory[index].amount == 0) inventory[index] = null;
 
 		return quantity < 0 ? 0 : quantity;

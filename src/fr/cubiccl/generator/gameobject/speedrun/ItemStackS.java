@@ -77,11 +77,6 @@ public class ItemStackS extends ItemStack
 		return this.importance == RESOURCE;
 	}
 
-	public boolean matches(ItemStackS item)
-	{
-		return this.getItem() == item.getItem() && this.getDamage() == item.getDamage();
-	}
-
 	public List<ItemStackS> splitQuantity()
 	{
 		ArrayList<ItemStackS> split = new ArrayList<ItemStackS>();

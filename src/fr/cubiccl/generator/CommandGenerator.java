@@ -11,6 +11,7 @@ import javax.swing.ToolTipManager;
 import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
+import fr.cubiccl.generator.gameobject.Recipe;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
@@ -28,7 +29,7 @@ import fr.cubiccl.generator.utils.*;
 public class CommandGenerator
 {
 	private static ArrayList<String> commandHistory = new ArrayList<String>();
-	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, SPEEDRUN = 3;
+	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, SPEEDRUN = 3, RECIPES = 4;
 	private static byte currentMode = COMMANDS;
 	private static String executeCommand = "", executeInput = null;
 	private static boolean isReloading = false;
@@ -113,6 +114,18 @@ public class CommandGenerator
 		}
 	}
 
+	public static void generateRecipe()
+	{
+		log("Generating !");
+		Recipe r = window.panelRecipeSelection.selectedRecipe();
+		if (r != null && r.isValid())
+		{
+			String output = r.toCommand();
+			window.showOutput(output);
+			log("Successfully generated : " + output);
+		}
+	}
+
 	public static void generateTable()
 	{
 		log("Generating !");
@@ -159,6 +172,27 @@ public class CommandGenerator
 		} while (!done);
 	}
 
+	public static void loadRecipe()
+	{
+		CGPanel p = new CGPanel();
+		p.setLayout(new BorderLayout());
+		p.add(new CGLabel("recipe.load.description"), BorderLayout.NORTH);
+		CTextArea area = new CTextArea("");
+		area.setEditable(true);
+		CScrollPane sc = new CScrollPane(area);
+		sc.setPreferredSize(new Dimension(400, 200));
+		p.add(sc, BorderLayout.CENTER);
+		if (!Dialogs.showConfirmDialog(p)) return;
+
+		TagCompound tag = (TagCompound) NBTReader.read(area.getText(), true, true, true);
+		Recipe recipe = Recipe.createFrom(tag);
+
+		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
+		if (name == null) return;
+		recipe.setCustomName(name);
+		window.panelRecipeSelection.list.add(recipe);
+	}
+
 	public static void loadTable()
 	{
 		CGPanel p = new CGPanel();
@@ -197,6 +231,7 @@ public class CommandGenerator
 		stateManager = new StateManager();
 		window = new Window();
 		ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
+		ToolTipManager.sharedInstance().setInitialDelay(200);
 		window.updateTranslations();
 		setSelected(Commands.getCommands()[0]);
 		window.setVisible(true);

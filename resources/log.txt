@@ -19,5 +19,30 @@ Successfully created 190 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
-Switching to Speedruns mode.
+Switching to Recipes mode.
+Generating !
+Successfully generated : {
+    type:"crafting_shaped",
+    key:
+    {
+        X:
+        {
+            id:"minecraft:obsidian",
+            Damage:0s
+        }
+    },
+    pattern:
+    [
+    "XX",
+    "XX"
+    ],
+    result:
+    {
+        id:"minecraft:bedrock",
+        Damage:0s,
+        Count:4b,
+        Slot:9s,
+        :{}
+    }
+}
 Exiting Command Generator... Bye bye !

@@ -24,17 +24,11 @@ public class StateManager
 	}
 
 	private Stack<State>[] states;
-	private Stack<State> statesCommand, statesTable, statesData, statesSpeedrun;
 
 	@SuppressWarnings("unchecked")
 	public StateManager()
 	{
-		this.statesCommand = new Stack<State>();
-		this.statesTable = new Stack<State>();
-		this.statesSpeedrun = new Stack<State>();
-		this.statesData = new Stack<State>();
-		this.states = new Stack[]
-		{ this.statesCommand, this.statesTable, this.statesData, this.statesSpeedrun };
+		this.states = new Stack[] {};
 	}
 
 	public void clear()
@@ -56,7 +50,19 @@ public class StateManager
 
 	private Stack<State> currentManager()
 	{
-		return this.states[CommandGenerator.getCurrentMode()];
+		int current = CommandGenerator.getCurrentMode();
+		if (current >= this.states.length)
+		{
+			@SuppressWarnings("unchecked")
+			Stack<State>[] s = new Stack[current + 1];
+			for (int i = 0; i < s.length; ++i)
+			{
+				if (i < this.states.length) s[i] = this.states[i];
+				if (s[i] == null) s[i] = new Stack<State>();
+			}
+			this.states = s;
+		}
+		return this.states[current];
 	}
 
 	public State getState()
@@ -67,7 +73,7 @@ public class StateManager
 
 	public <T extends CGPanel> void setCommandState(T panel, IStateListener<T> stateListener)
 	{
-		this.statesCommand.add(new State<T>(panel, stateListener));
+		this.states[0].add(new State<T>(panel, stateListener));
 		this.updatePanel();
 	}
 

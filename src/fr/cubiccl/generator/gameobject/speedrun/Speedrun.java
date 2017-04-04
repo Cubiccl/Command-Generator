@@ -220,7 +220,7 @@ public class Speedrun extends GameObject implements IObjectList<Speedrun>
 
 	public void verify()
 	{
-		System.out.println("Start verification ------------------");
+		// System.out.println("Start verification ------------------");
 		this.missingItems.clear();
 		this.missingSpace.clear();
 		this.thrownItems.clear();

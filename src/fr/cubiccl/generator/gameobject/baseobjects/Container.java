@@ -12,6 +12,8 @@ import fr.cubiccl.generator.utils.Textures;
 
 public class Container extends BaseObject
 {
+	public static final Container CRAFTING = new Container("crafting", new String[0], new Slot(0, 20, 17), new Slot(1, 38, 17), new Slot(2, 56, 17), new Slot(
+			3, 20, 35), new Slot(4, 38, 35), new Slot(5, 56, 35), new Slot(6, 20, 53), new Slot(7, 38, 53), new Slot(8, 56, 53), new Slot(9, 114, 35));
 
 	public String[] applicable;
 	public final String id;
@@ -22,7 +24,7 @@ public class Container extends BaseObject
 		this.id = id;
 		this.applicable = applicable;
 		this.slots = slots;
-		ObjectRegistry.containers.register(this);
+		if (!this.id.equals("crafting")) ObjectRegistry.containers.register(this);
 	}
 
 	public void addApplication(String objectId)

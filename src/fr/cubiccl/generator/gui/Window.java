@@ -18,10 +18,11 @@ import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.menubar.CMenuBar;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.data.PanelObjectSelection;
-import fr.cubiccl.generator.gui.component.panel.loottable.PanelLootTableOutput;
+import fr.cubiccl.generator.gui.component.panel.loottable.PanelJsonOutput;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelLootTableSelection;
 import fr.cubiccl.generator.gui.component.panel.mainwindow.PanelCommand;
 import fr.cubiccl.generator.gui.component.panel.mainwindow.PanelCommandSelection;
+import fr.cubiccl.generator.gui.component.panel.recipe.PanelRecipeSelection;
 import fr.cubiccl.generator.gui.component.panel.speedrun.PanelSpeedrunSelection;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Settings;
@@ -36,9 +37,10 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	private PanelCommand panelCommand;
 	private PanelCommandSelection panelCommandSelection;
 	private CGPanel panelGui;
-	private PanelLootTableOutput panelLootTableOutput;
+	private PanelJsonOutput panelJsonOutput;
 	public PanelLootTableSelection panelLootTableSelection;
 	public PanelObjectSelection panelObjectSelection;
+	public PanelRecipeSelection panelRecipeSelection;
 	public PanelSpeedrunSelection panelSpeedrunSelection;
 	private JScrollPane scrollpane;
 
@@ -81,9 +83,10 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		Container contentPane = this.getContentPane();
 		contentPane.setLayout(null);
 		contentPane.add(this.panelCommand = new PanelCommand());
-		contentPane.add(this.panelLootTableOutput = new PanelLootTableOutput());
+		contentPane.add(this.panelJsonOutput = new PanelJsonOutput());
 		contentPane.add(this.panelCommandSelection = new PanelCommandSelection());
 		contentPane.add(this.panelLootTableSelection = new PanelLootTableSelection());
+		contentPane.add(this.panelRecipeSelection = new PanelRecipeSelection());
 		contentPane.add(this.panelSpeedrunSelection = new PanelSpeedrunSelection());
 		contentPane.add(this.panelObjectSelection = new PanelObjectSelection());
 		contentPane.add(this.scrollpane = new CScrollPane(null));
@@ -102,6 +105,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	private void onResized()
 	{
 		Container contentPane = this.getContentPane();
+		boolean recipes = CommandGenerator.getCurrentMode() == CommandGenerator.RECIPES;
 		if (CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS)
 		{
 			this.panelCommand.setBounds(0, 0, contentPane.getWidth(), PanelCommand.HEIGHT);
@@ -113,11 +117,12 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 			this.panelObjectSelection.setBounds(0, 0, contentPane.getWidth(), PanelObjectSelection.HEIGHT);
 			this.scrollpane.setBounds(0, this.panelObjectSelection.getHeight(), contentPane.getWidth(),
 					contentPane.getHeight() - this.panelObjectSelection.getHeight());
-		} else if (CommandGenerator.getCurrentMode() == CommandGenerator.LOOT_TABLES)
+		} else if (CommandGenerator.getCurrentMode() == CommandGenerator.LOOT_TABLES || recipes)
 		{
-			this.panelLootTableSelection.setBounds(0, 0, contentPane.getWidth() / 2, PanelLootTableOutput.HEIGHT);
-			this.panelLootTableOutput.setBounds(this.panelLootTableSelection.getWidth(), 0, this.getWidth() / 2, PanelLootTableOutput.HEIGHT);
-			this.scrollpane.setBounds(0, PanelLootTableOutput.HEIGHT, contentPane.getWidth(), contentPane.getHeight() - this.panelLootTableOutput.getHeight());
+			this.panelLootTableSelection.setBounds(0, 0, contentPane.getWidth() / 2, PanelJsonOutput.HEIGHT);
+			this.panelRecipeSelection.setBounds(0, 0, contentPane.getWidth() / 2, PanelJsonOutput.HEIGHT);
+			this.panelJsonOutput.setBounds(this.panelLootTableSelection.getWidth(), 0, this.getWidth() / 2, PanelJsonOutput.HEIGHT);
+			this.scrollpane.setBounds(0, PanelJsonOutput.HEIGHT, contentPane.getWidth(), contentPane.getHeight() - this.panelJsonOutput.getHeight());
 		} else if (CommandGenerator.getCurrentMode() == CommandGenerator.SPEEDRUN)
 		{
 			this.panelSpeedrunSelection.setBounds(0, 0, contentPane.getWidth(), PanelSpeedrunSelection.HEIGHT);
@@ -147,7 +152,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	{
 		if (CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS) this.panelCommand.textfieldCommand.setText((Boolean.parseBoolean(Settings
 				.getSetting(Settings.SLASH)) ? "/" : "") + command);
-		else this.panelLootTableOutput.areaOutput.setText(command);
+		else this.panelJsonOutput.areaOutput.setText(command);
 	}
 
 	public void updateMode()
@@ -155,10 +160,12 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		boolean commands = CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS;
 		boolean loot_tables = CommandGenerator.getCurrentMode() == CommandGenerator.LOOT_TABLES;
 		boolean data = CommandGenerator.getCurrentMode() == CommandGenerator.DATA;
+		boolean recipes = CommandGenerator.getCurrentMode() == CommandGenerator.RECIPES;
 		this.panelCommandSelection.setVisible(commands);
 		this.panelCommand.setVisible(commands);
-		this.panelLootTableOutput.setVisible(loot_tables);
+		this.panelJsonOutput.setVisible(loot_tables || recipes);
 		this.panelLootTableSelection.setVisible(loot_tables);
+		this.panelRecipeSelection.setVisible(recipes);
 		this.panelSpeedrunSelection.setVisible(CommandGenerator.getCurrentMode() == CommandGenerator.SPEEDRUN);
 		this.panelObjectSelection.setVisible(data);
 		this.onResized();
@@ -175,8 +182,9 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	{
 		this.panelCommand.updateTranslations();
 		this.panelCommandSelection.updateTranslations();
-		this.panelLootTableOutput.updateTranslations();
+		this.panelJsonOutput.updateTranslations();
 		this.panelLootTableSelection.updateTranslations();
+		this.panelRecipeSelection.updateTranslations();
 		this.panelSpeedrunSelection.updateTranslations();
 		this.menubar.updateTranslations();
 		if (this.panelGui != null) this.panelGui.updateTranslations();

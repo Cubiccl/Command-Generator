@@ -24,6 +24,23 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 public class ItemStack extends GameObject implements IObjectList<ItemStack>
 {
 
+	public static ItemStack createForRecipe(TagCompound tag)
+	{
+		Item i = ObjectRegistry.items.first();
+		int a = 1, d = 0;
+
+		for (Tag t : tag.value())
+		{
+			if (t.id().equals(Tags.RECIPE_ITEM_ID.id())) i = ObjectRegistry.items.find(((TagString) t).value);
+			if (t.id().equals(Tags.RECIPE_ITEM_COUNT.id())) a = ((TagNumber) t).value;
+			if (t.id().equals(Tags.RECIPE_ITEM_DATA.id())) d = ((TagNumber) t).value;
+		}
+
+		ItemStack is = new ItemStack(i, d, a, Tags.DEFAULT_COMPOUND.create());
+		is.findName(tag);
+		return is;
+	}
+
 	public static ItemStack createFrom(Element item)
 	{
 		ItemStack i = new ItemStack();
@@ -181,6 +198,11 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return nbt;
 	}
 
+	public boolean matches(ItemStack item)
+	{
+		return this.getItem() == item.getItem() && this.getDamage() == item.getDamage();
+	}
+
 	public void setDamage(int damage)
 	{
 		this.damage = damage;
@@ -219,12 +241,22 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
+		// IF YOU CHANGE THIS CHANGE ALSO BELOW FOR RECIPE
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		tags.add(Tags.ITEM_ID.create(this.item.id()));
 		tags.add(Tags.ITEM_DAMAGE.create(this.damage));
 		tags.add(Tags.ITEM_COUNT.create(this.amount));
 		if (this.slot != -1) tags.add(Tags.ITEM_SLOT.create(this.slot));
 		tags.add(this.nbt);
+		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	public TagCompound toTagForRecipe(TemplateCompound container)
+	{
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		tags.add(Tags.RECIPE_ITEM_ID.create(this.item.id()));
+		tags.add(Tags.RECIPE_ITEM_DATA.create(this.damage));
+		if (this.amount != 1) tags.add(Tags.RECIPE_ITEM_COUNT.create(this.amount));
 		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 

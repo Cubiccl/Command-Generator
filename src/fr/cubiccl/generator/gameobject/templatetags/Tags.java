@@ -171,6 +171,14 @@ public final class Tags
 	public static final DefaultList POSE_LEG_RIGHT = new DefaultList("RightLeg");
 
 	public static final TemplateBoolean RECIPE_DISPLAYED = new TemplateBoolean("displayed", UNAVAILABLE);
+	public static final DefaultList RECIPE_INGREDIENTS = new DefaultList("ingredients");
+	public static final TemplateNumber RECIPE_ITEM_COUNT = new TemplateNumber("count", UNAVAILABLE, Tag.INT);
+	public static final TemplateNumber RECIPE_ITEM_DATA = new TemplateNumber("data", UNAVAILABLE, Tag.INT);
+	public static final TemplateString RECIPE_ITEM_ID = new TemplateString("item", UNAVAILABLE);
+	public static final DefaultCompound RECIPE_KEY = new DefaultCompound("key");
+	public static final DefaultList RECIPE_PATTERN = new DefaultList("pattern");
+	public static final DefaultCompound RECIPE_RESULT = new DefaultCompound("result");
+	public static final TemplateString RECIPE_TYPE = new TemplateString("type", UNAVAILABLE);
 	public static final TemplateBoolean RECIPE_UNLOCKED = new TemplateBoolean("unlocked", UNAVAILABLE);
 
 	public static final TemplateString SCORE_OBJECTIVE = new TemplateString("objective", UNAVAILABLE);

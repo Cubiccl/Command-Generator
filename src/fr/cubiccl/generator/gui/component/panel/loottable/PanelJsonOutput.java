@@ -17,7 +17,7 @@ import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
-public class PanelLootTableOutput extends CGPanel implements ActionListener
+public class PanelJsonOutput extends CGPanel implements ActionListener
 {
 	public static final int HEIGHT = 250;
 	private static final long serialVersionUID = -7446762724786768990L;
@@ -27,7 +27,7 @@ public class PanelLootTableOutput extends CGPanel implements ActionListener
 	private CGCheckBox checkboxEdit;
 	private CScrollPane scrollpane;
 
-	public PanelLootTableOutput()
+	public PanelJsonOutput()
 	{
 		GridBagConstraints gbc = this.createGridBagLayout();
 		this.add(new CGLabel("loottable.output"), gbc);

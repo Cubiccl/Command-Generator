@@ -1,3 +1,17 @@
+------------------------- VERSION 2.5 -------------------------
+ADDITIONS
+- Added Recipes mode. I don't know if you can customize them for your maps yet, but at least it's working for later.
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+loottable.edit
+
+ADDED TRANSLATIONS
+general.name
+menu.recipe
+recipe.*
+
 ------------------------- VERSION 2.4.4 -------------------------
 ADDITIONS
 - Added /advancement.
