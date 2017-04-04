@@ -181,6 +181,11 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return nbt;
 	}
 
+	public boolean matches(ItemStack item)
+	{
+		return this.getItem() == item.getItem() && this.getDamage() == item.getDamage();
+	}
+
 	public void setDamage(int damage)
 	{
 		this.damage = damage;
@@ -219,12 +224,21 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
+		// IF YOU CHANGE THIS CHANGE ALSO BELOW FOR RECIPE
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		tags.add(Tags.ITEM_ID.create(this.item.id()));
 		tags.add(Tags.ITEM_DAMAGE.create(this.damage));
 		tags.add(Tags.ITEM_COUNT.create(this.amount));
 		if (this.slot != -1) tags.add(Tags.ITEM_SLOT.create(this.slot));
 		tags.add(this.nbt);
+		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	public TagCompound toTagForRecipe(TemplateCompound container)
+	{
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		tags.add(Tags.ITEM_ID.create(this.item.id()));
+		tags.add(Tags.ITEM_DAMAGE.create(this.damage));
 		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 

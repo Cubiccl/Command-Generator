@@ -118,7 +118,7 @@ public class CommandGenerator
 	{
 		log("Generating !");
 		Recipe r = window.panelRecipeSelection.selectedRecipe();
-		if (r != null)
+		if (r != null && r.isValid())
 		{
 			String output = r.toCommand();
 			window.showOutput(output);
