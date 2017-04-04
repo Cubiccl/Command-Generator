@@ -6,6 +6,7 @@ import java.util.HashMap;
 
 import org.jdom2.Element;
 
+import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -13,6 +14,7 @@ import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -20,6 +22,7 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.display.PanelItemDisp
 import fr.cubiccl.generator.gui.component.panel.recipe.PanelRecipe;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class Recipe extends GameObject implements IObjectList<Recipe>
 {
@@ -181,6 +184,14 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
+		if ((boolean) properties.get("new"))
+		{
+			String name = Dialogs.showInputDialog(new Text("objects.name").toString());
+			if (name != null) this.setCustomName(name);
+			else return null;
+			CommandGenerator.window.panelRecipeSelection.list.add(this);
+		}
+		CommandGenerator.stateManager.clear();
 		return new PanelRecipe(this);
 	}
 
