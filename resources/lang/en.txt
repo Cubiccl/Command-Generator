@@ -529,8 +529,10 @@ pose.leg.right=Right Leg rotation
 
 recipe.all=All Recipes
 recipe.displayed=Has the Player seen this Recipe?
+recipe.invalid=Invalid recipe !
 recipe.list=Recipes
-recipe.load=Load existing Recipe
+recipe.load=Read existing Recipe
+recipe.load.description=Enter a Recipe that the Generator should read.
 recipe.one=One Recipe :
 recipe.unlocked=Has the Player unlocked this Recipe?
 

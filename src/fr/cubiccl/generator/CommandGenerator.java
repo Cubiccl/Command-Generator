@@ -11,6 +11,7 @@ import javax.swing.ToolTipManager;
 import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
+import fr.cubiccl.generator.gameobject.Recipe;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
@@ -115,7 +116,14 @@ public class CommandGenerator
 
 	public static void generateRecipe()
 	{
-		// TODO CommandGenerator.generateRecipe()
+		log("Generating !");
+		Recipe r = window.panelRecipeSelection.selectedRecipe();
+		if (r != null)
+		{
+			String output = r.toCommand();
+			window.showOutput(output);
+			log("Successfully generated : " + output);
+		}
 	}
 
 	public static void generateTable()
@@ -166,7 +174,23 @@ public class CommandGenerator
 
 	public static void loadRecipe()
 	{
-		// TODO CommandGenerator.loadRecipe();
+		CGPanel p = new CGPanel();
+		p.setLayout(new BorderLayout());
+		p.add(new CGLabel("recipe.load.description"), BorderLayout.NORTH);
+		CTextArea area = new CTextArea("");
+		area.setEditable(true);
+		CScrollPane sc = new CScrollPane(area);
+		sc.setPreferredSize(new Dimension(400, 200));
+		p.add(sc, BorderLayout.CENTER);
+		if (!Dialogs.showConfirmDialog(p)) return;
+
+		TagCompound tag = (TagCompound) NBTReader.read(area.getText(), true, true, true);
+		Recipe recipe = Recipe.createFrom(tag);
+
+		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
+		if (name == null) return;
+		recipe.setCustomName(name);
+		window.panelRecipeSelection.list.add(recipe);
 	}
 
 	public static void loadTable()

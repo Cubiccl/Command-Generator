@@ -169,5 +169,7 @@
       </checkpoint>
     </speedrun>
   </speedruns>
-  <recipes />
+  <recipes>
+    <recipe objectname="My recipe" version="1.12" type="0" />
+  </recipes>
 </objects>

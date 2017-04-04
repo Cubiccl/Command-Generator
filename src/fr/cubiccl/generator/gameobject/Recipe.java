@@ -8,6 +8,7 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.display.PanelItemDisplay;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
@@ -22,13 +23,14 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		Recipe r = new Recipe(Byte.parseByte(recipe.getAttributeValue("type")));
 		for (Element item : recipe.getChildren("item"))
 			r.recipe[Integer.parseInt(recipe.getAttributeValue("position"))] = ItemStack.createFrom(item);
+		r.findProperties(recipe);
 		return r;
 	}
 
 	public static Recipe createFrom(TagCompound tag)
 	{
 		// TODO Recipe.createFrom(tag)
-		return null;
+		return new Recipe(SHAPED);
 	}
 
 	private ItemStack[] recipe;
@@ -63,6 +65,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	@Override
 	public Component getDisplayComponent()
 	{
+		if (!this.isValid()) return new CGLabel("recipe.invalid");
 		return new PanelItemDisplay(this.recipe[9]);
 	}
 
@@ -81,10 +84,28 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 				toreturn[i] = this.recipe[i].clone();
 			} catch (CloneNotSupportedException e)
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		return toreturn;
+	}
+
+	private boolean isValid()
+	{
+		if (this.recipe[9] == null) return false;
+		for (int i = 0; i < 9; ++i)
+			if (this.recipe[i] != null) return true;
+		return false;
+	}
+
+	public void setItemAt(int position, ItemStack item)
+	{
+		try
+		{
+			this.recipe[position] = item.clone();
+		} catch (CloneNotSupportedException e)
+		{
+			e.printStackTrace();
+		}
 	}
 
 	@Override
@@ -103,22 +124,22 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	public TagCompound toTag(TemplateCompound container)
 	{
 		// TODO Recipe.toTag(container)
-		return null;
+		return Tags.DEFAULT_COMPOUND.create();
 	}
 
 	@Override
 	public Element toXML()
 	{
-		Element root = new Element("recipe").setAttribute("type", Byte.toString(this.type));
+		Element root = this.createRoot("recipe").setAttribute("type", Byte.toString(this.type));
 		for (int i = 0; i < this.recipe.length; ++i)
 			if (this.recipe[i] != null) root.addContent(this.recipe[i].toXML().setAttribute("position", Integer.toString(i)));
 		return root;
 	}
 
+	@Deprecated
 	@Override
 	public Recipe update(CGPanel panel) throws CommandGenerationException
 	{
-		// TODO Recipe.update(panel)
 		return this;
 	}
 

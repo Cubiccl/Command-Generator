@@ -75,7 +75,7 @@ public class PanelRecipeSelection extends CGPanel implements ActionListener, Lis
 		ObjectSaver.recipes.delete(object);
 	}
 
-	public Recipe selectedLootTable()
+	public Recipe selectedRecipe()
 	{
 		return ObjectSaver.recipes.find(this.list.getSelectedValue());
 	}
