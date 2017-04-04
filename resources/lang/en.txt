@@ -380,7 +380,7 @@ loottable.bonus.range=Random Bonus rolls
 loottable.condition=Condition <index>
 loottable.conditions=Conditions
 loottable.conditions.description=Each of these conditions needs to be verified for this to be used.
-loottable.edit=Edit Loot Table
+loottable.edit=Edit Output
 loottable.entry=Entry <index>
 loottable.entries=Entries
 loottable.entries.description=One of these entries will be chosen randomly at each roll and generate its Items.
@@ -529,6 +529,8 @@ pose.leg.right=Right Leg rotation
 
 recipe.all=All Recipes
 recipe.displayed=Has the Player seen this Recipe?
+recipe.list=Recipes
+recipe.load=Load existing Recipe
 recipe.one=One Recipe :
 recipe.unlocked=Has the Player unlocked this Recipe?
 

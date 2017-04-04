@@ -113,6 +113,11 @@ public class CommandGenerator
 		}
 	}
 
+	public static void generateRecipe()
+	{
+		// TODO CommandGenerator.generateRecipe()
+	}
+
 	public static void generateTable()
 	{
 		log("Generating !");
@@ -157,6 +162,11 @@ public class CommandGenerator
 				report(e);
 			}
 		} while (!done);
+	}
+
+	public static void loadRecipe()
+	{
+		// TODO CommandGenerator.loadRecipe();
 	}
 
 	public static void loadTable()
