@@ -534,6 +534,8 @@ recipe.list=Recipes
 recipe.load=Read existing Recipe
 recipe.load.description=Enter a Recipe that the Generator should read.
 recipe.one=One Recipe :
+recipe.shapeless=Shapeless Recipe
+recipe.shapeless.help=If the Recipe is shapeless, Items can be arranged in any pattern on the crafting grid.
 recipe.unlocked=Has the Player unlocked this Recipe?
 
 replaceitem.block=Coordinates of the Block

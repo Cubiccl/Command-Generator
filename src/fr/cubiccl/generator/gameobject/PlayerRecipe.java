@@ -11,7 +11,7 @@ import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.gameobject.RecipePanel;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelPlayerRecipe;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
@@ -51,7 +51,7 @@ public class PlayerRecipe implements IObjectList<PlayerRecipe>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		return new RecipePanel(this);
+		return new PanelPlayerRecipe(this);
 	}
 
 	@Override
@@ -75,7 +75,7 @@ public class PlayerRecipe implements IObjectList<PlayerRecipe>
 	@Override
 	public PlayerRecipe update(CGPanel panel) throws CommandGenerationException
 	{
-		RecipePanel p = (RecipePanel) panel;
+		PanelPlayerRecipe p = (PanelPlayerRecipe) panel;
 		this.recipe = p.selectedRecipe();
 		this.unlocked = p.isUnlocked();
 		this.displayed = p.isDisplayed();

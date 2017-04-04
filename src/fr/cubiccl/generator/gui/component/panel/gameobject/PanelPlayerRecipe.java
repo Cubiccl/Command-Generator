@@ -9,19 +9,19 @@ import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
-public class RecipePanel extends CGPanel
+public class PanelPlayerRecipe extends CGPanel
 {
 	private static final long serialVersionUID = 3420268951142556238L;
 
 	private CGCheckBox checkboxUnlocked, checkboxDisplayed;
 	private ObjectCombobox<RecipeType> comboboxRecipe;
 
-	public RecipePanel()
+	public PanelPlayerRecipe()
 	{
 		this(null);
 	}
 
-	public RecipePanel(PlayerRecipe recipe)
+	public PanelPlayerRecipe(PlayerRecipe recipe)
 	{
 		super();
 

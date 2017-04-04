@@ -7,7 +7,9 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Random;
+import java.util.Set;
 
 import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.CommandGenerator;
@@ -32,11 +34,18 @@ import fr.cubiccl.generator.utils.Text;
 
 public class PanelContainer extends SlotSelectionPanel implements IStateListener<PanelItem>, ActionListener
 {
+	public static interface ItemChangeListener
+	{
+		void onItemChange(int i, ItemStack item);
+	}
+
 	private static final long serialVersionUID = 8606720961759649878L;
 
 	private CGButton buttonEdit, buttonRemove, buttonGenerate;
 	public CGPanel container;
+	public boolean hasData = true, hasNBT = true, hasDurability = true, hasAmount = true;
 	private ItemStack[] items;
+	private Set<ItemChangeListener> listeners;
 	private CGPanel panelAction;
 	private PanelItemDisplay panelItemDisplay;
 	private int selected = -1;
@@ -45,6 +54,7 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 	{
 		super(container);
 		this.items = new ItemStack[this.container().slots.length];
+		this.listeners = new HashSet<ItemChangeListener>();
 
 		this.panelAction = new CGPanel();
 		GridBagConstraints gbc = this.panelAction.createGridBagLayout();
@@ -101,10 +111,16 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 		}
 	}
 
+	public void addItemChangeListener(ItemChangeListener listener)
+	{
+		this.listeners.add(listener);
+	}
+
 	private void delete()
 	{
 		if (!Dialogs.showConfirmMessage(new Text("container.confirm_deletion").toString(), Lang.translate("general.yes"), Lang.translate("general.no"))) return;
 		this.items[this.selected] = null;
+		this.onChange(this.selected, this.items[this.selected]);
 		this.select(-1);
 		this.repaint();
 	}
@@ -112,6 +128,10 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 	private void edit()
 	{
 		PanelItem p = new PanelItem("general.item");
+		p.setHasData(this.hasData);
+		p.setHasNBT(this.hasNBT);
+		p.setHasAmount(this.hasAmount);
+		p.setHasDurability(this.hasDurability);
 		if (this.items[this.selected] != null) p.setupFrom(this.items[this.selected]);
 		CommandGenerator.stateManager.setState(p, this);
 	}
@@ -119,7 +139,10 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 	public void empty()
 	{
 		for (int i = 0; i < this.items.length; i++)
+		{
 			this.items[i] = null;
+			this.onChange(this.selected, this.items[i]);
+		}
 		this.repaint();
 	}
 
@@ -167,6 +190,12 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 		for (int i = 0; i < tags.length; i++)
 			tags[i] = generated[i].toTag(Tags.DEFAULT_COMPOUND);
 		return template.create(tags);
+	}
+
+	private void onChange(int i, ItemStack item)
+	{
+		for (ItemChangeListener listener : this.listeners)
+			listener.onItemChange(i, item);
 	}
 
 	@Override
@@ -220,6 +249,11 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 		}
 	}
 
+	public void removeItemChangeListener(ItemChangeListener listener)
+	{
+		this.listeners.remove(listener);
+	}
+
 	private void select(int slot)
 	{
 		this.selected = slot;
@@ -235,7 +269,6 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 			{
 				for (int j = 0; j < this.container().slots.length; ++j)
 					if (this.container().slots[j].id == items[i].slot) this.items[j] = items[i];
-
 			}
 		this.repaint();
 	}
@@ -256,6 +289,7 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 	{
 		this.items[this.selected] = panel.generate();
 		this.items[this.selected].slot = this.container().slots[this.selected].id;// + this.container().startsAt;
+		this.onChange(this.selected, this.items[this.selected]);
 		this.panelItemDisplay.display(this.items[this.selected]);
 		return true;
 	}

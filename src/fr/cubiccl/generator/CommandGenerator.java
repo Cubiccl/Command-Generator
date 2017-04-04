@@ -231,6 +231,7 @@ public class CommandGenerator
 		stateManager = new StateManager();
 		window = new Window();
 		ToolTipManager.sharedInstance().setDismissDelay(Integer.MAX_VALUE);
+		ToolTipManager.sharedInstance().setInitialDelay(200);
 		window.updateTranslations();
 		setSelected(Commands.getCommands()[0]);
 		window.setVisible(true);

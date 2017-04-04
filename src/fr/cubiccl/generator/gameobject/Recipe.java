@@ -17,6 +17,7 @@ import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.display.PanelItemDisplay;
+import fr.cubiccl.generator.gui.component.panel.recipe.PanelRecipe;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
@@ -30,7 +31,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	{
 		Recipe r = new Recipe(Byte.parseByte(recipe.getAttributeValue("type")));
 		for (Element item : recipe.getChildren("item"))
-			r.recipe[Integer.parseInt(recipe.getAttributeValue("position"))] = ItemStack.createFrom(item);
+			r.recipe[Integer.parseInt(item.getAttributeValue("position"))] = ItemStack.createFrom(item);
 		r.findProperties(recipe);
 		return r;
 	}
@@ -57,9 +58,9 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 					pattern[i] = "";
 					improved = true;
 					break;
-				} else if ((i != 1 || isColumnEmpty(0, pattern) || isColumnEmpty(2, pattern)) && i < pattern[0].length() && isColumnEmpty(i, pattern))
+				} else if ((i != 1 || pattern[0].length() < 2) && isColumnEmpty(i, pattern))
 				{
-					pattern[0] = removeChar(i, pattern[0]);
+					if (i < pattern[0].length()) pattern[0] = removeChar(i, pattern[0]);
 					if (i < pattern[1].length()) pattern[1] = removeChar(i, pattern[1]);
 					if (i < pattern[2].length()) pattern[2] = removeChar(i, pattern[2]);
 					improved = true;
@@ -68,7 +69,11 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 			}
 		}
 
-		return pattern;
+		ArrayList<String> purged = new ArrayList<String>();
+		for (int i = 0; i < pattern.length; ++i)
+			if (!pattern[i].equals("")) purged.add(pattern[i]);
+
+		return purged.toArray(new String[purged.size()]);
 	}
 
 	private static Recipe createShapedFrom(TagCompound tag)
@@ -81,13 +86,17 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 			affectations.put(t.id().charAt(0), ItemStack.createFrom((TagCompound) t));
 
 		String pattern = "";
-		if (tag.hasTag(Tags.RECIPE_KEY)) for (Tag t : ((TagList) tag.getTag(Tags.RECIPE_PATTERN)).value())
+		if (tag.hasTag(Tags.RECIPE_KEY))
 		{
-			pattern += ((TagString) t).value();
-			while (pattern.length() % 3 != 0)
-				pattern += 0;
-		}
-		else pattern = "         ";
+			for (Tag t : ((TagList) tag.getTag(Tags.RECIPE_PATTERN)).value())
+			{
+				pattern += ((TagString) t).value();
+				while (pattern.length() % 3 != 0)
+					pattern += " ";
+			}
+			while (pattern.length() < 9)
+				pattern += " ";
+		} else pattern = "         ";
 
 		for (int i = 0; i < pattern.length(); ++i)
 			if (affectations.containsKey(pattern.charAt(i))) try
@@ -118,6 +127,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	{
 		for (int c = 0; c < pattern.length; ++c)
 			if (i < pattern[c].length() && pattern[c].charAt(i) != ' ') return false;
+		if (i >= pattern[0].length() && i >= pattern[1].length() && i >= pattern[2].length()) return false;
 		return true;
 	}
 
@@ -157,8 +167,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		// TODO Recipe.createPanel(properties)
-		return null;
+		return new PanelRecipe(this);
 	}
 
 	@Override
@@ -180,7 +189,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		for (int i = 0; i < toreturn.length; ++i)
 			try
 			{
-				toreturn[i] = this.recipe[i].clone();
+				toreturn[i] = this.recipe[i] == null ? null : this.recipe[i].clone();
 			} catch (CloneNotSupportedException e)
 			{
 				e.printStackTrace();
@@ -201,6 +210,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		try
 		{
 			this.recipe[position] = item.clone();
+			this.onChange();
 		} catch (CloneNotSupportedException e)
 		{
 			e.printStackTrace();
@@ -228,14 +238,13 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 			}
 		}
 
-		// TODO manage empty rows/cols for shaped recipes
 		String[] pattern = createPattern(output);
-
-		TagString[] o = new TagString[]
-		{ Tags.DEFAULT_STRING.create(pattern[0]), Tags.DEFAULT_STRING.create(pattern[1]), Tags.DEFAULT_STRING.create(pattern[2]) };
+		ArrayList<TagString> o = new ArrayList<TagString>();
+		for (String string : pattern)
+			o.add(Tags.DEFAULT_STRING.create(string));
 
 		return container.create(Tags.RECIPE_TYPE.create("crafting_shaped"), Tags.RECIPE_KEY.create(key.toArray(new TagCompound[key.size()])),
-				Tags.RECIPE_PATTERN.create(o), this.recipe[9].toTag(Tags.RECIPE_RESULT));
+				Tags.RECIPE_PATTERN.create(o.toArray(new TagString[o.size()])), this.recipe[9].toTag(Tags.RECIPE_RESULT));
 	}
 
 	private TagCompound shapelessToTag(TemplateCompound container)
@@ -250,7 +259,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	@Override
 	public String toCommand()
 	{
-		return this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand();
+		return this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand(0);
 	}
 
 	@Override
