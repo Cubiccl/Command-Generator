@@ -70,6 +70,13 @@ public class TagCompound extends TagList
 	}
 
 	@Override
+	public TagCompound setJson(boolean isJson)
+	{
+		super.setJson(isJson);
+		return this;
+	}
+
+	@Override
 	public String valueForCommand(int indent)
 	{
 		String value = "{";

@@ -46,6 +46,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.modeData.setText("Data mode");
 		this.modeData.setVisible(false);
 		this.modeCommands.setVisible(false);
+		this.modeSpeedrun.setVisible(false);
 
 		this.updateTranslations();
 	}
@@ -77,7 +78,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.modeCommands.setVisible(CommandGenerator.getCurrentMode() != CommandGenerator.COMMANDS);
 		this.modeLootTables.setVisible(CommandGenerator.getCurrentMode() != CommandGenerator.LOOT_TABLES);
 		this.modeRecipes.setVisible(CommandGenerator.getCurrentMode() != CommandGenerator.RECIPES);
-		this.modeSpeedrun.setVisible(CommandGenerator.getCurrentMode() != CommandGenerator.SPEEDRUN);
+		this.modeSpeedrun.setVisible(false);
 	}
 
 	public void toggleMenu(boolean enabled)

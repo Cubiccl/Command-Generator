@@ -31,7 +31,11 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	{
 		Recipe r = new Recipe(Byte.parseByte(recipe.getAttributeValue("type")));
 		for (Element item : recipe.getChildren("item"))
-			r.recipe[Integer.parseInt(item.getAttributeValue("position"))] = ItemStack.createFrom(item);
+		{
+			int pos = Integer.parseInt(item.getAttributeValue("position"));
+			r.recipe[pos] = ItemStack.createFrom(item);
+			r.recipe[pos].slot = pos;
+		}
 		r.findProperties(recipe);
 		return r;
 	}
@@ -79,11 +83,15 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	private static Recipe createShapedFrom(TagCompound tag)
 	{
 		Recipe r = new Recipe(SHAPED);
-		if (tag.hasTag(Tags.RECIPE_RESULT)) r.recipe[9] = ItemStack.createFrom((TagCompound) tag.getTag(Tags.RECIPE_RESULT));
+		if (tag.hasTag(Tags.RECIPE_RESULT))
+		{
+			r.recipe[9] = ItemStack.createForRecipe((TagCompound) tag.getTag(Tags.RECIPE_RESULT));
+			r.recipe[9].slot = 9;
+		}
 
 		HashMap<Character, ItemStack> affectations = new HashMap<Character, ItemStack>();
 		if (tag.hasTag(Tags.RECIPE_KEY)) for (Tag t : ((TagCompound) tag.getTag(Tags.RECIPE_KEY)).value())
-			affectations.put(t.id().charAt(0), ItemStack.createFrom((TagCompound) t));
+			affectations.put(t.id().charAt(0), ItemStack.createForRecipe((TagCompound) t));
 
 		String pattern = "";
 		if (tag.hasTag(Tags.RECIPE_KEY))
@@ -102,6 +110,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 			if (affectations.containsKey(pattern.charAt(i))) try
 			{
 				r.recipe[i] = affectations.get(pattern.charAt(i)).clone();
+				r.recipe[i].slot = i;
 			} catch (CloneNotSupportedException e)
 			{
 				e.printStackTrace();
@@ -113,12 +122,17 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	private static Recipe createShapelessFrom(TagCompound tag)
 	{
 		Recipe r = new Recipe(SHAPELESS);
-		if (tag.hasTag(Tags.RECIPE_RESULT)) r.recipe[9] = ItemStack.createFrom((TagCompound) tag.getTag(Tags.RECIPE_RESULT));
+		if (tag.hasTag(Tags.RECIPE_RESULT))
+		{
+			r.recipe[9] = ItemStack.createForRecipe((TagCompound) tag.getTag(Tags.RECIPE_RESULT));
+			r.recipe[9].slot = 9;
+		}
 		int i = 0;
 		if (tag.hasTag(Tags.RECIPE_INGREDIENTS)) for (Tag t : ((TagList) tag.getTag(Tags.RECIPE_INGREDIENTS)).value())
 		{
 			if (i > 8) break;
-			r.recipe[i] = ItemStack.createFrom((TagCompound) t);
+			r.recipe[i] = ItemStack.createForRecipe((TagCompound) t);
+			r.recipe[i].slot = i;
 		}
 		return r;
 	}
@@ -244,16 +258,16 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 			o.add(Tags.DEFAULT_STRING.create(string));
 
 		return container.create(Tags.RECIPE_TYPE.create("crafting_shaped"), Tags.RECIPE_KEY.create(key.toArray(new TagCompound[key.size()])),
-				Tags.RECIPE_PATTERN.create(o.toArray(new TagString[o.size()])), this.recipe[9].toTag(Tags.RECIPE_RESULT));
+				Tags.RECIPE_PATTERN.create(o.toArray(new TagString[o.size()])), this.recipe[9].toTagForRecipe(Tags.RECIPE_RESULT)).setJson(true);
 	}
 
 	private TagCompound shapelessToTag(TemplateCompound container)
 	{
 		ArrayList<TagCompound> items = new ArrayList<TagCompound>();
 		for (int i = 0; i < 9; ++i)
-			if (this.recipe[i] != null) items.add(this.recipe[i].toTag(container));
+			if (this.recipe[i] != null) items.add(this.recipe[i].toTagForRecipe(container));
 		TagList ingredients = Tags.RECIPE_INGREDIENTS.create(items.toArray(new TagCompound[items.size()]));
-		return container.create(Tags.RECIPE_TYPE.create("crafting_shapeless"), ingredients, this.recipe[9].toTag(Tags.RECIPE_RESULT));
+		return container.create(Tags.RECIPE_TYPE.create("crafting_shapeless"), ingredients, this.recipe[9].toTagForRecipe(Tags.RECIPE_RESULT)).setJson(true);
 	}
 
 	@Override

@@ -281,6 +281,7 @@ general.edit=Éditer sélection
 general.integer=Nombre entier
 general.item=Objet
 general.mode=Action
+general.name=Nom
 general.no=Non
 general.none=Aucun
 general.not=Pas
@@ -449,6 +450,7 @@ menu.command=Générateur de Commandes
 menu.exit=Quitter
 menu.loot_table=Générateur de Tables de Butin
 menu.objects=Objets personnalisés
+menu.recipe=Générateurs de Recettes
 menu.settings=Paramètres
 
 objects.achievement=Succès
@@ -517,7 +519,13 @@ pose.leg.right=Rotation de la jambe droite
 
 recipe.all=Toutes les Recettes
 recipe.displayed=Le Joueur a-t-il vu la Recette ?
+recipe.invalid=Recette invalide !
+recipe.list=Recettes
+recipe.load=Lire une Recette générée
+recipe.load.description=Entrez une Recette que le Générateur va analyser.
 recipe.one=Une Recette :
+recipe.shapeless=Recette sans forme
+recipe.shapeless.help=Si la recette est sans forme, les Objets pourront être disposés n'importe comment sur la grille de fabrication.
 recipe.unlocked=Le Joueur a-t-il débloqué la Recette ?
 
 replaceitem.block=Coordonnées du Bloc
