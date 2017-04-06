@@ -528,6 +528,11 @@ recipe.shapeless=Recette sans forme
 recipe.shapeless.help=Si la recette est sans forme, les Objets pourront être disposés n'importe comment sur la grille de fabrication.
 recipe.unlocked=Le Joueur a-t-il débloqué la Recette ?
 
+recipebook.filter=Filtre de fabrication
+recipebook.filter.description=Ce joueur filtre-t-il les recettes pour qu'uniquement celles qu'il peut effectuer sont visibles ?
+recipebook.gui=Interface Ouverte
+recipebook.gui.description=Ce joueur a-t-il ouvert l'interface des recettes ?
+
 replaceitem.block=Coordonnées du Bloc
 replaceitem.item=Objet à placer
 replaceitem.mode.block=Placer dans un Bloc

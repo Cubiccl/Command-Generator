@@ -1,3 +1,14 @@
+------------------------- VERSION 2.5.1 -------------------------
+ADDITIONS
+- Updated for snapshot 17w14a.
+
+BUGS FIXED
+- Slot NBT tag was Short instead of Byte.
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+
 ------------------------- VERSION 2.5 -------------------------
 ADDITIONS
 - Added Recipes mode. I don't know if you can customize them for your maps yet, but at least it's working for later.

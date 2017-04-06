@@ -93,7 +93,7 @@ public final class Tags
 	public static final TemplateNumber ITEM_DAMAGE = new TemplateNumber("Damage", UNAVAILABLE, Tag.SHORT);
 	public static final TemplateString ITEM_ID = new TemplateString("id", UNAVAILABLE);
 	public static final DefaultCompound ITEM_NBT = new DefaultCompound("tag");
-	public static final TemplateNumber ITEM_SLOT = new TemplateNumber("Slot", UNAVAILABLE, Tag.SHORT);
+	public static final TemplateNumber ITEM_SLOT = new TemplateNumber("Slot", UNAVAILABLE, Tag.BYTE);
 
 	public static final DefaultCompound JSON_CONTAINER = new DefaultCompound("json");
 	public static final DefaultList JSON_LIST = new DefaultList("json");
@@ -180,6 +180,9 @@ public final class Tags
 	public static final DefaultCompound RECIPE_RESULT = new DefaultCompound("result");
 	public static final TemplateString RECIPE_TYPE = new TemplateString("type", UNAVAILABLE);
 	public static final TemplateBoolean RECIPE_UNLOCKED = new TemplateBoolean("unlocked", UNAVAILABLE);
+
+	public static final TemplateNumber RECIPEBOOK_ISFILTERING = new TemplateNumber("isFilteringCraftable", UNAVAILABLE, Tag.BYTE);
+	public static final TemplateNumber RECIPEBOOK_ISGUIOPEN = new TemplateNumber("isGuiOpen", UNAVAILABLE, Tag.BYTE);
 
 	public static final TemplateString SCORE_OBJECTIVE = new TemplateString("objective", UNAVAILABLE);
 	public static final TemplateString SCORE_TARGET = new TemplateString("name", UNAVAILABLE);

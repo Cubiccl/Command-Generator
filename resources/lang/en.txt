@@ -538,6 +538,11 @@ recipe.shapeless=Shapeless Recipe
 recipe.shapeless.help=If the Recipe is shapeless, Items can be arranged in any pattern on the crafting grid.
 recipe.unlocked=Has the Player unlocked this Recipe?
 
+recipebook.filter=Crafting filtered
+recipebook.filter.description=Is this Player filtering his Recipe Book, showing only Items he/she can craft?
+recipebook.gui=GUI Opened
+recipebook.gui.description=Is this Player's Recipe Book interface opened?
+
 replaceitem.block=Coordinates of the Block
 replaceitem.item=Item to place
 replaceitem.mode.block=Place in a Block
