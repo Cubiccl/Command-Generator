@@ -8,6 +8,7 @@ BUGS FIXED
 CHANGED TRANSLATIONS
 
 ADDED TRANSLATIONS
+recipebook.*
 
 ------------------------- VERSION 2.5 -------------------------
 ADDITIONS
