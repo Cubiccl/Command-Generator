@@ -155,9 +155,9 @@ public class PanelCondition extends CGPanel implements ActionListener
 		{
 			ArrayList<Tag> scoreTags = new ArrayList<Tag>();
 			for (ScoreCondition score : this.scores.values())
-			{
-				if (score.isRange) scoreTags.add(new DefaultCompound(score.objective, Tag.UNKNOWN).create(Tags.LT_CONDITION_SCORES_MIN.create(score.min),
-						Tags.LT_CONDITION_SCORES_MAX.create(score.max)));
+			{// TODO use TestValue
+				if (score.isRange) scoreTags.add(new DefaultCompound(score.objective, Tag.UNKNOWN).create(Tags.VALUE_MIN.create(score.min),
+						Tags.VALUE_MAX.create(score.max)));
 				else scoreTags.add(new TemplateNumber(score.objective, Tag.UNKNOWN).create(score.min));
 			}
 			tags.add(Tags.LT_CONDITION_SCORES.create(scoreTags.toArray(new Tag[scoreTags.size()])));
@@ -208,13 +208,13 @@ public class PanelCondition extends CGPanel implements ActionListener
 			TagCompound sc = (TagCompound) t.getTag(Tags.LT_CONDITION_SCORES);
 			for (Tag s : sc.value())
 			{
-				if (s instanceof TagNumber) this.scores.add(new ScoreCondition(s.id(), ((TagNumber) s).value(), 0, false));
+				if (s instanceof TagNumber) this.scores.add(new ScoreCondition(s.id(), ((TagNumber) s).valueInt(), 0, false));
 				else if (s instanceof TagCompound)
-				{
+				{// TODO use TestValue
 					TagCompound v = (TagCompound) s;
 					int min = 0, max = 0;
-					if (v.hasTag(Tags.LT_CONDITION_SCORES_MIN)) min = ((TagNumber) v.getTag(Tags.LT_CONDITION_SCORES_MIN)).value();
-					if (v.hasTag(Tags.LT_CONDITION_SCORES_MAX)) max = ((TagNumber) v.getTag(Tags.LT_CONDITION_SCORES_MAX)).value();
+					if (v.hasTag(Tags.VALUE_MIN)) min = ((TagNumber) v.getTag(Tags.VALUE_MIN)).valueInt();
+					if (v.hasTag(Tags.VALUE_MAX)) max = ((TagNumber) v.getTag(Tags.VALUE_MAX)).valueInt();
 					this.scores.add(new ScoreCondition(v.id(), min, max, true));
 				}
 			}
@@ -225,8 +225,8 @@ public class PanelCondition extends CGPanel implements ActionListener
 			this.buttonFalse.setSelected(((TagBoolean) t.getTag(Tags.LT_CONDITION_KILLED)).value());
 		} else if (c == Condition.RANDOM_CHANCE || c == Condition.RANDOM_CHANCE_WITH_LOOTING)
 		{
-			if (t.hasTag(Tags.LT_CONDITION_CHANCE)) this.entry1.setText(Double.toString(((TagBigNumber) t.getTag(Tags.LT_CONDITION_CHANCE)).value()));
-			if (c == Condition.RANDOM_CHANCE_WITH_LOOTING && t.hasTag(Tags.LT_CONDITION_LOOTING)) this.entry2.setText(Double.toString(((TagBigNumber) t
+			if (t.hasTag(Tags.LT_CONDITION_CHANCE)) this.entry1.setText(Double.toString(((TagNumber) t.getTag(Tags.LT_CONDITION_CHANCE)).value()));
+			if (c == Condition.RANDOM_CHANCE_WITH_LOOTING && t.hasTag(Tags.LT_CONDITION_LOOTING)) this.entry2.setText(Double.toString(((TagNumber) t
 					.getTag(Tags.LT_CONDITION_LOOTING)).value()));
 		}
 	}

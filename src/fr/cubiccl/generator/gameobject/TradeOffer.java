@@ -41,8 +41,8 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 		for (Tag t : tag.value())
 		{
 			if (t.id().equals(Tags.OFFER_EXP.id())) trade.experienceReward = ((TagNumber) t).value() == 1;
-			else if (t.id().equals(Tags.OFFER_MAX_USES.id())) trade.maxUses = ((TagNumber) t).value();
-			else if (t.id().equals(Tags.OFFER_USES.id())) trade.uses = ((TagNumber) t).value();
+			else if (t.id().equals(Tags.OFFER_MAX_USES.id())) trade.maxUses = ((TagNumber) t).valueInt();
+			else if (t.id().equals(Tags.OFFER_USES.id())) trade.uses = ((TagNumber) t).valueInt();
 			else if (t.id().equals(Tags.OFFER_BUY.id())) trade.buy = ItemStack.createFrom((TagCompound) t);
 			else if (t.id().equals(Tags.OFFER_BUYB.id())) trade.buySecondary = ItemStack.createFrom((TagCompound) t);
 			else if (t.id().equals(Tags.OFFER_SELL.id())) trade.sell = ItemStack.createFrom((TagCompound) t);

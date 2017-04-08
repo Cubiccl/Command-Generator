@@ -5,9 +5,9 @@ import java.awt.Component;
 import org.jdom2.Element;
 
 import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
+import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
@@ -75,9 +75,9 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.COORD_X.id())) x = (float) ((TagBigNumber) t).value;
-			if (t.id().equals(Tags.COORD_Y.id())) y = (float) ((TagBigNumber) t).value;
-			if (t.id().equals(Tags.COORD_Z.id())) z = (float) ((TagBigNumber) t).value;
+			if (t.id().equals(Tags.COORD_X.id())) x = (float) (double) ((TagNumber) t).value();
+			if (t.id().equals(Tags.COORD_Y.id())) y = (float) (double) ((TagNumber) t).value();
+			if (t.id().equals(Tags.COORD_Z.id())) z = (float) (double) ((TagNumber) t).value();
 		}
 
 		Coordinates c = new Coordinates(x, y, z);
@@ -90,9 +90,9 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 		float x = 0, y = 0, z = 0;
 		try
 		{
-			x = (float) (double) ((TagBigNumber) tag.getTag(0)).value();
-			y = (float) (double) ((TagBigNumber) tag.getTag(1)).value();
-			z = (float) (double) ((TagBigNumber) tag.getTag(2)).value();
+			x = (float) (double) ((TagNumber) tag.getTag(0)).value();
+			y = (float) (double) ((TagNumber) tag.getTag(1)).value();
+			z = (float) (double) ((TagNumber) tag.getTag(2)).value();
 		} catch (Exception e)
 		{
 			e.printStackTrace();

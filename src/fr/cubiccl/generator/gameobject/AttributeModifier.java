@@ -63,18 +63,19 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 			for (Tag slot : ((TagList) tag.getTag(Tags.ATTRIBUTE_slots)).value())
 				s.add(((TagString) slot).value());
 		}
-		if (tag.hasTag(Tags.ATTRIBUTE_OPERATION)) o = (byte) (int) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_OPERATION)).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_operation)) o = (byte) (int) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_operation)).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_AMOUNT)) am = ((TagBigNumber) tag.getTag(Tags.ATTRIBUTE_AMOUNT)).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_amount)) am = ((TagBigNumber) tag.getTag(Tags.ATTRIBUTE_amount)).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_OPERATION)) o = (byte) (int) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_OPERATION)).valueInt();
+		if (tag.hasTag(Tags.ATTRIBUTE_operation)) o = (byte) (int) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_operation)).valueInt();
+		if (tag.hasTag(Tags.ATTRIBUTE_AMOUNT)) am = ((TagNumber) tag.getTag(Tags.ATTRIBUTE_AMOUNT)).value();
+		// TODO use TestValue
+		if (tag.hasTag(Tags.ATTRIBUTE_amount)) am = ((TagNumber) tag.getTag(Tags.ATTRIBUTE_amount)).value();
 		if (tag.hasTag(Tags.ATTRIBUTE_amount_range))
 		{
 			TagCompound container = (TagCompound) tag.getTag(Tags.ATTRIBUTE_amount_range);
-			am = ((TagBigNumber) container.getTag(Tags.LT_FUNCTION_MIN_FLOAT)).value();
-			amm = ((TagBigNumber) container.getTag(Tags.LT_FUNCTION_MAX_FLOAT)).value();
+			am = ((TagNumber) container.getTag(Tags.VALUE_MIN_FLOAT)).value();
+			amm = ((TagNumber) container.getTag(Tags.VALUE_MAX_FLOAT)).value();
 		}
-		if (tag.hasTag(Tags.ATTRIBUTE_UUIDMOST)) um = (long) (double) ((TagBigNumber) tag.getTag(Tags.ATTRIBUTE_UUIDMOST)).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_UUIDLEAST)) ul = (long) (double) ((TagBigNumber) tag.getTag(Tags.ATTRIBUTE_UUIDLEAST)).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_UUIDMOST)) um = (long) (double) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_UUIDMOST)).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_UUIDLEAST)) ul = (long) (double) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_UUIDLEAST)).value();
 
 		AttributeModifier m = new AttributeModifier(a, n, s.toArray(new String[s.size()]), o, am, amm, um, ul);
 		m.findName(tag);
@@ -177,8 +178,9 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		tags.add((lt ? Tags.ATTRIBUTE_modifier_name : Tags.ATTRIBUTE_MODIFIER_NAME).create(this.name));
 		tags.add((lt ? Tags.ATTRIBUTE_operation : Tags.ATTRIBUTE_OPERATION).create(this.operation));
-		if (this.amountMax != -1) tags.add(Tags.ATTRIBUTE_amount_range.create(Tags.LT_FUNCTION_MIN_FLOAT.create(this.amount),
-				Tags.LT_FUNCTION_MAX_FLOAT.create(this.amountMax)));
+		// TODO use TestValue
+		if (this.amountMax != -1) tags.add(Tags.ATTRIBUTE_amount_range.create(Tags.VALUE_MIN_FLOAT.create(this.amount),
+				Tags.VALUE_MAX_FLOAT.create(this.amountMax)));
 		else tags.add((lt ? Tags.ATTRIBUTE_amount : Tags.ATTRIBUTE_AMOUNT).create(this.amount));
 		if (!lt) tags.add(Tags.ATTRIBUTE_UUIDMOST.create(this.UUIDMost));
 		if (!lt) tags.add(Tags.ATTRIBUTE_UUIDLEAST.create(this.UUIDLeast));

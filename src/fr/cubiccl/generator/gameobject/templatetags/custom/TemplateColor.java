@@ -23,7 +23,7 @@ public class TemplateColor extends TemplateNumber
 		if (object.id().equals("minecraft:sheep") || object.id().equals("minecraft:shulker")) return super.createPanel(object, previousValue);
 
 		PanelColor p = new PanelColor(null);
-		if (previousValue != null) p.setupFrom(((TagNumber) previousValue).value);
+		if (previousValue != null) p.setupFrom(((TagNumber) previousValue).valueInt());
 		p.setName(this.title());
 		return p;
 	}

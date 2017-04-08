@@ -63,8 +63,8 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 			if (t.equals("empty")) type = EMPTY;
 		}
 		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_NAME)) name = ((TagString) tag.getTag(Tags.LOOTTABLE_ENTRY_NAME)).value();
-		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_WEIGHT)) weight = ((TagNumber) tag.getTag(Tags.LOOTTABLE_ENTRY_WEIGHT)).value();
-		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_QUALITY)) quality = ((TagNumber) tag.getTag(Tags.LOOTTABLE_ENTRY_QUALITY)).value();
+		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_WEIGHT)) weight = ((TagNumber) tag.getTag(Tags.LOOTTABLE_ENTRY_WEIGHT)).valueInt();
+		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_QUALITY)) quality = ((TagNumber) tag.getTag(Tags.LOOTTABLE_ENTRY_QUALITY)).valueInt();
 		if (tag.hasTag(Tags.LOOTTABLE_CONDITIONS))
 		{
 			TagList t = (TagList) tag.getTag(Tags.LOOTTABLE_CONDITIONS);

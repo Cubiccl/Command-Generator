@@ -154,7 +154,7 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 		if (this.condition == Condition.RANDOM_CHANCE || this.condition == Condition.RANDOM_CHANCE_WITH_LOOTING)
 		{
 			for (Tag t : this.tags)
-				if (t.template == Tags.LT_CONDITION_CHANCE && Math.random() <= ((TagBigNumber) t).value()) return false;
+				if (t.template == Tags.LT_CONDITION_CHANCE && Math.random() <= ((TagNumber) t).value()) return false;
 		}
 		return true;
 	}

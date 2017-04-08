@@ -58,19 +58,20 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		ArrayList<LootTableCondition> conditions = new ArrayList<LootTableCondition>();
 		ArrayList<LootTableEntry> entries = new ArrayList<LootTableEntry>();
 
-		if (tag.hasTag(Tags.LOOTTABLE_ROLLS)) min = ((TagNumber) tag.getTag(Tags.LOOTTABLE_ROLLS)).value();
+		// TODO use TestValue
+		if (tag.hasTag(Tags.LOOTTABLE_ROLLS)) min = ((TagNumber) tag.getTag(Tags.LOOTTABLE_ROLLS)).valueInt();
 		if (tag.hasTag(Tags.LOOTTABLE_ROLLS_RANGE))
 		{
 			TagCompound t = (TagCompound) tag.getTag(Tags.LOOTTABLE_ROLLS_RANGE);
-			if (t.hasTag(Tags.LOOTTABLE_ROLLS_MIN)) min = ((TagNumber) t.getTag(Tags.LOOTTABLE_ROLLS_MIN)).value();
-			if (t.hasTag(Tags.LOOTTABLE_ROLLS_MAX)) max = ((TagNumber) t.getTag(Tags.LOOTTABLE_ROLLS_MAX)).value();
+			if (t.hasTag(Tags.VALUE_MIN)) min = ((TagNumber) t.getTag(Tags.VALUE_MIN)).valueInt();
+			if (t.hasTag(Tags.VALUE_MAX)) max = ((TagNumber) t.getTag(Tags.VALUE_MAX)).valueInt();
 		}
-		if (tag.hasTag(Tags.LOOTTABLE_BONUS_ROLLS)) bonusMin = (float) (double) ((TagBigNumber) tag.getTag(Tags.LOOTTABLE_BONUS_ROLLS)).value();
+		if (tag.hasTag(Tags.LOOTTABLE_BONUS_ROLLS)) bonusMin = (float) (double) ((TagNumber) tag.getTag(Tags.LOOTTABLE_BONUS_ROLLS)).value();
 		if (tag.hasTag(Tags.LOOTTABLE_BONUS_ROLLS_RANGE))
 		{
 			TagCompound t = (TagCompound) tag.getTag(Tags.LOOTTABLE_BONUS_ROLLS_RANGE);
-			if (t.hasTag(Tags.LOOTTABLE_BONUS_ROLLS_MIN)) bonusMin = (float) (double) ((TagBigNumber) t.getTag(Tags.LOOTTABLE_BONUS_ROLLS_MIN)).value();
-			if (t.hasTag(Tags.LOOTTABLE_BONUS_ROLLS_MAX)) bonusMax = (float) (double) ((TagBigNumber) t.getTag(Tags.LOOTTABLE_BONUS_ROLLS_MAX)).value();
+			if (t.hasTag(Tags.VALUE_MIN_FLOAT)) bonusMin = (float) (double) ((TagNumber) t.getTag(Tags.VALUE_MIN_FLOAT)).value();
+			if (t.hasTag(Tags.VALUE_MAX_FLOAT)) bonusMax = (float) (double) ((TagNumber) t.getTag(Tags.VALUE_MAX_FLOAT)).value();
 		}
 		if (tag.hasTag(Tags.LOOTTABLE_CONDITIONS))
 		{
@@ -187,14 +188,14 @@ public class LootTablePool implements IObjectList<LootTablePool>
 
 	public TagCompound toTag(TemplateCompound container)
 	{
-		ArrayList<Tag> tags = new ArrayList<Tag>();
+		ArrayList<Tag> tags = new ArrayList<Tag>();// TODO use TestValue
 
 		if (this.rollsMax == -1) tags.add(Tags.LOOTTABLE_ROLLS.create(this.rollsMin));
-		else tags.add(Tags.LOOTTABLE_ROLLS_RANGE.create(Tags.LOOTTABLE_ROLLS_MIN.create(this.rollsMin), Tags.LOOTTABLE_ROLLS_MAX.create(this.rollsMax)));
+		else tags.add(Tags.LOOTTABLE_ROLLS_RANGE.create(Tags.VALUE_MIN.create(this.rollsMin), Tags.VALUE_MAX.create(this.rollsMax)));
 
 		if (this.bonusRollsMax == -1) tags.add(Tags.LOOTTABLE_BONUS_ROLLS.create(this.bonusRollsMin));
-		else tags.add(Tags.LOOTTABLE_BONUS_ROLLS_RANGE.create(Tags.LOOTTABLE_BONUS_ROLLS_MIN.create(this.bonusRollsMin),
-				Tags.LOOTTABLE_BONUS_ROLLS_MAX.create(this.bonusRollsMax)));
+		else tags
+				.add(Tags.LOOTTABLE_BONUS_ROLLS_RANGE.create(Tags.VALUE_MIN_FLOAT.create(this.bonusRollsMin), Tags.VALUE_MAX_FLOAT.create(this.bonusRollsMax)));
 
 		Tag[] con = new Tag[this.conditions.length];
 		for (int i = 0; i < con.length; ++i)

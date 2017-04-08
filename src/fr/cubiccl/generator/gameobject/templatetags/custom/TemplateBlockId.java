@@ -27,7 +27,7 @@ public class TemplateBlockId extends TemplateNumber
 		Block previous = p.selectedBlock();
 		if (previousValue != null)
 		{
-			previous = ObjectRegistry.blocks.find(((TagNumber) previousValue).value());
+			previous = ObjectRegistry.blocks.find(((TagNumber) previousValue).valueInt());
 			p.setSelected(previous);
 		}
 		if (this.damage != -1 && previous.isDamageValid(this.damage)) p.setDamage(this.damage);

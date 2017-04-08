@@ -146,43 +146,43 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 					list.addTag(tag);
 			} else item.getNbt().addTag(((TemplateList) ObjectRegistry.itemTags.find("AttributeModifiers")).create(modifiers));
 		} else if (this.function == Function.SET_COUNT) for (Tag t : this.tags)
-		{
+		{// TODO useTestValue
 			if (t.template == Tags.LT_FUNCTION_COUNT)
 			{
-				item.amount = ((TagNumber) t).value();
+				item.amount = ((TagNumber) t).valueInt();
 				break;
 			} else if (t.template == Tags.LT_FUNCTION_COUNT_RANGE)
 			{
-				int min = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MIN)).value();
-				int max = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MAX)).value();
+				int min = ((TagNumber) ((TagCompound) t).getTag(Tags.VALUE_MIN)).valueInt();
+				int max = ((TagNumber) ((TagCompound) t).getTag(Tags.VALUE_MAX)).valueInt();
 				item.amount = new Random().nextInt(max - min) + min;
 				break;
 			}
 		}
 		else if (this.function == Function.SET_DAMAGE) for (Tag t : this.tags)
-		{
+		{// TODO useTestValue
 			if (t.template == Tags.LT_FUNCTION_DAMAGE)
 			{
-				item.setDamage((int) (((TagBigNumber) t).value() * item.getItem().getDurability()));
+				item.setDamage((int) (((TagNumber) t).value() * item.getItem().getDurability()));
 				break;
 			} else if (t.template == Tags.LT_FUNCTION_DAMAGE_RANGE)
 			{
-				double min = ((TagBigNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MIN_FLOAT)).value();
-				double max = ((TagBigNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MAX_FLOAT)).value();
+				double min = ((TagNumber) ((TagCompound) t).getTag(Tags.VALUE_MIN_FLOAT)).value();
+				double max = ((TagNumber) ((TagCompound) t).getTag(Tags.VALUE_MAX_FLOAT)).value();
 				item.setDamage((int) ((new Random().nextDouble() * (max - min) + min) * item.getItem().getDurability()));
 				break;
 			}
 		}
 		else if (this.function == Function.SET_DATA) for (Tag t : this.tags)
-		{
+		{// TODO useTestValue
 			if (t.template == Tags.LT_FUNCTION_DATA)
 			{
-				item.setDamage(((TagNumber) t).value());
+				item.setDamage(((TagNumber) t).valueInt());
 				break;
 			} else if (t.template == Tags.LT_FUNCTION_DATA_RANGE)
 			{
-				int min = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MIN)).value();
-				int max = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MAX)).value();
+				int min = ((TagNumber) ((TagCompound) t).getTag(Tags.VALUE_MIN)).valueInt();
+				int max = ((TagNumber) ((TagCompound) t).getTag(Tags.VALUE_MAX)).valueInt();
 				item.setDamage(new Random().nextInt(max - min) + min);
 				break;
 			}

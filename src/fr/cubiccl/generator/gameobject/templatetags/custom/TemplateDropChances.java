@@ -7,7 +7,6 @@ import org.jdom2.Element;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
@@ -62,7 +61,7 @@ public class TemplateDropChances extends TemplateList
 	@Override
 	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
-		TagBigNumber[] tags = new TagBigNumber[this.slotCount];
+		Tag[] tags = new Tag[this.slotCount];
 		for (int i = 0; i < tags.length; i++)
 			tags[i] = Tags.DEFAULT_FLOAT.create(Double.parseDouble(((PanelDropChances) panel).entries[i].getText()));
 		return this.create(tags);

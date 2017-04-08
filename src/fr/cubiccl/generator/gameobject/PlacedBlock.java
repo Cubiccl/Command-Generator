@@ -40,7 +40,7 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		for (Tag t : tag.value())
 		{
 			if (t.id().equals(Tags.BLOCK_ID.id())) b = ObjectRegistry.blocks.find(((TagString) t).value);
-			if (t.id().equals(Tags.BLOCK_DATA.id())) d = ((TagNumber) t).value;
+			if (t.id().equals(Tags.BLOCK_DATA.id())) d = ((TagNumber) t).valueInt();
 			if (t.id().equals(Tags.BLOCK_NBT.id())) nbt = (TagCompound) t;
 		}
 

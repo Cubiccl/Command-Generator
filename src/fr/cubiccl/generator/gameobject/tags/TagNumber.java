@@ -1,23 +1,24 @@
 package fr.cubiccl.generator.gameobject.tags;
 
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
+import fr.cubiccl.generator.utils.Utils;
 
 public class TagNumber extends Tag
 {
 	public static final String[] SUFFIX =
 	{ "", "b", "s", "", "l", "f", "d", "", "" };
 
-	public int value;
+	public double value;
 
 	@Deprecated
-	public TagNumber(TemplateNumber template, int value)
+	public TagNumber(TemplateNumber template, double value)
 	{
 		super(template);
 		this.value = value;
 	}
 
 	@Override
-	public Integer value()
+	public Double value()
 	{
 		return this.value;
 	}
@@ -25,7 +26,18 @@ public class TagNumber extends Tag
 	@Override
 	public String valueForCommand(int indent)
 	{
-		return Integer.toString(this.value()) + SUFFIX[((TemplateNumber) this.template).tagType];
+		if (((TemplateNumber) this.template).isBigNumber())
+		{
+			if (((TemplateNumber) this.template).tagType == Tag.LONG) return Utils.doubleToString(this.value())
+					+ TagNumber.SUFFIX[((TemplateNumber) this.template).tagType];
+			return Utils.doubleToString(this.value()) + TagNumber.SUFFIX[((TemplateNumber) this.template).tagType];
+
+		} else return Integer.toString((int) this.value) + SUFFIX[((TemplateNumber) this.template).tagType];
+	}
+
+	public int valueInt()
+	{
+		return (int) this.value;
 	}
 
 }

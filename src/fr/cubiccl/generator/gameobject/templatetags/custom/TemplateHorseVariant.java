@@ -21,7 +21,7 @@ public class TemplateHorseVariant extends TemplateNumber
 	{
 		if (object.id().equals("minecraft:llama")) return super.createPanel(object, previousValue);
 		PanelHorseVariant p = new PanelHorseVariant();
-		if (previousValue != null) p.setupFrom(((TagNumber) previousValue).value());
+		if (previousValue != null) p.setupFrom(((TagNumber) previousValue).valueInt());
 		p.setName(this.title());
 		return p;
 	}

@@ -6,7 +6,6 @@ import org.jdom2.Element;
 
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ComboboxPanel;
@@ -40,9 +39,10 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@SuppressWarnings("deprecation")
-	public TagBigNumber create(double value)
+	public Tag create(double value)
 	{
-		return new TagBigNumber(this, value);
+		if (this.isBigNumber()) return new TagNumber(this, value);
+		return new TagNumber(this, (int) value);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -69,8 +69,8 @@ public class TemplateNumber extends TemplateTag
 			else p.entry.addIntFilter();
 			if (previousValue != null)
 			{
-				if (this.isBigNumber()) p.entry.setText(new DecimalFormat("#").format(((TagBigNumber) previousValue).value()));
-				else p.entry.setText(Integer.toString(((TagNumber) previousValue).value()));
+				if (this.isBigNumber()) p.entry.setText(new DecimalFormat("#").format(((TagNumber) previousValue).value()));
+				else p.entry.setText(Integer.toString(((TagNumber) previousValue).valueInt()));
 			} else p.entry.setText("0");
 			p.setName(new Text(this.id(), false));
 			return p;
@@ -78,7 +78,7 @@ public class TemplateNumber extends TemplateTag
 		ComboboxPanel p = new ComboboxPanel(this.description(object), this.prefix, this.names);
 		if (previousValue != null)
 		{
-			int v = ((TagNumber) previousValue).value();
+			int v = ((TagNumber) previousValue).valueInt();
 			if (this.values != null) for (int i = 0; i < this.values.length; ++i)
 				if (this.values[i] == v)
 				{
@@ -123,7 +123,7 @@ public class TemplateNumber extends TemplateTag
 		return this.values;
 	}
 
-	private boolean isBigNumber()
+	public boolean isBigNumber()
 	{
 		return this.tagType == Tag.LONG || this.tagType == Tag.FLOAT || this.tagType == Tag.DOUBLE;
 	}

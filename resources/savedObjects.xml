@@ -6,7 +6,7 @@
     <item objectname="Test Chest" version="1.11">
       <id>minecraft:chest</id>
       <data>4</data>
-      <nbt>{Items:[{id:"minecraft:stone",Damage:0s,Count:1b,Slot:13s,tag:{}},{id:"minecraft:nether_brick_fence",Damage:0s,Count:4b,Slot:26s,tag:{}}]}</nbt>
+      <nbt>{Items:[{id:"minecraft:stone",Damage:0s,Count:1b,Slot:13b,tag:{}},{id:"minecraft:nether_brick_fence",Damage:0s,Count:4b,Slot:26b,tag:{}}]}</nbt>
     </item>
   </blocks>
   <coords />
@@ -51,7 +51,7 @@
     </command>
   </commands>
   <tables>
-    <table objectname="Zombie" version="1.11">
+    <table objectname="Zombie" version="1.12">
       <pools>
         <pool>
           <conditions />
