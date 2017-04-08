@@ -22,7 +22,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 	private ArrayList<AdvancementCriteria> criteria;
 	private Item item;
 	public JsonMessage jsonTitle;
-	public int[][] requirements;
+	public ArrayList<int[]> requirements;
 	public int rewardExperience;
 	public ArrayList<String> rewardLoot, rewardRecipes;
 

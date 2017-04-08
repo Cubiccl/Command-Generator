@@ -1,56 +1,50 @@
 package fr.cubiccl.generator.gameobject.advancements;
 
+import java.awt.Component;
 import java.util.ArrayList;
 
 import org.jdom2.Element;
 
+import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
-import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
+import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
+import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
+import fr.cubiccl.generator.utils.CommandGenerationException;
 
-public class AdvancementCriteria
+public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 {
 
-	public static enum CriteriaTrigger
+	public static AdvancementCriteria createFrom(Element criteria)
 	{
-		beacon("construct_beacon"),
-		block("enter_block"),
-		breed("bred_animals"),
-		brew("cured_zombie_villager"),
-		damage("player_damaged"),
-		dealDamage("player_hurt_entity"),
-		death("entity_killed_player"),
-		enchant("enchanted_item"),
-		enderEye("used_ender_eye"),
-		impossible("impossible"),
-		inventory("inventory_changed"),
-		kill("player_killed_entity"),
-		location("location"),
-		recipe("recipe_unlocked"),
-		sleep("slept_in_bed"),
-		summon("summoned_entity"),
-		villager("villager_trade");
+		AdvancementCriteria c = new AdvancementCriteria();
+		c.name = criteria.getAttributeValue("name");
+		c.trigger = CriteriaTrigger.find(criteria.getAttributeValue("trigger"));
+		for (Element condition : criteria.getChildren("condition"))
+			c.conditions.add(NBTReader.read(condition.getText(), false, true, true));
+		return c;
+	}
 
-		public final String id;
-
-		private CriteriaTrigger(String id)
-		{
-			this.id = id;
-		}
-
-		public Text description()
-		{
-			return new Text("advancement.criteria." + this.id);
-		}
+	public static AdvancementCriteria createFrom(TagCompound tag)
+	{
+		AdvancementCriteria c = new AdvancementCriteria();
+		if (tag.hasTag(Tags.ADVANCEMENT_TRIGGER)) c.name = ((TagString) tag.getTag(Tags.ADVANCEMENT_TRIGGER)).value();
+		if (tag.hasTag(Tags.ADVANCEMENT_CONDITIONS)) for (Tag t : ((TagCompound) tag.getTag(Tags.ADVANCEMENT_CONDITIONS)).value())
+			c.conditions.add(t);
+		return c;
 	}
 
 	private ArrayList<Tag> conditions;
-	public final CriteriaTrigger trigger;
+	public String name;
+	public CriteriaTrigger trigger;
 
-	public AdvancementCriteria(CriteriaTrigger trigger)
+	public AdvancementCriteria()
 	{
-		this.trigger = trigger;
+		this.trigger = CriteriaTrigger.beacon;
 		this.conditions = new ArrayList<Tag>();
 	}
 
@@ -59,9 +53,28 @@ public class AdvancementCriteria
 		this.conditions.add(condition);
 	}
 
+	@Override
+	public CGPanel createPanel(ListProperties properties)
+	{
+		// TODO AdvancementCriteria.createPanel(properties)
+		return null;
+	}
+
 	public Tag[] getConditions()
 	{
 		return this.conditions.toArray(new Tag[this.conditions.size()]);
+	}
+
+	@Override
+	public Component getDisplayComponent()
+	{
+		return null;
+	}
+
+	@Override
+	public String getName(int index)
+	{
+		return this.name;
 	}
 
 	public void removeCondition(Tag condition)
@@ -69,16 +82,26 @@ public class AdvancementCriteria
 		this.conditions.remove(condition);
 	}
 
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toTag()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		return new DefaultCompound(this.name, Tag.UNKNOWN).create(Tags.ADVANCEMENT_TRIGGER.create(this.name),
+				Tags.ADVANCEMENT_CONDITIONS.create(this.conditions.toArray(new Tag[this.conditions.size()])));
 	}
 
 	public Element toXML()
 	{
-		// TODO Auto-generated method stub
-		return null;
+		Element root = new Element("criteria");
+		root.setAttribute("name", this.name);
+		root.setAttribute("trigger", this.trigger.id);
+		for (Tag tag : this.conditions)
+			root.addContent(new Element("condition").setText(tag.toCommand(-1)));
+		return root;
 	}
 
+	@Override
+	public AdvancementCriteria update(CGPanel panel) throws CommandGenerationException
+	{
+		// TODO AdvancementCriteria.update(panel)
+		return null;
+	}
 }

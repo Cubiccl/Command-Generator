@@ -14,6 +14,9 @@ public final class Tags
 	public static final TemplateNumber ABILITIES_MAY_BUILD = new TemplateNumber("mayBuild", UNAVAILABLE, Tag.BYTE);
 	public static final TemplateNumber ABILITIES_MAY_FLY = new TemplateNumber("mayFly", UNAVAILABLE, Tag.BYTE);
 
+	public static final DefaultCompound ADVANCEMENT_CONDITIONS = new DefaultCompound("conditions");
+	public static final TemplateString ADVANCEMENT_TRIGGER = new TemplateString("trigger", UNAVAILABLE);
+
 	public static final TemplateNumber ATTRIBUTE_amount = new TemplateNumber("amount", UNAVAILABLE, Tag.DOUBLE);
 	public static final TemplateNumber ATTRIBUTE_AMOUNT = new TemplateNumber("Amount", UNAVAILABLE, Tag.DOUBLE);
 	public static final DefaultCompound ATTRIBUTE_amount_range = new DefaultCompound("amount");
