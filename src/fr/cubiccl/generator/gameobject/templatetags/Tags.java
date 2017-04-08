@@ -14,7 +14,20 @@ public final class Tags
 	public static final TemplateNumber ABILITIES_MAY_BUILD = new TemplateNumber("mayBuild", UNAVAILABLE, Tag.BYTE);
 	public static final TemplateNumber ABILITIES_MAY_FLY = new TemplateNumber("mayFly", UNAVAILABLE, Tag.BYTE);
 
+	public static final TemplateString ADVANCEMENT_BACKGROUND = new TemplateString("background", UNAVAILABLE);
 	public static final DefaultCompound ADVANCEMENT_CONDITIONS = new DefaultCompound("conditions");
+	public static final DefaultCompound ADVANCEMENT_CRITERIA = new DefaultCompound("criteria");
+	public static final DefaultCompound ADVANCEMENT_DISPLAY = new DefaultCompound("display");
+	public static final TemplateNumber ADVANCEMENT_EXPERIENCE = new TemplateNumber("experience", UNAVAILABLE, Tag.INT);
+	public static final TemplateString ADVANCEMENT_FRAME = new TemplateString("frame", UNAVAILABLE);
+	public static final TemplateString ADVANCEMENT_ICON = new TemplateString("icon", UNAVAILABLE);
+	public static final DefaultList ADVANCEMENT_LOOT = new DefaultList("requirements");
+	public static final TemplateString ADVANCEMENT_PARENT = new TemplateString("parent", UNAVAILABLE);
+	public static final DefaultList ADVANCEMENT_RECIPES = new DefaultList("requirements");
+	public static final DefaultList ADVANCEMENT_REQUIREMENTS = new DefaultList("requirements");
+	public static final DefaultCompound ADVANCEMENT_REWARDS = new DefaultCompound("rewards");
+	public static final TemplateString ADVANCEMENT_TITLE = new TemplateString("title", UNAVAILABLE);
+	public static final DefaultCompound ADVANCEMENT_TITLE_JSON = new DefaultCompound("conditions");
 	public static final TemplateString ADVANCEMENT_TRIGGER = new TemplateString("trigger", UNAVAILABLE);
 
 	public static final TemplateNumber ATTRIBUTE_amount = new TemplateNumber("amount", UNAVAILABLE, Tag.DOUBLE);
