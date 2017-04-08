@@ -11,6 +11,7 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.utils.TestValue;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -66,7 +67,6 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		if (tag.hasTag(Tags.ATTRIBUTE_OPERATION)) o = (byte) (int) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_OPERATION)).valueInt();
 		if (tag.hasTag(Tags.ATTRIBUTE_operation)) o = (byte) (int) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_operation)).valueInt();
 		if (tag.hasTag(Tags.ATTRIBUTE_AMOUNT)) am = ((TagNumber) tag.getTag(Tags.ATTRIBUTE_AMOUNT)).value();
-		// TODO use TestValue
 		if (tag.hasTag(Tags.ATTRIBUTE_amount)) am = ((TagNumber) tag.getTag(Tags.ATTRIBUTE_amount)).value();
 		if (tag.hasTag(Tags.ATTRIBUTE_amount_range))
 		{
@@ -178,10 +178,13 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		tags.add((lt ? Tags.ATTRIBUTE_modifier_name : Tags.ATTRIBUTE_MODIFIER_NAME).create(this.name));
 		tags.add((lt ? Tags.ATTRIBUTE_operation : Tags.ATTRIBUTE_OPERATION).create(this.operation));
-		// TODO use TestValue
-		if (this.amountMax != -1) tags.add(Tags.ATTRIBUTE_amount_range.create(Tags.VALUE_MIN_FLOAT.create(this.amount),
-				Tags.VALUE_MAX_FLOAT.create(this.amountMax)));
-		else tags.add((lt ? Tags.ATTRIBUTE_amount : Tags.ATTRIBUTE_AMOUNT).create(this.amount));
+
+		TestValue v = new TestValue(lt ? Tags.ATTRIBUTE_amount : Tags.ATTRIBUTE_AMOUNT, Tags.ATTRIBUTE_amount_range, Tags.VALUE_MAX_FLOAT,
+				Tags.VALUE_MIN_FLOAT, this.amount);
+		v.isRanged = this.amountMax != -1;
+		v.valueMax = this.amountMax;
+		tags.add(v.toTag());
+
 		if (!lt) tags.add(Tags.ATTRIBUTE_UUIDMOST.create(this.UUIDMost));
 		if (!lt) tags.add(Tags.ATTRIBUTE_UUIDLEAST.create(this.UUIDLeast));
 		if (!isApplied)

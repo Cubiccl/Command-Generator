@@ -39,10 +39,9 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@SuppressWarnings("deprecation")
-	public Tag create(double value)
+	public TagNumber create(double value)
 	{
-		if (this.isBigNumber()) return new TagNumber(this, value);
-		return new TagNumber(this, (int) value);
+		return new TagNumber(this, value);
 	}
 
 	@SuppressWarnings("deprecation")

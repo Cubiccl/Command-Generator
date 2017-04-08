@@ -72,11 +72,11 @@
           <conditions>
             <condition>
               <id>killed_by_player</id>
-              <nbt>{inverse:"true"}</nbt>
+              <nbt>{"inverse":"true"}</nbt>
             </condition>
             <condition>
               <id>random_chance_with_looting</id>
-              <nbt>{chance:0.02f,looting_multiplier:0f}</nbt>
+              <nbt>{"chance":0.02f,"looting_multiplier":0f}</nbt>
             </condition>
           </conditions>
           <entries>

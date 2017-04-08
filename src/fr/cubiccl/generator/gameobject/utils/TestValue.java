@@ -1,11 +1,14 @@
 package fr.cubiccl.generator.gameobject.utils;
 
+import java.util.Random;
+
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 
+/** Can either be a TagNumber or a TagCompound containing two TagNumbers (min and max). */
 public class TestValue
 {
 
@@ -17,13 +20,27 @@ public class TestValue
 
 	public TestValue(TemplateNumber exactTag, TemplateCompound rangeTag)
 	{
-		super();
+		this(exactTag, rangeTag, Tags.VALUE_MIN, Tags.VALUE_MAX);
+	}
+
+	public TestValue(TemplateNumber exactTag, TemplateCompound rangeTag, TemplateNumber minTag, TemplateNumber maxTag)
+	{
+		this(exactTag, rangeTag, minTag, maxTag, 0);
+	}
+
+	public TestValue(TemplateNumber exactTag, TemplateCompound rangeTag, TemplateNumber minTag, TemplateNumber maxTag, double min)
+	{
 		this.exactTag = exactTag;
 		this.rangeTag = rangeTag;
-		this.minTag = Tags.VALUE_MIN;
-		this.maxTag = Tags.VALUE_MAX;
-		this.valueMin = 0;
+		this.minTag = minTag;
+		this.maxTag = maxTag;
+		this.valueMin = min;
 		this.valueMax = 0;
+	}
+
+	public void findValue(Tag[] tags)
+	{
+		this.findValue(Tags.DEFAULT_COMPOUND.create(tags));
 	}
 
 	public void findValue(TagCompound t)
@@ -39,6 +56,12 @@ public class TestValue
 			this.valueMin = (double) range.getTag(this.minTag).value();
 			this.valueMax = (double) range.getTag(this.maxTag).value();
 		}
+	}
+
+	public double generateValue()
+	{
+		if (this.isRanged) return new Random().nextDouble() * (this.valueMax - this.valueMin + 1) + this.valueMax;
+		return this.valueMin;
 	}
 
 	public Tag toTag()
