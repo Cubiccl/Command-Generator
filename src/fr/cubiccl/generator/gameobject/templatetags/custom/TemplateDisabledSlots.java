@@ -19,7 +19,7 @@ public class TemplateDisabledSlots extends TemplateNumber
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelDisabledSlots p = new PanelDisabledSlots();
-		if (previousValue != null) p.setupFrom(((TagNumber) previousValue).value());
+		if (previousValue != null) p.setupFrom(((TagNumber) previousValue).valueInt());
 		p.setName(this.title());
 		return p;
 	}

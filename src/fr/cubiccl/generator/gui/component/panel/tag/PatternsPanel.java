@@ -11,10 +11,10 @@ import java.util.ArrayList;
 import javax.swing.JPanel;
 
 import fr.cubi.cubigui.CButton;
-import fr.cubiccl.generator.gameobject.Pattern;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.utils.Pattern;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;

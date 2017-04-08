@@ -14,6 +14,7 @@ import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
+import fr.cubiccl.generator.gameobject.utils.TestValue;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelFunction;
@@ -145,49 +146,22 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 				for (Tag tag : modifiers)
 					list.addTag(tag);
 			} else item.getNbt().addTag(((TemplateList) ObjectRegistry.itemTags.find("AttributeModifiers")).create(modifiers));
-		} else if (this.function == Function.SET_COUNT) for (Tag t : this.tags)
+		} else if (this.function == Function.SET_COUNT)
 		{
-			if (t.template == Tags.LT_FUNCTION_COUNT)
-			{
-				item.amount = ((TagNumber) t).value();
-				break;
-			} else if (t.template == Tags.LT_FUNCTION_COUNT_RANGE)
-			{
-				int min = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MIN)).value();
-				int max = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MAX)).value();
-				item.amount = new Random().nextInt(max - min) + min;
-				break;
-			}
-		}
-		else if (this.function == Function.SET_DAMAGE) for (Tag t : this.tags)
+			TestValue v = new TestValue(Tags.LT_FUNCTION_COUNT, Tags.LT_FUNCTION_COUNT_RANGE);
+			v.findValue(this.tags);
+			item.amount = (int) v.generateValue();
+		} else if (this.function == Function.SET_DAMAGE)
 		{
-			if (t.template == Tags.LT_FUNCTION_DAMAGE)
-			{
-				item.setDamage((int) (((TagBigNumber) t).value() * item.getItem().getDurability()));
-				break;
-			} else if (t.template == Tags.LT_FUNCTION_DAMAGE_RANGE)
-			{
-				double min = ((TagBigNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MIN_FLOAT)).value();
-				double max = ((TagBigNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MAX_FLOAT)).value();
-				item.setDamage((int) ((new Random().nextDouble() * (max - min) + min) * item.getItem().getDurability()));
-				break;
-			}
-		}
-		else if (this.function == Function.SET_DATA) for (Tag t : this.tags)
+			TestValue v = new TestValue(Tags.LT_FUNCTION_DAMAGE, Tags.LT_FUNCTION_DAMAGE_RANGE, Tags.VALUE_MIN_FLOAT, Tags.VALUE_MAX_FLOAT);
+			v.findValue(this.tags);
+			item.setDamage((int) v.generateValue());
+		} else if (this.function == Function.SET_DATA)
 		{
-			if (t.template == Tags.LT_FUNCTION_DATA)
-			{
-				item.setDamage(((TagNumber) t).value());
-				break;
-			} else if (t.template == Tags.LT_FUNCTION_DATA_RANGE)
-			{
-				int min = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MIN)).value();
-				int max = ((TagNumber) ((TagCompound) t).getTag(Tags.LT_FUNCTION_MAX)).value();
-				item.setDamage(new Random().nextInt(max - min) + min);
-				break;
-			}
-		}
-		else if (this.function == Function.SET_NBT)
+			TestValue v = new TestValue(Tags.LT_FUNCTION_DATA, Tags.LT_FUNCTION_DATA_RANGE);
+			v.findValue(this.tags);
+			item.setDamage((int) v.generateValue());
+		} else if (this.function == Function.SET_NBT)
 		{
 			String tag = null;
 			for (Tag t : this.tags)

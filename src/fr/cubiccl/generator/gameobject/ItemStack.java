@@ -32,8 +32,8 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		for (Tag t : tag.value())
 		{
 			if (t.id().equals(Tags.RECIPE_ITEM_ID.id())) i = ObjectRegistry.items.find(((TagString) t).value);
-			if (t.id().equals(Tags.RECIPE_ITEM_COUNT.id())) a = ((TagNumber) t).value;
-			if (t.id().equals(Tags.RECIPE_ITEM_DATA.id())) d = ((TagNumber) t).value;
+			if (t.id().equals(Tags.RECIPE_ITEM_COUNT.id())) a = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.RECIPE_ITEM_DATA.id())) d = ((TagNumber) t).valueInt();
 		}
 
 		ItemStack is = new ItemStack(i, d, a, Tags.DEFAULT_COMPOUND.create());
@@ -62,9 +62,9 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		for (Tag t : tag.value())
 		{
 			if (t.id().equals(Tags.ITEM_ID.id())) i = ObjectRegistry.items.find(((TagString) t).value);
-			if (t.id().equals(Tags.ITEM_COUNT.id())) a = ((TagNumber) t).value;
-			if (t.id().equals(Tags.ITEM_DAMAGE.id())) d = ((TagNumber) t).value;
-			if (t.id().equals(Tags.ITEM_SLOT.id())) s = ((TagNumber) t).value;
+			if (t.id().equals(Tags.ITEM_COUNT.id())) a = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.ITEM_DAMAGE.id())) d = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.ITEM_SLOT.id())) s = ((TagNumber) t).valueInt();
 			if (t.id().equals(Tags.ITEM_NBT.id())) nbt = (TagCompound) t;
 		}
 

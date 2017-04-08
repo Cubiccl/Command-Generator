@@ -41,9 +41,9 @@ public class Effect extends GameObject implements IObjectList<Effect>
 		EffectType e = ObjectRegistry.effects.first();
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.EFFECT_ID.id())) e = ObjectRegistry.effects.find(((TagNumber) t).value());
-			if (t.id().equals(Tags.EFFECT_DURATION.id())) d = ((TagNumber) t).value();
-			if (t.id().equals(Tags.EFFECT_AMPLIFIER.id())) a = ((TagNumber) t).value();
+			if (t.id().equals(Tags.EFFECT_ID.id())) e = ObjectRegistry.effects.find(((TagNumber) t).valueInt());
+			if (t.id().equals(Tags.EFFECT_DURATION.id())) d = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.EFFECT_AMPLIFIER.id())) a = ((TagNumber) t).valueInt();
 			if (t.id().equals(Tags.EFFECT_PARTICLES.id())) h = ((TagNumber) t).value() == 1;
 		}
 		Effect ef = new Effect(e, d, a, h);

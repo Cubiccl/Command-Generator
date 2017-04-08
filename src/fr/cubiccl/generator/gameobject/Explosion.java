@@ -40,7 +40,7 @@ public class Explosion implements IObjectList<Explosion>
 		public CGPanel createPanel(ListProperties properties)
 		{
 			PanelColor p = new PanelColor(null);
-			p.setupFrom(this.value);
+			p.setupFrom(this.valueInt());
 			return p;
 		}
 
@@ -48,7 +48,7 @@ public class Explosion implements IObjectList<Explosion>
 		public Component getDisplayComponent()
 		{
 			CGPanel p = new CGPanel();
-			p.add(new CGLabel(new Text(Integer.toString(this.value), false)));
+			p.add(new CGLabel(new Text(Integer.toString(this.valueInt()), false)));
 			p.add(new ImageLabel(this.getTexture()));
 			return p;
 		}
@@ -56,14 +56,14 @@ public class Explosion implements IObjectList<Explosion>
 		@Override
 		public String getName(int index)
 		{
-			return Integer.toString(this.value);
+			return Integer.toString(this.valueInt());
 		}
 
 		public BufferedImage getTexture()
 		{
 			BufferedImage img = new BufferedImage(40, 40, BufferedImage.TYPE_INT_RGB);
 			Graphics g = img.getGraphics();
-			g.setColor(new java.awt.Color(this.value));
+			g.setColor(new java.awt.Color(this.valueInt()));
 			g.fillRect(0, 0, 40, 40);
 			return img;
 		}
@@ -82,7 +82,7 @@ public class Explosion implements IObjectList<Explosion>
 		Explosion e = new Explosion();
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.FIREWORK_TYPE.id())) e.type = (byte) (int) ((TagNumber) t).value();
+			if (t.id().equals(Tags.FIREWORK_TYPE.id())) e.type = (byte) ((TagNumber) t).valueInt();
 			else if (t.id().equals(Tags.FIREWORK_FLICKER.id())) e.flicker = (((TagNumber) t).value() == 1);
 			else if (t.id().equals(Tags.FIREWORK_TRAIL.id())) e.trail = (((TagNumber) t).value() == 1);
 			else if (t.id().equals(Tags.FIREWORK_COLORS.id()))
@@ -90,14 +90,14 @@ public class Explosion implements IObjectList<Explosion>
 				Tag[] list = ((TagList) t).value();
 				Color[] values = new Color[list.length];
 				for (int i = 0; i < values.length; ++i)
-					values[i] = new Color(((TagNumber) list[i]).value);
+					values[i] = new Color(((TagNumber) list[i]).valueInt());
 				e.primary = values;
 			} else if (t.id().equals(Tags.FIREWORK_FADE_COLORS.id()))
 			{
 				Tag[] list = ((TagList) t).value();
 				Color[] values = new Color[list.length];
 				for (int i = 0; i < values.length; ++i)
-					values[i] = new Color(((TagNumber) list[i]).value);
+					values[i] = new Color(((TagNumber) list[i]).valueInt());
 				e.fade = values;
 			}
 		}

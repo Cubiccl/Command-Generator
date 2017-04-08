@@ -6,9 +6,12 @@ import java.util.*;
 import org.jdom2.Element;
 
 import fr.cubiccl.generator.gameobject.ItemStack;
-import fr.cubiccl.generator.gameobject.tags.*;
+import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.utils.TestValue;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -58,20 +61,16 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		ArrayList<LootTableCondition> conditions = new ArrayList<LootTableCondition>();
 		ArrayList<LootTableEntry> entries = new ArrayList<LootTableEntry>();
 
-		if (tag.hasTag(Tags.LOOTTABLE_ROLLS)) min = ((TagNumber) tag.getTag(Tags.LOOTTABLE_ROLLS)).value();
-		if (tag.hasTag(Tags.LOOTTABLE_ROLLS_RANGE))
-		{
-			TagCompound t = (TagCompound) tag.getTag(Tags.LOOTTABLE_ROLLS_RANGE);
-			if (t.hasTag(Tags.LOOTTABLE_ROLLS_MIN)) min = ((TagNumber) t.getTag(Tags.LOOTTABLE_ROLLS_MIN)).value();
-			if (t.hasTag(Tags.LOOTTABLE_ROLLS_MAX)) max = ((TagNumber) t.getTag(Tags.LOOTTABLE_ROLLS_MAX)).value();
-		}
-		if (tag.hasTag(Tags.LOOTTABLE_BONUS_ROLLS)) bonusMin = (float) (double) ((TagBigNumber) tag.getTag(Tags.LOOTTABLE_BONUS_ROLLS)).value();
-		if (tag.hasTag(Tags.LOOTTABLE_BONUS_ROLLS_RANGE))
-		{
-			TagCompound t = (TagCompound) tag.getTag(Tags.LOOTTABLE_BONUS_ROLLS_RANGE);
-			if (t.hasTag(Tags.LOOTTABLE_BONUS_ROLLS_MIN)) bonusMin = (float) (double) ((TagBigNumber) t.getTag(Tags.LOOTTABLE_BONUS_ROLLS_MIN)).value();
-			if (t.hasTag(Tags.LOOTTABLE_BONUS_ROLLS_MAX)) bonusMax = (float) (double) ((TagBigNumber) t.getTag(Tags.LOOTTABLE_BONUS_ROLLS_MAX)).value();
-		}
+		TestValue v = new TestValue(Tags.LOOTTABLE_ROLLS, Tags.LOOTTABLE_ROLLS_RANGE);
+		v.findValue(tag);
+		min = (int) v.valueMin;
+		if (v.isRanged) max = (int) v.valueMax;
+
+		v = new TestValue(Tags.LOOTTABLE_BONUS_ROLLS, Tags.LOOTTABLE_BONUS_ROLLS_RANGE, Tags.VALUE_MIN_FLOAT, Tags.VALUE_MAX_FLOAT);
+		v.findValue(tag);
+		bonusMin = (float) v.valueMin;
+		if (v.isRanged) bonusMax = (float) v.valueMax;
+
 		if (tag.hasTag(Tags.LOOTTABLE_CONDITIONS))
 		{
 			TagList t = (TagList) tag.getTag(Tags.LOOTTABLE_CONDITIONS);
@@ -189,12 +188,17 @@ public class LootTablePool implements IObjectList<LootTablePool>
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
-		if (this.rollsMax == -1) tags.add(Tags.LOOTTABLE_ROLLS.create(this.rollsMin));
-		else tags.add(Tags.LOOTTABLE_ROLLS_RANGE.create(Tags.LOOTTABLE_ROLLS_MIN.create(this.rollsMin), Tags.LOOTTABLE_ROLLS_MAX.create(this.rollsMax)));
+		TestValue v = new TestValue(Tags.LOOTTABLE_ROLLS, Tags.LOOTTABLE_ROLLS_RANGE);
+		v.valueMin = this.rollsMin;
+		v.valueMax = this.rollsMax;
+		v.isRanged = this.rollsMax != -1;
+		tags.add(v.toTag());
 
-		if (this.bonusRollsMax == -1) tags.add(Tags.LOOTTABLE_BONUS_ROLLS.create(this.bonusRollsMin));
-		else tags.add(Tags.LOOTTABLE_BONUS_ROLLS_RANGE.create(Tags.LOOTTABLE_BONUS_ROLLS_MIN.create(this.bonusRollsMin),
-				Tags.LOOTTABLE_BONUS_ROLLS_MAX.create(this.bonusRollsMax)));
+		v = new TestValue(Tags.LOOTTABLE_BONUS_ROLLS, Tags.LOOTTABLE_BONUS_ROLLS_RANGE, Tags.VALUE_MIN_FLOAT, Tags.VALUE_MAX_FLOAT);
+		v.valueMin = this.bonusRollsMin;
+		v.valueMax = this.bonusRollsMax;
+		v.isRanged = this.bonusRollsMax != -1;
+		tags.add(v.toTag());
 
 		Tag[] con = new Tag[this.conditions.length];
 		for (int i = 0; i < con.length; ++i)

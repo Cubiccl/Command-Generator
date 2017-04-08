@@ -103,8 +103,6 @@ public final class Tags
 	public static final TemplateString JSON_TRANSLATE = new TemplateString("translate", UNAVAILABLE);
 
 	public static final TemplateNumber LOOTTABLE_BONUS_ROLLS = new TemplateNumber("bonus_rolls", UNAVAILABLE, Tag.FLOAT);
-	public static final TemplateNumber LOOTTABLE_BONUS_ROLLS_MAX = new TemplateNumber("max", UNAVAILABLE, Tag.FLOAT);
-	public static final TemplateNumber LOOTTABLE_BONUS_ROLLS_MIN = new TemplateNumber("min", UNAVAILABLE, Tag.FLOAT);
 	public static final DefaultCompound LOOTTABLE_BONUS_ROLLS_RANGE = new DefaultCompound("bonus_rolls");
 	public static final TemplateString LOOTTABLE_CONDITION = new TemplateString("condition", UNAVAILABLE);
 	public static final DefaultList LOOTTABLE_CONDITIONS = new DefaultList("conditions");
@@ -117,8 +115,6 @@ public final class Tags
 	public static final DefaultList LOOTTABLE_FUNCTIONS = new DefaultList("functions");
 	public static final DefaultList LOOTTABLE_POOLS = new DefaultList("pools");
 	public static final TemplateNumber LOOTTABLE_ROLLS = new TemplateNumber("rolls", UNAVAILABLE, Tag.INT);
-	public static final TemplateNumber LOOTTABLE_ROLLS_MAX = new TemplateNumber("max", UNAVAILABLE, Tag.INT);
-	public static final TemplateNumber LOOTTABLE_ROLLS_MIN = new TemplateNumber("min", UNAVAILABLE, Tag.INT);
 	public static final DefaultCompound LOOTTABLE_ROLLS_RANGE = new DefaultCompound("rolls");
 
 	public static final TemplateNumber LT_CONDITION_CHANCE = new TemplateNumber("chance", UNAVAILABLE, Tag.FLOAT);
@@ -128,8 +124,6 @@ public final class Tags
 	public static final TemplateNumber LT_CONDITION_LOOTING = new TemplateNumber("looting_multiplier", UNAVAILABLE, Tag.FLOAT);
 	public static final DefaultCompound LT_CONDITION_PROPERTIES = new DefaultCompound("properties");
 	public static final DefaultCompound LT_CONDITION_SCORES = new DefaultCompound("scores");
-	public static final TemplateNumber LT_CONDITION_SCORES_MAX = new TemplateNumber("max", UNAVAILABLE, Tag.INT);
-	public static final TemplateNumber LT_CONDITION_SCORES_MIN = new TemplateNumber("min", UNAVAILABLE, Tag.INT);
 
 	public static final TemplateNumber LT_FUNCTION_COUNT = new TemplateNumber("count", UNAVAILABLE, Tag.INT);
 	public static final DefaultCompound LT_FUNCTION_COUNT_RANGE = new DefaultCompound("count");
@@ -141,10 +135,6 @@ public final class Tags
 	public static final TemplateNumber LT_FUNCTION_LEVELS = new TemplateNumber("levels", UNAVAILABLE, Tag.INT);
 	public static final DefaultCompound LT_FUNCTION_LEVELS_RANGE = new DefaultCompound("levels");
 	public static final TemplateNumber LT_FUNCTION_LOOTING_LIMIT = new TemplateNumber("limit", UNAVAILABLE, Tag.INT);
-	public static final TemplateNumber LT_FUNCTION_MAX = new TemplateNumber("max", UNAVAILABLE, Tag.INT);
-	public static final TemplateNumber LT_FUNCTION_MAX_FLOAT = new TemplateNumber("max", UNAVAILABLE, Tag.FLOAT);
-	public static final TemplateNumber LT_FUNCTION_MIN = new TemplateNumber("min", UNAVAILABLE, Tag.INT);
-	public static final TemplateNumber LT_FUNCTION_MIN_FLOAT = new TemplateNumber("min", UNAVAILABLE, Tag.FLOAT);
 	public static final DefaultList LT_FUNCTION_MODIFIERS = new DefaultList("modifiers");
 	public static final TemplateString LT_FUNCTION_NBT = new TemplateString("nbt", UNAVAILABLE);
 	public static final TemplateBoolean LT_FUNCTION_TREASURE = new TemplateBoolean("treasure", UNAVAILABLE);
@@ -207,6 +197,11 @@ public final class Tags
 	public static final TemplateString TEXT_OBFUSCATED = new TemplateString("obfuscated", UNAVAILABLE);
 	public static final TemplateString TEXT_STRIKETHROUGH = new TemplateString("strikethrough", UNAVAILABLE);
 	public static final TemplateString TEXT_UNDERLINED = new TemplateString("underlined", UNAVAILABLE);
+
+	public static final TemplateNumber VALUE_MAX = new TemplateNumber("max", UNAVAILABLE, Tag.INT);
+	public static final TemplateNumber VALUE_MAX_FLOAT = new TemplateNumber("max", UNAVAILABLE, Tag.FLOAT);
+	public static final TemplateNumber VALUE_MIN = new TemplateNumber("min", UNAVAILABLE, Tag.INT);
+	public static final TemplateNumber VALUE_MIN_FLOAT = new TemplateNumber("min", UNAVAILABLE, Tag.FLOAT);
 
 	public static void create()
 	{

@@ -5,7 +5,6 @@ import java.awt.GridBagConstraints;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagBigNumber;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
@@ -56,8 +55,8 @@ public class TemplateRotation extends TemplateList
 	public TagList generateTag(BaseObject object, CGPanel panel)
 	{
 		RotationPanel p = (RotationPanel) panel;
-		TagBigNumber y = Tags.DEFAULT_FLOAT.create(Double.parseDouble(p.entryY.getText()));
-		TagBigNumber x = Tags.DEFAULT_FLOAT.create(Double.parseDouble(p.entryX.getText()));
+		Tag y = Tags.DEFAULT_FLOAT.create(Double.parseDouble(p.entryY.getText()));
+		Tag x = Tags.DEFAULT_FLOAT.create(Double.parseDouble(p.entryX.getText()));
 		return this.create(y, x);
 	}
 
