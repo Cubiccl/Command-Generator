@@ -14,6 +14,9 @@ achievement.take=Remove
 
 advancement.criterion=Only this Criterion :
 advancement.grant=Grant Advancement
+advancement.list=Advancements
+advancement.load=Read existing Advancement
+advancement.load.description=Enter an Advancement that the Generator should read.
 advancement.name=Advancement
 advancement.predefined=Predefined Advancements...
 advancement.revoke=Revoke Advancement
@@ -455,9 +458,10 @@ lt_function.set_data.description=Sets the Item's data value.
 lt_function.set_nbt=Add NBT Tags
 lt_function.set_nbt.description=Adds NBT Tags to the Item.
 
+menu.advancement=Advancement Generator
 menu.command=Command Generator
 menu.exit=Exit
-menu.loot_table=Loot Tables Generator
+menu.loot_table=Loot Table Generator
 menu.objects=Custom Objects
 menu.recipe=Recipe Generator
 menu.settings=Settings

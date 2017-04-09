@@ -142,6 +142,11 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		return this.customName();
 	}
 
+	public boolean isValid()
+	{
+		return (this.title != null || this.jsonTitle != null) && this.criteria.size() > 0;
+	}
+
 	@Override
 	public String toCommand()
 	{
