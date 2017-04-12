@@ -38,6 +38,7 @@ public class ObjectCreator
 				criteria.add(criterion.getText());
 			if (criteria.size() == 0) criteria.add(advancement.getAttributeValue("item"));
 			new DefaultAdvancement(advancement.getAttributeValue("id"), ObjectRegistry.items.find(advancement.getAttributeValue("item")),
+					advancement.getAttributeValue("category") != null ? advancement.getAttributeValue("category") : "adventure",
 					criteria.toArray(new String[criteria.size()]));
 		}
 		CommandGenerator.log("Successfully created " + ObjectRegistry.advancements.size() + " advancements.");

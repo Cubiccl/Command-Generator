@@ -1,5 +1,16 @@
 ------------------------- VERSION 2.5.1 -------------------------
 ADDITIONS
+- Updated for snapshot 17w15a.
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+advancement.* -> advancement.story.*
+
+ADDED TRANSLATIONS
+
+------------------------- VERSION 2.5.1 -------------------------
+ADDITIONS
 - Updated for snapshot 17w14a.
 
 BUGS FIXED
