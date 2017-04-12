@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
+import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.JsonMessage;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
@@ -12,11 +13,14 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.advancement.PanelAdvancement;
 import fr.cubiccl.generator.gui.component.panel.gameobject.display.PanelAdvancementDisplay;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class Advancement extends GameObject implements IObjectList<Advancement>
 {
@@ -50,6 +54,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		for (Element criteria : advancement.getChild("loot").getChildren())
 			a.rewardLoot.add(criteria.getText());
 
+		a.findProperties(advancement);
 		return a;
 	}
 
@@ -121,13 +126,21 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		this.requirements = new ArrayList<Integer[]>();
 		this.rewardExperience = -1;
 		this.item = ObjectRegistry.items.first();
+		this.frame = "task";
 	}
 
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		// TODO Advancement.createPanel(properties)
-		return null;
+		if ((boolean) properties.get("new"))
+		{
+			String name = Dialogs.showInputDialog(new Text("objects.name").toString());
+			if (name != null) this.setCustomName(name);
+			else return null;
+			CommandGenerator.window.panelAdvancementSelection.list.add(this);
+		}
+		CommandGenerator.stateManager.clear();
+		return new PanelAdvancement(this);
 	}
 
 	@Override
@@ -145,6 +158,11 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 	public boolean isValid()
 	{
 		return (this.title != null || this.jsonTitle != null) && this.criteria.size() > 0;
+	}
+
+	public void setItem(Item item)
+	{
+		this.item = item;
 	}
 
 	@Override
@@ -255,10 +273,9 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 	}
 
 	@Override
+	@Deprecated
 	public Advancement update(CGPanel panel) throws CommandGenerationException
 	{
-		// TODO Advancement.update(panel)
-		return null;
+		return this;
 	}
-
 }

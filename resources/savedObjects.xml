@@ -208,5 +208,12 @@
       </item>
     </recipe>
   </recipes>
-  <advancements />
+  <advancements>
+    <advancement objectname="My first Advancement" version="1.12" icon="minecraft:acacia_boat" frame="task">
+      <criterias />
+      <requirements />
+      <recipes />
+      <loot />
+    </advancement>
+  </advancements>
 </objects>
