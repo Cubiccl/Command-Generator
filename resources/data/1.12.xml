@@ -1219,6 +1219,7 @@
       <stacksize>1</stacksize>
     </item>
     <item idint="355" idstr="bed">
+      <maxdamage>15</maxdamage>
       <stacksize>1</stacksize>
     </item>
     <item idint="356" idstr="repeater" />
@@ -1608,60 +1609,166 @@
     <achievement id="theEnd2" item="dragon_egg" />
   </achievements>
   <advancements>
-    <advancement id="brew_potion" item="glass_bottle">
+    <advancement category="adventure" id="adventuring_time" item="diamond_boots">
+      <criterion>birch_forest_hills</criterion>
+      <criterion>river</criterion>
+      <criterion>swampland</criterion>
+      <criterion>desert</criterion>
+      <criterion>forest_hills</criterion>
+      <criterion>redwood_tairga_hills</criterion>
+      <criterion>taiga_cold</criterion>
+      <criterion>mesa</criterion>
+      <criterion>forest</criterion>
+      <criterion>stone_beach</criterion>
+      <criterion>ice_flats</criterion>
+      <criterion>taiga_hills</criterion>
+      <criterion>ice_mountains</criterion>
+      <criterion>mesa_rock</criterion>
+      <criterion>savanna</criterion>
+      <criterion>plains</criterion>
+      <criterion>frozen_river</criterion>
+      <criterion>redwood_taiga</criterion>
+      <criterion>cold_beach</criterion>
+      <criterion>deep_ocean</criterion>
+      <criterion>jungle_hills</criterion>
+      <criterion>jungle_edge</criterion>
+      <criterion>ocean</criterion>
+      <criterion>mushroom_island_shote</criterion>
+      <criterion>extreme_hills</criterion>
+      <criterion>desert_hills</criterion>
+      <criterion>jungle</criterion>
+      <criterion>beaches</criterion>
+      <criterion>savanna_rock</criterion>
+      <criterion>taiga_cold_hills</criterion>
+      <criterion>mesa_clear_rock</criterion>
+      <criterion>roofed_forest</criterion>
+      <criterion>taiga</criterion>
+      <criterion>birch_forest</criterion>
+      <criterion>mushroom_island</criterion>
+      <criterion>extreme_hills_with_trees</criterion>
+    </advancement>
+    <advancement category="adventure" id="kill_a_mob" item="iron_sword">
+      <criterion>cave_spider</criterion>
+      <criterion>spider</criterion>
+      <criterion>zombie_pigman</criterion>
+      <criterion>enderman</criterion>
+      <criterion>polar_bear</criterion>
+      <criterion>blaze</criterion>
+      <criterion>creeper</criterion>
+      <criterion>evoker</criterion>
+      <criterion>ghast</criterion>
+      <criterion>guardian</criterion>
+      <criterion>husk</criterion>
+      <criterion>magma_cube</criterion>
+      <criterion>shulker</criterion>
+      <criterion>silverfish</criterion>
+      <criterion>skeleton</criterion>
+      <criterion>slime</criterion>
+      <criterion>stray</criterion>
+      <criterion>vindicator</criterion>
+      <criterion>witch</criterion>
+      <criterion>wither_skeleton</criterion>
+      <criterion>zombie</criterion>
+      <criterion>zombie_villager</criterion>
+    </advancement>
+    <advancement category="adventure" id="kill_all_mobs" item="diamond_sword">
+      <criterion>cave_spider</criterion>
+      <criterion>spider</criterion>
+      <criterion>zombie_pigman</criterion>
+      <criterion>enderman</criterion>
+      <criterion>polar_bear</criterion>
+      <criterion>blaze</criterion>
+      <criterion>creeper</criterion>
+      <criterion>evoker</criterion>
+      <criterion>ghast</criterion>
+      <criterion>guardian</criterion>
+      <criterion>husk</criterion>
+      <criterion>magma_cube</criterion>
+      <criterion>shulker</criterion>
+      <criterion>silverfish</criterion>
+      <criterion>skeleton</criterion>
+      <criterion>slime</criterion>
+      <criterion>stray</criterion>
+      <criterion>vindicator</criterion>
+      <criterion>witch</criterion>
+      <criterion>wither_skeleton</criterion>
+      <criterion>zombie</criterion>
+      <criterion>zombie_villager</criterion>
+    </advancement>
+    <advancement category="adventure" id="root" item="map">
+      <criterion>killed_something</criterion>
+      <criterion>killed_by_something</criterion>
+    </advancement>
+    <advancement category="adventure" id="shoot_arrow" item="bow">
+      <criterion>shot_arrow</criterion>
+    </advancement>
+    <advancement category="adventure" id="sleep_in_bed" item="bed">
+      <criterion>slept_in_bed</criterion>
+    </advancement>
+    <advancement category="adventure" id="sniper_duel" item="arrow">
+      <criterion>killed_skeleton</criterion>
+    </advancement>
+    <advancement category="adventure" id="trade" item="emerald">
+      <criterion>shot_arrow</criterion>
+    </advancement>
+    <advancement category="story" id="brew_potion" item="glass_bottle">
       <criterion>potion</criterion>
     </advancement>
-    <advancement id="create_beacon" item="beacon" />
-    <advancement id="create_full_beacon" item="beacon" />
-    <advancement id="deflect_arrow" item="shield">
+    <advancement category="story" id="brew_weakness_potion" item="potion" />
+    <advancement category="story" id="create_beacon" item="beacon" />
+    <advancement category="story" id="create_full_beacon" item="beacon" />
+    <advancement category="story" id="cure_zombie_villager" item="golden_apple">
+      <criterion>cured_zombie</criterion>
+    </advancement>
+    <advancement category="story" id="deflect_arrow" item="shield">
       <criterion>deflected_projectile</criterion>
     </advancement>
-    <advancement id="elytra" item="elytra" />
-    <advancement id="enchant_item" item="enchanted_book">
+    <advancement category="story" id="elytra" item="elytra" />
+    <advancement category="story" id="enchant_item" item="enchanted_book">
       <criterion>enchanted_item</criterion>
     </advancement>
-    <advancement id="enter_end_gateway" item="ender_pearl">
+    <advancement category="story" id="enter_end_gateway" item="ender_pearl">
       <criterion>enter_end_gateway</criterion>
     </advancement>
-    <advancement id="enter_the_end" item="end_stone">
+    <advancement category="story" id="enter_the_end" item="end_stone">
       <criterion>enter_end_portal</criterion>
     </advancement>
-    <advancement id="enter_the_nether" item="flint_and_steel">
+    <advancement category="story" id="enter_the_nether" item="flint_and_steel">
       <criterion>enter_nether_portal</criterion>
     </advancement>
-    <advancement id="follow_ender_eye" item="eye_of_ender">
+    <advancement category="story" id="follow_ender_eye" item="eye_of_ender">
       <criterion>near_stronghold</criterion>
     </advancement>
-    <advancement id="form_obsidian" item="obsidian" />
-    <advancement id="iron_tools" item="iron_pickaxe" />
-    <advancement id="lava_bucket" item="lava_bucket" />
-    <advancement id="mine_diamond" item="diamond" />
-    <advancement id="mine_stone" item="wooden_pickaxe">
+    <advancement category="story" id="form_obsidian" item="obsidian" />
+    <advancement category="story" id="iron_tools" item="iron_pickaxe" />
+    <advancement category="story" id="lava_bucket" item="lava_bucket" />
+    <advancement category="story" id="mine_diamond" item="diamond" />
+    <advancement category="story" id="mine_stone" item="wooden_pickaxe">
       <criterion>get_stone</criterion>
     </advancement>
-    <advancement id="obtain_armor" item="iron_chestplate">
+    <advancement category="story" id="obtain_armor" item="iron_chestplate">
       <criterion>iron_helmet</criterion>
       <criterion>iron_chestplate</criterion>
       <criterion>iron_leggings</criterion>
       <criterion>iron_boots</criterion>
     </advancement>
-    <advancement id="obtain_blaze_rod" item="blaze_rod" />
-    <advancement id="root" item="grass">
+    <advancement category="story" id="obtain_blaze_rod" item="blaze_rod" />
+    <advancement category="story" id="root" item="grass">
       <criterion>crafting_table</criterion>
     </advancement>
-    <advancement id="shiny_gear" item="diamond_chestplate">
+    <advancement category="story" id="shiny_gear" item="diamond_chestplate">
       <criterion>diamond_helmet</criterion>
       <criterion>diamond_chestplate</criterion>
       <criterion>diamond_leggings</criterion>
       <criterion>diamond_boots</criterion>
     </advancement>
-    <advancement id="smelt_iron" item="iron_ingot">
+    <advancement category="story" id="smelt_iron" item="iron_ingot">
       <criterion>iron</criterion>
     </advancement>
-    <advancement id="summon_wither" item="nether_star">
+    <advancement category="story" id="summon_wither" item="nether_star">
       <criterion>summoned</criterion>
     </advancement>
-    <advancement id="upgrade_tools" item="stone_pickaxe" />
+    <advancement category="story" id="upgrade_tools" item="stone_pickaxe" />
   </advancements>
   <attributes>
     <achievement id="generic.armor" />
@@ -1749,7 +1856,6 @@
     <recipe id="armor_stand" />
     <recipe id="arrow" />
     <recipe id="beacon" />
-    <recipe id="bed" />
     <recipe id="beetroot_soup" />
     <recipe id="birch_boat" />
     <recipe id="birch_door" />
@@ -1767,6 +1873,14 @@
     <recipe id="black_banner">
       <item>banner</item>
       <damage>0</damage>
+    </recipe>
+    <recipe id="black_bed">
+      <item>bed</item>
+      <damage>15</damage>
+    </recipe>
+    <recipe id="black_bed_from_white_bed">
+      <item>bed</item>
+      <damage>15</damage>
     </recipe>
     <recipe id="black_carpet">
       <item>carpet</item>
@@ -1796,6 +1910,14 @@
     <recipe id="blue_banner">
       <item>banner</item>
       <damage>4</damage>
+    </recipe>
+    <recipe id="blue_bed">
+      <item>bed</item>
+      <damage>11</damage>
+    </recipe>
+    <recipe id="blue_bed_from_white_bed">
+      <item>bed</item>
+      <damage>11</damage>
     </recipe>
     <recipe id="blue_carpet">
       <item>carpet</item>
@@ -1845,6 +1967,14 @@
     <recipe id="brown_banner">
       <item>banner</item>
       <damage>3</damage>
+    </recipe>
+    <recipe id="brown_bed">
+      <item>bed</item>
+      <damage>12</damage>
+    </recipe>
+    <recipe id="brown_bed_from_white_bed">
+      <item>bed</item>
+      <damage>12</damage>
     </recipe>
     <recipe id="brown_carpet">
       <item>carpet</item>
@@ -1907,7 +2037,15 @@
     <recipe id="crafting_table" />
     <recipe id="cyan_banner">
       <item>banner</item>
-      <damage>7</damage>
+      <damage>6</damage>
+    </recipe>
+    <recipe id="cyan_bed">
+      <item>bed</item>
+      <damage>8</damage>
+    </recipe>
+    <recipe id="cyan_bed_from_white_bed">
+      <item>bed</item>
+      <damage>8</damage>
     </recipe>
     <recipe id="cyan_carpet">
       <item>carpet</item>
@@ -2025,6 +2163,14 @@
       <item>banner</item>
       <damage>8</damage>
     </recipe>
+    <recipe id="gray_bed">
+      <item>bed</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="gray_bed_from_white_bed">
+      <item>bed</item>
+      <damage>7</damage>
+    </recipe>
     <recipe id="gray_carpet">
       <item>carpet</item>
       <damage>7</damage>
@@ -2056,6 +2202,14 @@
     <recipe id="green_banner">
       <item>banner</item>
       <damage>2</damage>
+    </recipe>
+    <recipe id="green_bed">
+      <item>bed</item>
+      <damage>13</damage>
+    </recipe>
+    <recipe id="green_bed_from_white_bed">
+      <item>bed</item>
+      <damage>13</damage>
     </recipe>
     <recipe id="green_carpet">
       <item>carpet</item>
@@ -2137,6 +2291,14 @@
       <item>banner</item>
       <damage>12</damage>
     </recipe>
+    <recipe id="light_blue_bed">
+      <item>bed</item>
+      <damage>3</damage>
+    </recipe>
+    <recipe id="light_blue_bed_from_white_bed">
+      <item>bed</item>
+      <damage>3</damage>
+    </recipe>
     <recipe id="light_blue_carpet">
       <item>carpet</item>
       <damage>3</damage>
@@ -2172,6 +2334,14 @@
     <recipe id="light_gray_banner">
       <item>banner</item>
       <damage>8</damage>
+    </recipe>
+    <recipe id="light_gray_bed">
+      <item>bed</item>
+      <damage>7</damage>
+    </recipe>
+    <recipe id="light_gray_bed_from_white_bed">
+      <item>bed</item>
+      <damage>7</damage>
     </recipe>
     <recipe id="light_gray_carpet">
       <item>carpet</item>
@@ -2222,6 +2392,14 @@
       <item>banner</item>
       <damage>10</damage>
     </recipe>
+    <recipe id="lime_bed">
+      <item>bed</item>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="lime_bed_from_white_bed">
+      <item>bed</item>
+      <damage>5</damage>
+    </recipe>
     <recipe id="lime_carpet">
       <item>carpet</item>
       <damage>5</damage>
@@ -2254,6 +2432,14 @@
     <recipe id="magenta_banner">
       <item>banner</item>
       <damage>13</damage>
+    </recipe>
+    <recipe id="magenta_bed">
+      <item>bed</item>
+      <damage>2</damage>
+    </recipe>
+    <recipe id="magenta_bed_from_white_bed">
+      <item>bed</item>
+      <damage>2</damage>
     </recipe>
     <recipe id="magenta_carpet">
       <item>carpet</item>
@@ -2338,6 +2524,14 @@
       <item>banner</item>
       <damage>14</damage>
     </recipe>
+    <recipe id="orange_bed">
+      <item>bed</item>
+      <damage>1</damage>
+    </recipe>
+    <recipe id="orange_bed_from_white_bed">
+      <item>bed</item>
+      <damage>1</damage>
+    </recipe>
     <recipe id="orange_carpet">
       <item>carpet</item>
       <damage>1</damage>
@@ -2374,6 +2568,14 @@
     <recipe id="paper" />
     <recipe id="pink_banner">
       <item>banner</item>
+      <damage>6</damage>
+    </recipe>
+    <recipe id="pink_bed">
+      <item>bed</item>
+      <damage>9</damage>
+    </recipe>
+    <recipe id="pink_bed_from_white_bed">
+      <item>bed</item>
       <damage>9</damage>
     </recipe>
     <recipe id="pink_carpet">
@@ -2422,7 +2624,15 @@
     <recipe id="pumpkin_seeds" />
     <recipe id="purple_banner">
       <item>banner</item>
-      <damage>6</damage>
+      <damage>5</damage>
+    </recipe>
+    <recipe id="purple_bed">
+      <item>bed</item>
+      <damage>9</damage>
+    </recipe>
+    <recipe id="purple_bed_from_white_bed">
+      <item>bed</item>
+      <damage>9</damage>
     </recipe>
     <recipe id="purple_carpet">
       <item>carpet</item>
@@ -2469,6 +2679,14 @@
     <recipe id="red_banner">
       <item>banner</item>
       <damage>1</damage>
+    </recipe>
+    <recipe id="red_bed">
+      <item>bed</item>
+      <damage>14</damage>
+    </recipe>
+    <recipe id="red_bed_from_white_bed">
+      <item>bed</item>
+      <damage>14</damage>
     </recipe>
     <recipe id="red_carpet">
       <item>carpet</item>
@@ -2593,6 +2811,10 @@
       <item>banner</item>
       <damage>15</damage>
     </recipe>
+    <recipe id="white_bed">
+      <item>bed</item>
+      <damage>0</damage>
+    </recipe>
     <recipe id="white_carpet">
       <item>carpet</item>
       <damage>0</damage>
@@ -2630,6 +2852,14 @@
     <recipe id="yellow_banner">
       <item>banner</item>
       <damage>11</damage>
+    </recipe>
+    <recipe id="yellow_bed">
+      <item>bed</item>
+      <damage>4</damage>
+    </recipe>
+    <recipe id="yellow_bed_from_white_bed">
+      <item>bed</item>
+      <damage>4</damage>
     </recipe>
     <recipe id="yellow_carpet">
       <item>carpet</item>
@@ -3475,6 +3705,30 @@
         <app>furnace</app>
         <app>lit_furnace</app>
       </applicable>
+    </tag>
+    <tag id="color">
+      <type>3</type>
+      <applicable>
+        <app>bed</app>
+      </applicable>
+      <intnamed prefix="color">
+        <v>white</v>
+        <v>orange</v>
+        <v>magenta</v>
+        <v>light_blue</v>
+        <v>yellow</v>
+        <v>lime</v>
+        <v>pink</v>
+        <v>gray</v>
+        <v>light_gray</v>
+        <v>cyan</v>
+        <v>purple</v>
+        <v>blue</v>
+        <v>brown</v>
+        <v>green</v>
+        <v>red</v>
+        <v>black</v>
+      </intnamed>
     </tag>
     <tag id="Command">
       <type>0</type>
