@@ -19,6 +19,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.CGTabbedPane;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelJsonMessage;
+import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
@@ -31,9 +32,10 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 	private CGButton buttonSave, buttonCancel;
 	private CGRadioButton buttonTString, buttonTJson;
 	private OptionCombobox comboboxFrame;
-	private CGEntry entryTitle, entryDescription, entryBackground, entryParent;
+	private CGEntry entryTitle, entryDescription, entryBackground, entryParent, entryExperience;
 	private PanelItem panelItem;
 	private PanelJsonMessage panelTitleJson;
+	private PanelObjectList<Text> recipes, loot;
 	private CGTabbedPane tabbedPane;
 
 	public PanelAdvancement(Advancement advancement)
@@ -92,20 +94,25 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		gbc.gridwidth = 2;
 		display.add(this.comboboxFrame = new OptionCombobox("advancement.frame", "task", "goal", "challenge"), gbc);
 
-		gbc.gridx = 0;
+		CGPanel rewards = new CGPanel();
+		gbc = rewards.createGridBagLayout();
+		rewards.add((this.entryExperience = new CGEntry("advancement.experience")).container, gbc);
 		++gbc.gridy;
-		gbc.gridwidth = 3;
-		display.add(p, gbc);
+		rewards.add(this.recipes = new PanelObjectList<Text>("advancement.recipes", (Text) null, Text.class, "description", "advancement.recipe"), gbc);
+		++gbc.gridy;
+		rewards.add(this.loot = new PanelObjectList<Text>("advancement.loots", (Text) null, Text.class, "description", "advancement.loot"), gbc);
 
 		this.tabbedPane = new CGTabbedPane();
 		this.tabbedPane.addTab(new Text("advancement.display"), display);
 		this.tabbedPane.addTab(new Text("advancement.criteria"), new CGPanel());
-		this.tabbedPane.addTab(new Text("advancement.rewards"), new CGPanel());
+		this.tabbedPane.addTab(new Text("advancement.rewards"), rewards);
 
 		gbc = this.createGridBagLayout();
 		this.add(l, gbc);
 		++gbc.gridy;
 		this.add(this.tabbedPane, gbc);
+		++gbc.gridy;
+		this.add(p, gbc);
 
 		this.panelItem.setHasDurability(false);
 		this.panelItem.setHasAmount(false);
@@ -133,7 +140,6 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 
 	private void cancel()
 	{
-		// TODO Auto-generated method stub
 		this.panelItem.setItem(this.advancement.getItem());
 		this.comboboxFrame.setValue(this.advancement.frame);
 		this.entryTitle.setText(this.advancement.title == null ? "" : this.advancement.title);
@@ -141,6 +147,14 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		this.entryBackground.setText(this.advancement.background == null ? "" : this.advancement.background);
 		this.entryParent.setText(this.advancement.parent == null ? "" : this.advancement.parent);
 		if (this.advancement.jsonTitle != null) this.panelTitleJson.setupFrom(this.advancement.jsonTitle);
+
+		this.entryExperience.setText(Integer.toString(this.advancement.rewardExperience));
+		this.recipes.clear();
+		for (String s : this.advancement.rewardRecipes)
+			this.recipes.add(new Text(s, false));
+		this.loot.clear();
+		for (String s : this.advancement.rewardLoot)
+			this.loot.add(new Text(s, false));
 
 		this.buttonTString.setSelected(this.advancement.title != null);
 		this.buttonTJson.setSelected(this.advancement.jsonTitle != null);
@@ -151,6 +165,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 	{
 		if (this.buttonTJson.isSelected()) try
 		{
+			this.entryExperience.checkValue(CGEntry.INTEGER);
 			this.advancement.jsonTitle = this.panelTitleJson.generate();
 		} catch (CommandGenerationException e)
 		{
@@ -169,6 +184,14 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		if (this.advancement.background.equals("")) this.advancement.background = null;
 		this.advancement.parent = this.entryParent.getText();
 		if (this.advancement.parent.equals("")) this.advancement.parent = null;
+
+		this.advancement.rewardExperience = Integer.parseInt(this.entryExperience.getText());
+		this.advancement.rewardRecipes.clear();
+		for (Text t : this.recipes.values())
+			this.advancement.rewardRecipes.add(t.id);
+		this.advancement.rewardLoot.clear();
+		for (Text t : this.loot.values())
+			this.advancement.rewardLoot.add(t.id);
 	}
 
 	private void updateTitleType()

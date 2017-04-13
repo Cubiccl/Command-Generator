@@ -214,8 +214,12 @@
       <description>Use /give to get an unobtainable item !</description>
       <criterias />
       <requirements />
-      <recipes />
-      <loot />
+      <recipes>
+        <r>minecraft:bedrock</r>
+      </recipes>
+      <loot>
+        <l>minecraft:custom/cheats</l>
+      </loot>
     </advancement>
   </advancements>
 </objects>

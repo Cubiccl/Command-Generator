@@ -58,7 +58,7 @@ public class Text implements IObjectList<Text>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		EntryPanel p = new EntryPanel("display.lore");
+		EntryPanel p = new EntryPanel((String) properties.get("description"));
 		p.entry.setText(this.id);
 		return p;
 	}

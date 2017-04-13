@@ -128,7 +128,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		this.rewardRecipes = new ArrayList<String>();
 		this.criteria = new ArrayList<AdvancementCriteria>();
 		this.requirements = new ArrayList<Integer[]>();
-		this.rewardExperience = -1;
+		this.rewardExperience = 0;
 		this.item = ObjectRegistry.items.first();
 		this.frame = "task";
 	}
@@ -235,7 +235,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 				loot.add(Tags.DEFAULT_STRING.create(l));
 			rewards.add(Tags.ADVANCEMENT_LOOT.create(loot.toArray(new Tag[loot.size()])));
 		}
-		if (this.rewardExperience != -1) rewards.add(Tags.ADVANCEMENT_EXPERIENCE.create(this.rewardExperience));
+		if (this.rewardExperience != 0) rewards.add(Tags.ADVANCEMENT_EXPERIENCE.create(this.rewardExperience));
 		if (rewards.size() != 0) tags.add(Tags.ADVANCEMENT_REWARDS.create(rewards.toArray(new Tag[rewards.size()])));
 
 		return container.create(tags.toArray(new Tag[tags.size()]));
@@ -268,16 +268,16 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		}
 		root.addContent(req);
 
-		if (this.rewardExperience != -1) root.addContent(new Element("experience").setText(Integer.toString(this.rewardExperience)));
+		if (this.rewardExperience != 0) root.addContent(new Element("experience").setText(Integer.toString(this.rewardExperience)));
 
 		Element recipes = new Element("recipes");
 		for (String recipe : this.rewardRecipes)
-			recipes.addContent(recipe);
+			recipes.addContent(new Element("r").setText(recipe));
 		root.addContent(recipes);
 
 		Element loot = new Element("loot");
 		for (String l : this.rewardLoot)
-			loot.addContent(l);
+			loot.addContent(new Element("l").setText(l));
 		root.addContent(loot);
 
 		return root;

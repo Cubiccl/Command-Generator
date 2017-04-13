@@ -46,7 +46,7 @@ public class PanelDisplay extends CGPanel implements ActionListener
 		gbc.gridwidth = 3;
 		this.add((this.entryName = new CGEntry(new Text("display.name"), new Text("display.name"))).container, gbc);
 		++gbc.gridy;
-		this.add(this.list = new PanelObjectList<Text>("display.lore.title", "display.lore.x", Text.class), gbc);
+		this.add(this.list = new PanelObjectList<Text>("display.lore.title", "display.lore.x", Text.class, "description", "display.lore"), gbc);
 		++gbc.gridy;
 		this.add(this.checkboxDye = new CGCheckBox("display.dye.check"), gbc);
 		++gbc.gridy;
