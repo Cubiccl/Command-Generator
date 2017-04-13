@@ -8,7 +8,8 @@ public enum CriteriaTrigger
 	beacon("construct_beacon"),
 	block("enter_block"),
 	breed("bred_animals"),
-	brew("cured_zombie_villager"),
+	brew("brewed_potion"),
+	cure("cured_zombie_villager"),
 	damage("player_damaged"),
 	dealDamage("player_hurt_entity"),
 	death("entity_killed_player"),
@@ -28,6 +29,15 @@ public enum CriteriaTrigger
 		for (CriteriaTrigger trigger : values())
 			if (trigger.id.equals(id) || id.equals("minecraft:" + trigger.id)) return trigger;
 		return beacon;
+	}
+
+	public static String[] names()
+	{
+		CriteriaTrigger[] triggers = values();
+		String[] names = new String[triggers.length];
+		for (int i = 0; i < names.length; ++i)
+			names[i] = triggers[i].id;
+		return names;
 	}
 
 	public final TemplateTag[] conditions;

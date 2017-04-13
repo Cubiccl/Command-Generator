@@ -212,7 +212,9 @@
     <advancement objectname="My first Advancement" version="1.12" icon="minecraft:command_block" frame="goal">
       <title>Cheats!!</title>
       <description>Use /give to get an unobtainable item !</description>
-      <criterias />
+      <criterias>
+        <criteria name="first_criteria" trigger="construct_beacon" />
+      </criterias>
       <requirements />
       <recipes>
         <r>minecraft:bedrock</r>

@@ -12,6 +12,7 @@ import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.advancement.PanelAdvancementCriteria;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
@@ -55,8 +56,7 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		// TODO AdvancementCriteria.createPanel(properties)
-		return null;
+		return new PanelAdvancementCriteria(this);
 	}
 
 	public Tag[] getConditions()
@@ -83,7 +83,7 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 
 	public TagCompound toTag()
 	{
-		return new DefaultCompound(this.name, Tag.UNKNOWN).create(Tags.ADVANCEMENT_TRIGGER.create(this.name),
+		return new DefaultCompound(this.name, Tag.UNKNOWN).create(Tags.ADVANCEMENT_TRIGGER.create(this.trigger.id),
 				Tags.ADVANCEMENT_CONDITIONS.create(this.conditions.toArray(new Tag[this.conditions.size()])));
 	}
 
@@ -100,7 +100,7 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 	@Override
 	public AdvancementCriteria update(CGPanel panel) throws CommandGenerationException
 	{
-		// TODO AdvancementCriteria.update(panel)
-		return null;
+		((PanelAdvancementCriteria) panel).update(this);
+		return this;
 	}
 }

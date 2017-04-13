@@ -133,6 +133,17 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		this.frame = "task";
 	}
 
+	public void addCriterion(AdvancementCriteria criteria)
+	{
+		this.criteria.add(criteria);
+		this.onChange();
+	}
+
+	public void clearCriteria()
+	{
+		this.criteria.clear();
+	}
+
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
@@ -145,6 +156,11 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		}
 		CommandGenerator.stateManager.clear();
 		return new PanelAdvancement(this);
+	}
+
+	public AdvancementCriteria[] getCriteria()
+	{
+		return this.criteria.toArray(new AdvancementCriteria[this.criteria.size()]);
 	}
 
 	@Override
@@ -167,6 +183,11 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 	public boolean isValid()
 	{
 		return (this.title != null || this.jsonTitle != null) && this.criteria.size() > 0;
+	}
+
+	public void removeCriterion(AdvancementCriteria criteria)
+	{
+		this.criteria.remove(criteria);
 	}
 
 	public void setItem(Item item)
@@ -238,7 +259,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		if (this.rewardExperience != 0) rewards.add(Tags.ADVANCEMENT_EXPERIENCE.create(this.rewardExperience));
 		if (rewards.size() != 0) tags.add(Tags.ADVANCEMENT_REWARDS.create(rewards.toArray(new Tag[rewards.size()])));
 
-		return container.create(tags.toArray(new Tag[tags.size()]));
+		return container.create(tags.toArray(new Tag[tags.size()])).setJson(true);
 	}
 
 	@Override

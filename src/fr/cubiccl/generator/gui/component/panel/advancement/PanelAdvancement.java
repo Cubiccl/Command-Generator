@@ -10,6 +10,7 @@ import javax.swing.SwingConstants;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.advancements.Advancement;
+import fr.cubiccl.generator.gameobject.advancements.AdvancementCriteria;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
@@ -32,6 +33,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 	private CGButton buttonSave, buttonCancel;
 	private CGRadioButton buttonTString, buttonTJson;
 	private OptionCombobox comboboxFrame;
+	private PanelObjectList<AdvancementCriteria> criteria;
 	private CGEntry entryTitle, entryDescription, entryBackground, entryParent, entryExperience;
 	private PanelItem panelItem;
 	private PanelJsonMessage panelTitleJson;
@@ -102,9 +104,13 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		++gbc.gridy;
 		rewards.add(this.loot = new PanelObjectList<Text>("advancement.loots", (Text) null, Text.class, "description", "advancement.loot"), gbc);
 
+		CGPanel criterias = new CGPanel();
+		gbc = criterias.createGridBagLayout();
+		criterias.add(this.criteria = new PanelObjectList<AdvancementCriteria>("advancement.criteria", (Text) null, AdvancementCriteria.class));
+
 		this.tabbedPane = new CGTabbedPane();
 		this.tabbedPane.addTab(new Text("advancement.display"), display);
-		this.tabbedPane.addTab(new Text("advancement.criteria"), new CGPanel());
+		this.tabbedPane.addTab(new Text("advancement.criteria"), criterias);
 		this.tabbedPane.addTab(new Text("advancement.rewards"), rewards);
 
 		gbc = this.createGridBagLayout();
@@ -148,6 +154,10 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		this.entryParent.setText(this.advancement.parent == null ? "" : this.advancement.parent);
 		if (this.advancement.jsonTitle != null) this.panelTitleJson.setupFrom(this.advancement.jsonTitle);
 
+		this.criteria.clear();
+		for (AdvancementCriteria criteria : this.advancement.getCriteria())
+			this.criteria.add(criteria);
+
 		this.entryExperience.setText(Integer.toString(this.advancement.rewardExperience));
 		this.recipes.clear();
 		for (String s : this.advancement.rewardRecipes)
@@ -184,6 +194,10 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		if (this.advancement.background.equals("")) this.advancement.background = null;
 		this.advancement.parent = this.entryParent.getText();
 		if (this.advancement.parent.equals("")) this.advancement.parent = null;
+
+		this.advancement.clearCriteria();
+		for (AdvancementCriteria criteria : this.criteria.values())
+			this.advancement.addCriterion(criteria);
 
 		this.advancement.rewardExperience = Integer.parseInt(this.entryExperience.getText());
 		this.advancement.rewardRecipes.clear();
