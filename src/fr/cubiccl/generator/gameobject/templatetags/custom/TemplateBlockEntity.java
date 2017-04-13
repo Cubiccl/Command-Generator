@@ -21,7 +21,7 @@ public class TemplateBlockEntity extends TemplateCompound
 		PanelTags p = new PanelTags(null, Tag.BLOCK);
 		p.setTargetObject(object);
 
-		if (previousValue != null) p.setTags(((TagCompound) previousValue).value());
+		if (previousValue != null) p.setValues(((TagCompound) previousValue).value());
 
 		p.setName(this.title());
 		return p;

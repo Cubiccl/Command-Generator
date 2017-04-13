@@ -221,7 +221,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 
 	public void setTags(Tag[] tags)
 	{
-		this.panelTags.setTags(tags);
+		this.panelTags.setValues(tags);
 	}
 
 	@Override
@@ -233,7 +233,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 		this.updateDisplay();
 		if (this.spinnerAmount.isVisible()) this.spinnerAmount.setText(Integer.toString(itemStack.amount));
 		if (this.hasDurability) this.spinnerDurability.setText(Integer.toString(itemStack.getDamage()));
-		if (this.panelTags.isVisible()) this.panelTags.setTags(itemStack.getNbt().value());
+		if (this.panelTags.isVisible()) this.panelTags.setValues(itemStack.getNbt().value());
 	}
 
 	@Override

@@ -108,7 +108,7 @@ public class PanelEntity extends CGPanel implements ActionListener, ICustomObjec
 
 	public void setTags(Tag[] value)
 	{
-		this.panelTags.setTags(value);
+		this.panelTags.setValues(value);
 	}
 
 	@Override

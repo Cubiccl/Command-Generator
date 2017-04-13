@@ -65,6 +65,7 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	/** @return True if this tag can be applied to the Object with the input ID. */
 	public boolean canApplyTo(BaseObject object)
 	{
+		if (object == null) return true;
 		for (String app : this.applicable)
 		{
 			if (app.equals("ANY") && object != Entity.PLAYER) return true;
