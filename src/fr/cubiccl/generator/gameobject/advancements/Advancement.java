@@ -150,6 +150,11 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		return new PanelAdvancementDisplay(this);
 	}
 
+	public Item getItem()
+	{
+		return this.item;
+	}
+
 	@Override
 	public String getName(int index)
 	{
