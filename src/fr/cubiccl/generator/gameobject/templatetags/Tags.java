@@ -17,6 +17,7 @@ public final class Tags
 	public static final TemplateString ADVANCEMENT_BACKGROUND = new TemplateString("background", UNAVAILABLE);
 	public static final DefaultCompound ADVANCEMENT_CONDITIONS = new DefaultCompound("conditions");
 	public static final DefaultCompound ADVANCEMENT_CRITERIA = new DefaultCompound("criteria");
+	public static final TemplateString ADVANCEMENT_DESCRIPTION = new TemplateString("description", UNAVAILABLE);
 	public static final DefaultCompound ADVANCEMENT_DISPLAY = new DefaultCompound("display");
 	public static final TemplateNumber ADVANCEMENT_EXPERIENCE = new TemplateNumber("experience", UNAVAILABLE, Tag.INT);
 	public static final TemplateString ADVANCEMENT_FRAME = new TemplateString("frame", UNAVAILABLE);

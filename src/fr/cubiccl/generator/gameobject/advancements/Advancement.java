@@ -33,6 +33,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		if (advancement.getAttribute("title") != null) a.title = advancement.getAttributeValue("title");
 		else if (advancement.getChild("json_title") != null) a.jsonTitle = JsonMessage.createFrom(advancement.getChild("json_title"));
 		if (advancement.getChild("background") != null) a.background = advancement.getChildText("background");
+		if (advancement.getChild("description") != null) a.description = advancement.getChildText("description");
 		if (advancement.getChild("parent") != null) a.parent = advancement.getChildText("parent");
 
 		for (Element criteria : advancement.getChild("criterias").getChildren())
@@ -71,6 +72,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 					.getTag(Tags.ADVANCEMENT_TITLE_JSON));
 			if (display.hasTag(Tags.ADVANCEMENT_FRAME)) a.frame = ((TagString) display.getTag(Tags.ADVANCEMENT_FRAME)).value();
 			if (display.hasTag(Tags.ADVANCEMENT_BACKGROUND)) a.background = ((TagString) display.getTag(Tags.ADVANCEMENT_BACKGROUND)).value();
+			if (display.hasTag(Tags.ADVANCEMENT_DESCRIPTION)) a.description = ((TagString) display.getTag(Tags.ADVANCEMENT_DESCRIPTION)).value();
 		}
 
 		if (tag.hasTag(Tags.ADVANCEMENT_PARENT)) a.parent = ((TagString) tag.getTag(Tags.ADVANCEMENT_PARENT)).value();
@@ -110,7 +112,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		return a;
 	}
 
-	public String background, frame, parent, title;
+	public String background, description, frame, parent, title;
 	private ArrayList<AdvancementCriteria> criteria;
 	private Item item;
 	public JsonMessage jsonTitle;
@@ -186,6 +188,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		else if (this.jsonTitle != null) tags.add(this.jsonTitle.toTag(Tags.ADVANCEMENT_TITLE_JSON));
 		tags.add(Tags.ADVANCEMENT_FRAME.create(this.frame));
 		if (this.background != null) tags.add(Tags.ADVANCEMENT_BACKGROUND.create(this.background));
+		if (this.description != null) tags.add(Tags.ADVANCEMENT_DESCRIPTION.create(this.description));
 
 		TagCompound display = Tags.ADVANCEMENT_DISPLAY.create(tags.toArray(new Tag[tags.size()]));
 		tags.clear();
@@ -238,6 +241,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		root.setAttribute("icon", this.item.id());
 		root.setAttribute("frame", this.frame);
 		if (this.title != null) root.addContent(new Element("title").setText(this.title));
+		if (this.description != null) root.addContent(new Element("description").setText(this.description));
 		else if (this.jsonTitle != null) root.addContent(this.jsonTitle.toXML());
 		if (this.background != null) root.addContent(new Element("background").setText(this.background));
 		if (this.parent != null) root.addContent(new Element("parent").setText(this.parent));
