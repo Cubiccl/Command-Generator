@@ -1,17 +1,20 @@
 package fr.cubiccl.generator.gui.component.panel.gameobject.display;
 
+import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
 import fr.cubiccl.generator.gameobject.advancements.Advancement;
+import fr.cubiccl.generator.utils.Textures;
 
 public class PanelAdvancementDisplay extends JPanel
 {
+	private static final int ITEM = 32, FRAME = 52, ITEMPAD = 10;
 	private static final long serialVersionUID = -604631852048059610L;
 
-	@SuppressWarnings("unused")
 	private Advancement advancement;
+	private boolean sizeSet = false;
 
 	public PanelAdvancementDisplay()
 	{
@@ -26,6 +29,7 @@ public class PanelAdvancementDisplay extends JPanel
 	public void display(Advancement advancement)
 	{
 		this.advancement = advancement;
+		this.sizeSet = false;
 		this.repaint();
 	}
 
@@ -33,16 +37,22 @@ public class PanelAdvancementDisplay extends JPanel
 	public void paint(Graphics g)
 	{
 		super.paint(g);
-		/* int width = this.getWidth(), height = this.getHeight() - 1;
-		 * 
-		 * g.setColor(BACKGROUND); g.fillRect(PIXEL, 0, width - PIXEL * 2, height); g.fillRect(0, PIXEL, width, height - PIXEL * 2);
-		 * 
-		 * g.setColor(BORDER); g.fillRect(PIXEL, PIXEL, PIXEL, height - PIXEL * 2); g.fillRect(PIXEL, PIXEL, width - PIXEL * 2, PIXEL); g.fillRect(width - PIXEL * 2, PIXEL, PIXEL, height - PIXEL * 2); g.fillRect(PIXEL, height - PIXEL * 2, width - PIXEL * 2, PIXEL);
-		 * 
-		 * if (this.block == null) return;
-		 * 
-		 * g.drawImage(this.block.texture(), MARGIN, MARGIN - PIXEL * 3 / 2, null);
-		 * 
-		 * this.paintInfo(g); */
+
+		if (this.advancement == null) return;
+		if (!this.sizeSet) this.setSize();
+
+		if (this.advancement.frame.equals("challenge")) g.drawImage(Textures.getTexture("gui.challenge"), 0, 0, FRAME, FRAME, null);
+		else if (this.advancement.frame.equals("goal")) g.drawImage(Textures.getTexture("gui.goal"), 0, 0, FRAME, FRAME, null);
+		else g.drawImage(Textures.getTexture("gui.task"), 0, 0, FRAME, FRAME, null);
+
+		g.drawImage(this.advancement.getItem().texture(), ITEMPAD, ITEMPAD, ITEM, ITEM, null);
+
+	}
+
+	private void setSize()
+	{
+		this.setPreferredSize(new Dimension(FRAME, FRAME));
+		this.sizeSet = true;
+		this.revalidate();
 	}
 }

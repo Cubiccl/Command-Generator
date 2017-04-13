@@ -49,8 +49,8 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	public Window()
 	{
 		super();
-		this.setSize(800, 600);
-		this.setMinimumSize(new Dimension(800, 400));
+		this.setSize(890, 600);
+		this.setMinimumSize(new Dimension(890, 400));
 		this.setLocationRelativeTo(null);
 		this.setExtendedState(MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);

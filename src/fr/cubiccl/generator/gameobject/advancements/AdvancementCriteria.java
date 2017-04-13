@@ -44,7 +44,7 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 
 	public AdvancementCriteria()
 	{
-		this.trigger = CriteriaTrigger.beacon;
+		this.trigger = CriteriaTrigger.bred_animals;
 		this.conditions = new ArrayList<Tag>();
 	}
 
