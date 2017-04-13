@@ -5,6 +5,9 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Set;
 
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -42,7 +45,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	private CGList listTags;
 	private ArrayList<TemplateTag> shownTags;
 	private TemplateTag[] tags;
-	private Tag[] values;
+	private HashMap<TemplateTag, Tag> values;
 
 	public PanelTags(String titleID, int applicationType)
 	{
@@ -53,7 +56,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	{
 		super(titleID);
 		this.tags = tags;
-		this.values = new Tag[this.tags.length];
+		this.values = new HashMap<TemplateTag, Tag>();
 		this.shownTags = new ArrayList<TemplateTag>();
 
 		GridBagConstraints gbc = this.createGridBagLayout();
@@ -86,34 +89,34 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonAdd && this.getSelectedTag() != null)
+		if (e.getSource() == this.buttonAdd && this.selectedTag() != null)
 		{
-			TemplateTag tag = this.getSelectedTag();
+			TemplateTag tag = this.selectedTag();
 			BaseObject objectToGive = this.currentObject;
 			for (TemplateTag t : this.shownTags)
 			{
-				if (t.id().equals("DisplayData") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this
+				if (t.id().equals("DisplayData") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) (double) this
 						.valueFor(t).value();
-				else if (t.id().equals("carriedData") && tag instanceof TemplateBlockId && this.valueFor(t) != null) ((TemplateBlockId) tag).damage = (int) this
+				else if (t.id().equals("carriedData") && tag instanceof TemplateBlockId && this.valueFor(t) != null) ((TemplateBlockId) tag).damage = (int) (double) this
 						.valueFor(t).value();
-				else if (t.id().equals("blockData") && tag instanceof TemplateBlockId && this.valueFor(t) != null) ((TemplateBlockId) tag).damage = (int) this
+				else if (t.id().equals("blockData") && tag instanceof TemplateBlockId && this.valueFor(t) != null) ((TemplateBlockId) tag).damage = (int) (double) this
 						.valueFor(t).value();
-				else if (t.id().equals("Data") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) this
+				else if (t.id().equals("Data") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) (double) this
 						.valueFor(t).value();
-				else if (t.id().equals("Base") && tag instanceof TemplatePatterns && this.valueFor(t) != null) ((TemplatePatterns) tag).base = (int) this
+				else if (t.id().equals("Base") && tag instanceof TemplatePatterns && this.valueFor(t) != null) ((TemplatePatterns) tag).base = (int) (double) this
 						.valueFor(t).value();
 				else if (tag.id().equals("TileEntityData") && t.id().equals("Block")) objectToGive = this.valueFor(t) == null ? ObjectRegistry.blocks.first()
 						: ObjectRegistry.blocks.find(((TagString) this.valueFor(t)).value());
-				else if (t.id().equals("ParticleParam1") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param1 = (int) this
+				else if (t.id().equals("ParticleParam1") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param1 = (int) (double) this
 						.valueFor(t).value();
-				else if (t.id().equals("ParticleParam2") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param2 = (int) this
+				else if (t.id().equals("ParticleParam2") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param2 = (int) (double) this
 						.valueFor(t).value();
 			}
 
 			tag.askValue(objectToGive, this.selectedValue(), this);
-		} else if (e.getSource() == this.buttonRemove && this.getSelectedTag() != null)
+		} else if (e.getSource() == this.buttonRemove && this.selectedTag() != null)
 		{
-			this.values[this.indexOf(this.getSelectedTag())] = null;
+			this.values.remove(this.selectedTag());
 			this.updateDisplay();
 		}
 	}
@@ -121,49 +124,37 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	@Override
 	public void createTag(TemplateTag template, Tag value)
 	{
-		this.values[this.indexOf(template)] = value;
-		boolean particles = false;
-		for (int i = 0; i < this.tags.length; ++i)
+		this.values.put(template, value);
+		TemplateTag t;
+		if ((t = this.getTag("Base")) != null && template instanceof TemplatePatterns && template.id().equals("Patterns"))
 		{
-			if (this.tags[i].id().equals("Base") && template instanceof TemplatePatterns && template.id().equals("Patterns"))
-			{
-				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplatePatterns) template).base);
-				((TemplatePatterns) template).base = -1;
-				break;
-			} else if (this.tags[i].id().equals("Data") && template instanceof TemplateItemId
-					&& (template.id().equals("Item") || template.id().equals("Block")))
-			{
-				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplateItemId) template).damage);
-				((TemplateItemId) template).damage = -1;
-				break;
-			} else if (this.tags[i].id().equals("carriedData") && template instanceof TemplateBlockId && template.id().equals("carried"))
-			{
-				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplateBlockId) template).damage);
-				((TemplateBlockId) template).damage = -1;
-				break;
-			} else if (this.tags[i].id().equals("blockData") && template instanceof TemplateBlockId && template.id().equals("blockId"))
-			{
-				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplateBlockId) template).damage);
-				((TemplateBlockId) template).damage = -1;
-				break;
-			} else if (this.tags[i].id().equals("DisplayData") && template instanceof TemplateItemId && template.id().equals("DisplayTile"))
-			{
-				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplateItemId) template).damage);
-				((TemplateItemId) template).damage = -1;
-				break;
-			} else if (this.tags[i].id().equals("ParticleParam1") && template instanceof TemplateParticle && template.id().equals("Particle"))
-			{
-				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplateParticle) template).param1);
-				((TemplateParticle) template).param1 = 0;
-				if (particles) break;
-				particles = true;
-			} else if (this.tags[i].id().equals("ParticleParam2") && template instanceof TemplateParticle && template.id().equals("Particle"))
-			{
-				this.values[i] = ((TemplateNumber) this.tags[i]).create(((TemplateParticle) template).param2);
-				((TemplateParticle) template).param2 = 0;
-				if (particles) break;
-				particles = true;
-			}
+			this.values.put(t, ((TemplateNumber) t).create(((TemplatePatterns) template).base));
+			((TemplatePatterns) template).base = -1;
+		} else if ((t = this.getTag("Data")) != null && template instanceof TemplateItemId && (template.id().equals("Item") || template.id().equals("Block")))
+		{
+			this.values.put(t, ((TemplateNumber) t).create(((TemplateItemId) template).damage));
+			((TemplateItemId) template).damage = -1;
+		} else if ((t = this.getTag("carriedData")) != null && template instanceof TemplateBlockId && template.id().equals("carried"))
+		{
+			this.values.put(t, ((TemplateNumber) t).create(((TemplateBlockId) template).damage));
+			((TemplateBlockId) template).damage = -1;
+		} else if ((t = this.getTag("blockData")) != null && template instanceof TemplateBlockId && template.id().equals("blockId"))
+		{
+			this.values.put(t, ((TemplateNumber) t).create(((TemplateBlockId) template).damage));
+			((TemplateBlockId) template).damage = -1;
+		} else if ((t = this.getTag("DisplayData")) != null && template instanceof TemplateItemId && template.id().equals("DisplayTile"))
+		{
+			this.values.put(t, ((TemplateNumber) t).create(((TemplateItemId) template).damage));
+			((TemplateItemId) template).damage = -1;
+		} else if ((t = this.getTag("ParticleParam1")) != null && template instanceof TemplateParticle && template.id().equals("Particle"))
+		{
+			this.values.put(t, ((TemplateNumber) t).create(((TemplateParticle) template).param1));
+			((TemplateParticle) template).param1 = 0;
+		}
+		if ((t = this.getTag("ParticleParam2")) != null && template instanceof TemplateParticle && template.id().equals("Particle"))
+		{
+			this.values.put(t, ((TemplateNumber) t).create(((TemplateParticle) template).param2));
+			((TemplateParticle) template).param2 = 0;
 		}
 		this.updateDisplay();
 	}
@@ -171,65 +162,63 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	public TagCompound generateTags(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
-		for (Tag tag : this.values)
+		for (Tag tag : this.values.values())
 			if (tag != null) tags.add(tag);
 		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
-	public TemplateTag getSelectedTag()
+	private TemplateTag getTag(String id)
+	{
+		for (TemplateTag tag : this.tags)
+			if (tag.id().equals(id)) return tag;
+		return null;
+	}
+
+	public TemplateTag selectedTag()
 	{
 		if (this.shownTags.size() == 0 || this.listTags.getSelectedIndex() == -1) return null;
 		return this.shownTags.get(this.listTags.getSelectedIndex());
 	}
 
-	private int indexOf(TemplateTag template)
-	{
-		TemplateTag tag = this.getSelectedTag();
-		for (int i = 0; i < this.tags.length; ++i)
-			if (tag == this.tags[i]) return i;
-		return -1;
-	}
-
 	public Tag selectedValue()
 	{
-		return this.valueFor(this.getSelectedTag());
+		return this.valueFor(this.selectedTag());
 	}
 
-	public void setTags(Tag[] value)
+	public void setTags(TemplateTag... tags)
 	{
-		for (int i = 0; i < this.values.length; i++)
-			this.values[i] = null;
-
-		for (Tag t : value)
-		{
-			for (int i = 0; i < this.tags.length; ++i)
-			{
-				if (this.tags[i].id().equals(t.id()))
-				{
-					this.values[i] = t;
-					break;
-				}
-			}
-		}
-		this.updateDisplay();
+		this.tags = tags;
+		this.setTargetObject(this.currentObject);
 	}
 
 	public void setTargetObject(BaseObject object)
 	{
 		this.currentObject = object;
 		this.shownTags.clear();
-		for (int i = 0; i < this.tags.length; ++i)
-			if (this.tags[i].canApplyTo(this.currentObject)) this.shownTags.add(this.tags[i]);
-			else this.values[i] = null;
+		Set<TemplateTag> templates = new HashSet<TemplateTag>();
+		templates.addAll(this.values.keySet());
+		for (TemplateTag template : templates)
+			if (this.getTag(template.id()) == null || !template.canApplyTo(this.currentObject)) this.values.remove(template);
+		for (TemplateTag template : this.tags)
+			if (template.canApplyTo(this.currentObject)) this.shownTags.add(template);
 
 		this.updateTranslations();
+	}
+
+	public void setValues(Tag[] value)
+	{
+		this.values.clear();
+
+		for (Tag t : value)
+			this.values.put(t.template, t);
+		this.updateDisplay();
 	}
 
 	private void updateDisplay()
 	{
 		if (this.listTags.getSelectedIndex() == -1 || this.shownTags.size() == -1) return;
 		Tag value = this.selectedValue();
-		if (value == null) this.areaValue.setText(this.getSelectedTag().description(this.currentObject) + "\n" + Lang.translate("tag.no_value"));
+		if (value == null) this.areaValue.setText(this.selectedTag().description(this.currentObject) + "\n" + Lang.translate("tag.no_value"));
 		else this.areaValue.setText(value.template.description(this.currentObject) + "\n"
 				+ value.toCommand(Settings.getSetting(Settings.INDENTATION).equals("true") ? 0 : -1));
 	}
@@ -263,8 +252,6 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	private Tag valueFor(TemplateTag template)
 	{
 		if (template == null) return null;
-		for (Tag tag : this.values)
-			if (tag != null && tag.template.id().equals(template.id())) return tag;
-		return null;
+		return this.values.get(template);
 	}
 }
