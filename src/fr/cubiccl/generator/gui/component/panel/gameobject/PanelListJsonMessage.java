@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.JsonMessage;
+import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -154,6 +155,14 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 			values[i] = this.messages.get(i).toTag(Tags.JSON_CONTAINER);
 
 		return container.create(values);
+	}
+
+	public void setupFrom(Tag t)
+	{
+		this.clear();
+		if (t instanceof TagCompound) this.addMessage(JsonMessage.createFrom((TagCompound) t));
+		else for (Tag tag : ((TagList) t).value())
+			this.addMessage(JsonMessage.createFrom((TagCompound) tag));
 	}
 
 	@Override
