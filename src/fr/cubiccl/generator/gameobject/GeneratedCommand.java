@@ -19,7 +19,7 @@ public class GeneratedCommand extends GameObject
 	public static GeneratedCommand createFrom(TagCompound tag)
 	{
 		String command = "GLITCHED COMMAND...";
-		if (tag.hasTag(Tags.COMMAND)) command = (String) tag.getTag(Tags.COMMAND).value();
+		if (tag.hasTag(Tags.COMMAND)) command = tag.getTag(Tags.COMMAND).value();
 		GeneratedCommand c = new GeneratedCommand(command);
 		c.findName(tag);
 		return c;

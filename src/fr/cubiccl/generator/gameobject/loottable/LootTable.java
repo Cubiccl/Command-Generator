@@ -38,7 +38,7 @@ public class LootTable extends GameObject implements IObjectList<LootTable>
 		ArrayList<LootTablePool> pools = new ArrayList<LootTablePool>();
 		if (tag.hasTag(Tags.LOOTTABLE_POOLS))
 		{
-			TagList list = (TagList) tag.getTag(Tags.LOOTTABLE_POOLS);
+			TagList list = tag.getTag(Tags.LOOTTABLE_POOLS);
 			for (Tag t : list.value())
 			{
 				LootTablePool p = LootTablePool.createFrom((TagCompound) t);

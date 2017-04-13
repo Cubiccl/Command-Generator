@@ -121,7 +121,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		if (this.nbt.hasTag("display"))
 		{
 			TagCompound display = (TagCompound) this.nbt.getTagFromId("display");
-			if (display.hasTag(Tags.DISPLAY_NAME)) return ((TagString) display.getTag(Tags.DISPLAY_NAME)).value();
+			if (display.hasTag(Tags.DISPLAY_NAME)) return display.getTag(Tags.DISPLAY_NAME).value();
 		}
 		return (this.amount == 0 ? "" : this.amount + " ") + this.item.name(this.damage).toString();
 	}
@@ -154,7 +154,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 			TagCompound display = (TagCompound) this.nbt.getTagFromId("display");
 			if (display.hasTag(Tags.DISPLAY_LORE))
 			{
-				TagList lore = (TagList) display.getTag(Tags.DISPLAY_LORE);
+				TagList lore = display.getTag(Tags.DISPLAY_LORE);
 				String[] l = new String[lore.size()];
 				for (int i = 0; i < l.length; ++i)
 					l[i] = ((TagString) lore.getTag(i)).value();
