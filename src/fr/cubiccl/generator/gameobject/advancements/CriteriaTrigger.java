@@ -5,30 +5,30 @@ import fr.cubiccl.generator.utils.Text;
 
 public enum CriteriaTrigger
 {
-	beacon("construct_beacon"),
-	block("enter_block"),
-	breed("bred_animals"),
-	brew("brewed_potion"),
-	cure("cured_zombie_villager"),
-	damage("player_damaged"),
-	dealDamage("player_hurt_entity"),
-	death("entity_killed_player"),
-	enchant("enchanted_item"),
-	enderEye("used_ender_eye"),
+	bred_animals("bred_animals"),
+	brewed_potion("brewed_potion"),
+	construct_beacon("construct_beacon"),
+	cured_zombie_villager("cured_zombie_villager"),
+	enchanted_item("enchanted_item"),
+	enter_block("enter_block"),
+	entity_killed_player("entity_killed_player"),
 	impossible("impossible"),
-	inventory("inventory_changed"),
-	kill("player_killed_entity"),
+	inventory_changed("inventory_changed"),
 	location("location"),
-	recipe("recipe_unlocked"),
-	sleep("slept_in_bed"),
-	summon("summoned_entity"),
-	villager("villager_trade");
+	player_damaged("player_damaged"),
+	player_hurt_entity("player_hurt_entity"),
+	player_killed_entity("player_killed_entity"),
+	recipe_unlocked("recipe_unlocked"),
+	slept_in_bed("slept_in_bed"),
+	summoned_entity("summoned_entity"),
+	used_ender_eye("used_ender_eye"),
+	villager_trade("villager_trade");
 
 	public static CriteriaTrigger find(String id)
 	{
 		for (CriteriaTrigger trigger : values())
 			if (trigger.id.equals(id) || id.equals("minecraft:" + trigger.id)) return trigger;
-		return beacon;
+		return construct_beacon;
 	}
 
 	public static String[] names()

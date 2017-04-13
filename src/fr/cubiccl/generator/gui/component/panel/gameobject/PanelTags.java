@@ -163,7 +163,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (Tag tag : this.values.values())
-			if (tag != null) tags.add(tag);
+			if (tag != null && this.shownTags.contains(tag.template)) tags.add(tag);
 		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
