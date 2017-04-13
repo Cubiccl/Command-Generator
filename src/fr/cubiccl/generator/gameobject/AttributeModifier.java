@@ -54,28 +54,28 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		double am = 0, amm = -1;
 		long um = 0, ul = 0;
 
-		if (tag.hasTag(Tags.ATTRIBUTE_ATTRIBUTE_NAME)) a = ObjectRegistry.attributes.find(((TagString) tag.getTag(Tags.ATTRIBUTE_ATTRIBUTE_NAME)).value());
-		if (tag.hasTag(Tags.ATTRIBUTE_attribute_name)) a = ObjectRegistry.attributes.find(((TagString) tag.getTag(Tags.ATTRIBUTE_attribute_name)).value());
-		if (tag.hasTag(Tags.ATTRIBUTE_MODIFIER_NAME)) n = ((TagString) tag.getTag(Tags.ATTRIBUTE_MODIFIER_NAME)).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_modifier_name)) n = ((TagString) tag.getTag(Tags.ATTRIBUTE_modifier_name)).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_SLOT)) s.add(((TagString) tag.getTag(Tags.ATTRIBUTE_SLOT)).value());
+		if (tag.hasTag(Tags.ATTRIBUTE_ATTRIBUTE_NAME)) a = ObjectRegistry.attributes.find(tag.getTag(Tags.ATTRIBUTE_ATTRIBUTE_NAME).value());
+		if (tag.hasTag(Tags.ATTRIBUTE_attribute_name)) a = ObjectRegistry.attributes.find(tag.getTag(Tags.ATTRIBUTE_attribute_name).value());
+		if (tag.hasTag(Tags.ATTRIBUTE_MODIFIER_NAME)) n = tag.getTag(Tags.ATTRIBUTE_MODIFIER_NAME).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_modifier_name)) n = tag.getTag(Tags.ATTRIBUTE_modifier_name).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_SLOT)) s.add(tag.getTag(Tags.ATTRIBUTE_SLOT).value());
 		if (tag.hasTag(Tags.ATTRIBUTE_slots))
 		{
-			for (Tag slot : ((TagList) tag.getTag(Tags.ATTRIBUTE_slots)).value())
+			for (Tag slot : tag.getTag(Tags.ATTRIBUTE_slots).value())
 				s.add(((TagString) slot).value());
 		}
-		if (tag.hasTag(Tags.ATTRIBUTE_OPERATION)) o = (byte) (int) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_OPERATION)).valueInt();
-		if (tag.hasTag(Tags.ATTRIBUTE_operation)) o = (byte) (int) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_operation)).valueInt();
-		if (tag.hasTag(Tags.ATTRIBUTE_AMOUNT)) am = ((TagNumber) tag.getTag(Tags.ATTRIBUTE_AMOUNT)).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_amount)) am = ((TagNumber) tag.getTag(Tags.ATTRIBUTE_amount)).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_OPERATION)) o = (byte) tag.getTag(Tags.ATTRIBUTE_OPERATION).valueInt();
+		if (tag.hasTag(Tags.ATTRIBUTE_operation)) o = (byte) tag.getTag(Tags.ATTRIBUTE_operation).valueInt();
+		if (tag.hasTag(Tags.ATTRIBUTE_AMOUNT)) am = tag.getTag(Tags.ATTRIBUTE_AMOUNT).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_amount)) am = tag.getTag(Tags.ATTRIBUTE_amount).value();
 		if (tag.hasTag(Tags.ATTRIBUTE_amount_range))
 		{
-			TagCompound container = (TagCompound) tag.getTag(Tags.ATTRIBUTE_amount_range);
-			am = ((TagNumber) container.getTag(Tags.VALUE_MIN_FLOAT)).value();
-			amm = ((TagNumber) container.getTag(Tags.VALUE_MAX_FLOAT)).value();
+			TagCompound container = tag.getTag(Tags.ATTRIBUTE_amount_range);
+			am = container.getTag(Tags.VALUE_MIN_FLOAT).value();
+			amm = container.getTag(Tags.VALUE_MAX_FLOAT).value();
 		}
-		if (tag.hasTag(Tags.ATTRIBUTE_UUIDMOST)) um = (long) (double) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_UUIDMOST)).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_UUIDLEAST)) ul = (long) (double) ((TagNumber) tag.getTag(Tags.ATTRIBUTE_UUIDLEAST)).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_UUIDMOST)) um = (long) (double) tag.getTag(Tags.ATTRIBUTE_UUIDMOST).value();
+		if (tag.hasTag(Tags.ATTRIBUTE_UUIDLEAST)) ul = (long) (double) tag.getTag(Tags.ATTRIBUTE_UUIDLEAST).value();
 
 		AttributeModifier m = new AttributeModifier(a, n, s.toArray(new String[s.size()]), o, am, amm, um, ul);
 		m.findName(tag);

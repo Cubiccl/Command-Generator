@@ -197,21 +197,21 @@ public class PanelFunction extends CGPanel implements ActionListener
 
 			if (f == SET_ATTRIBUTES && t.hasTag(Tags.LT_FUNCTION_MODIFIERS))
 			{
-				Tag[] m = ((TagList) t.getTag(Tags.LT_FUNCTION_MODIFIERS)).value();
+				Tag[] m = t.getTag(Tags.LT_FUNCTION_MODIFIERS).value();
 				AttributeModifier[] modifiers = new AttributeModifier[m.length];
 				for (int i = 0; i < m.length; ++i)
 					modifiers[i] = AttributeModifier.createFrom((TagCompound) m[i]);
 				this.attributes.setValues(modifiers);
 			} else if (f == ENCHANT_RANDOMLY && t.hasTag(Tags.LT_FUNCTION_ENCHANTMENTS))
 			{
-				Tag[] e = ((TagList) t.getTag(Tags.LT_FUNCTION_ENCHANTMENTS)).value();
+				Tag[] e = t.getTag(Tags.LT_FUNCTION_ENCHANTMENTS).value();
 				EnchantmentType[] enchantments = new EnchantmentType[e.length];
 				for (int i = 0; i < e.length; ++i)
 					enchantments[i] = ObjectRegistry.enchantments.find(((TagString) e[i]).value());
 				this.enchantments.setValues(enchantments);
 			} else if (f == SET_NBT && t.hasTag(Tags.LT_FUNCTION_NBT))
 			{
-				TagCompound tag = (TagCompound) NBTReader.read(((TagString) t.getTag(Tags.LT_FUNCTION_NBT)).value(), true, true);
+				TagCompound tag = (TagCompound) NBTReader.read(t.getTag(Tags.LT_FUNCTION_NBT).value(), true, true);
 				String[] apps = tag.findApplications();
 				if (apps.length != 0) this.panelNbt.setItem(ObjectRegistry.items.find(apps[0]));
 				this.panelNbt.setTags(tag.value());
@@ -255,10 +255,9 @@ public class PanelFunction extends CGPanel implements ActionListener
 				}
 			}
 
-			if (f == ENCHANT_WITH_LEVELS && t.hasTag(Tags.LT_FUNCTION_TREASURE)) this.checkboxTreasure.setSelected(((TagBoolean) t
-					.getTag(Tags.LT_FUNCTION_TREASURE)).value());
-			if (f == LOOTING_ENCHANT && t.hasTag(Tags.LT_FUNCTION_LOOTING_LIMIT)) this.entryLimit.setText(Integer.toString(((TagNumber) t
-					.getTag(Tags.LT_FUNCTION_LOOTING_LIMIT)).valueInt()));
+			if (f == ENCHANT_WITH_LEVELS && t.hasTag(Tags.LT_FUNCTION_TREASURE)) this.checkboxTreasure.setSelected(t.getTag(Tags.LT_FUNCTION_TREASURE).value());
+			if (f == LOOTING_ENCHANT && t.hasTag(Tags.LT_FUNCTION_LOOTING_LIMIT)) this.entryLimit.setText(Integer.toString(t.getTag(
+					Tags.LT_FUNCTION_LOOTING_LIMIT).valueInt()));
 		}
 
 		this.conditions.setValues(function.conditions);

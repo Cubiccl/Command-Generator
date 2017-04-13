@@ -52,7 +52,7 @@ public class TestValue
 		} else if (t.hasTag(this.rangeTag))
 		{
 			this.isRanged = true;
-			TagCompound range = (TagCompound) t.getTag(this.rangeTag);
+			TagCompound range = t.getTag(this.rangeTag);
 			this.valueMin = (double) range.getTag(this.minTag).value();
 			this.valueMax = (double) range.getTag(this.maxTag).value();
 		}

@@ -57,17 +57,17 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 
 		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_TYPE))
 		{
-			String t = ((TagString) tag.getTag(Tags.LOOTTABLE_ENTRY_TYPE)).value();
+			String t = tag.getTag(Tags.LOOTTABLE_ENTRY_TYPE).value();
 			if (t.equals("item")) type = ITEM;
 			if (t.equals("loot_table")) type = LOOT_TABLE;
 			if (t.equals("empty")) type = EMPTY;
 		}
-		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_NAME)) name = ((TagString) tag.getTag(Tags.LOOTTABLE_ENTRY_NAME)).value();
-		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_WEIGHT)) weight = ((TagNumber) tag.getTag(Tags.LOOTTABLE_ENTRY_WEIGHT)).valueInt();
-		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_QUALITY)) quality = ((TagNumber) tag.getTag(Tags.LOOTTABLE_ENTRY_QUALITY)).valueInt();
+		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_NAME)) name = tag.getTag(Tags.LOOTTABLE_ENTRY_NAME).value();
+		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_WEIGHT)) weight = tag.getTag(Tags.LOOTTABLE_ENTRY_WEIGHT).valueInt();
+		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_QUALITY)) quality = tag.getTag(Tags.LOOTTABLE_ENTRY_QUALITY).valueInt();
 		if (tag.hasTag(Tags.LOOTTABLE_CONDITIONS))
 		{
-			TagList t = (TagList) tag.getTag(Tags.LOOTTABLE_CONDITIONS);
+			TagList t = tag.getTag(Tags.LOOTTABLE_CONDITIONS);
 			for (Tag con : t.value())
 			{
 				LootTableCondition c = LootTableCondition.createFrom((TagCompound) con);
@@ -76,7 +76,7 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		}
 		if (tag.hasTag(Tags.LOOTTABLE_FUNCTIONS))
 		{
-			TagList t = (TagList) tag.getTag(Tags.LOOTTABLE_FUNCTIONS);
+			TagList t = tag.getTag(Tags.LOOTTABLE_FUNCTIONS);
 			for (Tag fun : t.value())
 			{
 				LootTableFunction f = LootTableFunction.createFrom((TagCompound) fun);

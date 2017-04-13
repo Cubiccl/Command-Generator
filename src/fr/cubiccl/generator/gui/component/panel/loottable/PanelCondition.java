@@ -199,20 +199,20 @@ public class PanelCondition extends CGPanel implements ActionListener
 		TagCompound t = Tags.DEFAULT_COMPOUND.create(condition.tags);
 		Condition c = condition.condition;
 
-		if ((c == Condition.ENTITY_PROPERTIES || c == Condition.ENTITY_SCORES) && t.hasTag(Tags.LT_CONDITION_ENTITY)) this.comboboxEntity
-				.setValue(((TagString) t.getTag(Tags.LT_CONDITION_ENTITY)).value());
+		if ((c == Condition.ENTITY_PROPERTIES || c == Condition.ENTITY_SCORES) && t.hasTag(Tags.LT_CONDITION_ENTITY)) this.comboboxEntity.setValue(t.getTag(
+				Tags.LT_CONDITION_ENTITY).value());
 		if (c == Condition.ENTITY_PROPERTIES && t.hasTag(Tags.LT_CONDITION_PROPERTIES))
 		{
-			TagCompound tag = (TagCompound) t.getTag(Tags.LT_CONDITION_PROPERTIES);
+			TagCompound tag = t.getTag(Tags.LT_CONDITION_PROPERTIES);
 			if (tag.hasTag(Tags.LT_CONDITION_ENTITY_ONFIRE))
 			{
-				this.buttonTrue.setSelected(((TagBoolean) tag.getTag(Tags.LT_CONDITION_ENTITY_ONFIRE)).value());
-				this.buttonFalse.setSelected(!((TagBoolean) tag.getTag(Tags.LT_CONDITION_ENTITY_ONFIRE)).value());
+				this.buttonTrue.setSelected(tag.getTag(Tags.LT_CONDITION_ENTITY_ONFIRE).value());
+				this.buttonFalse.setSelected(!tag.getTag(Tags.LT_CONDITION_ENTITY_ONFIRE).value());
 			}
 		} else if (c == Condition.ENTITY_SCORES && t.hasTag(Tags.LT_CONDITION_SCORES))
 		{
 			this.scores.clear();
-			TagCompound sc = (TagCompound) t.getTag(Tags.LT_CONDITION_SCORES);
+			TagCompound sc = t.getTag(Tags.LT_CONDITION_SCORES);
 			for (Tag s : sc.value())
 			{
 				if (s instanceof TagNumber) this.scores.add(new ScoreCondition(s.id(), ((TagNumber) s).valueInt(), 0, false));
@@ -220,21 +220,21 @@ public class PanelCondition extends CGPanel implements ActionListener
 				{
 					TagCompound v = (TagCompound) s;
 					int min = 0, max = 0;
-					if (v.hasTag(Tags.VALUE_MIN)) min = ((TagNumber) v.getTag(Tags.VALUE_MIN)).valueInt();
-					if (v.hasTag(Tags.VALUE_MAX)) max = ((TagNumber) v.getTag(Tags.VALUE_MAX)).valueInt();
+					if (v.hasTag(Tags.VALUE_MIN)) min = v.getTag(Tags.VALUE_MIN).valueInt();
+					if (v.hasTag(Tags.VALUE_MAX)) max = v.getTag(Tags.VALUE_MAX).valueInt();
 					this.scores.add(new ScoreCondition(v.id(), min, max, true));
 				}
 			}
 		} else if (c == Condition.KILLED_BY_PLAYER && t.hasTag(Tags.LT_CONDITION_KILLED))
 		{
 			// reversed because tag is named inverse and stuff
-			this.buttonTrue.setSelected(!((TagBoolean) t.getTag(Tags.LT_CONDITION_KILLED)).value());
-			this.buttonFalse.setSelected(((TagBoolean) t.getTag(Tags.LT_CONDITION_KILLED)).value());
+			this.buttonTrue.setSelected(!t.getTag(Tags.LT_CONDITION_KILLED).value());
+			this.buttonFalse.setSelected(t.getTag(Tags.LT_CONDITION_KILLED).value());
 		} else if (c == Condition.RANDOM_CHANCE || c == Condition.RANDOM_CHANCE_WITH_LOOTING)
 		{
-			if (t.hasTag(Tags.LT_CONDITION_CHANCE)) this.entry1.setText(Double.toString(((TagNumber) t.getTag(Tags.LT_CONDITION_CHANCE)).value()));
-			if (c == Condition.RANDOM_CHANCE_WITH_LOOTING && t.hasTag(Tags.LT_CONDITION_LOOTING)) this.entry2.setText(Double.toString(((TagNumber) t
-					.getTag(Tags.LT_CONDITION_LOOTING)).value()));
+			if (t.hasTag(Tags.LT_CONDITION_CHANCE)) this.entry1.setText(Double.toString((t.getTag(Tags.LT_CONDITION_CHANCE)).value()));
+			if (c == Condition.RANDOM_CHANCE_WITH_LOOTING && t.hasTag(Tags.LT_CONDITION_LOOTING)) this.entry2.setText(Double.toString(t.getTag(
+					Tags.LT_CONDITION_LOOTING).value()));
 		}
 	}
 

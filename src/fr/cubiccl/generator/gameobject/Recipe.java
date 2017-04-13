@@ -88,18 +88,18 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		Recipe r = new Recipe(SHAPED);
 		if (tag.hasTag(Tags.RECIPE_RESULT))
 		{
-			r.recipe[9] = ItemStack.createForRecipe((TagCompound) tag.getTag(Tags.RECIPE_RESULT));
+			r.recipe[9] = ItemStack.createForRecipe(tag.getTag(Tags.RECIPE_RESULT));
 			r.recipe[9].slot = 9;
 		}
 
 		HashMap<Character, ItemStack> affectations = new HashMap<Character, ItemStack>();
-		if (tag.hasTag(Tags.RECIPE_KEY)) for (Tag t : ((TagCompound) tag.getTag(Tags.RECIPE_KEY)).value())
+		if (tag.hasTag(Tags.RECIPE_KEY)) for (Tag t : tag.getTag(Tags.RECIPE_KEY).value())
 			affectations.put(t.id().charAt(0), ItemStack.createForRecipe((TagCompound) t));
 
 		String pattern = "";
 		if (tag.hasTag(Tags.RECIPE_KEY))
 		{
-			for (Tag t : ((TagList) tag.getTag(Tags.RECIPE_PATTERN)).value())
+			for (Tag t : tag.getTag(Tags.RECIPE_PATTERN).value())
 			{
 				pattern += ((TagString) t).value();
 				while (pattern.length() % 3 != 0)
@@ -127,11 +127,11 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		Recipe r = new Recipe(SHAPELESS);
 		if (tag.hasTag(Tags.RECIPE_RESULT))
 		{
-			r.recipe[9] = ItemStack.createForRecipe((TagCompound) tag.getTag(Tags.RECIPE_RESULT));
+			r.recipe[9] = ItemStack.createForRecipe(tag.getTag(Tags.RECIPE_RESULT));
 			r.recipe[9].slot = 9;
 		}
 		int i = 0;
-		if (tag.hasTag(Tags.RECIPE_INGREDIENTS)) for (Tag t : ((TagList) tag.getTag(Tags.RECIPE_INGREDIENTS)).value())
+		if (tag.hasTag(Tags.RECIPE_INGREDIENTS)) for (Tag t : tag.getTag(Tags.RECIPE_INGREDIENTS).value())
 		{
 			if (i > 8) break;
 			r.recipe[i] = ItemStack.createForRecipe((TagCompound) t);

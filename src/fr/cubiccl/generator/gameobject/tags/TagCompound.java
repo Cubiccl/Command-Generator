@@ -2,8 +2,7 @@ package fr.cubiccl.generator.gameobject.tags;
 
 import java.util.ArrayList;
 
-import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
-import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
+import fr.cubiccl.generator.gameobject.templatetags.*;
 
 public class TagCompound extends TagList
 {
@@ -45,7 +44,32 @@ public class TagCompound extends TagList
 		return available.toArray(new String[available.size()]);
 	}
 
-	public Tag getTag(TemplateTag tag)
+	public TagBoolean getTag(TemplateBoolean tag)
+	{
+		return (TagBoolean) this.getTagFromId(tag.id());
+	}
+
+	public TagCompound getTag(TemplateCompound tag)
+	{
+		return (TagCompound) this.getTagFromId(tag.id());
+	}
+
+	public TagList getTag(TemplateList tag)
+	{
+		return (TagList) this.getTagFromId(tag.id());
+	}
+
+	public TagNumber getTag(TemplateNumber tag)
+	{
+		return (TagNumber) this.getTagFromId(tag.id());
+	}
+
+	public TagString getTag(TemplateString tag)
+	{
+		return (TagString) this.getTagFromId(tag.id());
+	}
+
+	private Tag getTag(TemplateTag tag)
 	{
 		return this.getTagFromId(tag.id());
 	}

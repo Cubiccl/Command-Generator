@@ -73,7 +73,7 @@ public class LootTablePool implements IObjectList<LootTablePool>
 
 		if (tag.hasTag(Tags.LOOTTABLE_CONDITIONS))
 		{
-			TagList t = (TagList) tag.getTag(Tags.LOOTTABLE_CONDITIONS);
+			TagList t = tag.getTag(Tags.LOOTTABLE_CONDITIONS);
 			for (Tag con : t.value())
 			{
 				LootTableCondition c = LootTableCondition.createFrom((TagCompound) con);
@@ -82,7 +82,7 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		}
 		if (tag.hasTag(Tags.LOOTTABLE_ENTRIES))
 		{
-			TagList t = (TagList) tag.getTag(Tags.LOOTTABLE_ENTRIES);
+			TagList t = tag.getTag(Tags.LOOTTABLE_ENTRIES);
 			for (Tag ent : t.value())
 			{
 				LootTableEntry e = LootTableEntry.createFrom((TagCompound) ent);

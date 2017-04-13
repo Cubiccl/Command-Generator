@@ -8,7 +8,6 @@ import javax.swing.ButtonGroup;
 
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -118,27 +117,27 @@ public class PanelAbilities extends CGPanel
 
 		if (tag.hasTag(Tags.ABILITIES_MAY_FLY))
 		{
-			if (((TagNumber) tag.getTag(Tags.ABILITIES_MAY_FLY)).value() == 1) this.buttonMayFlyYes.setSelected(true);
+			if (tag.getTag(Tags.ABILITIES_MAY_FLY).value() == 1) this.buttonMayFlyYes.setSelected(true);
 			else this.buttonMayFlyNo.setSelected(true);
 		}
 		if (tag.hasTag(Tags.ABILITIES_FLYING))
 		{
-			if (((TagNumber) tag.getTag(Tags.ABILITIES_FLYING)).value() == 1) this.buttonFlyingYes.setSelected(true);
+			if (tag.getTag(Tags.ABILITIES_FLYING).value() == 1) this.buttonFlyingYes.setSelected(true);
 			else this.buttonFlyingNo.setSelected(true);
 		}
 		if (tag.hasTag(Tags.ABILITIES_MAY_BUILD))
 		{
-			if (((TagNumber) tag.getTag(Tags.ABILITIES_MAY_BUILD)).value() == 1) this.buttonMayBuildYes.setSelected(true);
+			if (tag.getTag(Tags.ABILITIES_MAY_BUILD).value() == 1) this.buttonMayBuildYes.setSelected(true);
 			else this.buttonMayBuildNo.setSelected(true);
 		}
 		if (tag.hasTag(Tags.ABILITIES_INSTABUILD))
 		{
-			if (((TagNumber) tag.getTag(Tags.ABILITIES_INSTABUILD)).value() == 1) this.buttonInstabuildYes.setSelected(true);
+			if (tag.getTag(Tags.ABILITIES_INSTABUILD).value() == 1) this.buttonInstabuildYes.setSelected(true);
 			else this.buttonInstabuildNo.setSelected(true);
 		}
 		if (tag.hasTag(Tags.ABILITIES_INVULNERABLE))
 		{
-			if (((TagNumber) tag.getTag(Tags.ABILITIES_INVULNERABLE)).value() == 1) this.buttonInvulnerableYes.setSelected(true);
+			if (tag.getTag(Tags.ABILITIES_INVULNERABLE).value() == 1) this.buttonInvulnerableYes.setSelected(true);
 			else this.buttonInvulnerableNo.setSelected(true);
 		}
 	}
