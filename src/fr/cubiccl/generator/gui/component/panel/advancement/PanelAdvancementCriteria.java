@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.advancements.AdvancementCriteria;
 import fr.cubiccl.generator.gameobject.advancements.CriteriaTrigger;
+import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gui.component.combobox.SearchCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -67,6 +68,7 @@ public class PanelAdvancementCriteria extends CGPanel implements ActionListener
 		this.entryName.setText(criteria.name);
 		this.comboboxTrigger.setSelectedItem(criteria.trigger.id);
 		this.onTriggerSelection();
+		this.panelTags.setValues(criteria.getConditions());
 	}
 
 	public void update(AdvancementCriteria criteria) throws CommandGenerationException
@@ -74,6 +76,9 @@ public class PanelAdvancementCriteria extends CGPanel implements ActionListener
 		this.entryName.checkValue(CGEntry.STRING);
 		criteria.name = this.entryName.getText();
 		criteria.trigger = this.selectedTrigger();
+		criteria.clearConditions();
+		for (Tag t : this.panelTags.getValues())
+			criteria.addCondition(t);
 	}
 
 }

@@ -30,7 +30,7 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	}
 
 	public static final String[] TYPE_NAMES =
-	{ "block", "item", "entity" };
+	{ "block", "item", "entity", "other" };
 
 	private String[] applicable;
 	public final byte applicationType, tagType;
@@ -81,9 +81,14 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	 * @return A description of this NBT Tag. */
 	public Text description(BaseObject object)
 	{
-		String objectSpecific = "tag." + TYPE_NAMES[this.applicationType] + "." + this.id + "." + object.id();
-		if (Lang.keyExists(objectSpecific)) return new Text(objectSpecific, new Replacement("<o>", object.name()));
-		return new Text("tag." + TYPE_NAMES[this.applicationType] + "." + this.id, new Replacement("<o>", object.name()));
+		Text t = new Text("tag." + TYPE_NAMES[this.applicationType] + "." + this.id);
+		if (object != null)
+		{
+			String objectSpecific = "tag." + TYPE_NAMES[this.applicationType] + "." + this.id + "." + object.id();
+			if (Lang.keyExists(objectSpecific)) return new Text(objectSpecific, new Replacement("<o>", object.name()));
+			t.addReplacement("<o>", object.name());
+		}
+		return t;
 	}
 
 	/** @param object - The Object this Tag is applied to.

@@ -106,7 +106,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 
 		CGPanel criterias = new CGPanel();
 		gbc = criterias.createGridBagLayout();
-		criterias.add(this.criteria = new PanelObjectList<AdvancementCriteria>("advancement.criteria", (Text) null, AdvancementCriteria.class));
+		criterias.add(this.criteria = new PanelObjectList<AdvancementCriteria>("advancement.criteria", "advancement.criteria", AdvancementCriteria.class));
 
 		this.tabbedPane = new CGTabbedPane();
 		this.tabbedPane.addTab(new Text("advancement.display"), display);

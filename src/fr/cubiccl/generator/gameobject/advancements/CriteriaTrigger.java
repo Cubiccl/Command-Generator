@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject.advancements;
 
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.utils.Text;
 
@@ -7,7 +8,7 @@ public enum CriteriaTrigger
 {
 	bred_animals("bred_animals"),
 	brewed_potion("brewed_potion"),
-	construct_beacon("construct_beacon"),
+	construct_beacon("construct_beacon", Tags.CRITERIA_BEACON),
 	cured_zombie_villager("cured_zombie_villager"),
 	enchanted_item("enchanted_item"),
 	enter_block("enter_block"),

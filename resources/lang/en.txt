@@ -3219,6 +3219,8 @@ tag.Motion.x=X Velocity
 tag.Motion.y=Y Velocity
 tag.Motion.z=Z Velocity
 
+tag.other.level=The number of levels of the Beacon.
+
 tag.Potion.empty=Uncraftable Potion
 tag.Potion.water=Water Bottle
 tag.Potion.mundane=Mundane Potion

@@ -53,6 +53,11 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 		this.conditions.add(condition);
 	}
 
+	public void clearConditions()
+	{
+		this.conditions.clear();
+	}
+
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{

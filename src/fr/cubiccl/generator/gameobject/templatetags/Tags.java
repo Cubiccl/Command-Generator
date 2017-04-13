@@ -62,6 +62,8 @@ public final class Tags
 	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", UNAVAILABLE, Tag.DOUBLE);
 	public static final TemplateNumber COORD_Z_INT = new TemplateNumber("Z", UNAVAILABLE, Tag.INT);
 
+	public static final TemplateNumber CRITERIA_BEACON = new TemplateNumber("level", UNAVAILABLE, Tag.INT);
+
 	public static final TemplateBoolean DEFAULT_BOOLEAN = new TemplateBoolean("", UNAVAILABLE);
 	public static final TemplateNumber DEFAULT_BYTE = new TemplateNumber("", UNAVAILABLE, Tag.BYTE);
 	public static final TemplateCompound DEFAULT_COMPOUND = new DefaultCompound("");
