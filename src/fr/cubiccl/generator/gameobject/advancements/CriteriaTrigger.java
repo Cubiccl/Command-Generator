@@ -8,19 +8,19 @@ public enum CriteriaTrigger
 {
 	bred_animals("bred_animals"),
 	brewed_potion("brewed_potion"),
-	construct_beacon("construct_beacon", Tags.CRITERIA_BEACON),
+	construct_beacon("construct_beacon", Tags.CRITERIA_BEACON), // TODO Range
 	cured_zombie_villager("cured_zombie_villager"),
 	enchanted_item("enchanted_item"),
 	enter_block("enter_block"),
 	entity_killed_player("entity_killed_player"),
 	impossible("impossible"),
 	inventory_changed("inventory_changed"),
-	location("location"),
+	location("location", Tags.CRITERIA_BIOME),
 	player_damaged("player_damaged"),
 	player_hurt_entity("player_hurt_entity"),
 	player_killed_entity("player_killed_entity"),
 	recipe_unlocked("recipe_unlocked"),
-	slept_in_bed("slept_in_bed"),
+	slept_in_bed("slept_in_bed", Tags.CRITERIA_BIOME),
 	summoned_entity("summoned_entity"),
 	used_ender_eye("used_ender_eye"),
 	villager_trade("villager_trade");

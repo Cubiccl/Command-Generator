@@ -4,6 +4,15 @@ import java.text.DecimalFormat;
 
 public final class Utils
 {
+	public static final String[] BIOMES =
+	{ "ocean", "deep_ocean", "frozen_ocean", "plains", "mutated_plains", "desert", "desert_hills", "mutated_desert", "extreme_hills", "mutated_extreme_hills",
+			"smaller_extreme_hills", "extreme_hills_with_trees", "mutated_extreme_hills_with_trees", "forest", "forest_hills", "mutated_forest", "taiga",
+			"mutated_taiga", "taiga_hills", "taiga_cold", "mutated_taiga_cold", "taiga_cold_hills", "redwood_taiga", "mutated_redwood_taiga",
+			"redwood_taiga_hills", "mutated_redwood_taiga_hills", "swampland", "mutated_swampland", "river", "frozen_river", "ice_flats", "ice_mountains",
+			"mutated_ice_flats", "mushroom_island", "mushroom_island_shore", "beaches", "stone_beach", "cold_beach", "jungle", "jungle_hills", "jungle_edge",
+			"mutated_jungle", "mutated_jungle_edge", "birch_forest", "birch_forest_hills", "mutated_birch_forest", "mutated_birch_forest_hills",
+			"roofed_forest", "mutated_roofed_forest", "savanna", "mutated_savanna", "savanna_rock", "mutated_savanna_rock", "mesa", "mutated_mesa",
+			"mesa_rock", "mutated_mesa_rock", "mesa_clear_rock", "mutated_mesa_clear_rock", "hell", "sky", "void" };
 	public static final String[] COLORS =
 	{ "white", "aqua", "black", "blue", "dark_aqua", "dark_blue", "dark_gray", "dark_green", "dark_purple", "dark_red", "gold", "gray", "green",
 			"light_purple", "red", "yellow" };

@@ -56,6 +56,7 @@ public class PanelAdvancementCriteria extends CGPanel implements ActionListener
 	{
 		this.labelDescription.setTextID(this.selectedTrigger().description());
 		this.panelTags.setTags(this.selectedTrigger().conditions);
+		this.panelTags.setVisible(this.selectedTrigger() != CriteriaTrigger.impossible);
 	}
 
 	private CriteriaTrigger selectedTrigger()

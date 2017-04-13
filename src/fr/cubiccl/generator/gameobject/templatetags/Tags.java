@@ -4,6 +4,7 @@ import static fr.cubiccl.generator.gameobject.tags.Tag.UNAVAILABLE;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList.DefaultList;
+import fr.cubiccl.generator.utils.Utils;
 
 /** Contains unique and constant NBT Tags. */
 public final class Tags
@@ -24,8 +25,8 @@ public final class Tags
 	public static final TemplateString ADVANCEMENT_ICON = new TemplateString("icon", UNAVAILABLE);
 	public static final DefaultList ADVANCEMENT_LOOT = new DefaultList("requirements");
 	public static final TemplateString ADVANCEMENT_PARENT = new TemplateString("parent", UNAVAILABLE);
-	public static final DefaultList ADVANCEMENT_RECIPES = new DefaultList("requirements");
-	public static final DefaultList ADVANCEMENT_REQUIREMENTS = new DefaultList("requirements");
+	public static final DefaultList ADVANCEMENT_RECIPES = new DefaultList("recipes");
+	public static final DefaultList ADVANCEMENT_REQUIREMENTS = new DefaultList("loot");
 	public static final DefaultCompound ADVANCEMENT_REWARDS = new DefaultCompound("rewards");
 	public static final TemplateString ADVANCEMENT_TITLE = new TemplateString("title", UNAVAILABLE);
 	public static final DefaultCompound ADVANCEMENT_TITLE_JSON = new DefaultCompound("conditions");
@@ -63,6 +64,7 @@ public final class Tags
 	public static final TemplateNumber COORD_Z_INT = new TemplateNumber("Z", UNAVAILABLE, Tag.INT);
 
 	public static final TemplateNumber CRITERIA_BEACON = new TemplateNumber("level", UNAVAILABLE, Tag.INT);
+	public static final TemplateString CRITERIA_BIOME = new TemplateString("biome", UNAVAILABLE);
 
 	public static final TemplateBoolean DEFAULT_BOOLEAN = new TemplateBoolean("", UNAVAILABLE);
 	public static final TemplateNumber DEFAULT_BYTE = new TemplateNumber("", UNAVAILABLE, Tag.BYTE);
@@ -232,6 +234,9 @@ public final class Tags
 		FIREWORK_FLICKER.isByteBoolean = true;
 		FIREWORK_TRAIL.isByteBoolean = true;
 		OFFER_EXP.isByteBoolean = true;
+
+		CRITERIA_BIOME.setValues(Utils.BIOMES);
+		CRITERIA_BIOME.minecraftPrefix = true;
 	}
 
 }
