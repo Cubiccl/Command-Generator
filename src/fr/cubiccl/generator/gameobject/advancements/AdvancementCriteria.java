@@ -8,7 +8,6 @@ import org.jdom2.Element;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
@@ -32,8 +31,8 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 	public static AdvancementCriteria createFrom(TagCompound tag)
 	{
 		AdvancementCriteria c = new AdvancementCriteria();
-		if (tag.hasTag(Tags.ADVANCEMENT_TRIGGER)) c.name = ((TagString) tag.getTag(Tags.ADVANCEMENT_TRIGGER)).value();
-		if (tag.hasTag(Tags.ADVANCEMENT_CONDITIONS)) for (Tag t : ((TagCompound) tag.getTag(Tags.ADVANCEMENT_CONDITIONS)).value())
+		if (tag.hasTag(Tags.ADVANCEMENT_TRIGGER)) c.name = tag.getTag(Tags.ADVANCEMENT_TRIGGER).value();
+		if (tag.hasTag(Tags.ADVANCEMENT_CONDITIONS)) for (Tag t : tag.getTag(Tags.ADVANCEMENT_CONDITIONS).value())
 			c.conditions.add(t);
 		return c;
 	}

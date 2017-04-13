@@ -65,22 +65,21 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 
 		if (tag.hasTag(Tags.ADVANCEMENT_DISPLAY))
 		{
-			TagCompound display = (TagCompound) tag.getTag(Tags.ADVANCEMENT_DISPLAY);
-			if (display.hasTag(Tags.ADVANCEMENT_ICON)) a.item = ObjectRegistry.items.find(((TagString) display.getTag(Tags.ADVANCEMENT_ICON)).value());
-			if (display.hasTag(Tags.ADVANCEMENT_TITLE)) a.title = ((TagString) display.getTag(Tags.ADVANCEMENT_TITLE)).value();
-			else if (display.hasTag(Tags.ADVANCEMENT_TITLE_JSON)) a.jsonTitle = JsonMessage.createFrom((TagCompound) display
-					.getTag(Tags.ADVANCEMENT_TITLE_JSON));
-			if (display.hasTag(Tags.ADVANCEMENT_FRAME)) a.frame = ((TagString) display.getTag(Tags.ADVANCEMENT_FRAME)).value();
-			if (display.hasTag(Tags.ADVANCEMENT_BACKGROUND)) a.background = ((TagString) display.getTag(Tags.ADVANCEMENT_BACKGROUND)).value();
-			if (display.hasTag(Tags.ADVANCEMENT_DESCRIPTION)) a.description = ((TagString) display.getTag(Tags.ADVANCEMENT_DESCRIPTION)).value();
+			TagCompound display = tag.getTag(Tags.ADVANCEMENT_DISPLAY);
+			if (display.hasTag(Tags.ADVANCEMENT_ICON)) a.item = ObjectRegistry.items.find(display.getTag(Tags.ADVANCEMENT_ICON).value());
+			if (display.hasTag(Tags.ADVANCEMENT_TITLE)) a.title = display.getTag(Tags.ADVANCEMENT_TITLE).value();
+			else if (display.hasTag(Tags.ADVANCEMENT_TITLE_JSON)) a.jsonTitle = JsonMessage.createFrom(display.getTag(Tags.ADVANCEMENT_TITLE_JSON));
+			if (display.hasTag(Tags.ADVANCEMENT_FRAME)) a.frame = display.getTag(Tags.ADVANCEMENT_FRAME).value();
+			if (display.hasTag(Tags.ADVANCEMENT_BACKGROUND)) a.background = display.getTag(Tags.ADVANCEMENT_BACKGROUND).value();
+			if (display.hasTag(Tags.ADVANCEMENT_DESCRIPTION)) a.description = display.getTag(Tags.ADVANCEMENT_DESCRIPTION).value();
 		}
 
-		if (tag.hasTag(Tags.ADVANCEMENT_PARENT)) a.parent = ((TagString) tag.getTag(Tags.ADVANCEMENT_PARENT)).value();
+		if (tag.hasTag(Tags.ADVANCEMENT_PARENT)) a.parent = tag.getTag(Tags.ADVANCEMENT_PARENT).value();
 
-		if (tag.hasTag(Tags.ADVANCEMENT_CRITERIA)) for (Tag c : ((TagCompound) tag.getTag(Tags.ADVANCEMENT_CRITERIA)).value())
+		if (tag.hasTag(Tags.ADVANCEMENT_CRITERIA)) for (Tag c : tag.getTag(Tags.ADVANCEMENT_CRITERIA).value())
 			a.criteria.add(AdvancementCriteria.createFrom((TagCompound) c));
 
-		if (tag.hasTag(Tags.ADVANCEMENT_REQUIREMENTS)) for (Tag req : ((TagList) tag.getTag(Tags.ADVANCEMENT_REQUIREMENTS)).value())
+		if (tag.hasTag(Tags.ADVANCEMENT_REQUIREMENTS)) for (Tag req : tag.getTag(Tags.ADVANCEMENT_REQUIREMENTS).value())
 		{
 			ArrayList<Integer> r = new ArrayList<Integer>();
 			for (Tag t : ((TagList) req).value())
@@ -98,15 +97,15 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 
 		if (tag.hasTag(Tags.ADVANCEMENT_REWARDS))
 		{
-			TagCompound rewards = (TagCompound) tag.getTag(Tags.ADVANCEMENT_REWARDS);
+			TagCompound rewards = tag.getTag(Tags.ADVANCEMENT_REWARDS);
 
-			if (rewards.hasTag(Tags.ADVANCEMENT_RECIPES)) for (Tag recipe : ((TagList) rewards.getTag(Tags.ADVANCEMENT_RECIPES)).value())
+			if (rewards.hasTag(Tags.ADVANCEMENT_RECIPES)) for (Tag recipe : rewards.getTag(Tags.ADVANCEMENT_RECIPES).value())
 				a.rewardRecipes.add(((TagString) recipe).value());
 
-			if (rewards.hasTag(Tags.ADVANCEMENT_LOOT)) for (Tag l : ((TagList) rewards.getTag(Tags.ADVANCEMENT_LOOT)).value())
+			if (rewards.hasTag(Tags.ADVANCEMENT_LOOT)) for (Tag l : rewards.getTag(Tags.ADVANCEMENT_LOOT).value())
 				a.rewardLoot.add(((TagString) l).value());
 
-			if (rewards.hasTag(Tags.ADVANCEMENT_EXPERIENCE)) a.rewardExperience = ((TagNumber) rewards.getTag(Tags.ADVANCEMENT_EXPERIENCE)).valueInt();
+			if (rewards.hasTag(Tags.ADVANCEMENT_EXPERIENCE)) a.rewardExperience = rewards.getTag(Tags.ADVANCEMENT_EXPERIENCE).valueInt();
 		}
 
 		return a;
