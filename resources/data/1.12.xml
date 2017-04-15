@@ -5183,17 +5183,17 @@
       </applicable>
       <byteboolean>true</byteboolean>
     </tag>
+    <tag id="Life">
+      <type>3</type>
+      <applicable>
+        <app>fireworks_rocket</app>
+      </applicable>
+    </tag>
     <tag id="life">
       <type>2</type>
       <applicable>
         <app>arrow</app>
         <app>spectral_arrow</app>
-      </applicable>
-    </tag>
-    <tag id="Life">
-      <type>3</type>
-      <applicable>
-        <app>fireworks_rocket</app>
       </applicable>
     </tag>
     <tag id="LifeTicks">
@@ -5819,19 +5819,6 @@
       </applicable>
     </tag>
     <tag id="Variant">
-      <type>3</type>
-      <applicable>
-        <app>parrot</app>
-      </applicable>
-      <intnamed prefix="parrot">
-        <v>red</v>
-        <v>blue</v>
-        <v>green</v>
-        <v>cyan</v>
-        <v>silver</v>
-      </intnamed>
-    </tag>
-    <tag id="Variant">
       <customtype>HorseVariant</customtype>
       <applicable>
         <app>horse</app>
@@ -5842,6 +5829,19 @@
         <v>white</v>
         <v>brown</v>
         <v>gray</v>
+      </intnamed>
+    </tag>
+    <tag id="Variant">
+      <type>3</type>
+      <applicable>
+        <app>parrot</app>
+      </applicable>
+      <intnamed prefix="parrot">
+        <v>red</v>
+        <v>blue</v>
+        <v>green</v>
+        <v>cyan</v>
+        <v>silver</v>
       </intnamed>
     </tag>
     <tag id="Warmup">

@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 import fr.cubiccl.generator.gameobject.advancements.AdvancementCriteria;
 import fr.cubiccl.generator.gameobject.advancements.CriteriaTrigger;
 import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gui.component.combobox.SearchCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -55,7 +56,7 @@ public class PanelAdvancementCriteria extends CGPanel implements ActionListener
 	private void onTriggerSelection()
 	{
 		this.labelDescription.setTextID(this.selectedTrigger().description());
-		this.panelTags.setTags(this.selectedTrigger().conditions);
+		this.panelTags.setTags(this.selectedTrigger().conditions.keySet().toArray(new TemplateTag[this.selectedTrigger().conditions.keySet().size()]));
 		this.panelTags.setVisible(this.selectedTrigger() != CriteriaTrigger.impossible);
 	}
 

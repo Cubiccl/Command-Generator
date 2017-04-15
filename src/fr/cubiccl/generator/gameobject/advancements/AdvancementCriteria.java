@@ -9,6 +9,7 @@ import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -88,8 +89,33 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 
 	public TagCompound toTag()
 	{
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+
+		for (Tag t : this.conditions)
+		{
+			TemplateCompound container = this.trigger.conditions.get(t.template);
+			if (container == null) tags.add(t);
+			else
+			{
+				TagCompound c = null;
+				for (Tag tag : tags)
+					if (tag.template.equals(container))
+					{
+						c = (TagCompound) tag;
+						break;
+					}
+				if (c == null)
+				{
+					c = container.create();
+					tags.add(c);
+				}
+
+				c.addTag(t);
+			}
+		}
+
 		return new DefaultCompound(this.name, Tag.UNKNOWN).create(Tags.ADVANCEMENT_TRIGGER.create(this.trigger.id),
-				Tags.ADVANCEMENT_CONDITIONS.create(this.conditions.toArray(new Tag[this.conditions.size()])));
+				Tags.ADVANCEMENT_CONDITIONS.create(tags.toArray(new Tag[tags.size()])));
 	}
 
 	public Element toXML()

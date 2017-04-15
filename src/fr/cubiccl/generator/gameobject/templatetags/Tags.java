@@ -67,6 +67,7 @@ public final class Tags
 	public static final TemplateRange CRITERIA_BEACON = new TemplateRange("level", UNAVAILABLE, Tag.INT);
 	public static final TemplateString CRITERIA_BIOME = new TemplateString("biome", UNAVAILABLE);
 	public static final TemplateRange CRITERIA_DISTANCE = new TemplateRange("distance", UNAVAILABLE, Tag.INT);
+	public static final TemplateCompound CRITERIA_ENTITY = new DefaultCompound("entity");
 	public static final TemplateRange CRITERIA_LEVELS = new TemplateRange("levels", UNAVAILABLE, Tag.INT);
 
 	public static final TemplateBoolean DEFAULT_BOOLEAN = new TemplateBoolean("", UNAVAILABLE);
