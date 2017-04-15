@@ -8,9 +8,9 @@ public enum CriteriaTrigger
 {
 	bred_animals("bred_animals"),
 	brewed_potion("brewed_potion"),
-	construct_beacon("construct_beacon", Tags.CRITERIA_BEACON), // TODO Range
+	construct_beacon("construct_beacon", Tags.CRITERIA_BEACON),
 	cured_zombie_villager("cured_zombie_villager"),
-	enchanted_item("enchanted_item"),
+	enchanted_item("enchanted_item", Tags.CRITERIA_LEVELS),
 	enter_block("enter_block"),
 	entity_killed_player("entity_killed_player"),
 	impossible("impossible"),
@@ -22,7 +22,7 @@ public enum CriteriaTrigger
 	recipe_unlocked("recipe_unlocked"),
 	slept_in_bed("slept_in_bed", Tags.CRITERIA_BIOME),
 	summoned_entity("summoned_entity"),
-	used_ender_eye("used_ender_eye"),
+	used_ender_eye("used_ender_eye", Tags.CRITERIA_DISTANCE),
 	villager_trade("villager_trade");
 
 	public static CriteriaTrigger find(String id)
