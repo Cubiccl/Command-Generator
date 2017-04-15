@@ -30,7 +30,7 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	}
 
 	public static final String[] TYPE_NAMES =
-	{ "block", "item", "entity", "other" };
+	{ "block", "item", "entity", "other", "other" };
 
 	private String[] applicable;
 	public final byte applicationType, tagType;
@@ -89,6 +89,15 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 			t.addReplacement("<o>", object.name());
 		}
 		return t;
+	}
+
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (!(obj instanceof TemplateTag)) return false;
+		TemplateTag o = (TemplateTag) obj;
+
+		return this.tagType == o.tagType && this.id().equals(o.id());
 	}
 
 	/** @param object - The Object this Tag is applied to.

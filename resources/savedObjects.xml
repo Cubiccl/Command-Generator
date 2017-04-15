@@ -213,8 +213,8 @@
       <title>Cheats!!</title>
       <description>Use /give to get an unobtainable item !</description>
       <criterias>
-        <criteria name="first_criteria" trigger="location">
-          <condition>"biome":"minecraft:mutated_mesa_rock"</condition>
+        <criteria name="first_criteria" trigger="construct_beacon">
+          <condition>"level":{"min":2,"max":3}</condition>
         </criteria>
       </criterias>
       <requirements />

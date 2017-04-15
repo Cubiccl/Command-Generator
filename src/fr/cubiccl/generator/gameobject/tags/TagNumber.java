@@ -17,6 +17,11 @@ public class TagNumber extends Tag
 		this.value = value;
 	}
 
+	private String suffix()
+	{
+		return ((TemplateNumber) this.template).suffix();
+	}
+
 	@Override
 	public Double value()
 	{
@@ -28,11 +33,10 @@ public class TagNumber extends Tag
 	{
 		if (((TemplateNumber) this.template).isBigNumber())
 		{
-			if (((TemplateNumber) this.template).tagType == Tag.LONG) return Utils.doubleToString(this.value())
-					+ TagNumber.SUFFIX[((TemplateNumber) this.template).tagType];
-			return Utils.doubleToString(this.value()) + TagNumber.SUFFIX[((TemplateNumber) this.template).tagType];
+			if (((TemplateNumber) this.template).tagType == Tag.LONG) return Utils.doubleToString(this.value()) + this.suffix();
+			return Utils.doubleToString(this.value()) + this.suffix();
 
-		} else return Integer.toString((int) this.value) + SUFFIX[((TemplateNumber) this.template).tagType];
+		} else return Integer.toString((int) this.value) + this.suffix();
 	}
 
 	public int valueInt()

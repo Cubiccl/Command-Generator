@@ -91,7 +91,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	public Tag generateTag(BaseObject object, CGPanel panel)
+	protected Tag generateTag(BaseObject object, CGPanel panel)
 	{
 		if (this.isByteBoolean) return this.create(1 - ((PanelRadio) panel).getSelected());
 
@@ -169,6 +169,11 @@ public class TemplateNumber extends TemplateTag
 	public void setValues(int... values)
 	{
 		this.values = values;
+	}
+
+	public String suffix()
+	{
+		return TagNumber.SUFFIX[this.tagType];
 	}
 
 	@Override

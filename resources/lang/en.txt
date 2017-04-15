@@ -481,7 +481,6 @@ lt_function.enchant_with_levels=Enchantment level
 lt_function.enchant_with_levels.description=Enchants the Item as if it were enchanted with an Enchantment table. Levels is the amount of levels available to enchant.
 lt_function.enchantment.treasure=Treasure Enchantments allowed?
 lt_function.enchantments=Available Enchantments
-lt_function.fixed=Fixed value
 lt_function.furnace_smelt=Cook the Item
 lt_function.furnace_smelt.description=Cooks the Item as if it were in a Furnace.
 lt_function.looting_enchant=Additionnal Luck count
@@ -489,7 +488,6 @@ lt_function.looting_enchant.description=Adjusts the amount of Items. Formula is 
 lt_function.looting.limit=Maximum amount (0 for no limit)
 lt_function.modifiers=Attribute Modifiers
 lt_function.nbt=NBT Tags to set
-lt_function.ranged=Random value
 lt_function.set_attributes=Add Attribute Modifiers
 lt_function.set_attributes.description=Adds Attribute Modifiers to the Item.
 lt_function.set_count=Set Item count
@@ -885,6 +883,8 @@ trade.uses=Current use count
 trade.uses_max=Maximum uses
 
 value.false=False
+value.fixed=Fixed value
+value.ranged=Ranged value
 value.true=True
 
 variant.base=Base color

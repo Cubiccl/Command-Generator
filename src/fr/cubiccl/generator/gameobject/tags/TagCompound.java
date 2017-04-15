@@ -8,7 +8,7 @@ public class TagCompound extends TagList
 {
 
 	@Deprecated
-	public TagCompound(TemplateCompound template, Tag... tags)
+	public TagCompound(TemplateTag template, Tag... tags)
 	{
 		super(template, tags);
 	}

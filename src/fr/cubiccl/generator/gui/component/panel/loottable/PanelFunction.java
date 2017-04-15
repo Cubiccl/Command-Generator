@@ -67,9 +67,9 @@ public class PanelFunction extends CGPanel implements ActionListener
 
 		++gbc.gridy;
 		--gbc.gridwidth;
-		this.add(this.buttonFixed = new CGRadioButton("lt_function.fixed"), gbc);
+		this.add(this.buttonFixed = new CGRadioButton("value.fixed"), gbc);
 		++gbc.gridx;
-		this.add(this.buttonRange = new CGRadioButton("lt_function.ranged"), gbc);
+		this.add(this.buttonRange = new CGRadioButton("value.ranged"), gbc);
 
 		--gbc.gridx;
 		++gbc.gridy;
