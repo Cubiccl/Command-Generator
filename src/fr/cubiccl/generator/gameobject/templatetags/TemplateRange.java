@@ -12,6 +12,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.tag.PanelRangedTag;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Text;
 
 public class TemplateRange extends TemplateNumber
 {
@@ -56,7 +57,7 @@ public class TemplateRange extends TemplateNumber
 	@Override
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
-		PanelRangedTag p = new PanelRangedTag(this.description(object));
+		PanelRangedTag p = new PanelRangedTag(this.description(object), this.numberType == Tag.INT ? Text.INTEGER : Text.NUMBER);
 		if (previousValue != null)
 		{
 			if (previousValue instanceof TagNumber)

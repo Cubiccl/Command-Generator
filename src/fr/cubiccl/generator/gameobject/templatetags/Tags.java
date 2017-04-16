@@ -83,12 +83,18 @@ public final class Tags
 	public static final TemplateRange CRITERIA_DISTANCE_VILLAGER = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "cured_zombie_villager",
 			"villager_trade");
 	public static final TemplateRange CRITERIA_DISTANCE_ZOMBIE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "cured_zombie_villager");
+	public static final TemplateRange CRITERIA_EMPTY_SLOTS = new TemplateRange("empty", UNAVAILABLE, Tag.INT, "inventory_changed");
 	public static final TemplateEntityId CRITERIA_ENTITY_CHILD = new TemplateEntityId("type", UNAVAILABLE, "bred_animals");
 	public static final TemplateEntityId CRITERIA_ENTITY_ENTITY = new TemplateEntityId("type", UNAVAILABLE, "entity_killed_player", "player_killed_entity",
 			"summoned_entity");
 	public static final TemplateEntityId CRITERIA_ENTITY_PARENT = new TemplateEntityId("type", UNAVAILABLE, "bred_animals");
 	public static final TemplateEntityId CRITERIA_ENTITY_PARTNER = new TemplateEntityId("type", UNAVAILABLE, "bred_animals");
+	public static final TemplateRange CRITERIA_FULL_SLOTS = new TemplateRange("full", UNAVAILABLE, Tag.INT, "inventory_changed");
 	public static final TemplateRange CRITERIA_LEVELS = new TemplateRange("levels", UNAVAILABLE, Tag.INT, "enchanted_item");
+	public static final TemplateRange CRITERIA_OCCUPIED_SLOTS = new TemplateRange("occupied", UNAVAILABLE, Tag.INT, "inventory_changed");
+	public static final TemplateRange CRITERIA_X_POSITION = new TemplateRange("x", UNAVAILABLE, Tag.DOUBLE, "location", "slept_in_bed");
+	public static final TemplateRange CRITERIA_Y_POSITION = new TemplateRange("y", UNAVAILABLE, Tag.DOUBLE, "location", "slept_in_bed");
+	public static final TemplateRange CRITERIA_Z_POSITION = new TemplateRange("z", UNAVAILABLE, Tag.DOUBLE, "location", "slept_in_bed");
 
 	public static final TemplateBoolean DEFAULT_BOOLEAN = new TemplateBoolean("", UNAVAILABLE);
 	public static final TemplateNumber DEFAULT_BYTE = new TemplateNumber("", UNAVAILABLE, Tag.BYTE);
@@ -264,10 +270,16 @@ public final class Tags
 		CRITERIA_DISTANCE_ENTITY.container = CONTAINER_ENTITY;
 		CRITERIA_DISTANCE_VILLAGER.container = CONTAINER_VILLAGER;
 		CRITERIA_DISTANCE_ZOMBIE.container = CONTAINER_ZOMBIE;
+		CRITERIA_EMPTY_SLOTS.container = CONTAINER_SLOTS;
 		CRITERIA_ENTITY_CHILD.container = CONTAINER_CHILD;
 		CRITERIA_ENTITY_ENTITY.container = CONTAINER_ENTITY;
 		CRITERIA_ENTITY_PARENT.container = CONTAINER_PARENT;
 		CRITERIA_ENTITY_PARTNER.container = CONTAINER_PARTNER;
+		CRITERIA_FULL_SLOTS.container = CONTAINER_SLOTS;
+		CRITERIA_OCCUPIED_SLOTS.container = CONTAINER_SLOTS;
+		CRITERIA_X_POSITION.container = CONTAINER_POSITION;
+		CRITERIA_Y_POSITION.container = CONTAINER_POSITION;
+		CRITERIA_Z_POSITION.container = CONTAINER_POSITION;
 
 		for (TemplateTag t : ObjectRegistry.unavailableTags.list())
 			if (t instanceof TemplateRange) ((TemplateRange) t).setRangeTags();

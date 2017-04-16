@@ -20,7 +20,7 @@ public class PanelRangedTag extends CGPanel implements ActionListener
 	private CGRadioButton buttonFixed, buttonRanged;
 	private CGEntry entryMin, entryMax, entryFixed;
 
-	public PanelRangedTag(Text description)
+	public PanelRangedTag(Text description, Text hintText)
 	{
 		GridBagConstraints gbc = this.createGridBagLayout();
 		gbc.gridwidth = 2;
@@ -35,10 +35,10 @@ public class PanelRangedTag extends CGPanel implements ActionListener
 		gbc.gridx = 0;
 		++gbc.gridy;
 		++gbc.gridwidth;
-		this.add((this.entryFixed = new CGEntry(new Text("score.value"), Text.NUMBER)).container, gbc);
-		this.add((this.entryMin = new CGEntry(new Text("score.value.min"), Text.NUMBER)).container, gbc);
+		this.add((this.entryFixed = new CGEntry(new Text("score.value"), hintText)).container, gbc);
+		this.add((this.entryMin = new CGEntry(new Text("score.value.min"), hintText)).container, gbc);
 		++gbc.gridy;
-		this.add((this.entryMax = new CGEntry(new Text("scoreboard.test.max"), Text.NUMBER)).container, gbc);
+		this.add((this.entryMax = new CGEntry(new Text("scoreboard.test.max"), hintText)).container, gbc);
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(this.buttonFixed);

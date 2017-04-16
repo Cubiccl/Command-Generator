@@ -24,14 +24,17 @@ public class CriteriaTrigger extends BaseObject
 	public static final CriteriaTrigger entity_killed_player = new CriteriaTrigger("entity_killed_player", Tags.CRITERIA_DISTANCE_ENTITY,
 			Tags.CRITERIA_ENTITY_ENTITY);
 	public static final CriteriaTrigger impossible = new CriteriaTrigger("impossible");
-	public static final CriteriaTrigger inventory_changed = new CriteriaTrigger("inventory_changed");
-	public static final CriteriaTrigger location = new CriteriaTrigger("location", Tags.CRITERIA_BIOME);
+	public static final CriteriaTrigger inventory_changed = new CriteriaTrigger("inventory_changed", Tags.CRITERIA_EMPTY_SLOTS, Tags.CRITERIA_FULL_SLOTS,
+			Tags.CRITERIA_OCCUPIED_SLOTS);
+	public static final CriteriaTrigger location = new CriteriaTrigger("location", Tags.CRITERIA_BIOME, Tags.CRITERIA_X_POSITION, Tags.CRITERIA_Y_POSITION,
+			Tags.CRITERIA_Z_POSITION);
 	public static final CriteriaTrigger player_damaged = new CriteriaTrigger("player_damaged");
 	public static final CriteriaTrigger player_hurt_entity = new CriteriaTrigger("player_hurt_entity");
 	public static final CriteriaTrigger player_killed_entity = new CriteriaTrigger("player_killed_entity", Tags.CRITERIA_DISTANCE_ENTITY,
 			Tags.CRITERIA_ENTITY_ENTITY);
 	public static final CriteriaTrigger recipe_unlocked = new CriteriaTrigger("recipe_unlocked");
-	public static final CriteriaTrigger slept_in_bed = new CriteriaTrigger("slept_in_bed", Tags.CRITERIA_BIOME);
+	public static final CriteriaTrigger slept_in_bed = new CriteriaTrigger("slept_in_bed", Tags.CRITERIA_BIOME, Tags.CRITERIA_X_POSITION,
+			Tags.CRITERIA_Y_POSITION, Tags.CRITERIA_Z_POSITION);
 	public static final CriteriaTrigger summoned_entity = new CriteriaTrigger("summoned_entity", Tags.CRITERIA_DISTANCE_ENTITY, Tags.CRITERIA_ENTITY_ENTITY);
 	private static ArrayList<CriteriaTrigger> triggers;
 	public static final CriteriaTrigger used_ender_eye = new CriteriaTrigger("used_ender_eye", Tags.CRITERIA_DISTANCE);
