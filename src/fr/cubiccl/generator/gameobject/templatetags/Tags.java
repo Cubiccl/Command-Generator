@@ -57,6 +57,9 @@ public final class Tags
 
 	public static final TemplateString COMMAND = new TemplateString("Command", UNAVAILABLE);
 
+	public static final TemplateCompound CONTAINER_ENTITY = new DefaultCompound("entity");
+	public static final TemplateCompound CONTAINER_VILLAGER = new DefaultCompound("villager");
+
 	public static final TemplateNumber COORD_X = new TemplateNumber("X", UNAVAILABLE, Tag.DOUBLE);
 	public static final TemplateNumber COORD_X_INT = new TemplateNumber("X", UNAVAILABLE, Tag.INT);
 	public static final TemplateNumber COORD_Y = new TemplateNumber("Y", UNAVAILABLE, Tag.DOUBLE);
@@ -64,11 +67,10 @@ public final class Tags
 	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", UNAVAILABLE, Tag.DOUBLE);
 	public static final TemplateNumber COORD_Z_INT = new TemplateNumber("Z", UNAVAILABLE, Tag.INT);
 
-	public static final TemplateRange CRITERIA_BEACON = new TemplateRange("level", UNAVAILABLE, Tag.INT);
-	public static final TemplateString CRITERIA_BIOME = new TemplateString("biome", UNAVAILABLE);
-	public static final TemplateRange CRITERIA_DISTANCE = new TemplateRange("distance", UNAVAILABLE, Tag.INT);
-	public static final TemplateCompound CRITERIA_ENTITY = new DefaultCompound("entity");
-	public static final TemplateRange CRITERIA_LEVELS = new TemplateRange("levels", UNAVAILABLE, Tag.INT);
+	public static final TemplateRange CRITERIA_BEACON = new TemplateRange("level", UNAVAILABLE, Tag.INT, "ANY");
+	public static final TemplateString CRITERIA_BIOME = new TemplateString("biome", UNAVAILABLE, "ANY");
+	public static final TemplateRange CRITERIA_DISTANCE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "ANY");
+	public static final TemplateRange CRITERIA_LEVELS = new TemplateRange("levels", UNAVAILABLE, Tag.INT, "ANY");
 
 	public static final TemplateBoolean DEFAULT_BOOLEAN = new TemplateBoolean("", UNAVAILABLE);
 	public static final TemplateNumber DEFAULT_BYTE = new TemplateNumber("", UNAVAILABLE, Tag.BYTE);

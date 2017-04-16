@@ -19,9 +19,9 @@ public class TemplateRange extends TemplateNumber
 	public final byte numberType;
 	private TemplateNumber tagMin, tagMax;
 
-	public TemplateRange(String id, byte applicationType, byte numberType)
+	public TemplateRange(String id, byte applicationType, byte numberType, String... applicable)
 	{
-		super(id, applicationType, Tag.RANGE);
+		super(id, applicationType, Tag.RANGE, applicable);
 		this.numberType = numberType;
 	}
 

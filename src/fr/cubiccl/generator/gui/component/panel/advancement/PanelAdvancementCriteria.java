@@ -40,7 +40,7 @@ public class PanelAdvancementCriteria extends CGPanel implements ActionListener
 		gbc.gridwidth = 2;
 		this.add(this.labelDescription = new CGLabel((Text) null), gbc);
 		++gbc.gridy;
-		this.add(this.panelTags = new PanelTags("advancement.criteria.tags"), gbc);
+		this.add(this.panelTags = new PanelTags("advancement.criteria.tags", CriteriaTrigger.listTags()), gbc);
 
 		this.comboboxTrigger.addActionListener(this);
 
@@ -56,6 +56,7 @@ public class PanelAdvancementCriteria extends CGPanel implements ActionListener
 	private void onTriggerSelection()
 	{
 		this.labelDescription.setTextID(this.selectedTrigger().description());
+		this.panelTags.setTargetObject(this.selectedTrigger());
 		this.panelTags.setTags(this.selectedTrigger().conditions.keySet().toArray(new TemplateTag[this.selectedTrigger().conditions.keySet().size()]));
 		this.panelTags.setVisible(this.selectedTrigger() != CriteriaTrigger.impossible);
 	}
