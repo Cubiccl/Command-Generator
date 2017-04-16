@@ -121,8 +121,12 @@ public class TemplateRange extends TemplateNumber
 
 	public void setRangeTags()
 	{
-		this.tagMin = this.isInt() ? Tags.VALUE_MIN : Tags.VALUE_MIN_FLOAT;
-		this.tagMax = this.isInt() ? Tags.VALUE_MAX : Tags.VALUE_MAX_FLOAT;
+		TemplateNumber[] min =
+		{ null, null, null, Tags.VALUE_MIN, null, Tags.VALUE_MIN_FLOAT, Tags.VALUE_MIN_DOUBLE };
+		TemplateNumber[] max =
+		{ null, null, null, Tags.VALUE_MAX, null, Tags.VALUE_MAX_FLOAT, Tags.VALUE_MAX_DOUBLE };
+		this.tagMin = min[this.numberType];
+		this.tagMax = max[this.numberType];
 	}
 
 	public String suffix()

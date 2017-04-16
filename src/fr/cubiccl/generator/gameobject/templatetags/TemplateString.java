@@ -14,7 +14,7 @@ import fr.cubiccl.generator.utils.Text;
 
 public class TemplateString extends TemplateTag
 {
-	private String[] authorizedValues;
+	protected String[] authorizedValues;
 	public boolean minecraftPrefix = false;
 
 	public TemplateString(String id, byte applicationType, String... applicable)
@@ -33,7 +33,7 @@ public class TemplateString extends TemplateTag
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		if (this.authorizedValues != null)
-		{
+		{// TODO If you change this, change also TemplatePotion.createPanel()
 			ComboboxPanel p = new ComboboxPanel(this.description(object), "tag." + this.id(), this.authorizedValues);
 			if (previousValue != null) for (int i = 0; i < this.authorizedValues.length; ++i)
 				if ((this.minecraftPrefix && this.authorizedValues[i].equals(((String) previousValue.value()).substring("minecraft:".length())))

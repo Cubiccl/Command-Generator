@@ -4,18 +4,18 @@ import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagNumber;
-import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
+import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlockSelection;
 
-public class TemplateBlockId extends TemplateNumber
+public class TemplateBlockIdString extends TemplateString
 {
 	public int damage;
 
-	public TemplateBlockId(String id, byte applicationType, String... applicable)
+	public TemplateBlockIdString(String id, byte applicationType, String... applicable)
 	{
-		super(id, applicationType, TagNumber.SHORT, applicable);
+		super(id, applicationType, applicable);
 		this.damage = -1;
 	}
 
@@ -27,7 +27,7 @@ public class TemplateBlockId extends TemplateNumber
 		Block previous = p.selectedBlock();
 		if (previousValue != null)
 		{
-			previous = ObjectRegistry.blocks.find(((TagNumber) previousValue).valueInt());
+			previous = ObjectRegistry.blocks.find(((TagString) previousValue).value());
 			p.setSelected(previous);
 		}
 		if (this.damage != -1 && previous.isDamageValid(this.damage)) p.setDamage(this.damage);
@@ -35,10 +35,10 @@ public class TemplateBlockId extends TemplateNumber
 	}
 
 	@Override
-	public TagNumber generateTag(BaseObject object, CGPanel panel)
+	public TagString generateTag(BaseObject object, CGPanel panel)
 	{
 		this.damage = ((PanelBlockSelection) panel).selectedDamage();
-		return this.create(((PanelBlockSelection) panel).selectedBlock().idNum());
+		return this.create(((PanelBlockSelection) panel).selectedBlock().id());
 	}
 
 	@Override

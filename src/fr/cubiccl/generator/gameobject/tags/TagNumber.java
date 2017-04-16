@@ -6,7 +6,7 @@ import fr.cubiccl.generator.utils.Utils;
 public class TagNumber extends Tag
 {
 	public static final String[] SUFFIX =
-	{ "", "b", "s", "", "l", "f", "d", "", "" };
+	{ "", "b", "s", "", "l", "f", "d", "", "", "", "" };
 
 	public double value;
 

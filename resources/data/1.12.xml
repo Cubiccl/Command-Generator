@@ -4407,7 +4407,7 @@
       </applicable>
     </tag>
     <tag id="Potion">
-      <type>0</type>
+      <customtype>Potion</customtype>
       <applicable>
         <app>potion</app>
         <app>splash_potion</app>
