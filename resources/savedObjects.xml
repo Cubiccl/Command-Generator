@@ -214,7 +214,7 @@
       <description>Use /give to get an unobtainable item !</description>
       <criterias>
         <criteria name="first_criteria" trigger="cured_zombie_villager">
-          <condition>"distance":{"min":4,"max":5}</condition>
+          <condition>"villager":{"distance":{"min":4,"max":5}}</condition>
         </criteria>
       </criterias>
       <requirements />

@@ -34,6 +34,7 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 
 	private String[] applicable;
 	public final byte applicationType, tagType;
+	public TemplateCompound container = null;
 	/** Need several in case of chest-like recursion */
 	private Stack<TagCreation> creationListeners;
 	public String customTagName = null;
@@ -81,10 +82,12 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	 * @return A description of this NBT Tag. */
 	public Text description(BaseObject object)
 	{
-		Text t = new Text("tag." + TYPE_NAMES[this.applicationType] + "." + this.id);
+		String d = "tag." + TYPE_NAMES[this.applicationType] + "." + this.id;
+		if (this.container != null) d += "." + this.container.id();
+		Text t = new Text(d);
 		if (object != null)
 		{
-			String objectSpecific = "tag." + TYPE_NAMES[this.applicationType] + "." + this.id + "." + object.id();
+			String objectSpecific = d + "." + object.id();
 			if (Lang.keyExists(objectSpecific)) return new Text(objectSpecific, new Replacement("<o>", object.name()));
 			t.addReplacement("<o>", object.name());
 		}

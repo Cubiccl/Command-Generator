@@ -3283,7 +3283,10 @@ tag.Motion.y=Y Velocity
 tag.Motion.z=Z Velocity
 
 tag.other.biome=The biome the Player is currently in.
-tag.other.distance=The distance from the Player.
+tag.other.distance=The distance between the Stronghold and the Player.
+tag.other.distance.entity=The distance between the Entity and the Player.
+tag.other.distance.villager=The distance between the Villager and the Player after conversion.
+tag.other.distance.zombie=The distance between the Zombie and the Player before conversion.
 tag.other.level=The number of levels of the Beacon.
 tag.other.levels=The number of experience levels the Item was enchanted with.
 

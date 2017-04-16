@@ -1,13 +1,13 @@
 package fr.cubiccl.generator.gameobject.advancements;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.jdom2.Element;
 
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
+import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
-import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.utils.Text;
 
@@ -15,46 +15,24 @@ public class CriteriaTrigger extends BaseObject
 {
 	public static final CriteriaTrigger bred_animals = new CriteriaTrigger("bred_animals");
 	public static final CriteriaTrigger brewed_potion = new CriteriaTrigger("brewed_potion");
-	public static final CriteriaTrigger construct_beacon = new CriteriaTrigger("construct_beacon");
-	public static final CriteriaTrigger cured_zombie_villager = new CriteriaTrigger("cured_zombie_villager");
-	public static final CriteriaTrigger enchanted_item = new CriteriaTrigger("enchanted_item");
+	public static final CriteriaTrigger construct_beacon = new CriteriaTrigger("construct_beacon", Tags.CRITERIA_BEACON);
+	public static final CriteriaTrigger cured_zombie_villager = new CriteriaTrigger("cured_zombie_villager", Tags.CRITERIA_DISTANCE_VILLAGER,
+			Tags.CRITERIA_DISTANCE_ZOMBIE);
+	public static final CriteriaTrigger enchanted_item = new CriteriaTrigger("enchanted_item", Tags.CRITERIA_LEVELS);
 	public static final CriteriaTrigger enter_block = new CriteriaTrigger("enter_block");
-	public static final CriteriaTrigger entity_killed_player = new CriteriaTrigger("entity_killed_player");
+	public static final CriteriaTrigger entity_killed_player = new CriteriaTrigger("entity_killed_player", Tags.CRITERIA_DISTANCE_ENTITY);
 	public static final CriteriaTrigger impossible = new CriteriaTrigger("impossible");
 	public static final CriteriaTrigger inventory_changed = new CriteriaTrigger("inventory_changed");
-	public static final CriteriaTrigger location = new CriteriaTrigger("location");
+	public static final CriteriaTrigger location = new CriteriaTrigger("location", Tags.CRITERIA_BIOME);
 	public static final CriteriaTrigger player_damaged = new CriteriaTrigger("player_damaged");
 	public static final CriteriaTrigger player_hurt_entity = new CriteriaTrigger("player_hurt_entity");
-	public static final CriteriaTrigger player_killed_entity = new CriteriaTrigger("player_killed_entity");
+	public static final CriteriaTrigger player_killed_entity = new CriteriaTrigger("player_killed_entity", Tags.CRITERIA_DISTANCE_ENTITY);
 	public static final CriteriaTrigger recipe_unlocked = new CriteriaTrigger("recipe_unlocked");
-	public static final CriteriaTrigger slept_in_bed = new CriteriaTrigger("slept_in_bed");
-	public static final CriteriaTrigger summoned_entity = new CriteriaTrigger("summoned_entity");
+	public static final CriteriaTrigger slept_in_bed = new CriteriaTrigger("slept_in_bed", Tags.CRITERIA_BIOME);
+	public static final CriteriaTrigger summoned_entity = new CriteriaTrigger("summoned_entity", Tags.CRITERIA_DISTANCE_ENTITY);
 	private static ArrayList<CriteriaTrigger> triggers;
-	public static final CriteriaTrigger used_ender_eye = new CriteriaTrigger("used_ender_eye");
-	public static final CriteriaTrigger villager_trade = new CriteriaTrigger("villager_trade");
-
-	static
-	{
-		construct_beacon.addCondition(Tags.CRITERIA_BEACON);
-
-		cured_zombie_villager.addCondition(Tags.CRITERIA_DISTANCE, Tags.CONTAINER_VILLAGER);
-
-		enchanted_item.addCondition(Tags.CRITERIA_LEVELS);
-
-		entity_killed_player.addCondition(Tags.CRITERIA_DISTANCE, Tags.CONTAINER_ENTITY);
-
-		location.addCondition(Tags.CRITERIA_BIOME);
-
-		player_killed_entity.addCondition(Tags.CRITERIA_DISTANCE, Tags.CONTAINER_ENTITY);
-
-		slept_in_bed.addCondition(Tags.CRITERIA_BIOME);
-
-		summoned_entity.addCondition(Tags.CRITERIA_DISTANCE, Tags.CONTAINER_ENTITY);
-
-		used_ender_eye.addCondition(Tags.CRITERIA_DISTANCE);
-
-		villager_trade.addCondition(Tags.CRITERIA_DISTANCE, Tags.CONTAINER_VILLAGER);
-	}
+	public static final CriteriaTrigger used_ender_eye = new CriteriaTrigger("used_ender_eye", Tags.CRITERIA_DISTANCE);
+	public static final CriteriaTrigger villager_trade = new CriteriaTrigger("villager_trade", Tags.CRITERIA_DISTANCE_VILLAGER);
 
 	public static CriteriaTrigger find(String id)
 	{
@@ -67,7 +45,7 @@ public class CriteriaTrigger extends BaseObject
 	{
 		ArrayList<TemplateTag> tags = new ArrayList<TemplateTag>();
 		for (CriteriaTrigger trigger : values())
-			for (TemplateTag tag : trigger.conditions.keySet())
+			for (TemplateTag tag : trigger.conditions)
 				if (!tags.contains(tag)) tags.add(tag);
 		tags.sort(new ObjectComparatorID());
 		return tags.toArray(new TemplateTag[tags.size()]);
@@ -87,32 +65,35 @@ public class CriteriaTrigger extends BaseObject
 		return triggers.toArray(new CriteriaTrigger[triggers.size()]);
 	}
 
-	/** Describes the available conditions. Keys are the conditions. Values are the containers for those conditions. */
-	public final HashMap<TemplateTag, TemplateCompound> conditions;
-
+	public final ArrayList<TemplateTag> conditions;
 	public final String id;
 
-	private CriteriaTrigger(String id)
+	private CriteriaTrigger(String id, TemplateTag... conditions)
 	{
 		this.id = id;
-		this.conditions = new HashMap<TemplateTag, TemplateCompound>();
+		this.conditions = new ArrayList<TemplateTag>();
+		for (TemplateTag templateTag : conditions)
+			this.conditions.add(templateTag);
 		if (triggers == null) triggers = new ArrayList<CriteriaTrigger>();
 		triggers.add(this);
-	}
-
-	private void addCondition(TemplateTag condition)
-	{
-		this.conditions.put(condition, null);
-	}
-
-	private void addCondition(TemplateTag condition, TemplateCompound container)
-	{
-		this.conditions.put(condition, container);
 	}
 
 	public Text description()
 	{
 		return new Text("advancement.criteria." + this.id);
+	}
+
+	public ArrayList<Tag> findContainedTags(Tag t)
+	{
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		if (!(t instanceof TagCompound)) return tags;
+		for (Tag tag : ((TagCompound) t).value())
+			if (this.conditions.contains(tag.template))
+			{
+				tag.template = this.conditions.get(this.conditions.indexOf(tag.template)); // To get the correct container
+				tags.add(tag);
+			}
+		return tags;
 	}
 
 	@Override

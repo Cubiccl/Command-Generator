@@ -59,6 +59,7 @@ public final class Tags
 
 	public static final TemplateCompound CONTAINER_ENTITY = new DefaultCompound("entity");
 	public static final TemplateCompound CONTAINER_VILLAGER = new DefaultCompound("villager");
+	public static final TemplateCompound CONTAINER_ZOMBIE = new DefaultCompound("zombie");
 
 	public static final TemplateNumber COORD_X = new TemplateNumber("X", UNAVAILABLE, Tag.DOUBLE);
 	public static final TemplateNumber COORD_X_INT = new TemplateNumber("X", UNAVAILABLE, Tag.INT);
@@ -70,6 +71,9 @@ public final class Tags
 	public static final TemplateRange CRITERIA_BEACON = new TemplateRange("level", UNAVAILABLE, Tag.INT, "ANY");
 	public static final TemplateString CRITERIA_BIOME = new TemplateString("biome", UNAVAILABLE, "ANY");
 	public static final TemplateRange CRITERIA_DISTANCE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "ANY");
+	public static final TemplateRange CRITERIA_DISTANCE_ENTITY = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "ANY");
+	public static final TemplateRange CRITERIA_DISTANCE_VILLAGER = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "ANY");
+	public static final TemplateRange CRITERIA_DISTANCE_ZOMBIE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "ANY");
 	public static final TemplateRange CRITERIA_LEVELS = new TemplateRange("levels", UNAVAILABLE, Tag.INT, "ANY");
 
 	public static final TemplateBoolean DEFAULT_BOOLEAN = new TemplateBoolean("", UNAVAILABLE);
@@ -243,6 +247,9 @@ public final class Tags
 
 		CRITERIA_BIOME.setValues(Utils.BIOMES);
 		CRITERIA_BIOME.minecraftPrefix = true;
+		CRITERIA_DISTANCE_ENTITY.container = CONTAINER_ENTITY;
+		CRITERIA_DISTANCE_VILLAGER.container = CONTAINER_VILLAGER;
+		CRITERIA_DISTANCE_ZOMBIE.container = CONTAINER_ZOMBIE;
 
 		for (TemplateTag t : ObjectRegistry.unavailableTags.list())
 			if (t instanceof TemplateRange) ((TemplateRange) t).setRangeTags();

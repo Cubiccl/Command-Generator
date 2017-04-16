@@ -242,7 +242,8 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 			int selected = this.listTags.getSelectedIndex();
 			String[] names = new String[this.shownTags.size()];
 			for (int i = 0; i < names.length; ++i)
-				names[i] = this.shownTags.get(i).id();
+				if (this.shownTags.get(i).container == null) names[i] = this.shownTags.get(i).id();
+				else names[i] = this.shownTags.get(i).id() + "_" + this.shownTags.get(i).container.id();
 			this.listTags.setValues(names);
 			this.listTags.setSelectedIndex(selected == -1 ? 0 : selected);
 		}

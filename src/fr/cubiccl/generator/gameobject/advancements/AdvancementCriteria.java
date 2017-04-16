@@ -25,8 +25,18 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 		AdvancementCriteria c = new AdvancementCriteria();
 		c.name = criteria.getAttributeValue("name");
 		c.trigger = CriteriaTrigger.find(criteria.getAttributeValue("trigger"));
+
+		ArrayList<Tag> conditions = new ArrayList<Tag>();
 		for (Element condition : criteria.getChildren("condition"))
-			c.conditions.add(NBTReader.read(condition.getText(), false, true, true));
+			conditions.add(NBTReader.read(condition.getText(), false, true, true));
+
+		for (Tag t : conditions)
+		{
+			if (c.trigger.conditions.contains(t)) c.conditions.add(t);
+			else for (Tag tag : c.trigger.findContainedTags(t))
+				c.conditions.add(tag);
+		}
+
 		return c;
 	}
 
@@ -59,6 +69,38 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 		this.conditions.clear();
 	}
 
+	public ArrayList<Tag> conditionsInContainers()
+	{
+
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+
+		for (Tag t : this.conditions)
+		{
+			TemplateCompound container = t.template.container;
+			if (container == null) tags.add(t);
+			else
+			{
+				TagCompound c = null;
+				for (Tag tag : tags)
+					if (tag.template.equals(container))
+					{
+						c = (TagCompound) tag;
+						break;
+					}
+				if (c == null)
+				{
+					c = container.create();
+					c.setJson(true);
+					tags.add(c);
+				}
+
+				c.addTag(t);
+			}
+		}
+
+		return tags;
+	}
+
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
@@ -89,31 +131,7 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 
 	public TagCompound toTag()
 	{
-		ArrayList<Tag> tags = new ArrayList<Tag>();
-
-		for (Tag t : this.conditions)
-		{
-			TemplateCompound container = this.trigger.conditions.get(t.template);
-			if (container == null) tags.add(t);
-			else
-			{
-				TagCompound c = null;
-				for (Tag tag : tags)
-					if (tag.template.equals(container))
-					{
-						c = (TagCompound) tag;
-						break;
-					}
-				if (c == null)
-				{
-					c = container.create();
-					tags.add(c);
-				}
-
-				c.addTag(t);
-			}
-		}
-
+		ArrayList<Tag> tags = this.conditionsInContainers();
 		return new DefaultCompound(this.name, Tag.UNKNOWN).create(Tags.ADVANCEMENT_TRIGGER.create(this.trigger.id),
 				Tags.ADVANCEMENT_CONDITIONS.create(tags.toArray(new Tag[tags.size()])));
 	}
@@ -123,7 +141,7 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 		Element root = new Element("criteria");
 		root.setAttribute("name", this.name);
 		root.setAttribute("trigger", this.trigger.id);
-		for (Tag tag : this.conditions)
+		for (Tag tag : this.conditionsInContainers())
 			root.addContent(new Element("condition").setText(tag.toCommand(-1)));
 		return root;
 	}

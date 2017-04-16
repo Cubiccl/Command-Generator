@@ -32,8 +32,8 @@ public class ObjectRegistry<T extends BaseObject>
 	public static final ObjectRegistry<TemplateTag> itemTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
 	static final HashMap<String, ArrayList<String>> objectLists = new HashMap<String, ArrayList<String>>();
 	public static final ObjectRegistry<Particle> particles = new ObjectRegistry<Particle>(false, false, Particle.class);
-	public static final byte SORT_ALPHABETICALLY = 0, SORT_NUMERICALLY = 1, SORT_NAME = 2;
 	public static final ObjectRegistry<RecipeType> recipes = new ObjectRegistry<RecipeType>(false, false, RecipeType.class);
+	public static final byte SORT_ALPHABETICALLY = 0, SORT_NUMERICALLY = 1, SORT_NAME = 2;
 	public static final ObjectRegistry<Sound> sounds = new ObjectRegistry<Sound>(false, false, Sound.class);
 	public static final ObjectRegistry<TemplateTag> unavailableTags = new ObjectRegistry<TemplateTag>(false, false, TemplateTag.class);
 
@@ -312,11 +312,8 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public void register(T object)
 	{
-		if (this.knows(object.id()))
-		{
-			if (this != blockTags && this != itemTags && this != entityTags) return;
-			this.registry.put(object.id().replaceAll("minecraft:", "") + "_double_" + this.doubles(object.id()), object);
-		} else this.registry.put(object.id().replaceAll("minecraft:", ""), object);
+		if (this.knows(object.id())) this.registry.put(object.id().replaceAll("minecraft:", "") + "_double_" + this.doubles(object.id()), object);
+		else this.registry.put(object.id().replaceAll("minecraft:", ""), object);
 		if (this.hasNumericalIds) this.ids.put(object.idNum(), object.id().replaceAll("minecraft:", ""));
 	}
 

@@ -13,7 +13,7 @@ public abstract class Tag extends GameObject
 	public static final byte STRING = 0, BYTE = 1, SHORT = 2, INT = 3, LONG = 4, FLOAT = 5, DOUBLE = 6, LIST = 7, COMPOUND = 8, BOOLEAN = 9, RANGE = 10;
 
 	protected boolean isJson;
-	public final TemplateTag template;
+	public TemplateTag template;
 
 	public Tag(TemplateTag template)
 	{
