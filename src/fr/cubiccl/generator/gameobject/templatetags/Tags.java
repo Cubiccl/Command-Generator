@@ -84,7 +84,7 @@ public final class Tags
 			"player_hurt_entity");
 	public static final TemplateBoolean CRITERIA_BYPASSMAGIC_DAMAGE = new TemplateBoolean("bypasses_magic", UNAVAILABLE, "player_damaged", "player_hurt_entity");
 	public static final TemplateRange CRITERIA_DEALT_DAMAGE = new TemplateRange("dealt", UNAVAILABLE, Tag.DOUBLE, "player_damaged", "player_hurt_entity");
-	public static final TemplateRange CRITERIA_DISTANCE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "used_ender_pearl");
+	public static final TemplateRange CRITERIA_DISTANCE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "used_ender_eye");
 	public static final TemplateRange CRITERIA_DISTANCE_ENTITY = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "entity_killed_player",
 			"player_killed_entity", "summoned_entity");
 	public static final TemplateRange CRITERIA_DISTANCE_VILLAGER = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "cured_zombie_villager",
