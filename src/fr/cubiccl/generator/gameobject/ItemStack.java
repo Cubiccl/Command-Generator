@@ -16,6 +16,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.advancement.PanelTestedItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.display.PanelItemDisplay;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
@@ -118,6 +119,12 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
+		if (properties.isTrue("testing"))
+		{
+			PanelTestedItem p = new PanelTestedItem();
+			if (!properties.isTrue("new")) p.setupFrom(this);
+			return p;
+		}
 		PanelItem p = new PanelItem(null, true, true, properties.hasCustomObjects(), ObjectRegistry.items.list());
 		p.setupFrom(this);
 		return p;
@@ -197,7 +204,8 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public String getName(int index)
 	{
-		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.item.name(this.damage).toString();
+		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.item == null ? Integer.toString(index) : this.item.name(
+				this.damage).toString();
 	}
 
 	public TagCompound getNbt()
@@ -230,6 +238,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 
 	public BufferedImage texture()
 	{
+		if (this.item == null) return null;
 		return this.item.texture(this.damage);
 	}
 
@@ -293,7 +302,10 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public ItemStack update(CGPanel panel) throws CommandGenerationException
 	{
-		ItemStack i = ((PanelItem) panel).generate();
+		ItemStack i;
+		if (panel instanceof PanelTestedItem) i = ((PanelTestedItem) panel).generate();
+		else i = ((PanelItem) panel).generate();
+
 		this.amount = i.amount;
 		this.damage = i.damage;
 		this.item = i.item;

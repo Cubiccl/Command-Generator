@@ -32,7 +32,7 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 
 		for (Tag t : conditions)
 		{
-			if (c.trigger.conditions.contains(t)) c.conditions.add(t);
+			if (c.trigger.conditions.contains(t.template)) c.conditions.add(t);
 			else for (Tag tag : c.trigger.findContainedTags(t))
 				c.conditions.add(tag);
 		}

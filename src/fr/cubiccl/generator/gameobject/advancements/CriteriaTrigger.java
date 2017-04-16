@@ -25,7 +25,7 @@ public class CriteriaTrigger extends BaseObject
 			Tags.CRITERIA_ENTITY_ENTITY);
 	public static final CriteriaTrigger impossible = new CriteriaTrigger("impossible");
 	public static final CriteriaTrigger inventory_changed = new CriteriaTrigger("inventory_changed", Tags.CRITERIA_EMPTY_SLOTS, Tags.CRITERIA_FULL_SLOTS,
-			Tags.CRITERIA_OCCUPIED_SLOTS);
+			Tags.CRITERIA_ITEMS, Tags.CRITERIA_OCCUPIED_SLOTS);
 	public static final CriteriaTrigger location = new CriteriaTrigger("location", Tags.CRITERIA_BIOME, Tags.CRITERIA_X_POSITION, Tags.CRITERIA_Y_POSITION,
 			Tags.CRITERIA_Z_POSITION);
 	public static final CriteriaTrigger player_damaged = new CriteriaTrigger("player_damaged", Tags.CRITERIA_BLOCKED_DAMAGE, Tags.CRITERIA_BYPASSARMOR_DAMAGE,

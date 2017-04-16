@@ -102,6 +102,7 @@ public final class Tags
 	public static final TemplateBoolean CRITERIA_ISMAGIC_DAMAGE = new TemplateBoolean("is_magic", UNAVAILABLE, "player_damaged", "player_hurt_entity");
 	public static final TemplateBoolean CRITERIA_ISPROJECTILE_DAMAGE = new TemplateBoolean("is_projectile", UNAVAILABLE, "player_damaged", "player_hurt_entity");
 	public static final TemplateTestedItem CRITERIA_ITEM = new TemplateTestedItem("item", UNAVAILABLE, "enchanted_item", "villager_trade");
+	public static final TemplateTestedItemList CRITERIA_ITEMS = new TemplateTestedItemList("items", UNAVAILABLE, "inventory_changed");
 	public static final TemplateRange CRITERIA_LEVELS = new TemplateRange("levels", UNAVAILABLE, Tag.INT, "enchanted_item");
 	public static final TemplateRange CRITERIA_OCCUPIED_SLOTS = new TemplateRange("occupied", UNAVAILABLE, Tag.INT, "inventory_changed");
 	public static final TemplatePotion CRITERIA_POTION = new TemplatePotion("potion", UNAVAILABLE, "brewed_potion");

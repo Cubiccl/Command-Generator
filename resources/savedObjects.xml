@@ -213,7 +213,9 @@
       <title>Cheats!!</title>
       <description>Use /give to get an unobtainable item !</description>
       <criterias>
-        <criteria name="first_criteria" trigger="villager_trade" />
+        <criteria name="first_criteria" trigger="inventory_changed">
+          <condition>"items":[{"data":4},{"count":4},{"id":"minecraft:reeds","potion":"long_night_vision"}]</condition>
+        </criteria>
       </criterias>
       <requirements />
       <recipes>
