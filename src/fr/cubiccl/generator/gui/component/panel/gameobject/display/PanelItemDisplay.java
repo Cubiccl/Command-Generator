@@ -41,13 +41,13 @@ public class PanelItemDisplay extends JPanel
 
 	private void doResize(Graphics g)
 	{
-		int width = this.item == null ? 0 : this.item.texture().getWidth();
+		int width = this.item == null || this.item.getItem() == null ? 0 : this.item.texture().getWidth();
 		g.setFont(DisplayUtils.FONT);
 		for (String i : info)
 			width = Math.max(width, g.getFontMetrics().stringWidth(i));
 
 		int height = (this.info.length - 1) * LINE + MARGIN * 2;
-		if (this.item != null) height += PIXEL + this.item.texture().getHeight();
+		if (this.item != null && this.item.getItem() != null) height += PIXEL + this.item.texture().getHeight();
 		this.setVisible(false);
 		this.setPreferredSize(new Dimension(width + MARGIN * 2, height));
 		this.setVisible(true);
@@ -58,7 +58,7 @@ public class PanelItemDisplay extends JPanel
 	{
 		ArrayList<String> infos = new ArrayList<String>();
 
-		if (this.item != null)
+		if (this.item != null && this.item.getItem() != null)
 		{
 			infos.add(this.item.displayName());
 			for (String lore : this.item.findLore())
@@ -75,6 +75,8 @@ public class PanelItemDisplay extends JPanel
 	{
 		super.paint(g);
 
+		if (this.item == null || this.item.getItem() == null) return;
+
 		if (!this.isResized) this.doResize(g);
 
 		int width = this.getWidth(), height = this.getHeight() - 1;
@@ -88,8 +90,6 @@ public class PanelItemDisplay extends JPanel
 		g.fillRect(PIXEL, PIXEL, width - PIXEL * 2, PIXEL);
 		g.fillRect(width - PIXEL * 2, PIXEL, PIXEL, height - PIXEL * 2);
 		g.fillRect(PIXEL, height - PIXEL * 2, width - PIXEL * 2, PIXEL);
-
-		if (this.item == null) return;
 
 		g.drawImage(this.item.texture(), MARGIN, MARGIN - PIXEL * 3 / 2, null);
 

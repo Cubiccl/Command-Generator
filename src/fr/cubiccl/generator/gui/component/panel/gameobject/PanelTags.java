@@ -161,10 +161,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 
 	public TagCompound generateTags(TemplateCompound container)
 	{
-		ArrayList<Tag> tags = new ArrayList<Tag>();
-		for (Tag tag : this.values.values())
-			if (tag != null) tags.add(tag);
-		return container.create(tags.toArray(new Tag[tags.size()]));
+		return container.create(this.getValues());
 	}
 
 	private TemplateTag getTag(String id)
@@ -172,6 +169,14 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		for (TemplateTag tag : this.tags)
 			if (tag.id().equals(id)) return tag;
 		return null;
+	}
+
+	public Tag[] getValues()
+	{
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		for (Tag tag : this.values.values())
+			if (tag != null && this.shownTags.contains(tag.template)) tags.add(tag);
+		return tags.toArray(new Tag[tags.size()]);
 	}
 
 	public TemplateTag selectedTag()
@@ -237,7 +242,8 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 			int selected = this.listTags.getSelectedIndex();
 			String[] names = new String[this.shownTags.size()];
 			for (int i = 0; i < names.length; ++i)
-				names[i] = this.shownTags.get(i).id();
+				if (this.shownTags.get(i).container == null) names[i] = this.shownTags.get(i).id();
+				else names[i] = this.shownTags.get(i).id() + "_" + this.shownTags.get(i).container.id();
 			this.listTags.setValues(names);
 			this.listTags.setSelectedIndex(selected == -1 ? 0 : selected);
 		}

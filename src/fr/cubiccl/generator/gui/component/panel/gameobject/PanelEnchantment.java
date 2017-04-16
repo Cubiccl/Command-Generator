@@ -11,6 +11,7 @@ import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.tag.PanelRangedTag;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -20,9 +21,10 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 {
 	private static final long serialVersionUID = 1904430278915127658L;
 
-	private boolean checkMaximum;
+	private boolean checkMaximum, ranged;
 	private ObjectCombobox<EnchantmentType> comboboxEnchant;
 	private CGEntry entryLevel;
+	private PanelRangedTag panelRanged;
 
 	public PanelEnchantment(boolean checkMaximum)
 	{
@@ -31,8 +33,14 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 
 	public PanelEnchantment(boolean checkMaximum, boolean customObjects)
 	{
+		this(checkMaximum, customObjects, false);
+	}
+
+	public PanelEnchantment(boolean checkMaximum, boolean customObjects, boolean ranged)
+	{
 		super("enchant.title");
 		this.checkMaximum = checkMaximum;
+		this.ranged = ranged;
 		EnchantmentType[] enchants = ObjectRegistry.enchantments.list();
 
 		GridBagConstraints gbc = this.createGridBagLayout();
@@ -44,12 +52,15 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 		++gbc.gridy;
 		++gbc.gridwidth;
 		this.add((this.entryLevel = new CGEntry(new Text("enchant.level"), "1", Text.INTEGER)).container, gbc);
+		this.add(this.panelRanged = new PanelRangedTag(new Text("enchant.level"), Text.INTEGER), gbc);
 
 		++gbc.gridy;
 		gbc.fill = GridBagConstraints.NONE;
 		if (customObjects) this.add(new PanelCustomObject<Enchantment, Enchantment>(this, ObjectSaver.enchantments), gbc);
 
 		this.entryLevel.addIntFilter();
+		this.entryLevel.container.setVisible(!this.ranged);
+		this.panelRanged.setVisible(this.ranged);
 
 		this.updateTranslations();
 	}
@@ -61,6 +72,13 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 
 	public Enchantment generate() throws CommandGenerationException
 	{
+		if (this.ranged)
+		{
+			this.panelRanged.checkInput(CGEntry.INTEGER);
+			Enchantment e = new Enchantment(this.selectedEnchantment(), 0);
+			this.panelRanged.generateValue(e.value());
+			return e;
+		}
 		if (this.checkMaximum) this.entryLevel.checkValueInBounds(CGEntry.INTEGER, 1, this.selectedEnchantment().maxLevel);
 		this.entryLevel.checkValueSuperior(CGEntry.INTEGER, 1);
 		return new Enchantment(this.selectedEnchantment(), Integer.parseInt(this.entryLevel.getText()));
@@ -89,7 +107,11 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 	public void setupFrom(Enchantment enchantment)
 	{
 		this.setEnchantment(enchantment.getType());
-		this.setLevel(enchantment.getLevel());
+		if (this.ranged)
+		{
+			if (enchantment.value().isRanged) this.panelRanged.setRanged(enchantment.getLevel(), (int) enchantment.value().valueMax);
+			else this.panelRanged.setFixed((int) enchantment.getLevel());
+		} else this.setLevel(enchantment.getLevel());
 	}
 
 }

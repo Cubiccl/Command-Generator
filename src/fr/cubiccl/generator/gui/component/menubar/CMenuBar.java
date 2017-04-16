@@ -17,7 +17,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 {
 	private static final long serialVersionUID = 2644541217645898670L;
 
-	private CMenuItem objects, history, modeCommands, modeLootTables, modeRecipes, modeSpeedrun, modeData, settings, exit;
+	private CMenuItem objects, history, modeCommands, modeLootTables, modeRecipes, modeAdvancements, modeSpeedrun, modeData, settings, exit;
 	private boolean objectsEnabled = true;
 
 	public CMenuBar()
@@ -27,6 +27,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.add(this.modeCommands = new CMenuItem());
 		this.add(this.modeLootTables = new CMenuItem());
 		this.add(this.modeRecipes = new CMenuItem());
+		this.add(this.modeAdvancements = new CMenuItem());
 		this.add(this.modeSpeedrun = new CMenuItem());
 		this.add(this.modeData = new CMenuItem());
 		this.add(this.settings = new CMenuItem());
@@ -38,6 +39,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.modeCommands.addActionListener(this);
 		this.modeLootTables.addActionListener(this);
 		this.modeRecipes.addActionListener(this);
+		this.modeAdvancements.addActionListener(this);
 		this.modeSpeedrun.addActionListener(this);
 		this.modeData.addActionListener(this);
 		this.settings.addActionListener(this);
@@ -66,6 +68,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		} else if (e.getSource() == this.modeCommands) CommandGenerator.setCurrentMode(CommandGenerator.COMMANDS);
 		else if (e.getSource() == this.modeLootTables) CommandGenerator.setCurrentMode(CommandGenerator.LOOT_TABLES);
 		else if (e.getSource() == this.modeRecipes) CommandGenerator.setCurrentMode(CommandGenerator.RECIPES);
+		else if (e.getSource() == this.modeAdvancements) CommandGenerator.setCurrentMode(CommandGenerator.ADVANCEMENTS);
 		else if (e.getSource() == this.modeSpeedrun) CommandGenerator.setCurrentMode(CommandGenerator.SPEEDRUN);
 		else if (e.getSource() == this.modeData) CommandGenerator.setCurrentMode(CommandGenerator.DATA);
 		else if (e.getSource() == this.settings)
@@ -78,6 +81,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.modeCommands.setVisible(CommandGenerator.getCurrentMode() != CommandGenerator.COMMANDS);
 		this.modeLootTables.setVisible(CommandGenerator.getCurrentMode() != CommandGenerator.LOOT_TABLES);
 		this.modeRecipes.setVisible(CommandGenerator.getCurrentMode() != CommandGenerator.RECIPES);
+		this.modeAdvancements.setVisible(CommandGenerator.getCurrentMode() != CommandGenerator.ADVANCEMENTS);
 		this.modeSpeedrun.setVisible(false);
 	}
 
@@ -89,6 +93,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.modeCommands.setEnabled(enabled);
 		this.modeLootTables.setEnabled(enabled);
 		this.modeRecipes.setEnabled(enabled);
+		this.modeAdvancements.setEnabled(enabled);
 		this.modeSpeedrun.setEnabled(enabled);
 		this.modeData.setEnabled(enabled);
 		this.settings.setEnabled(enabled);
@@ -108,6 +113,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.modeCommands.setText(Lang.translate("menu.command"));
 		this.modeLootTables.setText(Lang.translate("menu.loot_table"));
 		this.modeRecipes.setText(Lang.translate("menu.recipe"));
+		this.modeAdvancements.setText(Lang.translate("menu.advancement"));
 		this.modeSpeedrun.setText(Lang.translate("menu.speedrun"));
 		this.settings.setText(Lang.translate("menu.settings"));
 		this.exit.setText(Lang.translate("menu.exit"));

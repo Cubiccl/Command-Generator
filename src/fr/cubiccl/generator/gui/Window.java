@@ -17,6 +17,7 @@ import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.interfaces.ITranslated;
 import fr.cubiccl.generator.gui.component.menubar.CMenuBar;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.advancement.PanelAdvancementSelection;
 import fr.cubiccl.generator.gui.component.panel.data.PanelObjectSelection;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelJsonOutput;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelLootTableSelection;
@@ -34,6 +35,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	private static final long serialVersionUID = -3962531275009303736L;
 
 	public CMenuBar menubar;
+	public PanelAdvancementSelection panelAdvancementSelection;
 	private PanelCommand panelCommand;
 	private PanelCommandSelection panelCommandSelection;
 	private CGPanel panelGui;
@@ -47,8 +49,8 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	public Window()
 	{
 		super();
-		this.setSize(800, 600);
-		this.setMinimumSize(new Dimension(800, 400));
+		this.setSize(890, 600);
+		this.setMinimumSize(new Dimension(890, 400));
 		this.setLocationRelativeTo(null);
 		this.setExtendedState(MAXIMIZED_BOTH);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -87,6 +89,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		contentPane.add(this.panelCommandSelection = new PanelCommandSelection());
 		contentPane.add(this.panelLootTableSelection = new PanelLootTableSelection());
 		contentPane.add(this.panelRecipeSelection = new PanelRecipeSelection());
+		contentPane.add(this.panelAdvancementSelection = new PanelAdvancementSelection());
 		contentPane.add(this.panelSpeedrunSelection = new PanelSpeedrunSelection());
 		contentPane.add(this.panelObjectSelection = new PanelObjectSelection());
 		contentPane.add(this.scrollpane = new CScrollPane(null));
@@ -105,7 +108,6 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	private void onResized()
 	{
 		Container contentPane = this.getContentPane();
-		boolean recipes = CommandGenerator.getCurrentMode() == CommandGenerator.RECIPES;
 		if (CommandGenerator.getCurrentMode() == CommandGenerator.COMMANDS)
 		{
 			this.panelCommand.setBounds(0, 0, contentPane.getWidth(), PanelCommand.HEIGHT);
@@ -117,10 +119,12 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 			this.panelObjectSelection.setBounds(0, 0, contentPane.getWidth(), PanelObjectSelection.HEIGHT);
 			this.scrollpane.setBounds(0, this.panelObjectSelection.getHeight(), contentPane.getWidth(),
 					contentPane.getHeight() - this.panelObjectSelection.getHeight());
-		} else if (CommandGenerator.getCurrentMode() == CommandGenerator.LOOT_TABLES || recipes)
+		} else if (CommandGenerator.getCurrentMode() == CommandGenerator.LOOT_TABLES || CommandGenerator.getCurrentMode() == CommandGenerator.RECIPES
+				|| CommandGenerator.getCurrentMode() == CommandGenerator.ADVANCEMENTS)
 		{
 			this.panelLootTableSelection.setBounds(0, 0, contentPane.getWidth() / 2, PanelJsonOutput.HEIGHT);
 			this.panelRecipeSelection.setBounds(0, 0, contentPane.getWidth() / 2, PanelJsonOutput.HEIGHT);
+			this.panelAdvancementSelection.setBounds(0, 0, contentPane.getWidth() / 2, PanelJsonOutput.HEIGHT);
 			this.panelJsonOutput.setBounds(this.panelLootTableSelection.getWidth(), 0, this.getWidth() / 2, PanelJsonOutput.HEIGHT);
 			this.scrollpane.setBounds(0, PanelJsonOutput.HEIGHT, contentPane.getWidth(), contentPane.getHeight() - this.panelJsonOutput.getHeight());
 		} else if (CommandGenerator.getCurrentMode() == CommandGenerator.SPEEDRUN)
@@ -161,11 +165,13 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		boolean loot_tables = CommandGenerator.getCurrentMode() == CommandGenerator.LOOT_TABLES;
 		boolean data = CommandGenerator.getCurrentMode() == CommandGenerator.DATA;
 		boolean recipes = CommandGenerator.getCurrentMode() == CommandGenerator.RECIPES;
+		boolean advancements = CommandGenerator.getCurrentMode() == CommandGenerator.ADVANCEMENTS;
 		this.panelCommandSelection.setVisible(commands);
 		this.panelCommand.setVisible(commands);
-		this.panelJsonOutput.setVisible(loot_tables || recipes);
+		this.panelJsonOutput.setVisible(loot_tables || recipes || advancements);
 		this.panelLootTableSelection.setVisible(loot_tables);
 		this.panelRecipeSelection.setVisible(recipes);
+		this.panelAdvancementSelection.setVisible(advancements);
 		this.panelSpeedrunSelection.setVisible(CommandGenerator.getCurrentMode() == CommandGenerator.SPEEDRUN);
 		this.panelObjectSelection.setVisible(data);
 		this.onResized();
@@ -185,6 +191,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.panelJsonOutput.updateTranslations();
 		this.panelLootTableSelection.updateTranslations();
 		this.panelRecipeSelection.updateTranslations();
+		this.panelAdvancementSelection.updateTranslations();
 		this.panelSpeedrunSelection.updateTranslations();
 		this.menubar.updateTranslations();
 		if (this.panelGui != null) this.panelGui.updateTranslations();

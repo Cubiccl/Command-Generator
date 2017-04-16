@@ -16,7 +16,7 @@ public class TagList extends Tag
 	public void addTag(Tag tag)
 	{
 		Tag[] t = new Tag[this.tags.length + 1];
-		for (int i = 0; i < t.length; ++i)
+		for (int i = 0; i < this.tags.length; ++i)
 			t[i] = this.tags[i];
 		t[this.tags.length] = tag;
 		this.tags = t;

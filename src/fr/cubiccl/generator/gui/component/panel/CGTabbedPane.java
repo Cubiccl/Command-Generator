@@ -32,7 +32,7 @@ public class CGTabbedPane extends CTabbedPane implements ITranslated
 	@Override
 	public String getTitleAt(int index)
 	{
-		return super.getTitleAt(index).toString();
+		return this.texts.get(index).toString();
 	}
 
 	@Override

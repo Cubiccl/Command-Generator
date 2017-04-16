@@ -20,7 +20,7 @@ public abstract class TemplateCompound extends TemplateTag
 
 		public DefaultCompound(String id, byte type)
 		{
-			super(id, type);
+			super(id, type, "ANY");
 		}
 
 		@Override
@@ -50,7 +50,7 @@ public abstract class TemplateCompound extends TemplateTag
 
 	@Override
 	public Tag readTag(String value, boolean isJson, boolean readUnknown)
-	{
+	{ // Change this --> Change TemplateRange.readTag()
 		if (value.startsWith("{") && value.endsWith("}")) value = value.substring(1, value.length() - 1);
 		String[] values = NBTReader.splitTagValues(value);
 		ArrayList<Tag> tags = new ArrayList<Tag>();

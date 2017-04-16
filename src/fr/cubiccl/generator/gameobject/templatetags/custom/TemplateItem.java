@@ -17,7 +17,7 @@ public class TemplateItem extends TemplateCompound
 	private String autoselect;
 	private String[] ids;
 
-	public TemplateItem(String id, byte applicationType, String[] applicable)
+	public TemplateItem(String id, byte applicationType, String... applicable)
 	{
 		super(id, applicationType, applicable);
 		this.ids = null;

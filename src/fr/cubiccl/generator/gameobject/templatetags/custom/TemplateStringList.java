@@ -12,7 +12,7 @@ import fr.cubiccl.generator.utils.Text;
 
 public class TemplateStringList extends TemplateList
 {
-	public TemplateStringList(String id, byte applicationType, String[] applicable)
+	public TemplateStringList(String id, byte applicationType, String... applicable)
 	{
 		super(id, applicationType, applicable);
 	}
@@ -20,15 +20,16 @@ public class TemplateStringList extends TemplateList
 	@Override
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
-		String[] values = new String[0];
+		Text[] values = new Text[0];
 		if (previousValue != null)
 		{
 			TagList t = (TagList) previousValue;
-			values = new String[t.size()];
+			values = new Text[t.size()];
 			for (int i = 0; i < values.length; i++)
-				values[i] = (String) t.getTag(i).value();
+				values[i] = new Text((String) t.getTag(i).value(), false);
 		}
-		PanelObjectList<Text> p = new PanelObjectList<Text>(null, "tag." + this.id(), Text.class);
+		PanelObjectList<Text> p = new PanelObjectList<Text>(null, "tag." + this.id(), Text.class, "description", this.description(object));
+		p.setValues(values);
 		p.setName(this.title());
 		return p;
 	}

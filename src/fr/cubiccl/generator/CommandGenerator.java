@@ -12,6 +12,7 @@ import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
 import fr.cubiccl.generator.gameobject.Recipe;
+import fr.cubiccl.generator.gameobject.advancements.Advancement;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
@@ -29,7 +30,7 @@ import fr.cubiccl.generator.utils.*;
 public class CommandGenerator
 {
 	private static ArrayList<String> commandHistory = new ArrayList<String>();
-	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, SPEEDRUN = 3, RECIPES = 4;
+	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, SPEEDRUN = 3, RECIPES = 4, ADVANCEMENTS = 5;
 	private static byte currentMode = COMMANDS;
 	private static String executeCommand = "", executeInput = null;
 	private static boolean isReloading = false;
@@ -73,6 +74,18 @@ public class CommandGenerator
 			FileUtils.writeToFile("untranslated.txt", untranslated.toArray(new String[untranslated.size()]));
 		}
 		log("Log, settings and custom objects save successful.");
+	}
+
+	public static void generateAdvancement()
+	{
+		log("Generating !");
+		Advancement a = window.panelAdvancementSelection.selectedAdvancement();
+		if (a != null && a.isValid())
+		{
+			String output = a.toCommand();
+			window.showOutput(output);
+			log("Successfully generated : " + output);
+		}
 	}
 
 	public static void generateCommand()
@@ -146,6 +159,11 @@ public class CommandGenerator
 	public static boolean isReloading()
 	{
 		return isReloading;
+	}
+
+	public static void loadAdvancement()
+	{
+		// TODO CommandGenerator.loadAdvancement();
 	}
 
 	public static void loadCommand()

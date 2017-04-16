@@ -16,6 +16,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.gui.component.panel.advancement.PanelTestedItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.display.PanelItemDisplay;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
@@ -55,17 +56,24 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 
 	public static ItemStack createFrom(TagCompound tag)
 	{
-		Item i = ObjectRegistry.items.first();
-		int a = 1, d = 0, s = -1;
+		return createFrom(tag, false);
+	}
+
+	public static ItemStack createFrom(TagCompound tag, boolean allowNull)
+	{
+		Item i = allowNull ? null : ObjectRegistry.items.first();
+		int a = allowNull ? -1 : 1, d = allowNull ? -1 : 0, s = -1;
 		TagCompound nbt = Tags.ITEM_NBT.create();
 
 		for (Tag t : tag.value())
 		{
 			if (t.id().equals(Tags.ITEM_ID.id())) i = ObjectRegistry.items.find(((TagString) t).value);
-			if (t.id().equals(Tags.ITEM_COUNT.id())) a = ((TagNumber) t).valueInt();
-			if (t.id().equals(Tags.ITEM_DAMAGE.id())) d = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.ITEM_COUNT.id()) || t.id().equals(Tags.RECIPE_ITEM_COUNT.id())) a = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.ITEM_DAMAGE.id()) || t.id().equals(Tags.RECIPE_ITEM_DATA.id())) d = ((TagNumber) t).valueInt();
 			if (t.id().equals(Tags.ITEM_SLOT.id())) s = ((TagNumber) t).valueInt();
 			if (t.id().equals(Tags.ITEM_NBT.id())) nbt = (TagCompound) t;
+			if (t.id().equals(Tags.CRITERIA_POTION.id())) nbt.addTag(t);
+			if (t.id().equals(Tags.ITEM_ENCHANTMENTS.id())) nbt.addTag(t);
 		}
 
 		ItemStack is = new ItemStack(i, d, a, nbt);
@@ -111,6 +119,12 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
+		if (properties.isTrue("testing"))
+		{
+			PanelTestedItem p = new PanelTestedItem();
+			if (!properties.isTrue("new")) p.setupFrom(this);
+			return p;
+		}
 		PanelItem p = new PanelItem(null, true, true, properties.hasCustomObjects(), ObjectRegistry.items.list());
 		p.setupFrom(this);
 		return p;
@@ -190,7 +204,8 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public String getName(int index)
 	{
-		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.item.name(this.damage).toString();
+		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.item == null ? Integer.toString(index) : this.item.name(
+				this.damage).toString();
 	}
 
 	public TagCompound getNbt()
@@ -223,6 +238,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 
 	public BufferedImage texture()
 	{
+		if (this.item == null) return null;
 		return this.item.texture(this.damage);
 	}
 
@@ -241,7 +257,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
-		// IF YOU CHANGE THIS CHANGE ALSO BELOW FOR RECIPE
+		// IF YOU CHANGE THIS CHANGE ALSO BELOW FOR RECIPE AND TEST
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		tags.add(Tags.ITEM_ID.create(this.item.id()));
 		tags.add(Tags.ITEM_DAMAGE.create(this.damage));
@@ -260,6 +276,17 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
+	public TagCompound toTagForTest(TemplateCompound container)
+	{
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		if (this.item != null) tags.add(Tags.ITEM_ID.create(this.item.id()));
+		if (this.damage != -1) tags.add(Tags.RECIPE_ITEM_DATA.create(this.damage));
+		if (this.amount != -1) tags.add(Tags.RECIPE_ITEM_COUNT.create(this.amount));
+		if (this.nbt.hasTag(Tags.CRITERIA_POTION)) tags.add(this.nbt.getTag(Tags.CRITERIA_POTION));
+		if (this.nbt.hasTag(Tags.ITEM_ENCHANTMENTS)) tags.add(this.nbt.getTag(Tags.ITEM_ENCHANTMENTS));
+		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
 	@Override
 	public Element toXML()
 	{
@@ -275,7 +302,10 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public ItemStack update(CGPanel panel) throws CommandGenerationException
 	{
-		ItemStack i = ((PanelItem) panel).generate();
+		ItemStack i;
+		if (panel instanceof PanelTestedItem) i = ((PanelTestedItem) panel).generate();
+		else i = ((PanelItem) panel).generate();
+
 		this.amount = i.amount;
 		this.damage = i.damage;
 		this.item = i.item;
