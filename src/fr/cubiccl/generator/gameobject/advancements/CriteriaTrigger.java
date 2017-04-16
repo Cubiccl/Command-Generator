@@ -20,7 +20,7 @@ public class CriteriaTrigger extends BaseObject
 	public static final CriteriaTrigger cured_zombie_villager = new CriteriaTrigger("cured_zombie_villager", Tags.CRITERIA_DISTANCE_VILLAGER,
 			Tags.CRITERIA_DISTANCE_ZOMBIE);
 	public static final CriteriaTrigger enchanted_item = new CriteriaTrigger("enchanted_item", Tags.CRITERIA_ITEM, Tags.CRITERIA_LEVELS);
-	public static final CriteriaTrigger enter_block = new CriteriaTrigger("enter_block", Tags.CRITERIA_BLOCK);
+	public static final CriteriaTrigger enter_block = new CriteriaTrigger("enter_block", Tags.CRITERIA_BLOCK, Tags.CRITERIA_STATE);
 	public static final CriteriaTrigger entity_killed_player = new CriteriaTrigger("entity_killed_player", Tags.CRITERIA_DISTANCE_ENTITY,
 			Tags.CRITERIA_ENTITY_ENTITY);
 	public static final CriteriaTrigger impossible = new CriteriaTrigger("impossible");

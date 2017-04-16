@@ -107,6 +107,7 @@ public final class Tags
 	public static final TemplateRange CRITERIA_OCCUPIED_SLOTS = new TemplateRange("occupied", UNAVAILABLE, Tag.INT, "inventory_changed");
 	public static final TemplatePotion CRITERIA_POTION = new TemplatePotion("potion", UNAVAILABLE, "brewed_potion");
 	public static final TemplateRecipeId CRITERIA_RECIPE = new TemplateRecipeId("recipe", UNAVAILABLE, "recipe_unlocked");
+	public static final TemplateStringList CRITERIA_STATE = new TemplateStringList("state", UNAVAILABLE, "enter_block");
 	public static final TemplateRange CRITERIA_TAKEN_DAMAGE = new TemplateRange("taken", UNAVAILABLE, Tag.DOUBLE, "player_damaged", "player_hurt_entity");
 	public static final TemplateRange CRITERIA_X_POSITION = new TemplateRange("x", UNAVAILABLE, Tag.DOUBLE, "location", "slept_in_bed");
 	public static final TemplateRange CRITERIA_Y_POSITION = new TemplateRange("y", UNAVAILABLE, Tag.DOUBLE, "location", "slept_in_bed");

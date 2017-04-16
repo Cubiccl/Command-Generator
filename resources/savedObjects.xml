@@ -216,8 +216,12 @@
         <criteria name="first_criteria" trigger="inventory_changed">
           <condition>"items":[{"data":4},{"count":4},{"id":"minecraft:reeds","potion":"long_night_vision"}]</condition>
         </criteria>
+        <criteria name="states_test" trigger="enter_block">
+          <condition>"state":["jkl"]</condition>
+        </criteria>
       </criterias>
       <requirements />
+      <experience>4</experience>
       <recipes>
         <r>minecraft:bedrock</r>
       </recipes>
