@@ -41,7 +41,7 @@ public class PanelItemDisplay extends JPanel
 
 	private void doResize(Graphics g)
 	{
-		int width = this.item == null ? 0 : this.item.texture().getWidth();
+		int width = this.item == null || this.item.getItem() == null ? 0 : this.item.texture().getWidth();
 		g.setFont(DisplayUtils.FONT);
 		for (String i : info)
 			width = Math.max(width, g.getFontMetrics().stringWidth(i));
@@ -58,7 +58,7 @@ public class PanelItemDisplay extends JPanel
 	{
 		ArrayList<String> infos = new ArrayList<String>();
 
-		if (this.item != null)
+		if (this.item != null && this.item.getItem() != null)
 		{
 			infos.add(this.item.displayName());
 			for (String lore : this.item.findLore())
@@ -89,7 +89,7 @@ public class PanelItemDisplay extends JPanel
 		g.fillRect(width - PIXEL * 2, PIXEL, PIXEL, height - PIXEL * 2);
 		g.fillRect(PIXEL, height - PIXEL * 2, width - PIXEL * 2, PIXEL);
 
-		if (this.item == null) return;
+		if (this.item == null || this.item.getItem() != null) return;
 
 		g.drawImage(this.item.texture(), MARGIN, MARGIN - PIXEL * 3 / 2, null);
 

@@ -55,17 +55,24 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 
 	public static ItemStack createFrom(TagCompound tag)
 	{
-		Item i = ObjectRegistry.items.first();
-		int a = 1, d = 0, s = -1;
+		return createFrom(tag, false);
+	}
+
+	public static ItemStack createFrom(TagCompound tag, boolean allowNull)
+	{
+		Item i = allowNull ? null : ObjectRegistry.items.first();
+		int a = allowNull ? -1 : 1, d = allowNull ? -1 : 0, s = -1;
 		TagCompound nbt = Tags.ITEM_NBT.create();
 
 		for (Tag t : tag.value())
 		{
 			if (t.id().equals(Tags.ITEM_ID.id())) i = ObjectRegistry.items.find(((TagString) t).value);
-			if (t.id().equals(Tags.ITEM_COUNT.id())) a = ((TagNumber) t).valueInt();
-			if (t.id().equals(Tags.ITEM_DAMAGE.id())) d = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.ITEM_COUNT.id()) || t.id().equals(Tags.RECIPE_ITEM_COUNT.id())) a = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.ITEM_DAMAGE.id()) || t.id().equals(Tags.RECIPE_ITEM_DATA.id())) d = ((TagNumber) t).valueInt();
 			if (t.id().equals(Tags.ITEM_SLOT.id())) s = ((TagNumber) t).valueInt();
 			if (t.id().equals(Tags.ITEM_NBT.id())) nbt = (TagCompound) t;
+			if (t.id().equals(Tags.CRITERIA_POTION.id())) nbt.addTag(t);
+			if (t.id().equals(Tags.ITEM_ENCHANTMENTS.id())) nbt.addTag(t);
 		}
 
 		ItemStack is = new ItemStack(i, d, a, nbt);
@@ -241,7 +248,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
-		// IF YOU CHANGE THIS CHANGE ALSO BELOW FOR RECIPE
+		// IF YOU CHANGE THIS CHANGE ALSO BELOW FOR RECIPE AND TEST
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		tags.add(Tags.ITEM_ID.create(this.item.id()));
 		tags.add(Tags.ITEM_DAMAGE.create(this.damage));
@@ -257,6 +264,17 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		tags.add(Tags.RECIPE_ITEM_ID.create(this.item.id()));
 		tags.add(Tags.RECIPE_ITEM_DATA.create(this.damage));
 		if (this.amount != 1) tags.add(Tags.RECIPE_ITEM_COUNT.create(this.amount));
+		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	public TagCompound toTagForTest(TemplateCompound container)
+	{
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		if (this.item != null) tags.add(Tags.ITEM_ID.create(this.item.id()));
+		if (this.damage != -1) tags.add(Tags.RECIPE_ITEM_DATA.create(this.damage));
+		if (this.amount != -1) tags.add(Tags.RECIPE_ITEM_COUNT.create(this.amount));
+		if (this.nbt.hasTag(Tags.CRITERIA_POTION)) tags.add(this.nbt.getTag(Tags.CRITERIA_POTION));
+		if (this.nbt.hasTag(Tags.ITEM_ENCHANTMENTS)) tags.add(this.nbt.getTag(Tags.ITEM_ENCHANTMENTS));
 		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 

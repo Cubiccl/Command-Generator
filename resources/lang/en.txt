@@ -14,6 +14,7 @@ achievement.take=Remove
 
 advancement.background=Background (optional)
 advancement.background.help=Specifies a custom texture for this category's background, e.g. "minecraft:textures/gui/advancements/backgrounds/stone.png". Only applies for root Advancements.
+advancement.check=What to check
 advancement.criterion=Only this Criterion :
 advancement.display=Display
 advancement.display_item=Item icon
@@ -3299,6 +3300,8 @@ tag.other.is_explosion.damage=True if the damage originates from an explosion.
 tag.other.is_fire.damage=True if the damage originates from a fire source.
 tag.other.is_magic.damage=True if the damage originates from magic.
 tag.other.is_projectile.damage=True if the damage originates from a projectile.
+tag.other.item.enchanted_item=The Item that was enchanted.
+tag.other.item.villager_trade=The Item that was purchased.
 tag.other.level=The number of levels of the Beacon.
 tag.other.levels=The number of experience levels the Item was enchanted with.
 tag.other.occupied.slots=The number of occupied slots in the Inventory (has Items but isn't full).

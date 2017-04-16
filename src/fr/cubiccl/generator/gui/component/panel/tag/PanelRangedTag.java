@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 
+import fr.cubiccl.generator.gameobject.utils.TestValue;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -65,6 +66,16 @@ public class PanelRangedTag extends CGPanel implements ActionListener
 			this.entryMin.checkValue(checkMode);
 			this.entryMax.checkValueSuperior(checkMode, this.min());
 		}
+	}
+
+	public void generateValue(TestValue value)
+	{
+		value.isRanged = this.isRanged();
+		if (this.isRanged())
+		{
+			value.valueMin = this.min();
+			value.valueMax = this.max();
+		} else value.valueMin = this.value();
 	}
 
 	public boolean isRanged()

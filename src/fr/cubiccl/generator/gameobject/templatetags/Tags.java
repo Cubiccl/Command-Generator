@@ -5,10 +5,7 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList.DefaultList;
-import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockIdString;
-import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateEntityId;
-import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePotion;
-import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateRecipeId;
+import fr.cubiccl.generator.gameobject.templatetags.custom.*;
 import fr.cubiccl.generator.utils.Utils;
 
 /** Contains unique and constant NBT Tags. */
@@ -104,6 +101,7 @@ public final class Tags
 	public static final TemplateBoolean CRITERIA_ISFIRE_DAMAGE = new TemplateBoolean("is_fire", UNAVAILABLE, "player_damaged", "player_hurt_entity");
 	public static final TemplateBoolean CRITERIA_ISMAGIC_DAMAGE = new TemplateBoolean("is_magic", UNAVAILABLE, "player_damaged", "player_hurt_entity");
 	public static final TemplateBoolean CRITERIA_ISPROJECTILE_DAMAGE = new TemplateBoolean("is_projectile", UNAVAILABLE, "player_damaged", "player_hurt_entity");
+	public static final TemplateTestedItem CRITERIA_ITEM = new TemplateTestedItem("item", UNAVAILABLE, "enchanted_item", "villager_trade");
 	public static final TemplateRange CRITERIA_LEVELS = new TemplateRange("levels", UNAVAILABLE, Tag.INT, "enchanted_item");
 	public static final TemplateRange CRITERIA_OCCUPIED_SLOTS = new TemplateRange("occupied", UNAVAILABLE, Tag.INT, "inventory_changed");
 	public static final TemplatePotion CRITERIA_POTION = new TemplatePotion("potion", UNAVAILABLE, "brewed_potion");
@@ -135,7 +133,10 @@ public final class Tags
 	public static final TemplateNumber EFFECT_PARTICLES = new TemplateNumber("ShowParticles", UNAVAILABLE, Tag.BYTE);
 
 	public static final TemplateNumber ENCHANTMENT_ID = new TemplateNumber("id", UNAVAILABLE, Tag.SHORT);
+	public static final TemplateString ENCHANTMENT_IDSTRING = new TemplateString("enchantment", UNAVAILABLE);
 	public static final TemplateNumber ENCHANTMENT_LVL = new TemplateNumber("lvl", UNAVAILABLE, Tag.SHORT);
+	public static final TemplateNumber ENCHANTMENT_LVLINT = new TemplateNumber("levels", UNAVAILABLE, Tag.INT);
+	public static final DefaultCompound ENCHANTMENT_LVLRANGE = new DefaultCompound("levels");
 
 	public static final DefaultCompound ENTITY = new DefaultCompound("");
 	public static final TemplateString ENTITY_ID = new TemplateString("id", UNAVAILABLE);
@@ -159,6 +160,7 @@ public final class Tags
 	public static final DefaultCompound ITEM = new DefaultCompound("item");
 	public static final TemplateNumber ITEM_COUNT = new TemplateNumber("Count", UNAVAILABLE, Tag.BYTE);
 	public static final TemplateNumber ITEM_DAMAGE = new TemplateNumber("Damage", UNAVAILABLE, Tag.SHORT);
+	public static final DefaultList ITEM_ENCHANTMENTS = new DefaultList("enchantments");
 	public static final TemplateString ITEM_ID = new TemplateString("id", UNAVAILABLE);
 	public static final DefaultCompound ITEM_NBT = new DefaultCompound("tag");
 	public static final TemplateNumber ITEM_SLOT = new TemplateNumber("Slot", UNAVAILABLE, Tag.BYTE);

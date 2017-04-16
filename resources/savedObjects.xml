@@ -213,9 +213,7 @@
       <title>Cheats!!</title>
       <description>Use /give to get an unobtainable item !</description>
       <criterias>
-        <criteria name="first_criteria" trigger="summoned_entity">
-          <condition>"entity":{"type":"minecraft:blaze","distance":{"min":6,"max":12}}</condition>
-        </criteria>
+        <criteria name="first_criteria" trigger="villager_trade" />
       </criterias>
       <requirements />
       <recipes>

@@ -32,7 +32,7 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	public static final String[] TYPE_NAMES =
 	{ "block", "item", "entity", "other", "other" };
 
-	private String[] applicable;
+	protected String[] applicable;
 	public final byte applicationType, tagType;
 	public TemplateCompound container = null;
 	/** Need several in case of chest-like recursion */

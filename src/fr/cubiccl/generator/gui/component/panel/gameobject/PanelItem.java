@@ -37,7 +37,7 @@ public class PanelItem extends CGPanel implements ActionListener, IStateListener
 	private CGLabel labelName;
 	private ImageLabel labelTexture;
 	private Set<ITranslated> listeners;
-	private PanelTags panelTags;
+	protected PanelTags panelTags;
 	private CGSpinner spinnerAmount, spinnerDurability;
 
 	public PanelItem(String titleID)

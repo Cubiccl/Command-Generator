@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
@@ -34,6 +36,22 @@ public class TemplatePotion extends TemplateString
 	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
 		return true;
+	}
+
+	@Override
+	public Element toXML()
+	{
+		Element root = new Element("tag");
+		root.setAttribute("id", this.id());
+		if (this.customTagName != null) root.addContent(new Element("customtype").setText(this.customTagName));
+		else root.addContent(new Element("type").setText(Integer.toString(this.tagType)));
+
+		Element applicable = new Element("applicable");
+		for (String app : this.applicable)
+			applicable.addContent(new Element("app").setText(app));
+		root.addContent(applicable);
+
+		return root;
 	}
 
 }

@@ -19,7 +19,7 @@ public class CriteriaTrigger extends BaseObject
 	public static final CriteriaTrigger construct_beacon = new CriteriaTrigger("construct_beacon", Tags.CRITERIA_BEACON);
 	public static final CriteriaTrigger cured_zombie_villager = new CriteriaTrigger("cured_zombie_villager", Tags.CRITERIA_DISTANCE_VILLAGER,
 			Tags.CRITERIA_DISTANCE_ZOMBIE);
-	public static final CriteriaTrigger enchanted_item = new CriteriaTrigger("enchanted_item", Tags.CRITERIA_LEVELS);
+	public static final CriteriaTrigger enchanted_item = new CriteriaTrigger("enchanted_item", Tags.CRITERIA_ITEM, Tags.CRITERIA_LEVELS);
 	public static final CriteriaTrigger enter_block = new CriteriaTrigger("enter_block", Tags.CRITERIA_BLOCK);
 	public static final CriteriaTrigger entity_killed_player = new CriteriaTrigger("entity_killed_player", Tags.CRITERIA_DISTANCE_ENTITY,
 			Tags.CRITERIA_ENTITY_ENTITY);
@@ -43,7 +43,7 @@ public class CriteriaTrigger extends BaseObject
 	public static final CriteriaTrigger summoned_entity = new CriteriaTrigger("summoned_entity", Tags.CRITERIA_DISTANCE_ENTITY, Tags.CRITERIA_ENTITY_ENTITY);
 	private static ArrayList<CriteriaTrigger> triggers;
 	public static final CriteriaTrigger used_ender_eye = new CriteriaTrigger("used_ender_eye", Tags.CRITERIA_DISTANCE);
-	public static final CriteriaTrigger villager_trade = new CriteriaTrigger("villager_trade", Tags.CRITERIA_DISTANCE_VILLAGER);
+	public static final CriteriaTrigger villager_trade = new CriteriaTrigger("villager_trade", Tags.CRITERIA_DISTANCE_VILLAGER, Tags.CRITERIA_ITEM);
 
 	public static CriteriaTrigger find(String id)
 	{
