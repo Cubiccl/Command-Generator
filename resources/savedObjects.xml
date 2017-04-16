@@ -233,7 +233,11 @@
           <condition>"state":["jkl"]</condition>
         </criteria>
       </criterias>
-      <requirements />
+      <requirements>
+        <r>
+          <i>0</i>
+        </r>
+      </requirements>
       <experience>4</experience>
       <recipes>
         <r>minecraft:bedrock</r>

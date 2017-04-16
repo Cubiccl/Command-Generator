@@ -1,4 +1,21 @@
-------------------------- VERSION 2.5.1 -------------------------
+------------------------- VERSION 2.6 -------------------------
+ADDITIONS
+- Added the Advancement Generator !
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+advancement.*
+general.cancel_edit, general.description
+menu.advancement
+value.fixed, value.ranged
+tag.biome.*
+tag.other.*
+tag.title.items, tag.title.states
+
+------------------------- VERSION 2.5.2 -------------------------
 ADDITIONS
 - Updated for snapshot 17w15a.
 

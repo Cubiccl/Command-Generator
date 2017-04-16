@@ -47,7 +47,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 			ArrayList<Integer> r = new ArrayList<Integer>();
 			for (Element i : req.getChildren())
 				r.add(Integer.parseInt(i.getText()));
-			a.requirements.add(new Integer[r.size()]);
+			a.requirements.add(r.toArray(new Integer[r.size()]));
 		}
 
 		if (advancement.getChild("experience") != null) a.rewardExperience = Integer.parseInt(advancement.getChildText("experience"));
@@ -187,7 +187,19 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 
 	public void removeCriterion(AdvancementCriteria criteria)
 	{
+		int index = this.criteria.indexOf(criteria);
+		ArrayList<Integer[]> newReq = new ArrayList<Integer[]>();
+		for (Integer[] req : this.requirements)
+		{
+			ArrayList<Integer> r = new ArrayList<Integer>();
+			for (Integer i : req)
+				if (i > index) r.add(i - 1);
+				else if (i < index) r.add(i);
+			newReq.add(r.toArray(new Integer[r.size()]));
+		}
+
 		this.criteria.remove(criteria);
+		this.requirements.clear();
 	}
 
 	public void setItem(Item item)

@@ -25,10 +25,10 @@ public final class Tags
 	public static final TemplateNumber ADVANCEMENT_EXPERIENCE = new TemplateNumber("experience", UNAVAILABLE, Tag.INT);
 	public static final TemplateString ADVANCEMENT_FRAME = new TemplateString("frame", UNAVAILABLE);
 	public static final TemplateString ADVANCEMENT_ICON = new TemplateString("icon", UNAVAILABLE);
-	public static final DefaultList ADVANCEMENT_LOOT = new DefaultList("requirements");
+	public static final DefaultList ADVANCEMENT_LOOT = new DefaultList("loot");
 	public static final TemplateString ADVANCEMENT_PARENT = new TemplateString("parent", UNAVAILABLE);
 	public static final DefaultList ADVANCEMENT_RECIPES = new DefaultList("recipes");
-	public static final DefaultList ADVANCEMENT_REQUIREMENTS = new DefaultList("loot");
+	public static final DefaultList ADVANCEMENT_REQUIREMENTS = new DefaultList("requirements");
 	public static final DefaultCompound ADVANCEMENT_REWARDS = new DefaultCompound("rewards");
 	public static final TemplateString ADVANCEMENT_TITLE = new TemplateString("title", UNAVAILABLE);
 	public static final DefaultCompound ADVANCEMENT_TITLE_JSON = new DefaultCompound("conditions");

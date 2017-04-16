@@ -8,9 +8,11 @@ import java.awt.event.ActionListener;
 import javax.swing.ButtonGroup;
 import javax.swing.SwingConstants;
 
+import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.advancements.Advancement;
 import fr.cubiccl.generator.gameobject.advancements.AdvancementCriteria;
+import fr.cubiccl.generator.gameobject.advancements.Requirement;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
@@ -27,15 +29,18 @@ import fr.cubiccl.generator.utils.Text;
 
 public class PanelAdvancement extends CGPanel implements ActionListener
 {
+
 	private static final long serialVersionUID = -773099244243224959L;
 
 	public final Advancement advancement;
+	private CTextArea areaReqDesc;
 	private CGButton buttonSave, buttonCancel;
 	private CGRadioButton buttonTString, buttonTJson;
 	private OptionCombobox comboboxFrame;
 	private PanelObjectList<AdvancementCriteria> criteria;
 	private CGEntry entryTitle, entryDescription, entryBackground, entryParent, entryExperience;
 	private PanelItem panelItem;
+	private PanelObjectList<Requirement> panelRequirements;
 	private PanelJsonMessage panelTitleJson;
 	private PanelObjectList<Text> recipes, loot;
 	private CGTabbedPane tabbedPane;
@@ -107,6 +112,13 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		CGPanel criterias = new CGPanel();
 		gbc = criterias.createGridBagLayout();
 		criterias.add(this.criteria = new PanelObjectList<AdvancementCriteria>("advancement.criteria", "advancement.criteria", AdvancementCriteria.class));
+		++gbc.gridy;
+		criterias.add(this.panelRequirements = new PanelObjectList<Requirement>("advancement.requirements", "", Requirement.class, "advancement",
+				this.advancement), gbc);
+		++gbc.gridy;
+		criterias.add(this.areaReqDesc = new CTextArea(new Text("advancement.requirements.description").toString()), gbc);
+		this.areaReqDesc.setWrapStyleWord(true);
+		this.areaReqDesc.setLineWrap(true);
 
 		this.tabbedPane = new CGTabbedPane();
 		this.tabbedPane.addTab(new Text("advancement.display"), display);
@@ -206,12 +218,23 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		this.advancement.rewardLoot.clear();
 		for (Text t : this.loot.values())
 			this.advancement.rewardLoot.add(t.id);
+
+		this.advancement.requirements.clear();
+		for (Requirement r : this.panelRequirements.values())
+			this.advancement.requirements.add(r.criterias);
 	}
 
 	private void updateTitleType()
 	{
 		this.entryTitle.container.setVisible(this.buttonTString.isSelected());
 		this.panelTitleJson.setVisible(this.buttonTJson.isSelected());
+	}
+
+	@Override
+	public void updateTranslations()
+	{
+		super.updateTranslations();
+		if (this.areaReqDesc != null) this.areaReqDesc.setText(new Text("advancement.requirements.description").toString());
 	}
 
 }
