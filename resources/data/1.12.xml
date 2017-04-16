@@ -4414,45 +4414,6 @@
         <app>lingering_potion</app>
         <app>tipped_arrow</app>
       </applicable>
-      <strvalues>
-        <v>empty</v>
-        <v>water</v>
-        <v>mundane</v>
-        <v>thick</v>
-        <v>awkward</v>
-        <v>night_vision</v>
-        <v>long_night_vision</v>
-        <v>invisibility</v>
-        <v>long_invisibility</v>
-        <v>leaping</v>
-        <v>strong_leaping</v>
-        <v>long_leaping</v>
-        <v>fire_resistance</v>
-        <v>long_fire_resistance</v>
-        <v>swiftness</v>
-        <v>strong_swiftness</v>
-        <v>long_swiftness</v>
-        <v>slowness</v>
-        <v>long_slowness</v>
-        <v>water_breathing</v>
-        <v>long_water_breathing</v>
-        <v>healing</v>
-        <v>strong_healing</v>
-        <v>harming</v>
-        <v>strong_harming</v>
-        <v>poison</v>
-        <v>strong_poison</v>
-        <v>long_poison</v>
-        <v>regeneration</v>
-        <v>strong_regeneration</v>
-        <v>long_regeneration</v>
-        <v>strength</v>
-        <v>strong_strength</v>
-        <v>long_strength</v>
-        <v>weakness</v>
-        <v>long_weakness</v>
-        <v>luck</v>
-      </strvalues>
     </tag>
     <tag id="Recipes">
       <customtype>RecipeList</customtype>
