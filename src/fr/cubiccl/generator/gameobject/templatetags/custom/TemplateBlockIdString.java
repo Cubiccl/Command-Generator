@@ -22,7 +22,7 @@ public class TemplateBlockIdString extends TemplateString
 	@Override
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
-		PanelBlockSelection p = new PanelBlockSelection();
+		PanelBlockSelection p = new PanelBlockSelection(false);
 
 		Block previous = p.selectedBlock();
 		if (previousValue != null)

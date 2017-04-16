@@ -164,6 +164,7 @@ public final class Tags
 	public static final TemplateNumber ITEM_DAMAGE = new TemplateNumber("Damage", UNAVAILABLE, Tag.SHORT);
 	public static final DefaultList ITEM_ENCHANTMENTS = new DefaultList("enchantments");
 	public static final TemplateString ITEM_ID = new TemplateString("id", UNAVAILABLE);
+	public static final TemplateString ITEM_IDITEM = new TemplateString("item", UNAVAILABLE);
 	public static final DefaultCompound ITEM_NBT = new DefaultCompound("tag");
 	public static final TemplateNumber ITEM_SLOT = new TemplateNumber("Slot", UNAVAILABLE, Tag.BYTE);
 

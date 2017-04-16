@@ -67,7 +67,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.ITEM_ID.id())) i = ObjectRegistry.items.find(((TagString) t).value);
+			if (t.id().equals(Tags.ITEM_ID.id()) || t.id().equals(Tags.ITEM_IDITEM.id())) i = ObjectRegistry.items.find(((TagString) t).value);
 			if (t.id().equals(Tags.ITEM_COUNT.id()) || t.id().equals(Tags.RECIPE_ITEM_COUNT.id())) a = ((TagNumber) t).valueInt();
 			if (t.id().equals(Tags.ITEM_DAMAGE.id()) || t.id().equals(Tags.RECIPE_ITEM_DATA.id())) d = ((TagNumber) t).valueInt();
 			if (t.id().equals(Tags.ITEM_SLOT.id())) s = ((TagNumber) t).valueInt();
@@ -251,6 +251,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	@Override
 	public String toString()
 	{
+		if (this.amount == -1) return this.item.name(this.damage).toString();
 		return this.amount + " " + this.item.name(this.damage);
 	}
 
@@ -279,7 +280,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 	public TagCompound toTagForTest(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
-		if (this.item != null) tags.add(Tags.ITEM_ID.create(this.item.id()));
+		if (this.item != null) tags.add(Tags.ITEM_IDITEM.create(this.item.id()));
 		if (this.damage != -1) tags.add(Tags.RECIPE_ITEM_DATA.create(this.damage));
 		if (this.amount != -1) tags.add(Tags.RECIPE_ITEM_COUNT.create(this.amount));
 		if (this.nbt.hasTag(Tags.CRITERIA_POTION)) tags.add(this.nbt.getTag(Tags.CRITERIA_POTION));

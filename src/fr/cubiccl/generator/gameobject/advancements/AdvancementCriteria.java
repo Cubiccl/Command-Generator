@@ -43,7 +43,8 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 	public static AdvancementCriteria createFrom(TagCompound tag)
 	{
 		AdvancementCriteria c = new AdvancementCriteria();
-		if (tag.hasTag(Tags.ADVANCEMENT_TRIGGER)) c.name = tag.getTag(Tags.ADVANCEMENT_TRIGGER).value();
+		c.name = tag.id();
+		if (tag.hasTag(Tags.ADVANCEMENT_TRIGGER)) c.trigger = CriteriaTrigger.find(tag.getTag(Tags.ADVANCEMENT_TRIGGER).value());
 		if (tag.hasTag(Tags.ADVANCEMENT_CONDITIONS)) for (Tag t : tag.getTag(Tags.ADVANCEMENT_CONDITIONS).value())
 			c.conditions.add(t);
 		return c;

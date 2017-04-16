@@ -163,7 +163,23 @@ public class CommandGenerator
 
 	public static void loadAdvancement()
 	{
-		// TODO CommandGenerator.loadAdvancement();
+		CGPanel p = new CGPanel();
+		p.setLayout(new BorderLayout());
+		p.add(new CGLabel("advancement.load.description"), BorderLayout.NORTH);
+		CTextArea area = new CTextArea("");
+		area.setEditable(true);
+		CScrollPane sc = new CScrollPane(area);
+		sc.setPreferredSize(new Dimension(400, 200));
+		p.add(sc, BorderLayout.CENTER);
+		if (!Dialogs.showConfirmDialog(p)) return;
+
+		TagCompound tag = (TagCompound) NBTReader.read(area.getText(), true, true, true);
+		Advancement advancement = Advancement.createFrom(tag);
+
+		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
+		if (name == null) return;
+		advancement.setCustomName(name);
+		window.panelAdvancementSelection.list.add(advancement);
 	}
 
 	public static void loadCommand()
