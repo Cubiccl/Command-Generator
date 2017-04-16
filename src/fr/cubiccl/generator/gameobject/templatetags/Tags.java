@@ -5,6 +5,7 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList.DefaultList;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateEntityId;
 import fr.cubiccl.generator.utils.Utils;
 
 /** Contains unique and constant NBT Tags. */
@@ -57,7 +58,13 @@ public final class Tags
 
 	public static final TemplateString COMMAND = new TemplateString("Command", UNAVAILABLE);
 
+	public static final TemplateCompound CONTAINER_CHILD = new DefaultCompound("child");
+	public static final TemplateCompound CONTAINER_DAMAGE = new DefaultCompound("damage");
 	public static final TemplateCompound CONTAINER_ENTITY = new DefaultCompound("entity");
+	public static final TemplateCompound CONTAINER_PARENT = new DefaultCompound("parent");
+	public static final TemplateCompound CONTAINER_PARTNER = new DefaultCompound("partner");
+	public static final TemplateCompound CONTAINER_POSITION = new DefaultCompound("position");
+	public static final TemplateCompound CONTAINER_SLOTS = new DefaultCompound("slots");
 	public static final TemplateCompound CONTAINER_VILLAGER = new DefaultCompound("villager");
 	public static final TemplateCompound CONTAINER_ZOMBIE = new DefaultCompound("zombie");
 
@@ -68,13 +75,20 @@ public final class Tags
 	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", UNAVAILABLE, Tag.DOUBLE);
 	public static final TemplateNumber COORD_Z_INT = new TemplateNumber("Z", UNAVAILABLE, Tag.INT);
 
-	public static final TemplateRange CRITERIA_BEACON = new TemplateRange("level", UNAVAILABLE, Tag.INT, "ANY");
-	public static final TemplateString CRITERIA_BIOME = new TemplateString("biome", UNAVAILABLE, "ANY");
-	public static final TemplateRange CRITERIA_DISTANCE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "ANY");
-	public static final TemplateRange CRITERIA_DISTANCE_ENTITY = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "ANY");
-	public static final TemplateRange CRITERIA_DISTANCE_VILLAGER = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "ANY");
-	public static final TemplateRange CRITERIA_DISTANCE_ZOMBIE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "ANY");
-	public static final TemplateRange CRITERIA_LEVELS = new TemplateRange("levels", UNAVAILABLE, Tag.INT, "ANY");
+	public static final TemplateRange CRITERIA_BEACON = new TemplateRange("level", UNAVAILABLE, Tag.INT, "construct_beacon");
+	public static final TemplateString CRITERIA_BIOME = new TemplateString("biome", UNAVAILABLE, "location", "slept_in_bed");
+	public static final TemplateRange CRITERIA_DISTANCE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "used_ender_pearl");
+	public static final TemplateRange CRITERIA_DISTANCE_ENTITY = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "entity_killed_player",
+			"player_killed_entity", "summoned_entity");
+	public static final TemplateRange CRITERIA_DISTANCE_VILLAGER = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "cured_zombie_villager",
+			"villager_trade");
+	public static final TemplateRange CRITERIA_DISTANCE_ZOMBIE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "cured_zombie_villager");
+	public static final TemplateEntityId CRITERIA_ENTITY_CHILD = new TemplateEntityId("type", UNAVAILABLE, "bred_animals");
+	public static final TemplateEntityId CRITERIA_ENTITY_ENTITY = new TemplateEntityId("type", UNAVAILABLE, "entity_killed_player", "player_killed_entity",
+			"summoned_entity");
+	public static final TemplateEntityId CRITERIA_ENTITY_PARENT = new TemplateEntityId("type", UNAVAILABLE, "bred_animals");
+	public static final TemplateEntityId CRITERIA_ENTITY_PARTNER = new TemplateEntityId("type", UNAVAILABLE, "bred_animals");
+	public static final TemplateRange CRITERIA_LEVELS = new TemplateRange("levels", UNAVAILABLE, Tag.INT, "enchanted_item");
 
 	public static final TemplateBoolean DEFAULT_BOOLEAN = new TemplateBoolean("", UNAVAILABLE);
 	public static final TemplateNumber DEFAULT_BYTE = new TemplateNumber("", UNAVAILABLE, Tag.BYTE);
@@ -250,6 +264,10 @@ public final class Tags
 		CRITERIA_DISTANCE_ENTITY.container = CONTAINER_ENTITY;
 		CRITERIA_DISTANCE_VILLAGER.container = CONTAINER_VILLAGER;
 		CRITERIA_DISTANCE_ZOMBIE.container = CONTAINER_ZOMBIE;
+		CRITERIA_ENTITY_CHILD.container = CONTAINER_CHILD;
+		CRITERIA_ENTITY_ENTITY.container = CONTAINER_ENTITY;
+		CRITERIA_ENTITY_PARENT.container = CONTAINER_PARENT;
+		CRITERIA_ENTITY_PARTNER.container = CONTAINER_PARTNER;
 
 		for (TemplateTag t : ObjectRegistry.unavailableTags.list())
 			if (t instanceof TemplateRange) ((TemplateRange) t).setRangeTags();

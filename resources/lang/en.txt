@@ -3289,6 +3289,10 @@ tag.other.distance.villager=The distance between the Villager and the Player aft
 tag.other.distance.zombie=The distance between the Zombie and the Player before conversion.
 tag.other.level=The number of levels of the Beacon.
 tag.other.levels=The number of experience levels the Item was enchanted with.
+tag.other.type.child=The type of the Entity that was born.
+tag.other.type.entity=The type of the Entity.
+tag.other.type.parent=The type of one of the parents.
+tag.other.type.partner=The type of the other.
 
 tag.Potion.empty=Uncraftable Potion
 tag.Potion.water=Water Bottle
