@@ -186,4 +186,10 @@ public final class Utils
 		return array;
 	}
 
+	/** @return True if the input array starts at 0 and each index increments by 1. */
+	public static boolean isArrayConsecutive(int... array)
+	{
+		return array.equals(generateArray(array.length - 1));
+	}
+
 }

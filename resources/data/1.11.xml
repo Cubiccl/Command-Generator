@@ -3,11 +3,27 @@
   <blocks>
     <block idint="0" idstr="air" />
     <block idint="1" idstr="stone">
-      <maxdamage>6</maxdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>stone</v>
+          <v>granite</v>
+          <v>smooth_granite</v>
+          <v>diorite</v>
+          <v>smooth_diorite</v>
+          <v>andesite</v>
+          <v>smooth_andesite</v>
+        </state>
+      </states>
     </block>
     <block idint="2" idstr="grass" />
     <block idint="3" idstr="dirt">
-      <maxdamage>2</maxdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>dirt</v>
+          <v>coarse_dirt</v>
+          <v>podzol</v>
+        </state>
+      </states>
     </block>
     <block idint="4" idstr="cobblestone" />
     <block idint="5" idstr="planks">
@@ -19,45 +35,139 @@
     <block idint="7" idstr="bedrock" />
     <block idint="8" idstr="flowing_water">
       <texture>-1</texture>
-      <maxdamage>7</maxdamage>
+      <states>
+        <state id="level" type="2" damage="1">
+          <v>0</v>
+          <v>1</v>
+          <v>2</v>
+          <v>3</v>
+          <v>4</v>
+          <v>5</v>
+          <v>6</v>
+          <v>7</v>
+        </state>
+      </states>
     </block>
     <block idint="9" idstr="water" />
     <block idint="10" idstr="flowing_lava">
       <texture>-1</texture>
-      <maxdamage>7</maxdamage>
+      <states>
+        <state id="level" type="2" damage="1">
+          <v>0</v>
+          <v>1</v>
+          <v>2</v>
+          <v>3</v>
+          <v>4</v>
+          <v>5</v>
+          <v>6</v>
+          <v>7</v>
+        </state>
+      </states>
     </block>
     <block idint="11" idstr="lava" />
     <block idint="12" idstr="sand">
-      <maxdamage>1</maxdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>sand</v>
+          <v>red_sand</v>
+        </state>
+      </states>
     </block>
     <block idint="13" idstr="gravel" />
     <block idint="14" idstr="gold_ore" />
     <block idint="15" idstr="iron_ore" />
     <block idint="16" idstr="coal_ore" />
     <block idint="17" idstr="log">
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>oak</v>
+          <v>spruce</v>
+          <v>birch</v>
+          <v>jungle</v>
+        </state>
+        <state id="axis" type="0" damage="4">
+          <v>y</v>
+          <v>x</v>
+          <v>z</v>
+          <v>none</v>
+        </state>
+      </states>
     </block>
     <block idint="18" idstr="leaves">
       <texture>4</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="check_decay" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="decayable" type="1" damage="4">
+          <v>true</v>
+          <v>false</v>
+        </state>
+        <state id="variant" type="0" damage="1">
+          <v>oak</v>
+          <v>spruce</v>
+          <v>birch</v>
+          <v>jungle</v>
+        </state>
+      </states>
     </block>
     <block idint="19" idstr="sponge">
-      <maxdamage>1</maxdamage>
+      <states>
+        <state id="wet" type="1" damage="1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="20" idstr="glass" />
     <block idint="21" idstr="lapis_ore" />
     <block idint="22" idstr="lapis_block" />
     <block idint="23" idstr="dispenser">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <states>
+        <state id="triggered" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="facing" type="0" damage="1">
+          <v>down</v>
+          <v>up</v>
+          <v>north</v>
+          <v>south</v>
+          <v>west</v>
+          <v>east</v>
+        </state>
+      </states>
     </block>
     <block idint="24" idstr="sandstone">
-      <maxdamage>2</maxdamage>
+      <states>
+        <state id="type" type="0" damage="1">
+          <v>sandstone</v>
+          <v>chiseled_sandstone</v>
+          <v>smooth_sandstone</v>
+        </state>
+      </states>
     </block>
     <block idint="25" idstr="noteblock" />
     <block idint="26" idstr="bed">
       <texture>-8</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="part" type="0" damage="8">
+          <v>head</v>
+          <v>foot</v>
+        </state>
+        <state id="facing" type="0" damage="1">
+          <v>south</v>
+          <v>west</v>
+          <v>north</v>
+          <v>east</v>
+        </state>
+        <state id="occupied" type="1" damage="4">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="27" idstr="golden_rail">
       <customblock>Rail</customblock>
@@ -67,31 +177,101 @@
     </block>
     <block idint="29" idstr="sticky_piston">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <states>
+        <state id="facing" type="0" damage="1">
+          <v>down</v>
+          <v>up</v>
+          <v>north</v>
+          <v>south</v>
+          <v>west</v>
+          <v>east</v>
+        </state>
+        <state id="extended" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="30" idstr="web" />
     <block idint="31" idstr="tallgrass">
-      <maxdamage>3</maxdamage>
+      <states>
+        <state id="type" type="0" damage="1">
+          <v>dead_bush</v>
+          <v>tall_grass</v>
+          <v>fern</v>
+        </state>
+      </states>
     </block>
     <block idint="32" idstr="deadbush" />
     <block idint="33" idstr="piston">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <states>
+        <state id="facing" type="0" damage="1">
+          <v>down</v>
+          <v>up</v>
+          <v>north</v>
+          <v>south</v>
+          <v>west</v>
+          <v>east</v>
+        </state>
+        <state id="extended" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="34" idstr="piston_head">
       <texture>-8</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <states>
+        <state id="facing" type="0" damage="1">
+          <v>down</v>
+          <v>up</v>
+          <v>north</v>
+          <v>south</v>
+          <v>west</v>
+          <v>east</v>
+        </state>
+        <state id="type" type="0" damage="8">
+          <v>normal</v>
+          <v>sticky</v>
+        </state>
+      </states>
     </block>
     <block idint="35" idstr="wool">
       <customblock>Stained</customblock>
     </block>
     <block idint="36" idstr="piston_extension">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <states>
+        <state id="facing" type="0" damage="1">
+          <v>down</v>
+          <v>up</v>
+          <v>north</v>
+          <v>south</v>
+          <v>west</v>
+          <v>east</v>
+        </state>
+        <state id="extended" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="37" idstr="yellow_flower" />
     <block idint="38" idstr="red_flower">
-      <maxdamage>8</maxdamage>
+      <states>
+        <state id="type" type="0" damage="1">
+          <v>poppy</v>
+          <v>blue_orchid</v>
+          <v>allium</v>
+          <v>houstonia</v>
+          <v>red_tulip</v>
+          <v>orange_tulip</v>
+          <v>white_tulip</v>
+          <v>pink_tulip</v>
+          <v>oxeye_daisy</v>
+        </state>
+      </states>
     </block>
     <block idint="39" idstr="brown_mushroom" />
     <block idint="40" idstr="red_mushroom" />

@@ -85,6 +85,16 @@ public class ObjectCreator
 				else if (block.getChild("maxdamage") != null) b = new Block(idInt, idString, Integer.parseInt(block.getChildText("maxdamage")));
 				else b = new Block(idInt, idString);
 				if (block.getChild("texture") != null) b.textureType = Integer.parseInt(block.getChildText("texture"));
+				if (block.getChild("states") != null) for (Element state : block.getChild("states").getChildren("state"))
+				{
+					ArrayList<String> values = new ArrayList<String>();
+					for (Element v : state.getChildren("v"))
+						values.add(v.getText());
+					BlockState s = new BlockState(state.getAttributeValue("id"), Byte.parseByte(state.getAttributeValue("type")), Integer.parseInt(state
+							.getAttributeValue("damage")), values.toArray(new String[values.size()]));
+					if (state.getAttribute("startsat") != null) s.startsAt = Integer.parseInt(state.getAttributeValue("startsat"));
+					b.addState(s);
+				}
 			}
 		}
 		CommandGenerator.log("Successfully created " + ObjectRegistry.blocks.size() + " blocks.");
