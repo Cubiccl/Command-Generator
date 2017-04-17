@@ -1,3 +1,14 @@
+------------------------- VERSION 2.6.0.1 -------------------------
+ADDITIONS
+
+BUGS FIXED
+- ArmorItems and HandItems NBT tags not showing for Armor Stands.
+Probably solved other similar bugs that way.
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+
 ------------------------- VERSION 2.6 -------------------------
 ADDITIONS
 - Added the Advancement Generator !

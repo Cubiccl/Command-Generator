@@ -70,7 +70,7 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 		for (String app : this.applicable)
 		{
 			if (app.equals("ANY") && object != Entity.PLAYER) return true;
-			if (app.startsWith("list=")) return ObjectRegistry.listContains(app.substring("list=".length()), object);
+			if (app.startsWith("list=") && ObjectRegistry.listContains(app.substring("list=".length()), object)) return true;
 			if (app.replaceAll("minecraft:", "").equals(object.id().replaceAll("minecraft:", ""))) return true;
 		}
 		return false;
