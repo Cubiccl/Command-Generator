@@ -4,6 +4,7 @@ import java.awt.Component;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 
 import org.jdom2.Element;
 
@@ -20,6 +21,8 @@ public class Block extends BlockItem implements IObjectList<Block>
 {
 
 	private HashMap<String, BlockState> states;
+	/** Damage values that are possible but not used. */
+	private HashSet<Integer> unusedDamage;
 
 	public Block()
 	{
@@ -51,6 +54,12 @@ public class Block extends BlockItem implements IObjectList<Block>
 		this.updateDamageValues();
 	}
 
+	public void addUnusedDamage(int unused)
+	{
+		this.unusedDamage.add(unused);
+		this.updateDamageValues();
+	}
+
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
@@ -62,6 +71,7 @@ public class Block extends BlockItem implements IObjectList<Block>
 	private void createStates()
 	{
 		this.states = new HashMap<String, BlockState>();
+		this.unusedDamage = new HashSet<Integer>();
 	}
 
 	@Override
@@ -94,11 +104,31 @@ public class Block extends BlockItem implements IObjectList<Block>
 				s.setAttribute("id", state.id);
 				s.setAttribute("type", Byte.toString(state.type));
 				s.setAttribute("damage", Integer.toString(state.damageValue));
-				if (state.startsAt != 0) s.setAttribute("startsat", Integer.toString(state.startsAt));
-				for (String v : state.values)
+				if (state.getStartsAt() != 0) s.setAttribute("startsat", Integer.toString(state.getStartsAt()));
+
+				boolean detailValues = true;
+				if (state.type == BlockState.INTEGER)
+				{
+					int[] values = new int[state.values.length];
+					for (int i = 0; i < values.length; ++i)
+						values[i] = Integer.parseInt(state.values[i]);
+
+					if (Utils.isArrayConsecutive(values))
+					{
+						detailValues = false;
+						s.setAttribute("max", Integer.toString(values.length - 1));
+					}
+				}
+				if (detailValues) for (String v : state.values)
 					s.addContent(new Element("v").setText(v));
 				root.getChild("states").addContent(s);
 			}
+		}
+		if (!this.unusedDamage.isEmpty())
+		{
+			root.addContent(new Element("unuseddamage"));
+			for (Integer i : this.unusedDamage)
+				root.getChild("unuseddamage").addContent(new Element("d").setText(i.toString()));
 		}
 		return root;
 	}
@@ -134,6 +164,7 @@ public class Block extends BlockItem implements IObjectList<Block>
 		}
 
 		damage.sort(Comparator.naturalOrder());
+		damage.removeAll(this.unusedDamage);
 
 		int[] d = new int[damage.size()];
 		for (int i = 0; i < d.length; ++i)

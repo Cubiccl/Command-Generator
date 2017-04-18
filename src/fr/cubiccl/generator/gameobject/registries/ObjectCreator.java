@@ -90,11 +90,16 @@ public class ObjectCreator
 					ArrayList<String> values = new ArrayList<String>();
 					for (Element v : state.getChildren("v"))
 						values.add(v.getText());
+					if (state.getAttribute("max") != null) for (int i = 0; i <= Integer.parseInt(state.getAttributeValue("max")); ++i)
+						values.add(Integer.toString(i));
+
 					BlockState s = new BlockState(state.getAttributeValue("id"), Byte.parseByte(state.getAttributeValue("type")), Integer.parseInt(state
 							.getAttributeValue("damage")), values.toArray(new String[values.size()]));
-					if (state.getAttribute("startsat") != null) s.startsAt = Integer.parseInt(state.getAttributeValue("startsat"));
+					if (state.getAttribute("startsat") != null) s.setStartsAt(Integer.parseInt(state.getAttributeValue("startsat")));
 					b.addState(s);
 				}
+				if (block.getChild("unuseddamage") != null) for (Element d : block.getChild("unuseddamage").getChildren("d"))
+					b.addUnusedDamage(Integer.parseInt(d.getText()));
 			}
 		}
 		CommandGenerator.log("Successfully created " + ObjectRegistry.blocks.size() + " blocks.");

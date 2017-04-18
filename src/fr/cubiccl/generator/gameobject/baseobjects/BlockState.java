@@ -11,7 +11,7 @@ public class BlockState implements Comparable<BlockState>
 	/** This Block state's ID. */
 	public final String id;
 	/** Damage value to start at for (mostly) furniture states (ladders, furnaces). */
-	public int startsAt = 0;
+	private int startsAt = 0;
 	/** The type of the value. */
 	public final byte type;
 	/** The state's values. */
@@ -35,9 +35,20 @@ public class BlockState implements Comparable<BlockState>
 	public ArrayList<Integer> damageValues()
 	{
 		ArrayList<Integer> d = new ArrayList<Integer>();
-		for (int i = 0; i < this.values.length; ++i)
+		if (this.damageValue != -1) for (int i = 0; i < this.values.length; ++i)
 			d.add(this.startsAt + i * this.damageValue);
+		else d.add(0);
 		return d;
 	}
 
+	public int getStartsAt()
+	{
+		return this.startsAt;
+	}
+
+	public BlockState setStartsAt(int startsAt)
+	{
+		this.startsAt = startsAt;
+		return this;
+	}
 }
