@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject.baseobjects.block;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
+import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
@@ -14,7 +15,11 @@ public class BlockFenceGate extends Block
 
 	public BlockFenceGate(int idInt, String idString)
 	{
-		super(idInt, idString, 7);
+		super(idInt, idString);
+		this.addState(new BlockState("facing", BlockState.STRING, 1, "south", "west", "north", "east"));
+		this.addState(new BlockState("open", BlockState.BOOLEAN, 4, "false", " true"));
+		this.addState(new BlockState("powered", BlockState.BOOLEAN, -1, "false", " true"));
+		this.addState(new BlockState("in_wall", BlockState.BOOLEAN, -1, "false", " true"));
 		this.textureType = -4;
 	}
 
