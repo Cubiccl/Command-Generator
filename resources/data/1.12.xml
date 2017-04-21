@@ -5144,17 +5144,17 @@
       </applicable>
       <byteboolean>true</byteboolean>
     </tag>
-    <tag id="Life">
-      <type>3</type>
-      <applicable>
-        <app>fireworks_rocket</app>
-      </applicable>
-    </tag>
     <tag id="life">
       <type>2</type>
       <applicable>
         <app>arrow</app>
         <app>spectral_arrow</app>
+      </applicable>
+    </tag>
+    <tag id="Life">
+      <type>3</type>
+      <applicable>
+        <app>fireworks_rocket</app>
       </applicable>
     </tag>
     <tag id="LifeTicks">
@@ -5210,7 +5210,7 @@
       </applicable>
     </tag>
     <tag id="Motion">
-      <customtype>Coordinates</customtype>
+      <customtype>Motion</customtype>
       <applicable>
         <app>ANY</app>
         <app>player</app>
@@ -5722,6 +5722,12 @@
     </tag>
     <tag id="TileEntityData">
       <customtype>BlockEntity</customtype>
+      <applicable>
+        <app>falling_block</app>
+      </applicable>
+    </tag>
+    <tag id="Time">
+      <type>3</type>
       <applicable>
         <app>falling_block</app>
       </applicable>

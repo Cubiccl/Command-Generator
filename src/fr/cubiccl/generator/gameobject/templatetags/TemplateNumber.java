@@ -56,7 +56,7 @@ public class TemplateNumber extends TemplateTag
 		if (this.isByteBoolean)
 		{
 			PanelRadio p = new PanelRadio(this.description(object), "value", "true", "false");
-			if (previousValue != null && (int) previousValue.value() == 0) p.setSelected(1);
+			if (previousValue != null && (double) previousValue.value() == 0) p.setSelected(1);
 			p.setName(new Text(this.id(), false));
 			return p;
 		}

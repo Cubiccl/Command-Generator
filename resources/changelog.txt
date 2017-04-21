@@ -1,3 +1,16 @@
+------------------------- VERSION 2.6.0.2 -------------------------
+ADDITIONS
+- Missing "Time" NBT tag for falling_block Entity.
+
+BUGS FIXED
+- /playsound was missing a space between the target and the coordinates.
+- Motion tag was a Compound instead of a List.
+- Translations for True and False switched in French lol.
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+
 ------------------------- VERSION 2.6.0.1 -------------------------
 ADDITIONS
 

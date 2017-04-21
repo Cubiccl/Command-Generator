@@ -3236,6 +3236,7 @@ tag.entity.Team=Only effective when spawning this <o>. Will add it to the listed
 tag.entity.Temper=The higher this value is, the easier this <o> is to tame. Ranges from 0 to 100.
 tag.entity.Thrower=The name of the Player who threw this Item.
 tag.entity.TileEntityData=The NBT Tags value of the falling Block. Set the value of the "Block" NBT Tag before this to determine the available NBT Tags.
+tag.entity.Time=The number of ticks this <o> has existed. If it exceeds 600, it will be deleted.
 tag.entity.TNTFuse=The number of ticks before this TNT Minecart explodes. -1 if deactivated.
 tag.entity.TrackOutput=If true, this Command Block Minecart will remember the output of commands it executes.
 tag.entity.TransferCooldown=Ticks until the next Item transfer. Usually between 1 and 8, or 0 if no Items to transfer.

@@ -840,10 +840,10 @@ trade.reward=Récompense avec de l'expérience
 trade.uses=Compteur d'utilisations actuel
 trade.uses_max=Utilisations maximum
 
-value.false=Vrai
+value.false=Faux
 value.fixed=Valeur fixe
 value.ranged=Valeur entre bornes
-value.true=Faux
+value.true=Vrai
 
 variant.base=Couleur de base
 variant.base.black=Noir
@@ -3189,6 +3189,7 @@ tag.entity.Team=Fonctionne uniquement quand ce <o> apparaît. Il sera ajouté aux 
 tag.entity.Temper=Plus cette valeur est haute, plus ce <o> est facile à apprivoiser. De 0 à 100.
 tag.entity.Thrower=Le nom du Joueur qui a jeté cet Objet.
 tag.entity.TileEntityData=Les données NBT du Bloc en chute. Utilisez "Bloc" avant celui-ci pour déterminer quels données NBT sont disponibles.
+tag.entity.Time=Le nombre de Ticks depuis que ce <o> existe. S'il dépasse 600, il sera supprimé.
 tag.entity.TNTFuse=Le nombre de ticks avant que ce <o> explose. -1 si désactivé.
 tag.entity.TrackOutput=Si vrai, ce <o> se rappellera des sorties des Commandes qu'il éxécute.
 tag.entity.TransferCooldown=Le nombre de ticks avant que le prochain Objet de cet Entonnoir soit transféré, généralement entre 0 et 8.
