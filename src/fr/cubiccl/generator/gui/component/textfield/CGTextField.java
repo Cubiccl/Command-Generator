@@ -78,6 +78,19 @@ public class CGTextField extends CTextField implements ITranslated
 		});
 	}
 
+	public void addStringIdFilter()
+	{
+		this.addFilter(new AbstractFilter()
+		{
+
+			@Override
+			protected boolean isStringValid(String string)
+			{
+				return !string.contains(" ");
+			}
+		});
+	}
+
 	public void removeFilter()
 	{
 		this.addFilter(null);

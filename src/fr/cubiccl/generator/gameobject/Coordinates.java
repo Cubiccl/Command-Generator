@@ -11,6 +11,7 @@ import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -188,7 +189,12 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 
 	public TagList toTagList(TemplateList container)
 	{
-		return container.create(Tags.DEFAULT_FLOAT.create(this.x), Tags.DEFAULT_FLOAT.create(this.y), Tags.DEFAULT_FLOAT.create(this.z));
+		return this.toTagList(container, Tags.DEFAULT_FLOAT);
+	}
+
+	public TagList toTagList(TemplateList container, TemplateNumber numberTags)
+	{
+		return container.create(numberTags.create(this.x), numberTags.create(this.y), numberTags.create(this.z));
 	}
 
 	@Override
