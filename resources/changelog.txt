@@ -1,3 +1,18 @@
+------------------------- VERSION 2.6.0.3 -------------------------
+ADDITIONS
+- Updated for snapshots 17w16a & 17w16b.
+- Added missing "maxEntityCramming" and "doWeatherCycle" gamerules.
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+block.hardened_clay,block.stained_hardened_clay,block.stained_hardened_clay.x
+
+ADDED TRANSLATIONS
+entity.illusion_illager
+gamerule.doWeatherCycle,gamerule.maxCommandChainLength,gamerule.maxEntityCramming
+recipe.group,recipe.group.help
+
 ------------------------- VERSION 2.6.0.2 -------------------------
 ADDITIONS
 - Missing "Time" NBT tag for falling_block Entity.

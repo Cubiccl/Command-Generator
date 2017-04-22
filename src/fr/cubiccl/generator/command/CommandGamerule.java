@@ -22,9 +22,9 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 {
 	public static final String[] GAMERULES_1d11 =
 	{ "commandBlockOutput", "disableElytraMovementCheck", "doDaylightCycle", "doEntityDrops", "doFireTick", "doMobLoot", "doMobSpawning", "doTileDrops",
-			"keepInventory", "logAdminCommands", "mobGriefing", "naturalRegeneration", "randomTickSpeed", "reducedDebugInfo", "sendCommandFeedback",
-			"showDeathMessages", "spawnRadius", "spectatorsGenerateChunks" }, GAMERULES_1d12 =
-	{ "doLimitedCrafting" };
+			"doWeatherCycle", "keepInventory", "logAdminCommands", "maxEntityCramming", "mobGriefing", "naturalRegeneration", "randomTickSpeed",
+			"reducedDebugInfo", "sendCommandFeedback", "showDeathMessages", "spawnRadius", "spectatorsGenerateChunks" }, GAMERULES_1d12 =
+	{ "doLimitedCrafting", "maxCommandChainLength" };
 
 	private static String[] gamerules()
 	{
@@ -144,7 +144,8 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 			}
 		if (predefined)
 		{
-			if (gamerule.equals("randomTickSpeed") || gamerule.equals("spawnRadius")) try
+			if (gamerule.equals("randomTickSpeed") || gamerule.equals("spawnRadius") || gamerule.equals("maxEntityCramming")
+					|| gamerule.equals("maxCommandChainLength")) try
 			{
 				int i = Integer.parseInt(value);
 				if (i < 0) throw new WrongValueException(this.entryValue.label.getAbsoluteText(), new Text("error.integer.positive"), value);

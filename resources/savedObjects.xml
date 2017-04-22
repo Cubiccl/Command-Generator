@@ -171,6 +171,7 @@
   </speedruns>
   <recipes>
     <recipe objectname="My recipe" version="1.12" type="0">
+      <group>cheats</group>
       <item objectname="" version="1.12" position="1">
         <id>minecraft:obsidian</id>
         <amount>1</amount>

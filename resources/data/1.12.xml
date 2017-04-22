@@ -1463,6 +1463,7 @@
     <entity id="hopper_minecart" />
     <entity id="horse" />
     <entity id="husk" />
+    <entity id="illusion_illager" />
     <entity id="item" />
     <entity id="item_frame" />
     <entity id="leash_knot" />
@@ -2960,10 +2961,14 @@
     <sound id="block.metal_pressure_plate.click_on" />
     <sound id="block.note.basedrum" />
     <sound id="block.note.bass" />
+    <sound id="block.note.bell" />
+    <sound id="block.note.flute" />
+    <sound id="block.note.guitar" />
     <sound id="block.note.harp" />
     <sound id="block.note.hat" />
     <sound id="block.note.pling" />
     <sound id="block.note.snare" />
+    <sound id="block.note.xylophone" />
     <sound id="block.piston.contract" />
     <sound id="block.piston.extend" />
     <sound id="block.portal.ambient" />
@@ -5674,6 +5679,7 @@
       <type>3</type>
       <applicable>
         <app>evocation_illager</app>
+        <app>illusion_illager</app>
       </applicable>
     </tag>
     <tag id="Strength">
@@ -5876,6 +5882,7 @@
       <object>guardian</object>
       <object>horse</object>
       <object>husk</object>
+      <object>illusion_illager</object>
       <object>llama</object>
       <object>magma_cube</object>
       <object>mooshroom</object>

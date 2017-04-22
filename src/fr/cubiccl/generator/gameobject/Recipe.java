@@ -33,6 +33,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	public static Recipe createFrom(Element recipe)
 	{
 		Recipe r = new Recipe(Byte.parseByte(recipe.getAttributeValue("type")));
+		if (recipe.getChild("group") != null) r.group = recipe.getChildText("group");
 		for (Element item : recipe.getChildren("item"))
 		{
 			int pos = Integer.parseInt(item.getAttributeValue("position"));
@@ -86,6 +87,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	private static Recipe createShapedFrom(TagCompound tag)
 	{
 		Recipe r = new Recipe(SHAPED);
+		if (tag.hasTag(Tags.RECIPE_GROUP)) r.group = tag.getTag(Tags.RECIPE_GROUP).value();
 		if (tag.hasTag(Tags.RECIPE_RESULT))
 		{
 			r.recipe[9] = ItemStack.createForRecipe(tag.getTag(Tags.RECIPE_RESULT));
@@ -125,6 +127,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	private static Recipe createShapelessFrom(TagCompound tag)
 	{
 		Recipe r = new Recipe(SHAPELESS);
+		if (tag.hasTag(Tags.RECIPE_GROUP)) r.group = tag.getTag(Tags.RECIPE_GROUP).value();
 		if (tag.hasTag(Tags.RECIPE_RESULT))
 		{
 			r.recipe[9] = ItemStack.createForRecipe(tag.getTag(Tags.RECIPE_RESULT));
@@ -158,8 +161,8 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		return string.substring(0, i) + (i < string.length() - 1 ? string.substring(i + 1, string.length()) : "");
 	}
 
+	public String group;
 	private ItemStack[] recipe;
-
 	public byte type;
 
 	public Recipe()
@@ -268,8 +271,14 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		for (String string : pattern)
 			o.add(Tags.DEFAULT_STRING.create(string));
 
-		return container.create(Tags.RECIPE_TYPE.create("crafting_shaped"), Tags.RECIPE_KEY.create(key.toArray(new TagCompound[key.size()])),
-				Tags.RECIPE_PATTERN.create(o.toArray(new TagString[o.size()])), this.recipe[9].toTagForRecipe(Tags.RECIPE_RESULT)).setJson(true);
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		tags.add(Tags.RECIPE_TYPE.create("crafting_shaped"));
+		if (this.group != null) tags.add(Tags.RECIPE_GROUP.create(this.group));
+		tags.add(Tags.RECIPE_KEY.create(key.toArray(new TagCompound[key.size()])));
+		tags.add(Tags.RECIPE_PATTERN.create(o.toArray(new TagString[o.size()])));
+		tags.add(this.recipe[9].toTagForRecipe(Tags.RECIPE_RESULT));
+
+		return container.create(tags.toArray(new Tag[tags.size()])).setJson(true);
 	}
 
 	private TagCompound shapelessToTag(TemplateCompound container)
@@ -278,7 +287,12 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		for (int i = 0; i < 9; ++i)
 			if (this.recipe[i] != null) items.add(this.recipe[i].toTagForRecipe(container));
 		TagList ingredients = Tags.RECIPE_INGREDIENTS.create(items.toArray(new TagCompound[items.size()]));
-		return container.create(Tags.RECIPE_TYPE.create("crafting_shapeless"), ingredients, this.recipe[9].toTagForRecipe(Tags.RECIPE_RESULT)).setJson(true);
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		tags.add(Tags.RECIPE_TYPE.create("crafting_shapeless"));
+		if (this.group != null) tags.add(Tags.RECIPE_GROUP.create(this.group));
+		tags.add(ingredients);
+		tags.add(this.recipe[9].toTagForRecipe(Tags.RECIPE_RESULT));
+		return container.create(tags.toArray(new Tag[tags.size()])).setJson(true);
 	}
 
 	@Override
@@ -304,6 +318,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	public Element toXML()
 	{
 		Element root = this.createRoot("recipe").setAttribute("type", Byte.toString(this.type));
+		if (this.group != null) root.addContent(new Element("group").setText(this.group));
 		for (int i = 0; i < this.recipe.length; ++i)
 			if (this.recipe[i] != null) root.addContent(this.recipe[i].toXML().setAttribute("position", Integer.toString(i)));
 		return root;

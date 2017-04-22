@@ -4,6 +4,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 
 import javax.swing.SwingConstants;
 
@@ -16,6 +18,7 @@ import fr.cubiccl.generator.gui.component.label.HelpLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.tag.PanelContainer;
 import fr.cubiccl.generator.gui.component.panel.tag.PanelContainer.ItemChangeListener;
+import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.Text;
 
 public class PanelRecipe extends CGPanel implements ItemChangeListener
@@ -23,6 +26,7 @@ public class PanelRecipe extends CGPanel implements ItemChangeListener
 	private static final long serialVersionUID = 6226736127162381216L;
 
 	private CGCheckBox buttonShapeless;
+	private CGEntry entryGroup;
 	private PanelContainer panelContainer;
 	public final Recipe recipe;
 
@@ -43,6 +47,11 @@ public class PanelRecipe extends CGPanel implements ItemChangeListener
 		this.add(this.buttonShapeless = new CGCheckBox("recipe.shapeless"), gbc);
 		++gbc.gridx;
 		this.add(new HelpLabel("recipe.shapeless.help"), gbc);
+		--gbc.gridx;
+		++gbc.gridy;
+		this.add((this.entryGroup = new CGEntry("recipe.group")).container, gbc);
+		++gbc.gridx;
+		this.add(new HelpLabel("recipe.group.help"), gbc);
 
 		this.buttonShapeless.setSelected(this.recipe.type == Recipe.SHAPELESS);
 		this.buttonShapeless.addActionListener(new ActionListener()
@@ -52,6 +61,28 @@ public class PanelRecipe extends CGPanel implements ItemChangeListener
 			{
 				recipe.type = buttonShapeless.isSelected() ? Recipe.SHAPELESS : Recipe.SHAPED;
 			}
+		});
+
+		this.entryGroup.addStringIdFilter();
+		this.entryGroup.setText(this.recipe.group.replaceAll(" ", ""));
+		this.entryGroup.addKeyListener(new KeyListener()
+		{
+
+			@Override
+			public void keyPressed(KeyEvent e)
+			{}
+
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				if (entryGroup.getText().equals("")) recipe.group = null;
+				else recipe.group = entryGroup.getText();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{}
+
 		});
 
 		this.panelContainer.addItemChangeListener(this);
