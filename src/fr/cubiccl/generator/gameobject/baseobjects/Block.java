@@ -89,41 +89,46 @@ public class Block extends BlockItem implements IObjectList<Block>
 		return this.mainName().toString();
 	}
 
+	protected boolean shouldSaveState(BlockState state)
+	{
+		return this.customObjectName == null;
+	}
+
 	@Override
 	public Element toXML()
 	{
 		Element root = super.toXML();
-		if (this.states.size() > 0 && this.customObjectName == null)
+		if (root.getChild("customdamage") != null) root.removeChild("customdamage");
+		if (root.getChild("maxdamage") != null) root.removeChild("maxdamage");
+		root.addContent(new Element("states"));
+		for (BlockState state : this.states.values())
 		{
-			if (root.getChild("customdamage") != null) root.removeChild("customdamage");
-			if (root.getChild("maxdamage") != null) root.removeChild("maxdamage");
-			root.addContent(new Element("states"));
-			for (BlockState state : this.states.values())
+			if (!this.shouldSaveState(state)) continue;
+			Element s = new Element("state");
+			s.setAttribute("id", state.id);
+			s.setAttribute("type", Byte.toString(state.type));
+			s.setAttribute("damage", Integer.toString(state.damageValue));
+			if (state.getStartsAt() != 0) s.setAttribute("startsat", Integer.toString(state.getStartsAt()));
+
+			boolean detailValues = true;
+			if (state.type == BlockState.INTEGER)
 			{
-				Element s = new Element("state");
-				s.setAttribute("id", state.id);
-				s.setAttribute("type", Byte.toString(state.type));
-				s.setAttribute("damage", Integer.toString(state.damageValue));
-				if (state.getStartsAt() != 0) s.setAttribute("startsat", Integer.toString(state.getStartsAt()));
+				int[] values = new int[state.values.length];
+				for (int i = 0; i < values.length; ++i)
+					values[i] = Integer.parseInt(state.values[i]);
 
-				boolean detailValues = true;
-				if (state.type == BlockState.INTEGER)
+				if (Utils.isArrayConsecutive(values))
 				{
-					int[] values = new int[state.values.length];
-					for (int i = 0; i < values.length; ++i)
-						values[i] = Integer.parseInt(state.values[i]);
-
-					if (Utils.isArrayConsecutive(values))
-					{
-						detailValues = false;
-						s.setAttribute("max", Integer.toString(values.length - 1));
-					}
+					detailValues = false;
+					s.setAttribute("max", Integer.toString(values.length - 1));
 				}
-				if (detailValues) for (String v : state.values)
-					s.addContent(new Element("v").setText(v));
-				root.getChild("states").addContent(s);
 			}
+			if (detailValues) for (String v : state.values)
+				s.addContent(new Element("v").setText(v));
+			root.getChild("states").addContent(s);
 		}
+		if (root.getChild("states").getChildren().size() == 0) root.removeChild("states");
+
 		if (!this.unusedDamage.isEmpty())
 		{
 			root.addContent(new Element("unuseddamage"));

@@ -29,4 +29,10 @@ public class BlockFenceGate extends Block
 		return getName(this.id(), damage);
 	}
 
+	@Override
+	protected boolean shouldSaveState(BlockState state)
+	{
+		return !state.id.equals("facing") && !state.id.equals("open") && !state.id.equals("powered") && !state.id.equals("in_wall");
+	}
+
 }

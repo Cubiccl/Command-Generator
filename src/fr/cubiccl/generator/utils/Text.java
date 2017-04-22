@@ -88,6 +88,14 @@ public class Text implements IObjectList<Text>
 		return false;
 	}
 
+	/** @return True if the translation files contain this Text. */
+	public boolean isTranslated()
+	{
+		for (Replacement r : this.replacements)
+			if (!r.replacement.isTranslated()) return false;
+		return (!this.doTranslate || Lang.keyExists(this.id));
+	}
+
 	public void removeReplacements(String pattern)
 	{
 		ArrayList<Replacement> r = new ArrayList<Replacement>();

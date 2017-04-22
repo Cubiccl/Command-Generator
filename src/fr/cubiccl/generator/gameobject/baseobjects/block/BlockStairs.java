@@ -28,4 +28,10 @@ public class BlockStairs extends Block
 		return getName(this.id(), damage);
 	}
 
+	@Override
+	protected boolean shouldSaveState(BlockState state)
+	{
+		return !state.id.equals("facing") && !state.id.equals("half") && !state.id.equals("shape");
+	}
+
 }

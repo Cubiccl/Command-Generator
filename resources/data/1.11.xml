@@ -41,15 +41,8 @@
       <customblock>Wood</customblock>
     </block>
     <block idint="6" idstr="sapling">
+      <customblock>Wood</customblock>
       <states>
-        <state id="type" type="0" damage="1">
-          <v>oak</v>
-          <v>birch</v>
-          <v>spruce</v>
-          <v>jungle</v>
-          <v>acacia</v>
-          <v>dark_oak</v>
-        </state>
         <state id="age" type="2" damage="8" max="1" />
       </states>
     </block>
@@ -127,19 +120,11 @@
     <block idint="21" idstr="lapis_ore" />
     <block idint="22" idstr="lapis_block" />
     <block idint="23" idstr="dispenser">
-      <texture>-1</texture>
+      <customblock>Facing</customblock>
       <states>
         <state id="triggered" type="1" damage="8">
           <v>false</v>
           <v>true</v>
-        </state>
-        <state id="facing" type="0" damage="1">
-          <v>down</v>
-          <v>up</v>
-          <v>north</v>
-          <v>south</v>
-          <v>west</v>
-          <v>east</v>
         </state>
       </states>
     </block>
@@ -179,16 +164,8 @@
       <customblock>Rail</customblock>
     </block>
     <block idint="29" idstr="sticky_piston">
-      <texture>-1</texture>
+      <customblock>Facing</customblock>
       <states>
-        <state id="facing" type="0" damage="1">
-          <v>down</v>
-          <v>up</v>
-          <v>north</v>
-          <v>south</v>
-          <v>west</v>
-          <v>east</v>
-        </state>
         <state id="extended" type="1" damage="8">
           <v>false</v>
           <v>true</v>
@@ -207,16 +184,8 @@
     </block>
     <block idint="32" idstr="deadbush" />
     <block idint="33" idstr="piston">
-      <texture>-1</texture>
+      <customblock>Facing</customblock>
       <states>
-        <state id="facing" type="0" damage="1">
-          <v>down</v>
-          <v>up</v>
-          <v>north</v>
-          <v>south</v>
-          <v>west</v>
-          <v>east</v>
-        </state>
         <state id="extended" type="1" damage="8">
           <v>false</v>
           <v>true</v>
@@ -224,16 +193,9 @@
       </states>
     </block>
     <block idint="34" idstr="piston_head">
+      <customblock>Facing</customblock>
       <texture>-8</texture>
       <states>
-        <state id="facing" type="0" damage="1">
-          <v>down</v>
-          <v>up</v>
-          <v>north</v>
-          <v>south</v>
-          <v>west</v>
-          <v>east</v>
-        </state>
         <state id="short" type="1" damage="-1">
           <v>true</v>
           <v>false</v>
@@ -248,16 +210,8 @@
       <customblock>Stained</customblock>
     </block>
     <block idint="36" idstr="piston_extension">
-      <texture>-1</texture>
+      <customblock>Facing</customblock>
       <states>
-        <state id="facing" type="0" damage="1">
-          <v>down</v>
-          <v>up</v>
-          <v>north</v>
-          <v>south</v>
-          <v>west</v>
-          <v>east</v>
-        </state>
         <state id="extended" type="1" damage="8">
           <v>false</v>
           <v>true</v>
@@ -572,14 +526,14 @@
     <block idint="79" idstr="ice" />
     <block idint="80" idstr="snow" />
     <block idint="81" idstr="cactus">
-      <texture>-1</texture>
+      <customblock>Numbered</customblock>
       <states>
         <state id="age" type="2" damage="1" max="15" />
       </states>
     </block>
     <block idint="82" idstr="clay" />
     <block idint="83" idstr="reeds">
-      <texture>-1</texture>
+      <customblock>Numbered</customblock>
       <states>
         <state id="age" type="2" damage="1" max="15" />
       </states>
@@ -628,6 +582,7 @@
     <block idint="88" idstr="soul_sand" />
     <block idint="89" idstr="glowstone" />
     <block idint="90" idstr="portal">
+      <texture>-1</texture>
       <states>
         <state id="axis" type="0" damage="1">
           <v>x</v>
@@ -688,17 +643,11 @@
       <customblock>Stained</customblock>
     </block>
     <block idint="96" idstr="trapdoor">
-      <texture>-1</texture>
+      <customblock>Furniture</customblock>
       <states>
         <state id="half" type="0" damage="4">
           <v>bottom</v>
           <v>top</v>
-        </state>
-        <state id="facing" type="0" damage="1">
-          <v>north</v>
-          <v>south</v>
-          <v>west</v>
-          <v>east</v>
         </state>
         <state id="open" type="0" damage="8">
           <v>false</v>
@@ -954,7 +903,7 @@
       <customblock>Wood</customblock>
     </block>
     <block idint="126" idstr="wooden_slab">
-      <texture>8</texture>
+      <customblock>Wood</customblock>
       <states>
         <state id="half" type="0" damage="8">
           <v>bottom</v>
@@ -1052,18 +1001,11 @@
       <customblock>Stairs</customblock>
     </block>
     <block idint="137" idstr="command_block">
+      <customblock>Facing</customblock>
       <states>
         <state id="conditional" type="1" damage="-1">
           <v>false</v>
           <v>true</v>
-        </state>
-        <state id="facing" type="0" damage="1">
-          <v>down</v>
-          <v>up</v>
-          <v>north</v>
-          <v>south</v>
-          <v>west</v>
-          <v>east</v>
         </state>
       </states>
     </block>
@@ -1188,13 +1130,13 @@
       <customblock>Furniture</customblock>
     </block>
     <block idint="147" idstr="light_weighted_pressure_plate">
-      <texture>-1</texture>
+      <customblock>Numbered</customblock>
       <states>
         <state id="power" type="2" damage="1" max="15" />
       </states>
     </block>
     <block idint="148" idstr="heavy_weighted_pressure_plate">
-      <texture>-1</texture>
+      <customblock>Numbered</customblock>
       <states>
         <state id="power" type="2" damage="1" max="15" />
       </states>
@@ -1279,19 +1221,11 @@
       <customblock>Rail</customblock>
     </block>
     <block idint="158" idstr="dropper">
-      <texture>-1</texture>
+      <customblock>Facing</customblock>
       <states>
         <state id="triggered" type="1" damage="8">
           <v>false</v>
           <v>true</v>
-        </state>
-        <state id="facing" type="0" damage="1">
-          <v>down</v>
-          <v>up</v>
-          <v>north</v>
-          <v>south</v>
-          <v>west</v>
-          <v>east</v>
         </state>
       </states>
     </block>
@@ -1299,28 +1233,11 @@
       <customblock>Stained</customblock>
     </block>
     <block idint="160" idstr="stained_glass_pane">
+      <customblock>Stained</customblock>
       <states>
         <state id="east" type="1" damage="-1">
           <v>false</v>
           <v>true</v>
-        </state>
-        <state id="color" type="0" damage="1">
-          <v>white</v>
-          <v>orange</v>
-          <v>magenta</v>
-          <v>light_blue</v>
-          <v>yellow</v>
-          <v>lime</v>
-          <v>pink</v>
-          <v>gray</v>
-          <v>silver</v>
-          <v>cyan</v>
-          <v>purple</v>
-          <v>blue</v>
-          <v>brown</v>
-          <v>green</v>
-          <v>red</v>
-          <v>black</v>
         </state>
         <state id="south" type="1" damage="-1">
           <v>false</v>
@@ -1376,17 +1293,11 @@
     <block idint="165" idstr="slime" />
     <block idint="166" idstr="barrier" />
     <block idint="167" idstr="iron_trapdoor">
-      <texture>-1</texture>
+      <customblock>Furniture</customblock>
       <states>
         <state id="half" type="0" damage="4">
           <v>bottom</v>
           <v>top</v>
-        </state>
-        <state id="facing" type="0" damage="1">
-          <v>north</v>
-          <v>south</v>
-          <v>west</v>
-          <v>east</v>
         </state>
         <state id="open" type="0" damage="8">
           <v>false</v>
@@ -1692,34 +1603,20 @@
     <block idint="208" idstr="grass_path" />
     <block idint="209" idstr="end_gateway" />
     <block idint="210" idstr="repeating_command_block">
+      <customblock>Facing</customblock>
       <states>
         <state id="conditional" type="1" damage="-1">
           <v>false</v>
           <v>true</v>
-        </state>
-        <state id="facing" type="0" damage="1">
-          <v>down</v>
-          <v>up</v>
-          <v>north</v>
-          <v>south</v>
-          <v>west</v>
-          <v>east</v>
         </state>
       </states>
     </block>
     <block idint="211" idstr="chain_command_block">
+      <customblock>Facing</customblock>
       <states>
         <state id="conditional" type="1" damage="-1">
           <v>false</v>
           <v>true</v>
-        </state>
-        <state id="facing" type="0" damage="1">
-          <v>down</v>
-          <v>up</v>
-          <v>north</v>
-          <v>south</v>
-          <v>west</v>
-          <v>east</v>
         </state>
       </states>
     </block>
@@ -1743,16 +1640,8 @@
     </block>
     <block idint="217" idstr="structure_void" />
     <block idint="218" idstr="observer">
-      <texture>-1</texture>
+      <customblock>Facing</customblock>
       <states>
-        <state id="facing" type="0" damage="1">
-          <v>down</v>
-          <v>up</v>
-          <v>north</v>
-          <v>south</v>
-          <v>west</v>
-          <v>east</v>
-        </state>
         <state id="power" type="1" damage="8">
           <v>false</v>
           <v>true</v>

@@ -19,11 +19,17 @@ public class BlockStained extends Block
 		this.addState(new BlockState("color", BlockState.STRING, 1, "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "silver",
 				"cyan", "purple", "blue", "brown", "green", "red", "black"));
 	}
-
+	
 	@Override
 	public Text name(int damage)
 	{
 		return getName(this.id(), damage);
+	}
+
+	@Override
+	protected boolean shouldSaveState(BlockState state)
+	{
+		return !state.id.equals("color");
 	}
 
 }

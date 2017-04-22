@@ -14,7 +14,7 @@ public class Lang
 	public static void checkTranslations()
 	{
 		for (String id : FileUtils.readFileAsArray("untranslated.txt"))
-			if (!english.containsKey(id)) CommandGenerator.untranslated.add(id);
+			if (!english.containsKey(id) && !CommandGenerator.untranslated.contains(id)) CommandGenerator.untranslated.add(id);
 	}
 
 	private static String doTranslate(String textID)
@@ -68,7 +68,7 @@ public class Lang
 			if (!dictionnary.containsKey(textID))
 			{
 				CommandGenerator.log("Not translated in " + Settings.language().name + " : " + textID);
-				if (Settings.testMode) CommandGenerator.untranslated.add(textID);
+				if (Settings.testMode && !CommandGenerator.untranslated.contains(textID)) CommandGenerator.untranslated.add(textID);
 			}
 	}
 

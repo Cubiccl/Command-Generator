@@ -19,11 +19,17 @@ public class BlockTerracotta extends Block
 		this.addState(new BlockState("facing", BlockState.STRING, 1, "south", "west", "north", "east"));
 		this.textureType = -1;
 	}
-
+	
 	@Override
 	public Text name(int damage)
 	{
 		return getName(this.id(), damage);
+	}
+
+	@Override
+	protected boolean shouldSaveState(BlockState state)
+	{
+		return !state.id.equals("facing");
 	}
 
 }

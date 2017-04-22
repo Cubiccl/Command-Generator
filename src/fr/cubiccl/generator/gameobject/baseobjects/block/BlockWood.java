@@ -19,12 +19,19 @@ public class BlockWood extends Block
 		super(idInt, idString);
 		this.addState(new BlockState(this.id().contains("planks") ? "variant" : "type", BlockState.STRING, 1, "oak", "spruce", "birch", "jungle", "acacia",
 				"dark_oak"));
+		this.textureType = 8;
 	}
-
+	
 	@Override
 	public Text name(int damage)
 	{
 		return getName(this.id(), damage);
+	}
+
+	@Override
+	protected boolean shouldSaveState(BlockState state)
+	{
+		return !state.id.equals("variant") && !state.id.equals("type");
 	}
 
 }

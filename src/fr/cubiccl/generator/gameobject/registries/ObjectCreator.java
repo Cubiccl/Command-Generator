@@ -67,10 +67,11 @@ public class ObjectCreator
 			int idInt = Integer.parseInt(block.getAttributeValue("idint"));
 			Element custom = block.getChild("customblock");
 
+			Block b;
 			if (custom != null) try
 			{
-				Block b = (Block) Class.forName("fr.cubiccl.generator.gameobject.baseobjects.block.Block" + custom.getText()).getConstructors()[0].newInstance(
-						idInt, idString);
+				b = (Block) Class.forName("fr.cubiccl.generator.gameobject.baseobjects.block.Block" + custom.getText()).getConstructors()[0].newInstance(idInt,
+						idString);
 				b.customObjectName = custom.getText();
 			} catch (Exception e)
 			{
@@ -78,29 +79,25 @@ public class ObjectCreator
 				System.out.println("Couldn't create custom Block: " + idString);
 				continue;
 			}
-			else
+			else b = new Block(idInt, idString);
+			if (block.getChild("customdamage") != null) b.setDamageCustom(createDamage(block.getChildText("customdamage")));
+			else if (block.getChild("maxdamage") != null) b.setMaxDamage(Integer.parseInt(block.getChildText("maxdamage")));
+			if (block.getChild("texture") != null) b.textureType = Integer.parseInt(block.getChildText("texture"));
+			if (block.getChild("states") != null) for (Element state : block.getChild("states").getChildren("state"))
 			{
-				Block b;
-				if (block.getChild("customdamage") != null) b = new Block(idInt, idString, createDamage(block.getChildText("customdamage")));
-				else if (block.getChild("maxdamage") != null) b = new Block(idInt, idString, Integer.parseInt(block.getChildText("maxdamage")));
-				else b = new Block(idInt, idString);
-				if (block.getChild("texture") != null) b.textureType = Integer.parseInt(block.getChildText("texture"));
-				if (block.getChild("states") != null) for (Element state : block.getChild("states").getChildren("state"))
-				{
-					ArrayList<String> values = new ArrayList<String>();
-					for (Element v : state.getChildren("v"))
-						values.add(v.getText());
-					if (state.getAttribute("max") != null) for (int i = 0; i <= Integer.parseInt(state.getAttributeValue("max")); ++i)
-						values.add(Integer.toString(i));
+				ArrayList<String> values = new ArrayList<String>();
+				for (Element v : state.getChildren("v"))
+					values.add(v.getText());
+				if (state.getAttribute("max") != null) for (int i = 0; i <= Integer.parseInt(state.getAttributeValue("max")); ++i)
+					values.add(Integer.toString(i));
 
-					BlockState s = new BlockState(state.getAttributeValue("id"), Byte.parseByte(state.getAttributeValue("type")), Integer.parseInt(state
-							.getAttributeValue("damage")), values.toArray(new String[values.size()]));
-					if (state.getAttribute("startsat") != null) s.setStartsAt(Integer.parseInt(state.getAttributeValue("startsat")));
-					b.addState(s);
-				}
-				if (block.getChild("unuseddamage") != null) for (Element d : block.getChild("unuseddamage").getChildren("d"))
-					b.addUnusedDamage(Integer.parseInt(d.getText()));
+				BlockState s = new BlockState(state.getAttributeValue("id"), Byte.parseByte(state.getAttributeValue("type")), Integer.parseInt(state
+						.getAttributeValue("damage")), values.toArray(new String[values.size()]));
+				if (state.getAttribute("startsat") != null) s.setStartsAt(Integer.parseInt(state.getAttributeValue("startsat")));
+				b.addState(s);
 			}
+			if (block.getChild("unuseddamage") != null) for (Element d : block.getChild("unuseddamage").getChildren("d"))
+				b.addUnusedDamage(Integer.parseInt(d.getText()));
 		}
 		CommandGenerator.log("Successfully created " + ObjectRegistry.blocks.size() + " blocks.");
 	}
