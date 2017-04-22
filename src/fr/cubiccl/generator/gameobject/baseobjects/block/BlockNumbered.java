@@ -34,4 +34,10 @@ public class BlockNumbered extends Block
 		return true;
 	}
 
+	@Override
+	protected boolean shouldSaveTextureType()
+	{
+		return this.textureType != -1;
+	}
+
 }

@@ -91,7 +91,10 @@ public class ObjectCreator
 				if (state.getAttribute("max") != null) for (int i = 0; i <= Integer.parseInt(state.getAttributeValue("max")); ++i)
 					values.add(Integer.toString(i));
 
-				BlockState s = new BlockState(state.getAttributeValue("id"), Byte.parseByte(state.getAttributeValue("type")), Integer.parseInt(state
+				BlockState s;
+				if (state.getAttribute("damagecustom") != null) s = new BlockState(state.getAttributeValue("id"), Byte.parseByte(state
+						.getAttributeValue("type")), createDamage(state.getAttributeValue("damagecustom")), values.toArray(new String[values.size()]));
+				else s = new BlockState(state.getAttributeValue("id"), Byte.parseByte(state.getAttributeValue("type")), Integer.parseInt(state
 						.getAttributeValue("damage")), values.toArray(new String[values.size()]));
 				if (state.getAttribute("startsat") != null) s.setStartsAt(Integer.parseInt(state.getAttributeValue("startsat")));
 				b.addState(s);

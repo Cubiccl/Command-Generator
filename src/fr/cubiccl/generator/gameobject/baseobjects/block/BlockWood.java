@@ -11,6 +11,7 @@ public class BlockWood extends Block
 
 	public static Text getName(String id, int damage)
 	{
+		if (damage >= 8) return new Text("block." + id + ".8.x", new Replacement("<wood>", new Text("utils.wood." + damage % 8)));
 		return new Text("block." + id + ".x", new Replacement("<wood>", new Text("utils.wood." + damage)));
 	}
 
@@ -21,7 +22,7 @@ public class BlockWood extends Block
 				"dark_oak"));
 		this.textureType = 8;
 	}
-	
+
 	@Override
 	public Text name(int damage)
 	{
@@ -32,6 +33,12 @@ public class BlockWood extends Block
 	protected boolean shouldSaveState(BlockState state)
 	{
 		return !state.id.equals("variant") && !state.id.equals("type");
+	}
+
+	@Override
+	protected boolean shouldSaveTextureType()
+	{
+		return this.textureType != 8;
 	}
 
 }

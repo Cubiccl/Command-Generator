@@ -10,6 +10,7 @@ public class BlockFurniture extends Block
 
 	public static Text getName(String id, int damage)
 	{
+		if (damage >= 8) return new Text("block." + id + ".8.x", new Replacement("<facing>", new Text("utils.facing." + damage % 8)));
 		return new Text("block." + id + ".x", new Replacement("<facing>", new Text("utils.facing." + damage)));
 	}
 
@@ -17,7 +18,7 @@ public class BlockFurniture extends Block
 	{
 		super(idInt, idString);
 		this.addState(new BlockState("facing", BlockState.STRING, 1, "north", "south", "west", "east").setStartsAt(2));
-		this.textureType = -1;
+		this.textureType = -8;
 	}
 
 	@Override
@@ -25,11 +26,17 @@ public class BlockFurniture extends Block
 	{
 		return getName(this.id(), damage);
 	}
-	
+
 	@Override
 	protected boolean shouldSaveState(BlockState state)
 	{
 		return !state.id.equals("facing");
+	}
+
+	@Override
+	protected boolean shouldSaveTextureType()
+	{
+		return this.textureType != -8;
 	}
 
 }

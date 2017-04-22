@@ -107,7 +107,13 @@ public class Block extends BlockItem implements IObjectList<Block>
 			Element s = new Element("state");
 			s.setAttribute("id", state.id);
 			s.setAttribute("type", Byte.toString(state.type));
-			s.setAttribute("damage", Integer.toString(state.damageValue));
+			if (state.isDamageCustom())
+			{
+				String d = Integer.toString(state.customDamageValues[0]);
+				for (int i = 1; i < state.customDamageValues.length; ++i)
+					d += ":" + state.customDamageValues[i];
+				s.setAttribute("damagecustom", d);
+			} else s.setAttribute("damage", Integer.toString(state.damageValue));
 			if (state.getStartsAt() != 0) s.setAttribute("startsat", Integer.toString(state.getStartsAt()));
 
 			boolean detailValues = true;

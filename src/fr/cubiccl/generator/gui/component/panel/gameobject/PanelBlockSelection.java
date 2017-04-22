@@ -150,7 +150,16 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 				}
 			this.setSelected(index, false);
 		}
-		if (e.getSource() == this.spinnerDamage) this.setDamage(this.spinnerDamage.getValue());
+		if (e.getSource() == this.spinnerDamage)
+		{
+			int[] d = this.selectedBlock().getDamageValues();
+			for (int i = 0; i < d.length; ++i)
+				if (d[i] == this.spinnerDamage.getValue())
+				{
+					this.setDamage(i);
+					break;
+				}
+		}
 	}
 
 	@Override
@@ -204,7 +213,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 	{
 		this.damage = damage;
 		this.damageSelector.repaint();
-		this.spinnerDamage.setText(Integer.toString(damage));
+		this.spinnerDamage.setText(Integer.toString(this.selectedDamage()));
 		this.updateDisplay();
 	}
 
@@ -221,7 +230,7 @@ public class PanelBlockSelection extends ConfirmPanel implements ComponentListen
 	private void setSelected(int selected, boolean sendUpdates)
 	{
 		this.selected = selected;
-		int[] damage =this.selectedBlock().getDamageValues();
+		int[] damage = this.selectedBlock().getDamageValues();
 		if (sendUpdates) this.comboboxBlock.setSelectedItem(this.selectedBlock().id());
 		this.spinnerDamage.setValues(damage);
 		this.blockSelector.repaint();

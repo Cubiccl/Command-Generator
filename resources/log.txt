@@ -1,4 +1,4 @@
-Welcome to the Command Generator v2.6.0.1 by Cubi !
+Welcome to the Command Generator v2.6.0.3 by Cubi !
 ---- VERSION : 1.11 ----
 ---- Creating objects ----
 Successfully created 236 blocks.
@@ -15,7 +15,7 @@ Successfully created 485 sounds.
 Successfully created 37 containers.
 Successfully created 66 Block NBT Tags.
 Successfully created 21 Item NBT Tags.
-Successfully created 185 Entity NBT Tags.
+Successfully created 186 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
