@@ -11,9 +11,11 @@ public class BlockNumbered extends Block
 
 	public static Text getName(String id, int damage)
 	{
-		Text t = new Text("block." + id + "." + damage, new Replacement("<count>", Integer.toString(damage)));
+		int actual = damage + 1;
+		if (id.contains("weighted_")) --actual;
+		Text t = new Text("block." + id + "." + damage, new Replacement("<count>", Integer.toString(actual)));
 		if (t.isTranslated()) return t;
-		return new Text("block." + id + ".x", new Replacement("<count>", Integer.toString(damage)));
+		return new Text("block." + id + ".x", new Replacement("<count>", Integer.toString(actual)));
 	}
 
 	public BlockNumbered(int idInt, String idString)

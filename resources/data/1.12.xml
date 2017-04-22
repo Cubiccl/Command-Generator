@@ -3,11 +3,38 @@
   <blocks>
     <block idint="0" idstr="air" />
     <block idint="1" idstr="stone">
-      <maxdamage>6</maxdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>stone</v>
+          <v>granite</v>
+          <v>smooth_granite</v>
+          <v>diorite</v>
+          <v>smooth_diorite</v>
+          <v>andesite</v>
+          <v>smooth_andesite</v>
+        </state>
+      </states>
     </block>
-    <block idint="2" idstr="grass" />
+    <block idint="2" idstr="grass">
+      <states>
+        <state id="snowy" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
     <block idint="3" idstr="dirt">
-      <maxdamage>2</maxdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>dirt</v>
+          <v>coarse_dirt</v>
+          <v>podzol</v>
+        </state>
+        <state id="snowy" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="4" idstr="cobblestone" />
     <block idint="5" idstr="planks">
@@ -15,49 +42,119 @@
     </block>
     <block idint="6" idstr="sapling">
       <customblock>Wood</customblock>
+      <states>
+        <state id="age" type="2" damage="8" max="1" />
+      </states>
     </block>
     <block idint="7" idstr="bedrock" />
     <block idint="8" idstr="flowing_water">
-      <texture>-1</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Liquid</customblock>
     </block>
-    <block idint="9" idstr="water" />
+    <block idint="9" idstr="water">
+      <customblock>Liquid</customblock>
+    </block>
     <block idint="10" idstr="flowing_lava">
-      <texture>-1</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Liquid</customblock>
     </block>
-    <block idint="11" idstr="lava" />
+    <block idint="11" idstr="lava">
+      <customblock>Liquid</customblock>
+    </block>
     <block idint="12" idstr="sand">
-      <maxdamage>1</maxdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>sand</v>
+          <v>red_sand</v>
+        </state>
+      </states>
     </block>
     <block idint="13" idstr="gravel" />
     <block idint="14" idstr="gold_ore" />
     <block idint="15" idstr="iron_ore" />
     <block idint="16" idstr="coal_ore" />
     <block idint="17" idstr="log">
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>oak</v>
+          <v>spruce</v>
+          <v>birch</v>
+          <v>jungle</v>
+        </state>
+        <state id="axis" type="0" damage="4">
+          <v>y</v>
+          <v>x</v>
+          <v>z</v>
+          <v>none</v>
+        </state>
+      </states>
     </block>
     <block idint="18" idstr="leaves">
       <texture>4</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="check_decay" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="decayable" type="1" damage="4">
+          <v>true</v>
+          <v>false</v>
+        </state>
+        <state id="variant" type="0" damage="1">
+          <v>oak</v>
+          <v>spruce</v>
+          <v>birch</v>
+          <v>jungle</v>
+        </state>
+      </states>
     </block>
     <block idint="19" idstr="sponge">
-      <maxdamage>1</maxdamage>
+      <states>
+        <state id="wet" type="1" damage="1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="20" idstr="glass" />
     <block idint="21" idstr="lapis_ore" />
     <block idint="22" idstr="lapis_block" />
     <block idint="23" idstr="dispenser">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <customblock>Facing</customblock>
+      <states>
+        <state id="triggered" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="24" idstr="sandstone">
-      <maxdamage>2</maxdamage>
+      <states>
+        <state id="type" type="0" damage="1">
+          <v>sandstone</v>
+          <v>chiseled_sandstone</v>
+          <v>smooth_sandstone</v>
+        </state>
+      </states>
     </block>
     <block idint="25" idstr="noteblock" />
     <block idint="26" idstr="bed">
       <texture>-8</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="part" type="0" damage="8">
+          <v>head</v>
+          <v>foot</v>
+        </state>
+        <state id="facing" type="0" damage="1">
+          <v>south</v>
+          <v>west</v>
+          <v>north</v>
+          <v>east</v>
+        </state>
+        <state id="occupied" type="1" damage="4">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="27" idstr="golden_rail">
       <customblock>Rail</customblock>
@@ -67,53 +164,182 @@
     </block>
     <block idint="29" idstr="sticky_piston">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <customblock>Facing</customblock>
+      <states>
+        <state id="extended" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="30" idstr="web" />
     <block idint="31" idstr="tallgrass">
-      <maxdamage>3</maxdamage>
+      <states>
+        <state id="type" type="0" damage="1">
+          <v>dead_bush</v>
+          <v>tall_grass</v>
+          <v>fern</v>
+        </state>
+      </states>
     </block>
     <block idint="32" idstr="deadbush" />
     <block idint="33" idstr="piston">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <customblock>Facing</customblock>
+      <states>
+        <state id="extended" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="34" idstr="piston_head">
-      <texture>-8</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <customblock>Facing</customblock>
+      <states>
+        <state id="short" type="1" damage="-1">
+          <v>true</v>
+          <v>false</v>
+        </state>
+        <state id="type" type="0" damage="8">
+          <v>normal</v>
+          <v>sticky</v>
+        </state>
+      </states>
     </block>
     <block idint="35" idstr="wool">
       <customblock>Stained</customblock>
     </block>
     <block idint="36" idstr="piston_extension">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <customblock>Facing</customblock>
+      <states>
+        <state id="extended" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
-    <block idint="37" idstr="yellow_flower" />
+    <block idint="37" idstr="yellow_flower">
+      <states>
+        <state id="type" type="0" damage="-1">
+          <v>dandelion</v>
+        </state>
+      </states>
+    </block>
     <block idint="38" idstr="red_flower">
-      <maxdamage>8</maxdamage>
+      <states>
+        <state id="type" type="0" damage="1">
+          <v>poppy</v>
+          <v>blue_orchid</v>
+          <v>allium</v>
+          <v>houstonia</v>
+          <v>red_tulip</v>
+          <v>orange_tulip</v>
+          <v>white_tulip</v>
+          <v>pink_tulip</v>
+          <v>oxeye_daisy</v>
+        </state>
+      </states>
     </block>
     <block idint="39" idstr="brown_mushroom" />
     <block idint="40" idstr="red_mushroom" />
     <block idint="41" idstr="gold_block" />
     <block idint="42" idstr="iron_block" />
     <block idint="43" idstr="double_stone_slab">
-      <customdamage>0:1:2:3:4:5:6:7:8:9:15</customdamage>
+      <states>
+        <state id="seamless" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="variant" type="0" damage="1">
+          <v>stone</v>
+          <v>sandstone</v>
+          <v>wood_old</v>
+          <v>cobblestone</v>
+          <v>brick</v>
+          <v>stone_brick</v>
+          <v>nether_brick</v>
+          <v>quartz</v>
+        </state>
+      </states>
+      <unuseddamage>
+        <d>10</d>
+        <d>11</d>
+        <d>12</d>
+        <d>13</d>
+        <d>14</d>
+      </unuseddamage>
     </block>
     <block idint="44" idstr="stone_slab">
       <texture>8</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="half" type="0" damage="8">
+          <v>bottom</v>
+          <v>top</v>
+        </state>
+        <state id="variant" type="0" damage="1">
+          <v>stone</v>
+          <v>sandstone</v>
+          <v>wood_old</v>
+          <v>cobblestone</v>
+          <v>brick</v>
+          <v>stone_brick</v>
+          <v>nether_brick</v>
+          <v>quartz</v>
+        </state>
+      </states>
     </block>
     <block idint="45" idstr="brick_block" />
-    <block idint="46" idstr="tnt" />
+    <block idint="46" idstr="tnt">
+      <texture>-1</texture>
+      <states>
+        <state id="explode" type="1" damage="1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
     <block idint="47" idstr="bookshelf" />
     <block idint="48" idstr="mossy_cobblestone" />
     <block idint="49" idstr="obsidian" />
     <block idint="50" idstr="torch">
       <texture>-1</texture>
-      <customdamage>1:2:3:4:5</customdamage>
+      <states>
+        <state id="facing" type="0" damage="1" startsat="1">
+          <v>east</v>
+          <v>west</v>
+          <v>south</v>
+          <v>north</v>
+          <v>up</v>
+        </state>
+      </states>
     </block>
-    <block idint="51" idstr="fire" />
+    <block idint="51" idstr="fire">
+      <customblock>Numbered</customblock>
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="up" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="age" type="2" damage="1" max="15" />
+      </states>
+    </block>
     <block idint="52" idstr="mob_spawner" />
     <block idint="53" idstr="oak_stairs">
       <customblock>Stairs</customblock>
@@ -122,18 +348,44 @@
       <customblock>Furniture</customblock>
     </block>
     <block idint="55" idstr="redstone_wire">
-      <texture>-1</texture>
-      <maxdamage>15</maxdamage>
+      <customblock>Numbered</customblock>
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="power" type="2" damage="1" max="15" />
+        <state id="up" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="56" idstr="diamond_ore" />
     <block idint="57" idstr="diamond_block" />
     <block idint="58" idstr="crafting_table" />
     <block idint="59" idstr="wheat">
-      <maxdamage>7</maxdamage>
+      <states>
+        <state id="age" type="2" damage="1" max="7" />
+      </states>
     </block>
     <block idint="60" idstr="farmland">
       <texture>-7</texture>
-      <maxdamage>7</maxdamage>
+      <states>
+        <state id="moisture" type="2" damage="1" max="7" />
+      </states>
     </block>
     <block idint="61" idstr="furnace">
       <customblock>Furniture</customblock>
@@ -143,7 +395,9 @@
     </block>
     <block idint="63" idstr="standing_sign">
       <texture>-1</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="rotation" type="2" damage="1" max="15" />
+      </states>
     </block>
     <block idint="64" idstr="wooden_door">
       <customblock>Door</customblock>
@@ -152,7 +406,20 @@
       <customblock>Furniture</customblock>
     </block>
     <block idint="66" idstr="rail">
-      <maxdamage>9</maxdamage>
+      <states>
+        <state id="shape" type="0" damage="1">
+          <v>north_south</v>
+          <v>east_west</v>
+          <v>ascending_east</v>
+          <v>ascending_west</v>
+          <v>ascending_north</v>
+          <v>ascending_south</v>
+          <v>south_east</v>
+          <v>south_west</v>
+          <v>north_west</v>
+          <v>north_east</v>
+        </state>
+      </states>
     </block>
     <block idint="67" idstr="stone_stairs">
       <customblock>Stairs</customblock>
@@ -162,105 +429,392 @@
     </block>
     <block idint="69" idstr="lever">
       <texture>-1</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="powered" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="facing" type="0" damage="1">
+          <v>up_x</v>
+          <v>east</v>
+          <v>west</v>
+          <v>south</v>
+          <v>north</v>
+          <v>bottom_z</v>
+          <v>bottom_x</v>
+          <v>up_z</v>
+        </state>
+      </states>
     </block>
     <block idint="70" idstr="stone_pressure_plate">
       <texture>-1</texture>
-      <maxdamage>1</maxdamage>
+      <states>
+        <state id="powered" type="1" damage="1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="71" idstr="iron_door">
       <customblock>Door</customblock>
     </block>
     <block idint="72" idstr="wooden_pressure_plate">
       <texture>-1</texture>
-      <maxdamage>1</maxdamage>
+      <states>
+        <state id="powered" type="1" damage="1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="73" idstr="redstone_ore" />
     <block idint="74" idstr="lit_redstone_ore" />
     <block idint="75" idstr="unlit_redstone_torch">
       <texture>-1</texture>
-      <customdamage>1:2:3:4:5</customdamage>
+      <states>
+        <state id="facing" type="0" damage="1" startsat="1">
+          <v>east</v>
+          <v>west</v>
+          <v>south</v>
+          <v>north</v>
+          <v>up</v>
+        </state>
+      </states>
     </block>
     <block idint="76" idstr="redstone_torch">
       <texture>-1</texture>
-      <customdamage>1:2:3:4:5</customdamage>
+      <states>
+        <state id="facing" type="0" damage="1" startsat="1">
+          <v>east</v>
+          <v>west</v>
+          <v>south</v>
+          <v>north</v>
+          <v>up</v>
+        </state>
+      </states>
     </block>
     <block idint="77" idstr="stone_button">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <states>
+        <state id="powered" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="facing" type="0" damage="1">
+          <v>down</v>
+          <v>east</v>
+          <v>west</v>
+          <v>south</v>
+          <v>north</v>
+          <v>up</v>
+        </state>
+      </states>
     </block>
     <block idint="78" idstr="snow_layer">
-      <maxdamage>7</maxdamage>
+      <states>
+        <state id="layers" type="2" damage="1">
+          <v>1</v>
+          <v>2</v>
+          <v>3</v>
+          <v>4</v>
+          <v>5</v>
+          <v>6</v>
+          <v>7</v>
+          <v>8</v>
+        </state>
+      </states>
     </block>
     <block idint="79" idstr="ice" />
     <block idint="80" idstr="snow" />
-    <block idint="81" idstr="cactus" />
+    <block idint="81" idstr="cactus">
+      <customblock>Numbered</customblock>
+      <states>
+        <state id="age" type="2" damage="1" max="15" />
+      </states>
+    </block>
     <block idint="82" idstr="clay" />
-    <block idint="83" idstr="reeds" />
+    <block idint="83" idstr="reeds">
+      <customblock>Numbered</customblock>
+      <states>
+        <state id="age" type="2" damage="1" max="15" />
+      </states>
+    </block>
     <block idint="84" idstr="jukebox">
       <texture>-1</texture>
-      <maxdamage>1</maxdamage>
+      <states>
+        <state id="has_record" type="1" damage="1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
-    <block idint="85" idstr="fence" />
+    <block idint="85" idstr="fence">
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
     <block idint="86" idstr="pumpkin">
       <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <states>
+        <state id="facing" type="0" damage="1">
+          <v>south</v>
+          <v>west</v>
+          <v>north</v>
+          <v>east</v>
+        </state>
+      </states>
     </block>
     <block idint="87" idstr="netherrack" />
     <block idint="88" idstr="soul_sand" />
     <block idint="89" idstr="glowstone" />
-    <block idint="90" idstr="portal" />
+    <block idint="90" idstr="portal">
+      <texture>-1</texture>
+      <states>
+        <state id="axis" type="0" damage="1">
+          <v>x</v>
+          <v>z</v>
+        </state>
+      </states>
+    </block>
     <block idint="91" idstr="lit_pumpkin">
       <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <states>
+        <state id="facing" type="0" damage="1">
+          <v>south</v>
+          <v>west</v>
+          <v>north</v>
+          <v>east</v>
+        </state>
+      </states>
     </block>
     <block idint="92" idstr="cake">
       <texture>-1</texture>
-      <maxdamage>6</maxdamage>
+      <states>
+        <state id="bites" type="2" damage="1" max="6" />
+      </states>
     </block>
     <block idint="93" idstr="unpowered_repeater">
       <texture>-1</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="delay" type="2" damage="4" max="2" />
+        <state id="facing" type="0" damage="1">
+          <v>north</v>
+          <v>east</v>
+          <v>south</v>
+          <v>west</v>
+        </state>
+        <state id="locked" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="94" idstr="powered_repeater">
       <texture>-1</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="delay" type="2" damage="4" max="2" />
+        <state id="facing" type="0" damage="1">
+          <v>north</v>
+          <v>east</v>
+          <v>south</v>
+          <v>west</v>
+        </state>
+        <state id="locked" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="95" idstr="stained_glass">
       <customblock>Stained</customblock>
     </block>
     <block idint="96" idstr="trapdoor">
       <texture>-1</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="half" type="0" damage="4">
+          <v>bottom</v>
+          <v>top</v>
+        </state>
+        <state id="facing" type="0" damage="1">
+          <v>north</v>
+          <v>south</v>
+          <v>west</v>
+          <v>east</v>
+        </state>
+        <state id="open" type="0" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="97" idstr="monster_egg">
-      <maxdamage>5</maxdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>stone</v>
+          <v>cobblestone</v>
+          <v>stone_brick</v>
+          <v>mossy_brick</v>
+          <v>cracked_brick</v>
+          <v>chiseled_brick</v>
+        </state>
+      </states>
     </block>
     <block idint="98" idstr="stonebrick">
-      <maxdamage>3</maxdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>stonebrick</v>
+          <v>mossy_stonebrick</v>
+          <v>cracked_stonebrick</v>
+          <v>chiseled_stonebrick</v>
+        </state>
+      </states>
     </block>
     <block idint="99" idstr="brown_mushroom_block">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:6:7:8:9:10:14:15</customdamage>
+      <states>
+        <state id="variant" type="0" damagecustom="0:1:2:3:4:5:6:7:8:9:10:14:15">
+          <v>all_inside</v>
+          <v>north_west</v>
+          <v>north</v>
+          <v>north_east</v>
+          <v>west</v>
+          <v>center</v>
+          <v>east</v>
+          <v>south_west</v>
+          <v>south</v>
+          <v>south_east</v>
+          <v>stem</v>
+          <v>all_outside</v>
+          <v>all_stem</v>
+        </state>
+      </states>
     </block>
     <block idint="100" idstr="red_mushroom_block">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:6:7:8:9:10:14:15</customdamage>
+      <states>
+        <state id="variant" type="0" damagecustom="0:1:2:3:4:5:6:7:8:9:10:14:15">
+          <v>all_inside</v>
+          <v>north_west</v>
+          <v>north</v>
+          <v>north_east</v>
+          <v>west</v>
+          <v>center</v>
+          <v>east</v>
+          <v>south_west</v>
+          <v>south</v>
+          <v>south_east</v>
+          <v>stem</v>
+          <v>all_outside</v>
+          <v>all_stem</v>
+        </state>
+      </states>
     </block>
-    <block idint="101" idstr="iron_bars" />
-    <block idint="102" idstr="glass_pane" />
+    <block idint="101" idstr="iron_bars">
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
+    <block idint="102" idstr="glass_pane">
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
     <block idint="103" idstr="melon_block" />
     <block idint="104" idstr="pumpkin_stem">
-      <texture>-1</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Numbered</customblock>
+      <states>
+        <state id="facing" type="0" damage="-1">
+          <v>south</v>
+          <v>west</v>
+          <v>north</v>
+          <v>east</v>
+          <v>up</v>
+        </state>
+        <state id="age" type="2" damage="1" max="7" />
+      </states>
     </block>
     <block idint="105" idstr="melon_stem">
-      <texture>-1</texture>
-      <maxdamage>7</maxdamage>
+      <customblock>Numbered</customblock>
+      <states>
+        <state id="facing" type="0" damage="-1">
+          <v>south</v>
+          <v>west</v>
+          <v>north</v>
+          <v>east</v>
+          <v>up</v>
+        </state>
+        <state id="age" type="2" damage="1" max="7" />
+      </states>
     </block>
     <block idint="106" idstr="vine">
       <texture>-1</texture>
-      <customdamage>1:2:3:4:5:6:7:8:9:10:11:12:13:14:15</customdamage>
+      <states>
+        <state id="east" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="4">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="2">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="up" type="1" damage="0">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="107" idstr="fence_gate">
       <customblock>FenceGate</customblock>
@@ -271,26 +825,84 @@
     <block idint="109" idstr="stone_brick_stairs">
       <customblock>Stairs</customblock>
     </block>
-    <block idint="110" idstr="mycelium" />
+    <block idint="110" idstr="mycelium">
+      <states>
+        <state id="snowy" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
     <block idint="111" idstr="waterlily" />
     <block idint="112" idstr="nether_brick" />
-    <block idint="113" idstr="nether_brick_fence" />
+    <block idint="113" idstr="nether_brick_fence">
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
     <block idint="114" idstr="nether_brick_stairs">
       <customblock>Stairs</customblock>
     </block>
     <block idint="115" idstr="nether_wart">
-      <maxdamage>3</maxdamage>
+      <texture>0</texture>
+      <customblock>Numbered</customblock>
+      <states>
+        <state id="age" type="2" damage="1" max="3" />
+      </states>
     </block>
     <block idint="116" idstr="enchanting_table" />
-    <block idint="117" idstr="brewing_stand" />
+    <block idint="117" idstr="brewing_stand">
+      <states>
+        <state id="has_bottle_1" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="has_bottle_2" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="has_bottle_3" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
     <block idint="118" idstr="cauldron">
       <texture>-1</texture>
-      <maxdamage>3</maxdamage>
+      <states>
+        <state id="level" type="2" damage="1" max="3" />
+      </states>
     </block>
     <block idint="119" idstr="end_portal" />
     <block idint="120" idstr="end_portal_frame">
       <texture>-1</texture>
-      <maxdamage>7</maxdamage>
+      <states>
+        <state id="eye" type="1" damage="4">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="facing" type="0" damage="1">
+          <v>south</v>
+          <v>west</v>
+          <v>north</v>
+          <v>east</v>
+        </state>
+      </states>
     </block>
     <block idint="121" idstr="end_stone" />
     <block idint="122" idstr="dragon_egg" />
@@ -300,12 +912,25 @@
       <customblock>Wood</customblock>
     </block>
     <block idint="126" idstr="wooden_slab">
-      <texture>8</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <customblock>Wood</customblock>
+      <states>
+        <state id="half" type="0" damage="8">
+          <v>bottom</v>
+          <v>top</v>
+        </state>
+      </states>
     </block>
     <block idint="127" idstr="cocoa">
       <texture>-4</texture>
-      <maxdamage>11</maxdamage>
+      <states>
+        <state id="facing" type="0" damage="1">
+          <v>south</v>
+          <v>west</v>
+          <v>north</v>
+          <v>east</v>
+        </state>
+        <state id="age" type="2" damage="4" max="2" />
+      </states>
     </block>
     <block idint="128" idstr="sandstone_stairs">
       <customblock>Stairs</customblock>
@@ -316,11 +941,55 @@
     </block>
     <block idint="131" idstr="tripwire_hook">
       <texture>-1</texture>
-      <maxdamage>11</maxdamage>
+      <states>
+        <state id="powered" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="attached" type="1" damage="4">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="facing" type="0" damage="1">
+          <v>south</v>
+          <v>west</v>
+          <v>north</v>
+          <v>east</v>
+        </state>
+      </states>
     </block>
     <block idint="132" idstr="tripwire">
       <texture>-1</texture>
-      <customdamage>0:1:4:5:8:9:12:13</customdamage>
+      <states>
+        <state id="disarmed" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="powered" type="1" damage="1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="attached" type="1" damage="4">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="133" idstr="emerald_block" />
     <block idint="134" idstr="spruce_stairs">
@@ -332,61 +1001,223 @@
     <block idint="136" idstr="jungle_stairs">
       <customblock>Stairs</customblock>
     </block>
-    <block idint="137" idstr="command_block" />
+    <block idint="137" idstr="command_block">
+      <customblock>Facing</customblock>
+      <states>
+        <state id="conditional" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
     <block idint="138" idstr="beacon" />
     <block idint="139" idstr="cobblestone_wall">
-      <maxdamage>1</maxdamage>
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="variant" type="0" damage="1">
+          <v>cobblestone</v>
+          <v>mossy_cobblestone</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="up" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="down" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
-    <block idint="140" idstr="flower_pot" />
+    <block idint="140" idstr="flower_pot">
+      <states>
+        <state id="contents" type="0" damage="-1">
+          <v>empty</v>
+          <v>dandelion</v>
+          <v>rose</v>
+          <v>blue_orchid</v>
+          <v>allium</v>
+          <v>houstonia</v>
+          <v>red_tulip</v>
+          <v>orange_tulip</v>
+          <v>white_tulip</v>
+          <v>pink_tulip</v>
+          <v>oxeye_daisy</v>
+          <v>oak_sapling</v>
+          <v>spruce_sapling</v>
+          <v>birch_sapling</v>
+          <v>jungle_sapling</v>
+          <v>acacia_sapling</v>
+          <v>dark_oak_sapling</v>
+          <v>mushroom_red</v>
+          <v>mushroom_brown</v>
+          <v>dead_bush</v>
+          <v>fern</v>
+          <v>cactus</v>
+        </state>
+      </states>
+    </block>
     <block idint="141" idstr="carrots">
-      <maxdamage>7</maxdamage>
+      <texture>0</texture>
+      <customblock>Numbered</customblock>
+      <states>
+        <state id="age" type="2" damage="1" max="7" />
+      </states>
     </block>
     <block idint="142" idstr="potatoes">
-      <maxdamage>7</maxdamage>
+      <texture>0</texture>
+      <customblock>Numbered</customblock>
+      <states>
+        <state id="age" type="2" damage="1" max="7" />
+      </states>
     </block>
     <block idint="143" idstr="wooden_button">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <states>
+        <state id="powered" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="facing" type="0" damage="1">
+          <v>down</v>
+          <v>east</v>
+          <v>west</v>
+          <v>south</v>
+          <v>north</v>
+          <v>up</v>
+        </state>
+      </states>
     </block>
     <block idint="144" idstr="skull">
       <texture>-1</texture>
-      <customdamage>1:2:3:4:5</customdamage>
+      <states>
+        <state id="nodrop" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="facing" type="0" damage="1" startsat="1">
+          <v>up</v>
+          <v>north</v>
+          <v>south</v>
+          <v>east</v>
+          <v>west</v>
+          <v>down</v>
+        </state>
+      </states>
     </block>
     <block idint="145" idstr="anvil">
       <texture>-4</texture>
-      <maxdamage>11</maxdamage>
+      <states>
+        <state id="damage" type="2" damage="4" max="2" />
+        <state id="facing" type="0" damage="1">
+          <v>north</v>
+          <v>east</v>
+          <v>south</v>
+          <v>west</v>
+        </state>
+      </states>
     </block>
     <block idint="146" idstr="trapped_chest">
       <customblock>Furniture</customblock>
     </block>
     <block idint="147" idstr="light_weighted_pressure_plate">
-      <texture>-1</texture>
-      <maxdamage>1</maxdamage>
+      <customblock>Numbered</customblock>
+      <states>
+        <state id="power" type="2" damage="1" max="15" />
+      </states>
     </block>
     <block idint="148" idstr="heavy_weighted_pressure_plate">
-      <texture>-1</texture>
-      <maxdamage>1</maxdamage>
+      <customblock>Numbered</customblock>
+      <states>
+        <state id="power" type="2" damage="1" max="15" />
+      </states>
     </block>
     <block idint="149" idstr="unpowered_comparator">
       <texture>-1</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="mode" type="0" damage="4">
+          <v>compare</v>
+          <v>substract</v>
+        </state>
+        <state id="powered" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="facing" type="0" damage="1">
+          <v>north</v>
+          <v>east</v>
+          <v>south</v>
+          <v>west</v>
+        </state>
+      </states>
     </block>
     <block idint="150" idstr="powered_comparator">
       <texture>-1</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="mode" type="0" damage="4">
+          <v>compare</v>
+          <v>substract</v>
+        </state>
+        <state id="powered" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="facing" type="0" damage="1" startsat="8">
+          <v>north</v>
+          <v>east</v>
+          <v>south</v>
+          <v>west</v>
+        </state>
+      </states>
     </block>
     <block idint="151" idstr="daylight_detector">
       <texture>-1</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="power" type="2" damage="1" max="15" />
+      </states>
     </block>
     <block idint="152" idstr="redstone_block" />
     <block idint="153" idstr="quartz_ore" />
     <block idint="154" idstr="hopper">
       <texture>-1</texture>
-      <customdamage>0:2:3:4:5:8:10:11:12:13</customdamage>
+      <states>
+        <state id="facing" type="0" damagecustom="0:2:3:4:5">
+          <v>down</v>
+          <v>north</v>
+          <v>south</v>
+          <v>west</v>
+          <v>east</v>
+        </state>
+        <state id="enabled" type="1" damage="8">
+          <v>true</v>
+          <v>false</v>
+        </state>
+      </states>
     </block>
     <block idint="155" idstr="quartz_block">
-      <maxdamage>4</maxdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>default</v>
+          <v>chiseled</v>
+          <v>lines_y</v>
+          <v>lines_z</v>
+          <v>lines_x</v>
+        </state>
+      </states>
     </block>
     <block idint="156" idstr="quartz_stairs">
       <customblock>Stairs</customblock>
@@ -396,20 +1227,68 @@
     </block>
     <block idint="158" idstr="dropper">
       <texture>-1</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <customblock>Facing</customblock>
+      <states>
+        <state id="triggered" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="159" idstr="stained_hardened_clay">
       <customblock>Stained</customblock>
     </block>
     <block idint="160" idstr="stained_glass_pane">
       <customblock>Stained</customblock>
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="161" idstr="leaves2">
       <texture>4</texture>
-      <customdamage>0:1:4:5:8:9:12:13</customdamage>
+      <states>
+        <state id="check_decay" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="decayable" type="1" damage="4">
+          <v>true</v>
+          <v>false</v>
+        </state>
+        <state id="variant" type="0" damage="1">
+          <v>acacia</v>
+          <v>dark_oak</v>
+        </state>
+      </states>
     </block>
     <block idint="162" idstr="log2">
-      <customdamage>0:1:4:5:8:9:12:13</customdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>acacia</v>
+          <v>dark_oak</v>
+        </state>
+        <state id="axis" type="0" damage="4">
+          <v>y</v>
+          <v>x</v>
+          <v>z</v>
+          <v>none</v>
+        </state>
+      </states>
     </block>
     <block idint="163" idstr="acacia_stairs">
       <customblock>Stairs</customblock>
@@ -421,15 +1300,42 @@
     <block idint="166" idstr="barrier" />
     <block idint="167" idstr="iron_trapdoor">
       <texture>-1</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="half" type="0" damage="4">
+          <v>bottom</v>
+          <v>top</v>
+        </state>
+        <state id="facing" type="0" damage="1">
+          <v>north</v>
+          <v>south</v>
+          <v>west</v>
+          <v>east</v>
+        </state>
+        <state id="open" type="0" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="168" idstr="prismarine">
-      <maxdamage>2</maxdamage>
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>prismarine</v>
+          <v>prismarine_bricks</v>
+          <v>dark_prismarine</v>
+        </state>
+      </states>
     </block>
     <block idint="169" idstr="sea_lantern" />
     <block idint="170" idstr="hay_block">
       <texture>-1</texture>
-      <maxdamage>2</maxdamage>
+      <states>
+        <state id="axis" type="0" damage="4">
+          <v>y</v>
+          <v>x</v>
+          <v>z</v>
+        </state>
+      </states>
     </block>
     <block idint="171" idstr="carpet">
       <customblock>Stained</customblock>
@@ -439,29 +1345,70 @@
     <block idint="174" idstr="packed_ice" />
     <block idint="175" idstr="double_plant">
       <texture>8</texture>
-      <customdamage>0:1:2:3:4:5:8:9:10:11:12:13</customdamage>
+      <states>
+        <state id="half" type="0" damage="8">
+          <v>lower</v>
+          <v>upper</v>
+        </state>
+        <state id="variant" type="0" damage="1">
+          <v>sunflower</v>
+          <v>syringa</v>
+          <v>double_grass</v>
+          <v>double_fern</v>
+          <v>double_rose</v>
+          <v>paeonia</v>
+        </state>
+      </states>
     </block>
     <block idint="176" idstr="standing_banner">
       <texture>-1</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="rotation" type="2" damage="1" max="15" />
+      </states>
     </block>
     <block idint="177" idstr="wall_banner">
       <customblock>Furniture</customblock>
     </block>
     <block idint="178" idstr="daylight_detector_inverted">
       <texture>-1</texture>
-      <maxdamage>15</maxdamage>
+      <states>
+        <state id="power" type="2" damage="1" max="15" />
+      </states>
     </block>
     <block idint="179" idstr="red_sandstone">
-      <maxdamage>2</maxdamage>
+      <states>
+        <state id="type" type="0" damage="1">
+          <v>red_sandstone</v>
+          <v>chiseled_red_sandstone</v>
+          <v>smooth_red_sandstone</v>
+        </state>
+      </states>
     </block>
     <block idint="180" idstr="red_sandstone_stairs">
       <customblock>Stairs</customblock>
     </block>
-    <block idint="181" idstr="double_stone_slab2" />
+    <block idint="181" idstr="double_stone_slab2">
+      <states>
+        <state id="seamless" type="0" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="variant" type="0" damage="1">
+          <v>red_sandstone</v>
+        </state>
+      </states>
+    </block>
     <block idint="182" idstr="stone_slab2">
       <texture>-1</texture>
-      <customdamage>0:8</customdamage>
+      <states>
+        <state id="half" type="0" damage="8">
+          <v>bottom</v>
+          <v>top</v>
+        </state>
+        <state id="variant" type="0" damage="1">
+          <v>red_sandstone</v>
+        </state>
+      </states>
     </block>
     <block idint="183" idstr="spruce_fence_gate">
       <customblock>FenceGate</customblock>
@@ -478,11 +1425,106 @@
     <block idint="187" idstr="acacia_fence_gate">
       <customblock>FenceGate</customblock>
     </block>
-    <block idint="188" idstr="spruce_fence" />
-    <block idint="189" idstr="birch_fence" />
-    <block idint="190" idstr="jungle_fence" />
-    <block idint="191" idstr="dark_oak_fence" />
-    <block idint="192" idstr="acacia_fence" />
+    <block idint="188" idstr="spruce_fence">
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
+    <block idint="189" idstr="birch_fence">
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
+    <block idint="190" idstr="jungle_fence">
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
+    <block idint="191" idstr="dark_oak_fence">
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
+    <block idint="192" idstr="acacia_fence">
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
     <block idint="193" idstr="spruce_door">
       <customblock>Door</customblock>
     </block>
@@ -504,39 +1546,122 @@
     <block idint="199" idstr="chorus_plant" />
     <block idint="200" idstr="chorus_flower">
       <texture>-1</texture>
-      <maxdamage>5</maxdamage>
+      <states>
+        <state id="east" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="south" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="north" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="west" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="up" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+        <state id="down" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="201" idstr="purpur_block" />
     <block idint="202" idstr="purpur_pillar">
       <texture>-1</texture>
-      <maxdamage>2</maxdamage>
+      <states>
+        <state id="axis" type="0" damage="1">
+          <v>y</v>
+          <v>x</v>
+          <v>z</v>
+        </state>
+      </states>
     </block>
     <block idint="203" idstr="purpur_stairs">
       <customblock>Stairs</customblock>
     </block>
-    <block idint="204" idstr="purpur_double_slab" />
+    <block idint="204" idstr="purpur_double_slab">
+      <states>
+        <state id="variant" type="0" damage="1">
+          <v>default</v>
+        </state>
+      </states>
+    </block>
     <block idint="205" idstr="purpur_slab">
       <texture>-1</texture>
-      <customdamage>0:8</customdamage>
+      <states>
+        <state id="half" type="0" damage="8">
+          <v>bottom</v>
+          <v>top</v>
+        </state>
+        <state id="variant" type="0" damage="1">
+          <v>default</v>
+        </state>
+      </states>
     </block>
     <block idint="206" idstr="end_bricks" />
     <block idint="207" idstr="beetroots">
-      <maxdamage>3</maxdamage>
+      <texture>0</texture>
+      <customblock>Numbered</customblock>
+      <states>
+        <state id="age" type="2" damage="1" max="3" />
+      </states>
     </block>
     <block idint="208" idstr="grass_path" />
     <block idint="209" idstr="end_gateway" />
-    <block idint="210" idstr="repeating_command_block" />
-    <block idint="211" idstr="chain_command_block" />
+    <block idint="210" idstr="repeating_command_block">
+      <customblock>Facing</customblock>
+      <states>
+        <state id="conditional" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
+    <block idint="211" idstr="chain_command_block">
+      <customblock>Facing</customblock>
+      <states>
+        <state id="conditional" type="1" damage="-1">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
+    </block>
     <block idint="212" idstr="frosted_ice">
-      <maxdamage>3</maxdamage>
+      <states>
+        <state id="age" type="2" damage="1" max="3" />
+      </states>
     </block>
     <block idint="213" idstr="magma" />
     <block idint="214" idstr="nether_wart_block" />
     <block idint="215" idstr="red_nether_brick" />
-    <block idint="216" idstr="bone_block" />
+    <block idint="216" idstr="bone_block">
+      <texture>-1</texture>
+      <states>
+        <state id="axis" type="0" damage="4">
+          <v>y</v>
+          <v>x</v>
+          <v>z</v>
+        </state>
+      </states>
+    </block>
     <block idint="217" idstr="structure_void" />
     <block idint="218" idstr="observer">
+      <texture>-1</texture>
       <customblock>Facing</customblock>
+      <states>
+        <state id="power" type="1" damage="8">
+          <v>false</v>
+          <v>true</v>
+        </state>
+      </states>
     </block>
     <block idint="219" idstr="white_shulker_box">
       <customblock>Facing</customblock>
@@ -641,7 +1766,14 @@
       <customblock>Stained</customblock>
     </block>
     <block idint="255" idstr="structure_block">
-      <maxdamage>3</maxdamage>
+      <states>
+        <state id="mode" type="0" damage="1">
+          <v>save</v>
+          <v>load</v>
+          <v>corner</v>
+          <v>data</v>
+        </state>
+      </states>
     </block>
   </blocks>
   <items>
@@ -791,7 +1923,7 @@
     <item idint="122" idstr="dragon_egg" />
     <item idint="123" idstr="redstone_lamp" />
     <item idint="126" idstr="wooden_slab">
-      <maxdamage>5</maxdamage>
+      <customitem>Wood</customitem>
     </item>
     <item idint="128" idstr="sandstone_stairs" />
     <item idint="129" idstr="emerald_ore">
@@ -4480,16 +5612,16 @@
       </applicable>
     </tag>
     <tag id="Age">
-      <type>3</type>
-      <applicable>
-        <app>list=breed</app>
-      </applicable>
-    </tag>
-    <tag id="Age">
       <type>2</type>
       <applicable>
         <app>item</app>
         <app>xp_orb</app>
+      </applicable>
+    </tag>
+    <tag id="Age">
+      <type>3</type>
+      <applicable>
+        <app>list=breed</app>
       </applicable>
     </tag>
     <tag id="Air">
@@ -5149,17 +6281,17 @@
       </applicable>
       <byteboolean>true</byteboolean>
     </tag>
+    <tag id="Life">
+      <type>3</type>
+      <applicable>
+        <app>fireworks_rocket</app>
+      </applicable>
+    </tag>
     <tag id="life">
       <type>2</type>
       <applicable>
         <app>arrow</app>
         <app>spectral_arrow</app>
-      </applicable>
-    </tag>
-    <tag id="Life">
-      <type>3</type>
-      <applicable>
-        <app>fireworks_rocket</app>
       </applicable>
     </tag>
     <tag id="LifeTicks">
