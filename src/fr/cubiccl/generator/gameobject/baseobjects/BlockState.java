@@ -66,6 +66,13 @@ public class BlockState implements Comparable<BlockState>
 		return this.startsAt;
 	}
 
+	public boolean hasValue(String value)
+	{
+		for (String v : this.values)
+			if (v.equals(value)) return true;
+		return false;
+	}
+
 	boolean isDamageCustom()
 	{
 		return this.customDamageValues != null;

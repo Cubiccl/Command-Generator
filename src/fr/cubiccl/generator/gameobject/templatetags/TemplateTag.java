@@ -59,8 +59,10 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	 * @param listener - Warned when the creation is complete. */
 	public void askValue(BaseObject object, Tag previousValue, ITagCreationListener listener)
 	{
+		CGPanel p = this.createPanel(object, previousValue);
+		if (p == null) return;
 		this.creationListeners.push(new TagCreation(listener, object));
-		CommandGenerator.stateManager.setState(this.createPanel(object, previousValue), this);
+		CommandGenerator.stateManager.setState(p, this);
 	}
 
 	/** @return True if this tag can be applied to the Object with the input ID. */

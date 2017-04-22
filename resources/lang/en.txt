@@ -105,6 +105,10 @@ block.id=Block ID
 block.select=Select a Block
 block.tags=NBT Tags
 
+blockstate.added=Added Block states
+blockstate.available=Available Block states
+blockstate.value=Values
+
 clear.all_items=Empty target's inventory
 clear.ignore_data=Ignore Item data
 clear.item=Item to delete
@@ -274,6 +278,7 @@ error.number.positive=<name>: "XXX" is not valid. It must be a positive number.
 error.space=<name>: "XXX" is not valid. It shouldn't contain any space.
 error.spreadplayers=<name>: "XXX" is not valid. It must be greater than the distance between players +1.
 error.spread.no_players=Please select at least one Entity to spread.
+error.tag.state=Please select a Block to choose its states. You can delete the Block later if you like.
 error.title=Error
 error.trade.incomplete=This trade is incomplete.
 error.value.missing=Missing information for: <name>

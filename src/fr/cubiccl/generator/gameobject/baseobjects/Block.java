@@ -1,10 +1,7 @@
 package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.Component;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 import org.jdom2.Element;
 
@@ -87,6 +84,11 @@ public class Block extends BlockItem implements IObjectList<Block>
 	public String getName(int index)
 	{
 		return this.mainName().toString();
+	}
+
+	public Collection<BlockState> getStates()
+	{
+		return this.states.values();
 	}
 
 	protected boolean shouldSaveState(BlockState state)
