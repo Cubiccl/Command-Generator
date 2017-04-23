@@ -844,7 +844,7 @@ target.type.tostring.@r=a random player
 
 testforblock.block=Block to match
 testforblock.coordinates=Coordinates of the Block
-testforblock.ignore_data=Ignore Block data
+testforblock.states=Block states to verify
 
 testforblocks.destination=Area to check: northwestern corner
 testforblocks.mode.all=Match every block

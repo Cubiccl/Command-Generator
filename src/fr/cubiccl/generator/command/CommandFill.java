@@ -26,8 +26,8 @@ public class CommandFill extends Command implements ActionListener
 
 	public CommandFill()
 	{
-		super("fill", "fill <x1> <y1> <z1> <x2> <y2> <z2> <block> [dataValue] [oldBlockHandling] [dataTag]\n"
-				+ "fill <x1> <y1> <z1> <x2> <y2> <z2> <block> <dataValue> replace <replaceTileName> [replaceDataValue]", 8, 9, 10, 11, 12);
+		super("fill", "fill <x1> <y1> <z1> <x2> <y2> <z2> <block> [dataValue|state] [oldBlockHandling] [dataTag]\n"
+				+ "fill <x1> <y1> <z1> <x2> <y2> <z2> <block> <dataValue|state> replace <replaceTileName> [replaceDataValue|replaceState]", 8, 9, 10, 11, 12);
 	}
 
 	@Override

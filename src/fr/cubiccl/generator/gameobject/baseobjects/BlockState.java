@@ -25,6 +25,16 @@ public class BlockState implements Comparable<BlockState>
 		return parsed;
 	}
 
+	public static String toCommand(HashMap<String, String> states)
+	{
+		String command = "";
+		for (String id : states.keySet())
+		{
+			command += id + "=" + states.get(id) + ",";
+		}
+		return command.substring(0, command.length() - 1);
+	}
+
 	/** The damage values corresponding to this state. */
 	public final int[] customDamageValues;
 	/** The damage value corresponding to this state. */
@@ -33,6 +43,7 @@ public class BlockState implements Comparable<BlockState>
 	public final String id;
 	/** Damage value to start at for (mostly) furniture states (ladders, furnaces). */
 	private int startsAt = 0;
+
 	/** The type of the value. */
 	public final byte type;
 

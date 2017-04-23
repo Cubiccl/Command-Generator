@@ -49,7 +49,6 @@ public class Tests
 				System.out.println("id = " + id + ", value = " + parsed.get(id));
 		} catch (CommandGenerationException e)
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}

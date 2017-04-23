@@ -33,6 +33,12 @@ public class PanelStateSelection extends CGPanel implements ActionListener, List
 
 	public PanelStateSelection(Block block)
 	{
+		this(null, block);
+	}
+
+	public PanelStateSelection(String titleID, Block block)
+	{
+		super(titleID);
 		this.states = new ArrayList<BlockState>();
 		this.added = new ArrayList<BlockState>();
 		this.values = new HashMap<String, String>();
@@ -50,7 +56,7 @@ public class PanelStateSelection extends CGPanel implements ActionListener, List
 
 		gbc.gridx = 1;
 		gbc.gridheight = 1;
-		this.add(new CGLabel("blockstate.value"), gbc);
+		this.add(new CGLabel("blockstate.value").setHasColumn(true), gbc);
 		++gbc.gridy;
 		this.add(this.comboboxValues = new CGComboBox(), gbc);
 		++gbc.gridy;
@@ -75,6 +81,18 @@ public class PanelStateSelection extends CGPanel implements ActionListener, List
 			this.added.remove(this.selectedValue());
 			this.updateDisplay();
 		}
+	}
+
+	public void clear()
+	{
+		this.added.clear();
+		this.values.clear();
+		this.updateDisplay();
+	}
+
+	public Block currentBlock()
+	{
+		return this.block;
 	}
 
 	private ArrayList<BlockState> remaining()
@@ -111,15 +129,19 @@ public class PanelStateSelection extends CGPanel implements ActionListener, List
 		this.states.clear();
 		this.states.addAll(this.block.getStates());
 		this.added.clear();
-		for (String s : this.values.keySet())
+		ArrayList<String> ids = new ArrayList<String>();
+		ids.addAll(this.values.keySet());
+		for (String s : ids)
 		{
+			boolean found = false;
 			for (BlockState state : this.states)
 				if (state.id.equals(s) && state.hasValue(this.values.get(s)))
 				{
+					found = true;
 					this.added.add(state);
 					break;
 				}
-			this.values.remove(s);
+			if (!found) this.values.remove(s);
 		}
 		this.updateValues();
 		this.updateDisplay();
