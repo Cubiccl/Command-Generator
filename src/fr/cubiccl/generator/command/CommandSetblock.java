@@ -81,7 +81,9 @@ public class CommandSetblock extends Command
 		{
 			this.panelBlock.setData(Integer.parseInt(argument));
 		} catch (Exception e)
-		{}
+		{
+			this.panelBlock.setData(this.panelBlock.selectedBlock().damageFromState(argument));
+		}
 		if (index == 6) this.comboboxMode.setValue(argument);
 		if (index == 7) this.panelBlock.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
 	}

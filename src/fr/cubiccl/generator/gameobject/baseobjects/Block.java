@@ -71,6 +71,16 @@ public class Block extends BlockItem implements IObjectList<Block>
 		this.unusedDamage = new HashSet<Integer>();
 	}
 
+	public int damageFromState(String state) throws CommandGenerationException
+	{
+		HashMap<String, String> parsed = BlockState.parseState(state);
+		int damage = 0;
+		for (String id : parsed.keySet())
+			if (this.states.keySet().contains(id) && this.states.get(id).hasValue(parsed.get(id))) damage += this.states.get(id).damageForValue(parsed.get(id));
+		if (this.isDamageValid(damage)) return damage;
+		return this.getDamageValues()[0];
+	}
+
 	@Override
 	public Component getDisplayComponent()
 	{

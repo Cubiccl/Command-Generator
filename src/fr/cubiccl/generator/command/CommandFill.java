@@ -139,7 +139,9 @@ public class CommandFill extends Command implements ActionListener
 		{
 			this.panelBlockFill.setData(Integer.parseInt(argument));
 		} catch (Exception e)
-		{}
+		{
+			this.panelBlockFill.setData(this.panelBlockFill.selectedBlock().damageFromState(argument));
+		}
 		if (index == 9) this.comboboxMode.setValue(argument);
 		if (index == 10)
 		{
@@ -155,6 +157,8 @@ public class CommandFill extends Command implements ActionListener
 			this.checkboxData.setSelected(true);
 			this.panelBlockReplace.setHasData(false);
 		} catch (Exception e)
-		{}
+		{
+			this.panelBlockReplace.setData(this.panelBlockReplace.selectedBlock().damageFromState(argument));
+		}
 	}
 }

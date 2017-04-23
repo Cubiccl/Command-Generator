@@ -104,7 +104,9 @@ public class CommandTestforblock extends Command implements ActionListener
 			this.checkboxIgnoreData.setSelected(false);
 			this.panelBlock.setData(Integer.parseInt(argument));
 		} catch (Exception e)
-		{}
+		{
+			this.panelBlock.setData(this.panelBlock.selectedBlock().damageFromState(argument));
+		}
 		if (index == 6) this.panelBlock.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
 	}
 
