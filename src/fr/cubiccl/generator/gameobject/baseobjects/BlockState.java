@@ -127,4 +127,9 @@ public class BlockState implements Comparable<BlockState>
 		this.startsAt = startsAt;
 		return this;
 	}
+
+	public String valueForDamage(int damage)
+	{
+		return this.values[this.damageValues().indexOf(damage)];
+	}
 }

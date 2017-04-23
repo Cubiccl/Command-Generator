@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.Component;
 import java.util.*;
+import java.util.function.Predicate;
 
 import org.jdom2.Element;
 
@@ -79,6 +80,36 @@ public class Block extends BlockItem implements IObjectList<Block>
 			if (this.states.keySet().contains(id) && this.states.get(id).hasValue(parsed.get(id))) damage += this.states.get(id).damageForValue(parsed.get(id));
 		if (this.isDamageValid(damage)) return damage;
 		return this.getDamageValues()[0];
+	}
+
+	public HashMap<String, String> findStatesFromDamage(int damage)
+	{
+		ArrayList<BlockState> s = new ArrayList<BlockState>();
+		s.addAll(this.states.values());
+		s.removeIf(new Predicate<BlockState>()
+		{
+
+			@Override
+			public boolean test(BlockState t)
+			{
+				return !t.isDamageCustom() && t.damageValue == -1;
+			}
+		});
+		s.sort(Comparator.naturalOrder());
+		HashMap<String, String> states = new HashMap<String, String>();
+		for (int i = s.size() - 1; i >= 0; --i)
+		{
+			ArrayList<Integer> d = s.get(i).damageValues();
+			for (int j = d.size() - 1; j >= 0; --j)
+				if (damage >= d.get(j))
+				{
+					damage -= d.get(j);
+					states.put(s.get(i).id, s.get(i).valueForDamage(d.get(j)));
+					break;
+				}
+		}
+
+		return states;
 	}
 
 	@Override

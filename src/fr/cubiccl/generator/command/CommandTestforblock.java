@@ -89,9 +89,14 @@ public class CommandTestforblock extends Command implements ActionListener
 		// testforblock <x> <y> <z> <block> [dataValue] [dataTag]
 		if (index == 1) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[2], fullCommand[3]));
 		if (index == 4) this.panelBlock.setBlock(ObjectRegistry.blocks.find(argument));
-		if (index == 5 && !argument.equals("-1"))
+		if (index == 5 && !argument.equals("-1")) try
 		{
-			// TODO states from int
+			int damage = Integer.parseInt(argument);
+			HashMap<String, String> states = this.panelBlock.selectedBlock().findStatesFromDamage(damage);
+			for (String id : states.keySet())
+				this.panelStates.setState(id, states.get(id));
+		} catch (NumberFormatException e)
+		{
 			HashMap<String, String> states = BlockState.parseState(argument);
 			for (String id : states.keySet())
 				this.panelStates.setState(id, states.get(id));
