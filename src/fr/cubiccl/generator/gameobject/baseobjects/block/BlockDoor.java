@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject.baseobjects.block;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
+import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
@@ -14,7 +15,13 @@ public class BlockDoor extends Block
 
 	public BlockDoor(int idInt, String idString)
 	{
-		super(idInt, idString, 11);
+		super(idInt, idString);
+		this.addState(new BlockState("facing", BlockState.STRING, -1, "north", "south", "west", "east"));
+		this.addState(new BlockState("half", BlockState.STRING, -1, "lower", "upper"));
+		this.addState(new BlockState("hinge", BlockState.STRING, -1, "left", "right"));
+		this.addState(new BlockState("open", BlockState.STRING, -1, "false", "true"));
+		this.addState(new BlockState("powered", BlockState.STRING, -1, "false", "true"));
+		this.setMaxDamage(11);
 		this.textureType = -8;
 	}
 
@@ -22,6 +29,12 @@ public class BlockDoor extends Block
 	public Text name(int damage)
 	{
 		return getName(this.id(), damage);
+	}
+
+	@Override
+	protected boolean shouldSaveState(BlockState state)
+	{
+		return !state.id.equals("facing") && !state.id.equals("half") && !state.id.equals("hinge") && !state.id.equals("open") && !state.id.equals("powered");
 	}
 
 }

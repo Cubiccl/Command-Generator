@@ -6,21 +6,22 @@ import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
 /** This Block has 6 data values, determining which type of wood it is made of. */
-public class BlockWood extends Block
+public class BlockNumbered extends Block
 {
 
 	public static Text getName(String id, int damage)
 	{
-		if (damage >= 8) return new Text("block." + id + ".8.x", new Replacement("<wood>", new Text("utils.wood." + damage % 8)));
-		return new Text("block." + id + ".x", new Replacement("<wood>", new Text("utils.wood." + damage)));
+		int actual = damage + 1;
+		if (id.contains("weighted_") || id.contains("_wire")) --actual;
+		Text t = new Text("block." + id + "." + damage, new Replacement("<count>", Integer.toString(actual)));
+		if (t.isTranslated()) return t;
+		return new Text("block." + id + ".x", new Replacement("<count>", Integer.toString(actual)));
 	}
 
-	public BlockWood(int idInt, String idString)
+	public BlockNumbered(int idInt, String idString)
 	{
 		super(idInt, idString);
-		this.addState(new BlockState(this.id().contains("planks") ? "variant" : "type", BlockState.STRING, 1, "oak", "spruce", "birch", "jungle", "acacia",
-				"dark_oak"));
-		this.textureType = 8;
+		this.textureType = -1;
 	}
 
 	@Override
@@ -32,13 +33,13 @@ public class BlockWood extends Block
 	@Override
 	protected boolean shouldSaveState(BlockState state)
 	{
-		return !state.id.equals("variant") && !state.id.equals("type");
+		return true;
 	}
 
 	@Override
 	protected boolean shouldSaveTextureType()
 	{
-		return this.textureType != 8;
+		return this.textureType != -1;
 	}
 
 }

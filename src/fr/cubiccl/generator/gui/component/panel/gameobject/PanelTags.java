@@ -23,10 +23,7 @@ import fr.cubiccl.generator.gameobject.templatetags.ITagCreationListener;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
-import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateBlockId;
-import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateItemId;
-import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateParticle;
-import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePatterns;
+import fr.cubiccl.generator.gameobject.templatetags.custom.*;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.button.CGButton;
@@ -111,6 +108,8 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 						.valueFor(t).value();
 				else if (t.id().equals("ParticleParam2") && tag instanceof TemplateParticle && this.valueFor(t) != null) ((TemplateParticle) tag).param2 = (int) (double) this
 						.valueFor(t).value();
+				else if (t.id().equals("block") && tag instanceof TemplateBlockState && this.valueFor(t) != null) ((TemplateBlockState) tag).block = ObjectRegistry.blocks
+						.find((String) this.valueFor(t).value());
 			}
 
 			tag.askValue(objectToGive, this.selectedValue(), this);
@@ -156,6 +155,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 			this.values.put(t, ((TemplateNumber) t).create(((TemplateParticle) template).param2));
 			((TemplateParticle) template).param2 = 0;
 		}
+		if ((t = this.getTag("state")) != null && template instanceof TemplateBlockState && template.id().equals("state")) ((TemplateBlockState) template).block = null;
 		this.updateDisplay();
 	}
 

@@ -19,6 +19,7 @@ public class CGComboBox extends CComboBox
 
 	public String getValue()
 	{
+		if (this.getSelectedIndex() == -1) return null;
 		return this.values[this.getSelectedIndex()];
 	}
 

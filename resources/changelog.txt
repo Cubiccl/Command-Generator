@@ -1,3 +1,47 @@
+------------------------- VERSION 2.6.1 -------------------------
+ADDITIONS
+- Added Block States !
+  * /setblock, /fill and /testforblock now read block states when loading a command.
+  * /testforblocks now uses block states to test the block. Note that there is currently a glitch where certain block states can't be tested.
+  * Advancements can now correctly test for block states for the enter_block trigger.
+- Added various missing damage values.
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+block.beetroots.* -> block.beetroots.x
+block.carrots.* -> block.carrots.x
+block.melon_stem.* -> block.melon_stem.x
+block.nether_wart.* -> block.nether_wart.x
+block.potatoes.* -> block.potatoes.x
+block.pumpkin_stem.* -> block.pumpkin_stem.x
+block.redstone_wire.* -> block.redstone_wire.x
+block.dispenser.* -> block.dispenser.x,block.dispenser.8.x
+block.dropper.* -> block.dropper.x,block.dropper.8.x
+block.piston.* -> block.piston.x,block.piston.8.x
+block.piston_extension.* -> block.piston_extension.x,block.piston_extension.8.x
+block.piston_head.* -> block.piston_head.x,block.piston_head.8.x
+block.sticky_piston.* -> block.sticky_piston.x,block.sticky_piston.8.x
+block.wooden_slab.* -> block.wooden_slab.x,block.wooden_slab.8.x
+block.hay_block.1 -> block.hay_block.4
+block.hay_block.2 -> block.hay_block.8
+
+ADDED TRANSLATIONS
+block.anvil,block.bed
+block.double_stone_slab2.0,block.double_stone_slab2.8
+block.chain_command_block.x,block.command_block.x,block.repeating_command_block.x
+block.flowing_lava.x,block.flowing_water.x,block.lava.x,block.water.x
+block.heavy_weighted_pressure_plate.x,block.light_weighted_pressure_plate.x
+block.observer.8.x,block.sapling.8.x
+block.bone_block.*,block.portal.*,block.tnt.*
+block.cactus.x,block.reeds.x,block.fire.x
+block.skull,block.skull.6
+block.tripwire_hook.12-15
+blockstate.added,blockstate.available,blockstate.value
+error.tag.state
+testforblock.states
+utils.liquid.*
+
 ------------------------- VERSION 2.6.0.3 -------------------------
 ADDITIONS
 - Updated for snapshots 17w16a & 17w16b.

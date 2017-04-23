@@ -123,6 +123,8 @@ public class CommandClone extends Command implements ActionListener
 		{
 			this.panelBlock.setData(Integer.parseInt(argument));
 		} catch (Exception e)
-		{}
+		{
+			this.panelBlock.setData(this.panelBlock.selectedBlock().damageFromState(argument));
+		}
 	}
 }

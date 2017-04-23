@@ -231,7 +231,8 @@
           <condition>"items":[{"data":4},{"count":4},{"item":"minecraft:reeds","potion":"long_night_vision"}]</condition>
         </criteria>
         <criteria name="states_test" trigger="enter_block">
-          <condition>"state":["jkl"]</condition>
+          <condition>"block":"minecraft:fence_gate"</condition>
+          <condition>"state":{"facing":"north","open":"false"}</condition>
         </criteria>
       </criterias>
       <requirements>

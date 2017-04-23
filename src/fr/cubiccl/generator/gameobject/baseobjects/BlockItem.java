@@ -98,6 +98,18 @@ public abstract class BlockItem extends BaseObject
 		return this.type;
 	}
 
+	private boolean isTextureUnique()
+	{
+		if (this.damageMax == 0 || this.textureType == -1) return true;
+		if (this.textureType < -1)
+		{
+			for (int i : this.getDamageValues())
+				if (i >= -this.textureType) return false;
+			return true;
+		}
+		return false;
+	}
+
 	/** @return The name of the general Block/Item (no damage) */
 	public Text mainName()
 	{
@@ -144,6 +156,11 @@ public abstract class BlockItem extends BaseObject
 		this.damageCustom = null;
 	}
 
+	protected boolean shouldSaveTextureType()
+	{
+		return this.textureType != 0 && this.customObjectName == null;
+	}
+
 	@Override
 	public BufferedImage texture()
 	{
@@ -154,7 +171,7 @@ public abstract class BlockItem extends BaseObject
 	 * @return The name of this Block/Item for the given damage value. */
 	public BufferedImage texture(int damage)
 	{
-		if (this.damageMax == 0 || this.textureType == -1) return Textures.getTexture(this.typeName() + "." + this.idString);
+		if (this.isTextureUnique()) return Textures.getTexture(this.typeName() + "." + this.idString);
 		if (this.textureType == 0) return Textures.getTexture(this.typeName() + "." + this.idString + "_" + damage);
 		if (this.textureType < -1) return Textures.getTexture(this.typeName() + "." + this.idString + "_" + damage / -this.textureType);
 		return Textures.getTexture(this.typeName() + "." + this.idString + "_" + damage % this.textureType);
@@ -167,9 +184,9 @@ public abstract class BlockItem extends BaseObject
 		root.setAttribute("idint", Integer.toString(this.idNum()));
 		root.setAttribute("idstr", this.id().substring("minecraft:".length()));
 
+		if (this.shouldSaveTextureType()) root.addContent(new Element("texture").setText(Integer.toString(this.textureType)));
 		if (this.customObjectName == null)
 		{
-			if (this.textureType != 0) root.addContent(new Element("texture").setText(Integer.toString(this.textureType)));
 
 			if (this.isDamageCustom())
 			{

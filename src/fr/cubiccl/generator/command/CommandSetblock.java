@@ -23,7 +23,7 @@ public class CommandSetblock extends Command
 
 	public CommandSetblock()
 	{
-		super("setblock", "setblock <x> <y> <z> <block> [dataValue] [oldBlockHandling] [dataTag]", 5, 6, 7, 8);
+		super("setblock", "setblock <x> <y> <z> <block> [dataValue|state] [oldBlockHandling] [dataTag]", 5, 6, 7, 8);
 	}
 
 	@Override
@@ -81,7 +81,9 @@ public class CommandSetblock extends Command
 		{
 			this.panelBlock.setData(Integer.parseInt(argument));
 		} catch (Exception e)
-		{}
+		{
+			this.panelBlock.setData(this.panelBlock.selectedBlock().damageFromState(argument));
+		}
 		if (index == 6) this.comboboxMode.setValue(argument);
 		if (index == 7) this.panelBlock.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
 	}
