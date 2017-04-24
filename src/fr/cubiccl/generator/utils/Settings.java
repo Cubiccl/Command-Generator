@@ -103,10 +103,11 @@ public class Settings
 	}
 
 	public static final boolean CHECK_UPDATES = false;
-	public static final String GENERATOR_VERSION = "2.6.1";
+	public static final String GENERATOR_VERSION = "2.6.1.1";
 	private static Language language;
 	private static Version mcversion;
-	public static final String MINECRAFT_VERSION = "mcversion", LANG = "lang", SLASH = "slash", SORT_TYPE = "sort", INDENTATION = "indentation";
+	public static final String MINECRAFT_VERSION = "mcversion", LANG = "lang", SLASH = "slash", SORT_TYPE = "sort", INDENTATION = "indentation",
+			LAST_VERSION = "lastversion";
 	private static HashMap<String, String> settings = new HashMap<String, String>();
 	public static boolean testMode = false;
 
@@ -119,6 +120,9 @@ public class Settings
 
 			case LANG:
 				return Language.ENGLISH.codeName;
+
+			case LAST_VERSION:
+				return " ";
 
 			case INDENTATION:
 			case SLASH:

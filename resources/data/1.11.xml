@@ -4357,6 +4357,7 @@
         <app>list=mob</app>
         <app>armor_stand</app>
       </applicable>
+      <noslot>true</noslot>
     </tag>
     <tag id="AttachFace">
       <type>2</type>
@@ -4822,6 +4823,7 @@
         <app>list=mob</app>
         <app>armor_stand</app>
       </applicable>
+      <noslot>true</noslot>
     </tag>
     <tag id="Health">
       <type>5</type>

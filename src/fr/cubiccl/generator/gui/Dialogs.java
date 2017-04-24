@@ -1,8 +1,12 @@
 package fr.cubiccl.generator.gui;
 
 import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Font;
 
-import javax.swing.JLabel;
+import javax.swing.JEditorPane;
+import javax.swing.event.HyperlinkEvent;
+import javax.swing.event.HyperlinkListener;
 
 import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.CommandGenerator;
@@ -30,7 +34,34 @@ public final class Dialogs
 
 	public static boolean showConfirmMessage(String message, String okText, String cancelText)
 	{
-		return DisplayUtils.showPopup(CommandGenerator.window, "", new JLabel(message), okText, cancelText);
+		JEditorPane jep = new JEditorPane();
+		jep.setContentType("text/html");
+		jep.setText(message);
+
+		jep.setEditable(false);
+		jep.setOpaque(false);
+		jep.setFont(DisplayUtils.FONT.deriveFont(Font.PLAIN, 12));
+
+		jep.addHyperlinkListener(new HyperlinkListener()
+		{
+			@Override
+			public void hyperlinkUpdate(HyperlinkEvent hle)
+			{
+				if (HyperlinkEvent.EventType.ACTIVATED.equals(hle.getEventType()))
+				{
+					System.out.println(hle.getURL());
+					Desktop desktop = Desktop.getDesktop();
+					try
+					{
+						desktop.browse(hle.getURL().toURI());
+					} catch (Exception ex)
+					{
+						ex.printStackTrace();
+					}
+				}
+			}
+		});
+		return DisplayUtils.showPopup(CommandGenerator.window, "", jep, okText, cancelText);
 	}
 
 	public static String showInputDialog(String message)

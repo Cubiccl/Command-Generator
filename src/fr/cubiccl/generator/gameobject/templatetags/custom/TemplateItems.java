@@ -27,6 +27,7 @@ public class TemplateItems extends TemplateList
 	{
 		Container container = (!this.hasSlot || object == Entity.PLAYER) ? ObjectRegistry.containers.find(this.id()) : ObjectRegistry.containers.find(object
 				.id());
+		if (container == null) container = ObjectRegistry.containers.find(this.id());
 		PanelContainer p = new PanelContainer(container);
 		if (previousValue != null) p.setupFrom((TagList) previousValue);
 		if (object == Entity.PLAYER) p.setName(this.title());
@@ -44,7 +45,7 @@ public class TemplateItems extends TemplateList
 	public Element toXML()
 	{
 		Element root = super.toXML();
-		if (!this.hasSlot) root.addContent(new Element("noSlot").setText("true"));
+		if (!this.hasSlot) root.addContent(new Element("noslot").setText("true"));
 		return root;
 	}
 

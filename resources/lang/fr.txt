@@ -502,10 +502,13 @@ lt_function.set_data.description=Change la variante de l'Objet.
 lt_function.set_nbt=Données NBT
 lt_function.set_nbt.description=Ajoute des Données NBT à l'Objet.
 
+menu.about=À propos
+menu.about.text=<html>Générateur de Commandes version <version>.<br />Créé par <a href="https://twitter.com/Cubiccl">Cubi<a>.<br />Updater créé par <a href="http://www.minecraftforum.net/members/Lenni0451">Lenni0451</a>. Merci beaucoup !<br />Pour toute question ou suggestion, contactez Cubi ou visitez le <a href="http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-tools/2142815">Forum</a>.</html>
 menu.advancement=Générateur d'Avancements
 menu.command=Générateur de Commandes
 menu.exit=Quitter
 menu.loot_table=Générateur de Tables de Butin
+menu.mode=Mode du Générateur
 menu.objects=Objets personnalisés
 menu.recipe=Générateurs de Recettes
 menu.settings=Paramètres

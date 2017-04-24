@@ -1,3 +1,15 @@
+------------------------- VERSION 2.6.1.1 -------------------------
+ADDITIONS
+- Updated the updater (for windows) Kappa. Huge thanks to Lenni0451 for making it.
+- Changelog now appears after updating. Always in English though.
+- Added an About menu with useful info and links. Also regrouped all modes into a "Generator mode" menu.
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+
 ------------------------- VERSION 2.6.1 -------------------------
 ADDITIONS
 - Added Block States !

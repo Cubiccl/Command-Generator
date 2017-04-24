@@ -258,6 +258,7 @@ public class CommandGenerator
 	{
 		if (args.length == 1 && args[0].equals("true")) Settings.testMode = true;
 		log("Welcome to the Command Generator v" + Settings.GENERATOR_VERSION + " by Cubi !");
+		FileUtils.renameUpdater();
 		if (!Settings.testMode) FileUtils.checkForUpdates();
 		Settings.loadSettings();
 		if (Settings.testMode) Lang.checkTranslations();
@@ -269,6 +270,7 @@ public class CommandGenerator
 		window.updateTranslations();
 		setSelected(Commands.getCommands()[0]);
 		window.setVisible(true);
+		if (!Settings.getSetting(Settings.LAST_VERSION).equals(Settings.GENERATOR_VERSION)) showChangelog();
 	}
 
 	public static void report(CommandGenerationException e)
@@ -306,6 +308,12 @@ public class CommandGenerator
 		window.setSelected(command);
 		stateManager.clear();
 		stateManager.setCommandState(selectedCommand().getGUI(), null);
+	}
+
+	private static void showChangelog()
+	{
+		Dialogs.showMessage(FileUtils.readChangelog());
+		Settings.setSetting(Settings.LAST_VERSION, Settings.GENERATOR_VERSION);
 	}
 
 	public static void updateData()

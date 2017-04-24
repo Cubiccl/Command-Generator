@@ -35,7 +35,7 @@ public class FileUtils
 		if (Settings.GENERATOR_VERSION.equals(readFileAsArray("version.txt")[0])) return;
 
 		if (!Dialogs.showConfirmMessage("A new update for the Command Generator has been found ! Would you like to update?", "Yes", "No")) return;
-		File f = new File("updater.jar");
+		File f = new File("updater2.exe");
 		if (!f.exists()) CommandGenerator.log("Couldn't update because there is no updater... WTF");
 		else try
 		{
@@ -80,6 +80,26 @@ public class FileUtils
 	{
 		File file = new File(resourcesFolder + path);
 		return file != null && file.exists();
+	}
+
+	public static String readChangelog()
+	{
+		String changelog = "Changelog: Version " + Settings.GENERATOR_VERSION;
+		String[] data = readFileAsArray("changelog.txt");
+		int start = 0, end = 0;
+		for (int i = 0; i < data.length; ++i)
+			if (data[i].contains("ADDITIONS")) start = i + 1;
+			else if (data[i].contains("CHANGED TRANSLATIONS"))
+			{
+				end = i;
+				break;
+			}
+
+		for (int i = start; i < end; ++i)
+			if (data[i].contains("BUGS FIXED")) changelog += "<br />";
+			else changelog += "<br />" + data[i];
+
+		return changelog;
 	}
 
 	/** @param path - The path to the File.
@@ -141,6 +161,29 @@ public class FileUtils
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	/** Avoids errors when unzipping the update. */
+	public static void renameUpdater()
+	{
+		File delete = new File("updater-windows.exe");
+		File rename = new File("updater.exe");
+		if (delete.exists() && rename.exists()) delete.delete();
+		if (rename.exists()) rename.renameTo(delete);
+		delete = new File("Bunifu_UI_v1.52.dll");
+		rename = new File("dll1.dll");
+		if (delete.exists() && rename.exists()) delete.delete();
+		if (rename.exists()) rename.renameTo(delete);
+
+		delete = new File("Ionic.Zip.dll");
+		rename = new File("dll2.dll");
+		if (delete.exists() && rename.exists()) delete.delete();
+		if (rename.exists()) rename.renameTo(delete);
+
+		delete = new File("updater.jar");
+		rename = new File("updater-common.jar");
+		if (delete.exists() && rename.exists()) delete.delete();
+		if (rename.exists()) rename.renameTo(delete);
 	}
 
 	/** @param root - The Root XML element to save.

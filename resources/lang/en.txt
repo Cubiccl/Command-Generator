@@ -354,7 +354,7 @@ general.remove=Remove selected
 general.search=Search
 general.success_execute=The /execute command was successfully generated. Create a command to execute, or click on "Cancel /execute" to cancel.
 general.success=Success
-general.title=Command Generator v<gen> for Minecraft <mc>
+general.title=Command Generator - Minecraft <mc>
 general.unspecified=Not specified
 general.value.add=Add value
 general.value.remove=Remove value
@@ -509,10 +509,13 @@ lt_function.set_data.description=Sets the Item's data value.
 lt_function.set_nbt=Add NBT Tags
 lt_function.set_nbt.description=Adds NBT Tags to the Item.
 
+menu.about=About
+menu.about.text=<html>Command Generator version <version>.<br />Made by <a href="https://twitter.com/Cubiccl">Cubi<a>.<br />Updater made by <a href="http://www.minecraftforum.net/members/Lenni0451">Lenni0451</a>. Thanks a lot!<br />For any questions or suggestions, contact Cubi or visit the <a href="http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-tools/2142815">Forum thread</a>.</html>
 menu.advancement=Advancement Generator
 menu.command=Command Generator
 menu.exit=Exit
 menu.loot_table=Loot Table Generator
+menu.mode=Generator mode
 menu.objects=Custom Objects
 menu.recipe=Recipe Generator
 menu.settings=Settings
