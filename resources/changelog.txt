@@ -1,3 +1,13 @@
+------------------------- VERSION 2.6.1.2 -------------------------
+ADDITIONS
+
+BUGS FIXED
+- Protection Enchantment disappears from the Generator. Somehow.
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+
 ------------------------- VERSION 2.6.1.1 -------------------------
 ADDITIONS
 - Updated the updater (for windows) Kappa. Huge thanks to Lenni0451 for making it.

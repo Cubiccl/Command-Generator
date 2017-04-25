@@ -1,5 +1,5 @@
 indentation=true
-lastversion=2.6.1
+lastversion=2.6.1.2
 slash=true
 sort=0
 lang=en

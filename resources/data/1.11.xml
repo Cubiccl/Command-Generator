@@ -2582,6 +2582,7 @@
     <effect idint="27" idstr="unluck" />
   </effects>
   <enchantments>
+    <enchantment idint="0" idstr="protection" maxlevel="5" />
     <enchantment idint="1" idstr="fire_protection" maxlevel="4" />
     <enchantment idint="2" idstr="feather_falling" maxlevel="4" />
     <enchantment idint="3" idstr="blast_protection" maxlevel="4" />

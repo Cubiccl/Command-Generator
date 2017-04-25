@@ -39,7 +39,7 @@ public class EnchantmentType extends BaseObject implements IObjectList<Enchantme
 		this.idInt = idInt;
 		this.idString = "minecraft:" + idString;
 		this.maxLevel = maxLevel;
-		if (idInt > 0) ObjectRegistry.enchantments.register(this);
+		if (idInt >= 0) ObjectRegistry.enchantments.register(this);
 	}
 
 	@Override

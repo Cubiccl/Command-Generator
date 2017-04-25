@@ -35,7 +35,7 @@ public class FileUtils
 		if (Settings.GENERATOR_VERSION.equals(readFileAsArray("version.txt")[0])) return;
 
 		if (!Dialogs.showConfirmMessage("A new update for the Command Generator has been found ! Would you like to update?", "Yes", "No")) return;
-		File f = new File("updater2.exe");
+		File f = new File("updater.jar");
 		if (!f.exists()) CommandGenerator.log("Couldn't update because there is no updater... WTF");
 		else try
 		{
