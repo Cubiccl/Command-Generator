@@ -1,14 +1,11 @@
 package fr.cubiccl.generator;
 
-import java.awt.BorderLayout;
-import java.awt.Dimension;
 import java.util.ArrayList;
 import java.util.Comparator;
 
 import javax.swing.SwingUtilities;
 import javax.swing.ToolTipManager;
 
-import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.command.Command;
 import fr.cubiccl.generator.command.Commands;
 import fr.cubiccl.generator.gameobject.Recipe;
@@ -22,9 +19,6 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.gui.Window;
-import fr.cubiccl.generator.gui.component.CScrollPane;
-import fr.cubiccl.generator.gui.component.label.CGLabel;
-import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.*;
 
 public class CommandGenerator
@@ -51,6 +45,39 @@ public class CommandGenerator
 	public static String[] commandHistory()
 	{
 		return commandHistory.toArray(new String[commandHistory.size()]);
+	}
+
+	public static void createAdvancement(String text)
+	{
+		TagCompound tag = (TagCompound) NBTReader.read(text, true, true, true);
+		Advancement advancement = Advancement.createFrom(tag);
+
+		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
+		if (name == null) return;
+		advancement.setCustomName(name);
+		window.panelAdvancementSelection.list.add(advancement);
+	}
+
+	public static void createRecipe(String text)
+	{
+		TagCompound tag = (TagCompound) NBTReader.read(text, true, true, true);
+		Recipe recipe = Recipe.createFrom(tag);
+
+		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
+		if (name == null) return;
+		recipe.setCustomName(name);
+		window.panelRecipeSelection.list.add(recipe);
+	}
+
+	public static void createTable(String text)
+	{
+		TagCompound tag = (TagCompound) NBTReader.read(text, true, true, true);
+		LootTable table = LootTable.createFrom(tag);
+
+		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
+		if (name == null) return;
+		table.setCustomName(name);
+		window.panelLootTableSelection.list.add(table);
 	}
 
 	public static void doLoad(String input) throws CommandGenerationException
@@ -161,27 +188,6 @@ public class CommandGenerator
 		return isReloading;
 	}
 
-	public static void loadAdvancement()
-	{
-		CGPanel p = new CGPanel();
-		p.setLayout(new BorderLayout());
-		p.add(new CGLabel("advancement.load.description"), BorderLayout.NORTH);
-		CTextArea area = new CTextArea("");
-		area.setEditable(true);
-		CScrollPane sc = new CScrollPane(area);
-		sc.setPreferredSize(new Dimension(400, 200));
-		p.add(sc, BorderLayout.CENTER);
-		if (!Dialogs.showConfirmDialog(p)) return;
-
-		TagCompound tag = (TagCompound) NBTReader.read(area.getText(), true, true, true);
-		Advancement advancement = Advancement.createFrom(tag);
-
-		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
-		if (name == null) return;
-		advancement.setCustomName(name);
-		window.panelAdvancementSelection.list.add(advancement);
-	}
-
 	public static void loadCommand()
 	{
 		Command command;
@@ -204,48 +210,6 @@ public class CommandGenerator
 				report(e);
 			}
 		} while (!done);
-	}
-
-	public static void loadRecipe()
-	{
-		CGPanel p = new CGPanel();
-		p.setLayout(new BorderLayout());
-		p.add(new CGLabel("recipe.load.description"), BorderLayout.NORTH);
-		CTextArea area = new CTextArea("");
-		area.setEditable(true);
-		CScrollPane sc = new CScrollPane(area);
-		sc.setPreferredSize(new Dimension(400, 200));
-		p.add(sc, BorderLayout.CENTER);
-		if (!Dialogs.showConfirmDialog(p)) return;
-
-		TagCompound tag = (TagCompound) NBTReader.read(area.getText(), true, true, true);
-		Recipe recipe = Recipe.createFrom(tag);
-
-		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
-		if (name == null) return;
-		recipe.setCustomName(name);
-		window.panelRecipeSelection.list.add(recipe);
-	}
-
-	public static void loadTable()
-	{
-		CGPanel p = new CGPanel();
-		p.setLayout(new BorderLayout());
-		p.add(new CGLabel("loottable.load.description"), BorderLayout.NORTH);
-		CTextArea area = new CTextArea("");
-		area.setEditable(true);
-		CScrollPane sc = new CScrollPane(area);
-		sc.setPreferredSize(new Dimension(400, 200));
-		p.add(sc, BorderLayout.CENTER);
-		if (!Dialogs.showConfirmDialog(p)) return;
-
-		TagCompound tag = (TagCompound) NBTReader.read(area.getText(), true, true, true);
-		LootTable table = LootTable.createFrom(tag);
-
-		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
-		if (name == null) return;
-		table.setCustomName(name);
-		window.panelLootTableSelection.list.add(table);
 	}
 
 	public static void log(String text)

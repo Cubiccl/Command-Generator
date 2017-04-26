@@ -102,12 +102,17 @@ public class FileUtils
 		return changelog;
 	}
 
-	/** @param path - The path to the File.
-	 * @return Each line of the File in a String Array. */
-	public static String[] readFileAsArray(String path)
+	public static String readFile(File file)
 	{
-		File file = new File(resourcesFolder + path);
+		String[] data = readFileAsArray(file);
+		String toreturn = "";
+		for (String line : data)
+			if (!line.equals("")) toreturn += line;
+		return toreturn;
+	}
 
+	private static String[] readFileAsArray(File file)
+	{
 		ArrayList<String> lines = new ArrayList<String>();
 		if (file != null && file.exists())
 		{
@@ -122,10 +127,16 @@ public class FileUtils
 			{
 				e.printStackTrace();
 			}
-		} else CommandGenerator.log("File not found : " + path);
+		} else CommandGenerator.log("File not found : " + file.getPath());
 
 		return lines.toArray(new String[lines.size()]);
+	}
 
+	/** @param path - The path to the File.
+	 * @return Each line of the File in a String Array. */
+	public static String[] readFileAsArray(String path)
+	{
+		return readFileAsArray(new File(resourcesFolder + path));
 	}
 
 	/** @param path - The path to the File.
@@ -201,10 +212,8 @@ public class FileUtils
 
 	/** @param path - Path to the File
 	 * @param data - Each line to write. */
-	public static void writeToFile(String path, String[] data)
+	public static void writeToFile(File file, String... data)
 	{
-		File file = new File(resourcesFolder + path);
-
 		if (file.exists()) file.delete();
 		try
 		{
@@ -216,6 +225,13 @@ public class FileUtils
 		{
 			e.printStackTrace();
 		}
+	}
+
+	/** @param path - Path to the File
+	 * @param data - Each line to write. */
+	public static void writeToFile(String path, String... data)
+	{
+		writeToFile(new File(resourcesFolder + path), data);
 	}
 
 	private FileUtils()

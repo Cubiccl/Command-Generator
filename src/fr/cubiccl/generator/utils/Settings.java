@@ -103,11 +103,11 @@ public class Settings
 	}
 
 	public static final boolean CHECK_UPDATES = false;
-	public static final String GENERATOR_VERSION = "2.6.1.2";
+	public static final String GENERATOR_VERSION = "2.6.2";
 	private static Language language;
 	private static Version mcversion;
 	public static final String MINECRAFT_VERSION = "mcversion", LANG = "lang", SLASH = "slash", SORT_TYPE = "sort", INDENTATION = "indentation",
-			LAST_VERSION = "lastversion";
+			LAST_VERSION = "lastversion", LAST_FOLDER = "folder";
 	private static HashMap<String, String> settings = new HashMap<String, String>();
 	public static boolean testMode = false;
 
@@ -123,6 +123,9 @@ public class Settings
 
 			case LAST_VERSION:
 				return " ";
+
+			case LAST_FOLDER:
+				return "";
 
 			case INDENTATION:
 			case SLASH:
@@ -153,7 +156,8 @@ public class Settings
 		String version = getDefault(MINECRAFT_VERSION), lang = getDefault(LANG);
 		for (String line : values)
 		{
-			String id = line.split("=")[0], value = line.split("=")[1];
+			String id = line.split("=")[0];
+			String value = line.substring(line.indexOf('=') + 1);
 			if (id.equals(LANG)) lang = value;
 			else if (id.equals(MINECRAFT_VERSION)) version = value;
 			else setSetting(id, value);

@@ -1,5 +1,6 @@
 indentation=true
-lastversion=2.6.1.2
+folder=C:\Users\Clément\Desktop\Programmation\Generator
+lastversion=2.6.1.3
 slash=true
 sort=0
 lang=en

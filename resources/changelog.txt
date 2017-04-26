@@ -1,3 +1,16 @@
+------------------------- VERSION 2.6.2 -------------------------
+ADDITIONS
+- Added hidden feature: @s ! Selects the executing Entity.
+- Added an Export button to Loot Tables, Recipes and Advacements. Exports it to a file you select.
+- Also added an Import button. Select a file to import the Loot Table, Recipe or Advancement.
+- Copy to Clipboard doesn't copy if it is empty anymore.
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+
 ------------------------- VERSION 2.6.1.2 -------------------------
 ADDITIONS
 

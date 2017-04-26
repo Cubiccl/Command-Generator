@@ -39,9 +39,9 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 	private static final long serialVersionUID = 4720702579772411649L;
 	private static final String[][] TARGETS =
 	{
-	{ "@a", "@e", "@p", "@r", "player" },
-	{ "@a", "@p", "@r", "player" },
-	{ "@e" } };
+	{ "@a", "@e", "@p", "@r", "@s", "player" },
+	{ "@a", "@p", "@r", "@s", "player" },
+	{ "@e", "@s" } };
 	private static final String[] TITLES =
 	{ "target.title.any", "target.title.player", "target.title.entity" };
 

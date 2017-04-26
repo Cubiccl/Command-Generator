@@ -26,7 +26,8 @@ public class Target extends GameObject implements IObjectList<Target>
 		ALL_PLAYERS("@a"),
 		CLOSEST_PLAYER("@p"),
 		PLAYER("player"),
-		RANDOM_PLAYER("@r");
+		RANDOM_PLAYER("@r"),
+		SELF("@s");
 
 		public static TargetType find(String id)
 		{
@@ -65,6 +66,7 @@ public class Target extends GameObject implements IObjectList<Target>
 		if (value.charAt(1) == 'a') type = TargetType.ALL_PLAYERS;
 		else if (value.charAt(1) == 'p') type = TargetType.CLOSEST_PLAYER;
 		else if (value.charAt(1) == 'r') type = TargetType.RANDOM_PLAYER;
+		else if (value.charAt(1) == 's') type = TargetType.SELF;
 		if (value.length() == 2) return new Target(type);
 
 		String[] args = value.substring(3, value.length() - 1).split(",");

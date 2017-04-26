@@ -8,14 +8,21 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
+import java.io.File;
+
+import javax.swing.JFileChooser;
 
 import fr.cubi.cubigui.CTextArea;
 import fr.cubi.cubigui.RoundedCornerBorder;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.CScrollPane;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
+import fr.cubiccl.generator.utils.FileUtils;
+import fr.cubiccl.generator.utils.Settings;
+import fr.cubiccl.generator.utils.Text;
 
 public class PanelJsonOutput extends CGPanel implements ActionListener
 {
@@ -23,7 +30,7 @@ public class PanelJsonOutput extends CGPanel implements ActionListener
 	private static final long serialVersionUID = -7446762724786768990L;
 
 	public final CTextArea areaOutput;
-	private CGButton buttonCopy;
+	private CGButton buttonCopy, buttonExport;
 	private CGCheckBox checkboxEdit;
 	private CScrollPane scrollpane;
 
@@ -35,9 +42,11 @@ public class PanelJsonOutput extends CGPanel implements ActionListener
 		this.add(this.checkboxEdit = new CGCheckBox("loottable.edit"), gbc);
 		++gbc.gridy;
 		this.add(this.buttonCopy = new CGButton("command.copy"), gbc);
+		++gbc.gridy;
+		this.add(this.buttonExport = new CGButton("command.export"), gbc);
 		++gbc.gridx;
 		gbc.gridy = 0;
-		gbc.gridheight = 3;
+		gbc.gridheight = 4;
 		this.add(this.scrollpane = new CScrollPane(this.areaOutput = new CTextArea("")), gbc);
 
 		this.areaOutput.setLineWrap(true);
@@ -45,6 +54,7 @@ public class PanelJsonOutput extends CGPanel implements ActionListener
 		this.scrollpane.setPreferredSize(new Dimension(180, 180));
 		this.checkboxEdit.addActionListener(this);
 		this.buttonCopy.addActionListener(this);
+		this.buttonExport.addActionListener(this);
 		this.addComponentListener(new ComponentListener()
 		{
 
@@ -76,9 +86,20 @@ public class PanelJsonOutput extends CGPanel implements ActionListener
 		{
 			this.areaOutput.setEditable(this.checkboxEdit.isSelected());
 			this.areaOutput.setBorder(new RoundedCornerBorder(true));
-		}
-		if (e.getSource() == this.buttonCopy) Toolkit.getDefaultToolkit().getSystemClipboard()
+		} else if (e.getSource() == this.buttonCopy && !this.areaOutput.getText().equals("")) Toolkit.getDefaultToolkit().getSystemClipboard()
 				.setContents(new StringSelection(this.areaOutput.getText()), null);
+		else if (e.getSource() == this.buttonExport && !this.areaOutput.getText().equals(""))
+		{
+			JFileChooser fileChooser = new JFileChooser(Settings.getSetting(Settings.LAST_FOLDER));
+			int result = fileChooser.showSaveDialog(this);
+			if (result == JFileChooser.APPROVE_OPTION)
+			{
+				File f = fileChooser.getSelectedFile();
+				Settings.setSetting(Settings.LAST_FOLDER, f.getParentFile().getPath());
+				FileUtils.writeToFile(f, this.areaOutput.getText());
+				Dialogs.showMessage(new Text("command.export.success").addReplacement("<file>", fileChooser.getSelectedFile().getName()).toString());
+			}
+		}
 	}
 
 }

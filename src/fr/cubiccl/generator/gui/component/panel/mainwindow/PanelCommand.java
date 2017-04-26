@@ -48,7 +48,7 @@ public class PanelCommand extends CGPanel implements ActionListener
 	public void actionPerformed(ActionEvent e)
 	{
 		if (e.getSource() == this.checkboxEdit) this.textfieldCommand.setEditable(this.checkboxEdit.isSelected());
-		if (e.getSource() == this.buttonCopy) Toolkit.getDefaultToolkit().getSystemClipboard()
+		if (e.getSource() == this.buttonCopy && !this.textfieldCommand.getText().equals("")) Toolkit.getDefaultToolkit().getSystemClipboard()
 				.setContents(new StringSelection(this.textfieldCommand.getText()), null);
 	}
 
