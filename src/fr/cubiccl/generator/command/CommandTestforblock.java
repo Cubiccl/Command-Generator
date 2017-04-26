@@ -17,6 +17,7 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelStateSelection;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Text;
 
 public class CommandTestforblock extends Command implements ActionListener
@@ -69,7 +70,7 @@ public class CommandTestforblock extends Command implements ActionListener
 	{
 		Text d = this.defaultDescription();
 		d.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
-		d.addReplacement("<block>", this.panelBlock.selectedBlock().name(this.panelBlock.selectedDamage()));
+		d.addReplacement("<block>", Lang.translateObject(this.panelBlock.selectedBlock(), this.panelBlock.selectedDamage()));
 		return d;
 	}
 

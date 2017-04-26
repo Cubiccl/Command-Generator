@@ -20,6 +20,9 @@ import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.gui.Window;
 import fr.cubiccl.generator.utils.*;
+// TODO entity/block/item
+// TODO damage variation
+// TODO 17w17a
 
 public class CommandGenerator
 {

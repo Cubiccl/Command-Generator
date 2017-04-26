@@ -13,6 +13,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Text;
 
 public class CommandSetblock extends Command
@@ -58,7 +59,7 @@ public class CommandSetblock extends Command
 	{
 		Text d = this.defaultDescription();
 		d.addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates());
-		d.addReplacement("<block>", this.panelBlock.selectedBlock().name(this.panelBlock.selectedDamage()));
+		d.addReplacement("<block>", Lang.translateObject(this.panelBlock.selectedBlock(), this.panelBlock.selectedDamage()));
 		return d;
 	}
 

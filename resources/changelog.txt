@@ -21,6 +21,8 @@ BUGS FIXED
 CHANGED TRANSLATIONS
 
 ADDED TRANSLATIONS
+command.export,command.export.success,command.import
+target.type.@s,target.type.tostring.@s
 
 ------------------------- VERSION 2.6.1.2 -------------------------
 ADDITIONS

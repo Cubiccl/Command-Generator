@@ -19,10 +19,7 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelCoordinates;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelSlotSelection;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTarget;
-import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.IStateListener;
-import fr.cubiccl.generator.utils.Replacement;
-import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.*;
 
 public class CommandReplaceitem extends Command implements ActionListener, IStateListener<PanelSlotSelection>
 {
@@ -118,9 +115,9 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 	protected Text description()
 	{
 		if (this.isBlock()) return new Text("command." + this.id + ".block").addReplacement("<coordinates>", this.panelCoordinates.displayCoordinates())
-				.addReplacement("<item>", this.panelItem.selectedItem().name(this.panelItem.selectedDamage()));
+				.addReplacement("<item>", Lang.translateObject(this.panelItem.selectedItem(), this.panelItem.selectedDamage()));
 		return this.defaultDescription().addReplacement("<target>", this.panelTarget.displayTarget())
-				.addReplacement("<item>", this.panelItem.selectedItem().name(this.panelItem.selectedDamage()));
+				.addReplacement("<item>", Lang.translateObject(this.panelItem.selectedItem(), this.panelItem.selectedDamage()));
 	}
 
 	@Override

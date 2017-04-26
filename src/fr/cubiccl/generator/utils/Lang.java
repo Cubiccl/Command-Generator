@@ -4,6 +4,7 @@ import java.util.HashMap;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
+import fr.cubiccl.generator.gameobject.baseobjects.BlockItem;
 import fr.cubiccl.generator.utils.Settings.Language;
 
 public class Lang
@@ -56,14 +57,20 @@ public class Lang
 
 	public static Text translateObject(BaseObject object)
 	{
-		return translateObject(object, true);
+		return translateObject(object, -1);
 	}
 
-	public static Text translateObject(BaseObject object, boolean undetermined)
+	public static Text translateObject(BaseObject object, int damage)
+	{
+		return translateObject(object, damage, true);
+	}
+
+	public static Text translateObject(BaseObject object, int damage, boolean undetermined)
 	{
 		String t = variations.get(object.id().replaceAll("minecraft:", ""));
 		if (t == null) t = "tag.object";
 		if (undetermined) t += ".undetermined";
+		if (damage != -1 && object instanceof BlockItem) return new Text(t).addReplacement("<name>", ((BlockItem) object).name(damage));
 		return new Text(t).addReplacement("<name>", object.name());
 	}
 
