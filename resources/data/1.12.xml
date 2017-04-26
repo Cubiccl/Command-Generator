@@ -4924,7 +4924,9 @@
         <app>hopper</app>
         <app>lit_furnace</app>
         <app>repeating_command_block</app>
+        <app>standing_banner</app>
         <app>trapped_chest</app>
+        <app>wall_banner</app>
       </applicable>
     </tag>
     <tag id="Data">
@@ -6284,17 +6286,17 @@
       </applicable>
       <byteboolean>true</byteboolean>
     </tag>
-    <tag id="Life">
-      <type>3</type>
-      <applicable>
-        <app>fireworks_rocket</app>
-      </applicable>
-    </tag>
     <tag id="life">
       <type>2</type>
       <applicable>
         <app>arrow</app>
         <app>spectral_arrow</app>
+      </applicable>
+    </tag>
+    <tag id="Life">
+      <type>3</type>
+      <applicable>
+        <app>fireworks_rocket</app>
       </applicable>
     </tag>
     <tag id="LifeTicks">
@@ -6927,19 +6929,6 @@
       </applicable>
     </tag>
     <tag id="Variant">
-      <customtype>HorseVariant</customtype>
-      <applicable>
-        <app>horse</app>
-        <app>llama</app>
-      </applicable>
-      <intnamed prefix="variant.base">
-        <v>creamy</v>
-        <v>white</v>
-        <v>brown</v>
-        <v>gray</v>
-      </intnamed>
-    </tag>
-    <tag id="Variant">
       <type>3</type>
       <applicable>
         <app>parrot</app>
@@ -6950,6 +6939,19 @@
         <v>green</v>
         <v>cyan</v>
         <v>silver</v>
+      </intnamed>
+    </tag>
+    <tag id="Variant">
+      <customtype>HorseVariant</customtype>
+      <applicable>
+        <app>horse</app>
+        <app>llama</app>
+      </applicable>
+      <intnamed prefix="variant.base">
+        <v>creamy</v>
+        <v>white</v>
+        <v>brown</v>
+        <v>gray</v>
       </intnamed>
     </tag>
     <tag id="Warmup">

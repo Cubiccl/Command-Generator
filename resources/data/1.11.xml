@@ -3581,7 +3581,9 @@
         <app>hopper</app>
         <app>lit_furnace</app>
         <app>repeating_command_block</app>
+        <app>standing_banner</app>
         <app>trapped_chest</app>
+        <app>wall_banner</app>
       </applicable>
     </tag>
     <tag id="Data">

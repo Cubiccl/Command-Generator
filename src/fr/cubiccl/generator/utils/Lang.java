@@ -3,6 +3,7 @@ package fr.cubiccl.generator.utils;
 import java.util.HashMap;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.utils.Settings.Language;
 
 public class Lang
@@ -10,6 +11,7 @@ public class Lang
 
 	private static final HashMap<String, String> dictionnary = new HashMap<String, String>();
 	private static final HashMap<String, String> english = new HashMap<String, String>();
+	private static final HashMap<String, String> variations = new HashMap<String, String>();
 
 	public static void checkTranslations()
 	{
@@ -27,7 +29,7 @@ public class Lang
 	/** @return True if the input textID exists in the language files. */
 	public static boolean keyExists(String textID)
 	{
-		return english.containsKey(textID.replaceAll("minecraft:", ""));
+		return english.containsKey(textID.replaceAll("minecraft:", "")) || dictionnary.containsKey(textID.replaceAll("minecraft:", ""));
 	}
 
 	private static void loadEnglish()
@@ -52,10 +54,33 @@ public class Lang
 		return doTranslate(textID);
 	}
 
+	public static Text translateObject(BaseObject object)
+	{
+		return translateObject(object, true);
+	}
+
+	public static Text translateObject(BaseObject object, boolean undetermined)
+	{
+		String t = variations.get(object.id().replaceAll("minecraft:", ""));
+		if (t == null) t = "tag.object";
+		if (undetermined) t += ".undetermined";
+		return new Text(t).addReplacement("<name>", object.name());
+	}
+
 	public static void updateLang()
 	{
 		if (english.size() == 0) loadEnglish();
 		dictionnary.clear();
+		variations.clear();
+
+		String[] vars = FileUtils.readFileAsArray("lang/" + Settings.language().codeName + "_variations.txt");
+		for (String line : vars)
+		{
+			String id = line.split("=")[0];
+			for (String object : line.split("=")[1].split(","))
+				variations.put(object, id);
+		}
+
 		if (Settings.language() == Language.ENGLISH) return;
 		String[] translations = FileUtils.readFileAsArray("lang/" + Settings.language().codeName + ".txt");
 		for (String translation : translations)

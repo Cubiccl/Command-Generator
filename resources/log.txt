@@ -1,4 +1,4 @@
-Welcome to the Command Generator v2.6.1.2 by Cubi !
+Welcome to the Command Generator v2.6.2 by Cubi !
 ---- VERSION : 1.12 - snapshot ----
 ---- Creating objects ----
 Successfully created 254 blocks.
@@ -19,4 +19,50 @@ Successfully created 191 Entity NBT Tags.
 Successfully created 9 object lists.
 Loading textures...
 ---- Creating window ----
+Not translated in Français : speedrun.move.importance.optionnal
+Not translated in Français : speedrun.move.item
+Not translated in Français : speedrun.move.desc.from
+Not translated in Français : speedrun.problems.unused
+Not translated in Français : speedrun.move.name
+Not translated in Français : command.export
+Not translated in Français : menu.speedrun
+Not translated in Français : speedrun.move.chest
+Not translated in Français : speedrun.problems
+Not translated in Français : speedrun.move.legs
+Not translated in Français : speedrun.move.boots
+Not translated in Français : speedrun.move.importance.help
+Not translated in Français : speedrun.move.desc
+Not translated in Français : speedrun.problems.missing_items
+Not translated in Français : speedrun.checkpoint
+Not translated in Français : speedrun.help.button
+Not translated in Français : speedrun.problems.nothing
+Not translated in Français : speedrun.help
+Not translated in Français : speedrun.move.from
+Not translated in Français : speedrun.problems.missing_space.desc
+Not translated in Français : speedrun.problems.missing_space
+Not translated in Français : target.type.tostring.@s
+Not translated in Français : speedrun.list
+Not translated in Français : speedrun.problems.missing_items.desc
+Not translated in Français : speedrun.move.importance
+Not translated in Français : speedrun.move.inventory
+Not translated in Français : speedrun.move.importance.resource
+Not translated in Français : target.type.@s
+Not translated in Français : speedrun.load
+Not translated in Français : tag.object.plural.undetermined
+Not translated in Français : speedrun.move.obtained
+Not translated in Français : speedrun.problems.thrown
+Not translated in Français : command.export.success
+Not translated in Français : speedrun.problems.see
+Not translated in Français : speedrun.move.importance.forced
+Not translated in Français : speedrun.move.head
+Not translated in Français : speedrun.move.thrown
+Not translated in Français : speedrun.move.to
+Not translated in Français : speedrun.problems.thrown.desc
+Not translated in Français : speedrun.move.desc.to
+Not translated in Français : speedrun.problems.unused.desc
+Not translated in Français : speedrun.move.moved
+Not translated in Français : command.import
+Not translated in Français : speedrun.checkpoints
+Not translated in Français : speedrun.move.enderchest
+Not translated in Français : tag.object.plural
 Exiting Command Generator... Bye bye !
