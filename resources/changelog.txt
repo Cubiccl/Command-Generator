@@ -1,9 +1,12 @@
 ------------------------- VERSION 2.6.2.1 -------------------------
 ADDITIONS
+- Updated for snapshots 17w17a & 17w17b.
 - Added missing NBT Tag for Banner blocks: CustomName
 - Translations improvement. Plural and gender are customizable for Blocks, Items, Entities...
 
 BUGS FIXED
+- Advancement criteria need some work to be fully complete. It's really badly coded even if you can't see it :3
+- Fixed "minecraft:" appearing in Attribute Modifiers.
 
 CHANGED TRANSLATIONS
 

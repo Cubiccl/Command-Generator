@@ -2804,6 +2804,7 @@
       <criterion>wither_skeleton</criterion>
       <criterion>zombie</criterion>
       <criterion>zombie_villager</criterion>
+      <criterion>illusion_illager</criterion>
     </advancement>
     <advancement category="adventure" id="kill_all_mobs" item="diamond_sword">
       <criterion>cave_spider</criterion>
@@ -2828,6 +2829,7 @@
       <criterion>wither_skeleton</criterion>
       <criterion>zombie</criterion>
       <criterion>zombie_villager</criterion>
+      <criterion>illusion_illager</criterion>
     </advancement>
     <advancement category="adventure" id="root" item="map">
       <criterion>killed_something</criterion>
@@ -2843,35 +2845,65 @@
       <criterion>killed_skeleton</criterion>
     </advancement>
     <advancement category="adventure" id="trade" item="emerald">
-      <criterion>shot_arrow</criterion>
+      <criterion>traded</criterion>
     </advancement>
-    <advancement category="story" id="brew_potion" item="glass_bottle">
-      <criterion>potion</criterion>
+    <advancement category="end" id="dragon_breath" item="dragon_breath" />
+    <advancement category="end" id="dragon_egg" item="dragon_egg" />
+    <advancement category="end" id="elytra" item="elytra" />
+    <advancement category="end" id="enter_end_gateway" item="ender_pearl">
+      <criterion>entered_end_gateway</criterion>
     </advancement>
-    <advancement category="story" id="brew_weakness_potion" item="potion" />
-    <advancement category="story" id="create_beacon" item="beacon" />
-    <advancement category="story" id="create_full_beacon" item="beacon" />
+    <advancement category="end" id="find_end_city" item="purpur_block">
+      <criterion>in_city</criterion>
+    </advancement>
+    <advancement category="end" id="kill_dragon" item="skull" data="1">
+      <criterion>killed_dragon</criterion>
+    </advancement>
+    <advancement category="end" id="levitate" item="shulker_shell">
+      <criterion>levitated</criterion>
+    </advancement>
+    <advancement category="end" id="respawn_dragon" item="end_crystal">
+      <criterion>summoned_dragon</criterion>
+    </advancement>
+    <advancement category="end" id="root" item="end_stone">
+      <criterion>entered_end</criterion>
+    </advancement>
+    <advancement category="nether" id="brew_potion" item="potion" />
+    <advancement category="nether" id="create_beacon" item="beacon" />
+    <advancement category="nether" id="create_full_beacon" item="beacon" />
+    <advancement category="nether" id="find_fortress" item="nether_brick">
+      <criterion>fortress</criterion>
+    </advancement>
+    <advancement category="nether" id="get_wither_skull" item="skull" data="1">
+      <criterion>wither_skull</criterion>
+    </advancement>
+    <advancement category="nether" id="obtain_blaze_rod" item="blaze_rod" />
+    <advancement category="nether" id="return_to_sender" item="ghast_tear">
+      <criterion>killed_ghast</criterion>
+    </advancement>
+    <advancement category="nether" id="root" item="nether_wart">
+      <criterion>entered_nether</criterion>
+    </advancement>
+    <advancement category="nether" id="summon_wither" item="nether_star">
+      <criterion>summoned</criterion>
+    </advancement>
     <advancement category="story" id="cure_zombie_villager" item="golden_apple">
       <criterion>cured_zombie</criterion>
     </advancement>
     <advancement category="story" id="deflect_arrow" item="shield">
       <criterion>deflected_projectile</criterion>
     </advancement>
-    <advancement category="story" id="elytra" item="elytra" />
     <advancement category="story" id="enchant_item" item="enchanted_book">
       <criterion>enchanted_item</criterion>
     </advancement>
-    <advancement category="story" id="enter_end_gateway" item="ender_pearl">
-      <criterion>enter_end_gateway</criterion>
-    </advancement>
     <advancement category="story" id="enter_the_end" item="end_stone">
-      <criterion>enter_end_portal</criterion>
+      <criterion>entered_end</criterion>
     </advancement>
     <advancement category="story" id="enter_the_nether" item="flint_and_steel">
-      <criterion>enter_nether_portal</criterion>
+      <criterion>entered_nether</criterion>
     </advancement>
     <advancement category="story" id="follow_ender_eye" item="eye_of_ender">
-      <criterion>near_stronghold</criterion>
+      <criterion>in_stronghold</criterion>
     </advancement>
     <advancement category="story" id="form_obsidian" item="obsidian" />
     <advancement category="story" id="iron_tools" item="iron_pickaxe" />
@@ -2886,7 +2918,6 @@
       <criterion>iron_leggings</criterion>
       <criterion>iron_boots</criterion>
     </advancement>
-    <advancement category="story" id="obtain_blaze_rod" item="blaze_rod" />
     <advancement category="story" id="root" item="grass">
       <criterion>crafting_table</criterion>
     </advancement>
@@ -2898,9 +2929,6 @@
     </advancement>
     <advancement category="story" id="smelt_iron" item="iron_ingot">
       <criterion>iron</criterion>
-    </advancement>
-    <advancement category="story" id="summon_wither" item="nether_star">
-      <criterion>summoned</criterion>
     </advancement>
     <advancement category="story" id="upgrade_tools" item="stone_pickaxe" />
   </advancements>
@@ -4055,6 +4083,8 @@
     <sound id="block.dispenser.launch" />
     <sound id="block.enchantment_table.use" />
     <sound id="block.end_gateway.spawn" />
+    <sound id="block.end_portal.spawn" />
+    <sound id="block.end_portal_frame.fill" />
     <sound id="block.ender_chest.close" />
     <sound id="block.ender_chest.open" />
     <sound id="block.fence_gate.close" />
@@ -4095,6 +4125,7 @@
     <sound id="block.note.basedrum" />
     <sound id="block.note.bass" />
     <sound id="block.note.bell" />
+    <sound id="block.note.chime" />
     <sound id="block.note.flute" />
     <sound id="block.note.guitar" />
     <sound id="block.note.harp" />
@@ -4171,6 +4202,9 @@
     <sound id="entity.blaze.death" />
     <sound id="entity.blaze.hurt" />
     <sound id="entity.blaze.shoot" />
+    <sound id="entity.boat.paddle_land" />
+    <sound id="entity.boat.paddle_water" />
+    <sound id="entity.bobber.retrieve" />
     <sound id="entity.bobber.splash" />
     <sound id="entity.bobber.throw" />
     <sound id="entity.cat.ambient" />
@@ -4213,6 +4247,7 @@
     <sound id="entity.enderdragon.hurt" />
     <sound id="entity.enderdragon.shoot" />
     <sound id="entity.enderdragon_fireball.explode" />
+    <sound id="entity.endereye.death" />
     <sound id="entity.endereye.launch" />
     <sound id="entity.endermen.ambient" />
     <sound id="entity.endermen.death" />
@@ -4291,6 +4326,13 @@
     <sound id="entity.husk.death" />
     <sound id="entity.husk.hurt" />
     <sound id="entity.husk.step" />
+    <sound id="entity.illusion_illager.ambient" />
+    <sound id="entity.illusion_illager.cast_spell" />
+    <sound id="entity.illusion_illager.death" />
+    <sound id="entity.illusion_illager.hurt" />
+    <sound id="entity.illusion_illager.mirror_move" />
+    <sound id="entity.illusion_illager.prepare_blindness" />
+    <sound id="entity.illusion_illager.prepare_mirror" />
     <sound id="entity.irongolem.attack" />
     <sound id="entity.irongolem.death" />
     <sound id="entity.irongolem.hurt" />
@@ -4328,6 +4370,12 @@
     <sound id="entity.mule.death" />
     <sound id="entity.mule.hurt" />
     <sound id="entity.painting.place" />
+    <sound id="entity.parrot.ambient" />
+    <sound id="entity.parrot.death" />
+    <sound id="entity.parrot.eat" />
+    <sound id="entity.parrot.fly" />
+    <sound id="entity.parrot.hurt" />
+    <sound id="entity.parrot.step" />
     <sound id="entity.pig.ambient" />
     <sound id="entity.pig.death" />
     <sound id="entity.pig.hurt" />
@@ -5015,6 +5063,14 @@
         <app>trapped_chest</app>
       </applicable>
     </tag>
+    <tag id="LastExecution">
+      <type>4</type>
+      <applicable>
+        <app>command_block</app>
+        <app>chain_command_block</app>
+        <app>repeating_command_block</app>
+      </applicable>
+    </tag>
     <tag id="LastOutput">
       <type>0</type>
       <applicable>
@@ -5399,6 +5455,15 @@
       <applicable>
         <app>hopper</app>
       </applicable>
+    </tag>
+    <tag id="UpdateLastExecution">
+      <type>1</type>
+      <applicable>
+        <app>command_block</app>
+        <app>chain_command_block</app>
+        <app>repeating_command_block</app>
+      </applicable>
+      <byteboolean>true</byteboolean>
     </tag>
   </blocktags>
   <itemtags>
@@ -6324,6 +6389,18 @@
       <applicable>
         <app>chest_minecart</app>
         <app>hopper_minecart</app>
+      </applicable>
+    </tag>
+    <tag id="LoveCauseLeast">
+      <type>4</type>
+      <applicable>
+        <app>list=breed</app>
+      </applicable>
+    </tag>
+    <tag id="LoveCauseMost">
+      <type>4</type>
+      <applicable>
+        <app>list=breed</app>
       </applicable>
     </tag>
     <tag id="Marker">

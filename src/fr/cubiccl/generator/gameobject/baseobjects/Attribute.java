@@ -13,7 +13,7 @@ public class Attribute extends BaseObject
 
 	public Attribute(String id)
 	{
-		this.id = "minecraft:" + id;
+		this.id = id;
 		ObjectRegistry.attributes.register(this);
 	}
 
@@ -32,6 +32,6 @@ public class Attribute extends BaseObject
 	@Override
 	public Element toXML()
 	{
-		return new Element("achievement").setAttribute("id", this.id().substring("minecraft:".length()));
+		return new Element("achievement").setAttribute("id", this.id());
 	}
 }

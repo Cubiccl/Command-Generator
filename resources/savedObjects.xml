@@ -222,6 +222,7 @@
       <requirements />
       <recipes />
       <loot />
+      <commands />
     </advancement>
     <advancement objectname="My first Advancement" version="1.12" icon="minecraft:command_block" frame="goal">
       <title>Cheats!!</title>
@@ -235,11 +236,7 @@
           <condition>"state":{"facing":"north","open":"false"}</condition>
         </criteria>
       </criterias>
-      <requirements>
-        <r>
-          <i>0</i>
-        </r>
-      </requirements>
+      <requirements />
       <experience>4</experience>
       <recipes>
         <r>minecraft:bedrock</r>
@@ -247,6 +244,9 @@
       <loot>
         <l>minecraft:custom/cheats</l>
       </loot>
+      <commands>
+        <c>/tellraw @a [{"selector":"@s"},{"text":"cheated !!!"}]</c>
+      </commands>
     </advancement>
   </advancements>
 </objects>

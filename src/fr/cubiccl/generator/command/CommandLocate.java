@@ -9,6 +9,7 @@ import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
+import fr.cubiccl.generator.utils.Utils;
 
 public class CommandLocate extends Command
 {
@@ -31,8 +32,7 @@ public class CommandLocate extends Command
 		--gbc.gridwidth;
 		panel.add(new CGLabel("locate.select").setHasColumn(true), gbc);
 		++gbc.gridx;
-		panel.add(this.comboboxStructure = new OptionCombobox("locate", "EndCity", "Fortress", "Mansion", "Mineshaft", "Monument", "Stronghold", "Temple",
-				"Village"), gbc);
+		panel.add(this.comboboxStructure = new OptionCombobox("locate", Utils.STRUCTURES), gbc);
 
 		this.comboboxStructure.addActionListener(new ActionListener()
 		{

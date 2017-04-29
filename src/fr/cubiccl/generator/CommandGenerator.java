@@ -21,8 +21,8 @@ import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.gui.Window;
 import fr.cubiccl.generator.utils.*;
 
-// TODO 17w17a & 17w17b
-// TODO attribute modifiers minecraft: ?
+// TODO Re-structure advancements. Tags may not be the way to go.
+// TODO Commands in advancements.
 
 public class CommandGenerator
 {

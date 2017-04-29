@@ -29,7 +29,7 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 	private CGButton buttonPredefinedAdvancement;
 	private CGCheckBox checkboxCriterion;
 	private CGComboBox comboboxCriterion;
-	private OptionCombobox comboboxMode;
+	private OptionCombobox comboboxMode, comboboxAdvMode;
 	private CGEntry entryAdvancement;
 	private boolean isPredefined = false;
 	private PanelTarget panelTarget;
@@ -37,7 +37,7 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 
 	public CommandAdvancement()
 	{
-		super("advancement", "advancement <grant|revoke|test> <player> <advancement> [criterion]", 4);
+		super("advancement", "advancement <grant|revoke|test> <player> <everything|from|only|through|until> [<advancement>] [criterion]", 4);
 	}
 
 	@Override
@@ -46,6 +46,7 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 		if (e.getSource() == this.checkboxCriterion) this.onCheckbox();
 		else if (e.getSource() == this.buttonPredefinedAdvancement) CommandGenerator.stateManager.setState(new ObjectCombobox<DefaultAdvancement>(
 				ObjectRegistry.advancements.list()).container, this);
+		else if (e.getSource() == this.comboboxAdvMode) this.onModeChange();
 		this.updateTranslations();
 	}
 
@@ -60,6 +61,8 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 		panel.add(this.labelDescription(), gbc);
 		++gbc.gridy;
 		panel.add(this.comboboxMode = new OptionCombobox("advancement", "grant", "revoke", "test"), gbc);
+		++gbc.gridy;
+		panel.add(this.comboboxAdvMode = new OptionCombobox("advancement", "everything", "from", "only", "through", "until"), gbc);
 		++gbc.gridy;
 		--gbc.gridwidth;
 		panel.add((this.entryAdvancement = new CGEntry("advancement.name")).container, gbc);
@@ -110,9 +113,12 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 			{}
 		});
 		this.comboboxMode.addActionListener(this);
+		this.comboboxAdvMode.addActionListener(this);
 		this.comboboxCriterion.addActionListener(this);
 		this.comboboxCriterion.setVisible(false);
 		this.checkboxCriterion.addActionListener(this);
+
+		this.onModeChange();
 
 		return panel;
 	}
@@ -140,13 +146,16 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 	protected void finishReading()
 	{
 		this.onCheckbox();
+		this.onModeChange();
 	}
 
 	@Override
 	public String generate() throws CommandGenerationException
 	{
-		String command = this.id + " " + this.comboboxMode.getValue() + " " + this.panelTarget.generate().toCommand() + " " + this.entryAdvancement.getText();
+		String command = this.id + " " + this.comboboxMode.getValue() + " " + this.panelTarget.generate().toCommand() + " " + this.comboboxAdvMode.getValue();
+		if (this.comboboxAdvMode.getValue().equals("everything")) return command;
 		this.entryAdvancement.checkValue(CGEntry.STRING);
+		command += " " + this.entryAdvancement.getText();
 		if (this.checkboxCriterion.isSelected()) if (this.isPredefined) return command + " " + this.comboboxCriterion.getValue();
 		else return command + " " + this.textfieldCriterion.getText();
 		return command;
@@ -155,8 +164,9 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 	private void onAdvancementChange()
 	{
 		this.isPredefined = ObjectRegistry.advancements.find(this.entryAdvancement.getText()) != null;
-		this.comboboxCriterion.setVisible(this.isPredefined);
-		this.textfieldCriterion.setVisible(!this.isPredefined);
+		String mode = this.comboboxAdvMode.getValue();
+		this.comboboxCriterion.setVisible(mode.equals("only") && this.isPredefined);
+		this.textfieldCriterion.setVisible(mode.equals("only") && !this.isPredefined);
 		if (this.isPredefined) this.comboboxCriterion.setValues(ObjectRegistry.advancements.find(this.entryAdvancement.getText()).criteria);
 		this.updateTranslations();
 	}
@@ -167,17 +177,29 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 		this.textfieldCriterion.setEnabled(this.checkboxCriterion.isSelected());
 	}
 
+	private void onModeChange()
+	{
+		String mode = this.comboboxAdvMode.getValue();
+		this.entryAdvancement.container.setVisible(!mode.equals("everything"));
+		this.buttonPredefinedAdvancement.setVisible(!mode.equals("everything"));
+		this.checkboxCriterion.setVisible(mode.equals("only"));
+		this.textfieldCriterion.setVisible(mode.equals("only") && !this.isPredefined);
+		this.comboboxCriterion.setVisible(mode.equals("only") && this.isPredefined);
+		if (mode.equals("only")) this.onAdvancementChange();
+	}
+
 	@Override
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
-		// advancement <grant|revoke|test> <player> <advancement> [criterion]
+		// advancement <grant|revoke|test> <player> <everything|from|only|through|until> [<advancement>] [criterion]
 		if (index == 1) this.comboboxMode.setValue(argument);
 		else if (index == 2) this.panelTarget.setupFrom(Target.createFrom(argument));
-		else if (index == 3)
+		else if (index == 3) this.comboboxAdvMode.setValue(argument);
+		else if (index == 4)
 		{
 			this.entryAdvancement.setText(argument);
 			this.onAdvancementChange();
-		} else if (index == 4)
+		} else if (index == 5)
 		{
 			this.checkboxCriterion.setSelected(true);
 			if (this.isPredefined) this.comboboxCriterion.setSelectedItem(argument);

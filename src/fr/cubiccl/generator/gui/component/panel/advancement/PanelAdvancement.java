@@ -42,7 +42,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 	private PanelItem panelItem;
 	private PanelObjectList<Requirement> panelRequirements;
 	private PanelJsonMessage panelTitleJson;
-	private PanelObjectList<Text> recipes, loot;
+	private PanelObjectList<Text> recipes, loot, commands;
 	private CGTabbedPane tabbedPane;
 
 	public PanelAdvancement(Advancement advancement)
@@ -75,7 +75,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		gbc.gridwidth = 3;
 		display.add(title, gbc);
 		++gbc.gridy;
-		display.add(this.panelItem = new PanelItem("advancement.display_item", false, false, false), gbc);
+		display.add(this.panelItem = new PanelItem("advancement.display_item", true, false, false), gbc);
 		++gbc.gridy;
 		display.add(p, gbc);
 		++gbc.gridy;
@@ -108,6 +108,8 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		rewards.add(this.recipes = new PanelObjectList<Text>("advancement.recipes", (Text) null, Text.class, "description", "advancement.recipe"), gbc);
 		++gbc.gridy;
 		rewards.add(this.loot = new PanelObjectList<Text>("advancement.loots", (Text) null, Text.class, "description", "advancement.loot"), gbc);
+		++gbc.gridy;
+		rewards.add(this.commands = new PanelObjectList<Text>("advancement.commands", (Text) null, Text.class, "description", "advancement.command"), gbc);
 
 		CGPanel criterias = new CGPanel();
 		gbc = criterias.createGridBagLayout();
@@ -159,6 +161,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 	private void cancel()
 	{
 		this.panelItem.setItem(this.advancement.getItem());
+		this.panelItem.setDamage(this.advancement.getData());
 		this.comboboxFrame.setValue(this.advancement.frame);
 		this.entryTitle.setText(this.advancement.title == null ? "" : this.advancement.title);
 		this.entryDescription.setText(this.advancement.description == null ? "" : this.advancement.description);
@@ -177,6 +180,9 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		this.loot.clear();
 		for (String s : this.advancement.rewardLoot)
 			this.loot.add(new Text(s, false));
+		this.commands.clear();
+		for (String s : this.advancement.rewardCommands)
+			this.commands.add(new Text(s, false));
 
 		this.buttonTString.setSelected(this.advancement.title != null);
 		this.buttonTJson.setSelected(this.advancement.jsonTitle != null);
@@ -200,6 +206,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		else this.advancement.title = null;
 
 		this.advancement.setItem(this.panelItem.selectedItem());
+		this.advancement.setData(this.panelItem.selectedDamage());
 		this.advancement.frame = this.comboboxFrame.getValue();
 		this.advancement.description = this.entryDescription.getText();
 		this.advancement.background = this.entryBackground.getText();
@@ -218,10 +225,15 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		this.advancement.rewardLoot.clear();
 		for (Text t : this.loot.values())
 			this.advancement.rewardLoot.add(t.id);
+		this.advancement.rewardCommands.clear();
+		for (Text t : this.commands.values())
+			this.advancement.rewardCommands.add(t.id);
 
 		this.advancement.requirements.clear();
 		for (Requirement r : this.panelRequirements.values())
 			this.advancement.requirements.add(r.criterias);
+
+		CommandGenerator.window.panelAdvancementSelection.list.updateList();
 	}
 
 	private void updateTitleType()

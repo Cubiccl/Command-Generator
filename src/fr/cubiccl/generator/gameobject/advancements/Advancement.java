@@ -32,6 +32,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 	{
 		Advancement a = new Advancement();
 		a.item = ObjectRegistry.items.find(advancement.getAttributeValue("icon"));
+		if (advancement.getAttribute("icondata") != null) a.data = Integer.parseInt(advancement.getAttributeValue("icondata"));
 		a.frame = advancement.getAttributeValue("frame");
 		if (advancement.getChild("title") != null) a.title = advancement.getChildText("title");
 		else if (advancement.getChild("json_title") != null) a.jsonTitle = JsonMessage.createFrom(advancement.getChild("json_title"));
@@ -52,11 +53,14 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 
 		if (advancement.getChild("experience") != null) a.rewardExperience = Integer.parseInt(advancement.getChildText("experience"));
 
-		for (Element criteria : advancement.getChild("recipes").getChildren())
-			a.rewardRecipes.add(criteria.getText());
+		for (Element recipe : advancement.getChild("recipes").getChildren())
+			a.rewardRecipes.add(recipe.getText());
 
-		for (Element criteria : advancement.getChild("loot").getChildren())
-			a.rewardLoot.add(criteria.getText());
+		for (Element loot : advancement.getChild("loot").getChildren())
+			a.rewardLoot.add(loot.getText());
+
+		if (advancement.getChild("commands") != null) for (Element command : advancement.getChild("commands").getChildren())
+			a.rewardCommands.add(command.getText());
 
 		a.findProperties(advancement);
 		return a;
@@ -69,7 +73,12 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		if (tag.hasTag(Tags.ADVANCEMENT_DISPLAY))
 		{
 			TagCompound display = tag.getTag(Tags.ADVANCEMENT_DISPLAY);
-			if (display.hasTag(Tags.ADVANCEMENT_ICON)) a.item = ObjectRegistry.items.find(display.getTag(Tags.ADVANCEMENT_ICON).value());
+			if (display.hasTag(Tags.ADVANCEMENT_ICON))
+			{
+				TagCompound icon = display.getTag(Tags.ADVANCEMENT_ICON);
+				a.item = ObjectRegistry.items.find(icon.getTag(Tags.RECIPE_ITEM_ID).value());
+				if (icon.hasTag(Tags.RECIPE_ITEM_DATA)) a.data = icon.getTag(Tags.RECIPE_ITEM_DATA).valueInt();
+			}
 			if (display.hasTag(Tags.ADVANCEMENT_TITLE)) a.title = display.getTag(Tags.ADVANCEMENT_TITLE).value();
 			else if (display.hasTag(Tags.ADVANCEMENT_TITLE_JSON)) a.jsonTitle = JsonMessage.createFrom(display.getTag(Tags.ADVANCEMENT_TITLE_JSON));
 			if (display.hasTag(Tags.ADVANCEMENT_FRAME)) a.frame = display.getTag(Tags.ADVANCEMENT_FRAME).value();
@@ -108,6 +117,9 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 			if (rewards.hasTag(Tags.ADVANCEMENT_LOOT)) for (Tag l : rewards.getTag(Tags.ADVANCEMENT_LOOT).value())
 				a.rewardLoot.add(((TagString) l).value());
 
+			if (rewards.hasTag(Tags.ADVANCEMENT_COMMANDS)) for (Tag l : rewards.getTag(Tags.ADVANCEMENT_COMMANDS).value())
+				a.rewardCommands.add(((TagString) l).value());
+
 			if (rewards.hasTag(Tags.ADVANCEMENT_EXPERIENCE)) a.rewardExperience = rewards.getTag(Tags.ADVANCEMENT_EXPERIENCE).valueInt();
 		}
 
@@ -116,21 +128,24 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 
 	public String background, description, frame, parent, title;
 	private ArrayList<AdvancementCriteria> criteria;
+	private int data;
 	private Item item;
 	public JsonMessage jsonTitle;
 	public ArrayList<Integer[]> requirements;
 	public int rewardExperience;
-	public ArrayList<String> rewardLoot, rewardRecipes;
+	public ArrayList<String> rewardLoot, rewardRecipes, rewardCommands;
 
 	public Advancement()
 	{
 		this.rewardLoot = new ArrayList<String>();
 		this.rewardRecipes = new ArrayList<String>();
+		this.rewardCommands = new ArrayList<String>();
 		this.criteria = new ArrayList<AdvancementCriteria>();
 		this.requirements = new ArrayList<Integer[]>();
 		this.rewardExperience = 0;
 		this.item = ObjectRegistry.items.first();
 		this.frame = "task";
+		this.data = 0;
 	}
 
 	public void addCriterion(AdvancementCriteria criteria)
@@ -161,6 +176,11 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 	public AdvancementCriteria[] getCriteria()
 	{
 		return this.criteria.toArray(new AdvancementCriteria[this.criteria.size()]);
+	}
+
+	public int getData()
+	{
+		return this.data;
 	}
 
 	@Override
@@ -202,9 +222,16 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		this.requirements.clear();
 	}
 
+	public void setData(int data)
+	{
+		this.data = data;
+		this.onChange();
+	}
+
 	public void setItem(Item item)
 	{
 		this.item = item;
+		this.onChange();
 	}
 
 	@Override
@@ -223,7 +250,8 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
-		tags.add(Tags.ADVANCEMENT_ICON.create(this.item.id()));
+		if (this.data != 0) tags.add(Tags.ADVANCEMENT_ICON.create(Tags.RECIPE_ITEM_ID.create(this.item.id()), Tags.RECIPE_ITEM_DATA.create(this.data)));
+		tags.add(Tags.ADVANCEMENT_ICON.create(Tags.ITEM_IDITEM.create(this.item.id())));
 		if (this.title != null) tags.add(Tags.ADVANCEMENT_TITLE.create(this.title));
 		else if (this.jsonTitle != null) tags.add(this.jsonTitle.toTag(Tags.ADVANCEMENT_TITLE_JSON));
 		tags.add(Tags.ADVANCEMENT_FRAME.create(this.frame));
@@ -268,6 +296,13 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 				loot.add(Tags.DEFAULT_STRING.create(l));
 			rewards.add(Tags.ADVANCEMENT_LOOT.create(loot.toArray(new Tag[loot.size()])));
 		}
+		if (this.rewardCommands.size() != 0)
+		{
+			ArrayList<TagString> commands = new ArrayList<TagString>();
+			for (String c : this.rewardCommands)
+				commands.add(Tags.DEFAULT_STRING.create(c));
+			rewards.add(Tags.ADVANCEMENT_COMMANDS.create(commands.toArray(new Tag[commands.size()])));
+		}
 		if (this.rewardExperience != 0) rewards.add(Tags.ADVANCEMENT_EXPERIENCE.create(this.rewardExperience));
 		if (rewards.size() != 0) tags.add(Tags.ADVANCEMENT_REWARDS.create(rewards.toArray(new Tag[rewards.size()])));
 
@@ -279,6 +314,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 	{
 		Element root = this.createRoot("advancement");
 		root.setAttribute("icon", this.item.id());
+		if (this.data != 0) root.setAttribute("icondata", Integer.toString(this.data));
 		root.setAttribute("frame", this.frame);
 		if (this.title != null) root.addContent(new Element("title").setText(this.title));
 		if (this.description != null) root.addContent(new Element("description").setText(this.description));
@@ -312,6 +348,11 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		for (String l : this.rewardLoot)
 			loot.addContent(new Element("l").setText(l));
 		root.addContent(loot);
+
+		Element commands = new Element("commands");
+		for (String c : this.rewardCommands)
+			commands.addContent(new Element("c").setText(c));
+		root.addContent(commands);
 
 		return root;
 	}

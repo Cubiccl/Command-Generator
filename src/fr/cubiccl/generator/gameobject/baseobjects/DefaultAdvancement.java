@@ -11,6 +11,7 @@ public class DefaultAdvancement extends BaseObject
 {
 	public final String category;
 	public final String[] criteria;
+	public int data = -1;
 	public final String id;
 	public final Item item;
 
@@ -38,6 +39,7 @@ public class DefaultAdvancement extends BaseObject
 	@Override
 	public BufferedImage texture()
 	{
+		if (this.data != -1) return this.item.texture(this.data);
 		return this.item.texture();
 	}
 
@@ -48,6 +50,7 @@ public class DefaultAdvancement extends BaseObject
 		root.setAttribute("category", this.category);
 		root.setAttribute("id", this.id);
 		root.setAttribute("item", this.item.id().substring("minecraft:".length()));
+		if (this.data != -1) root.setAttribute("data", Integer.toString(this.data));
 		if (this.criteria.length != 1 || !("minecraft:" + this.criteria[0]).equals(this.item.id())) for (String criterion : this.criteria)
 			root.addContent(new Element("criterion").setText(criterion));
 		return root;
