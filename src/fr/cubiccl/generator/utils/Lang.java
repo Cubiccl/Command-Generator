@@ -3,8 +3,7 @@ package fr.cubiccl.generator.utils;
 import java.util.HashMap;
 
 import fr.cubiccl.generator.CommandGenerator;
-import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
-import fr.cubiccl.generator.gameobject.baseobjects.BlockItem;
+import fr.cubiccl.generator.gameobject.baseobjects.*;
 import fr.cubiccl.generator.utils.Settings.Language;
 
 public class Lang
@@ -67,8 +66,16 @@ public class Lang
 
 	public static Text translateObject(BaseObject object, int damage, boolean undetermined)
 	{
-		String t = variations.get(object.id().replaceAll("minecraft:", ""));
-		if (t == null) t = "tag.object";
+		String id = object.id().replaceAll("minecraft:", "");
+		String t = variations.get(id);
+		if (t == null)
+		{
+			if (object instanceof Block) t = variations.get("block." + id);
+			else if (object instanceof Entity) t = variations.get("entity." + id);
+			else if (object instanceof Item) t = variations.get("item." + id);
+			if (t == null) t = "tag.object";
+		}
+
 		if (undetermined) t += ".undetermined";
 		if (damage != -1 && object instanceof BlockItem) return new Text(t).addReplacement("<name>", ((BlockItem) object).name(damage));
 		return new Text(t).addReplacement("<name>", object.name());
