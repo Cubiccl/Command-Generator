@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gui.component.panel;
 
 import java.awt.Component;
+import java.util.HashMap;
 
 import javax.swing.BorderFactory;
 
@@ -15,6 +16,7 @@ public class CGPanel extends CPanel implements ITranslated
 
 	private Text title;
 	private String titleID;
+	private HashMap<Component, Boolean> wasEnabled = new HashMap<Component, Boolean>();
 
 	public CGPanel()
 	{
@@ -32,6 +34,18 @@ public class CGPanel extends CPanel implements ITranslated
 		return this.title;
 	}
 
+	@Override
+	public void setEnabled(boolean enabled)
+	{
+		for (Component component : this.getComponents())
+			if (!enabled)
+			{
+				this.wasEnabled.put(component, component.isEnabled());
+				component.setEnabled(false);
+			} else if (this.wasEnabled.containsKey(component)) component.setEnabled(this.wasEnabled.get(component));
+			else component.setEnabled(enabled);
+	}
+
 	public void setName(String nameID)
 	{
 		this.setName(new Text(nameID));
@@ -40,6 +54,12 @@ public class CGPanel extends CPanel implements ITranslated
 	public void setName(Text name)
 	{
 		this.title = name;
+	}
+
+	public void setTitle(String titleID)
+	{
+		this.titleID = titleID;
+		this.updateTranslations();
 	}
 
 	@Override

@@ -12,6 +12,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TagsMain;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gameobject.utils.TestValue;
@@ -153,7 +154,7 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 			item.amount = (int) v.generateValue();
 		} else if (this.function == Function.SET_DAMAGE)
 		{
-			TestValue v = new TestValue(Tags.LT_FUNCTION_DAMAGE, Tags.LT_FUNCTION_DAMAGE_RANGE, Tags.VALUE_MIN_FLOAT, Tags.VALUE_MAX_FLOAT);
+			TestValue v = new TestValue(Tags.LT_FUNCTION_DAMAGE, Tags.LT_FUNCTION_DAMAGE_RANGE, TagsMain.VALUE_MIN_FLOAT, TagsMain.VALUE_MAX_FLOAT);
 			v.findValue(this.tags);
 			item.setDamage((int) v.generateValue());
 		} else if (this.function == Function.SET_DATA)

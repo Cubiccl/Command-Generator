@@ -9,13 +9,16 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.tag.PanelRangedTag;
+import fr.cubiccl.generator.gui.component.panel.tag.PanelRangedValue;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
 public class TemplateRange extends TemplateNumber
 {
+	public static final TemplateNumber[] min =
+	{ null, null, null, TagsMain.VALUE_MIN, null, TagsMain.VALUE_MIN_FLOAT, TagsMain.VALUE_MIN_DOUBLE }, max =
+	{ null, null, null, TagsMain.VALUE_MAX, null, TagsMain.VALUE_MAX_FLOAT, TagsMain.VALUE_MAX_DOUBLE };
 
 	public final byte numberType;
 	private TemplateNumber tagMin, tagMax;
@@ -24,6 +27,7 @@ public class TemplateRange extends TemplateNumber
 	{
 		super(id, applicationType, Tag.RANGE, applicable);
 		this.numberType = numberType;
+		this.setRangeTags();
 	}
 
 	@SuppressWarnings("deprecation")
@@ -57,7 +61,7 @@ public class TemplateRange extends TemplateNumber
 	@Override
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
-		PanelRangedTag p = new PanelRangedTag(this.description(object), this.numberType == Tag.INT ? Text.INTEGER : Text.NUMBER);
+		PanelRangedValue p = new PanelRangedValue(this.description(object), this.numberType == Tag.INT ? Text.INTEGER : Text.NUMBER);
 		if (previousValue != null)
 		{
 			if (previousValue instanceof TagNumber)
@@ -77,7 +81,7 @@ public class TemplateRange extends TemplateNumber
 	@Override
 	protected Tag generateTag(BaseObject object, CGPanel panel)
 	{
-		PanelRangedTag p = (PanelRangedTag) panel;
+		PanelRangedValue p = (PanelRangedValue) panel;
 		if (p.isRanged()) return this.create(p.min(), p.max());
 		return this.create(p.value());
 	}
@@ -85,14 +89,13 @@ public class TemplateRange extends TemplateNumber
 	@Override
 	protected boolean isInputValid(BaseObject object, CGPanel panel)
 	{
-		PanelRangedTag p = (PanelRangedTag) panel;
+		PanelRangedValue p = (PanelRangedValue) panel;
 		try
 		{
 			p.checkInput(this.isInt() ? CGEntry.INTEGER : CGEntry.NUMBER);
 			return true;
 		} catch (CommandGenerationException e)
 		{
-			e.printStackTrace();
 			CommandGenerator.report(e);
 			return false;
 		}
@@ -119,12 +122,8 @@ public class TemplateRange extends TemplateNumber
 		return this.create(tags.toArray(new Tag[tags.size()]));
 	}
 
-	public void setRangeTags()
+	private void setRangeTags()
 	{
-		TemplateNumber[] min =
-		{ null, null, null, Tags.VALUE_MIN, null, Tags.VALUE_MIN_FLOAT, Tags.VALUE_MIN_DOUBLE };
-		TemplateNumber[] max =
-		{ null, null, null, Tags.VALUE_MAX, null, Tags.VALUE_MAX_FLOAT, Tags.VALUE_MAX_DOUBLE };
 		this.tagMin = min[this.numberType];
 		this.tagMax = max[this.numberType];
 	}

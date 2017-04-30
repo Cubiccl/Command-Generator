@@ -215,9 +215,7 @@
       <description>Find an Elytra</description>
       <parent>minecraft:story/enter_end_gateway</parent>
       <criterias>
-        <criteria name="elytra" trigger="inventory_changed">
-          <condition>"items":[{"item":"minecraft:elytra"}]</condition>
-        </criteria>
+        <criteria name="elytra" trigger="inventory_changed" />
       </criterias>
       <requirements />
       <recipes />
@@ -228,8 +226,8 @@
       <title>Cheats!!</title>
       <description>Use /give to get an unobtainable item !</description>
       <criterias>
-        <criteria name="first_criteria" trigger="inventory_changed">
-          <condition>"items":[{"data":4},{"count":4},{"item":"minecraft:reeds","potion":"long_night_vision"}]</condition>
+        <criteria name="first_criteria" trigger="entity_hurt_player">
+          <condition>"damage":{"source_entity":{"type":"minecraft:skeleton","distance":10}}</condition>
         </criteria>
         <criteria name="states_test" trigger="enter_block">
           <condition>"block":"minecraft:fence_gate"</condition>

@@ -34,7 +34,6 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 
 	protected String[] applicable;
 	public final byte applicationType, tagType;
-	public TemplateCompound container = null;
 	/** Need several in case of chest-like recursion */
 	private Stack<TagCreation> creationListeners;
 	public String customTagName = null;
@@ -85,7 +84,7 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	public Text description(BaseObject object)
 	{
 		String d = "tag." + TYPE_NAMES[this.applicationType] + "." + this.id;
-		if (this.container != null) d += "." + this.container.id();
+
 		Text t = new Text(d);
 		if (object != null)
 		{

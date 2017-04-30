@@ -7,10 +7,21 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateRange;
 
 /** Can either be a TagNumber or a TagCompound containing two TagNumbers (min and max). */
 public class TestValue
 {
+
+	private static TemplateNumber maxFor(TemplateNumber tag)
+	{
+		return TemplateRange.max[tag.tagType];
+	}
+
+	private static TemplateNumber minFor(TemplateNumber tag)
+	{
+		return TemplateRange.min[tag.tagType];
+	}
 
 	public final TemplateNumber exactTag;
 	public boolean isRanged = false;
@@ -20,7 +31,7 @@ public class TestValue
 
 	public TestValue(TemplateNumber exactTag, TemplateCompound rangeTag)
 	{
-		this(exactTag, rangeTag, Tags.VALUE_MIN, Tags.VALUE_MAX);
+		this(exactTag, rangeTag, minFor(exactTag), maxFor(exactTag));
 	}
 
 	public TestValue(TemplateNumber exactTag, TemplateCompound rangeTag, TemplateNumber minTag, TemplateNumber maxTag)
@@ -38,30 +49,38 @@ public class TestValue
 		this.valueMax = 0;
 	}
 
-	public void findValue(Tag[] tags)
+	public boolean findValue(Tag[] tags)
 	{
-		this.findValue(Tags.DEFAULT_COMPOUND.create(tags));
+		return this.findValue(Tags.DEFAULT_COMPOUND.create(tags));
 	}
 
-	public void findValue(TagCompound t)
+	public boolean findValue(TagCompound t)
 	{
 		if (t.hasTag(this.exactTag))
 		{
 			this.isRanged = false;
-			this.valueMin = (double) t.getTag(this.exactTag).value();
+			this.valueMin = t.getTag(this.exactTag).value();
+			return true;
 		} else if (t.hasTag(this.rangeTag))
 		{
 			this.isRanged = true;
 			TagCompound range = t.getTag(this.rangeTag);
-			this.valueMin = (double) range.getTag(this.minTag).value();
-			this.valueMax = (double) range.getTag(this.maxTag).value();
+			this.valueMin = range.getTag(this.minTag).value();
+			this.valueMax = range.getTag(this.maxTag).value();
+			return true;
 		}
+		return false;
 	}
 
 	public double generateValue()
 	{
 		if (this.isRanged) return new Random().nextDouble() * (this.valueMax - this.valueMin + 1) + this.valueMax;
 		return this.valueMin;
+	}
+
+	public boolean isInt()
+	{
+		return this.exactTag.tagType != Tag.DOUBLE && this.exactTag.tagType != Tag.FLOAT;
 	}
 
 	public Tag toTag()

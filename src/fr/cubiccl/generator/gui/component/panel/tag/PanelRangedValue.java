@@ -14,15 +14,16 @@ import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class PanelRangedTag extends CGPanel implements ActionListener
+public class PanelRangedValue extends CGPanel implements ActionListener
 {
 	private static final long serialVersionUID = -6013895507174678230L;
 
 	private CGRadioButton buttonFixed, buttonRanged;
 	private CGEntry entryMin, entryMax, entryFixed;
 
-	public PanelRangedTag(Text description, Text hintText)
+	public PanelRangedValue(String titleID, Text description, Text hintText)
 	{
+		super(titleID);
 		GridBagConstraints gbc = this.createGridBagLayout();
 		gbc.gridwidth = 2;
 		this.add(new CGLabel(description), gbc);
@@ -52,6 +53,11 @@ public class PanelRangedTag extends CGPanel implements ActionListener
 		this.onModeChange();
 	}
 
+	public PanelRangedValue(Text description, Text hintText)
+	{
+		this(null, description, hintText);
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -68,7 +74,7 @@ public class PanelRangedTag extends CGPanel implements ActionListener
 		}
 	}
 
-	public void generateValue(TestValue value)
+	public TestValue generateValue(TestValue value)
 	{
 		value.isRanged = this.isRanged();
 		if (this.isRanged())
@@ -76,6 +82,7 @@ public class PanelRangedTag extends CGPanel implements ActionListener
 			value.valueMin = this.min();
 			value.valueMax = this.max();
 		} else value.valueMin = this.value();
+		return value;
 	}
 
 	public boolean isRanged()
@@ -128,6 +135,14 @@ public class PanelRangedTag extends CGPanel implements ActionListener
 		this.entryMax.setText(Integer.toString(max));
 		this.entryMin.setText(Integer.toString(min));
 		this.onModeChange();
+	}
+
+	public void setupFrom(TestValue value)
+	{
+		if (value.isRanged) if (value.isInt()) this.setRanged((int) value.valueMin, (int) value.valueMax);
+		else this.setRanged(value.valueMin, value.valueMax);
+		else if (value.isInt()) this.setFixed((int) value.valueMin);
+		else this.setFixed(value.valueMin);
 	}
 
 	public double value()

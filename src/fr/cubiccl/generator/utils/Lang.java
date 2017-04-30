@@ -11,6 +11,7 @@ public class Lang
 
 	private static final HashMap<String, String> dictionnary = new HashMap<String, String>();
 	private static final HashMap<String, String> english = new HashMap<String, String>();
+	private static final HashMap<String, String> remapping = new HashMap<String, String>();
 	private static final HashMap<String, String> variations = new HashMap<String, String>();
 
 	public static void checkTranslations()
@@ -40,15 +41,29 @@ public class Lang
 			if (translation.contains("=")) english.put(translation.substring(0, translation.indexOf('=')), translation.substring(translation.indexOf('=') + 1));
 	}
 
+	private static void loadRemapping()
+	{
+		remapping.clear();
+		String[] translations = FileUtils.readFileAsArray("lang/remapping.txt");
+		for (String path : translations)
+		{
+			String[] data = path.split("=");
+			for (int i = 0; i < data.length - 1; ++i)
+				remapping.put(data[i], data[data.length - 1]);
+		}
+	}
+
 	/** @param textID - A text to translate.
 	 * @return The translation if found. If not, returns <code>textID</code>. */
 	public static String translate(String textID)
 	{
 		textID = textID.replaceAll("minecraft:", "");
-		if (!keyExists(textID))
+		while (remapping.containsKey(textID))
+			textID = remapping.get(textID);
+		if (!keyExists(textID) && !CommandGenerator.untranslated.contains(textID))
 		{
+			CommandGenerator.untranslated.add(textID);
 			CommandGenerator.log("Couldn't find translation for : " + textID);
-			if (!keyExists(textID) && !CommandGenerator.untranslated.contains(textID)) CommandGenerator.untranslated.add(textID);
 			// new Exception().printStackTrace();
 		}
 		return doTranslate(textID);
@@ -84,6 +99,7 @@ public class Lang
 	public static void updateLang()
 	{
 		if (english.size() == 0) loadEnglish();
+		if (remapping.size() == 0) loadRemapping();
 		dictionnary.clear();
 		variations.clear();
 

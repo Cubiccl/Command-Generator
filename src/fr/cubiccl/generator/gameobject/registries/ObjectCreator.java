@@ -291,6 +291,7 @@ public class ObjectCreator
 		createTags(data.getChild("itemtags"), Tag.ITEM);
 		createTags(data.getChild("entitytags"), Tag.ENTITY);
 		createLists(data.getChild("lists"));
+		TagsMain.create();
 		Tags.create();
 		CommandGenerator.log("Successfully created " + ObjectRegistry.objectLists.size() + " object lists.");
 		TargetArgument.createArguments();

@@ -22,8 +22,12 @@ import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
 import fr.cubiccl.generator.gameobject.loottable.LootTableFunction;
 import fr.cubiccl.generator.gameobject.loottable.LootTableFunction.Function;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.*;
+import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TagsMain;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.utils.TestValue;
@@ -150,8 +154,8 @@ public class PanelFunction extends CGPanel implements ActionListener
 			TestValue v = new TestValue(exact, range);
 			if (f == SET_DAMAGE)
 			{
-				v.minTag = Tags.VALUE_MIN_FLOAT;
-				v.maxTag = Tags.VALUE_MAX_FLOAT;
+				v.minTag = TagsMain.VALUE_MIN_FLOAT;
+				v.maxTag = TagsMain.VALUE_MAX_FLOAT;
 			}
 
 			if (f == SET_DAMAGE) v.valueMin = Double.parseDouble(this.entryMin.getText()) / 100.0;
@@ -230,8 +234,8 @@ public class PanelFunction extends CGPanel implements ActionListener
 				TestValue v = new TestValue(exact, range);
 				if (f == SET_DAMAGE)
 				{
-					v.minTag = Tags.VALUE_MIN_FLOAT;
-					v.maxTag = Tags.VALUE_MAX_FLOAT;
+					v.minTag = TagsMain.VALUE_MIN_FLOAT;
+					v.maxTag = TagsMain.VALUE_MAX_FLOAT;
 				}
 				v.findValue(t);
 

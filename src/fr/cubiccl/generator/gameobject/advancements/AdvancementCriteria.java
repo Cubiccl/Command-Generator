@@ -9,7 +9,6 @@ import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
-import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -70,38 +69,6 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 		this.conditions.clear();
 	}
 
-	public ArrayList<Tag> conditionsInContainers()
-	{
-
-		ArrayList<Tag> tags = new ArrayList<Tag>();
-
-		for (Tag t : this.conditions)
-		{
-			TemplateCompound container = t.template.container;
-			if (container == null) tags.add(t);
-			else
-			{
-				TagCompound c = null;
-				for (Tag tag : tags)
-					if (tag.template.equals(container))
-					{
-						c = (TagCompound) tag;
-						break;
-					}
-				if (c == null)
-				{
-					c = container.create();
-					c.setJson(true);
-					tags.add(c);
-				}
-
-				c.addTag(t);
-			}
-		}
-
-		return tags;
-	}
-
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
@@ -132,9 +99,8 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 
 	public TagCompound toTag()
 	{
-		ArrayList<Tag> tags = this.conditionsInContainers();
 		return new DefaultCompound(this.name, Tag.UNKNOWN).create(Tags.ADVANCEMENT_TRIGGER.create(this.trigger.id),
-				Tags.ADVANCEMENT_CONDITIONS.create(tags.toArray(new Tag[tags.size()])));
+				Tags.ADVANCEMENT_CONDITIONS.create(this.getConditions()));
 	}
 
 	public Element toXML()
@@ -142,7 +108,7 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 		Element root = new Element("criteria");
 		root.setAttribute("name", this.name);
 		root.setAttribute("trigger", this.trigger.id);
-		for (Tag tag : this.conditionsInContainers())
+		for (Tag tag : this.getConditions())
 			root.addContent(new Element("condition").setText(tag.toCommand(-1)));
 		return root;
 	}

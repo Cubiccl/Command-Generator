@@ -10,6 +10,7 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TagsMain;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.utils.TestValue;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
@@ -66,7 +67,7 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		min = (int) v.valueMin;
 		if (v.isRanged) max = (int) v.valueMax;
 
-		v = new TestValue(Tags.LOOTTABLE_BONUS_ROLLS, Tags.LOOTTABLE_BONUS_ROLLS_RANGE, Tags.VALUE_MIN_FLOAT, Tags.VALUE_MAX_FLOAT);
+		v = new TestValue(Tags.LOOTTABLE_BONUS_ROLLS, Tags.LOOTTABLE_BONUS_ROLLS_RANGE, TagsMain.VALUE_MIN_FLOAT, TagsMain.VALUE_MAX_FLOAT);
 		v.findValue(tag);
 		bonusMin = (float) v.valueMin;
 		if (v.isRanged) bonusMax = (float) v.valueMax;
@@ -194,7 +195,7 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		v.isRanged = this.rollsMax != -1;
 		tags.add(v.toTag());
 
-		v = new TestValue(Tags.LOOTTABLE_BONUS_ROLLS, Tags.LOOTTABLE_BONUS_ROLLS_RANGE, Tags.VALUE_MIN_FLOAT, Tags.VALUE_MAX_FLOAT);
+		v = new TestValue(Tags.LOOTTABLE_BONUS_ROLLS, Tags.LOOTTABLE_BONUS_ROLLS_RANGE, TagsMain.VALUE_MIN_FLOAT, TagsMain.VALUE_MAX_FLOAT);
 		v.valueMin = this.bonusRollsMin;
 		v.valueMax = this.bonusRollsMax;
 		v.isRanged = this.bonusRollsMax != -1;

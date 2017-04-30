@@ -10,6 +10,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.Attribute;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TagsMain;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.utils.TestValue;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
@@ -71,8 +72,8 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		if (tag.hasTag(Tags.ATTRIBUTE_amount_range))
 		{
 			TagCompound container = tag.getTag(Tags.ATTRIBUTE_amount_range);
-			am = container.getTag(Tags.VALUE_MIN_FLOAT).value();
-			amm = container.getTag(Tags.VALUE_MAX_FLOAT).value();
+			am = container.getTag(TagsMain.VALUE_MIN_FLOAT).value();
+			amm = container.getTag(TagsMain.VALUE_MAX_FLOAT).value();
 		}
 		if (tag.hasTag(Tags.ATTRIBUTE_UUIDMOST)) um = (long) (double) tag.getTag(Tags.ATTRIBUTE_UUIDMOST).value();
 		if (tag.hasTag(Tags.ATTRIBUTE_UUIDLEAST)) ul = (long) (double) tag.getTag(Tags.ATTRIBUTE_UUIDLEAST).value();
@@ -179,8 +180,8 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		tags.add((lt ? Tags.ATTRIBUTE_modifier_name : Tags.ATTRIBUTE_MODIFIER_NAME).create(this.name));
 		tags.add((lt ? Tags.ATTRIBUTE_operation : Tags.ATTRIBUTE_OPERATION).create(this.operation));
 
-		TestValue v = new TestValue(lt ? Tags.ATTRIBUTE_amount : Tags.ATTRIBUTE_AMOUNT, Tags.ATTRIBUTE_amount_range, Tags.VALUE_MAX_FLOAT,
-				Tags.VALUE_MIN_FLOAT, this.amount);
+		TestValue v = new TestValue(lt ? Tags.ATTRIBUTE_amount : Tags.ATTRIBUTE_AMOUNT, Tags.ATTRIBUTE_amount_range, TagsMain.VALUE_MAX_FLOAT,
+				TagsMain.VALUE_MIN_FLOAT, this.amount);
 		v.isRanged = this.amountMax != -1;
 		v.valueMax = this.amountMax;
 		tags.add(v.toTag());
