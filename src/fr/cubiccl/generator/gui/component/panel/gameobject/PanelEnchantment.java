@@ -11,7 +11,7 @@ import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
 import fr.cubiccl.generator.gui.component.interfaces.ICustomObject;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.panel.tag.PanelRangedTag;
+import fr.cubiccl.generator.gui.component.panel.tag.PanelRangedValue;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelCustomObject;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -24,7 +24,7 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 	private boolean checkMaximum, ranged;
 	private ObjectCombobox<EnchantmentType> comboboxEnchant;
 	private CGEntry entryLevel;
-	private PanelRangedTag panelRanged;
+	private PanelRangedValue panelRanged;
 
 	public PanelEnchantment(boolean checkMaximum)
 	{
@@ -52,7 +52,7 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 		++gbc.gridy;
 		++gbc.gridwidth;
 		this.add((this.entryLevel = new CGEntry(new Text("enchant.level"), "1", Text.INTEGER)).container, gbc);
-		this.add(this.panelRanged = new PanelRangedTag(new Text("enchant.level"), Text.INTEGER), gbc);
+		this.add(this.panelRanged = new PanelRangedValue(new Text("enchant.level"), Text.INTEGER), gbc);
 
 		++gbc.gridy;
 		gbc.fill = GridBagConstraints.NONE;

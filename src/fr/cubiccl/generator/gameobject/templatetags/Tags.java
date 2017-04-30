@@ -1,12 +1,11 @@
 package fr.cubiccl.generator.gameobject.templatetags;
 
 import static fr.cubiccl.generator.gameobject.tags.Tag.UNAVAILABLE;
-import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList.DefaultList;
-import fr.cubiccl.generator.gameobject.templatetags.custom.*;
-import fr.cubiccl.generator.utils.Utils;
+import fr.cubiccl.generator.gameobject.templatetags.custom.TemplatePotion;
+import fr.cubiccl.generator.gameobject.templatetags.custom.advancements.TemplateCriteriaEntity;
 
 /** Contains unique and constant NBT Tags. */
 public final class Tags
@@ -75,7 +74,15 @@ public final class Tags
 	public static final TemplateNumber COORD_Y_INT = new TemplateNumber("Y", UNAVAILABLE, Tag.INT);
 	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", UNAVAILABLE, Tag.DOUBLE);
 	public static final TemplateNumber COORD_Z_INT = new TemplateNumber("Z", UNAVAILABLE, Tag.INT);
-
+	
+	public static final TemplateNumber CRITERIA_DISTANCE = new TemplateNumber("distance", UNAVAILABLE, Tag.INT);
+	public static final TemplateCompound CRITERIA_DISTANCE_ = new DefaultCompound("distance");
+	public static final TemplateCriteriaEntity CRITERIA_ENTITY_CHILD = new TemplateCriteriaEntity("child", UNAVAILABLE, "bred_animals");
+	public static final TemplateString CRITERIA_ENTITY_ID = new TemplateString("type", UNAVAILABLE);
+	public static final TemplateCriteriaEntity CRITERIA_ENTITY_PARENT = new TemplateCriteriaEntity("parent", UNAVAILABLE, "bred_animals");
+	public static final TemplateCriteriaEntity CRITERIA_ENTITY_PARTNER = new TemplateCriteriaEntity("partner", UNAVAILABLE, "bred_animals");
+	public static final TemplatePotion CRITERIA_POTION = new TemplatePotion("potion", UNAVAILABLE, "brewed_potion");
+/*
 	public static final TemplateRange CRITERIA_BEACON = new TemplateRange("level", UNAVAILABLE, Tag.INT, "construct_beacon");
 	public static final TemplateString CRITERIA_BIOME = new TemplateString("biome", UNAVAILABLE, "location", "slept_in_bed");
 	public static final TemplateBlockIdString CRITERIA_BLOCK = new TemplateBlockIdString("block", UNAVAILABLE, "enter_block");
@@ -87,18 +94,13 @@ public final class Tags
 	public static final TemplateRange CRITERIA_DEALT_DAMAGE = new TemplateRange("dealt", UNAVAILABLE, Tag.DOUBLE, "player_damaged", "player_hurt_entity");
 	public static final TemplateString CRITERIA_DIMENSION = new TemplateString("dimension", UNAVAILABLE, "location", "slept_in_bed");
 	public static final TemplateRange CRITERIA_DISTANCE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "used_ender_eye", "levitation");
-	public static final TemplateRange CRITERIA_DISTANCE_ENTITY = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "entity_killed_player",
-			"player_killed_entity", "summoned_entity");
 	public static final TemplateRange CRITERIA_DISTANCE_VILLAGER = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "cured_zombie_villager",
 			"villager_trade");
 	public static final TemplateRange CRITERIA_DISTANCE_ZOMBIE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "cured_zombie_villager");
 	public static final TemplateRange CRITERIA_DURATION = new TemplateRange("duration", UNAVAILABLE, Tag.INT, "levitation");
 	public static final TemplateRange CRITERIA_EMPTY_SLOTS = new TemplateRange("empty", UNAVAILABLE, Tag.INT, "inventory_changed");
-	public static final TemplateEntityId CRITERIA_ENTITY_CHILD = new TemplateEntityId("type", UNAVAILABLE, "bred_animals");
 	public static final TemplateEntityId CRITERIA_ENTITY_ENTITY = new TemplateEntityId("type", UNAVAILABLE, "entity_killed_player", "player_killed_entity",
 			"summoned_entity");
-	public static final TemplateEntityId CRITERIA_ENTITY_PARENT = new TemplateEntityId("type", UNAVAILABLE, "bred_animals");
-	public static final TemplateEntityId CRITERIA_ENTITY_PARTNER = new TemplateEntityId("type", UNAVAILABLE, "bred_animals");
 	public static final TemplateString CRITERIA_FEATURE = new TemplateString("feature", UNAVAILABLE, "location");
 	public static final TemplateRange CRITERIA_FULL_SLOTS = new TemplateRange("full", UNAVAILABLE, Tag.INT, "inventory_changed");
 	public static final TemplateBoolean CRITERIA_ISEXPLOSION_DAMAGE = new TemplateBoolean("is_explosion", UNAVAILABLE, "player_damaged", "player_hurt_entity");
@@ -109,14 +111,13 @@ public final class Tags
 	public static final TemplateTestedItemList CRITERIA_ITEMS = new TemplateTestedItemList("items", UNAVAILABLE, "inventory_changed");
 	public static final TemplateRange CRITERIA_LEVELS = new TemplateRange("levels", UNAVAILABLE, Tag.INT, "enchanted_item");
 	public static final TemplateRange CRITERIA_OCCUPIED_SLOTS = new TemplateRange("occupied", UNAVAILABLE, Tag.INT, "inventory_changed");
-	public static final TemplatePotion CRITERIA_POTION = new TemplatePotion("potion", UNAVAILABLE, "brewed_potion");
 	public static final TemplateRecipeId CRITERIA_RECIPE = new TemplateRecipeId("recipe", UNAVAILABLE, "recipe_unlocked");
 	public static final TemplateBlockState CRITERIA_STATE = new TemplateBlockState("state", UNAVAILABLE, "enter_block");
 	public static final TemplateRange CRITERIA_TAKEN_DAMAGE = new TemplateRange("taken", UNAVAILABLE, Tag.DOUBLE, "player_damaged", "player_hurt_entity");
 	public static final TemplateRange CRITERIA_X_POSITION = new TemplateRange("x", UNAVAILABLE, Tag.DOUBLE, "location", "slept_in_bed");
 	public static final TemplateRange CRITERIA_Y_POSITION = new TemplateRange("y", UNAVAILABLE, Tag.DOUBLE, "location", "slept_in_bed");
 	public static final TemplateRange CRITERIA_Z_POSITION = new TemplateRange("z", UNAVAILABLE, Tag.DOUBLE, "location", "slept_in_bed");
-
+*/
 	public static final TemplateBoolean DEFAULT_BOOLEAN = new TemplateBoolean("", UNAVAILABLE);
 	public static final TemplateNumber DEFAULT_BYTE = new TemplateNumber("", UNAVAILABLE, Tag.BYTE);
 	public static final TemplateCompound DEFAULT_COMPOUND = new DefaultCompound("");
@@ -277,13 +278,6 @@ public final class Tags
 	public static final TemplateString TEXT_STRIKETHROUGH = new TemplateString("strikethrough", UNAVAILABLE);
 	public static final TemplateString TEXT_UNDERLINED = new TemplateString("underlined", UNAVAILABLE);
 
-	public static final TemplateNumber VALUE_MAX = new TemplateNumber("max", UNAVAILABLE, Tag.INT);
-	public static final TemplateNumber VALUE_MAX_DOUBLE = new TemplateNumber("max", UNAVAILABLE, Tag.DOUBLE);
-	public static final TemplateNumber VALUE_MAX_FLOAT = new TemplateNumber("max", UNAVAILABLE, Tag.FLOAT);
-	public static final TemplateNumber VALUE_MIN = new TemplateNumber("min", UNAVAILABLE, Tag.INT);
-	public static final TemplateNumber VALUE_MIN_DOUBLE = new TemplateNumber("min", UNAVAILABLE, Tag.DOUBLE);
-	public static final TemplateNumber VALUE_MIN_FLOAT = new TemplateNumber("min", UNAVAILABLE, Tag.FLOAT);
-
 	public static void create()
 	{
 		ABILITIES_FLYING.isByteBoolean = true;
@@ -294,7 +288,7 @@ public final class Tags
 		FIREWORK_FLICKER.isByteBoolean = true;
 		FIREWORK_TRAIL.isByteBoolean = true;
 		OFFER_EXP.isByteBoolean = true;
-
+/*
 		CRITERIA_BIOME.setValues(Utils.BIOMES);
 		CRITERIA_BIOME.minecraftPrefix = true;
 		CRITERIA_DIMENSION.setValues("overworld", "the_end", "the_nether");
@@ -322,10 +316,10 @@ public final class Tags
 		CRITERIA_ISFIRE_DAMAGE.container = CONTAINER_DAMAGE;
 		CRITERIA_ISMAGIC_DAMAGE.container = CONTAINER_DAMAGE;
 		CRITERIA_ISPROJECTILE_DAMAGE.container = CONTAINER_DAMAGE;
-		CRITERIA_TAKEN_DAMAGE.container = CONTAINER_DAMAGE;
-
-		for (TemplateTag t : ObjectRegistry.unavailableTags.list())
-			if (t instanceof TemplateRange) ((TemplateRange) t).setRangeTags();
+		CRITERIA_TAKEN_DAMAGE.container = CONTAINER_DAMAGE;*/
 	}
+	
+	private Tags()
+	{}
 
 }

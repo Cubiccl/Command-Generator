@@ -10,8 +10,11 @@ import javax.swing.ButtonGroup;
 
 import fr.cubiccl.generator.gameobject.loottable.LootTableCondition;
 import fr.cubiccl.generator.gameobject.loottable.LootTableCondition.Condition;
-import fr.cubiccl.generator.gameobject.tags.*;
+import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.tags.TagNumber;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TagsMain;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
 import fr.cubiccl.generator.gameobject.utils.TestValue;
@@ -220,8 +223,8 @@ public class PanelCondition extends CGPanel implements ActionListener
 				{
 					TagCompound v = (TagCompound) s;
 					int min = 0, max = 0;
-					if (v.hasTag(Tags.VALUE_MIN)) min = v.getTag(Tags.VALUE_MIN).valueInt();
-					if (v.hasTag(Tags.VALUE_MAX)) max = v.getTag(Tags.VALUE_MAX).valueInt();
+					if (v.hasTag(TagsMain.VALUE_MIN)) min = v.getTag(TagsMain.VALUE_MIN).valueInt();
+					if (v.hasTag(TagsMain.VALUE_MAX)) max = v.getTag(TagsMain.VALUE_MAX).valueInt();
 					this.scores.add(new ScoreCondition(v.id(), min, max, true));
 				}
 			}
