@@ -23,9 +23,9 @@ public class CriteriaTrigger extends BaseObject
 	public static final CriteriaTrigger enchanted_item = new CriteriaTrigger("enchanted_item", Tags.CRITERIA_ITEM, Tags.CRITERIA_LEVELS);
 	public static final CriteriaTrigger enter_block = new CriteriaTrigger("enter_block", Tags.CRITERIA_BLOCK, Tags.CRITERIA_STATE);
 	public static final CriteriaTrigger entity_hurt_player = new CriteriaTrigger("entity_hurt_player", Tags.CRITERIA_DAMAGE);
-	public static final CriteriaTrigger entity_killed_player = new CriteriaTrigger("entity_killed_player");
+	public static final CriteriaTrigger entity_killed_player = new CriteriaTrigger("entity_killed_player", Tags.CRITERIA_ENTITY, Tags.CRITERIA_KILLINGBLOW);
 	public static final CriteriaTrigger impossible = new CriteriaTrigger("impossible");
-	public static final CriteriaTrigger inventory_changed = new CriteriaTrigger("inventory_changed");
+	public static final CriteriaTrigger inventory_changed = new CriteriaTrigger("inventory_changed", Tags.CRITERIA_ITEMS, Tags.CRITERIA_SLOTS);
 	public static final CriteriaTrigger levitation = new CriteriaTrigger("levitation");
 	public static final CriteriaTrigger location = new CriteriaTrigger("location");
 	public static final CriteriaTrigger player_hurt_entity = new CriteriaTrigger("player_hurt_entity");
