@@ -16,6 +16,9 @@ import fr.cubiccl.generator.utils.Text;
 
 public class TemplateRange extends TemplateNumber
 {
+	public static final TemplateNumber[] min =
+	{ null, null, null, TagsMain.VALUE_MIN, null, TagsMain.VALUE_MIN_FLOAT, TagsMain.VALUE_MIN_DOUBLE }, max =
+	{ null, null, null, TagsMain.VALUE_MAX, null, TagsMain.VALUE_MAX_FLOAT, TagsMain.VALUE_MAX_DOUBLE };
 
 	public final byte numberType;
 	private TemplateNumber tagMin, tagMax;
@@ -121,10 +124,6 @@ public class TemplateRange extends TemplateNumber
 
 	private void setRangeTags()
 	{
-		TemplateNumber[] min =
-		{ null, null, null, TagsMain.VALUE_MIN, null, TagsMain.VALUE_MIN_FLOAT, TagsMain.VALUE_MIN_DOUBLE };
-		TemplateNumber[] max =
-		{ null, null, null, TagsMain.VALUE_MAX, null, TagsMain.VALUE_MAX_FLOAT, TagsMain.VALUE_MAX_DOUBLE };
 		this.tagMin = min[this.numberType];
 		this.tagMax = max[this.numberType];
 	}

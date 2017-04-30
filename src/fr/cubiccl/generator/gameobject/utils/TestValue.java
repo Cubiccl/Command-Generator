@@ -5,13 +5,23 @@ import java.util.Random;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
-import fr.cubiccl.generator.gameobject.templatetags.TagsMain;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateNumber;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateRange;
 
 /** Can either be a TagNumber or a TagCompound containing two TagNumbers (min and max). */
 public class TestValue
 {
+
+	private static TemplateNumber maxFor(TemplateNumber tag)
+	{
+		return TemplateRange.max[tag.tagType];
+	}
+
+	private static TemplateNumber minFor(TemplateNumber tag)
+	{
+		return TemplateRange.min[tag.tagType];
+	}
 
 	public final TemplateNumber exactTag;
 	public boolean isRanged = false;
@@ -21,7 +31,7 @@ public class TestValue
 
 	public TestValue(TemplateNumber exactTag, TemplateCompound rangeTag)
 	{
-		this(exactTag, rangeTag, TagsMain.VALUE_MIN, TagsMain.VALUE_MAX);
+		this(exactTag, rangeTag, minFor(exactTag), maxFor(exactTag));
 	}
 
 	public TestValue(TemplateNumber exactTag, TemplateCompound rangeTag, TemplateNumber minTag, TemplateNumber maxTag)
@@ -66,6 +76,11 @@ public class TestValue
 	{
 		if (this.isRanged) return new Random().nextDouble() * (this.valueMax - this.valueMin + 1) + this.valueMax;
 		return this.valueMin;
+	}
+
+	public boolean isInt()
+	{
+		return this.exactTag.tagType != Tag.DOUBLE && this.exactTag.tagType != Tag.FLOAT;
 	}
 
 	public Tag toTag()

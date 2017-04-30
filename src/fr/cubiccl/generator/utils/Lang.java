@@ -60,10 +60,10 @@ public class Lang
 		textID = textID.replaceAll("minecraft:", "");
 		while (remapping.containsKey(textID))
 			textID = remapping.get(textID);
-		if (!keyExists(textID))
+		if (!keyExists(textID) && !CommandGenerator.untranslated.contains(textID))
 		{
+			CommandGenerator.untranslated.add(textID);
 			CommandGenerator.log("Couldn't find translation for : " + textID);
-			if (!keyExists(textID) && !CommandGenerator.untranslated.contains(textID)) CommandGenerator.untranslated.add(textID);
 			// new Exception().printStackTrace();
 		}
 		return doTranslate(textID);

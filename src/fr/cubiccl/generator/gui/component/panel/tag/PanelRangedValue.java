@@ -21,8 +21,9 @@ public class PanelRangedValue extends CGPanel implements ActionListener
 	private CGRadioButton buttonFixed, buttonRanged;
 	private CGEntry entryMin, entryMax, entryFixed;
 
-	public PanelRangedValue(Text description, Text hintText)
+	public PanelRangedValue(String titleID, Text description, Text hintText)
 	{
+		super(titleID);
 		GridBagConstraints gbc = this.createGridBagLayout();
 		gbc.gridwidth = 2;
 		this.add(new CGLabel(description), gbc);
@@ -52,6 +53,11 @@ public class PanelRangedValue extends CGPanel implements ActionListener
 		this.onModeChange();
 	}
 
+	public PanelRangedValue(Text description, Text hintText)
+	{
+		this(null, description, hintText);
+	}
+
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
@@ -68,7 +74,7 @@ public class PanelRangedValue extends CGPanel implements ActionListener
 		}
 	}
 
-	public void generateValue(TestValue value)
+	public TestValue generateValue(TestValue value)
 	{
 		value.isRanged = this.isRanged();
 		if (this.isRanged())
@@ -76,6 +82,7 @@ public class PanelRangedValue extends CGPanel implements ActionListener
 			value.valueMin = this.min();
 			value.valueMax = this.max();
 		} else value.valueMin = this.value();
+		return value;
 	}
 
 	public boolean isRanged()
@@ -132,7 +139,9 @@ public class PanelRangedValue extends CGPanel implements ActionListener
 
 	public void setupFrom(TestValue distance)
 	{
-		if (distance.isRanged) this.setRanged(distance.valueMin, distance.valueMax);
+		if (distance.isRanged) if (distance.isInt()) this.setRanged((int) distance.valueMin, (int) distance.valueMax);
+		else this.setRanged(distance.valueMin, distance.valueMax);
+		else if (distance.isInt()) this.setFixed((int) distance.valueMin);
 		else this.setFixed(distance.valueMin);
 	}
 

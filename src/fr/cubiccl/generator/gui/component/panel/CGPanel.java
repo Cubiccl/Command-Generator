@@ -56,6 +56,12 @@ public class CGPanel extends CPanel implements ITranslated
 		this.title = name;
 	}
 
+	public void setTitle(String titleID)
+	{
+		this.titleID = titleID;
+		this.updateTranslations();
+	}
+
 	@Override
 	public void updateTranslations()
 	{

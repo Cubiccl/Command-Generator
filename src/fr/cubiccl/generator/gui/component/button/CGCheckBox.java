@@ -22,6 +22,11 @@ public class CGCheckBox extends CCheckBox implements ITranslated
 		this.updateTranslations();
 	}
 
+	public void setTextID(String textID)
+	{
+		this.setTextID(new Text(textID));
+	}
+
 	public void setTextID(Text text)
 	{
 		this.text = text;
