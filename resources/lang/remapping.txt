@@ -1,0 +1,5 @@
+// This file remaps some translations to avoid repetitions.
+
+tag.from.overworld=tag.to.overworld=tag.dimension.overworld
+tag.from.the_end=tag.to.the_end=tag.dimension.the_end
+tag.from.the_nether=tag.to.the_nether=tag.dimension.the_nether

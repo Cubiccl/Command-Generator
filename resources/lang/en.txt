@@ -56,6 +56,7 @@ advancement.until=All until and this Advancement
 advancement.criteria=Criteria
 advancement.criteria.bred_animals=Player breeds 2 animals.
 advancement.criteria.brewed_potion=Player brews a Potion.
+advancement.criteria.changed_dimension=Player moves to another dimension.
 advancement.criteria.construct_beacon=Player changes the structure of a Beacon.
 advancement.criteria.cured_zombie_villager=Player cures a Zombie Villager.
 advancement.criteria.description=Trigger
