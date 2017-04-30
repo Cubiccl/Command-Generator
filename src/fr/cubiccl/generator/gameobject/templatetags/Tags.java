@@ -74,7 +74,9 @@ public final class Tags
 	public static final TemplateNumber COORD_Y_INT = new TemplateNumber("Y", UNAVAILABLE, Tag.INT);
 	public static final TemplateNumber COORD_Z = new TemplateNumber("Z", UNAVAILABLE, Tag.DOUBLE);
 	public static final TemplateNumber COORD_Z_INT = new TemplateNumber("Z", UNAVAILABLE, Tag.INT);
-	
+
+	public static final TemplateString CRITERIA_DIMENSION_FROM = new TemplateString("from", UNAVAILABLE, "changed_dimension");
+	public static final TemplateString CRITERIA_DIMENSION_TO = new TemplateString("to", UNAVAILABLE, "changed_dimension");
 	public static final TemplateNumber CRITERIA_DISTANCE = new TemplateNumber("distance", UNAVAILABLE, Tag.INT);
 	public static final TemplateCompound CRITERIA_DISTANCE_ = new DefaultCompound("distance");
 	public static final TemplateCriteriaEntity CRITERIA_ENTITY_CHILD = new TemplateCriteriaEntity("child", UNAVAILABLE, "bred_animals");
@@ -92,7 +94,6 @@ public final class Tags
 			"player_hurt_entity");
 	public static final TemplateBoolean CRITERIA_BYPASSMAGIC_DAMAGE = new TemplateBoolean("bypasses_magic", UNAVAILABLE, "player_damaged", "player_hurt_entity");
 	public static final TemplateRange CRITERIA_DEALT_DAMAGE = new TemplateRange("dealt", UNAVAILABLE, Tag.DOUBLE, "player_damaged", "player_hurt_entity");
-	public static final TemplateString CRITERIA_DIMENSION = new TemplateString("dimension", UNAVAILABLE, "location", "slept_in_bed");
 	public static final TemplateRange CRITERIA_DISTANCE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "used_ender_eye", "levitation");
 	public static final TemplateRange CRITERIA_DISTANCE_VILLAGER = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "cured_zombie_villager",
 			"villager_trade");
@@ -288,10 +289,12 @@ public final class Tags
 		FIREWORK_FLICKER.isByteBoolean = true;
 		FIREWORK_TRAIL.isByteBoolean = true;
 		OFFER_EXP.isByteBoolean = true;
+
+		CRITERIA_DIMENSION_FROM.setValues("overworld", "the_end", "the_nether");
+		CRITERIA_DIMENSION_TO.setValues("overworld", "the_end", "the_nether");
 /*
 		CRITERIA_BIOME.setValues(Utils.BIOMES);
 		CRITERIA_BIOME.minecraftPrefix = true;
-		CRITERIA_DIMENSION.setValues("overworld", "the_end", "the_nether");
 		CRITERIA_DISTANCE_ENTITY.container = CONTAINER_ENTITY;
 		CRITERIA_DISTANCE_VILLAGER.container = CONTAINER_VILLAGER;
 		CRITERIA_DISTANCE_ZOMBIE.container = CONTAINER_ZOMBIE;

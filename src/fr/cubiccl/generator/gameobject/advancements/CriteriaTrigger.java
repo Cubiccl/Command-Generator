@@ -16,6 +16,7 @@ public class CriteriaTrigger extends BaseObject
 	public static final CriteriaTrigger bred_animals = new CriteriaTrigger("bred_animals", Tags.CRITERIA_ENTITY_CHILD, Tags.CRITERIA_ENTITY_PARENT,
 			Tags.CRITERIA_ENTITY_PARTNER);
 	public static final CriteriaTrigger brewed_potion = new CriteriaTrigger("brewed_potion", Tags.CRITERIA_POTION);
+	public static final CriteriaTrigger changed_dimension = new CriteriaTrigger("changed_dimension", Tags.CRITERIA_DIMENSION_FROM, Tags.CRITERIA_DIMENSION_TO);
 	public static final CriteriaTrigger construct_beacon = new CriteriaTrigger("construct_beacon");
 	public static final CriteriaTrigger cured_zombie_villager = new CriteriaTrigger("cured_zombie_villager");
 	public static final CriteriaTrigger enchanted_item = new CriteriaTrigger("enchanted_item");
