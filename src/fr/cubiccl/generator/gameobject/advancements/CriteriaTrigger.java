@@ -17,10 +17,11 @@ public class CriteriaTrigger extends BaseObject
 			Tags.CRITERIA_ENTITY_PARTNER);
 	public static final CriteriaTrigger brewed_potion = new CriteriaTrigger("brewed_potion", Tags.CRITERIA_POTION);
 	public static final CriteriaTrigger changed_dimension = new CriteriaTrigger("changed_dimension", Tags.CRITERIA_DIMENSION_FROM, Tags.CRITERIA_DIMENSION_TO);
-	public static final CriteriaTrigger construct_beacon = new CriteriaTrigger("construct_beacon");
-	public static final CriteriaTrigger cured_zombie_villager = new CriteriaTrigger("cured_zombie_villager");
-	public static final CriteriaTrigger enchanted_item = new CriteriaTrigger("enchanted_item");
-	public static final CriteriaTrigger enter_block = new CriteriaTrigger("enter_block");
+	public static final CriteriaTrigger construct_beacon = new CriteriaTrigger("construct_beacon", Tags.CRITERIA_LEVEL);
+	public static final CriteriaTrigger cured_zombie_villager = new CriteriaTrigger("cured_zombie_villager", Tags.CRITERIA_ENTITY_VILLAGER,
+			Tags.CRITERIA_ENTITY_ZOMBIE);
+	public static final CriteriaTrigger enchanted_item = new CriteriaTrigger("enchanted_item", Tags.CRITERIA_ITEM, Tags.CRITERIA_LEVELS);
+	public static final CriteriaTrigger enter_block = new CriteriaTrigger("enter_block", Tags.CRITERIA_BLOCK, Tags.CRITERIA_STATE);
 	public static final CriteriaTrigger entity_killed_player = new CriteriaTrigger("entity_killed_player");
 	public static final CriteriaTrigger impossible = new CriteriaTrigger("impossible");
 	public static final CriteriaTrigger inventory_changed = new CriteriaTrigger("inventory_changed");

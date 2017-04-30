@@ -93,7 +93,6 @@ public class TemplateRange extends TemplateNumber
 			return true;
 		} catch (CommandGenerationException e)
 		{
-			e.printStackTrace();
 			CommandGenerator.report(e);
 			return false;
 		}

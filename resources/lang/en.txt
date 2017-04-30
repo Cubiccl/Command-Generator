@@ -3291,9 +3291,11 @@ tag.other.recipe=The Recipe that was unlocked.
 tag.other.state=The states of the Block the Player is currently in.
 tag.other.taken.damage=The damage that was taken (after damage reduction).
 tag.other.to=The dimension the Player just arrived in.
+tag.other.villager=Describes the converted Villager.
 tag.other.x.position=The X cordinate of the Player.
 tag.other.y.position=The Y cordinate of the Player.
 tag.other.z.position=The Z cordinate of the Player.
+tag.other.zombie=Describes the Zombie that was converted.
 
 tag.Potion.empty=Uncraftable Potion
 tag.Potion.water=Water Bottle
