@@ -172,6 +172,9 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		this.criteria.clear();
 		for (AdvancementCriteria criteria : this.advancement.getCriteria())
 			this.criteria.add(criteria);
+		this.panelRequirements.clear();
+		for (AdvancementCriteria[] req : this.advancement.requirements)
+			this.panelRequirements.add(new Requirement(req));
 
 		this.entryExperience.setText(Integer.toString(this.advancement.rewardExperience));
 		this.recipes.clear();

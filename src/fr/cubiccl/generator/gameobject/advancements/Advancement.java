@@ -43,12 +43,17 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		for (Element criteria : advancement.getChild("criterias").getChildren())
 			a.criteria.add(AdvancementCriteria.createFrom(criteria));
 
-		for (Element req : advancement.getChild("requirements").getChildren())
+		for (Element req : advancement.getChild("requirements").getChildren("r"))
 		{
-			ArrayList<Integer> r = new ArrayList<Integer>();
-			for (Element i : req.getChildren())
-				r.add(Integer.parseInt(i.getText()));
-			a.requirements.add(r.toArray(new Integer[r.size()]));
+			ArrayList<AdvancementCriteria> r = new ArrayList<AdvancementCriteria>();
+			for (Element name : req.getChildren("c"))
+				for (AdvancementCriteria c : a.criteria)
+					if (name.getText().equals(c.name))
+					{
+						r.add(c);
+						break;
+					}
+			a.requirements.add(r.toArray(new AdvancementCriteria[r.size()]));
 		}
 
 		if (advancement.getChild("experience") != null) a.rewardExperience = Integer.parseInt(advancement.getChildText("experience"));
@@ -93,18 +98,20 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 
 		if (tag.hasTag(Tags.ADVANCEMENT_REQUIREMENTS)) for (Tag req : tag.getTag(Tags.ADVANCEMENT_REQUIREMENTS).value())
 		{
-			ArrayList<Integer> r = new ArrayList<Integer>();
+			ArrayList<AdvancementCriteria> r = new ArrayList<AdvancementCriteria>();
 			for (Tag t : ((TagList) req).value())
 			{
 				String name = ((TagString) t).value();
-				for (int i = 0; i < a.criteria.size(); ++i)
-					if (a.criteria.get(i).name.equals(name))
+				for (AdvancementCriteria c : a.criteria)
+				{
+					if (c.name.equals(name))
 					{
-						r.add(i);
+						r.add(c);
 						break;
 					}
+				}
 			}
-			a.requirements.add(r.toArray(new Integer[r.size()]));
+			a.requirements.add(r.toArray(new AdvancementCriteria[r.size()]));
 		}
 
 		if (tag.hasTag(Tags.ADVANCEMENT_REWARDS))
@@ -131,7 +138,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 	private int data;
 	private Item item;
 	public JsonMessage jsonTitle;
-	public ArrayList<Integer[]> requirements;
+	public ArrayList<AdvancementCriteria[]> requirements;
 	public int rewardExperience;
 	public ArrayList<String> rewardLoot, rewardRecipes, rewardCommands;
 
@@ -141,7 +148,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		this.rewardRecipes = new ArrayList<String>();
 		this.rewardCommands = new ArrayList<String>();
 		this.criteria = new ArrayList<AdvancementCriteria>();
-		this.requirements = new ArrayList<Integer[]>();
+		this.requirements = new ArrayList<AdvancementCriteria[]>();
 		this.rewardExperience = 0;
 		this.item = ObjectRegistry.items.first();
 		this.frame = "task";
@@ -207,19 +214,18 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 
 	public void removeCriterion(AdvancementCriteria criteria)
 	{
-		int index = this.criteria.indexOf(criteria);
-		ArrayList<Integer[]> newReq = new ArrayList<Integer[]>();
-		for (Integer[] req : this.requirements)
+		ArrayList<AdvancementCriteria[]> newReq = new ArrayList<AdvancementCriteria[]>();
+		for (AdvancementCriteria[] req : this.requirements)
 		{
-			ArrayList<Integer> r = new ArrayList<Integer>();
-			for (Integer i : req)
-				if (i > index) r.add(i - 1);
-				else if (i < index) r.add(i);
-			newReq.add(r.toArray(new Integer[r.size()]));
+			ArrayList<AdvancementCriteria> r = new ArrayList<AdvancementCriteria>();
+			for (AdvancementCriteria c : req)
+				if (c != criteria) r.add(c);
+			newReq.add(r.toArray(new AdvancementCriteria[r.size()]));
 		}
 
 		this.criteria.remove(criteria);
 		this.requirements.clear();
+		this.requirements.addAll(newReq);
 	}
 
 	public void setData(int data)
@@ -271,11 +277,11 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		if (this.requirements.size() != 0)
 		{
 			ArrayList<TagList> req = new ArrayList<TagList>();
-			for (Integer[] r : this.requirements)
+			for (AdvancementCriteria[] r : this.requirements)
 			{
 				TagString[] names = new TagString[r.length];
 				for (int i = 0; i < names.length; ++i)
-					names[i] = Tags.DEFAULT_STRING.create(this.criteria.get(r[i]).name);
+					names[i] = Tags.DEFAULT_STRING.create(r[i].name);
 				req.add(Tags.DEFAULT_LIST.create(names));
 			}
 			tags.add(Tags.ADVANCEMENT_REQUIREMENTS.create(req.toArray(new TagList[req.size()])));
@@ -328,11 +334,11 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		root.addContent(criteria);
 
 		Element req = new Element("requirements");
-		for (Integer[] r : this.requirements)
+		for (AdvancementCriteria[] r : this.requirements)
 		{
 			Element r1 = new Element("r");
-			for (int i : r)
-				r1.addContent(new Element("i").setText(Integer.toString(i)));
+			for (AdvancementCriteria c : r)
+				r1.addContent(new Element("c").setText(c.name));
 			req.addContent(r1);
 		}
 		root.addContent(req);

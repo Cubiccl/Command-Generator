@@ -560,7 +560,7 @@ lt_function.set_nbt=Add NBT Tags
 lt_function.set_nbt.description=Adds NBT Tags to the Item.
 
 menu.about=About
-menu.about.text=<html>Command Generator version <version>.<br />Made by <a href="https://twitter.com/Cubiccl">Cubi<a>.<br />Updater made by <a href="http://www.minecraftforum.net/members/Lenni0451">Lenni0451</a>. Thanks a lot!<br />For any questions or suggestions, contact Cubi or visit the <a href="http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-tools/2142815">Forum thread</a>.</html>
+menu.about.text=<html>Command Generator version <version>.<br />Made by <a href="https://twitter.com/Cubiccl">Cubi<a>.<br />Updaters made by <a href="http://www.minecraftforum.net/members/Lenni0451">Lenni0451</a>. Thanks a lot!<br />Also thanks to <a href="http://www.minecraftforum.net/members/Skylinerw">Skylinerw</a> for his great thread on the Forum with detailed info about various topics (advancements, recipes...)<br />For any questions or suggestions, contact Cubi or visit the <a href="http://www.minecraftforum.net/forums/mapping-and-modding/minecraft-tools/2142815">Forum thread</a>.</html>
 menu.advancement=Advancement Generator
 menu.command=Command Generator
 menu.exit=Exit
@@ -3298,6 +3298,7 @@ tag.other.damage=Describes the damage that was dealt.
 tag.other.delta=The change of durability. Negative values mean durability was lost.
 tag.other.dimension=The dimension the Player is currently in.
 tag.other.distance=The distance between the Stronghold and the Player.
+tag.other.distance.levitation=The distance the Player has been levitating for.
 tag.other.durability=The durability of the Item after the change.
 tag.other.duration=The number of ticks the Player has been levitating for.
 tag.other.entity=Describes the Entity that killed the Player.

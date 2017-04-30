@@ -1,3 +1,21 @@
+------------------------- VERSION 2.6.2.2 -------------------------
+ADDITIONS
+- Remade the criteria for Advancement triggers. It may not look that different but it's actually much better on my side.
+- Updated the Updater (Kappa) for non-Windows users ; once again thanks to Lenni 0451 for working on this!
+
+BUGS FIXED
+- Fixed various issues with Advancement Requirements.
+
+CHANGED TRANSLATIONS
+advancement.criteria.changed_dimension,advancement.criteria.item_durability_changed,advancement.criteria.changed_dimension
+advancement.criteria.player_damaged -> advancement.criteria.entity_hurt_player
+tag.other.* (also check for new ones)
+
+ADDED TRANSLATIONS
+criteria.damage.*
+criteria.entity.*
+criteria.slots.*
+
 ------------------------- VERSION 2.6.2.1 -------------------------
 ADDITIONS
 - Updated for snapshots 17w17a & 17w17b.

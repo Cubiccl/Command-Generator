@@ -1,6 +1,6 @@
 indentation=true
-folder=C:\Users\Clément\Desktop\Programmation\Generator
-lastversion=2.6.2.1
+folder=C:\Users\Clément\Desktop\Programmation\Generator\assets\advancements\adventure
+lastversion=2.6.2.2
 slash=true
 sort=0
 lang=en

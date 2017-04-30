@@ -74,21 +74,22 @@ public class PanelRequirement extends CGPanel implements ActionListener
 		this.updateDisplay();
 	}
 
-	public Integer[] generate()
+	public AdvancementCriteria[] generate()
 	{
-		ArrayList<Integer> list = new ArrayList<Integer>();
+		ArrayList<AdvancementCriteria> list = new ArrayList<AdvancementCriteria>();
 		AdvancementCriteria[] criteria = this.advancement.getCriteria();
 		for (int i = 0; i < criteria.length; ++i)
-			if (this.added.get(criteria[i])) list.add(i);
-		return list.toArray(new Integer[list.size()]);
+			if (this.added.get(criteria[i])) list.add(criteria[i]);
+		return list.toArray(new AdvancementCriteria[list.size()]);
 	}
 
-	public void setupFrom(Integer[] criterias)
+	public void setupFrom(AdvancementCriteria[] criterias)
 	{
 		for (AdvancementCriteria criteria : this.advancement.getCriteria())
 			this.added.put(criteria, false);
-		for (Integer i : criterias)
-			this.added.put(this.advancement.getCriteria()[i], true);
+		for (AdvancementCriteria c : criterias)
+			this.added.put(c, true);
+		this.updateDisplay();
 	}
 
 	private void updateDisplay()

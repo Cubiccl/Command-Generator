@@ -11,10 +11,12 @@ import fr.cubiccl.generator.utils.Text;
 
 public class Requirement implements IObjectList<Requirement>
 {
-	public Integer[] criterias = new Integer[0];
+	public AdvancementCriteria[] criterias = new AdvancementCriteria[0];
 
-	public Requirement()
-	{}
+	public Requirement(AdvancementCriteria[] criteria)
+	{
+		this.criterias = criteria;
+	}
 
 	@Override
 	public CGPanel createPanel(ListProperties properties)

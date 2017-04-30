@@ -21,9 +21,6 @@ import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.gui.Window;
 import fr.cubiccl.generator.utils.*;
 
-// TODO Re-structure advancements. Tags may not be the way to go.
-// TODO Commands in advancements.
-
 public class CommandGenerator
 {
 	private static ArrayList<String> commandHistory = new ArrayList<String>();
@@ -110,7 +107,7 @@ public class CommandGenerator
 	{
 		log("Generating !");
 		Advancement a = window.panelAdvancementSelection.selectedAdvancement();
-		if (a != null && a.isValid())
+		if (a != null)
 		{
 			String output = a.toCommand();
 			window.showOutput(output);

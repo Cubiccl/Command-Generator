@@ -210,18 +210,6 @@
     </recipe>
   </recipes>
   <advancements>
-    <advancement objectname="Elytra" version="1.12" icon="minecraft:elytra" frame="task">
-      <title>Sky's the Limit</title>
-      <description>Find an Elytra</description>
-      <parent>minecraft:story/enter_end_gateway</parent>
-      <criterias>
-        <criteria name="elytra" trigger="inventory_changed" />
-      </criterias>
-      <requirements />
-      <recipes />
-      <loot />
-      <commands />
-    </advancement>
     <advancement objectname="My first Advancement" version="1.12" icon="minecraft:command_block" frame="goal">
       <title>Cheats!!</title>
       <description>Use /give to get an unobtainable item !</description>
@@ -234,7 +222,11 @@
           <condition>"state":{"facing":"north","open":"false"}</condition>
         </criteria>
       </criterias>
-      <requirements />
+      <requirements>
+        <r>
+          <c>first_criteria</c>
+        </r>
+      </requirements>
       <experience>4</experience>
       <recipes>
         <r>minecraft:bedrock</r>

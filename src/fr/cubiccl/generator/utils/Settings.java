@@ -103,7 +103,7 @@ public class Settings
 	}
 
 	public static final boolean CHECK_UPDATES = false;
-	public static final String GENERATOR_VERSION = "2.6.2.1";
+	public static final String GENERATOR_VERSION = "2.6.2.2";
 	private static Language language;
 	private static Version mcversion;
 	public static final String MINECRAFT_VERSION = "mcversion", LANG = "lang", SLASH = "slash", SORT_TYPE = "sort", INDENTATION = "indentation",
