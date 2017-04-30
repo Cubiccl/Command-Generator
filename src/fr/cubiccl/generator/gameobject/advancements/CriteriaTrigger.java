@@ -26,16 +26,20 @@ public class CriteriaTrigger extends BaseObject
 	public static final CriteriaTrigger entity_killed_player = new CriteriaTrigger("entity_killed_player", Tags.CRITERIA_ENTITY, Tags.CRITERIA_KILLINGBLOW);
 	public static final CriteriaTrigger impossible = new CriteriaTrigger("impossible");
 	public static final CriteriaTrigger inventory_changed = new CriteriaTrigger("inventory_changed", Tags.CRITERIA_ITEMS, Tags.CRITERIA_SLOTS);
-	public static final CriteriaTrigger levitation = new CriteriaTrigger("levitation");
-	public static final CriteriaTrigger location = new CriteriaTrigger("location");
-	public static final CriteriaTrigger player_hurt_entity = new CriteriaTrigger("player_hurt_entity");
-	public static final CriteriaTrigger player_killed_entity = new CriteriaTrigger("player_killed_entity");
-	public static final CriteriaTrigger recipe_unlocked = new CriteriaTrigger("recipe_unlocked");
-	public static final CriteriaTrigger slept_in_bed = new CriteriaTrigger("slept_in_bed");
-	public static final CriteriaTrigger summoned_entity = new CriteriaTrigger("summoned_entity");
+	public static final CriteriaTrigger item_durabillity_changed = new CriteriaTrigger("item_durabillity_changed", Tags.CRITERIA_ITEM,
+			Tags.CRITERIA_DURABILITY, Tags.CRITERIA_DELTA);
+	public static final CriteriaTrigger levitation = new CriteriaTrigger("levitation", Tags.CRITERIA_LEVITATION_DISTANCE, Tags.CRITERIA_LEVITATION_DURATION);
+	public static final CriteriaTrigger location = new CriteriaTrigger("location", Tags.CRITERIA_BIOME, Tags.CRITERIA_DIMENSION, Tags.CRITERIA_FEATURE,
+			Tags.CRITERIA_POSITION);
+	public static final CriteriaTrigger player_hurt_entity = new CriteriaTrigger("player_hurt_entity", Tags.CRITERIA_DAMAGE, Tags.CRITERIA_ENTITY);
+	public static final CriteriaTrigger player_killed_entity = new CriteriaTrigger("player_killed_entity", Tags.CRITERIA_ENTITY, Tags.CRITERIA_KILLINGBLOW);
+	public static final CriteriaTrigger recipe_unlocked = new CriteriaTrigger("recipe_unlocked", Tags.CRITERIA_RECIPE);
+	public static final CriteriaTrigger slept_in_bed = new CriteriaTrigger("slept_in_bed", Tags.CRITERIA_BIOME, Tags.CRITERIA_DIMENSION, Tags.CRITERIA_FEATURE,
+			Tags.CRITERIA_POSITION);
+	public static final CriteriaTrigger summoned_entity = new CriteriaTrigger("summoned_entity", Tags.CRITERIA_ENTITY);
 	private static ArrayList<CriteriaTrigger> triggers;
-	public static final CriteriaTrigger used_ender_eye = new CriteriaTrigger("used_ender_eye");
-	public static final CriteriaTrigger villager_trade = new CriteriaTrigger("villager_trade");
+	public static final CriteriaTrigger used_ender_eye = new CriteriaTrigger("used_ender_eye", Tags.CRITERIA_ENDEREYE_DISTANCE);
+	public static final CriteriaTrigger villager_trade = new CriteriaTrigger("villager_trade", Tags.CRITERIA_ITEM, Tags.CRITERIA_ENTITY_VILLAGER);
 
 	public static CriteriaTrigger find(String id)
 	{

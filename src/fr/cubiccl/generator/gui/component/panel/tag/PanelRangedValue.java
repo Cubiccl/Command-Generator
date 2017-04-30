@@ -137,12 +137,12 @@ public class PanelRangedValue extends CGPanel implements ActionListener
 		this.onModeChange();
 	}
 
-	public void setupFrom(TestValue distance)
+	public void setupFrom(TestValue value)
 	{
-		if (distance.isRanged) if (distance.isInt()) this.setRanged((int) distance.valueMin, (int) distance.valueMax);
-		else this.setRanged(distance.valueMin, distance.valueMax);
-		else if (distance.isInt()) this.setFixed((int) distance.valueMin);
-		else this.setFixed(distance.valueMin);
+		if (value.isRanged) if (value.isInt()) this.setRanged((int) value.valueMin, (int) value.valueMax);
+		else this.setRanged(value.valueMin, value.valueMax);
+		else if (value.isInt()) this.setFixed((int) value.valueMin);
+		else this.setFixed(value.valueMin);
 	}
 
 	public double value()

@@ -1,5 +1,18 @@
 // This file remaps some translations to avoid repetitions.
 
+criteria.position.x=argument.x
+criteria.position.y=argument.y
+criteria.position.z=argument.z
+
+tag.feature.EndCity=locate.EndCity
+tag.feature.Fortress=locate.Fortress
+tag.feature.Mansion=locate.Mansion
+tag.feature.Mineshaft=locate.Mineshaft
+tag.feature.Monument=locate.Monument
+tag.feature.Stronghold=locate.Stronghold
+tag.feature.Temple=locate.Temple
+tag.feature.Village=locate.Village
+
 tag.from.overworld=tag.to.overworld=tag.dimension.overworld
 tag.from.the_end=tag.to.the_end=tag.dimension.the_end
 tag.from.the_nether=tag.to.the_nether=tag.dimension.the_nether
