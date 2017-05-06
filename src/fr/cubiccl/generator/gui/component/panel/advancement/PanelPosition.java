@@ -20,6 +20,13 @@ public class PanelPosition extends PanelTestValues
 
 	public PanelPosition()
 	{
+		this(null);
+	}
+
+	public PanelPosition(String titleID)
+	{
+		super(titleID);
+
 		this.x = new TestValue(Tags.CRITERIA_X, Tags.CRITERIA_X_);
 		this.y = new TestValue(Tags.CRITERIA_Y, Tags.CRITERIA_Y_);
 		this.z = new TestValue(Tags.CRITERIA_Z, Tags.CRITERIA_Z_);

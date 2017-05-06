@@ -185,26 +185,31 @@ public class PanelJsonMessage extends CGPanel implements ActionListener, ICustom
 		gbc.gridx = 0;
 		++gbc.gridy;
 		gbc.gridwidth = 4;
-		this.add(this.panelClickEvent = new PanelClickEvent(), gbc);
-		++gbc.gridy;
-		this.add(this.panelHoverEvent = new PanelHoverEvent(), gbc);
-		++gbc.gridy;
+		if (this.hasEvents)
+		{
+			this.add(this.panelClickEvent = new PanelClickEvent(), gbc);
+			++gbc.gridy;
+			this.add(this.panelHoverEvent = new PanelHoverEvent(), gbc);
+			++gbc.gridy;
+		}
 		gbc.fill = GridBagConstraints.NONE;
 		if (customObjects) this.add(new PanelCustomObject<JsonMessage, JsonMessage>(this, ObjectSaver.jsonMessages), gbc);
 
 		this.comboboxMode.addActionListener(this);
 		this.checkboxClickEvent.addActionListener(this);
 		this.checkboxHoverEvent.addActionListener(this);
-		this.panelClickEvent.setVisible(false);
-		this.panelHoverEvent.setVisible(false);
-		this.panelTarget.setVisible(false);
-		this.entryInsertion.addHelpLabel(new HelpLabel("json.insertion.help"));
-
-		if (!this.hasEvents)
+		if (this.hasEvents)
+		{
+			this.panelClickEvent.setVisible(false);
+			this.panelHoverEvent.setVisible(false);
+		} else
 		{
 			this.checkboxClickEvent.setVisible(false);
 			this.checkboxHoverEvent.setVisible(false);
 		}
+		this.panelTarget.setVisible(false);
+		this.entryInsertion.addHelpLabel(new HelpLabel("json.insertion.help"));
+
 	}
 
 	@Override

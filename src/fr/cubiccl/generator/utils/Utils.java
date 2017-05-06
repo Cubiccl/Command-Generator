@@ -16,6 +16,8 @@ public final class Utils
 	public static final String[] COLORS =
 	{ "white", "aqua", "black", "blue", "dark_aqua", "dark_blue", "dark_gray", "dark_green", "dark_purple", "dark_red", "gold", "gray", "green",
 			"light_purple", "red", "yellow" };
+	public static final String[] DIMENSIONS =
+	{ "overworld", "the_end", "the_nether" };
 	public static final String[] STRUCTURES =
 	{ "EndCity", "Fortress", "Mansion", "Mineshaft", "Monument", "Stronghold", "Temple", "Village" };
 	public static final String[] WOOL_COLORS =

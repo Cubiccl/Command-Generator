@@ -13,11 +13,13 @@ import fr.cubiccl.generator.utils.Text;
 
 public class CriteriaTrigger extends BaseObject
 {
+	public static final CriteriaTrigger arbitrary_player_tick = new CriteriaTrigger("arbitrary_player_tick");
 	public static final CriteriaTrigger bred_animals = new CriteriaTrigger("bred_animals", Tags.CRITERIA_ENTITY_CHILD, Tags.CRITERIA_ENTITY_PARENT,
 			Tags.CRITERIA_ENTITY_PARTNER);
 	public static final CriteriaTrigger brewed_potion = new CriteriaTrigger("brewed_potion", Tags.CRITERIA_POTION);
 	public static final CriteriaTrigger changed_dimension = new CriteriaTrigger("changed_dimension", Tags.CRITERIA_DIMENSION_FROM, Tags.CRITERIA_DIMENSION_TO);
 	public static final CriteriaTrigger construct_beacon = new CriteriaTrigger("construct_beacon", Tags.CRITERIA_LEVEL);
+	public static final CriteriaTrigger consume_item = new CriteriaTrigger("consume_item", Tags.CRITERIA_ITEM);
 	public static final CriteriaTrigger cured_zombie_villager = new CriteriaTrigger("cured_zombie_villager", Tags.CRITERIA_ENTITY_VILLAGER,
 			Tags.CRITERIA_ENTITY_ZOMBIE);
 	public static final CriteriaTrigger enchanted_item = new CriteriaTrigger("enchanted_item", Tags.CRITERIA_ITEM, Tags.CRITERIA_LEVELS);
@@ -28,15 +30,19 @@ public class CriteriaTrigger extends BaseObject
 	public static final CriteriaTrigger inventory_changed = new CriteriaTrigger("inventory_changed", Tags.CRITERIA_ITEMS, Tags.CRITERIA_SLOTS);
 	public static final CriteriaTrigger item_durabillity_changed = new CriteriaTrigger("item_durabillity_changed", Tags.CRITERIA_ITEM,
 			Tags.CRITERIA_DURABILITY, Tags.CRITERIA_DELTA);
-	public static final CriteriaTrigger levitation = new CriteriaTrigger("levitation", Tags.CRITERIA_LEVITATION_DISTANCE, Tags.CRITERIA_LEVITATION_DURATION);
+	public static final CriteriaTrigger levitation = new CriteriaTrigger("levitation", Tags.CRITERIA_DISTANCE, Tags.CRITERIA_LEVITATION_DURATION);
 	public static final CriteriaTrigger location = new CriteriaTrigger("location", Tags.CRITERIA_BIOME, Tags.CRITERIA_DIMENSION, Tags.CRITERIA_FEATURE,
 			Tags.CRITERIA_POSITION);
+	public static final CriteriaTrigger placed_block = new CriteriaTrigger("placed_block", Tags.CRITERIA_BLOCK, Tags.CRITERIA_ITEM, Tags.CRITERIA_LOCATION,
+			Tags.CRITERIA_STATE);
 	public static final CriteriaTrigger player_hurt_entity = new CriteriaTrigger("player_hurt_entity", Tags.CRITERIA_DAMAGE, Tags.CRITERIA_ENTITY);
 	public static final CriteriaTrigger player_killed_entity = new CriteriaTrigger("player_killed_entity", Tags.CRITERIA_ENTITY, Tags.CRITERIA_KILLINGBLOW);
 	public static final CriteriaTrigger recipe_unlocked = new CriteriaTrigger("recipe_unlocked", Tags.CRITERIA_RECIPE);
 	public static final CriteriaTrigger slept_in_bed = new CriteriaTrigger("slept_in_bed", Tags.CRITERIA_BIOME, Tags.CRITERIA_DIMENSION, Tags.CRITERIA_FEATURE,
 			Tags.CRITERIA_POSITION);
 	public static final CriteriaTrigger summoned_entity = new CriteriaTrigger("summoned_entity", Tags.CRITERIA_ENTITY);
+	public static final CriteriaTrigger tame_animal = new CriteriaTrigger("tame_animal", Tags.CRITERIA_ENTITY);
+	public static final CriteriaTrigger tick = new CriteriaTrigger("tick");
 	private static ArrayList<CriteriaTrigger> triggers;
 	public static final CriteriaTrigger used_ender_eye = new CriteriaTrigger("used_ender_eye", Tags.CRITERIA_ENDEREYE_DISTANCE);
 	public static final CriteriaTrigger villager_trade = new CriteriaTrigger("villager_trade", Tags.CRITERIA_ITEM, Tags.CRITERIA_ENTITY_VILLAGER);
