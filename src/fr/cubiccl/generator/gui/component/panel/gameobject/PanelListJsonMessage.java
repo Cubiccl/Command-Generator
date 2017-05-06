@@ -152,9 +152,14 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 	{
 		TagCompound[] values = new TagCompound[this.messages.size()];
 		for (int i = 0; i < values.length; ++i)
-			values[i] = this.messages.get(i).toTag(Tags.JSON_CONTAINER);
+			values[i] = this.messages.get(i).toTag(Tags.DEFAULT_COMPOUND);
 
 		return container.create(values);
+	}
+
+	public JsonMessage[] getMessages()
+	{
+		return this.messages.toArray(new JsonMessage[this.messages.size()]);
 	}
 
 	public void setupFrom(Tag t)

@@ -444,6 +444,7 @@ json.mode.selector=Display Entity name
 json.mode.text=Display text
 json.mode.translate=Display translated text
 json.page=Page to change to
+json.page.index=Page <index>
 json.obfuscated=Obfuscated text
 json.strikethrough=Striked text
 json.text=Text to display

@@ -10,9 +10,7 @@ import javax.swing.JLabel;
 
 import org.jdom2.Element;
 
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
-import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
@@ -87,7 +85,9 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 			if (t.id().equals(EVENT_HOVER.id()))
 			{
 				message.hoverAction = (String) ((TagCompound) t).getTagFromId(EVENT_ACTION.id()).value();
-				message.hoverValue = (String) ((TagCompound) t).getTagFromId(EVENT_VALUE.id()).value();
+				Tag value = ((TagCompound) t).getTagFromId(EVENT_VALUE.id());
+				if (value instanceof TagString) message.hoverValue = ((TagString) value).value();
+				else message.hoverValue = JsonMessage.createFrom((TagCompound) value);
 			}
 		}
 		message.findName(tag);
@@ -104,7 +104,8 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 	public boolean bold, underlined, italic, strikethrough, obfuscated;
 	public String clickAction, clickValue;
 	public int color;
-	public String hoverAction, hoverValue;
+	public String hoverAction;
+	public Object hoverValue;
 	public String insertion;
 	public byte mode;
 	public String target;
@@ -166,7 +167,7 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 		this.clickValue = clickValue;
 	}
 
-	public void setHover(String hoverAction, String hoverValue)
+	public void setHover(String hoverAction, Object hoverValue)
 	{
 		this.hoverAction = hoverAction;
 		this.hoverValue = hoverValue;
@@ -215,7 +216,12 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 		if (this.obfuscated) tags.add(TEXT_OBFUSCATED.create("true"));
 		if (this.insertion != null) tags.add(TEXT_INSERTION.create(this.insertion));
 		if (this.clickAction != null) tags.add(EVENT_CLICK.create(EVENT_ACTION.create(this.clickAction), EVENT_VALUE.create(this.clickValue)));
-		if (this.hoverAction != null) tags.add(EVENT_HOVER.create(EVENT_ACTION.create(this.hoverAction), EVENT_VALUE.create(this.hoverValue)));
+		if (this.hoverAction != null)
+		{
+			if (this.hoverValue instanceof String) tags.add(EVENT_HOVER.create(EVENT_ACTION.create(this.hoverAction),
+					EVENT_VALUE.create((String) this.hoverValue)));
+			else tags.add(EVENT_HOVER.create(EVENT_ACTION.create(this.hoverAction), ((JsonMessage) this.hoverValue).toTag(Tags.EVENT_VALUE_JSON)));
+		}
 
 		TagCompound tag = container.create(tags.toArray(new Tag[tags.size()]));
 		tag.setJson(true);

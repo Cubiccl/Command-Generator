@@ -9,9 +9,7 @@ import fr.cubiccl.generator.gameobject.JsonMessage;
 import fr.cubiccl.generator.gameobject.LivingEntity;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
 import fr.cubiccl.generator.gameobject.tags.NBTReader;
-import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
@@ -76,7 +74,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener, ICustom
 		private PanelCriteria panelAchievement;
 		private PanelEntity panelEntity;
 		private PanelItem panelItem;
-		private PanelListJsonMessage panelJson;
+		private PanelJsonMessage panelJson;
 
 		public PanelHoverEvent()
 		{
@@ -84,7 +82,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener, ICustom
 			GridBagConstraints gbc = this.createGridBagLayout();
 			this.add(this.comboboxMode = new OptionCombobox("json.hover.mode", "show_text", "show_item", "show_achievement", "show_entity"), gbc);
 			++gbc.gridy;
-			this.add(this.panelJson = new PanelListJsonMessage(null, false), gbc);
+			this.add(this.panelJson = new PanelJsonMessage(false), gbc);
 
 			this.comboboxMode.addActionListener(this);
 		}
@@ -108,7 +106,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener, ICustom
 			this.panelJson.setVisible(mode.equals("show_text"));
 		}
 
-		public String getValue() throws CommandGenerationException
+		public Object getValue() throws CommandGenerationException
 		{
 			switch (this.comboboxMode.getValue())
 			{
@@ -122,7 +120,7 @@ public class PanelJsonMessage extends CGPanel implements ActionListener, ICustom
 					return this.panelItem.generate().toTag(Tags.ITEM).valueForCommand();
 
 				default:
-					return this.panelJson.generateMessage(Tags.JSON_LIST).valueForCommand();
+					return this.panelJson.generate();
 			}
 		}
 	}
@@ -294,21 +292,19 @@ public class PanelJsonMessage extends CGPanel implements ActionListener, ICustom
 			switch (this.panelHoverEvent.comboboxMode.getValue())
 			{
 				case "show_achievement":
-					this.panelHoverEvent.panelAchievement.setupFrom(message.hoverValue);
+					this.panelHoverEvent.panelAchievement.setupFrom((String) message.hoverValue);
 					break;
 
 				case "show_entity":
-					this.panelHoverEvent.panelEntity.setupFrom(LivingEntity.createFrom((TagCompound) NBTReader.read(message.hoverValue, true, false)));
+					this.panelHoverEvent.panelEntity.setupFrom(LivingEntity.createFrom((TagCompound) NBTReader.read((String) message.hoverValue, true, false)));
 					break;
 
 				case "show_item":
-					this.panelHoverEvent.panelItem.setupFrom(ItemStack.createFrom((TagCompound) NBTReader.read(message.hoverValue, true, false)));
+					this.panelHoverEvent.panelItem.setupFrom(ItemStack.createFrom((TagCompound) NBTReader.read((String) message.hoverValue, true, false)));
 					break;
 
 				case "show_text":
-					TagList list = (TagList) NBTReader.read(message.hoverValue, true, true);
-					for (Tag tag : list.value())
-						this.panelHoverEvent.panelJson.addMessage(JsonMessage.createFrom((TagCompound) tag));
+					this.panelHoverEvent.panelJson.setupFrom((JsonMessage) message.hoverValue);
 					break;
 
 				default:

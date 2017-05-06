@@ -96,7 +96,7 @@ public class CommandTitle extends Command implements ActionListener
 		String mode = this.comboboxMode.getValue();
 		String command = this.id + " " + this.panelTarget.generate().toCommand() + " " + mode;
 		if (mode.equals("title") || mode.equals("subtitle") || mode.equals("actionbar")) return command + " "
-				+ this.panelJson.generateMessage(Tags.JSON_LIST).valueForCommand();
+				+ this.panelJson.generateMessage(Tags.DEFAULT_LIST).valueForCommand();
 		if (mode.equals("times"))
 		{
 			this.entryFadeIn.checkValueSuperior(CGEntry.INTEGER, 0);

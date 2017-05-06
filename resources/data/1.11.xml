@@ -4197,7 +4197,7 @@
       </applicable>
     </tag>
     <tag id="pages">
-      <customtype>Json</customtype>
+      <customtype>Pages</customtype>
       <applicable>
         <app>writable_book</app>
         <app>written_book</app>

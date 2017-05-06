@@ -172,9 +172,10 @@ public final class Tags
 	public static final TemplateNumber ENTITY_WEIGHT = new TemplateNumber("Weight", UNAVAILABLE);
 
 	public static final TemplateString EVENT_ACTION = new TemplateString("action", UNAVAILABLE);
-	public static final DefaultCompound EVENT_CLICK = new DefaultCompound("ClickEvent");
-	public static final DefaultCompound EVENT_HOVER = new DefaultCompound("HoverEvent");
+	public static final DefaultCompound EVENT_CLICK = new DefaultCompound("clickEvent");
+	public static final DefaultCompound EVENT_HOVER = new DefaultCompound("hoverEvent");
 	public static final TemplateString EVENT_VALUE = new TemplateString("value", UNAVAILABLE);
+	public static final DefaultCompound EVENT_VALUE_JSON = new DefaultCompound("value");
 
 	public static final DefaultList FIREWORK_COLORS = new DefaultList("Colors");
 	public static final DefaultList FIREWORK_EXPLOSIONS = new DefaultList("Explosions");
@@ -193,8 +194,7 @@ public final class Tags
 	public static final DefaultCompound ITEM_NBT = new DefaultCompound("tag");
 	public static final TemplateNumber ITEM_SLOT = new TemplateNumber("Slot", UNAVAILABLE, Tag.BYTE);
 
-	public static final DefaultCompound JSON_CONTAINER = new DefaultCompound("json");
-	public static final DefaultList JSON_LIST = new DefaultList("json");
+	//public static final DefaultList JSON_LIST = new DefaultList("json");
 	public static final DefaultCompound JSON_SCORE = new DefaultCompound("score");
 	public static final TemplateString JSON_SELECTOR = new TemplateString("selector", UNAVAILABLE);
 	public static final TemplateString JSON_TEXT = new TemplateString("text", UNAVAILABLE);

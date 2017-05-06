@@ -1,3 +1,14 @@
+------------------------- VERSION 2.6.2.3 -------------------------
+ADDITIONS
+
+BUGS FIXED
+- Fixed a few issues regarding Json messages (pages, tellraw, etc.)
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+json.page.index
+
 ------------------------- VERSION 2.6.2.2 -------------------------
 ADDITIONS
 - Remade the criteria for Advancement triggers. It may not look that different but it's actually much better on my side.
