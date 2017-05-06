@@ -2804,7 +2804,6 @@
       <criterion>wither_skeleton</criterion>
       <criterion>zombie</criterion>
       <criterion>zombie_villager</criterion>
-      <criterion>illusion_illager</criterion>
     </advancement>
     <advancement category="adventure" id="kill_all_mobs" item="diamond_sword">
       <criterion>cave_spider</criterion>
@@ -2829,7 +2828,6 @@
       <criterion>wither_skeleton</criterion>
       <criterion>zombie</criterion>
       <criterion>zombie_villager</criterion>
-      <criterion>illusion_illager</criterion>
     </advancement>
     <advancement category="adventure" id="root" item="map">
       <criterion>killed_something</criterion>
@@ -2844,6 +2842,9 @@
     <advancement category="adventure" id="sniper_duel" item="arrow">
       <criterion>killed_skeleton</criterion>
     </advancement>
+    <advancement category="adventure" id="summon_iron_golem" item="pumpkin">
+      <criterion>summoned_golem</criterion>
+    </advancement>
     <advancement category="adventure" id="trade" item="emerald">
       <criterion>traded</criterion>
     </advancement>
@@ -2856,7 +2857,7 @@
     <advancement category="end" id="find_end_city" item="purpur_block">
       <criterion>in_city</criterion>
     </advancement>
-    <advancement category="end" id="kill_dragon" item="skull" data="1">
+    <advancement category="end" id="kill_dragon" item="skull" data="5">
       <criterion>killed_dragon</criterion>
     </advancement>
     <advancement category="end" id="levitate" item="shulker_shell">
@@ -2867,6 +2868,78 @@
     </advancement>
     <advancement category="end" id="root" item="end_stone">
       <criterion>entered_end</criterion>
+    </advancement>
+    <advancement category="husbandry" id="balanced_diet" item="apple">
+      <criterion>apple</criterion>
+      <criterion>mushroom_stew</criterion>
+      <criterion>bread</criterion>
+      <criterion>porkchop</criterion>
+      <criterion>cooked_porkchop</criterion>
+      <criterion>golden_apple</criterion>
+      <criterion>fish</criterion>
+      <criterion>cooked_fish</criterion>
+      <criterion>cookie</criterion>
+      <criterion>melon</criterion>
+      <criterion>beef</criterion>
+      <criterion>cooked_beef</criterion>
+      <criterion>chicken</criterion>
+      <criterion>cooked_chicken</criterion>
+      <criterion>rotten_flesh</criterion>
+      <criterion>spider_eye</criterion>
+      <criterion>carrot</criterion>
+      <criterion>potato</criterion>
+      <criterion>baked_potato</criterion>
+      <criterion>poisonous_potato</criterion>
+      <criterion>golden_carrot</criterion>
+      <criterion>pumpkin_pie</criterion>
+      <criterion>rabbit</criterion>
+      <criterion>cooked_rabbit</criterion>
+      <criterion>rabbit_stew</criterion>
+      <criterion>mutton</criterion>
+      <criterion>cooked_mutton</criterion>
+      <criterion>chorus_fruit</criterion>
+      <criterion>beetroot</criterion>
+      <criterion>beetroot_soup</criterion>
+    </advancement>
+    <advancement category="husbandry" id="break_diamond_hoe" item="diamond_hoe">
+      <criterion>levitated</criterion>
+    </advancement>
+    <advancement category="husbandry" id="breed_all_animals" item="golden_carrot">
+      <criterion>bred_horse</criterion>
+      <criterion>bred_sheep</criterion>
+      <criterion>bred_cow</criterion>
+      <criterion>bred_mooshroom</criterion>
+      <criterion>bred_pig</criterion>
+      <criterion>bred_chicken</criterion>
+      <criterion>bred_wolf</criterion>
+      <criterion>bred_ocelot</criterion>
+      <criterion>bred_rabbit</criterion>
+      <criterion>bred_llama</criterion>
+    </advancement>
+    <advancement category="husbandry" id="breed_an_animal" item="wheat">
+      <criterion>bred_horse</criterion>
+      <criterion>bred_sheep</criterion>
+      <criterion>bred_cow</criterion>
+      <criterion>bred_mooshroom</criterion>
+      <criterion>bred_pig</criterion>
+      <criterion>bred_chicken</criterion>
+      <criterion>bred_wolf</criterion>
+      <criterion>bred_ocelot</criterion>
+      <criterion>bred_rabbit</criterion>
+      <criterion>bred_llama</criterion>
+    </advancement>
+    <advancement category="husbandry" id="plant_seed" item="wheat">
+      <criterion>wheat</criterion>
+      <criterion>pumpkin_stem</criterion>
+      <criterion>melon_stem</criterion>
+      <criterion>beetroots</criterion>
+      <criterion>nether_wart</criterion>
+    </advancement>
+    <advancement category="husbandry" id="root" item="hay_block">
+      <criterion>consumed_item</criterion>
+    </advancement>
+    <advancement category="husbandry" id="tame_an_animal" item="lead">
+      <criterion>tamed_animal</criterion>
     </advancement>
     <advancement category="nether" id="brew_potion" item="potion" />
     <advancement category="nether" id="create_beacon" item="beacon" />
@@ -5680,16 +5753,16 @@
       </applicable>
     </tag>
     <tag id="Age">
+      <type>3</type>
+      <applicable>
+        <app>list=breed</app>
+      </applicable>
+    </tag>
+    <tag id="Age">
       <type>2</type>
       <applicable>
         <app>item</app>
         <app>xp_orb</app>
-      </applicable>
-    </tag>
-    <tag id="Age">
-      <type>3</type>
-      <applicable>
-        <app>list=breed</app>
       </applicable>
     </tag>
     <tag id="Air">
@@ -7006,19 +7079,6 @@
       </applicable>
     </tag>
     <tag id="Variant">
-      <type>3</type>
-      <applicable>
-        <app>parrot</app>
-      </applicable>
-      <intnamed prefix="parrot">
-        <v>red</v>
-        <v>blue</v>
-        <v>green</v>
-        <v>cyan</v>
-        <v>silver</v>
-      </intnamed>
-    </tag>
-    <tag id="Variant">
       <customtype>HorseVariant</customtype>
       <applicable>
         <app>horse</app>
@@ -7029,6 +7089,19 @@
         <v>white</v>
         <v>brown</v>
         <v>gray</v>
+      </intnamed>
+    </tag>
+    <tag id="Variant">
+      <type>3</type>
+      <applicable>
+        <app>parrot</app>
+      </applicable>
+      <intnamed prefix="parrot">
+        <v>red</v>
+        <v>blue</v>
+        <v>green</v>
+        <v>cyan</v>
+        <v>silver</v>
       </intnamed>
     </tag>
     <tag id="Warmup">

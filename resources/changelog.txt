@@ -1,5 +1,6 @@
 ------------------------- VERSION 2.6.2.3 -------------------------
 ADDITIONS
+- Updated for snapshots 17w18a & 17w18b.
 
 BUGS FIXED
 - Fixed a few issues regarding Json messages (pages, tellraw, etc.)
@@ -7,7 +8,14 @@ BUGS FIXED
 CHANGED TRANSLATIONS
 
 ADDED TRANSLATIONS
+advancement.adventure.summon_iron_golem
+advancement.announce,advancement.toast
+advancement.criteria.arbitrary_player_tick,advancement.criteria.consume_item,advancement.criteria.placed_block,advancement.criteria.tame_animal,advancement.criteria.tick
+advancement.husbandry.*
+criteria.distance.*
+gamerule.announceAdvancements
 json.page.index
+tag.other.entity.tame_animal,tag.other.item.consume_item,tag.other.item.placed_block,tag.other.location
 
 ------------------------- VERSION 2.6.2.2 -------------------------
 ADDITIONS

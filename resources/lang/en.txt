@@ -12,6 +12,7 @@ achievement.give=Give
 achievement.one=One Achievement :
 achievement.take=Remove
 
+advancement.announce=Announce in chat when Advancement is completed
 advancement.background=Background (optional)
 advancement.background.help=Specifies a custom texture for this category's background, e.g. "minecraft:textures/gui/advancements/backgrounds/stone.png". Only applies for root Advancements.
 advancement.check=What to check
@@ -51,6 +52,7 @@ advancement.through=All before, after and this Advancement
 advancement.title=Title
 advancement.title.json=Json text
 advancement.title.string=Simple text
+advancement.toast=Show a notification on top-right of screen when completed
 advancement.until=All until and this Advancement
 
 advancement.criteria=Criteria
@@ -1160,6 +1162,7 @@ advancement.adventure.root=Adventure
 advancement.adventure.shoot_arrow=Take Aim
 advancement.adventure.sleep_in_bed=Sweet dreams
 advancement.adventure.sniper_duel=Sniper duel
+advancement.adventure.summon_iron_golem=Hired Help
 advancement.adventure.trade=What a Deal!
 advancement.end.dragon_breath=You Need a Mint
 advancement.end.dragon_egg=The Next Generation
@@ -1170,6 +1173,13 @@ advancement.end.kill_dragon=Free the End
 advancement.end.levitate=Great View From Up Here
 advancement.end.respawn_dragon=The End... Again...
 advancement.end.root=The End
+advancement.husbandry.balanced_diet=A Balanced Diet
+advancement.husbandry.break_diamond_hoe=Serious Dedication
+advancement.husbandry.breed_all_animals=Two by Two
+advancement.husbandry.breed_an_animal=The Parrots and the Bats
+advancement.husbandry.plant_seed=A Seedy Place
+advancement.husbandry.root=Husbandry
+advancement.husbandry.tame_an_animal=Best Friends Forever
 advancement.nether.brew_potion=Local Brewery
 advancement.nether.create_beacon=Bring Home the Beacon
 advancement.nether.create_full_beacon=Beaconator
@@ -2447,6 +2457,7 @@ entity.zombie_horse=Zombie Horse
 entity.zombie_villager=Zombie Villager
 
 // GAMERULES
+gamerule.announceAdvancements=Announce completed Advancements
 gamerule.commandBlockOutput=Command Block Output
 gamerule.disableElytraMovementCheck=Disable Elytra Movement Checking
 gamerule.doDaylightCycle=Daylight Cycle

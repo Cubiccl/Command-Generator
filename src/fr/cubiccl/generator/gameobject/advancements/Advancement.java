@@ -39,6 +39,8 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		if (advancement.getChild("background") != null) a.background = advancement.getChildText("background");
 		if (advancement.getChild("description") != null) a.description = advancement.getChildText("description");
 		if (advancement.getChild("parent") != null) a.parent = advancement.getChildText("parent");
+		if (advancement.getChild("not_announced") != null) a.announce = false;
+		if (advancement.getChild("no_toast") != null) a.toast = false;
 
 		for (Element criteria : advancement.getChild("criterias").getChildren())
 			a.criteria.add(AdvancementCriteria.createFrom(criteria));
@@ -89,6 +91,8 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 			if (display.hasTag(Tags.ADVANCEMENT_FRAME)) a.frame = display.getTag(Tags.ADVANCEMENT_FRAME).value();
 			if (display.hasTag(Tags.ADVANCEMENT_BACKGROUND)) a.background = display.getTag(Tags.ADVANCEMENT_BACKGROUND).value();
 			if (display.hasTag(Tags.ADVANCEMENT_DESCRIPTION)) a.description = display.getTag(Tags.ADVANCEMENT_DESCRIPTION).value();
+			if (display.hasTag(Tags.ADVANCEMENT_ANNOUNCE)) a.announce = display.getTag(Tags.ADVANCEMENT_ANNOUNCE).value();
+			if (display.hasTag(Tags.ADVANCEMENT_TOAST)) a.toast = display.getTag(Tags.ADVANCEMENT_TOAST).value();
 		}
 
 		if (tag.hasTag(Tags.ADVANCEMENT_PARENT)) a.parent = tag.getTag(Tags.ADVANCEMENT_PARENT).value();
@@ -133,6 +137,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		return a;
 	}
 
+	public boolean announce, toast;
 	public String background, description, frame, parent, title;
 	private ArrayList<AdvancementCriteria> criteria;
 	private int data;
@@ -153,6 +158,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		this.item = ObjectRegistry.items.first();
 		this.frame = "task";
 		this.data = 0;
+		this.announce = this.toast = true;
 	}
 
 	public void addCriterion(AdvancementCriteria criteria)
@@ -263,6 +269,8 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		tags.add(Tags.ADVANCEMENT_FRAME.create(this.frame));
 		if (this.background != null) tags.add(Tags.ADVANCEMENT_BACKGROUND.create(this.background));
 		if (this.description != null) tags.add(Tags.ADVANCEMENT_DESCRIPTION.create(this.description));
+		if (!this.announce) tags.add(Tags.ADVANCEMENT_ANNOUNCE.create(this.announce));
+		if (!this.toast) tags.add(Tags.ADVANCEMENT_TOAST.create(this.toast));
 
 		TagCompound display = Tags.ADVANCEMENT_DISPLAY.create(tags.toArray(new Tag[tags.size()]));
 		tags.clear();
@@ -327,6 +335,8 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		else if (this.jsonTitle != null) root.addContent(this.jsonTitle.toXML());
 		if (this.background != null) root.addContent(new Element("background").setText(this.background));
 		if (this.parent != null) root.addContent(new Element("parent").setText(this.parent));
+		if (!this.announce) root.addContent(new Element("not_announced"));
+		if (!this.toast) root.addContent(new Element("no_toast"));
 
 		Element criteria = new Element("criterias");
 		for (AdvancementCriteria c : this.criteria)

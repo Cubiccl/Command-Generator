@@ -14,6 +14,7 @@ import fr.cubiccl.generator.gameobject.advancements.Advancement;
 import fr.cubiccl.generator.gameobject.advancements.AdvancementCriteria;
 import fr.cubiccl.generator.gameobject.advancements.Requirement;
 import fr.cubiccl.generator.gui.component.button.CGButton;
+import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -36,6 +37,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 	private CTextArea areaReqDesc;
 	private CGButton buttonSave, buttonCancel;
 	private CGRadioButton buttonTString, buttonTJson;
+	private CGCheckBox checkboxAnnounce, checkboxToast;
 	private OptionCombobox comboboxFrame;
 	private PanelObjectList<AdvancementCriteria> criteria;
 	private CGEntry entryTitle, entryDescription, entryBackground, entryParent, entryExperience;
@@ -100,6 +102,13 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		++gbc.gridx;
 		gbc.gridwidth = 2;
 		display.add(this.comboboxFrame = new OptionCombobox("advancement.frame", "task", "goal", "challenge"), gbc);
+
+		--gbc.gridx;
+		++gbc.gridy;
+		gbc.gridwidth = 3;
+		display.add(this.checkboxAnnounce = new CGCheckBox("advancement.announce"), gbc);
+		++gbc.gridy;
+		display.add(this.checkboxToast = new CGCheckBox("advancement.toast"), gbc);
 
 		CGPanel rewards = new CGPanel();
 		gbc = rewards.createGridBagLayout();
@@ -168,6 +177,8 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		this.entryBackground.setText(this.advancement.background == null ? "" : this.advancement.background);
 		this.entryParent.setText(this.advancement.parent == null ? "" : this.advancement.parent);
 		if (this.advancement.jsonTitle != null) this.panelTitleJson.setupFrom(this.advancement.jsonTitle);
+		this.checkboxAnnounce.setSelected(this.advancement.announce);
+		this.checkboxToast.setSelected(this.advancement.toast);
 
 		this.criteria.clear();
 		for (AdvancementCriteria criteria : this.advancement.getCriteria())
@@ -207,6 +218,8 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		else this.advancement.jsonTitle = null;
 		if (this.buttonTString.isSelected()) this.advancement.title = this.entryTitle.getText();
 		else this.advancement.title = null;
+		this.advancement.announce = this.checkboxAnnounce.isSelected();
+		this.advancement.toast = this.checkboxToast.isSelected();
 
 		this.advancement.setItem(this.panelItem.selectedItem());
 		this.advancement.setData(this.panelItem.selectedDamage());

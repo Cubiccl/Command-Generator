@@ -49,7 +49,7 @@ public class Settings
 	public static enum Version
 	{
 		v1d11("1.11", "1.11", 0),
-		v1d12("17w17b", "1.12", 1);
+		v1d12("17w18b", "1.12", 1);
 
 		public static Version get(String codeName)
 		{
@@ -103,7 +103,7 @@ public class Settings
 	}
 
 	public static final boolean CHECK_UPDATES = false;
-	public static final String GENERATOR_VERSION = "2.6.2.2";
+	public static final String GENERATOR_VERSION = "2.6.2.3";
 	private static Language language;
 	private static Version mcversion;
 	public static final String MINECRAFT_VERSION = "mcversion", LANG = "lang", SLASH = "slash", SORT_TYPE = "sort", INDENTATION = "indentation",

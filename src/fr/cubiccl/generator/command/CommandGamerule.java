@@ -24,7 +24,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	{ "commandBlockOutput", "disableElytraMovementCheck", "doDaylightCycle", "doEntityDrops", "doFireTick", "doMobLoot", "doMobSpawning", "doTileDrops",
 			"doWeatherCycle", "keepInventory", "logAdminCommands", "maxEntityCramming", "mobGriefing", "naturalRegeneration", "randomTickSpeed",
 			"reducedDebugInfo", "sendCommandFeedback", "showDeathMessages", "spawnRadius", "spectatorsGenerateChunks" }, GAMERULES_1d12 =
-	{ "doLimitedCrafting", "maxCommandChainLength" };
+	{ "announceAdvancements", "doLimitedCrafting", "maxCommandChainLength" };
 
 	private static String[] gamerules()
 	{

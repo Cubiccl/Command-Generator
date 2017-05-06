@@ -1,5 +1,5 @@
-Welcome to the Command Generator v2.6.2.1 by Cubi !
----- VERSION : 17w17b ----
+Welcome to the Command Generator v2.6.2.3 by Cubi !
+---- VERSION : 17w18b ----
 ---- Creating objects ----
 Successfully created 254 blocks.
 Successfully created 412 items.
@@ -7,7 +7,7 @@ Successfully created 85 entities.
 Successfully created 27 effects.
 Successfully created 30 enchantments.
 Successfully created 33 achievements.
-Successfully created 42 advancements.
+Successfully created 50 advancements.
 Successfully created 11 attributes.
 Successfully created 48 particles.
 Successfully created 429 recipes.

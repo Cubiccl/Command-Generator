@@ -17,6 +17,7 @@ public final class Tags
 	public static final TemplateNumber ABILITIES_MAY_BUILD = new TemplateNumber("mayBuild", UNAVAILABLE, Tag.BYTE);
 	public static final TemplateNumber ABILITIES_MAY_FLY = new TemplateNumber("mayFly", UNAVAILABLE, Tag.BYTE);
 
+	public static final TemplateBoolean ADVANCEMENT_ANNOUNCE = new TemplateBoolean("announce_to_chat", UNAVAILABLE);
 	public static final TemplateString ADVANCEMENT_BACKGROUND = new TemplateString("background", UNAVAILABLE);
 	public static final DefaultList ADVANCEMENT_COMMANDS = new DefaultList("commands");
 	public static final DefaultCompound ADVANCEMENT_CONDITIONS = new DefaultCompound("conditions");
@@ -33,6 +34,7 @@ public final class Tags
 	public static final DefaultCompound ADVANCEMENT_REWARDS = new DefaultCompound("rewards");
 	public static final TemplateString ADVANCEMENT_TITLE = new TemplateString("title", UNAVAILABLE);
 	public static final DefaultCompound ADVANCEMENT_TITLE_JSON = new DefaultCompound("conditions");
+	public static final TemplateBoolean ADVANCEMENT_TOAST = new TemplateBoolean("show_toast", UNAVAILABLE);
 	public static final TemplateString ADVANCEMENT_TRIGGER = new TemplateString("trigger", UNAVAILABLE);
 
 	public static final TemplateNumber ATTRIBUTE_amount = new TemplateNumber("amount", UNAVAILABLE, Tag.DOUBLE);
