@@ -27,6 +27,7 @@ public class Commands
 		new CommandEntitydata("entitydata");
 		new CommandExecute();
 		new CommandFill();
+		new CommandFunction();
 		new CommandGamemode();
 		new CommandGamerule();
 		new CommandGive();

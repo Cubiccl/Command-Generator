@@ -2845,6 +2845,9 @@
     <advancement category="adventure" id="summon_iron_golem" item="pumpkin">
       <criterion>summoned_golem</criterion>
     </advancement>
+    <advancement category="adventure" id="totem_of_undying" item="totem_of_undying">
+      <criterion>shot_arrow</criterion>
+    </advancement>
     <advancement category="adventure" id="trade" item="emerald">
       <criterion>traded</criterion>
     </advancement>
@@ -2941,9 +2944,18 @@
     <advancement category="husbandry" id="tame_an_animal" item="lead">
       <criterion>tamed_animal</criterion>
     </advancement>
+    <advancement category="nether" id="all_effects" item="bucket">
+      <criterion>all_effects</criterion>
+    </advancement>
+    <advancement category="nether" id="all_potions" item="milk_bucket">
+      <criterion>all_effects</criterion>
+    </advancement>
     <advancement category="nether" id="brew_potion" item="potion" />
     <advancement category="nether" id="create_beacon" item="beacon" />
     <advancement category="nether" id="create_full_beacon" item="beacon" />
+    <advancement category="nether" id="fast_travel" item="map">
+      <criterion>travelled</criterion>
+    </advancement>
     <advancement category="nether" id="find_fortress" item="nether_brick">
       <criterion>fortress</criterion>
     </advancement>
@@ -2959,6 +2971,9 @@
     </advancement>
     <advancement category="nether" id="summon_wither" item="nether_star">
       <criterion>summoned</criterion>
+    </advancement>
+    <advancement category="nether" id="uneasy_alliance" item="ghast_tear">
+      <criterion>killed_ghast</criterion>
     </advancement>
     <advancement category="story" id="cure_zombie_villager" item="golden_apple">
       <criterion>cured_zombie</criterion>

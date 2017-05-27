@@ -49,7 +49,7 @@ public class Settings
 	public static enum Version
 	{
 		v1d11("1.11", "1.11", 0),
-		v1d12("17w18b", "1.12", 1);
+		v1d12("1.12-pre5", "1.12", 1);
 
 		public static Version get(String codeName)
 		{

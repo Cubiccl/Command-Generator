@@ -44,6 +44,7 @@ public class CommandEffect extends Command implements ActionListener
 		panel.add(this.comboboxMode = new OptionCombobox("effect.mode", "apply", "clear"), gbc);
 		++gbc.gridy;
 		panel.add(this.panelEffect = new PanelEffect(), gbc);
+		this.panelEffect.setDurationAsSeconds(true);
 
 		this.comboboxMode.addActionListener(this);
 		this.panelEffect.addActionListener(this);

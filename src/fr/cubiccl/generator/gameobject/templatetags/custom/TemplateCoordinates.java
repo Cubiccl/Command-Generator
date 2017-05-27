@@ -24,7 +24,7 @@ public class TemplateCoordinates extends TemplateCompound
 	@Override
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
-		this.isInteger = object.id().equals("minecraft:ender_crystal");
+		this.isInteger = object != null && object.id().equals("minecraft:ender_crystal");
 		PanelCoordinates p = new PanelCoordinates(null, false);
 		if (previousValue != null)
 		{

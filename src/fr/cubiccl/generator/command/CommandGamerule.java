@@ -24,7 +24,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	{ "commandBlockOutput", "disableElytraMovementCheck", "doDaylightCycle", "doEntityDrops", "doFireTick", "doMobLoot", "doMobSpawning", "doTileDrops",
 			"doWeatherCycle", "keepInventory", "logAdminCommands", "maxEntityCramming", "mobGriefing", "naturalRegeneration", "randomTickSpeed",
 			"reducedDebugInfo", "sendCommandFeedback", "showDeathMessages", "spawnRadius", "spectatorsGenerateChunks" }, GAMERULES_1d12 =
-	{ "announceAdvancements", "doLimitedCrafting", "maxCommandChainLength" };
+	{ "announceAdvancements", "doLimitedCrafting", "gameLoopFunction", "maxCommandChainLength" };
 
 	private static String[] gamerules()
 	{
@@ -142,7 +142,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 				predefined = true;
 				break;
 			}
-		if (predefined)
+		if (predefined && !gamerule.equals("gameLoopFunction"))
 		{
 			if (gamerule.equals("randomTickSpeed") || gamerule.equals("spawnRadius") || gamerule.equals("maxEntityCramming")
 					|| gamerule.equals("maxCommandChainLength")) try

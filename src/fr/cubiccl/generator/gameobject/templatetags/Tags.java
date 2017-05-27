@@ -19,13 +19,14 @@ public final class Tags
 
 	public static final TemplateBoolean ADVANCEMENT_ANNOUNCE = new TemplateBoolean("announce_to_chat", UNAVAILABLE);
 	public static final TemplateString ADVANCEMENT_BACKGROUND = new TemplateString("background", UNAVAILABLE);
-	public static final DefaultList ADVANCEMENT_COMMANDS = new DefaultList("commands");
 	public static final DefaultCompound ADVANCEMENT_CONDITIONS = new DefaultCompound("conditions");
 	public static final DefaultCompound ADVANCEMENT_CRITERIA = new DefaultCompound("criteria");
 	public static final TemplateString ADVANCEMENT_DESCRIPTION = new TemplateString("description", UNAVAILABLE);
 	public static final DefaultCompound ADVANCEMENT_DISPLAY = new DefaultCompound("display");
 	public static final TemplateNumber ADVANCEMENT_EXPERIENCE = new TemplateNumber("experience", UNAVAILABLE, Tag.INT);
 	public static final TemplateString ADVANCEMENT_FRAME = new TemplateString("frame", UNAVAILABLE);
+	public static final TemplateString ADVANCEMENT_FUNCTION = new TemplateString("function", UNAVAILABLE);
+	public static final TemplateBoolean ADVANCEMENT_HIDDEN = new TemplateBoolean("hidden", UNAVAILABLE);
 	public static final DefaultCompound ADVANCEMENT_ICON = new DefaultCompound("icon");
 	public static final DefaultList ADVANCEMENT_LOOT = new DefaultList("loot");
 	public static final TemplateString ADVANCEMENT_PARENT = new TemplateString("parent", UNAVAILABLE);
@@ -95,8 +96,9 @@ public final class Tags
 	public static final TemplateString CRITERIA_DIMENSION_FROM = new TemplateString("from", UNAVAILABLE, "changed_dimension");
 	public static final TemplateString CRITERIA_DIMENSION_TO = new TemplateString("to", UNAVAILABLE, "changed_dimension");
 	public static final TemplateCriteriaEntity CRITERIA_DIRECT_ENTITY = new TemplateCriteriaEntity("direct_entity");
-	public static final TemplateCriteriaDistance CRITERIA_DISTANCE = new TemplateCriteriaDistance("distance", "levitation");
+	public static final TemplateCriteriaDistance CRITERIA_DISTANCE = new TemplateCriteriaDistance("distance", "levitation", "nether_travel");
 	public static final TemplateRange CRITERIA_DURABILITY = new TemplateRange("durability", UNAVAILABLE, Tag.INT, "item_durabillity_changed");
+	public static final TemplateCriteriaEffects CRITERIA_EFFECTS = new TemplateCriteriaEffects("effects", "effects_changed");
 	public static final TemplateNumber CRITERIA_EMPTY = new TemplateNumber("empty", UNAVAILABLE, Tag.INT);
 	public static final TemplateCompound CRITERIA_EMPTY_ = new DefaultCompound("empty");
 	public static final TemplateRange CRITERIA_ENDEREYE_DISTANCE = new TemplateRange("distance", UNAVAILABLE, Tag.INT, "used_ender_eye");
@@ -118,7 +120,7 @@ public final class Tags
 	public static final TemplateBoolean CRITERIA_ISMAGIC = new TemplateBoolean("is_magic", UNAVAILABLE);
 	public static final TemplateBoolean CRITERIA_ISPROJECTILE = new TemplateBoolean("is_projectile", UNAVAILABLE);
 	public static final TemplateTestedItem CRITERIA_ITEM = new TemplateTestedItem("item", UNAVAILABLE, "consume_item", "enchanted_item",
-			"item_durabillity_changed", "placed_block", "villager_trade");
+			"item_durabillity_changed", "placed_block", "used_totem", "villager_trade");
 	public static final TemplateTestedItemList CRITERIA_ITEMS = new TemplateTestedItemList("items", UNAVAILABLE, "inventory_changed");
 	public static final TemplateCriteriaDamageFlags CRITERIA_KILLINGBLOW = new TemplateCriteriaDamageFlags("killing_blow", "entity_killed_player",
 			"player_killed_entity");
@@ -126,6 +128,7 @@ public final class Tags
 	public static final TemplateRange CRITERIA_LEVELS = new TemplateRange("levels", UNAVAILABLE, Tag.INT, "enchanted_item");
 	public static final TemplateRange CRITERIA_LEVITATION_DURATION = new TemplateRange("duration", UNAVAILABLE, Tag.INT, "levitation");
 	public static final TemplateCriteriaLocation CRITERIA_LOCATION = new TemplateCriteriaLocation("location", "placed_block");
+	public static final TemplateString CRITERIA_NBT = new TemplateString("nbt", UNAVAILABLE);
 	public static final TemplateNumber CRITERIA_OCCUPIED = new TemplateNumber("occupied", UNAVAILABLE, Tag.INT);
 	public static final TemplateCompound CRITERIA_OCCUPIED_ = new DefaultCompound("occupied");
 	public static final TemplateCriteriaPosition CRITERIA_POSITION = new TemplateCriteriaPosition("position", "location", "slept_in_bed");
@@ -159,8 +162,12 @@ public final class Tags
 	public static final DefaultList DISPLAY_LORE = new DefaultList("Lore");
 	public static final TemplateString DISPLAY_NAME = new TemplateString("Name", UNAVAILABLE);
 
+	public static final TemplateNumber EFFECT_amplifier = new TemplateNumber("amplifier", UNAVAILABLE, Tag.INT);
 	public static final TemplateNumber EFFECT_AMPLIFIER = new TemplateNumber("Amplifier", UNAVAILABLE, Tag.BYTE);
+	public static final DefaultCompound EFFECT_amplifier_ = new DefaultCompound("amplifier");
+	public static final TemplateNumber EFFECT_duration = new TemplateNumber("duration", UNAVAILABLE, Tag.INT);
 	public static final TemplateNumber EFFECT_DURATION = new TemplateNumber("Duration", UNAVAILABLE, Tag.INT);
+	public static final DefaultCompound EFFECT_duration_ = new DefaultCompound("duration");
 	public static final TemplateNumber EFFECT_ID = new TemplateNumber("Id", UNAVAILABLE, Tag.BYTE);
 	public static final TemplateNumber EFFECT_PARTICLES = new TemplateNumber("ShowParticles", UNAVAILABLE, Tag.BYTE);
 

@@ -74,6 +74,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 			if (t.id().equals(Tags.ITEM_NBT.id())) nbt = (TagCompound) t;
 			if (t.id().equals(Tags.CRITERIA_POTION.id())) nbt.addTag(t);
 			if (t.id().equals(Tags.ITEM_ENCHANTMENTS.id())) nbt.addTag(t);
+			if (t.id().equals(Tags.CRITERIA_NBT.id())) nbt.addTag(t);
 		}
 
 		ItemStack is = new ItemStack(i, d, a, nbt);
@@ -285,6 +286,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		if (this.amount != -1) tags.add(Tags.RECIPE_ITEM_COUNT.create(this.amount));
 		if (this.nbt.hasTag(Tags.CRITERIA_POTION)) tags.add(this.nbt.getTag(Tags.CRITERIA_POTION));
 		if (this.nbt.hasTag(Tags.ITEM_ENCHANTMENTS)) tags.add(this.nbt.getTag(Tags.ITEM_ENCHANTMENTS));
+		if (this.nbt.hasTag(Tags.CRITERIA_NBT)) tags.add(this.nbt.getTag(Tags.CRITERIA_NBT));
 		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 

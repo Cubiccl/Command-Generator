@@ -42,6 +42,11 @@ public abstract class TemplateCompound extends TemplateTag
 		super(id, Tag.COMPOUND, applicationType, applicable);
 	}
 
+	public TagCompound create()
+	{
+		return this.create(new Tag[0]);
+	}
+
 	@SuppressWarnings("deprecation")
 	public TagCompound create(Tag... value)
 	{

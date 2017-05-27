@@ -81,6 +81,13 @@ public class Lang
 
 	public static Text translateObject(BaseObject object, int damage, boolean undetermined)
 	{
+		if (object == null)
+		{
+			if (object instanceof Block) return new Text("general.block");
+			if (object instanceof Entity) return new Text("general.entity");
+			if (object instanceof Item) return new Text("general.item");
+			return new Text("general.object");
+		}
 		String id = object.id().replaceAll("minecraft:", "");
 		String t = variations.get(id);
 		if (t == null)

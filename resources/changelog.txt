@@ -1,3 +1,28 @@
+------------------------- VERSION 2.6.3 -------------------------
+ADDITIONS
+- Updated for Minecraft 1.12.
+
+BUGS FIXED
+- Everywhere except in /effect, effect durations were in seconds instead of ticks.
+
+CHANGED TRANSLATIONS
+effect.duration
+
+ADDED TRANSLATIONS
+advancement.adventure.totem_of_undying
+advancement.appears
+advancement.criteria.effects_changed,advancement.criteria.nether_travel,advancement.criteria.used_totem
+advancement.function,advancement.function.help
+advancement.nether.all_effects,advancement.nether.all_potions,advancement.nether.fast_travel,advancement.nether.uneasy_alliance
+command.function
+criteria.entity.location
+effect.amplifier,effect.duration.seconds,effect.duration.test
+error.effects.duplicate
+function.path
+gamerule.gameLoopFunction
+general.block,general.entity,general.object
+tag.other.distance.nether_travel,tag.other.effects,tag.other.item.used_totem
+
 ------------------------- VERSION 2.6.2.3 -------------------------
 ADDITIONS
 - Updated for snapshots 17w18a & 17w18b.

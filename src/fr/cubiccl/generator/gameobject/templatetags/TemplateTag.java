@@ -90,8 +90,8 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 		{
 			String objectSpecific = d + "." + object.id();
 			if (Lang.keyExists(objectSpecific)) return new Text(objectSpecific, new Replacement("<o>", object.name()));
-			t.addReplacement("<o>", Lang.translateObject(object, -1, false));
 		}
+		t.addReplacement("<o>", Lang.translateObject(object, -1, false));
 		return t;
 	}
 

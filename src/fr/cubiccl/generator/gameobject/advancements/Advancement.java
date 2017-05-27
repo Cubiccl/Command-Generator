@@ -41,6 +41,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		if (advancement.getChild("parent") != null) a.parent = advancement.getChildText("parent");
 		if (advancement.getChild("not_announced") != null) a.announce = false;
 		if (advancement.getChild("no_toast") != null) a.toast = false;
+		if (advancement.getChild("hidden") != null) a.hidden = true;
 
 		for (Element criteria : advancement.getChild("criterias").getChildren())
 			a.criteria.add(AdvancementCriteria.createFrom(criteria));
@@ -66,8 +67,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		for (Element loot : advancement.getChild("loot").getChildren())
 			a.rewardLoot.add(loot.getText());
 
-		if (advancement.getChild("commands") != null) for (Element command : advancement.getChild("commands").getChildren())
-			a.rewardCommands.add(command.getText());
+		if (advancement.getChild("function") != null) a.rewardFunction = advancement.getChild("function").getText();
 
 		a.findProperties(advancement);
 		return a;
@@ -93,6 +93,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 			if (display.hasTag(Tags.ADVANCEMENT_DESCRIPTION)) a.description = display.getTag(Tags.ADVANCEMENT_DESCRIPTION).value();
 			if (display.hasTag(Tags.ADVANCEMENT_ANNOUNCE)) a.announce = display.getTag(Tags.ADVANCEMENT_ANNOUNCE).value();
 			if (display.hasTag(Tags.ADVANCEMENT_TOAST)) a.toast = display.getTag(Tags.ADVANCEMENT_TOAST).value();
+			if (display.hasTag(Tags.ADVANCEMENT_HIDDEN)) a.hidden = display.getTag(Tags.ADVANCEMENT_HIDDEN).value();
 		}
 
 		if (tag.hasTag(Tags.ADVANCEMENT_PARENT)) a.parent = tag.getTag(Tags.ADVANCEMENT_PARENT).value();
@@ -128,30 +129,27 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 			if (rewards.hasTag(Tags.ADVANCEMENT_LOOT)) for (Tag l : rewards.getTag(Tags.ADVANCEMENT_LOOT).value())
 				a.rewardLoot.add(((TagString) l).value());
 
-			if (rewards.hasTag(Tags.ADVANCEMENT_COMMANDS)) for (Tag l : rewards.getTag(Tags.ADVANCEMENT_COMMANDS).value())
-				a.rewardCommands.add(((TagString) l).value());
-
+			if (rewards.hasTag(Tags.ADVANCEMENT_FUNCTION)) a.rewardFunction = rewards.getTag(Tags.ADVANCEMENT_FUNCTION).value();
 			if (rewards.hasTag(Tags.ADVANCEMENT_EXPERIENCE)) a.rewardExperience = rewards.getTag(Tags.ADVANCEMENT_EXPERIENCE).valueInt();
 		}
 
 		return a;
 	}
 
-	public boolean announce, toast;
-	public String background, description, frame, parent, title;
+	public boolean announce, hidden, toast;
+	public String background, description, frame, parent, title, rewardFunction;
 	private ArrayList<AdvancementCriteria> criteria;
 	private int data;
 	private Item item;
 	public JsonMessage jsonTitle;
 	public ArrayList<AdvancementCriteria[]> requirements;
 	public int rewardExperience;
-	public ArrayList<String> rewardLoot, rewardRecipes, rewardCommands;
+	public ArrayList<String> rewardLoot, rewardRecipes;
 
 	public Advancement()
 	{
 		this.rewardLoot = new ArrayList<String>();
 		this.rewardRecipes = new ArrayList<String>();
-		this.rewardCommands = new ArrayList<String>();
 		this.criteria = new ArrayList<AdvancementCriteria>();
 		this.requirements = new ArrayList<AdvancementCriteria[]>();
 		this.rewardExperience = 0;
@@ -159,6 +157,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		this.frame = "task";
 		this.data = 0;
 		this.announce = this.toast = true;
+		this.hidden = false;
 	}
 
 	public void addCriterion(AdvancementCriteria criteria)
@@ -271,6 +270,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		if (this.description != null) tags.add(Tags.ADVANCEMENT_DESCRIPTION.create(this.description));
 		if (!this.announce) tags.add(Tags.ADVANCEMENT_ANNOUNCE.create(this.announce));
 		if (!this.toast) tags.add(Tags.ADVANCEMENT_TOAST.create(this.toast));
+		if (this.hidden) tags.add(Tags.ADVANCEMENT_HIDDEN.create(this.hidden));
 
 		TagCompound display = Tags.ADVANCEMENT_DISPLAY.create(tags.toArray(new Tag[tags.size()]));
 		tags.clear();
@@ -310,13 +310,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 				loot.add(Tags.DEFAULT_STRING.create(l));
 			rewards.add(Tags.ADVANCEMENT_LOOT.create(loot.toArray(new Tag[loot.size()])));
 		}
-		if (this.rewardCommands.size() != 0)
-		{
-			ArrayList<TagString> commands = new ArrayList<TagString>();
-			for (String c : this.rewardCommands)
-				commands.add(Tags.DEFAULT_STRING.create(c));
-			rewards.add(Tags.ADVANCEMENT_COMMANDS.create(commands.toArray(new Tag[commands.size()])));
-		}
+		if (this.rewardFunction != null) rewards.add(Tags.ADVANCEMENT_FUNCTION.create(this.rewardFunction));
 		if (this.rewardExperience != 0) rewards.add(Tags.ADVANCEMENT_EXPERIENCE.create(this.rewardExperience));
 		if (rewards.size() != 0) tags.add(Tags.ADVANCEMENT_REWARDS.create(rewards.toArray(new Tag[rewards.size()])));
 
@@ -337,6 +331,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		if (this.parent != null) root.addContent(new Element("parent").setText(this.parent));
 		if (!this.announce) root.addContent(new Element("not_announced"));
 		if (!this.toast) root.addContent(new Element("no_toast"));
+		if (this.hidden) root.addContent(new Element("hidden"));
 
 		Element criteria = new Element("criterias");
 		for (AdvancementCriteria c : this.criteria)
@@ -364,11 +359,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		for (String l : this.rewardLoot)
 			loot.addContent(new Element("l").setText(l));
 		root.addContent(loot);
-
-		Element commands = new Element("commands");
-		for (String c : this.rewardCommands)
-			commands.addContent(new Element("c").setText(c));
-		root.addContent(commands);
+		if (this.rewardFunction != null) root.addContent(new Element("function").setText(this.rewardFunction));
 
 		return root;
 	}

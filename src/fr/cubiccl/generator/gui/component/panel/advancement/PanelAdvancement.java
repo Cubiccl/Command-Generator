@@ -37,14 +37,14 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 	private CTextArea areaReqDesc;
 	private CGButton buttonSave, buttonCancel;
 	private CGRadioButton buttonTString, buttonTJson;
-	private CGCheckBox checkboxAnnounce, checkboxToast;
+	private CGCheckBox checkboxAnnounce, checkboxToast, checkboxAppears;
 	private OptionCombobox comboboxFrame;
 	private PanelObjectList<AdvancementCriteria> criteria;
-	private CGEntry entryTitle, entryDescription, entryBackground, entryParent, entryExperience;
+	private CGEntry entryTitle, entryDescription, entryBackground, entryParent, entryExperience, entryFunction;
 	private PanelItem panelItem;
 	private PanelObjectList<Requirement> panelRequirements;
 	private PanelJsonMessage panelTitleJson;
-	private PanelObjectList<Text> recipes, loot, commands;
+	private PanelObjectList<Text> recipes, loot;
 	private CGTabbedPane tabbedPane;
 
 	public PanelAdvancement(Advancement advancement)
@@ -109,6 +109,8 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		display.add(this.checkboxAnnounce = new CGCheckBox("advancement.announce"), gbc);
 		++gbc.gridy;
 		display.add(this.checkboxToast = new CGCheckBox("advancement.toast"), gbc);
+		++gbc.gridy;
+		display.add(this.checkboxAppears = new CGCheckBox("advancement.appears"), gbc);
 
 		CGPanel rewards = new CGPanel();
 		gbc = rewards.createGridBagLayout();
@@ -118,7 +120,8 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		++gbc.gridy;
 		rewards.add(this.loot = new PanelObjectList<Text>("advancement.loots", (Text) null, Text.class, "description", "advancement.loot"), gbc);
 		++gbc.gridy;
-		rewards.add(this.commands = new PanelObjectList<Text>("advancement.commands", (Text) null, Text.class, "description", "advancement.command"), gbc);
+		rewards.add((this.entryFunction = new CGEntry("advancement.function")).container, gbc);
+		this.entryFunction.addHelpLabel(new HelpLabel("advancement.function.help"));
 
 		CGPanel criterias = new CGPanel();
 		gbc = criterias.createGridBagLayout();
@@ -179,6 +182,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		if (this.advancement.jsonTitle != null) this.panelTitleJson.setupFrom(this.advancement.jsonTitle);
 		this.checkboxAnnounce.setSelected(this.advancement.announce);
 		this.checkboxToast.setSelected(this.advancement.toast);
+		this.checkboxAppears.setSelected(!this.advancement.hidden);
 
 		this.criteria.clear();
 		for (AdvancementCriteria criteria : this.advancement.getCriteria())
@@ -194,9 +198,8 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		this.loot.clear();
 		for (String s : this.advancement.rewardLoot)
 			this.loot.add(new Text(s, false));
-		this.commands.clear();
-		for (String s : this.advancement.rewardCommands)
-			this.commands.add(new Text(s, false));
+		if (this.advancement.rewardFunction == null) this.entryFunction.setText("");
+		else this.entryFunction.setText(this.advancement.rewardFunction);
 
 		this.buttonTString.setSelected(this.advancement.title != null);
 		this.buttonTJson.setSelected(this.advancement.jsonTitle != null);
@@ -220,6 +223,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		else this.advancement.title = null;
 		this.advancement.announce = this.checkboxAnnounce.isSelected();
 		this.advancement.toast = this.checkboxToast.isSelected();
+		this.advancement.hidden = !this.checkboxAppears.isSelected();
 
 		this.advancement.setItem(this.panelItem.selectedItem());
 		this.advancement.setData(this.panelItem.selectedDamage());
@@ -241,9 +245,8 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		this.advancement.rewardLoot.clear();
 		for (Text t : this.loot.values())
 			this.advancement.rewardLoot.add(t.id);
-		this.advancement.rewardCommands.clear();
-		for (Text t : this.commands.values())
-			this.advancement.rewardCommands.add(t.id);
+		if (this.entryFunction.getText().equals("")) this.advancement.rewardFunction = null;
+		else this.advancement.rewardFunction = this.entryFunction.getText();
 
 		this.advancement.requirements.clear();
 		for (Requirement r : this.panelRequirements.values())

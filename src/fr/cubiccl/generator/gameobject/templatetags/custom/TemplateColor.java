@@ -20,7 +20,8 @@ public class TemplateColor extends TemplateNumber
 	@Override
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
-		if (object.id().equals("minecraft:sheep") || object.id().equals("minecraft:shulker")) return super.createPanel(object, previousValue);
+		if (object != null && (object.id().equals("minecraft:sheep") || object != null && object.id().equals("minecraft:shulker"))) return super.createPanel(
+				object, previousValue);
 
 		PanelColor p = new PanelColor(null);
 		if (previousValue != null) p.setupFrom(((TagNumber) previousValue).valueInt());

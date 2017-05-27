@@ -214,12 +214,15 @@
       <title>Cheats!!</title>
       <description>Use /give to get an unobtainable item !</description>
       <criterias>
-        <criteria name="first_criteria" trigger="entity_hurt_player">
-          <condition>"damage":{"source_entity":{"type":"minecraft:skeleton","distance":10}}</condition>
+        <criteria name="first_criteria" trigger="item_durabillity_changed">
+          <condition>"item":{"nbt":"{Unbreakable:1b}"}</condition>
         </criteria>
         <criteria name="states_test" trigger="enter_block">
           <condition>"block":"minecraft:fence_gate"</condition>
           <condition>"state":{"facing":"north","open":"false"}</condition>
+        </criteria>
+        <criteria name="is_poisonned" trigger="effects_changed">
+          <condition>"effects":{"minecraft:poison":{}}</condition>
         </criteria>
       </criterias>
       <requirements>
@@ -234,9 +237,6 @@
       <loot>
         <l>minecraft:custom/cheats</l>
       </loot>
-      <commands>
-        <c>/tellraw @a [{"selector":"@s"},{"text":"cheated !!!"}]</c>
-      </commands>
     </advancement>
   </advancements>
 </objects>

@@ -112,6 +112,12 @@ public class PanelEffect extends CGPanel implements ActionListener, ICustomObjec
 		this.entryDuration.setText(Integer.toString(duration));
 	}
 
+	public void setDurationAsSeconds(boolean asSeconds)
+	{
+		if (asSeconds) this.entryDuration.label.setTextID("effect.duration.seconds");
+		else this.entryDuration.label.setTextID("effect.duration");
+	}
+
 	public void setEffect(EffectType effect)
 	{
 		if (effect != null) this.comboboxEffect.setSelected(effect);

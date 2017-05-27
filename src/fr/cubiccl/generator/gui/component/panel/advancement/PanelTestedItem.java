@@ -10,6 +10,7 @@ import fr.cubiccl.generator.gameobject.Enchantment;
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
+import fr.cubiccl.generator.gameobject.tags.NBTReader;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -21,6 +22,7 @@ import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItemSelection;
+import fr.cubiccl.generator.gui.component.panel.gameobject.PanelTags;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.gui.component.textfield.CGSpinner;
@@ -43,6 +45,7 @@ public class PanelTestedItem extends CGPanel implements ActionListener, IStateLi
 	private ImageLabel labelTexture;
 	private PanelObjectList<Enchantment> panelEnchantments;
 	private CGPanel panelItem;
+	private PanelTags panelTags;
 	private CGSpinner spinnerAmount, spinnerDurability;
 
 	public PanelTestedItem()
@@ -93,6 +96,9 @@ public class PanelTestedItem extends CGPanel implements ActionListener, IStateLi
 		++gbc.gridy;
 		gbc.gridwidth = 2;
 		this.add(this.panelEnchantments = new PanelObjectList<Enchantment>("tag.title.ench", (Text) null, Enchantment.class, "testing", true), gbc);
+		++gbc.gridy;
+		this.add(this.panelTags = new PanelTags("item.tags", Tag.ITEM), gbc);
+		this.panelTags.setTargetObject(null);
 
 		this.buttonSelectItem.addActionListener(this);
 		this.checkboxID.addActionListener(this);
@@ -149,6 +155,8 @@ public class PanelTestedItem extends CGPanel implements ActionListener, IStateLi
 				tags.add(enchantment.toTagForTest(Tags.DEFAULT_COMPOUND));
 			i.getNbt().addTag(Tags.ITEM_ENCHANTMENTS.create(tags.toArray(new TagCompound[tags.size()])));
 		}
+		TagCompound t = this.panelTags.generateTags(Tags.DEFAULT_COMPOUND);
+		if (t.size() != 0) i.getNbt().addTag(Tags.CRITERIA_NBT.create(t.valueForCommand()));
 		return i;
 	}
 
@@ -166,7 +174,8 @@ public class PanelTestedItem extends CGPanel implements ActionListener, IStateLi
 		this.labelPotion.setVisible(this.checkboxPotion.isSelected());
 		this.comboboxPotion.setVisible(this.checkboxPotion.isSelected());
 		this.panelEnchantments.setVisible(this.checkboxEnchantments.isSelected());
-		if (!this.hasData()) {
+		if (!this.hasData())
+		{
 			this.damage = 0;
 			this.updateDisplay();
 		}
@@ -214,6 +223,8 @@ public class PanelTestedItem extends CGPanel implements ActionListener, IStateLi
 				this.panelEnchantments.add(Enchantment.createFrom((TagCompound) tag));
 			this.checkboxEnchantments.setSelected(true);
 		}
+		if (item.getNbt().hasTag(Tags.CRITERIA_NBT)) this.panelTags.setValues(((TagCompound) NBTReader.read(item.getNbt().getTag(Tags.CRITERIA_NBT).value(),
+				true, true)).value());
 		this.onCheckbox();
 		this.updateDisplay();
 	}

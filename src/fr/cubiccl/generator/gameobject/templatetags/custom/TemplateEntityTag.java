@@ -20,8 +20,9 @@ public class TemplateEntityTag extends TemplateCompound
 	protected PanelEntity createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelEntity p = new PanelEntity(null);
-		if (object.id().equals("minecraft:armor_stand")) p.setEntity(ObjectRegistry.entities.find("armor_stand"));
-		if (object.id().equals("minecraft:spawn_egg") || object.id().equals("minecraft:mob_spawner")) p.setEntity(ObjectRegistry.entities.find("creeper"));
+		if (object != null && object.id().equals("minecraft:armor_stand")) p.setEntity(ObjectRegistry.entities.find("armor_stand"));
+		if (object != null && object.id().equals("minecraft:spawn_egg") || object.id().equals("minecraft:mob_spawner")) p.setEntity(ObjectRegistry.entities
+				.find("creeper"));
 
 		if (previousValue != null)
 		{

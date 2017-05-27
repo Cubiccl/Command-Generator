@@ -16,6 +16,12 @@ public class PanelCriteriaLocation extends PanelTestValues
 
 	public PanelCriteriaLocation()
 	{
+		this(null);
+	}
+
+	public PanelCriteriaLocation(String titleID)
+	{
+		super(titleID);
 		this.addComponent("criteria.location.position", this.panelPosition = new PanelPosition("criteria.location.position"));
 		this.addComponent("criteria.location.biome", this.comboboxBiome = new OptionCombobox("tag.biome", Utils.BIOMES));
 		this.addComponent("criteria.location.feature", this.comboboxFeature = new OptionCombobox("locate", Utils.STRUCTURES));
