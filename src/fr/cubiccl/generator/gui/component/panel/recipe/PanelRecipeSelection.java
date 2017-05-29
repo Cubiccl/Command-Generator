@@ -79,7 +79,7 @@ public class PanelRecipeSelection extends CGPanel implements ActionListener, Lis
 			sc.setPreferredSize(new Dimension(400, 200));
 			p.add(sc, BorderLayout.CENTER);
 			if (!Dialogs.showConfirmDialog(p)) return;
-			CommandGenerator.createRecipe(area.getText());
+			CommandGenerator.parseRecipe(area.getText());
 		} else if (e.getSource() == this.buttonImport)
 		{
 			JFileChooser fileChooser = new JFileChooser(Settings.getSetting(Settings.LAST_FOLDER));
@@ -88,7 +88,7 @@ public class PanelRecipeSelection extends CGPanel implements ActionListener, Lis
 			{
 				File f = fileChooser.getSelectedFile();
 				Settings.setSetting(Settings.LAST_FOLDER, f.getParentFile().getPath());
-				CommandGenerator.createRecipe(FileUtils.readFile(f));
+				CommandGenerator.parseRecipe(FileUtils.readFile(f));
 			}
 		}
 	}

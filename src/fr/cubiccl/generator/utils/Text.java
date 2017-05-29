@@ -9,13 +9,17 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 
+/** Some text to display to the user. */
 public class Text implements IObjectList<Text>
 {
 	public static final Text INTEGER = new Text("general.integer"), NUMBER = new Text("general.number"), OBJECTIVE = new Text("score.name"), VALUE = new Text(
 			"score.value");
 
+	/** <code>true</code> if this Text should be translated. */
 	public boolean doTranslate;
+	/** The ID to translate. Can also be the actual text if {@link Text#doTranslate} is false. */
 	public String id;
+	/** The Replacements to apply to the translated text, in order. */
 	private ArrayList<Replacement> replacements;
 
 	public Text()
@@ -37,18 +41,21 @@ public class Text implements IObjectList<Text>
 		this(id, true, replacements);
 	}
 
+	/** Adds a Replacement. */
 	public Text addReplacement(Replacement replacement)
 	{
 		this.replacements.add(replacement);
 		return this;
 	}
 
+	/** Adds a Replacement. */
 	public Text addReplacement(String pattern, String replacement)
 	{
 		this.addReplacement(new Replacement(pattern, replacement));
 		return this;
 	}
 
+	/** Adds a Replacement. */
 	public Text addReplacement(String pattern, Text replacement)
 	{
 		this.addReplacement(new Replacement(pattern, replacement));
@@ -81,6 +88,8 @@ public class Text implements IObjectList<Text>
 		return this.toString().length() > 20 ? this.toString().substring(0, 17) + "..." : this.toString();
 	}
 
+	/** @param pattern - The pattern to locate.
+	 * @return <code>true</code> if there is already a Replacement looking for the input <code>pattern</code>. */
 	public boolean hasReplacement(String pattern)
 	{
 		for (Replacement replacement : this.replacements)
@@ -88,7 +97,7 @@ public class Text implements IObjectList<Text>
 		return false;
 	}
 
-	/** @return True if the translation files contain this Text. */
+	/** @return True if the translation files contain this text's ID and if each of the Replacements are translated as well. */
 	public boolean isTranslated()
 	{
 		for (Replacement r : this.replacements)
@@ -96,6 +105,9 @@ public class Text implements IObjectList<Text>
 		return (!this.doTranslate || Lang.keyExists(this.id));
 	}
 
+	/** Removes all Replacements that replace the input <code>pattern</code>.
+	 * 
+	 * @param pattern - The pattern to locate. */
 	public void removeReplacements(String pattern)
 	{
 		ArrayList<Replacement> r = new ArrayList<Replacement>();

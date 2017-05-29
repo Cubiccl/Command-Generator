@@ -21,7 +21,7 @@ public class CommandLocate extends Command
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();

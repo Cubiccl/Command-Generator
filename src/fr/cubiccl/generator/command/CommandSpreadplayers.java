@@ -22,7 +22,7 @@ public class CommandSpreadplayers extends Command
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -59,7 +59,7 @@ public class CommandSpreadplayers extends Command
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.list.clear();
 		this.checkboxX.setSelected(false);

@@ -124,13 +124,13 @@ public class PanelSettings extends ConfirmPanel implements IStateListener<PanelS
 			{
 				if (!Dialogs.showConfirmMessage(new Text("settings.version.confirm").toString(), new Text("general.yes").toString(),
 						new Text("general.no").toString())) return;
-				Settings.setSetting(Settings.MINECRAFT_VERSION, v2.codeName);
+				Settings.setSetting(Settings.MINECRAFT_VERSION, v2.id);
 			}
 			Settings.setSetting(Settings.INDENTATION, Boolean.toString(this.buttonIndentYes.isSelected()));
 			Settings.setSetting(Settings.SLASH, Boolean.toString(this.buttonSlashYes.isSelected()));
 			Settings.setSetting(Settings.SORT_TYPE,
 					Byte.toString(this.buttonSortID.isSelected() ? ObjectRegistry.SORT_ALPHABETICALLY : ObjectRegistry.SORT_NAME));
-			Settings.setSetting(Settings.LANG, this.languages[this.comboboxLanguage.getSelectedIndex()].codeName);
+			Settings.setSetting(Settings.LANG, this.languages[this.comboboxLanguage.getSelectedIndex()].id);
 			if (v == v2) CommandGenerator.stateManager.clearState(false);
 		}
 		

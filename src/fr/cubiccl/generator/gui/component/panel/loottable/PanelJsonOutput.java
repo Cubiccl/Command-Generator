@@ -96,7 +96,7 @@ public class PanelJsonOutput extends CGPanel implements ActionListener
 			{
 				File f = fileChooser.getSelectedFile();
 				Settings.setSetting(Settings.LAST_FOLDER, f.getParentFile().getPath());
-				FileUtils.writeToFile(f, this.areaOutput.getText());
+				FileUtils.writeToFile(this.areaOutput.getText(), f);
 				Dialogs.showMessage(new Text("command.export.success").addReplacement("<file>", fileChooser.getSelectedFile().getName()).toString());
 			}
 		}

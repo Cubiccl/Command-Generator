@@ -32,7 +32,7 @@ public class CommandClear extends Command implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.checkboxAllItem || e.getSource() == this.checkboxIgnoreData || e.getSource() == this.checkboxAll) this.finishReading();
+		if (e.getSource() == this.checkboxAllItem || e.getSource() == this.checkboxIgnoreData || e.getSource() == this.checkboxAll) this.onParsingEnd();
 		this.updateTranslations();
 	}
 
@@ -47,7 +47,7 @@ public class CommandClear extends Command implements ActionListener
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -79,7 +79,7 @@ public class CommandClear extends Command implements ActionListener
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.checkboxAllItem.setSelected(true);
 		this.checkboxIgnoreData.setSelected(true);
@@ -107,7 +107,7 @@ public class CommandClear extends Command implements ActionListener
 	}
 
 	@Override
-	protected void finishReading()
+	protected void onParsingEnd()
 	{
 		boolean item = !this.clearAllItems();
 		this.panelItem.setVisible(item);

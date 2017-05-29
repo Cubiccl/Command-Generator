@@ -25,7 +25,7 @@ public class CommandGive extends Command
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -43,7 +43,7 @@ public class CommandGive extends Command
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.panelItem.setCount(1);
 		this.panelItem.setDamage(0);

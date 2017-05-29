@@ -33,12 +33,12 @@ public class CommandStopsound extends Command implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.checkboxAllSound) this.finishReading();
+		if (e.getSource() == this.checkboxAllSound) this.onParsingEnd();
 		this.updateTranslations();
 	}
 
 	@Override
-	protected CGPanel createGUI()
+	protected CGPanel createUI()
 	{
 		CGPanel p = new CGPanel();
 		GridBagConstraints gbc = p.createGridBagLayout();
@@ -68,7 +68,7 @@ public class CommandStopsound extends Command implements ActionListener
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.checkboxAllSound.setSelected(true);
 		this.comboboxSound.container.setVisible(false);
@@ -84,7 +84,7 @@ public class CommandStopsound extends Command implements ActionListener
 	}
 
 	@Override
-	protected void finishReading()
+	protected void onParsingEnd()
 	{
 		this.comboboxSound.container.setVisible(!this.checkboxAllSound.isSelected());
 		this.labelSound.setVisible(!this.checkboxAllSound.isSelected());

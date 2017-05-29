@@ -20,7 +20,7 @@ public class CommandTestforblocks extends Command
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -46,7 +46,7 @@ public class CommandTestforblocks extends Command
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.comboboxMode.setValue("all");
 	}

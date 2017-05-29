@@ -38,12 +38,12 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		this.finishReading();
+		this.onParsingEnd();
 		this.updateTranslations();
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -99,7 +99,7 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.checkboxClearSlot.setSelected(true);
 		this.entryObjective.container.setVisible(false);
@@ -125,7 +125,7 @@ public class CommandScoreboardObjectives extends Command implements ActionListen
 	}
 
 	@Override
-	protected void finishReading()
+	protected void onParsingEnd()
 	{
 		boolean display = this.comboboxMode.getValue().equals("setdisplay"), add = this.comboboxMode.getValue().equals("add");
 		this.comboboxDisplaySlot.setVisible(display);

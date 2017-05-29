@@ -8,11 +8,16 @@ import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.utils.Settings;
 import fr.cubiccl.generator.utils.Settings.Version;
 
+/** Stores the available Commands. */
 public class Commands
 {
 
+	/** Contains the Commands. */
 	private static final HashMap<String, Command> commands = new HashMap<String, Command>();
 
+	/** Loads all the Commands for the current Version.
+	 * 
+	 * @param frame - Loading Frame to inform on the progress. */
 	public static void createCommands(LoadingFrame frame)
 	{
 		commands.clear();
@@ -60,7 +65,7 @@ public class Commands
 		new CommandWeather();
 		new CommandWorldborder();
 		new CommandXp();
-		
+
 		if (Settings.version().isBefore(Version.v1d11))
 		{
 			new CommandAchievement();
@@ -71,30 +76,29 @@ public class Commands
 			new CommandAdvancement();
 			new CommandRecipe();
 		}
-		
+
 	}
 
+	/** @param id - ID of the Command.
+	 * @return The Command with the input <code>ID</code>. */
 	public static Command getCommandFromID(String id)
 	{
 		return commands.get(id);
 	}
 
+	/** @return An array containing all Commands, sorted by ID. */
 	public static Command[] getCommands()
 	{
 		ArrayList<Command> c = new ArrayList<Command>();
 		c.addAll(commands.values());
-		c.sort(new Comparator<Command>()
-		{
-
-			@Override
-			public int compare(Command o1, Command o2)
-			{
-				return o1.id.compareTo(o2.id);
-			}
-		});
+		c.sort(Comparator.naturalOrder());
 		return c.toArray(new Command[c.size()]);
 	}
 
+	/** Finds the Command that matches the input generated command.
+	 * 
+	 * @param command - the command to parse.
+	 * @return The Command matching the input text. <code>null</code> if the input matches no Command. */
 	public static Command identifyCommand(String command)
 	{
 		if (command.startsWith("/")) command = command.substring(1);
@@ -105,6 +109,7 @@ public class Commands
 		return null;
 	}
 
+	/** Registers a Command. */
 	public static void registerCommand(Command command)
 	{
 		commands.put(command.id, command);

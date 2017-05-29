@@ -59,7 +59,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 		boolean block = this.isBlock();
 		if (e.getSource() == this.comboboxMode)
 		{
-			this.finishReading();
+			this.onParsingEnd();
 		} else
 		{
 			PanelSlotSelection p = new PanelSlotSelection(new Text("replaceitem.slot.selection"), block ? CONTAINER_BLOCKS : CONTAINER_ENTITIES);
@@ -70,7 +70,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -104,7 +104,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.panelItem.setCount(1);
 		this.panelItem.setDamage(0);
@@ -121,7 +121,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 	}
 
 	@Override
-	protected void finishReading()
+	protected void onParsingEnd()
 	{
 		boolean block = this.isBlock();
 		this.panelCoordinates.setVisible(block);

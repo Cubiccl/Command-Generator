@@ -33,13 +33,13 @@ public class CommandFill extends Command implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.comboboxMode) this.finishReading();
+		if (e.getSource() == this.comboboxMode) this.onParsingEnd();
 		else this.panelBlockReplace.setHasData(!this.checkboxData.isSelected());
 		this.updateTranslations();
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -72,7 +72,7 @@ public class CommandFill extends Command implements ActionListener
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.panelBlockFill.setBlock(ObjectRegistry.blocks.find("stone"));
 		this.panelBlockFill.setData(0);
@@ -96,7 +96,7 @@ public class CommandFill extends Command implements ActionListener
 	}
 
 	@Override
-	protected void finishReading()
+	protected void onParsingEnd()
 	{
 		boolean filter = this.isFiltering();
 		this.panelBlockReplace.setVisible(filter);

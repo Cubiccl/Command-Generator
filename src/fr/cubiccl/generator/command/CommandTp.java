@@ -42,7 +42,7 @@ public class CommandTp extends Command implements ActionListener
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -84,7 +84,7 @@ public class CommandTp extends Command implements ActionListener
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.entryXRot.setText("0");
 		this.entryYRot.setText("0");

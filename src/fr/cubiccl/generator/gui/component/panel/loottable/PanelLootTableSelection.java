@@ -80,7 +80,7 @@ public class PanelLootTableSelection extends CGPanel implements ActionListener, 
 			p.add(sc, BorderLayout.CENTER);
 			if (!Dialogs.showConfirmDialog(p)) return;
 
-			CommandGenerator.createTable(area.getText());
+			CommandGenerator.parseLootTable(area.getText());
 		}
 		if (e.getSource() == this.buttonImport)
 		{
@@ -90,7 +90,7 @@ public class PanelLootTableSelection extends CGPanel implements ActionListener, 
 			{
 				File f = fileChooser.getSelectedFile();
 				Settings.setSetting(Settings.LAST_FOLDER, f.getParentFile().getPath());
-				CommandGenerator.createTable(FileUtils.readFile(f));
+				CommandGenerator.parseLootTable(FileUtils.readFile(f));
 			}
 		}
 	}

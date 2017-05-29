@@ -7,20 +7,24 @@ import java.util.HashMap;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 
+/** Settings. */
 public class Settings
 {
+	/** The available Languages. */
 	public static enum Language
 	{
-		ENGLISH("English", "en"),
-		FRENCH("Français", "fr");
+		ENGLISH("en", "English"),
+		FRENCH("fr", "Français");
 
-		public static Language get(String codeName)
+		/** @return The Language matching the input <code>id</code>. */
+		public static Language get(String id)
 		{
 			for (Language l : Language.values())
-				if (l.codeName.equals(codeName)) return l;
+				if (l.id.equals(id)) return l;
 			return get(Settings.getDefault(LANG));
 		}
 
+		/** @return An array containing all Languages. */
 		public static Language[] getLanguages()
 		{
 			ArrayList<Language> langs = new ArrayList<Settings.Language>();
@@ -37,27 +41,32 @@ public class Settings
 			return langs.toArray(new Language[langs.size()]);
 		}
 
-		public final String name, codeName;
+		/** This Language's id. */
+		public final String id;
+		/** This Language's name. */
+		public final String name;
 
-		private Language(String name, String codeName)
+		private Language(String id, String name)
 		{
+			this.id = id;
 			this.name = name;
-			this.codeName = codeName;
 		}
 	}
 
+	/** The available Minecraft Versions. */
 	public static enum Version
 	{
 		v1d11("1.11", "1.11", 0),
 		v1d12("1.12-pre5", "1.12", 1);
 
-		public static Version get(String codeName)
+		public static Version get(String id)
 		{
 			for (Version v : Version.values())
-				if (v.codeName.equals(codeName)) return v;
+				if (v.id.equals(id)) return v;
 			return get(Settings.getDefault(MINECRAFT_VERSION));
 		}
 
+		/** @return An array containing all Versions. */
 		public static Version[] getVersions()
 		{
 			ArrayList<Version> vs = new ArrayList<Version>();
@@ -74,52 +83,63 @@ public class Settings
 			return vs.toArray(new Version[vs.size()]);
 		}
 
-		public final String name, codeName;
+		/** This Version's ID. */
+		public final String id;
+		/** This Version's name. */
+		public final String name;
+		/** The position of the Version. */
 		public final int order;
 
-		private Version(String name, String codeName, int order)
+		private Version(String id, String name, int order)
 		{
+			this.id = id;
 			this.name = name;
-			this.codeName = codeName;
 			this.order = order;
 		}
 
 		public int compare(Version anotherVersion)
 		{
-			return this.order - anotherVersion.order;
+			return Integer.compare(this.order, anotherVersion.order);
 		}
 
-		/** @return true if this Version is after or equal to another Version. */
+		/** @return <code>true</code> if this Version is after or equal to another Version. */
 		public boolean isAfter(Version anotherVersion)
 		{
 			return this.compare(anotherVersion) >= 0;
 		}
 
-		/** @return true if this Version is before or equal to another Version. */
+		/** @return <code>true</code> if this Version is before or equal to another Version. */
 		public boolean isBefore(Version anotherVersion)
 		{
 			return this.compare(anotherVersion) <= 0;
 		}
 	}
 
-	public static final boolean CHECK_UPDATES = false;
+	/** The Generator's version. */
 	public static final String GENERATOR_VERSION = "2.6.2.3";
+	/** The selected Language. */
 	private static Language language;
+	/** The selected Minecraft version. */
 	private static Version mcversion;
+	/** Setting IDs. */
 	public static final String MINECRAFT_VERSION = "mcversion", LANG = "lang", SLASH = "slash", SORT_TYPE = "sort", INDENTATION = "indentation",
 			LAST_VERSION = "lastversion", LAST_FOLDER = "folder";
+	/** Stores the Settings. */
 	private static HashMap<String, String> settings = new HashMap<String, String>();
+	/** <code>true</code> if the Generator is in debug mode. */
 	public static boolean testMode = false;
 
-	private static String getDefault(String settingID)
+	/** @param id - The Setting's ID.
+	 * @return The default value for the input Setting. */
+	private static String getDefault(String id)
 	{
-		switch (settingID)
+		switch (id)
 		{
 			case MINECRAFT_VERSION:
-				return Version.v1d11.codeName;
+				return Version.v1d11.id;
 
 			case LANG:
-				return Language.ENGLISH.codeName;
+				return Language.ENGLISH.id;
 
 			case LAST_VERSION:
 				return " ";
@@ -139,17 +159,21 @@ public class Settings
 		}
 	}
 
+	/** @param id - The Setting's ID.
+	 * @return The value of the input Setting. */
 	public static String getSetting(String id)
 	{
 		if (!settings.containsKey(id)) setSetting(id, getDefault(id));
 		return settings.get(id);
 	}
 
+	/** @return The selected {@link Language}. */
 	public static Language language()
 	{
 		return language;
 	}
 
+	/** Loads the Settings by reading the settings file. */
 	public static void loadSettings()
 	{
 		String[] values = FileUtils.readFileAsArray("settings.txt");
@@ -166,6 +190,7 @@ public class Settings
 		setSetting(MINECRAFT_VERSION, version);
 	}
 
+	/** Saves the Settings to the file. */
 	public static void save()
 	{
 		ArrayList<String> data = new ArrayList<String>();
@@ -174,12 +199,19 @@ public class Settings
 		FileUtils.writeToFile("settings.txt", data.toArray(new String[data.size()]));
 	}
 
+	/** Changes the selected Language.
+	 * 
+	 * @param newLanguage - The new Language. */
 	public static void setLanguage(Language newLanguage)
 	{
 		language = newLanguage;
 		CommandGenerator.updateLanguage();
 	}
 
+	/** Changes the value of a setting.
+	 * 
+	 * @param id - The Setting's ID.
+	 * @param value - The value of the Setting. */
 	public static void setSetting(String id, String value)
 	{
 		settings.put(id, value);
@@ -187,12 +219,16 @@ public class Settings
 		if (id.equals(MINECRAFT_VERSION)) setVersion(Version.get(value));
 	}
 
+	/** Changes the selected Minecraft Version.
+	 * 
+	 * @param newLanguage - The new Version. */
 	public static void setVersion(Version newVersion)
 	{
 		mcversion = newVersion;
 		CommandGenerator.updateData();
 	}
 
+	/** @return The selected {@link Version Minecraft Version}. */
 	public static Version version()
 	{
 		return mcversion;

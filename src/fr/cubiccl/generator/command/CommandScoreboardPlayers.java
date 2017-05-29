@@ -48,7 +48,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener,
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -133,7 +133,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener,
 	}
 
 	@Override
-	protected void finishReading()
+	protected void onParsingEnd()
 	{
 		this.onCheckbox();
 	}

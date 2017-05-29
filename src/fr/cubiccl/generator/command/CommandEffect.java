@@ -32,7 +32,7 @@ public class CommandEffect extends Command implements ActionListener
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -54,7 +54,7 @@ public class CommandEffect extends Command implements ActionListener
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.panelEffect.setDefault();
 		this.comboboxMode.setValue("apply");

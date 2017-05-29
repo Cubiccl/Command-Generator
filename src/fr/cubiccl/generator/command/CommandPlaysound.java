@@ -35,7 +35,7 @@ public class CommandPlaysound extends Command
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -88,7 +88,7 @@ public class CommandPlaysound extends Command
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.panelCoordinates.setupFrom(new Coordinates(0, 0, 0, true, true, true));
 		this.entryVolume.setText("0");

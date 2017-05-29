@@ -51,7 +51,7 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -124,7 +124,7 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.checkboxCriterion.setSelected(false);
 	}
@@ -143,7 +143,7 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 	}
 
 	@Override
-	protected void finishReading()
+	protected void onParsingEnd()
 	{
 		this.onCheckbox();
 		this.onModeChange();

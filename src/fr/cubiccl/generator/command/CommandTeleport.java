@@ -27,7 +27,7 @@ public class CommandTeleport extends Command
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -61,7 +61,7 @@ public class CommandTeleport extends Command
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.entryXRot.setText("0");
 		this.entryYRot.setText("0");

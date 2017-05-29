@@ -20,7 +20,7 @@ public abstract class GameObject
 	{
 		Element root = new Element(id);
 		root.setAttribute("objectname", this.customName);
-		root.setAttribute("version", this.versionMin.codeName);
+		root.setAttribute("version", this.versionMin.id);
 		return root;
 	}
 

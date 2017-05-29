@@ -61,7 +61,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -106,7 +106,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.checkboxQuery.setSelected(false);
 		this.onCheckbox();
@@ -123,7 +123,7 @@ public class CommandGamerule extends Command implements ActionListener, IStateLi
 	}
 
 	@Override
-	protected void finishReading()
+	protected void onParsingEnd()
 	{
 		this.onCheckbox();
 	}

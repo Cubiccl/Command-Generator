@@ -6,13 +6,20 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ConfirmPanel;
 
+/** Manages the Generator's states. */
 @SuppressWarnings("rawtypes")
 public class StateManager
 {
+	/** A Single state.
+	 * 
+	 * @param <T> - The type of the State's UI. */
 	public class State<T extends CGPanel>
 	{
+		/** <code>true</code> if the OK/Cancel buttons are included in this State's UI. */
 		public final boolean isConfirmIncluded;
+		/** This State's UI. */
 		public final T panel;
+		/** The listener. Will be called when this State closes. */
 		private final IStateListener<T> stateListener;
 
 		public State(T panel, IStateListener<T> stateListener)
@@ -23,6 +30,7 @@ public class StateManager
 		}
 	}
 
+	/** The list of States for each mode. */
 	private Stack<State>[] states;
 
 	@SuppressWarnings("unchecked")
@@ -31,12 +39,17 @@ public class StateManager
 		this.states = new Stack[] {};
 	}
 
+	/** Clears all States for the current mode. */
 	public void clear()
 	{
 		this.currentManager().clear();
-		this.updatePanel();
+		this.onStateChange();
 	}
 
+	/** Clears the current State.
+	 * 
+	 * @param shouldCheck - <code>true</code> if the listener should be called.
+	 * @return The UI that was closed. */
 	@SuppressWarnings("unchecked")
 	public <T extends CGPanel> T clearState(boolean shouldCheck)
 	{
@@ -44,10 +57,11 @@ public class StateManager
 		if (shouldCheck && this.currentManager().peek().stateListener != null
 				&& !this.currentManager().peek().stateListener.shouldStateClose(this.currentManager().peek().panel)) return null;
 		T panel = (T) this.currentManager().pop().panel;
-		this.updatePanel();
+		this.onStateChange();
 		return panel;
 	}
 
+	/** @return The manager for the current mode. */
 	private Stack<State> currentManager()
 	{
 		int current = CommandGenerator.getCurrentMode();
@@ -65,40 +79,46 @@ public class StateManager
 		return this.states[current];
 	}
 
+	/** @return The current State. */
 	public State getState()
 	{
 		if (this.currentManager().isEmpty()) return null;
 		return this.currentManager().peek();
 	}
 
-	public <T extends CGPanel> void setCommandState(T panel, IStateListener<T> stateListener)
-	{
-		this.states[0].add(new State<T>(panel, stateListener));
-		this.updatePanel();
-	}
-
-	public <T extends CGPanel> void setState(T panel, IStateListener<T> stateListener)
-	{
-		this.currentManager().add(new State<T>(panel, stateListener));
-		this.updatePanel();
-	}
-
-	public int stateCount()
-	{
-		return this.currentManager().size();
-	}
-
-	public void updateMode()
-	{
-		this.updatePanel();
-	}
-
-	private void updatePanel()
+	/** Displays the UI of the current State and updates its translations. Called when changing mode or State. */
+	public void onStateChange()
 	{
 		State state = this.getState();
 		CGPanel p = state == null ? null : state.panel;
 		if (p != null) p.updateTranslations();
 		if (this.currentManager().size() <= 1 || (state != null && state.isConfirmIncluded)) CommandGenerator.window.setMainPanel(p);
 		else CommandGenerator.window.setMainPanel(new ConfirmPanel(state.panel.getStateName(), p, true));
+	}
+
+	/** Sets the State for the Command Generator mode.
+	 * 
+	 * @param panel - The new State's UI.
+	 * @param stateListener - The new State's listener. */
+	public <T extends CGPanel> void setCommandState(T panel, IStateListener<T> stateListener)
+	{
+		this.states[CommandGenerator.COMMANDS].add(new State<T>(panel, stateListener));
+		this.onStateChange();
+	}
+
+	/** Sets the State for the current mode.
+	 * 
+	 * @param panel - The new State's UI.
+	 * @param stateListener - The new State's listener. */
+	public <T extends CGPanel> void setState(T panel, IStateListener<T> stateListener)
+	{
+		this.currentManager().add(new State<T>(panel, stateListener));
+		this.onStateChange();
+	}
+
+	/** @return The number of States for the current mode. */
+	public int stateCount()
+	{
+		return this.currentManager().size();
 	}
 }

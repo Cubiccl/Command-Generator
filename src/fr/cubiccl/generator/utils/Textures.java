@@ -5,13 +5,15 @@ import java.util.HashMap;
 
 import fr.cubiccl.generator.CommandGenerator;
 
+/** Manages Images. */
 public class Textures
 {
-	/** Maps texture IDs to filePaths. */
+	/** Maps texture IDs to file paths. */
 	private static final HashMap<String, String> paths = new HashMap<String, String>();
-	/** Maps filePaths to the loaded Buffered Images. */
+	/** Maps file paths to the loaded Buffered Images. */
 	private static final HashMap<String, BufferedImage> textures = new HashMap<String, BufferedImage>();
 
+	/** Reloads the textures and remaps the IDs to the paths. */
 	public static void createTextures()
 	{
 		paths.clear();
@@ -26,7 +28,7 @@ public class Textures
 	}
 
 	/** @param textureID - The Identifier of the Texture.
-	 * @return The corresponding BufferedImage. Returns null if <code>textureID</code> is not recognized or the File can't be found. */
+	 * @return The corresponding BufferedImage. Returns null if <code>textureID</code> is not recognized or the image File can't be found. */
 	public static BufferedImage getTexture(String textureID)
 	{
 		textureID = textureID.replaceAll("minecraft:", "");
@@ -48,12 +50,18 @@ public class Textures
 		return textures.get(path);
 	}
 
-	/** @param textureID - Loads the Buffered Image at <code>path</code> and registers it. */
+	/** Loads an Image.
+	 * 
+	 * @param path - The path to the File containing the Image. */
 	private static void loadTexture(String path)
 	{
 		textures.put(path, FileUtils.readImage(path));
 	}
 
+	/** Locates the Image with the input ID.
+	 * 
+	 * @param textureID - The ID of the Image.
+	 * @return The path to the Image File. */
 	private static String locateTexture(String textureID)
 	{
 		String defaultPath = "textures/" + textureID.replaceAll("\\.", "/");

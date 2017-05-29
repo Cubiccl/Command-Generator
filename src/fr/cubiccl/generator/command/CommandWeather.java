@@ -26,11 +26,11 @@ public class CommandWeather extends Command implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		this.finishReading();
+		this.onParsingEnd();
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -65,7 +65,7 @@ public class CommandWeather extends Command implements ActionListener
 	}
 
 	@Override
-	protected void defaultGui()
+	protected void resetUI()
 	{
 		this.checkboxRandomDuration.setSelected(false);
 	}
@@ -77,7 +77,7 @@ public class CommandWeather extends Command implements ActionListener
 	}
 
 	@Override
-	protected void finishReading()
+	protected void onParsingEnd()
 	{
 		this.entryDuration.container.setVisible(!this.checkboxRandomDuration.isSelected());
 	}

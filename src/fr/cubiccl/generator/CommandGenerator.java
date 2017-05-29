@@ -21,65 +21,80 @@ import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.gui.Window;
 import fr.cubiccl.generator.utils.*;
 
+/** Main class. */
 public class CommandGenerator
 {
+	/** Stores each command that was generated. */
 	private static ArrayList<String> commandHistory = new ArrayList<String>();
+	/** Identifiers for the Generator mode. <br />
+	 * <br />
+	 * <table border="1">
+	 * <tr>
+	 * <td>ID</td>
+	 * <td>Variable</td>
+	 * <td>Mode</td>
+	 * </tr>
+	 * <tr>
+	 * <td>0</td>
+	 * <td>COMMANDS</td>
+	 * <td>Command Generator</td>
+	 * </tr>
+	 * <tr>
+	 * <td>1</td>
+	 * <td>LOOT_TABLES</td>
+	 * <td>Loot Table Generator</td>
+	 * </tr>
+	 * <tr>
+	 * <td>4</td>
+	 * <td>RECIPES</td>
+	 * <td>Recipe Generator</td>
+	 * </tr>
+	 * <tr>
+	 * <td>5</td>
+	 * <td>ADVANCEMENTS</td>
+	 * <td>Advancement Generator</td>
+	 * </tr>
+	 * </table> */
 	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, SPEEDRUN = 3, RECIPES = 4, ADVANCEMENTS = 5;
+	/** The current generator mode.
+	 * 
+	 * @see {@link CommandGenerator#COMMANDS} for possible values. */
 	private static byte currentMode = COMMANDS;
-	private static String executeCommand = "", executeInput = null;
+	/** Temporary variable for /execute. When generating /execute, the execute part will be stored in this variable, while the user chooses the Command to execute. */
+	private static String executeCommand = "";
+	/** Temporary variable for /execute. If the user parsed a /execute command, the executed part is stored in this variable; then used when the user generates again to be parsed and setup the UI. */
+	private static String executeInput = null;
+	/** Is true while the data is reloading (false when loading for the first time during this instance). */
 	private static boolean isReloading = false;
+	/** The output log. */
 	private static ArrayList<String> log = new ArrayList<String>();
+	/** Names for the Generator mode. */
 	private static final String[] MODE_NAMES =
 	{ "Commands", "Loot tables", "Data", "Speedruns", "Recipes", "Advancements" };
 	private static Command selected;
+	/** The State manager instance. */
 	public static StateManager stateManager;
-	public static ArrayList<String> untranslated = new ArrayList<String>();
+	/** The Window. */
 	public static Window window;
 
+	/** Cancels the /execute command. */
 	public static void cancelExecute()
 	{
 		executeCommand = "";
 		window.setExecuteCommand(false);
 	}
 
+	/** @return The Command History.
+	 * @see {@link CommandGenerator#commandHistory} */
 	public static String[] commandHistory()
 	{
 		return commandHistory.toArray(new String[commandHistory.size()]);
 	}
 
-	public static void createAdvancement(String text)
-	{
-		TagCompound tag = (TagCompound) NBTReader.read(text, true, true, true);
-		Advancement advancement = Advancement.createFrom(tag);
-
-		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
-		if (name == null) return;
-		advancement.setCustomName(name);
-		window.panelAdvancementSelection.list.add(advancement);
-	}
-
-	public static void createRecipe(String text)
-	{
-		TagCompound tag = (TagCompound) NBTReader.read(text, true, true, true);
-		Recipe recipe = Recipe.createFrom(tag);
-
-		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
-		if (name == null) return;
-		recipe.setCustomName(name);
-		window.panelRecipeSelection.list.add(recipe);
-	}
-
-	public static void createTable(String text)
-	{
-		TagCompound tag = (TagCompound) NBTReader.read(text, true, true, true);
-		LootTable table = LootTable.createFrom(tag);
-
-		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
-		if (name == null) return;
-		table.setCustomName(name);
-		window.panelLootTableSelection.list.add(table);
-	}
-
+	/** Parses the input generated command.
+	 * 
+	 * @param input - The command to parse.
+	 * @throws CommandGenerationException - If the parsing fails. */
 	public static void doLoad(String input) throws CommandGenerationException
 	{
 		Command command = Commands.identifyCommand(input);
@@ -88,6 +103,7 @@ public class CommandGenerator
 		setSelected(command);
 	}
 
+	/** Exits the Generator. Saves data, settings and exports the log. */
 	public static void exit()
 	{
 		log("Exiting Command Generator... Bye bye !");
@@ -96,13 +112,14 @@ public class CommandGenerator
 		ObjectSaver.save();
 		if (Settings.testMode)
 		{
-			untranslated.sort(Comparator.naturalOrder());
+			Lang.untranslated.sort(Comparator.naturalOrder());
 			saveVersion();
-			FileUtils.writeToFile("untranslated.txt", untranslated.toArray(new String[untranslated.size()]));
+			FileUtils.writeToFile("untranslated.txt", Lang.untranslated.toArray(new String[Lang.untranslated.size()]));
 		}
-		log("Log, settings and custom objects save successful.");
+		log("Log, settings and custom objects saved successfully.");
 	}
 
+	/** Generates the Advancement. */
 	public static void generateAdvancement()
 	{
 		log("Generating !");
@@ -115,6 +132,7 @@ public class CommandGenerator
 		}
 	}
 
+	/** Generates the Command. */
 	public static void generateCommand()
 	{
 		log("Generating !");
@@ -154,6 +172,7 @@ public class CommandGenerator
 		}
 	}
 
+	/** Generates the Recipe. */
 	public static void generateRecipe()
 	{
 		log("Generating !");
@@ -166,6 +185,7 @@ public class CommandGenerator
 		}
 	}
 
+	/** Generates the Loot Table. */
 	public static void generateTable()
 	{
 		log("Generating !");
@@ -178,16 +198,19 @@ public class CommandGenerator
 		}
 	}
 
+	/** @return {@link CommandGenerator#currentMode} */
 	public static byte getCurrentMode()
 	{
 		return currentMode;
 	}
 
+	/** @return {@link CommandGenerator#isReloading} */
 	public static boolean isReloading()
 	{
 		return isReloading;
 	}
 
+	/** Asks the user for a Command to parse and parses it. */
 	public static void loadCommand()
 	{
 		Command command;
@@ -212,6 +235,9 @@ public class CommandGenerator
 		} while (!done);
 	}
 
+	/** Logs a line of text. Prints it in the console and adds it to the log.
+	 * 
+	 * @param text - The text to log. */
 	public static void log(String text)
 	{
 		System.out.println(text);
@@ -237,43 +263,101 @@ public class CommandGenerator
 		if (!Settings.getSetting(Settings.LAST_VERSION).equals(Settings.GENERATOR_VERSION)) showChangelog();
 	}
 
-	public static void report(CommandGenerationException e)
+	/** Parses an Advancement.
+	 * 
+	 * @param text - The text to parse. */
+	public static void parseAdvancement(String text)
 	{
-		Dialogs.showMessage(e.getMessage());
-		log("Error : " + e.getMessage());
+		TagCompound tag = (TagCompound) NBTReader.read(text, true, true, true);
+		Advancement advancement = Advancement.createFrom(tag);
+
+		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
+		if (name == null) return;
+		advancement.setCustomName(name);
+		window.panelAdvancementSelection.list.add(advancement);
 	}
 
+	/** Parses a Loot Table.
+	 * 
+	 * @param text - The text to parse. */
+	public static void parseLootTable(String text)
+	{
+		TagCompound tag = (TagCompound) NBTReader.read(text, true, true, true);
+		LootTable table = LootTable.createFrom(tag);
+
+		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
+		if (name == null) return;
+		table.setCustomName(name);
+		window.panelLootTableSelection.list.add(table);
+	}
+
+	/** Parses a Recipe.
+	 * 
+	 * @param text - The text to parse. */
+	public static void parseRecipe(String text)
+	{
+		TagCompound tag = (TagCompound) NBTReader.read(text, true, true, true);
+		Recipe recipe = Recipe.createFrom(tag);
+
+		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
+		if (name == null) return;
+		recipe.setCustomName(name);
+		window.panelRecipeSelection.list.add(recipe);
+	}
+
+	/** Reports an Exception. Prints it in the console and adds it to the log.
+	 * 
+	 * @param exception - The Exception to report. */
+	public static void report(CommandGenerationException exception)
+	{
+		Dialogs.showMessage(exception.getMessage());
+		log("Error : " + exception.getMessage());
+	}
+
+	/** Saves the data of the current version. */
 	private static void saveVersion()
 	{
-		FileUtils.saveXMLFile(ObjectRegistry.allToXML(), "data/" + Settings.version().codeName);
+		FileUtils.saveXMLFile(ObjectRegistry.allToXML(), "data/" + Settings.version().id);
 	}
 
+	/** @return The currently selected Command. */
 	public static Command selectedCommand()
 	{
 		return selected;
 	}
 
+	/** Changes the current generator mode.
+	 * 
+	 * @param mode - The ID of the mode to set.
+	 * @see {@link CommandGenerator#COMMANDS Generator modes}. */
 	public static void setCurrentMode(byte mode)
 	{
 		currentMode = mode;
 		log("Switching to " + MODE_NAMES[mode] + " mode.");
 		window.updateMode();
-		stateManager.updateMode();
+		stateManager.onStateChange();
 	}
 
+	/** Sets the executeInput.
+	 * 
+	 * @see {@link CommandGenerator#executeInput} */
 	public static void setExecuteInput(String input)
 	{
 		executeInput = input;
 	}
 
+	/** Sets the input Command as selected.
+	 * 
+	 * @param command - The selected Command. */
 	public static void setSelected(Command command)
 	{
 		selected = command;
 		window.setSelected(command);
 		stateManager.clear();
-		stateManager.setCommandState(selectedCommand().getGUI(), null);
+		stateManager.setCommandState(selectedCommand().getUI(), null);
 	}
 
+	/** Displays the Change log to the user. */
 	private static void showChangelog()
 	{
 		Dialogs.showMessage(FileUtils.readChangelog());
@@ -286,6 +370,7 @@ public class CommandGenerator
 		log("---- Creating objects ----");
 
 		LoadingFrame frame = new LoadingFrame(5);
+		if (Settings.testMode) saveVersion();
 		Settings.save();
 		ObjectSaver.save();
 		ObjectCreator.createObjects(frame);

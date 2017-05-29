@@ -273,7 +273,7 @@ public class ObjectCreator
 	{
 		frame.setText("loading.objects");
 		ObjectRegistry.resetAll();
-		Element data = FileUtils.readXMLFile("data/" + Settings.version().codeName);
+		Element data = FileUtils.readXMLFile("data/" + Settings.version().id);
 
 		createBlocks(data.getChild("blocks"));
 		createItems(data.getChild("items"));

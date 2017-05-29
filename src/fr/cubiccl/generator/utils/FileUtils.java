@@ -21,9 +21,12 @@ import fr.cubiccl.generator.gui.Dialogs;
 
 public class FileUtils
 {
+	/** Path to the resources folder. */
 	public static final String resourcesFolder = "resources/";
+	/** URL for the file containing the latest version of the Generator. */
 	private static final String VERSION_URL = "https://www.dropbox.com/s/1crneiyy6fx3lqk/version.txt?dl=1";
 
+	/** Checks for updates. Asks the user if they want to update if an update is found. */
 	public static void checkForUpdates()
 	{
 		CommandGenerator.log("Checking for updates...");
@@ -48,6 +51,9 @@ public class FileUtils
 		}
 	}
 
+	/** Deletes the input file.
+	 * 
+	 * @param path - Path to the file to delete. */
 	public static void delete(String path)
 	{
 		File f = new File(resourcesFolder + path);
@@ -56,6 +62,8 @@ public class FileUtils
 
 	/** Downloads a single file.
 	 * 
+	 * @param url - The URL to the file.
+	 * @param destination - The path to the destination location.
 	 * @return True if the download was successful. */
 	public static boolean download(String url, String destination)
 	{
@@ -76,12 +84,17 @@ public class FileUtils
 		}
 	}
 
+	/** @param path - The path to the file.
+	 * @return <code>true</code> if the input file exists. */
 	public static boolean fileExists(String path)
 	{
 		File file = new File(resourcesFolder + path);
 		return file != null && file.exists();
 	}
 
+	/** Read the changelog of the latest release.
+	 * 
+	 * @return The read changelog. */
 	public static String readChangelog()
 	{
 		String changelog = "Changelog: Version " + Settings.GENERATOR_VERSION;
@@ -102,6 +115,10 @@ public class FileUtils
 		return changelog;
 	}
 
+	/** Reads the input file.
+	 * 
+	 * @param file - The path to the file.
+	 * @return A String containing the file content. */
 	public static String readFile(File file)
 	{
 		String[] data = readFileAsArray(file);
@@ -111,6 +128,10 @@ public class FileUtils
 		return toreturn;
 	}
 
+	/** Reads the input file.
+	 * 
+	 * @param file - The file.
+	 * @return A String array containing each line of the file content. */
 	private static String[] readFileAsArray(File file)
 	{
 		ArrayList<String> lines = new ArrayList<String>();
@@ -132,15 +153,19 @@ public class FileUtils
 		return lines.toArray(new String[lines.size()]);
 	}
 
-	/** @param path - The path to the File.
-	 * @return Each line of the File in a String Array. */
+	/** Reads the input file.
+	 * 
+	 * @param path - The path to the file.
+	 * @return A String array containing each line of the file content. */
 	public static String[] readFileAsArray(String path)
 	{
 		return readFileAsArray(new File(resourcesFolder + path));
 	}
 
-	/** @param path - The path to the File.
-	 * @return The Image located at <code>path</code>. */
+	/** Reads the input file.
+	 * 
+	 * @param path - The path to the file.
+	 * @return The read Image. */
 	public static BufferedImage readImage(String path)
 	{
 		File file = new File(resourcesFolder + path + ".png");
@@ -159,7 +184,10 @@ public class FileUtils
 		}
 	}
 
-	/** @param path - Path to the File, .xml excluded. */
+	/** Reads the input XML file.
+	 * 
+	 * @param path - The path to the file.
+	 * @return The root Element of the XML file. */
 	public static Element readXMLFile(String path)
 	{
 		File file = new File(resourcesFolder + path + ".xml");
@@ -174,7 +202,7 @@ public class FileUtils
 		return null;
 	}
 
-	/** Avoids errors when unzipping the update. */
+	/** Renames the update files. Avoids errors when updating. */
 	public static void renameUpdater()
 	{
 		File delete = new File("updater-windows.exe");
@@ -197,22 +225,43 @@ public class FileUtils
 		if (rename.exists()) rename.renameTo(delete);
 	}
 
-	/** @param root - The Root XML element to save.
-	 * @param path - Path to the File, .xml excluded. */
-	public static void saveXMLFile(Element root, String path)
+	/** Saves the input XML file.
+	 * 
+	 * @param element - The XML element to save.
+	 * @param path - The path to the file. */
+	public static void saveXMLFile(Element element, String path)
 	{
 		try
 		{
-			new XMLOutputter(Format.getPrettyFormat()).output(new Document(root), new FileOutputStream(resourcesFolder + path + ".xml"));
+			new XMLOutputter(Format.getPrettyFormat()).output(new Document(element), new FileOutputStream(resourcesFolder + path + ".xml"));
 		} catch (Exception e)
 		{
 			e.printStackTrace();
 		}
 	}
 
+	/** Saves a single line in the input file.
+	 * 
+	 * @param data - The line to write.
+	 * @param file - The file. */
+	public static void writeToFile(String data, File file)
+	{
+		writeToFile(new String[]
+		{ data }, file);
+	}
+
 	/** @param path - Path to the File
 	 * @param data - Each line to write. */
-	public static void writeToFile(File file, String... data)
+	public static void writeToFile(String path, String... data)
+	{
+		writeToFile(data, new File(resourcesFolder + path));
+	}
+
+	/** Saves data in the input file.
+	 * 
+	 * @param data - The lines to write.
+	 * @param file - The file. */
+	public static void writeToFile(String[] data, File file)
 	{
 		if (file.exists()) file.delete();
 		try
@@ -225,13 +274,6 @@ public class FileUtils
 		{
 			e.printStackTrace();
 		}
-	}
-
-	/** @param path - Path to the File
-	 * @param data - Each line to write. */
-	public static void writeToFile(String path, String... data)
-	{
-		writeToFile(new File(resourcesFolder + path), data);
 	}
 
 	private FileUtils()

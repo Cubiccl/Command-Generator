@@ -30,13 +30,13 @@ public class CommandWorldborder extends Command implements ActionListener, KeyLi
 	{
 		if (e.getSource() == this.comboboxMode || e.getSource() == this.comboboxMode2)
 		{
-			this.finishReading();
+			this.onParsingEnd();
 		}
 		this.updateTranslations();
 	}
 
 	@Override
-	public CGPanel createGUI()
+	public CGPanel createUI()
 	{
 		CGPanel panel = new CGPanel();
 		GridBagConstraints gbc = panel.createGridBagLayout();
@@ -93,7 +93,7 @@ public class CommandWorldborder extends Command implements ActionListener, KeyLi
 	}
 
 	@Override
-	protected void finishReading()
+	protected void onParsingEnd()
 	{
 		String mode = this.comboboxMode.getValue();
 		this.entryValue.container.setVisible(!mode.equals("get"));
