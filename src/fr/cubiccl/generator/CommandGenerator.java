@@ -370,7 +370,7 @@ public class CommandGenerator
 		log("---- Creating objects ----");
 
 		LoadingFrame frame = new LoadingFrame(5);
-		if (Settings.testMode) saveVersion();
+		if (Settings.testMode && window != null) saveVersion();
 		Settings.save();
 		ObjectSaver.save();
 		ObjectCreator.createObjects(frame);

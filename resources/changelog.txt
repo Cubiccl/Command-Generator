@@ -3,6 +3,7 @@ ADDITIONS
 - Updated for Minecraft 1.12.
 
 BUGS FIXED
+- 1.11 didn't have Shulker Box items.
 - Everywhere except in /effect, effect durations were in seconds instead of ticks.
 
 CHANGED TRANSLATIONS

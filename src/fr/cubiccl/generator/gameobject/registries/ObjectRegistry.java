@@ -269,6 +269,7 @@ public class ObjectRegistry<T extends BaseObject>
 
 	public T first()
 	{
+		if (this.size() == 0) return null;
 		return this.list()[0];
 	}
 

@@ -1970,6 +1970,22 @@
     <item idint="216" idstr="bone_block" />
     <item idint="217" idstr="structure_void" />
     <item idint="218" idstr="observer" />
+    <item idint="219" idstr="white_shulker_box" />
+    <item idint="220" idstr="orange_shulker_box" />
+    <item idint="221" idstr="magenta_shulker_box" />
+    <item idint="222" idstr="light_blue_shulker_box" />
+    <item idint="223" idstr="yellow_shulker_box" />
+    <item idint="224" idstr="lime_shulker_box" />
+    <item idint="225" idstr="pink_shulker_box" />
+    <item idint="226" idstr="gray_shulker_box" />
+    <item idint="227" idstr="silver_shulker_box" />
+    <item idint="228" idstr="cyan_shulker_box" />
+    <item idint="229" idstr="purple_shulker_box" />
+    <item idint="230" idstr="blue_shulker_box" />
+    <item idint="231" idstr="brown_shulker_box" />
+    <item idint="232" idstr="green_shulker_box" />
+    <item idint="233" idstr="red_shulker_box" />
+    <item idint="234" idstr="black_shulker_box" />
     <item idint="255" idstr="structure_block" />
     <item idint="256" idstr="iron_shovel">
       <texture>-1</texture>
