@@ -16,8 +16,13 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelAttribute;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
+/** Represents an Attribute applied to an Entity. */
 public class AppliedAttribute extends GameObject implements IObjectList<AppliedAttribute>
 {
+	/** Creates an Applied Attribute from the input XML element.
+	 * 
+	 * @param attribute - The XML element describing the Applied Attribute.
+	 * @return The created Applied Attribute. */
 	public static AppliedAttribute createFrom(Element attribute)
 	{
 		ArrayList<AttributeModifier> modifiers = new ArrayList<AttributeModifier>();
@@ -32,6 +37,10 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 		return a;
 	}
 
+	/** Creates an Applied Attribute from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Applied Attribute.
+	 * @return The created Applied Attribute. */
 	public static AppliedAttribute createFrom(TagCompound tag)
 	{
 		Attribute a = ObjectRegistry.attributes.first();
@@ -56,8 +65,11 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 		return at;
 	}
 
+	/** The applied {@link Attribute}. */
 	private Attribute attribute;
+	/** The base value of the Attribute. */
 	public double base;
+	/** The modifiers of this Attribute. */
 	public AttributeModifier[] modifiers;
 
 	public AppliedAttribute()
@@ -80,6 +92,7 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 		return p;
 	}
 
+	/** Getter for {@link AppliedAttribute#attribute}. */
 	public Attribute getAttribute()
 	{
 		return attribute;
@@ -97,6 +110,7 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.attribute.name().toString();
 	}
 
+	/** Setter for {@link AppliedAttribute#attribute}. */
 	public void setAttribute(Attribute attribute)
 	{
 		this.attribute = attribute;

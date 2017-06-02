@@ -21,14 +21,49 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Utils;
 
+/** Represents a Message in Json format. */
 public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 {
+	/** Colors values for Json colors. */
 	public static final Color[] LABEL_COLOR =
 	{ Color.WHITE, new Color(85, 255, 255), Color.BLACK, new Color(85, 85, 255), new Color(0, 170, 170), new Color(0, 0, 170), new Color(85, 85, 85),
 			new Color(0, 170, 0), new Color(170, 0, 170), new Color(170, 0, 0), new Color(255, 170, 0), new Color(170, 170, 170), new Color(85, 255, 85),
 			new Color(255, 85, 255), new Color(255, 85, 85), new Color(255, 255, 85) };
+	/** Identifiers for Json Message modes. <br />
+	 * <br />
+	 * <table border="1">
+	 * <tr>
+	 * <td>ID</td>
+	 * <td>Variable</td>
+	 * <td>Mode</td>
+	 * </tr>
+	 * <tr>
+	 * <td>0</td>
+	 * <td>TEXT</td>
+	 * <td>Raw text</td>
+	 * </tr>
+	 * <tr>
+	 * <td>1</td>
+	 * <td>TRANSLATE</td>
+	 * <td>ID of a text to translate</td>
+	 * </tr>
+	 * <tr>
+	 * <td>2</td>
+	 * <td>SCORE</td>
+	 * <td>Scoreboard value</td>
+	 * </tr>
+	 * <tr>
+	 * <td>3</td>
+	 * <td>SELECTOR</td>
+	 * <td>Entity selector</td>
+	 * </tr>
+	 * </table> */
 	public static final byte TEXT = 0, TRANSLATE = 1, SCORE = 2, SELECTOR = 3;
 
+	/** Creates a Json Message from the input XLM element.
+	 * 
+	 * @param json - The XML element describing the Json Message.
+	 * @return The created Json Message. */
 	public static JsonMessage createFrom(Element json)
 	{
 		JsonMessage message = createFrom((TagCompound) NBTReader.read(json.getChildText("message"), true, false, true));
@@ -36,6 +71,10 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 		return message;
 	}
 
+	/** Creates a Json Message from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Json Message.
+	 * @return The created Json Message. */
 	public static JsonMessage createFrom(TagCompound tag)
 	{
 		JsonMessage message = new JsonMessage(TEXT, "", 0);
@@ -94,6 +133,8 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 		return message;
 	}
 
+	/** @param value - A Color as a string.
+	 * @return The numerical ID of the Color. */
 	private static int getColorID(String value)
 	{
 		for (int i = 0; i < Utils.COLORS.length; ++i)
@@ -101,15 +142,38 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 		return 0;
 	}
 
-	public boolean bold, underlined, italic, strikethrough, obfuscated;
-	public String clickAction, clickValue;
+	/** <code>true</code> if this Message is in bold format. */
+	public boolean bold;
+	/** The type of action to execute when this Message is clicked on. */
+	public String clickAction;
+	/** The value of the action to execute when this Message is clicked on. */
+	public String clickValue;
+	/** This Message's Color. */
 	public int color;
+	/** The type of action to execute when this Message is hovered over. */
 	public String hoverAction;
+	/** The value of the action to execute when this Message is hovered over. */
 	public Object hoverValue;
+	/** The text to insert into the Player's chat box when this Message is clicked on. */
 	public String insertion;
+	/** <code>true</code> if this Message is in italic format. */
+	public boolean italic;
+	/** This Message's mode.
+	 * 
+	 * @see JsonMessage#TEXT */
 	public byte mode;
+	/** <code>true</code> if this Message is in obfuscated format. */
+	public boolean obfuscated;
+	/** <code>true</code> if this Message is in strikethrough format. */
+	public boolean strikethrough;
+	/** When mode is {@link JsonMessage#SELECTOR selector}, the target to display. <br />
+	 * When mode is {@link JsonMessage#SCORE score}, the target whose score should be displayed. */
 	public String target;
+	/** When mode is {@link JsonMessage#TEXT text} or {@link JsonMessage#TRANSLATE translate}, the text to display/translate. <br />
+	 * When mode is {@link JsonMessage#SCORE score}, the objective name. */
 	public String text;
+	/** <code>true</code> if this Message is in underlined format. */
+	public boolean underlined;
 
 	public JsonMessage()
 	{
@@ -131,6 +195,10 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 		return p;
 	}
 
+	/** Displays this Message in a label.
+	 * 
+	 * @param label - The label to display into.
+	 * @return The modified label. */
 	public JLabel displayInLabel(JLabel label)
 	{
 		String display = this.text;
@@ -161,12 +229,20 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.text;
 	}
 
+	/** Sets the Click event.
+	 * 
+	 * @param clickAction - see {@link JsonMessage#clickAction}.
+	 * @param clickValue - see {@link JsonMessage#clickValue}. */
 	public void setClick(String clickAction, String clickValue)
 	{
 		this.clickAction = clickAction;
 		this.clickValue = clickValue;
 	}
 
+	/** Sets the Hover event.
+	 * 
+	 * @param hoverAction - see {@link JsonMessage#hoverAction}.
+	 * @param hoverValue - see {@link JsonMessage#hoverValue}. */
 	public void setHover(String hoverAction, Object hoverValue)
 	{
 		this.hoverAction = hoverAction;
@@ -185,6 +261,7 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 		return this.toTag(DEFAULT_COMPOUND).valueForCommand();
 	}
 
+	@Override
 	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();

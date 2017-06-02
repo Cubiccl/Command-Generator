@@ -23,7 +23,7 @@ public class Tests
 
 	public void recipePattern()
 	{
-		for (String string : Recipe.createPattern("X XX X   "))
+		for (String string : Recipe.reducePattern("X XX X   "))
 		{
 			System.out.println("\"" + string + "\"");
 		}

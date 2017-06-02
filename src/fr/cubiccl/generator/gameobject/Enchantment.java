@@ -21,9 +21,14 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
+/** Represents an Enchantment applied to an Item. */
 public class Enchantment extends GameObject implements IObjectList<Enchantment>
 {
 
+	/** Creates an Enchantment from the input XML element.
+	 * 
+	 * @param enchant - The XML element describing the Enchantment.
+	 * @return The created Enchantment. */
 	public static Enchantment createFrom(Element enchant)
 	{
 		Enchantment e = new Enchantment(ObjectRegistry.enchantments.find(enchant.getChildText("id")), Integer.parseInt(enchant.getChildText("level")));
@@ -31,6 +36,10 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 		return e;
 	}
 
+	/** Creates an Enchantment from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Enchantment.
+	 * @return The created Enchantment. */
 	public static Enchantment createFrom(TagCompound tag)
 	{
 		EnchantmentType type = ObjectRegistry.enchantments.first();
@@ -47,7 +56,9 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 		return e;
 	}
 
+	/** This Enchantment's level. */
 	private TestValue level;
+	/** This {@link EnchantmentType Enchantment type}. */
 	private EnchantmentType type;
 
 	public Enchantment()
@@ -77,6 +88,7 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 		return new CGLabel(new Text(this.toString(), false));
 	}
 
+	/** @return The level of this Enchantment, when fixed. */
 	public int getLevel()
 	{
 		return (int) this.level.valueMin;
@@ -88,17 +100,20 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.toString();
 	}
 
+	/** Getter for {@link Enchantment#type}. */
 	public EnchantmentType getType()
 	{
 		return type;
 	}
 
+	/** Changes the level of this Enchantment, when fixed. */
 	public void setLevel(int level)
 	{
 		this.level.valueMin = level;
 		this.onChange();
 	}
 
+	/** Setter for {@link Enchantment#type}. */
 	public void setType(EnchantmentType type)
 	{
 		this.type = type;
@@ -147,6 +162,7 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 		return this;
 	}
 
+	/** @return The level of this Enchantment, when tested. */
 	public TestValue value()
 	{
 		return this.level;

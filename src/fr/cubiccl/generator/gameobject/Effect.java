@@ -20,9 +20,14 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
+/** Represents an Effect applied to an Entity or stored in a Potion. */
 public class Effect extends GameObject implements IObjectList<Effect>
 {
 
+	/** Creates an Effect from the input XML element.
+	 * 
+	 * @param effect - The XML element describing the Effect.
+	 * @return The created Effect. */
 	public static Effect createFrom(Element effect)
 	{
 		Effect e = new Effect();
@@ -34,6 +39,10 @@ public class Effect extends GameObject implements IObjectList<Effect>
 		return e;
 	}
 
+	/** Creates an Effect from the input XML element.
+	 * 
+	 * @param trade - The XML element describing the Effect.
+	 * @return The created Effect. */
 	public static Effect createFrom(TagCompound tag)
 	{
 		int a = 0, d = 0;
@@ -46,16 +55,18 @@ public class Effect extends GameObject implements IObjectList<Effect>
 			if (t.id().equals(Tags.EFFECT_AMPLIFIER.id())) a = ((TagNumber) t).valueInt();
 			if (t.id().equals(Tags.EFFECT_PARTICLES.id())) h = ((TagNumber) t).value() == 1;
 		}
-		Effect ef = new Effect(e, d, a, h);
-		ef.findName(tag);
-		return ef;
+		Effect effect = new Effect(e, d, a, h);
+		effect.findName(tag);
+		return effect;
 	}
 
-	/** Level of Effect (0 = Level 1) */
+	/** The level of the Effect (0 = Level 1) */
 	public int amplifier;
-	/** Duration in seconds */
+	/** The duration of the Effect. Is usually in ticks, except for /effect where it's in seconds. */
 	public int duration;
+	/** <code>true</code> if the Effect particles should be hidden. */
 	public boolean hideParticles;
+	/** The {@link EffectType Effect type}. */
 	private EffectType type;
 
 	public Effect()
@@ -94,11 +105,13 @@ public class Effect extends GameObject implements IObjectList<Effect>
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.type.name().toString() + " " + this.amplifier;
 	}
 
+	/** Getter for {@link Effect#type}. */
 	public EffectType getType()
 	{
 		return type;
 	}
 
+	/** Setter for {@link Effect#type}. */
 	public void setType(EffectType type)
 	{
 		this.type = type;

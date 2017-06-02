@@ -20,8 +20,10 @@ import fr.cubiccl.generator.gui.component.panel.utils.PanelColor;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
+/** Represents a Fireworks explosion. */
 public class Explosion implements IObjectList<Explosion>
 {
+	/** Color NBT Tag. */
 	public static class Color extends TagNumber implements IObjectList<Color>
 	{
 
@@ -59,6 +61,7 @@ public class Explosion implements IObjectList<Explosion>
 			return Integer.toString(this.valueInt());
 		}
 
+		/** @return A Square filled with this Color. */
 		public BufferedImage getTexture()
 		{
 			BufferedImage img = new BufferedImage(40, 40, BufferedImage.TYPE_INT_RGB);
@@ -77,6 +80,10 @@ public class Explosion implements IObjectList<Explosion>
 
 	}
 
+	/** Creates an Explosion from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Explosion.
+	 * @return The created Explosion. */
 	public static Explosion createFrom(TagCompound tag)
 	{
 		Explosion e = new Explosion();
@@ -104,8 +111,15 @@ public class Explosion implements IObjectList<Explosion>
 		return e;
 	}
 
-	public boolean flicker, trail;
-	public Color[] primary, fade;
+	/** The fading Colors of this Explosion. */
+	public Color[] fade;
+	/** <code>true</code> if this Explosion flickers. */
+	public boolean flicker;
+	/** The primary Colors of this Explosion. */
+	public Color[] primary;
+	/** <code>true</code> if this Explosion has a trail. */
+	public boolean trail;
+	/** The Explosion type. */
 	public byte type;
 
 	public Explosion()
@@ -143,6 +157,10 @@ public class Explosion implements IObjectList<Explosion>
 		return "Explosion " + index;
 	}
 
+	/** Converts this Explosion to a NBT Tag.
+	 * 
+	 * @param container - The template for the container Tag.
+	 * @return The Compound container tag. */
 	public TagCompound toTag(TemplateCompound container)
 	{
 		return container.create(Tags.FIREWORK_TYPE.create(this.type), Tags.FIREWORK_FLICKER.create(this.flicker ? 1 : 0),

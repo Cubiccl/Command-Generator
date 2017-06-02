@@ -21,13 +21,43 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
+/** Represents an AttributeModifier. */
 public class AttributeModifier extends GameObject implements IObjectList<AttributeModifier>
 {
+	/** Identifiers for operation modes.<br />
+	 * <br />
+	 * <table border="1">
+	 * <tr>
+	 * <td>ID</td>
+	 * <td>Variable</td>
+	 * <td>Mode</td>
+	 * </tr>
+	 * <tr>
+	 * <td>0</td>
+	 * <td>OP_ADD</td>
+	 * <td>Add to base.</td>
+	 * </tr>
+	 * <tr>
+	 * <td>1</td>
+	 * <td>OP_MULTIPLY</td>
+	 * <td>Multiply base.</td>
+	 * </tr>
+	 * <tr>
+	 * <td>2</td>
+	 * <td>OP_MULTIPLY_ALL</td>
+	 * <td>Multiplies everything.</td>
+	 * </tr>
+	 * </table> */
 	public static final byte OP_ADD = 0, OP_MULTIPLY = 1, OP_MULTIPLY_ALL = 2;
 
+	/** Slot names. */
 	public static final String[] SLOTS =
 	{ "mainhand", "offhand", "feet", "legs", "chest", "head" };
 
+	/** Creates an Attribute Modifier from the input XML element.
+	 * 
+	 * @param modifier - The XML element describing the Attribute Modifier.
+	 * @return The created Attribute Modifier. */
 	public static AttributeModifier createFrom(Element modifier)
 	{
 		ArrayList<String> slots = new ArrayList<String>();
@@ -46,6 +76,10 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		return m;
 	}
 
+	/** Creates an Attribute Modifier from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Attribute Modifier.
+	 * @return The created Attribute Modifier. */
 	public static AttributeModifier createFrom(TagCompound tag)
 	{
 		Attribute a = ObjectRegistry.attributes.first();
@@ -83,13 +117,23 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		return m;
 	}
 
-	public double amount, amountMax;
+	/** The amount to apply. When {@link AttributeModifier#amountMax} isn't -1, the minimum amount. */
+	public double amount;
+	/** If not -1, the maximum amount to apply. */
+	public double amountMax;
+	/** The {@link Attribute} to modify. */
 	private Attribute attribute;
+	/** <code>true</code> if is in test mode. */
 	public boolean isInLootTable;
+	/** A name for this Modifier. */
 	public String name;
+	/** The operation type.
+	 * 
+	 * @see AttributeModifier#OP_ADD */
 	public byte operation;
+	/** The slots this modifier is applied on. */
 	public String[] slots;
-
+	/** The UUID of this modifier. */
 	public long UUIDMost, UUIDLeast;
 
 	public AttributeModifier()
@@ -125,6 +169,7 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		return p;
 	}
 
+	/** Getter for {@link AttributeModifier#attribute}. */
 	public Attribute getAttribute()
 	{
 		return attribute;
@@ -142,6 +187,7 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.name;
 	}
 
+	/** Setter for {@link AttributeModifier#attribute}. */
 	public void setAttribute(Attribute attribute)
 	{
 		this.attribute = attribute;

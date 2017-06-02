@@ -107,7 +107,7 @@ public class TemplateRecipeBook extends TemplateCompound
 		{
 			Tag[] tags = ((TagCompound) previousValue).value();
 			for (Tag tag : tags)
-				if (tag instanceof TagCompound) panel.panelRecipes.add(PlayerRecipe.fromNBT((TagCompound) tag));
+				if (tag instanceof TagCompound) panel.panelRecipes.add(PlayerRecipe.createFrom((TagCompound) tag));
 				else if (tag.id().equals(Tags.RECIPEBOOK_ISGUIOPEN.id()))
 				{
 					if (((TagNumber) tag).value() == 0) panel.buttonGuiNo.setSelected(true);
@@ -135,7 +135,7 @@ public class TemplateRecipeBook extends TemplateCompound
 		PlayerRecipe[] recipes = p.panelRecipes.values();
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (int i = 0; i < recipes.length; ++i)
-			tags.add(recipes[i].toNBT());
+			tags.add(recipes[i].toTag());
 		if (!p.buttonFilterUnspecified.isSelected()) tags.add(Tags.RECIPEBOOK_ISFILTERING.create(p.buttonFilterYes.isSelected() ? 1 : 0));
 		if (!p.buttonGuiUnspecified.isSelected()) tags.add(Tags.RECIPEBOOK_ISGUIOPEN.create(p.buttonGuiYes.isSelected() ? 1 : 0));
 		if (p.checkboxDisplay.isSelected())

@@ -18,9 +18,14 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.display.PanelBlockDis
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
+/** Represents a Block placed in the world. */
 public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 {
 
+	/** Creates a Placed Block from the input XML element.
+	 * 
+	 * @param block - The XML element describing the Placed Block.
+	 * @return The created Placed Block. */
 	public static PlacedBlock createFrom(Element block)
 	{
 		PlacedBlock b = new PlacedBlock();
@@ -31,6 +36,10 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		return b;
 	}
 
+	/** Creates a Placed Block from the input NB Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Placed Block.
+	 * @return The created Placed Block. */
 	public static PlacedBlock createFrom(TagCompound tag)
 	{
 		Block b = ObjectRegistry.blocks.first();
@@ -49,8 +58,11 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		return bl;
 	}
 
+	/** The {@link Block} type. */
 	private Block block;
+	/** The data of the Block. */
 	private int data;
+	/** The NBT Tags if this is a Tile Entity. */
 	private TagCompound nbt;
 
 	public PlacedBlock()
@@ -65,6 +77,7 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		this.nbt = nbt;
 	}
 
+	/** @return The number of Items in this Container. If not a Container, returns <code>-1</code>. */
 	public int containerSize()
 	{
 		if (this.nbt.hasTag("Items")) return ((TagList) this.nbt.getTagFromId("Items")).size();
@@ -79,11 +92,13 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		return p;
 	}
 
+	/** Getter for {@link PlacedBlock#block}. */
 	public Block getBlock()
 	{
 		return block;
 	}
 
+	/** Getter for {@link PlacedBlock#data}. */
 	public int getData()
 	{
 		return data;
@@ -101,34 +116,40 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.block.name(this.data).toString();
 	}
 
+	/** Getter for {@link PlacedBlock#nbt}. */
 	public TagCompound getNbt()
 	{
 		return nbt;
 	}
 
+	/** Setter for {@link PlacedBlock#block}. */
 	public void setBlock(Block block)
 	{
 		this.block = block;
 		this.onChange();
 	}
 
+	/** Setter for {@link PlacedBlock#data}. */
 	public void setData(int data)
 	{
 		this.data = data;
 		this.onChange();
 	}
 
+	/** Setter for {@link PlacedBlock#nbt}. */
 	public void setNbt(TagCompound nbt)
 	{
 		this.nbt = nbt;
 		this.onChange();
 	}
 
+	/** @return This Placed Block's texture. */
 	public BufferedImage texture()
 	{
 		return this.block.texture(this.data);
 	}
 
+	@Override
 	public String toCommand()
 	{
 		return this.block.id() + " " + this.data + " " + this.nbt.value();

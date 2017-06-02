@@ -18,9 +18,14 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
+/** Represents a Villager's Trade Offer. */
 public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 {
 
+	/** Creates a Trade Offer from the input XML element.
+	 * 
+	 * @param trade - The XML element describing the Trade Offer.
+	 * @return The created Trade Offer. */
 	public static TradeOffer createFrom(Element trade)
 	{
 		TradeOffer t = new TradeOffer();
@@ -34,6 +39,10 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 		return t;
 	}
 
+	/** Creates a Trade Offer from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Trade Offer.
+	 * @return The created Trade Offer. */
 	public static TradeOffer createFrom(TagCompound tag)
 	{
 		TradeOffer trade = new TradeOffer();
@@ -52,9 +61,18 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 		return trade;
 	}
 
-	private ItemStack buy = null, buySecondary = null, sell = null;
+	/** The bought Item. */
+	private ItemStack buy = null;
+	/** The secondary bought Item. Can be <code>null</code> if only one Item is bought. */
+	private ItemStack buySecondary = null;
+	/** <code>true</code> if this Trade Offer rewards the Player with experience when completed. */
 	public boolean experienceReward = false;
-	public int maxUses = 0, uses = 0;
+	/** The maximum number of uses this Trade Offer is authorized for. */
+	public int maxUses = 0;
+	/** The sold Item. */
+	private ItemStack sell = null;
+	/** The current number of uses. */
+	public int uses = 0;
 
 	public TradeOffer()
 	{}
@@ -67,11 +85,13 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 		return p;
 	}
 
+	/** Getter for {@link TradeOffer#buy}. */
 	public ItemStack getBuy()
 	{
 		return buy;
 	}
 
+	/** Getter for {@link TradeOffer#buySecondary}. */
 	public ItemStack getBuySecondary()
 	{
 		return buySecondary;
@@ -89,28 +109,33 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 		return this.customName() == null || this.customName().equals("") ? "Trade " + (index + 1) : this.customName();
 	}
 
+	/** Getter for {@link TradeOffer#sell}. */
 	public ItemStack getSell()
 	{
 		return sell;
 	}
 
+	/** @return <code>true</code> if this Trade Offer is valid, i.e. if the {@link TradeOffer#buy bought Item} and the {@link TradeOffer#sell sold Item} are not null. */
 	public boolean isValid()
 	{
 		return this.buy != null && this.sell != null;
 	}
 
+	/** Setter for {@link TradeOffer#buy}. */
 	public void setBuy(ItemStack buy)
 	{
 		this.buy = buy;
 		this.onChange();
 	}
 
+	/** Setter for {@link TradeOffer#buySecondary}. */
 	public void setBuySecondary(ItemStack buySecondary)
 	{
 		this.buySecondary = buySecondary;
 		this.onChange();
 	}
 
+	/** Setter for {@link TradeOffer#sell}. */
 	public void setSell(ItemStack sell)
 	{
 		this.sell = sell;

@@ -20,9 +20,14 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
+/** Represents Coordinates. */
 public class Coordinates extends GameObject implements IObjectList<Coordinates>
 {
 
+	/** Creates Coordinates from the input XML element.
+	 * 
+	 * @param coord - The XLM element describing the Coordinates.
+	 * @return The created Coordinates. */
 	public static Coordinates createFrom(Element coord)
 	{
 		Coordinates c = new Coordinates();
@@ -36,6 +41,12 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 		return c;
 	}
 
+	/** Creates Coordinates from the input values.
+	 * 
+	 * @param x - The X coordinate.
+	 * @param y - The Y coordinate.
+	 * @param z - The Z coordinate.
+	 * @return The created Coordinates. */
 	public static Coordinates createFrom(String x, String y, String z) throws CommandGenerationException
 	{
 		float X = 0, Y = 0, Z = 0;
@@ -70,6 +81,10 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 		return new Coordinates(X, Y, Z, xr, yr, zr);
 	}
 
+	/** Creates Coordinates from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Coordinates.
+	 * @return The created Coordinates. */
 	public static Coordinates createFrom(TagCompound tag)
 	{
 		float x = 0, y = 0, z = 0;
@@ -86,6 +101,10 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 		return c;
 	}
 
+	/** Creates Coordinates from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Coordinates.
+	 * @return The created Coordinates. */
 	public static Coordinates createFrom(TagList tag)
 	{
 		float x = 0, y = 0, z = 0;
@@ -102,8 +121,18 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 		return new Coordinates(x, y, z);
 	}
 
-	public float x, y, z;
-	public boolean xRelative, yRelative, zRelative;
+	/** The X Coordinate. */
+	public float x;
+	/** <code>true</code> if the {@link Coordinates#x X Coordinate} is relative. */
+	public boolean xRelative;
+	/** The Y Coordinate. */
+	public float y;
+	/** <code>true</code> if the {@link Coordinates#y Y Coordinate} is relative. */
+	public boolean yRelative;
+	/** The Z Coordinate. */
+	public float z;
+	/** <code>true</code> if the {@link Coordinates#z Z Coordinate} is relative. */
+	public boolean zRelative;
 
 	public Coordinates()
 	{
@@ -187,11 +216,20 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 		return container.create(Tags.COORD_X.create(this.x), Tags.COORD_Y.create(this.y), Tags.COORD_Z.create(this.z));
 	}
 
+	/** Converts this Object to a NBT Tag.
+	 * 
+	 * @param container - The template for the container Tag.
+	 * @return The List container tag. */
 	public TagList toTagList(TemplateList container)
 	{
 		return this.toTagList(container, Tags.DEFAULT_FLOAT);
 	}
 
+	/** Converts this Object to a NBT Tag.
+	 * 
+	 * @param container - The template for the container Tag.
+	 * @param numberTags - The template for the number Tags inside the List.
+	 * @return The List container tag. */
 	public TagList toTagList(TemplateList container, TemplateNumber numberTags)
 	{
 		return container.create(numberTags.create(this.x), numberTags.create(this.y), numberTags.create(this.z));

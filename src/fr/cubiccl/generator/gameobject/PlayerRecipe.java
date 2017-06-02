@@ -15,10 +15,15 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelPlayerRecipe;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
+/** A Recipe for the Player Recipe Book. */
 public class PlayerRecipe implements IObjectList<PlayerRecipe>
 {
 
-	public static PlayerRecipe fromNBT(TagCompound tag)
+	/** Creates a Player Recipe from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Player Recipe.
+	 * @return The created Player Recipe. */
+	public static PlayerRecipe createFrom(TagCompound tag)
 	{
 		RecipeType r = ObjectRegistry.recipes.find(tag.id());
 		boolean u = true, d = true;
@@ -33,8 +38,12 @@ public class PlayerRecipe implements IObjectList<PlayerRecipe>
 
 	}
 
+	/** <code>true</code> if this Recipe has already been displayed to the Player. */
+	public boolean displayed;
+	/** The {@link RecipeType Recipe} this represents. */
 	public RecipeType recipe;
-	public boolean unlocked, displayed;
+	/** <code>true</code> if this Recipe has been unlocked. */
+	public boolean unlocked;
 
 	public PlayerRecipe()
 	{
@@ -66,7 +75,11 @@ public class PlayerRecipe implements IObjectList<PlayerRecipe>
 		return this.recipe.item.getName(index);
 	}
 
-	public TagCompound toNBT()
+	/** Converts this Player Recipe to a NBT Tag.
+	 * 
+	 * @param container - The template for the container Tag.
+	 * @return The Compound container tag. */
+	public TagCompound toTag()
 	{
 		return new DefaultCompound(this.recipe.id(), Tag.UNKNOWN).create(Tags.RECIPE_UNLOCKED.create(this.unlocked),
 				Tags.RECIPE_DISPLAYED.create(this.displayed));

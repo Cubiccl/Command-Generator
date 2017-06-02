@@ -22,9 +22,14 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.display.PanelItemDisp
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
+/** Represents an Item in an Inventory. */
 public class ItemStack extends GameObject implements IObjectList<ItemStack>
 {
 
+	/** Creates an Item Stack from the input NBT Tag, for a Recipe (uses different NBT Tags).
+	 * 
+	 * @param tag - The NBT Tag describing the Item Stack.
+	 * @return The created Item Stack. */
 	public static ItemStack createForRecipe(TagCompound tag)
 	{
 		Item i = ObjectRegistry.items.first();
@@ -42,6 +47,10 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return is;
 	}
 
+	/** Creates an Item Stack from the input XML element.
+	 * 
+	 * @param item - The XML element describing the Item Stack.
+	 * @return The created Item Stack. */
 	public static ItemStack createFrom(Element item)
 	{
 		ItemStack i = new ItemStack();
@@ -54,11 +63,20 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return i;
 	}
 
+	/** Creates an Item Stack from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Item Stack.
+	 * @return The created Item Stack. */
 	public static ItemStack createFrom(TagCompound tag)
 	{
 		return createFrom(tag, false);
 	}
 
+	/** Creates an Item Stack from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Item Stack.
+	 * @param allowNull - <code>true</code> if some elements such as Item ID or count can be omitted.
+	 * @return The created Item Stack. */
 	public static ItemStack createFrom(TagCompound tag, boolean allowNull)
 	{
 		Item i = allowNull ? null : ObjectRegistry.items.first();
@@ -83,10 +101,15 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return is;
 	}
 
+	/** The number of Items in this Stack. */
 	public int amount;
+	/** The damage value of the Item. */
 	private int damage;
+	/** The {@link Item}. */
 	private Item item;
+	/** The NBT Tags of this Item. */
 	private TagCompound nbt;
+	/** The slot this Item is in. */
 	public int slot;
 
 	public ItemStack()
@@ -131,6 +154,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return p;
 	}
 
+	/** @return This Item Stack's display name. Looks into the NBT Tags to find a custom one; if it doesn't, returns the default name. */
 	public String displayName()
 	{
 		if (this.nbt.hasTag("display"))
@@ -141,6 +165,9 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return (this.amount == 0 ? "" : this.amount + " ") + this.item.name(this.damage).toString();
 	}
 
+	/** Adds an Enchantment to this Item, with a random level.
+	 * 
+	 * @param enchantment - The Enchantment to add. */
 	public void enchant(EnchantmentType enchantment)
 	{
 		TagCompound e = Tags.DEFAULT_COMPOUND.create(Tags.ENCHANTMENT_ID.create(enchantment.idNum()),
@@ -149,6 +176,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		else this.nbt.addTag(((TemplateList) ObjectRegistry.itemTags.find("ench")).create(e));
 	}
 
+	/** @return The Enchantments applied to this Item. */
 	public Enchantment[] findEnchantments()
 	{
 		if (this.nbt.hasTag("ench"))
@@ -162,6 +190,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return new Enchantment[0];
 	}
 
+	/** @return The Lore describing this Item. */
 	public String[] findLore()
 	{
 		if (this.nbt.hasTag("display"))
@@ -179,6 +208,9 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return new String[0];
 	}
 
+	/** Converts this Item to a speedrun Item Stack.
+	 * 
+	 * @param importance - The importance of the Item. */
 	public ItemStackS forSpeedrun(byte importance)
 	{
 		ItemStackS stack = new ItemStackS(item, this.damage, this.amount, nbt);
@@ -186,6 +218,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return stack;
 	}
 
+	/** Getter for {@link ItemStack#damage}. */
 	public int getDamage()
 	{
 		return damage;
@@ -197,6 +230,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return new PanelItemDisplay(this);
 	}
 
+	/** Getter for {@link ItemStack#item}. */
 	public Item getItem()
 	{
 		return item;
@@ -209,34 +243,41 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 				this.damage).toString();
 	}
 
+	/** Getter for {@link ItemStack#nbt}. */
 	public TagCompound getNbt()
 	{
 		return nbt;
 	}
 
+	/** @param item - An Item Stack to compare with.
+	 * @return <code>true</code> if this Item Stack matches the input Item Stack, i.e. their ID and damage are equal. */
 	public boolean matches(ItemStack item)
 	{
 		return this.getItem() == item.getItem() && this.getDamage() == item.getDamage();
 	}
 
+	/** Setter for {@link ItemStack#damage}. */
 	public void setDamage(int damage)
 	{
 		this.damage = damage;
 		this.onChange();
 	}
 
+	/** Setter for {@link ItemStack#item}. */
 	public void setItem(Item item)
 	{
 		this.item = item;
 		this.onChange();
 	}
 
+	/** Setter for {@link ItemStack#nbt}. */
 	public void setNbt(TagCompound nbt)
 	{
 		this.nbt = nbt;
 		this.onChange();
 	}
 
+	/** @return This Item Stack's texture. */
 	public BufferedImage texture()
 	{
 		if (this.item == null) return null;
@@ -269,6 +310,10 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
+	/** Converts this Object to a NBT Tag, for a Recipe.
+	 * 
+	 * @param container - The template for the container Tag.
+	 * @return The Compound container tag. */
 	public TagCompound toTagForRecipe(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
@@ -278,6 +323,10 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
+	/** Converts this Object to a NBT Tag, for a testing object (loot table or advancement).
+	 * 
+	 * @param container - The template for the container Tag.
+	 * @return The Compound container tag. */
 	public TagCompound toTagForTest(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();

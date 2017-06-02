@@ -23,9 +23,14 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
+/** Represents an Entity in the world. */
 public class LivingEntity extends GameObject implements IObjectList<LivingEntity>
 {
 
+	/** Creates a Living Entity from the input XML element.
+	 * 
+	 * @param entity - The XML element describing the Living Entity.
+	 * @return The created Living Entity. */
 	public static LivingEntity createFrom(Element entity)
 	{
 		LivingEntity e = new LivingEntity(ObjectRegistry.entities.find(entity.getChildText("id")), null);
@@ -34,6 +39,10 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 		return e;
 	}
 
+	/** Creates a Living Entity from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Living Entity.
+	 * @return The created Living Entity. */
 	public static LivingEntity createFrom(TagCompound tag)
 	{
 		Entity e = ObjectRegistry.entities.first();
@@ -50,7 +59,9 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 		return en;
 	}
 
+	/** The {@link Entity} type. */
 	private Entity entity;
+	/** The NBT Tags of this Entity. */
 	private TagCompound nbt;
 
 	public LivingEntity()
@@ -82,6 +93,7 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 		return p;
 	}
 
+	/** Getter for {@link LivingEntity#entity}. */
 	public Entity getEntity()
 	{
 		return entity;
@@ -93,28 +105,33 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 		return this.customName() != null && !this.customName().equals("") ? this.customName() : this.entity.name().toString();
 	}
 
+	/** Getter for {@link LivingEntity#nbt}. */
 	public TagCompound getNbt()
 	{
 		return nbt;
 	}
 
+	/** @return This Entity's name. */
 	public Text name()
 	{
 		return this.entity.name();
 	}
 
+	/** Setter for {@link LivingEntity#entity}. */
 	public void setEntity(Entity entity)
 	{
 		this.entity = entity;
 		this.onChange();
 	}
 
+	/** Setter for {@link LivingEntity#nbt}. */
 	public void setNbt(TagCompound nbt)
 	{
 		this.nbt = nbt;
 		this.onChange();
 	}
 
+	/** @return This Entity's texture. */
 	public BufferedImage texture()
 	{
 		return this.entity.texture();

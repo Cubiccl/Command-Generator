@@ -24,12 +24,37 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
+/** Represents an editable Recipe for map making. */
 public class Recipe extends GameObject implements IObjectList<Recipe>
 {
+	/** Keys to generate the pattern. */
 	private static final char[] KEYS =
 	{ 'X', 'Y', 'Z', '#', '$', '*', '1', '2', '3' };
+	/** Recipe modes. <br />
+	 * <br />
+	 * <table border="1">
+	 * <tr>
+	 * <td>ID</td>
+	 * <td>Variable</td>
+	 * <td>Mode</td>
+	 * </tr>
+	 * <tr>
+	 * <td>0</td>
+	 * <td>SHAPED</td>
+	 * <td>Shaped recipe</td>
+	 * </tr>
+	 * <tr>
+	 * <td>1</td>
+	 * <td>SHAPELESS</td>
+	 * <td>Shapeless recipe</td>
+	 * </tr>
+	 * </table> */
 	public static final byte SHAPED = 0, SHAPELESS = 1;
 
+	/** Creates a Recipe from the input XML element.
+	 * 
+	 * @param recipe - The XML element describing the Recipe.
+	 * @return The created Recipe. */
 	public static Recipe createFrom(Element recipe)
 	{
 		Recipe r = new Recipe(Byte.parseByte(recipe.getAttributeValue("type")));
@@ -44,46 +69,20 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		return r;
 	}
 
+	/** Creates a Recipe from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Recipe.
+	 * @return The created Recipe. */
 	public static Recipe createFrom(TagCompound tag)
 	{
 		if (tag.hasTag(Tags.RECIPE_TYPE) && tag.getTag(Tags.RECIPE_TYPE).value().equals("crafting_shapeless")) return createShapelessFrom(tag);
 		return createShapedFrom(tag);
 	}
 
-	public static String[] createPattern(String output)
-	{
-		String[] pattern = new String[]
-		{ output.substring(0, 3), output.substring(3, 6), output.substring(6, 9) };
-
-		boolean improved = true;
-		while (improved)
-		{
-			improved = false;
-			for (int i = 0; i < 3; ++i)
-			{
-				if ((i != 1 || isEmpty(pattern[0]) || isEmpty(pattern[2])) && isEmpty(pattern[i]))
-				{
-					pattern[i] = "";
-					improved = true;
-					break;
-				} else if ((i != 1 || pattern[0].length() < 2) && isColumnEmpty(i, pattern))
-				{
-					if (i < pattern[0].length()) pattern[0] = removeChar(i, pattern[0]);
-					if (i < pattern[1].length()) pattern[1] = removeChar(i, pattern[1]);
-					if (i < pattern[2].length()) pattern[2] = removeChar(i, pattern[2]);
-					improved = true;
-					break;
-				}
-			}
-		}
-
-		ArrayList<String> purged = new ArrayList<String>();
-		for (int i = 0; i < pattern.length; ++i)
-			if (!pattern[i].equals("")) purged.add(pattern[i]);
-
-		return purged.toArray(new String[purged.size()]);
-	}
-
+	/** Creates a Shaped Recipe from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Recipe.
+	 * @return The created Recipe. */
 	private static Recipe createShapedFrom(TagCompound tag)
 	{
 		Recipe r = new Recipe(SHAPED);
@@ -124,6 +123,10 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		return r;
 	}
 
+	/** Creates a Shapeless Recipe from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Recipe.
+	 * @return The created Recipe. */
 	private static Recipe createShapelessFrom(TagCompound tag)
 	{
 		Recipe r = new Recipe(SHAPELESS);
@@ -143,26 +146,79 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		return r;
 	}
 
-	private static boolean isColumnEmpty(int i, String[] pattern)
+	/** @param column - The index of the column.
+	 * @param pattern - The pattern to analyze.
+	 * @return <code>true</code> if the column has no Items. */
+	private static boolean isColumnEmpty(int column, String[] pattern)
 	{
 		for (int c = 0; c < pattern.length; ++c)
-			if (i < pattern[c].length() && pattern[c].charAt(i) != ' ') return false;
-		if (i >= pattern[0].length() && i >= pattern[1].length() && i >= pattern[2].length()) return false;
+			if (column < pattern[c].length() && pattern[c].charAt(column) != ' ') return false;
+		if (column >= pattern[0].length() && column >= pattern[1].length() && column >= pattern[2].length()) return false;
 		return true;
 	}
 
-	private static boolean isEmpty(String string)
+	/** @param line - The line to analyze.
+	 * @return <code>true</code> if the input line is empty. */
+	private static boolean isLineEmpty(String line)
 	{
-		return string.length() > 0 && string.replaceAll(" ", "").length() == 0;
+		return line.length() > 0 && line.replaceAll(" ", "").length() == 0;
 	}
 
-	private static String removeChar(int i, String string)
+	/** Reduces the input pattern.
+	 * 
+	 * @param output - The pattern to reduce.
+	 * @return The reduced pattern. */
+	public static String[] reducePattern(String output)
 	{
-		return string.substring(0, i) + (i < string.length() - 1 ? string.substring(i + 1, string.length()) : "");
+		String[] pattern = new String[]
+		{ output.substring(0, 3), output.substring(3, 6), output.substring(6, 9) };
+
+		boolean improved = true;
+		while (improved)
+		{
+			improved = false;
+			for (int i = 0; i < 3; ++i)
+			{
+				if ((i != 1 || isLineEmpty(pattern[0]) || isLineEmpty(pattern[2])) && isLineEmpty(pattern[i]))
+				{
+					pattern[i] = "";
+					improved = true;
+					break;
+				} else if ((i != 1 || pattern[0].length() < 2) && isColumnEmpty(i, pattern))
+				{
+					if (i < pattern[0].length()) pattern[0] = removeChar(i, pattern[0]);
+					if (i < pattern[1].length()) pattern[1] = removeChar(i, pattern[1]);
+					if (i < pattern[2].length()) pattern[2] = removeChar(i, pattern[2]);
+					improved = true;
+					break;
+				}
+			}
+		}
+
+		ArrayList<String> purged = new ArrayList<String>();
+		for (int i = 0; i < pattern.length; ++i)
+			if (!pattern[i].equals("")) purged.add(pattern[i]);
+
+		return purged.toArray(new String[purged.size()]);
 	}
 
+	/** Removes a character from the input line. Checks for errors such as OOB.
+	 * 
+	 * @param index - The index of the character to remove.
+	 * @param line - The line to edit.
+	 * @return The edited line. */
+	private static String removeChar(int index, String line)
+	{
+		return line.substring(0, index) + (index < line.length() - 1 ? line.substring(index + 1, line.length()) : "");
+	}
+
+	/** The Recipe's group. */
 	public String group;
+	/** The Items forming the Recipe. */
 	private ItemStack[] recipe;
+	/** The Recipe's type.
+	 * 
+	 * @see Recipe#SHAPED */
 	public byte type;
 
 	public Recipe()
@@ -211,6 +267,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		return this.customName();
 	}
 
+	/** Getter for {@link Recipe#recipe}. */
 	public ItemStack[] getRecipe()
 	{
 		ItemStack[] toreturn = new ItemStack[this.recipe.length];
@@ -225,6 +282,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		return toreturn;
 	}
 
+	/** @return <code>true</code> if this Recipe is valid, i.e. if it has at least one Item. */
 	public boolean isValid()
 	{
 		if (this.recipe[9] == null) return false;
@@ -233,6 +291,10 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		return false;
 	}
 
+	/** Changes an Item in this Recipe.
+	 * 
+	 * @param position - The index to put the Item at.
+	 * @param item - The Item to put. */
 	public void setItemAt(int position, ItemStack item)
 	{
 		try
@@ -245,6 +307,10 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		}
 	}
 
+	/** Converts this Shaped Recipe to a NBT Tag.
+	 * 
+	 * @param container - The template for the container Tag.
+	 * @return The Compound container tag. */
 	private TagCompound shapedToTag(TemplateCompound container)
 	{
 		ItemStack[] affectations = new ItemStack[9];
@@ -266,7 +332,7 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 			}
 		}
 
-		String[] pattern = createPattern(output);
+		String[] pattern = reducePattern(output);
 		ArrayList<TagString> o = new ArrayList<TagString>();
 		for (String string : pattern)
 			o.add(Tags.DEFAULT_STRING.create(string));
@@ -281,6 +347,10 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		return container.create(tags.toArray(new Tag[tags.size()])).setJson(true);
 	}
 
+	/** Converts this Shapeless Recipe to a NBT Tag.
+	 * 
+	 * @param container - The template for the container Tag.
+	 * @return The Compound container tag. */
 	private TagCompound shapelessToTag(TemplateCompound container)
 	{
 		ArrayList<TagCompound> items = new ArrayList<TagCompound>();
