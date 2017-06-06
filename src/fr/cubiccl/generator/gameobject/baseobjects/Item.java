@@ -15,8 +15,11 @@ import fr.cubiccl.generator.utils.Text;
 
 public class Item extends BlockItem implements IObjectList<Item>
 {
+	/** ID of the Item this Item cooks to. */
 	public String cooksTo = null;
+	/** <code>true</code> if this Item has durability. */
 	public boolean hasDurability = false;
+	/** The maximum number of these Items a stack can contain. */
 	public int maxStackSize = 64;
 
 	public Item()
@@ -64,6 +67,7 @@ public class Item extends BlockItem implements IObjectList<Item>
 		return p;
 	}
 
+	/** @return The maximum durability for this Item. */
 	public int getDurability()
 	{
 		return this.getMaxDamage();
@@ -75,12 +79,16 @@ public class Item extends BlockItem implements IObjectList<Item>
 		return this.mainName().toString();
 	}
 
+	@Override
 	public Text name(int damage)
 	{
-		if (this.hasDurability) return this.name(this.id());
+		if (this.hasDurability) return this.namePrefix(this.id());
 		return super.name(damage);
 	}
 
+	/** Sets this Item's durability.
+	 * 
+	 * @param durability - The durability to apply. */
 	public void setDurability(int durability)
 	{
 		this.hasDurability = durability != -1;

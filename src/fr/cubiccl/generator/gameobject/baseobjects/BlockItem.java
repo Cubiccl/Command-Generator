@@ -11,13 +11,14 @@ import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
 import fr.cubiccl.generator.utils.Utils;
 
-/** Represents a Block or an Item. */
+/** Parent class for {@link Block Blocks} and {@link Item Items}. */
 public abstract class BlockItem extends BaseObject
 {
 	public static final boolean ITEM = true, BLOCK = false;
 
+	/** Custom Class name, for storage. */
 	public String customObjectName = null;
-	/** List of custom available damage values for this Block/Item. */
+	/** List of custom available damage values for this Block/Item if {@link BlockItem#damageMax} is <code>-1</code>. */
 	private int[] damageCustom;
 	/** The maximum damage value. */
 	private int damageMax;
@@ -25,9 +26,13 @@ public abstract class BlockItem extends BaseObject
 	private final int idInt;
 	/** Text ID of this Block/Item. */
 	private final String idString;
-	/** Defines how to handle language and texture. */
+	/** Defines how to handle language and texture.<br />
+	 * If <code>0</code>, default.<br />
+	 * If <code>-1</code>, texture is the same for any damage.<br />
+	 * If positive, texture index is the damage modulo this texture type.<br />
+	 * If negative, texture index is the damage divided by this texture type. */
 	public int textureType;
-	/** True if this is an Item, false if this is a Block. */
+	/** <code>true</code> if this is an {@link Item}, <code>false</code> if this is a {@link Block}. */
 	private final boolean type;
 
 	public BlockItem(boolean type, int idInt, String idString)
@@ -56,12 +61,14 @@ public abstract class BlockItem extends BaseObject
 		this.damageCustom = damage;
 	}
 
+	/** @return The list of possible damage values for this Block/Item. */
 	public int[] getDamageValues()
 	{
 		if (this.isDamageCustom()) return this.damageCustom;
 		return Utils.generateArray(this.getMaxDamage());
 	}
 
+	/** @return The maximum damage value for this Block/Item. */
 	public int getMaxDamage()
 	{
 		return this.damageMax;
@@ -79,25 +86,29 @@ public abstract class BlockItem extends BaseObject
 		return this.idInt;
 	}
 
+	/** @return <code>true</code> if the possible damage values for this Block/Item are not a consecutive list starting at 0. */
 	public boolean isDamageCustom()
 	{
 		return this.damageMax == -1;
 	}
 
-	public boolean isDamageValid(int data)
+	/** @param damage - The damage value to test.
+	 * @return <code>true</code> if the input damage value is valid for this Block/Item. */
+	public boolean isDamageValid(int damage)
 	{
-		if (!this.isDamageCustom()) return data >= 0 && data <= this.damageMax;
+		if (!this.isDamageCustom()) return damage >= 0 && damage <= this.damageMax;
 		for (int i : this.damageCustom)
-			if (i == data) return true;
+			if (i == damage) return true;
 		return false;
 	}
 
-	/** @return True if this is an Item, false if this is a Block. */
+	/** @return <code>true</code> if this is an {@link Item}. */
 	public boolean isItem()
 	{
 		return this.type;
 	}
 
+	/** @return <code>true</code> if this Block/Item's texture is unique. */
 	private boolean isTextureUnique()
 	{
 		if (this.damageMax == 0 || this.textureType == -1) return true;
@@ -110,7 +121,7 @@ public abstract class BlockItem extends BaseObject
 		return false;
 	}
 
-	/** @return The name of the general Block/Item (no damage) */
+	/** @return The name of the general Block/Item (no damage value) */
 	public Text mainName()
 	{
 		String nameID = this.idString;
@@ -128,14 +139,18 @@ public abstract class BlockItem extends BaseObject
 	}
 
 	/** @param damage - A damage value.
-	 * @return The name of this Block/Item for the given damage value. */
+	 * @return The name of this Block/Item for the input damage value. */
 	public Text name(int damage)
 	{
-		if (this.damageMax == 0) return this.name(this.idString);
-		return this.name(this.idString + "." + damage);
+		if (this.damageMax == 0) return this.namePrefix(this.idString);
+		return this.namePrefix(this.idString + "." + damage);
 	}
 
-	protected Text name(String nameID)
+	/** Finds the correct prefix for this Block/Item's name.
+	 * 
+	 * @param nameID - Contains the ID and damage of the Block/Item.
+	 * @return The complete name using the input name ID. */
+	protected Text namePrefix(String nameID)
 	{
 		if (this.type == BLOCK) return new Text("block." + nameID);
 		if (Lang.keyExists("item." + nameID)) return new Text("item." + nameID);
@@ -144,18 +159,25 @@ public abstract class BlockItem extends BaseObject
 		return new Text("item." + nameID);
 	}
 
+	/** Sets this Block/Item to have custom damage.
+	 * 
+	 * @param damage - The damage values to apply. */
 	public void setDamageCustom(int... damage)
 	{
 		this.damageCustom = damage;
 		this.damageMax = -1;
 	}
 
+	/** Sets this Block/Item to have linear damage.
+	 * 
+	 * @param maxDamage - The maximum damage value. */
 	public void setMaxDamage(int maxDamage)
 	{
 		this.damageMax = maxDamage;
 		this.damageCustom = null;
 	}
 
+	/** @return <code>true</code> if the texture type should be saved in XML. */
 	protected boolean shouldSaveTextureType()
 	{
 		return this.textureType != 0 && this.customObjectName == null;
@@ -168,7 +190,7 @@ public abstract class BlockItem extends BaseObject
 	}
 
 	/** @param damage - A damage value.
-	 * @return The name of this Block/Item for the given damage value. */
+	 * @return The name of this Block/Item for the input damage value. */
 	public BufferedImage texture(int damage)
 	{
 		if (this.isTextureUnique()) return Textures.getTexture(this.typeName() + "." + this.idString);
@@ -200,6 +222,7 @@ public abstract class BlockItem extends BaseObject
 		return root;
 	}
 
+	/** @return <code>"block"</code> if this is a {@link Block}, or <code>"item"</code> if this is an {@link Item}. */
 	private String typeName()
 	{
 		if (this.type == BLOCK) return "block";

@@ -15,11 +15,15 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Text;
 
+/** A default Recipe from Minecraft. */
 public class RecipeType extends BaseObject implements IObjectList<RecipeType>
 {
 
+	/** The damage of the resulting Item. */
 	public final int damage;
+	/** The ID of the Recipe. */
 	public final String id;
+	/** The resulting Item. */
 	public final Item item;
 
 	public RecipeType()
@@ -66,6 +70,7 @@ public class RecipeType extends BaseObject implements IObjectList<RecipeType>
 		return "minecraft:" + this.id;
 	}
 
+	@Override
 	public Text name()
 	{
 		if (Lang.keyExists("recipe." + this.id)) return new Text("recipe." + this.id);
@@ -73,6 +78,7 @@ public class RecipeType extends BaseObject implements IObjectList<RecipeType>
 		return this.item.name(this.damage);
 	}
 
+	@Override
 	public BufferedImage texture()
 	{
 		if (this.damage == -1) return this.item.texture();

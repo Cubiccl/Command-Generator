@@ -7,6 +7,7 @@ import org.jdom2.Element;
 
 import fr.cubiccl.generator.utils.Text;
 
+/** Parent class for Basic Objects of the Game. */
 public abstract class BaseObject
 {
 
@@ -49,13 +50,13 @@ public abstract class BaseObject
 		return -1;
 	}
 
-	/** @return This Object's name. Returns this object's ID by default. */
+	/** @return This Object's name. Returns this object's ID if no name. */
 	public Text name()
 	{
 		return new Text(this.id(), false);
 	}
 
-	/** @return This Object's texture. Can be null. */
+	/** @return This Object's texture. Can be null if no texture. */
 	public BufferedImage texture()
 	{
 		return null;
@@ -67,7 +68,7 @@ public abstract class BaseObject
 		return this.name().toString();
 	}
 
-	/** @return This Object in XML format. */
+	/** @return This Object in XML format for storage. */
 	public abstract Element toXML();
 
 }

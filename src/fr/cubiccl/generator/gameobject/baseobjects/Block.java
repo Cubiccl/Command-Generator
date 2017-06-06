@@ -18,8 +18,9 @@ import fr.cubiccl.generator.utils.Utils;
 public class Block extends BlockItem implements IObjectList<Block>
 {
 
+	/** The possible {@link BlockState Block states} for this Block. */
 	private HashMap<String, BlockState> states;
-	/** Damage values that are possible but not used. */
+	/** Damage values that would be created with the {@link Block#states Block states} but are not used. */
 	private HashSet<Integer> unusedDamage;
 
 	public Block()
@@ -46,12 +47,19 @@ public class Block extends BlockItem implements IObjectList<Block>
 		this.createStates();
 	}
 
+	/** Adds a State to this Block.
+	 * 
+	 * @param state - The Block state to add. */
 	public void addState(BlockState state)
 	{
 		this.states.put(state.id, state);
 		this.updateDamageValues();
 	}
 
+	/** Adds a damage value to the list of unused damage values.
+	 * 
+	 * @param unused - The damage that shouldn't be used.
+	 * @see Block#unusedDamage */
 	public void addUnusedDamage(int unused)
 	{
 		this.unusedDamage.add(unused);
@@ -66,12 +74,18 @@ public class Block extends BlockItem implements IObjectList<Block>
 		return p;
 	}
 
+	/** Initializes the Block States arrays. */
 	private void createStates()
 	{
 		this.states = new HashMap<String, BlockState>();
 		this.unusedDamage = new HashSet<Integer>();
 	}
 
+	/** Parses the input Block states to determine the corresponding damage value.
+	 * 
+	 * @param state - The states to apply.
+	 * @return The resulting damage value.
+	 * @throws CommandGenerationException - If State parsing fails. */
 	public int damageFromState(String state) throws CommandGenerationException
 	{
 		HashMap<String, String> parsed = BlockState.parseState(state);
@@ -82,6 +96,10 @@ public class Block extends BlockItem implements IObjectList<Block>
 		return this.getDamageValues()[0];
 	}
 
+	/** Finds the Block states described by the input damage value.
+	 * 
+	 * @param damage - A damage value.
+	 * @return A Hashmap containing a value for each used Block state. */
 	public HashMap<String, String> findStatesFromDamage(int damage)
 	{
 		ArrayList<BlockState> s = new ArrayList<BlockState>();
@@ -127,11 +145,14 @@ public class Block extends BlockItem implements IObjectList<Block>
 		return this.mainName().toString();
 	}
 
+	/** @return The possible {@link BlockState Block states} for this Block. */
 	public Collection<BlockState> getStates()
 	{
 		return this.states.values();
 	}
 
+	/** @param state - A Block state.
+	 * @return <code>true</code> if the input Block state should be saved in XML. */
 	protected boolean shouldSaveState(BlockState state)
 	{
 		return this.customObjectName == null;
@@ -193,6 +214,7 @@ public class Block extends BlockItem implements IObjectList<Block>
 		return ((PanelBlockSelection) panel).selectedBlock();
 	}
 
+	/** Reloads damage values to match this Block's states. */
 	private void updateDamageValues()
 	{
 		ArrayList<Integer> damage = new ArrayList<Integer>(), previousDamage = new ArrayList<Integer>(), temp = new ArrayList<Integer>();

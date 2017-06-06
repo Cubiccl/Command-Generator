@@ -2,12 +2,18 @@ package fr.cubiccl.generator.gameobject.baseobjects;
 
 import org.jdom2.Element;
 
+/** Represents a single slot in a {@link Container} */
 public class Slot implements Comparable<Slot>
 {
+	/** Slot size for graphics. */
 	public static final int SIZE = 16;
 
+	/** This Slot's Identifier. */
 	public final int id;
-	public int x, y;
+	/** This Slot's x position in the Container. */
+	public int x;
+	/** This Slot's x position in the Container. */
+	public int y;
 
 	public Slot(int id)
 	{
@@ -27,11 +33,15 @@ public class Slot implements Comparable<Slot>
 		return this.id - o.id;
 	}
 
+	/** @param mouseX - The X coordinate of the mouse.
+	 * @param mouseY - The Y coordinate of the mouse.
+	 * @return <code>true</code> if the input mouse coordinates are contained in this Slot. */
 	public boolean isSelected(int mouseX, int mouseY)
 	{
 		return mouseX >= this.x && mouseX <= this.x + SIZE && mouseY >= this.y && mouseY <= this.y + SIZE;
 	}
 
+	/** @return This Object in XML format for storage. */
 	public Element toXML()
 	{
 		return new Element("slot").setAttribute("id", Integer.toString(this.id)).setAttribute("x", Integer.toString(this.x))

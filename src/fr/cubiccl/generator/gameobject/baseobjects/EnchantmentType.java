@@ -82,6 +82,7 @@ public class EnchantmentType extends BaseObject implements IObjectList<Enchantme
 		return new Text("enchantment." + this.idString);
 	}
 
+	@Override
 	public BufferedImage texture()
 	{
 		return null;

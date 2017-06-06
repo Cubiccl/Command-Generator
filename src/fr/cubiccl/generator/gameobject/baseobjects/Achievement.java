@@ -10,7 +10,7 @@ import fr.cubiccl.generator.utils.Text;
 public class Achievement extends BaseObject
 {
 
-	/** The ID of this Achievement. */
+	/** This Achievement's ID. */
 	public final String id;
 	/** The Item to use for this Achievement's Texture. */
 	public Item textureItem;

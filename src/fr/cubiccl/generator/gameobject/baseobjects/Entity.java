@@ -10,6 +10,7 @@ import fr.cubiccl.generator.utils.Textures;
 
 public class Entity extends BaseObject
 {
+	/** The Player Entity. */
 	public static final Entity PLAYER = new Entity("player");
 
 	/** This Entity's ID. */

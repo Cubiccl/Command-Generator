@@ -7,12 +7,18 @@ import org.jdom2.Element;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 
+/** A default Recipe from Minecraft. */
 public class DefaultAdvancement extends BaseObject
 {
+	/** This Advancement's category. */
 	public final String category;
+	/** The list of criterias of this Advancement. */
 	public final String[] criteria;
+	/** The damage value of the display Item. -1 for no particular damage value. */
 	public int data = -1;
+	/** This Advancement's ID. */
 	public final String id;
+	/** The display Item. */
 	public final Item item;
 
 	public DefaultAdvancement(String id, Item item, String category, String... criteria)
