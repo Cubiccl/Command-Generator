@@ -5,6 +5,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
+/** Liquid Blocks, with 16 data values determining how much liquid it has. */
 public class BlockLiquid extends Block
 {
 

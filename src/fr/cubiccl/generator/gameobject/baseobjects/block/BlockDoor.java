@@ -5,6 +5,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
+/** Door Blocks, with 11 data values and various states describing its status. */
 public class BlockDoor extends Block
 {
 

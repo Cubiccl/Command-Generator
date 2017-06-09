@@ -5,6 +5,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
+/** Directional Blocks, with 6 data values determining which direction it's facing (including up and down). */
 public class BlockFacing extends Block
 {
 

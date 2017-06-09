@@ -5,6 +5,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
+/** Redstone Rail Blocks, with 16 data values determining which shape it has and whether it's powered. */
 public class BlockRail extends Block
 {
 

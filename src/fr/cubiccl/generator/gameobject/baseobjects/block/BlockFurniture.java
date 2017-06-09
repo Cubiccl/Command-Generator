@@ -5,6 +5,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
+/** Furniture Blocks, with 4 data values starting at 2 determining which direction it's facing. */
 public class BlockFurniture extends Block
 {
 

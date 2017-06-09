@@ -5,6 +5,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
+/** Stairs Blocks, with 8 data values determining which direction it's facing, and a state describing its shape. */
 public class BlockStairs extends Block
 {
 

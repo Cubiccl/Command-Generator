@@ -5,6 +5,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
+/** Terracotta Blocks, with 4 data values determining which direction it's facing. */
 public class BlockTerracotta extends Block
 {
 

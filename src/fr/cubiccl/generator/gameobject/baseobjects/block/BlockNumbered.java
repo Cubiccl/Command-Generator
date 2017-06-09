@@ -5,7 +5,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
-/** This Block has 6 data values, determining which type of wood it is made of. */
+/** This Block has several data values, the number displays in the name. */
 public class BlockNumbered extends Block
 {
 
