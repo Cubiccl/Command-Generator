@@ -2,8 +2,10 @@ package fr.cubiccl.generator.gameobject.tags;
 
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 
+/** Contains a list of tags, ordered and unnamed. */
 public class TagList extends Tag
 {
+	/** The contained Tags. */
 	protected Tag[] tags;
 
 	@Deprecated
@@ -13,6 +15,9 @@ public class TagList extends Tag
 		this.tags = tags;
 	}
 
+	/** Adds a Tag to this List.
+	 * 
+	 * @param tag - The Tag to add. */
 	public void addTag(Tag tag)
 	{
 		Tag[] t = new Tag[this.tags.length + 1];
@@ -22,6 +27,8 @@ public class TagList extends Tag
 		this.tags = t;
 	}
 
+	/** @param index - The index of the requested Tag.
+	 * @return The Tag at the input index. */
 	public Tag getTag(int index)
 	{
 		if (index < 0 || index >= this.tags.length) return null;
@@ -37,6 +44,7 @@ public class TagList extends Tag
 		return this;
 	}
 
+	/** @return This List's size. */
 	public int size()
 	{
 		return this.tags.length;

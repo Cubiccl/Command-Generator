@@ -4,7 +4,7 @@ import java.awt.GridBagConstraints;
 
 import fr.cubiccl.generator.gameobject.LivingEntity;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -63,7 +63,7 @@ public class CommandEntitydata extends Command
 		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
 		if (index == 2)
 		{
-			TagCompound t = (TagCompound) NBTReader.read(argument, true, false);
+			TagCompound t = (TagCompound) NBTParser.parse(argument, true, false);
 			String[] applications = t.findApplications();
 			if (applications.length != 0) this.panelEntity.setEntity(ObjectRegistry.entities.find(applications[0]));
 			this.panelEntity.setTags(t.value());

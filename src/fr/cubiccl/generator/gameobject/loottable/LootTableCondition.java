@@ -51,7 +51,7 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 	public static LootTableCondition createFrom(Element condition)
 	{
 		LootTableCondition c = new LootTableCondition(Condition.get(condition.getChildText("id")));
-		c.tags = ((TagCompound) NBTReader.read(condition.getChildText("nbt"), true, false, true)).value();
+		c.tags = ((TagCompound) NBTParser.parse(condition.getChildText("nbt"), true, false, true)).value();
 		return c;
 	}
 

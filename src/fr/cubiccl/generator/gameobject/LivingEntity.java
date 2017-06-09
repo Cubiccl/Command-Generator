@@ -8,7 +8,7 @@ import org.jdom2.Element;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
@@ -34,7 +34,7 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 	public static LivingEntity createFrom(Element entity)
 	{
 		LivingEntity e = new LivingEntity(ObjectRegistry.entities.find(entity.getChildText("id")), null);
-		e.nbt = (TagCompound) NBTReader.read(entity.getChildText("nbt"), true, false, true);
+		e.nbt = (TagCompound) NBTParser.parse(entity.getChildText("nbt"), true, false, true);
 		e.findProperties(entity);
 		return e;
 	}

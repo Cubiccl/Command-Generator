@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.templatetags.*;
 
+/** Contains a list of Tags, unordered and named. */
 public class TagCompound extends TagList
 {
 
@@ -13,6 +14,7 @@ public class TagCompound extends TagList
 		super(template, tags);
 	}
 
+	/** @return The list of possible Objects this Compound could describe. */
 	public String[] findApplications()
 	{
 		if (this.size() == 0) return new String[0];
@@ -44,36 +46,50 @@ public class TagCompound extends TagList
 		return available.toArray(new String[available.size()]);
 	}
 
+	/** @param tag - The Template for the requested Tag.
+	 * @return The Tag with the requested Template, if it exists. Else <code>null</code>. */
 	public TagBoolean getTag(TemplateBoolean tag)
 	{
 		return (TagBoolean) this.getTagFromId(tag.id());
 	}
 
+	/** @param tag - The Template for the requested Tag.
+	 * @return The Tag with the requested Template, if it exists. Else <code>null</code>. */
 	public TagCompound getTag(TemplateCompound tag)
 	{
 		return (TagCompound) this.getTagFromId(tag.id());
 	}
 
+	/** @param tag - The Template for the requested Tag.
+	 * @return The Tag with the requested Template, if it exists. Else <code>null</code>. */
 	public TagList getTag(TemplateList tag)
 	{
 		return (TagList) this.getTagFromId(tag.id());
 	}
 
+	/** @param tag - The Template for the requested Tag.
+	 * @return The Tag with the requested Template, if it exists. Else <code>null</code>. */
 	public TagNumber getTag(TemplateNumber tag)
 	{
 		return (TagNumber) this.getTagFromId(tag.id());
 	}
 
+	/** @param tag - The Template for the requested Tag.
+	 * @return The Tag with the requested Template, if it exists. Else <code>null</code>. */
 	public TagString getTag(TemplateString tag)
 	{
 		return (TagString) this.getTagFromId(tag.id());
 	}
 
+	/** @param tag - The Template for the requested Tag.
+	 * @return The Tag with the requested Template, if it exists. Else <code>null</code>. */
 	private Tag getTag(TemplateTag tag)
 	{
 		return this.getTagFromId(tag.id());
 	}
 
+	/** @param id - The ID of the requested Tag.
+	 * @return The Tag with the requested ID, if it exists. Else <code>null</code>. */
 	public Tag getTagFromId(String id)
 	{
 		for (Tag tag : this.tags)
@@ -81,6 +97,8 @@ public class TagCompound extends TagList
 		return null;
 	}
 
+	/** @param id - The ID to check.
+	 * @return <code>true</code> if this Compound contains a Tag with the input ID. */
 	public boolean hasTag(String id)
 	{
 		for (Tag tag : this.tags)
@@ -88,6 +106,8 @@ public class TagCompound extends TagList
 		return false;
 	}
 
+	/** @param tag - The Template to check.
+	 * @return <code>true</code> if this Compound contains a Tag with the input Template. */
 	public boolean hasTag(TemplateTag tag)
 	{
 		return this.hasTag(tag.id()) && this.getTag(tag).template.tagType == tag.tagType;

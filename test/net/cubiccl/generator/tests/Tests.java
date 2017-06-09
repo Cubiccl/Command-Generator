@@ -6,14 +6,14 @@ import org.junit.Test;
 
 import fr.cubiccl.generator.gameobject.Recipe;
 import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
 public class Tests
 {
 	public void multisplit()
 	{
-		String[] split = NBTReader.multisplit("[{jkl,kkk},{\"ww\\\"w\"}]");
+		String[] split = NBTParser.multisplit("[{jkl,kkk},{\"ww\\\"w\"}]");
 
 		for (String string : split)
 		{
@@ -31,7 +31,7 @@ public class Tests
 
 	public void tagSplit()
 	{
-		String[] split = NBTReader.splitTagValues("s:jkl,OM:[kkk,j],klmkm:{\"ww\\\"w\",jkl}");
+		String[] split = NBTParser.splitTagValues("s:jkl,OM:[kkk,j],klmkm:{\"ww\\\"w\",jkl}");
 
 		for (String string : split)
 		{

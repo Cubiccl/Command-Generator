@@ -3,7 +3,7 @@ package fr.cubiccl.generator.gameobject.templatetags;
 import java.util.ArrayList;
 
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -57,12 +57,12 @@ public abstract class TemplateCompound extends TemplateTag
 	public Tag readTag(String value, boolean isJson, boolean readUnknown)
 	{ // Change this --> Change TemplateRange.readTag()
 		if (value.startsWith("{") && value.endsWith("}")) value = value.substring(1, value.length() - 1);
-		String[] values = NBTReader.splitTagValues(value);
+		String[] values = NBTParser.splitTagValues(value);
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (String v : values)
 		{
 			if (v.equals("")) continue;
-			Tag t = NBTReader.read(v, false, isJson, readUnknown);
+			Tag t = NBTParser.parse(v, false, isJson, readUnknown);
 			if (t != null) tags.add(t);
 		}
 		return this.create(tags.toArray(new Tag[tags.size()]));

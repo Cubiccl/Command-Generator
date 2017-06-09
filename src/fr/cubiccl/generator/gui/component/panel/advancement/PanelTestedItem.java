@@ -10,7 +10,7 @@ import fr.cubiccl.generator.gameobject.Enchantment;
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -223,7 +223,7 @@ public class PanelTestedItem extends CGPanel implements ActionListener, IStateLi
 				this.panelEnchantments.add(Enchantment.createFrom((TagCompound) tag));
 			this.checkboxEnchantments.setSelected(true);
 		}
-		if (item.getNbt().hasTag(Tags.CRITERIA_NBT)) this.panelTags.setValues(((TagCompound) NBTReader.read(item.getNbt().getTag(Tags.CRITERIA_NBT).value(),
+		if (item.getNbt().hasTag(Tags.CRITERIA_NBT)) this.panelTags.setValues(((TagCompound) NBTParser.parse(item.getNbt().getTag(Tags.CRITERIA_NBT).value(),
 				true, true)).value());
 		this.onCheckbox();
 		this.updateDisplay();

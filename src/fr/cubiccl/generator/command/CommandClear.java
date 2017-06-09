@@ -6,7 +6,7 @@ import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
@@ -158,7 +158,7 @@ public class CommandClear extends Command implements ActionListener
 				this.panelItem.setCount(Integer.parseInt(argument));
 			} catch (NumberFormatException e)
 			{}
-		} else if (index == 5) this.panelItem.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
+		} else if (index == 5) this.panelItem.setTags(((TagCompound) NBTParser.parse(argument, true, false)).value());
 	}
 
 }

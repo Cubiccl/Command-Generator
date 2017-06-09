@@ -9,7 +9,7 @@ import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -102,7 +102,7 @@ public class CommandTestforblock extends Command implements ActionListener
 			for (String id : states.keySet())
 				this.panelStates.setState(id, states.get(id));
 		}
-		if (index == 6) this.panelBlock.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
+		if (index == 6) this.panelBlock.setTags(((TagCompound) NBTParser.parse(argument, true, false)).value());
 	}
 
 	@Override

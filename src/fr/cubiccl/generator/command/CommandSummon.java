@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.LivingEntity;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -79,7 +79,7 @@ public class CommandSummon extends Command
 		// summon <entity> [x] [y] [z] [dataTag]
 		if (index == 1) this.panelEntity.setEntity(ObjectRegistry.entities.find(argument));
 		if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
-		if (index == 5) this.panelEntity.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
+		if (index == 5) this.panelEntity.setTags(((TagCompound) NBTParser.parse(argument, true, false)).value());
 	}
 
 }

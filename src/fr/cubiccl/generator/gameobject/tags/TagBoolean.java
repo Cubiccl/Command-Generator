@@ -2,8 +2,10 @@ package fr.cubiccl.generator.gameobject.tags;
 
 import fr.cubiccl.generator.gameobject.templatetags.TemplateBoolean;
 
+/** Boolean Tag. */
 public class TagBoolean extends Tag
 {
+	/** This Tag's value. */
 	private boolean value;
 
 	@Deprecated

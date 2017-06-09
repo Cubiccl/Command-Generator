@@ -5,7 +5,7 @@ import java.awt.GridBagConstraints;
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlock;
@@ -62,7 +62,7 @@ public class CommandBlockdata extends Command
 		if (index == 1) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[2], fullCommand[3]));
 		else if (index == 4)
 		{
-			TagCompound t = (TagCompound) NBTReader.read(argument, true, false);
+			TagCompound t = (TagCompound) NBTParser.parse(argument, true, false);
 			String[] application = t.findApplications();
 			if (application.length != 0) this.panelBlock.setBlock(ObjectRegistry.blocks.find(application[0]));
 			this.panelBlock.setTags(t.value());

@@ -22,7 +22,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
 import fr.cubiccl.generator.gameobject.loottable.LootTableFunction;
 import fr.cubiccl.generator.gameobject.loottable.LootTableFunction.Function;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
@@ -215,7 +215,7 @@ public class PanelFunction extends CGPanel implements ActionListener
 				this.enchantments.setValues(enchantments);
 			} else if (f == SET_NBT && t.hasTag(Tags.LT_FUNCTION_NBT))
 			{
-				TagCompound tag = (TagCompound) NBTReader.read(t.getTag(Tags.LT_FUNCTION_NBT).value(), true, true);
+				TagCompound tag = (TagCompound) NBTParser.parse(t.getTag(Tags.LT_FUNCTION_NBT).value(), true, true);
 				String[] apps = tag.findApplications();
 				if (apps.length != 0) this.panelNbt.setItem(ObjectRegistry.items.find(apps[0]));
 				this.panelNbt.setTags(tag.value());

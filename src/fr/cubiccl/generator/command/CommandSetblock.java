@@ -5,7 +5,7 @@ import java.awt.GridBagConstraints;
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
@@ -86,7 +86,7 @@ public class CommandSetblock extends Command
 			this.panelBlock.setData(this.panelBlock.selectedBlock().damageFromState(argument));
 		}
 		if (index == 6) this.comboboxMode.setValue(argument);
-		if (index == 7) this.panelBlock.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
+		if (index == 7) this.panelBlock.setTags(((TagCompound) NBTParser.parse(argument, true, false)).value());
 	}
 
 }

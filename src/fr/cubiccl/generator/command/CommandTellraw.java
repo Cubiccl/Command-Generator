@@ -2,7 +2,7 @@ package fr.cubiccl.generator.command;
 
 import java.awt.GridBagConstraints;
 
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -54,7 +54,7 @@ public class CommandTellraw extends Command
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
 		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
-		if (index == 2) this.panelJson.setupFrom(NBTReader.read(argument, true, true));
+		if (index == 2) this.panelJson.setupFrom(NBTParser.parse(argument, true, true));
 	}
 
 }

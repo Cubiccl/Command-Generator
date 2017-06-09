@@ -12,7 +12,7 @@ import fr.cubiccl.generator.gameobject.*;
 import fr.cubiccl.generator.gameobject.advancements.Advancement;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.speedrun.Speedrun;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.Dialogs;
@@ -139,55 +139,55 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 			switch (current)
 			{
 				case MODIFIERS:
-					attributeModifiers.addObject(AttributeModifier.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					attributeModifiers.addObject(AttributeModifier.createFrom((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case ATTRIBUTES:
-					attributes.addObject(AppliedAttribute.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					attributes.addObject(AppliedAttribute.createFrom((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case BLOCKS:
-					blocks.addObject(PlacedBlock.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					blocks.addObject(PlacedBlock.createFrom((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case COORDINATES:
-					coordinates.addObject(Coordinates.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					coordinates.addObject(Coordinates.createFrom((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case EFFECTS:
-					effects.addObject(Effect.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					effects.addObject(Effect.createFrom((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case ENCHANTMENTS:
-					enchantments.addObject(Enchantment.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					enchantments.addObject(Enchantment.createFrom((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case ENTITIES:
-					entities.addObject(LivingEntity.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					entities.addObject(LivingEntity.createFrom((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case ITEMS:
-					items.addObject(ItemStack.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					items.addObject(ItemStack.createFrom((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case JSONS:
-					jsonMessages.addObject(JsonMessage.createFrom((TagCompound) NBTReader.read(line, true, true)));
+					jsonMessages.addObject(JsonMessage.createFrom((TagCompound) NBTParser.parse(line, true, true)));
 					break;
 
 				case TRADES:
-					trades.addObject(TradeOffer.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					trades.addObject(TradeOffer.createFrom((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case TARGETS:
-					targets.addObject(Target.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					targets.addObject(Target.createFrom((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case COMMANDS:
-					commands.addObject(GeneratedCommand.createFrom((TagCompound) NBTReader.read(line, true, false)));
+					commands.addObject(GeneratedCommand.createFrom((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case LOOT_TABLES:
-					lootTables.addObject(LootTable.createFrom((TagCompound) NBTReader.read(line, true, true, true)));
+					lootTables.addObject(LootTable.createFrom((TagCompound) NBTParser.parse(line, true, true, true)));
 					break;
 
 				default:

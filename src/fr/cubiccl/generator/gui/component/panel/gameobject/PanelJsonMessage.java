@@ -8,7 +8,7 @@ import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.JsonMessage;
 import fr.cubiccl.generator.gameobject.LivingEntity;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -301,11 +301,11 @@ public class PanelJsonMessage extends CGPanel implements ActionListener, ICustom
 					break;
 
 				case "show_entity":
-					this.panelHoverEvent.panelEntity.setupFrom(LivingEntity.createFrom((TagCompound) NBTReader.read((String) message.hoverValue, true, false)));
+					this.panelHoverEvent.panelEntity.setupFrom(LivingEntity.createFrom((TagCompound) NBTParser.parse((String) message.hoverValue, true, false)));
 					break;
 
 				case "show_item":
-					this.panelHoverEvent.panelItem.setupFrom(ItemStack.createFrom((TagCompound) NBTReader.read((String) message.hoverValue, true, false)));
+					this.panelHoverEvent.panelItem.setupFrom(ItemStack.createFrom((TagCompound) NBTParser.parse((String) message.hoverValue, true, false)));
 					break;
 
 				case "show_text":

@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.PlacedBlock;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
@@ -149,7 +149,7 @@ public class CommandFill extends Command implements ActionListener
 			{
 				this.comboboxMode.setValue("filter");
 				this.panelBlockReplace.setBlock(ObjectRegistry.blocks.find(argument));
-			} else this.panelBlockFill.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
+			} else this.panelBlockFill.setTags(((TagCompound) NBTParser.parse(argument, true, false)).value());
 		}
 		if (index == 11) try
 		{

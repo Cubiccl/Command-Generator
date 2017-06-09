@@ -3,7 +3,7 @@ package fr.cubiccl.generator.gameobject.templatetags.custom;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.JsonMessage;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
@@ -35,7 +35,7 @@ public class TemplateText extends TemplateString
 		if (p.getSelected() == 0) return super.createPanel(object, previousValue);
 
 		PanelJsonMessage pj = new PanelJsonMessage();
-		if (previousValue != null) pj.setupFrom(JsonMessage.createFrom((TagCompound) NBTReader.read((String) previousValue.value(), true, true)));
+		if (previousValue != null) pj.setupFrom(JsonMessage.createFrom((TagCompound) NBTParser.parse((String) previousValue.value(), true, true)));
 		pj.setName(this.title());
 		return pj;
 	}

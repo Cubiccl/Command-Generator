@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import fr.cubiccl.generator.gameobject.JsonMessage;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagList;
@@ -124,7 +124,7 @@ public class CommandTitle extends Command implements ActionListener
 		else
 		{
 			this.panelJson.clear();
-			Tag t = NBTReader.read(argument, true, true);
+			Tag t = NBTParser.parse(argument, true, true);
 			if (t instanceof TagCompound) this.panelJson.addMessage(JsonMessage.createFrom((TagCompound) t));
 			else for (Tag tag : ((TagList) t).value())
 				this.panelJson.addMessage(JsonMessage.createFrom((TagCompound) tag));

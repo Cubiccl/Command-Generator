@@ -2,8 +2,10 @@ package fr.cubiccl.generator.gameobject.tags;
 
 import fr.cubiccl.generator.gameobject.templatetags.TemplateString;
 
+/** A String NBT Tag. */
 public class TagString extends Tag
 {
+	/** This Tag's value. */
 	public final String value;
 
 	@Deprecated

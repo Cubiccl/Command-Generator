@@ -31,7 +31,7 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		PlacedBlock b = new PlacedBlock();
 		b.block = ObjectRegistry.blocks.find(block.getChildText("id"));
 		b.data = Integer.parseInt(block.getChildText("data"));
-		b.nbt = (TagCompound) NBTReader.read(block.getChildText("nbt"), true, false, true);
+		b.nbt = (TagCompound) NBTParser.parse(block.getChildText("nbt"), true, false, true);
 		b.findProperties(block);
 		return b;
 	}

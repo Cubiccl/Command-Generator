@@ -7,7 +7,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
@@ -263,7 +263,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener,
 		{}
 		else if (mode.equals("add") || mode.equals("remove") || mode.equals("set") || mode.equals("tag"))
 		{
-			TagCompound t = (TagCompound) NBTReader.read(argument, true, false);
+			TagCompound t = (TagCompound) NBTParser.parse(argument, true, false);
 			String[] app = t.findApplications();
 			if (app.length != 0) this.panelEntityTags.setEntity(ObjectRegistry.entities.find(app[0]));
 			this.panelEntityTags.setTags(t.value());

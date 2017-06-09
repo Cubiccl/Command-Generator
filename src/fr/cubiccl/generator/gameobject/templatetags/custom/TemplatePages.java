@@ -73,7 +73,7 @@ public class TemplatePages extends TemplateList
 
 	private static Page createPage(String value)
 	{
-		Tag t = NBTReader.read(value, true, true);
+		Tag t = NBTParser.parse(value, true, true);
 		if (t instanceof TagCompound) return new Page(JsonMessage.createFrom((TagCompound) t));
 		JsonMessage[] messages = new JsonMessage[((TagList) t).size()];
 		for (int i = 0; i < messages.length; ++i)

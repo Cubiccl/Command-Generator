@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import org.jdom2.Element;
 
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
@@ -27,7 +27,7 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 
 		ArrayList<Tag> conditions = new ArrayList<Tag>();
 		for (Element condition : criteria.getChildren("condition"))
-			conditions.add(NBTReader.read(condition.getText(), false, true, true));
+			conditions.add(NBTParser.parse(condition.getText(), false, true, true));
 
 		for (Tag t : conditions)
 		{

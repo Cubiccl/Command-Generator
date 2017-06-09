@@ -14,7 +14,7 @@ import fr.cubiccl.generator.gameobject.loottable.LootTable;
 import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.LoadingFrame;
@@ -268,7 +268,7 @@ public class CommandGenerator
 	 * @param text - The text to parse. */
 	public static void parseAdvancement(String text)
 	{
-		TagCompound tag = (TagCompound) NBTReader.read(text, true, true, true);
+		TagCompound tag = (TagCompound) NBTParser.parse(text, true, true, true);
 		Advancement advancement = Advancement.createFrom(tag);
 
 		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
@@ -282,7 +282,7 @@ public class CommandGenerator
 	 * @param text - The text to parse. */
 	public static void parseLootTable(String text)
 	{
-		TagCompound tag = (TagCompound) NBTReader.read(text, true, true, true);
+		TagCompound tag = (TagCompound) NBTParser.parse(text, true, true, true);
 		LootTable table = LootTable.createFrom(tag);
 
 		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
@@ -296,7 +296,7 @@ public class CommandGenerator
 	 * @param text - The text to parse. */
 	public static void parseRecipe(String text)
 	{
-		TagCompound tag = (TagCompound) NBTReader.read(text, true, true, true);
+		TagCompound tag = (TagCompound) NBTParser.parse(text, true, true, true);
 		Recipe recipe = Recipe.createFrom(tag);
 
 		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));

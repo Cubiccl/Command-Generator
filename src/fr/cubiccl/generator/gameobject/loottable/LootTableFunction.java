@@ -69,7 +69,7 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 	{
 		LootTableFunction f = new LootTableFunction();
 		f.function = Function.get(function.getChildText("id"));
-		f.tags = ((TagCompound) NBTReader.read(function.getChildText("nbt"), true, false, true)).value();
+		f.tags = ((TagCompound) NBTParser.parse(function.getChildText("nbt"), true, false, true)).value();
 
 		ArrayList<LootTableCondition> conditions = new ArrayList<LootTableCondition>();
 		for (Element condition : function.getChild("conditions").getChildren())
@@ -169,7 +169,7 @@ public class LootTableFunction implements IObjectList<LootTableFunction>
 				if (t.template == Tags.LT_FUNCTION_NBT) tag = ((TagString) t).value();
 			if (tag == null) return;
 
-			TagCompound t = (TagCompound) NBTReader.read(tag, false, false);
+			TagCompound t = (TagCompound) NBTParser.parse(tag, false, false);
 			for (Tag nbt : t.value())
 				item.getNbt().addTag(nbt);
 		}

@@ -66,7 +66,7 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 	 * @return The created Json Message. */
 	public static JsonMessage createFrom(Element json)
 	{
-		JsonMessage message = createFrom((TagCompound) NBTReader.read(json.getChildText("message"), true, false, true));
+		JsonMessage message = createFrom((TagCompound) NBTParser.parse(json.getChildText("message"), true, false, true));
 		message.findProperties(json);
 		return message;
 	}

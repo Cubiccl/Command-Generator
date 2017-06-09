@@ -58,7 +58,7 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		i.amount = Integer.parseInt(item.getChildText("amount"));
 		i.damage = Integer.parseInt(item.getChildText("damage"));
 		i.slot = Integer.parseInt(item.getChildText("slot"));
-		i.nbt = (TagCompound) NBTReader.read(item.getChildText("nbt"), true, false, true);
+		i.nbt = (TagCompound) NBTParser.parse(item.getChildText("nbt"), true, false, true);
 		i.findProperties(item);
 		return i;
 	}

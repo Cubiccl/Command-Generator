@@ -7,7 +7,7 @@ import java.awt.event.ActionListener;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.Coordinates;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
@@ -166,7 +166,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 				this.panelItem.setDamage(Integer.parseInt(argument));
 			} catch (Exception e)
 			{}
-			if (index == 9) this.panelItem.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
+			if (index == 9) this.panelItem.setTags(((TagCompound) NBTParser.parse(argument, true, false)).value());
 		} else
 		{
 			if (index == 2) this.panelTarget.setupFrom(Target.createFrom(argument));
@@ -182,7 +182,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 				this.panelItem.setDamage(Integer.parseInt(argument));
 			} catch (Exception e)
 			{}
-			if (index == 7) this.panelItem.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
+			if (index == 7) this.panelItem.setTags(((TagCompound) NBTParser.parse(argument, true, false)).value());
 		}
 	}
 

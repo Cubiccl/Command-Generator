@@ -4,7 +4,7 @@ import java.awt.GridBagConstraints;
 
 import fr.cubiccl.generator.gameobject.ItemStack;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.tags.NBTReader;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
@@ -82,7 +82,7 @@ public class CommandGive extends Command
 			this.panelItem.setDamage(Integer.parseInt(argument));
 		} catch (Exception e)
 		{}
-		if (index == 5) this.panelItem.setTags(((TagCompound) NBTReader.read(argument, true, false)).value());
+		if (index == 5) this.panelItem.setTags(((TagCompound) NBTParser.parse(argument, true, false)).value());
 	}
 
 }
