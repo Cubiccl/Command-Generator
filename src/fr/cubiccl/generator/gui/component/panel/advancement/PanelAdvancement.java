@@ -11,7 +11,7 @@ import javax.swing.SwingConstants;
 import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.advancements.Advancement;
-import fr.cubiccl.generator.gameobject.advancements.AdvancementCriteria;
+import fr.cubiccl.generator.gameobject.advancements.AdvancementCriterion;
 import fr.cubiccl.generator.gameobject.advancements.Requirement;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.button.CGCheckBox;
@@ -39,7 +39,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 	private CGRadioButton buttonTString, buttonTJson;
 	private CGCheckBox checkboxAnnounce, checkboxToast, checkboxAppears;
 	private OptionCombobox comboboxFrame;
-	private PanelObjectList<AdvancementCriteria> criteria;
+	private PanelObjectList<AdvancementCriterion> criteria;
 	private CGEntry entryTitle, entryDescription, entryBackground, entryParent, entryExperience, entryFunction;
 	private PanelItem panelItem;
 	private PanelObjectList<Requirement> panelRequirements;
@@ -125,7 +125,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 
 		CGPanel criterias = new CGPanel();
 		gbc = criterias.createGridBagLayout();
-		criterias.add(this.criteria = new PanelObjectList<AdvancementCriteria>("advancement.criteria", "advancement.criteria", AdvancementCriteria.class));
+		criterias.add(this.criteria = new PanelObjectList<AdvancementCriterion>("advancement.criteria", "advancement.criteria", AdvancementCriterion.class));
 		++gbc.gridy;
 		criterias.add(this.panelRequirements = new PanelObjectList<Requirement>("advancement.requirements", "", Requirement.class, "advancement",
 				this.advancement), gbc);
@@ -185,10 +185,10 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		this.checkboxAppears.setSelected(!this.advancement.hidden);
 
 		this.criteria.clear();
-		for (AdvancementCriteria criteria : this.advancement.getCriteria())
+		for (AdvancementCriterion criteria : this.advancement.getCriteria())
 			this.criteria.add(criteria);
 		this.panelRequirements.clear();
-		for (AdvancementCriteria[] req : this.advancement.requirements)
+		for (AdvancementCriterion[] req : this.advancement.requirements)
 			this.panelRequirements.add(new Requirement(req));
 
 		this.entryExperience.setText(Integer.toString(this.advancement.rewardExperience));
@@ -235,7 +235,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 		if (this.advancement.parent.equals("")) this.advancement.parent = null;
 
 		this.advancement.clearCriteria();
-		for (AdvancementCriteria criteria : this.criteria.values())
+		for (AdvancementCriterion criteria : this.criteria.values())
 			this.advancement.addCriterion(criteria);
 
 		this.advancement.rewardExperience = Integer.parseInt(this.entryExperience.getText());
@@ -250,7 +250,7 @@ public class PanelAdvancement extends CGPanel implements ActionListener
 
 		this.advancement.requirements.clear();
 		for (Requirement r : this.panelRequirements.values())
-			this.advancement.requirements.add(r.criterias);
+			this.advancement.requirements.add(r.criteria);
 
 		CommandGenerator.window.panelAdvancementSelection.list.updateList();
 	}

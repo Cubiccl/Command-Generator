@@ -4,8 +4,8 @@ import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import fr.cubiccl.generator.gameobject.advancements.AdvancementCriteria;
-import fr.cubiccl.generator.gameobject.advancements.CriteriaTrigger;
+import fr.cubiccl.generator.gameobject.advancements.AdvancementCriterion;
+import fr.cubiccl.generator.gameobject.advancements.CriterionTrigger;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gui.component.combobox.SearchCombobox;
@@ -25,7 +25,7 @@ public class PanelAdvancementCriteria extends CGPanel implements ActionListener
 	private CGLabel labelDescription;
 	private PanelTags panelTags;
 
-	public PanelAdvancementCriteria(AdvancementCriteria criteria)
+	public PanelAdvancementCriteria(AdvancementCriterion criteria)
 	{
 		GridBagConstraints gbc = this.createGridBagLayout();
 		gbc.gridwidth = 2;
@@ -34,13 +34,13 @@ public class PanelAdvancementCriteria extends CGPanel implements ActionListener
 		gbc.gridwidth = 1;
 		this.add(new CGLabel("advancement.criteria.description").setHasColumn(true), gbc);
 		++gbc.gridx;
-		this.add((this.comboboxTrigger = new SearchCombobox(CriteriaTrigger.names())).container, gbc);
+		this.add((this.comboboxTrigger = new SearchCombobox(CriterionTrigger.names())).container, gbc);
 		--gbc.gridx;
 		++gbc.gridy;
 		gbc.gridwidth = 2;
 		this.add(this.labelDescription = new CGLabel((Text) null), gbc);
 		++gbc.gridy;
-		this.add(this.panelTags = new PanelTags("advancement.criteria.tags", CriteriaTrigger.listTags()), gbc);
+		this.add(this.panelTags = new PanelTags("advancement.criteria.tags", CriterionTrigger.listTags()), gbc);
 
 		this.comboboxTrigger.addActionListener(this);
 
@@ -61,12 +61,12 @@ public class PanelAdvancementCriteria extends CGPanel implements ActionListener
 		this.panelTags.setVisible(this.selectedTrigger().conditions.size() > 0);
 	}
 
-	private CriteriaTrigger selectedTrigger()
+	private CriterionTrigger selectedTrigger()
 	{
-		return CriteriaTrigger.find(this.comboboxTrigger.getValue());
+		return CriterionTrigger.find(this.comboboxTrigger.getValue());
 	}
 
-	private void setupFrom(AdvancementCriteria criteria)
+	private void setupFrom(AdvancementCriterion criteria)
 	{
 		this.entryName.setText(criteria.name);
 		this.comboboxTrigger.setSelectedItem(criteria.trigger.id);
@@ -74,7 +74,7 @@ public class PanelAdvancementCriteria extends CGPanel implements ActionListener
 		this.panelTags.setValues(criteria.getConditions());
 	}
 
-	public void update(AdvancementCriteria criteria) throws CommandGenerationException
+	public void update(AdvancementCriterion criteria) throws CommandGenerationException
 	{
 		this.entryName.checkValue(CGEntry.STRING);
 		criteria.name = this.entryName.getText();

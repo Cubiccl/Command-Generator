@@ -14,9 +14,14 @@ import fr.cubiccl.generator.gui.component.panel.advancement.PanelTestedEffect;
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
+/** Represents a Potion Effect that can be tested in Advancements. */
 public class TestedEffect implements IObjectList<TestedEffect>
 {
 
+	/** Creates an Effect from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing this Effect.
+	 * @return The created Effect */
 	public static TestedEffect createFrom(TagCompound tag)
 	{
 		TestedEffect e = new TestedEffect();
@@ -26,8 +31,15 @@ public class TestedEffect implements IObjectList<TestedEffect>
 		return e;
 	}
 
-	public TestValue amplifier, duration;
-	public boolean amplifierTested, durationTested;
+	/** This Effect's amplifier. */
+	public TestValue amplifier;
+	/** <code>true</code> if this Effect's {@link TestedEffect#amplifier amplifier} is being tested. */
+	public boolean amplifierTested;
+	/** This Effect's duration. */
+	public TestValue duration;
+	/** <code>true</code> if this Effect's {@link TestedEffect#duration duration} is being tested. */
+	public boolean durationTested;
+	/** This Effect's type. */
 	public EffectType effect;
 
 	public TestedEffect()
@@ -56,6 +68,7 @@ public class TestedEffect implements IObjectList<TestedEffect>
 		return this.effect.name().toString();
 	}
 
+	/** @return This Effect as an NBT Tag to be generated. */
 	public TagCompound toTag()
 	{
 		TagCompound tag = new DefaultCompound(this.effect.id()).create();

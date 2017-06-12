@@ -25,9 +25,14 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
+/** Represents an editable Advancement for map making. */
 public class Advancement extends GameObject implements IObjectList<Advancement>
 {
 
+	/** Creates an Advancement from the input XML element.
+	 * 
+	 * @param advancement - The XML element describing the Advancement.
+	 * @return The created Advancement. */
 	public static Advancement createFrom(Element advancement)
 	{
 		Advancement a = new Advancement();
@@ -44,19 +49,19 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		if (advancement.getChild("hidden") != null) a.hidden = true;
 
 		for (Element criteria : advancement.getChild("criterias").getChildren())
-			a.criteria.add(AdvancementCriteria.createFrom(criteria));
+			a.criteria.add(AdvancementCriterion.createFrom(criteria));
 
 		for (Element req : advancement.getChild("requirements").getChildren("r"))
 		{
-			ArrayList<AdvancementCriteria> r = new ArrayList<AdvancementCriteria>();
+			ArrayList<AdvancementCriterion> r = new ArrayList<AdvancementCriterion>();
 			for (Element name : req.getChildren("c"))
-				for (AdvancementCriteria c : a.criteria)
+				for (AdvancementCriterion c : a.criteria)
 					if (name.getText().equals(c.name))
 					{
 						r.add(c);
 						break;
 					}
-			a.requirements.add(r.toArray(new AdvancementCriteria[r.size()]));
+			a.requirements.add(r.toArray(new AdvancementCriterion[r.size()]));
 		}
 
 		if (advancement.getChild("experience") != null) a.rewardExperience = Integer.parseInt(advancement.getChildText("experience"));
@@ -73,6 +78,10 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		return a;
 	}
 
+	/** Creates an Advancement from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Advancement.
+	 * @return The created Advancement. */
 	public static Advancement createFrom(TagCompound tag)
 	{
 		Advancement a = new Advancement();
@@ -99,15 +108,15 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		if (tag.hasTag(Tags.ADVANCEMENT_PARENT)) a.parent = tag.getTag(Tags.ADVANCEMENT_PARENT).value();
 
 		if (tag.hasTag(Tags.ADVANCEMENT_CRITERIA)) for (Tag c : tag.getTag(Tags.ADVANCEMENT_CRITERIA).value())
-			a.criteria.add(AdvancementCriteria.createFrom((TagCompound) c));
+			a.criteria.add(AdvancementCriterion.createFrom((TagCompound) c));
 
 		if (tag.hasTag(Tags.ADVANCEMENT_REQUIREMENTS)) for (Tag req : tag.getTag(Tags.ADVANCEMENT_REQUIREMENTS).value())
 		{
-			ArrayList<AdvancementCriteria> r = new ArrayList<AdvancementCriteria>();
+			ArrayList<AdvancementCriterion> r = new ArrayList<AdvancementCriterion>();
 			for (Tag t : ((TagList) req).value())
 			{
 				String name = ((TagString) t).value();
-				for (AdvancementCriteria c : a.criteria)
+				for (AdvancementCriterion c : a.criteria)
 				{
 					if (c.name.equals(name))
 					{
@@ -116,7 +125,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 					}
 				}
 			}
-			a.requirements.add(r.toArray(new AdvancementCriteria[r.size()]));
+			a.requirements.add(r.toArray(new AdvancementCriterion[r.size()]));
 		}
 
 		if (tag.hasTag(Tags.ADVANCEMENT_REWARDS))
@@ -136,22 +145,47 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		return a;
 	}
 
-	public boolean announce, hidden, toast;
-	public String background, description, frame, parent, title, rewardFunction;
-	private ArrayList<AdvancementCriteria> criteria;
+	/** <code>true</code> if this Advancement should be announced in the chat when granted. */
+	public boolean announce;
+	/** Path to the texture to use for the background of this Advancement's category if root. */
+	public String background;
+	/** The list of {@link AdvancementCriterion Criteria} for this Advancement. */
+	private ArrayList<AdvancementCriterion> criteria;
+	/** The damage value of this Advancement's display Item. */
 	private int data;
+	/** This Advancement's description. */
+	public String description;
+	/** This Advancement's frame. */
+	public String frame;
+	/** <code>true</code> if this Advancement should not be displayed in the Advancement menu before unlocking. */
+	public boolean hidden;
+	/** This Advancement's display Item. */
 	private Item item;
+	/** The Title of this Advancement (if Json). */
 	public JsonMessage jsonTitle;
-	public ArrayList<AdvancementCriteria[]> requirements;
+	/** This Advancement's parent. If <code>null</code>, this Advancement is a root Advancement. */
+	public String parent;
+	/** This Advancement's requirements. Each requirement is a list of possible Criteria to satisfy. Each requirement must be acquired, but only one Criterion per requirement is needed. */
+	public ArrayList<AdvancementCriterion[]> requirements;
+	/** The experience points this Advancement gives when completed. */
 	public int rewardExperience;
-	public ArrayList<String> rewardLoot, rewardRecipes;
+	/** The path to the Function this Advancement triggers when completed. */
+	public String rewardFunction;
+	/** The Loot Tables this Advancement triggers when completed. */
+	public ArrayList<String> rewardLoot;
+	/** The Recipes this Advencement unlocks when completed. */
+	public ArrayList<String> rewardRecipes;
+	/** The Title of this Advancement (if String). */
+	public String title;
+	/** <code>true</code> if this Advancement should be shown in a toast message when completed. */
+	public boolean toast;
 
 	public Advancement()
 	{
 		this.rewardLoot = new ArrayList<String>();
 		this.rewardRecipes = new ArrayList<String>();
-		this.criteria = new ArrayList<AdvancementCriteria>();
-		this.requirements = new ArrayList<AdvancementCriteria[]>();
+		this.criteria = new ArrayList<AdvancementCriterion>();
+		this.requirements = new ArrayList<AdvancementCriterion[]>();
 		this.rewardExperience = 0;
 		this.item = ObjectRegistry.items.first();
 		this.frame = "task";
@@ -160,12 +194,16 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		this.hidden = false;
 	}
 
-	public void addCriterion(AdvancementCriteria criteria)
+	/** Adds a Criterion to this Advancement.
+	 * 
+	 * @param criterion - The criterion to add. */
+	public void addCriterion(AdvancementCriterion criterion)
 	{
-		this.criteria.add(criteria);
+		this.criteria.add(criterion);
 		this.onChange();
 	}
 
+	/** Deletes all criteria from this Advancement. */
 	public void clearCriteria()
 	{
 		this.criteria.clear();
@@ -185,11 +223,13 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		return new PanelAdvancement(this);
 	}
 
-	public AdvancementCriteria[] getCriteria()
+	/** Getter for {@link Advancement#criteria}. */
+	public AdvancementCriterion[] getCriteria()
 	{
-		return this.criteria.toArray(new AdvancementCriteria[this.criteria.size()]);
+		return this.criteria.toArray(new AdvancementCriterion[this.criteria.size()]);
 	}
 
+	/** Getter for {@link Advancement#data}. */
 	public int getData()
 	{
 		return this.data;
@@ -201,6 +241,7 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		return new PanelAdvancementDisplay(this);
 	}
 
+	/** Getter for {@link Advancement#item}. */
 	public Item getItem()
 	{
 		return this.item;
@@ -212,33 +253,39 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		return this.customName();
 	}
 
+	/** @return <code>true</code> if this Advancement is valid, i.e. if either {@link Advancement#title} or {@link Advancement#jsonTitle} isn't <code>null</code>, and {@link Advancement#criteria} isn't empty. */
 	public boolean isValid()
 	{
 		return (this.title != null || this.jsonTitle != null) && this.criteria.size() > 0;
 	}
 
-	public void removeCriterion(AdvancementCriteria criteria)
+	/** Removes a Criterion from this Advancement.
+	 * 
+	 * @param criterion - The criterion to remove. */
+	public void removeCriterion(AdvancementCriterion criterion)
 	{
-		ArrayList<AdvancementCriteria[]> newReq = new ArrayList<AdvancementCriteria[]>();
-		for (AdvancementCriteria[] req : this.requirements)
+		ArrayList<AdvancementCriterion[]> newReq = new ArrayList<AdvancementCriterion[]>();
+		for (AdvancementCriterion[] req : this.requirements)
 		{
-			ArrayList<AdvancementCriteria> r = new ArrayList<AdvancementCriteria>();
-			for (AdvancementCriteria c : req)
-				if (c != criteria) r.add(c);
-			newReq.add(r.toArray(new AdvancementCriteria[r.size()]));
+			ArrayList<AdvancementCriterion> r = new ArrayList<AdvancementCriterion>();
+			for (AdvancementCriterion c : req)
+				if (c != criterion) r.add(c);
+			newReq.add(r.toArray(new AdvancementCriterion[r.size()]));
 		}
 
-		this.criteria.remove(criteria);
+		this.criteria.remove(criterion);
 		this.requirements.clear();
 		this.requirements.addAll(newReq);
 	}
 
+	/** Setter for {@link Advancement#data}. */
 	public void setData(int data)
 	{
 		this.data = data;
 		this.onChange();
 	}
 
+	/** Setter for {@link Advancement#item}. */
 	public void setItem(Item item)
 	{
 		this.item = item;
@@ -278,14 +325,14 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		if (this.parent != null) tags.add(Tags.ADVANCEMENT_PARENT.create(this.parent));
 
 		ArrayList<Tag> criterias = new ArrayList<Tag>();
-		for (AdvancementCriteria c : this.criteria)
+		for (AdvancementCriterion c : this.criteria)
 			criterias.add(c.toTag());
 		tags.add(Tags.ADVANCEMENT_CRITERIA.create(criterias.toArray(new Tag[criterias.size()])));
 
 		if (this.requirements.size() != 0)
 		{
 			ArrayList<TagList> req = new ArrayList<TagList>();
-			for (AdvancementCriteria[] r : this.requirements)
+			for (AdvancementCriterion[] r : this.requirements)
 			{
 				TagString[] names = new TagString[r.length];
 				for (int i = 0; i < names.length; ++i)
@@ -334,15 +381,15 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		if (this.hidden) root.addContent(new Element("hidden"));
 
 		Element criteria = new Element("criterias");
-		for (AdvancementCriteria c : this.criteria)
+		for (AdvancementCriterion c : this.criteria)
 			criteria.addContent(c.toXML());
 		root.addContent(criteria);
 
 		Element req = new Element("requirements");
-		for (AdvancementCriteria[] r : this.requirements)
+		for (AdvancementCriterion[] r : this.requirements)
 		{
 			Element r1 = new Element("r");
-			for (AdvancementCriteria c : r)
+			for (AdvancementCriterion c : r)
 				r1.addContent(new Element("c").setText(c.name));
 			req.addContent(r1);
 		}

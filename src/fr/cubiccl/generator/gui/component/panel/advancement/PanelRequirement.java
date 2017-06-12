@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import fr.cubiccl.generator.gameobject.advancements.Advancement;
-import fr.cubiccl.generator.gameobject.advancements.AdvancementCriteria;
+import fr.cubiccl.generator.gameobject.advancements.AdvancementCriterion;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -18,7 +18,7 @@ public class PanelRequirement extends CGPanel implements ActionListener
 {
 	private static final long serialVersionUID = 1524613792193016918L;
 
-	private HashMap<AdvancementCriteria, Boolean> added;
+	private HashMap<AdvancementCriterion, Boolean> added;
 	private Advancement advancement;
 	private CGButton buttonAdd, buttonRemove;
 	private CGList listAdded, listRemaining;
@@ -26,8 +26,8 @@ public class PanelRequirement extends CGPanel implements ActionListener
 	public PanelRequirement(Advancement advancement)
 	{
 		this.advancement = advancement;
-		this.added = new HashMap<AdvancementCriteria, Boolean>();
-		for (AdvancementCriteria criteria : this.advancement.getCriteria())
+		this.added = new HashMap<AdvancementCriterion, Boolean>();
+		for (AdvancementCriterion criteria : this.advancement.getCriteria())
 			this.added.put(criteria, false);
 
 		GridBagConstraints gbc = this.createGridBagLayout();
@@ -56,7 +56,7 @@ public class PanelRequirement extends CGPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonAdd) for (AdvancementCriteria criteria : this.advancement.getCriteria())
+		if (e.getSource() == this.buttonAdd) for (AdvancementCriterion criteria : this.advancement.getCriteria())
 		{
 			if (criteria.name.equals(this.listRemaining.getValue()))
 			{
@@ -64,7 +64,7 @@ public class PanelRequirement extends CGPanel implements ActionListener
 				break;
 			}
 		}
-		else if (e.getSource() == this.buttonRemove) for (AdvancementCriteria criteria : this.advancement.getCriteria())
+		else if (e.getSource() == this.buttonRemove) for (AdvancementCriterion criteria : this.advancement.getCriteria())
 			if (criteria.name.equals(this.listAdded.getValue()))
 			{
 				this.added.put(criteria, false);
@@ -74,20 +74,20 @@ public class PanelRequirement extends CGPanel implements ActionListener
 		this.updateDisplay();
 	}
 
-	public AdvancementCriteria[] generate()
+	public AdvancementCriterion[] generate()
 	{
-		ArrayList<AdvancementCriteria> list = new ArrayList<AdvancementCriteria>();
-		AdvancementCriteria[] criteria = this.advancement.getCriteria();
+		ArrayList<AdvancementCriterion> list = new ArrayList<AdvancementCriterion>();
+		AdvancementCriterion[] criteria = this.advancement.getCriteria();
 		for (int i = 0; i < criteria.length; ++i)
 			if (this.added.get(criteria[i])) list.add(criteria[i]);
-		return list.toArray(new AdvancementCriteria[list.size()]);
+		return list.toArray(new AdvancementCriterion[list.size()]);
 	}
 
-	public void setupFrom(AdvancementCriteria[] criterias)
+	public void setupFrom(AdvancementCriterion[] criterias)
 	{
-		for (AdvancementCriteria criteria : this.advancement.getCriteria())
+		for (AdvancementCriterion criteria : this.advancement.getCriteria())
 			this.added.put(criteria, false);
-		for (AdvancementCriteria c : criterias)
+		for (AdvancementCriterion c : criterias)
 			this.added.put(c, true);
 		this.updateDisplay();
 	}
@@ -95,7 +95,7 @@ public class PanelRequirement extends CGPanel implements ActionListener
 	private void updateDisplay()
 	{
 		ArrayList<String> a = new ArrayList<String>(), r = new ArrayList<String>();
-		for (AdvancementCriteria criteria : this.advancement.getCriteria())
+		for (AdvancementCriterion criteria : this.advancement.getCriteria())
 			if (this.added.get(criteria)) a.add(criteria.name);
 			else r.add(criteria.name);
 

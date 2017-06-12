@@ -16,17 +16,22 @@ import fr.cubiccl.generator.gui.component.panel.advancement.PanelAdvancementCrit
 import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
-public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
+/** Represents a Criterion for an Advancement. */
+public class AdvancementCriterion implements IObjectList<AdvancementCriterion>
 {
 
-	public static AdvancementCriteria createFrom(Element criteria)
+	/** Creates a Criterion from the input XML element.
+	 * 
+	 * @param criterion - The XML element describing the Criterion.
+	 * @return The created Criterion. */
+	public static AdvancementCriterion createFrom(Element criterion)
 	{
-		AdvancementCriteria c = new AdvancementCriteria();
-		c.name = criteria.getAttributeValue("name");
-		c.trigger = CriteriaTrigger.find(criteria.getAttributeValue("trigger"));
+		AdvancementCriterion c = new AdvancementCriterion();
+		c.name = criterion.getAttributeValue("name");
+		c.trigger = CriterionTrigger.find(criterion.getAttributeValue("trigger"));
 
 		ArrayList<Tag> conditions = new ArrayList<Tag>();
-		for (Element condition : criteria.getChildren("condition"))
+		for (Element condition : criterion.getChildren("condition"))
 			conditions.add(NBTParser.parse(condition.getText(), false, true, true));
 
 		for (Tag t : conditions)
@@ -39,31 +44,42 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 		return c;
 	}
 
-	public static AdvancementCriteria createFrom(TagCompound tag)
+	/** Creates a Criterion from the input NBT Tag.
+	 * 
+	 * @param criterion - The NBT Tag describing the Criterion.
+	 * @return The created Criterion. */
+	public static AdvancementCriterion createFrom(TagCompound tag)
 	{
-		AdvancementCriteria c = new AdvancementCriteria();
+		AdvancementCriterion c = new AdvancementCriterion();
 		c.name = tag.id();
-		if (tag.hasTag(Tags.ADVANCEMENT_TRIGGER)) c.trigger = CriteriaTrigger.find(tag.getTag(Tags.ADVANCEMENT_TRIGGER).value());
+		if (tag.hasTag(Tags.ADVANCEMENT_TRIGGER)) c.trigger = CriterionTrigger.find(tag.getTag(Tags.ADVANCEMENT_TRIGGER).value());
 		if (tag.hasTag(Tags.ADVANCEMENT_CONDITIONS)) for (Tag t : tag.getTag(Tags.ADVANCEMENT_CONDITIONS).value())
 			c.conditions.add(t);
 		return c;
 	}
 
+	/** The conditions for this Criterion. */
 	private ArrayList<Tag> conditions;
+	/** This Criterion's name. */
 	public String name;
-	public CriteriaTrigger trigger;
+	/** This Criterion's trigger. */
+	public CriterionTrigger trigger;
 
-	public AdvancementCriteria()
+	public AdvancementCriterion()
 	{
-		this.trigger = CriteriaTrigger.bred_animals;
+		this.trigger = CriterionTrigger.bred_animals;
 		this.conditions = new ArrayList<Tag>();
 	}
 
+	/** Adds a condition to this Criterion.
+	 * 
+	 * @param condition - The condition to add. */
 	public void addCondition(Tag condition)
 	{
 		this.conditions.add(condition);
 	}
 
+	/** Removes all conditions from this Criterion. */
 	public void clearConditions()
 	{
 		this.conditions.clear();
@@ -75,6 +91,7 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 		return new PanelAdvancementCriteria(this);
 	}
 
+	/** Getter for {@link AdvancementCriterion#conditions}. */
 	public Tag[] getConditions()
 	{
 		return this.conditions.toArray(new Tag[this.conditions.size()]);
@@ -92,17 +109,22 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 		return this.name;
 	}
 
+	/** Removes a condition from this Criterion.
+	 * 
+	 * @param condition - The condition to remove. */
 	public void removeCondition(Tag condition)
 	{
 		this.conditions.remove(condition);
 	}
 
+	/** @return This Criterion as an NBT Tag to be generated. */
 	public TagCompound toTag()
 	{
 		return new DefaultCompound(this.name, Tag.UNKNOWN).create(Tags.ADVANCEMENT_TRIGGER.create(this.trigger.id),
 				Tags.ADVANCEMENT_CONDITIONS.create(this.getConditions()));
 	}
 
+	/** @return This Criterion as an XML element to be stored. */
 	public Element toXML()
 	{
 		Element root = new Element("criteria");
@@ -114,7 +136,7 @@ public class AdvancementCriteria implements IObjectList<AdvancementCriteria>
 	}
 
 	@Override
-	public AdvancementCriteria update(CGPanel panel) throws CommandGenerationException
+	public AdvancementCriterion update(CGPanel panel) throws CommandGenerationException
 	{
 		((PanelAdvancementCriteria) panel).update(this);
 		return this;
