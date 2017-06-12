@@ -11,7 +11,6 @@ import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.*;
 import fr.cubiccl.generator.gameobject.advancements.Advancement;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
-import fr.cubiccl.generator.gameobject.speedrun.Speedrun;
 import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.target.Target;
@@ -39,7 +38,6 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 	public static final ObjectSaver<Recipe> recipes = new ObjectSaver<Recipe>(new Text("recipes", false), Recipe.class);
 	@SuppressWarnings("rawtypes")
 	public static ObjectSaver[] savers, hiddenSavers;
-	public static final ObjectSaver<Speedrun> speedruns = new ObjectSaver<Speedrun>(new Text("speedruns", false), Speedrun.class);
 	public static final ObjectSaver<Target> targets = new ObjectSaver<Target>("target", Target.class);
 	public static final ObjectSaver<TradeOffer> trades = new ObjectSaver<TradeOffer>("trade", TradeOffer.class);
 	private static boolean wasLoaded = false;
@@ -50,7 +48,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		savers = new ObjectSaver[]
 		{ attributeModifiers, attributes, blocks, coordinates, effects, enchantments, entities, items, jsonMessages, trades, targets };
 		hiddenSavers = new ObjectSaver[]
-		{ commands, lootTables, speedruns, recipes, advancements };
+		{ commands, lootTables, recipes, advancements };
 		resetAll();
 
 		if (!FileUtils.fileExists("savedObjects.xml"))
@@ -113,7 +111,7 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 			if (shouldLoad(table)) lootTables.addObject(LootTable.createFrom(table));
 			else lootTables.recentObjects.add(table);
 
-		/*if (objects.getChild("speedruns") != null) for (Element speedrun : objects.getChild("speedruns").getChildren()) if (shouldLoad(speedrun)) speedruns.addObject(Speedrun.createFrom(speedrun)); else speedruns.recentObjects.add(speedrun); */
+		/* if (objects.getChild("speedruns") != null) for (Element speedrun : objects.getChild("speedruns").getChildren()) if (shouldLoad(speedrun)) speedruns.addObject(Speedrun.createFrom(speedrun)); else speedruns.recentObjects.add(speedrun); */
 
 		if (objects.getChild("recipes") != null) for (Element recipe : objects.getChild("recipes").getChildren())
 			if (shouldLoad(recipe)) recipes.addObject(Recipe.createFrom(recipe));
@@ -226,7 +224,6 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		root.addContent(trades.toXML("trades"));
 		root.addContent(commands.toXML("commands"));
 		root.addContent(lootTables.toXML("tables"));
-		root.addContent(speedruns.toXML("speedruns"));
 		root.addContent(recipes.toXML("recipes"));
 		root.addContent(advancements.toXML("advancements"));
 

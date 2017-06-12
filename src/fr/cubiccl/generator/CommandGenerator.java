@@ -55,7 +55,7 @@ public class CommandGenerator
 	 * <td>Advancement Generator</td>
 	 * </tr>
 	 * </table> */
-	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, SPEEDRUN = 3, RECIPES = 4, ADVANCEMENTS = 5;
+	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, RECIPES = 4, ADVANCEMENTS = 5;
 	/** The current generator mode.
 	 * 
 	 * @see {@link CommandGenerator#COMMANDS} for possible values. */

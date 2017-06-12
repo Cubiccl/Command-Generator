@@ -9,7 +9,6 @@ import org.jdom2.Element;
 import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
 import fr.cubiccl.generator.gameobject.baseobjects.Item;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gameobject.speedrun.ItemStackS;
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
@@ -206,16 +205,6 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 			}
 		}
 		return new String[0];
-	}
-
-	/** Converts this Item to a speedrun Item Stack.
-	 * 
-	 * @param importance - The importance of the Item. */
-	public ItemStackS forSpeedrun(byte importance)
-	{
-		ItemStackS stack = new ItemStackS(item, this.damage, this.amount, nbt);
-		stack.importance = importance;
-		return stack;
 	}
 
 	/** Getter for {@link ItemStack#damage}. */
