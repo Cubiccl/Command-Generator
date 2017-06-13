@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 
-import fr.cubiccl.generator.gameobject.loottable.LootTableEntry;
-import fr.cubiccl.generator.gameobject.loottable.LootTablePool;
+import fr.cubiccl.generator.gameobject.loottable.LTEntry;
+import fr.cubiccl.generator.gameobject.loottable.LTPool;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.HelpLabel;
@@ -24,7 +24,7 @@ public class PanelPool extends CGPanel implements ActionListener
 	private CGRadioButton buttonRollsExact, buttonRollsRange, buttonBonusExact, buttonBonusRange;
 	private CGEntry entryRollsMin, entryRollsMax, entryBonusMin, entryBonusMax;
 	private PanelConditionList listConditions;
-	private PanelObjectList<LootTableEntry> listEntries;
+	private PanelObjectList<LTEntry> listEntries;
 
 	public PanelPool()
 	{
@@ -62,7 +62,7 @@ public class PanelPool extends CGPanel implements ActionListener
 		++gbc.gridy;
 		this.add(new CGLabel("loottable.entries.description"), gbc);
 		++gbc.gridy;
-		this.add(this.listEntries = new PanelObjectList<LootTableEntry>("loottable.entries", "loottable.entry", LootTableEntry.class), gbc);
+		this.add(this.listEntries = new PanelObjectList<LTEntry>("loottable.entries", "loottable.entry", LTEntry.class), gbc);
 
 		this.buttonRollsExact.addActionListener(this);
 		this.buttonRollsRange.addActionListener(this);
@@ -93,7 +93,7 @@ public class PanelPool extends CGPanel implements ActionListener
 		this.updateDisplay();
 	}
 
-	public LootTablePool generatePool() throws CommandGenerationException
+	public LTPool generatePool() throws CommandGenerationException
 	{
 		int rollsMin = 0, rollsMax = -1;
 		double bonusRollsMin = 0, bonusRollsMax = -1;
@@ -115,10 +115,10 @@ public class PanelPool extends CGPanel implements ActionListener
 			bonusRollsMax = Double.parseDouble(this.entryBonusMax.getText());
 		}
 
-		return new LootTablePool(this.listConditions.values(), rollsMin, rollsMax, bonusRollsMin, bonusRollsMax, this.listEntries.values());
+		return new LTPool(this.listConditions.values(), rollsMin, rollsMax, bonusRollsMin, bonusRollsMax, this.listEntries.values());
 	}
 
-	public void setupFrom(LootTablePool pool)
+	public void setupFrom(LTPool pool)
 	{
 		if (pool.rollsMax != -1)
 		{

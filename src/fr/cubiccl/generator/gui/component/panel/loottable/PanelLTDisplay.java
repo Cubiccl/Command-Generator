@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 
 import fr.cubi.cubigui.DisplayUtils;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
-import fr.cubiccl.generator.gameobject.loottable.LootTablePool;
+import fr.cubiccl.generator.gameobject.loottable.LTPool;
 
 public class PanelLTDisplay extends JPanel
 {
@@ -136,7 +136,7 @@ public class PanelLTDisplay extends JPanel
 
 		for (int i = 0; i < this.lootTable.size(); ++i)
 		{
-			LootTablePool pool = this.lootTable.get(i);
+			LTPool pool = this.lootTable.get(i);
 			this.pools.add(new TableElement(pool.getName(i), pool.entries.length));
 			for (int j = 0; j < pool.entries.length; ++j)
 				this.entries.add(new TableElement(pool.entries[j].name(), pool.entries[j].getIcon()));

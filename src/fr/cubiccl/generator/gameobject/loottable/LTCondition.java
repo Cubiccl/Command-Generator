@@ -17,9 +17,11 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
-public class LootTableCondition implements IObjectList<LootTableCondition>
+/** Represents Conditions for Loot Tables. */
+public class LTCondition implements IObjectList<LTCondition>
 {
 
+	/** Condition types. */
 	public static enum Condition
 	{
 		ENTITY_PROPERTIES("entity_properties"),
@@ -28,13 +30,16 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 		RANDOM_CHANCE("random_chance"),
 		RANDOM_CHANCE_WITH_LOOTING("random_chance_with_looting");
 
-		public static Condition get(String name)
+		/** @param name - Name of the Condition.
+		 * @return The Condition with the input name. */
+		public static Condition find(String name)
 		{
 			for (Condition c : values())
 				if (c.name.equals(name)) return c;
 			return null;
 		}
 
+		/** This Condition's name. */
 		public final String name;
 
 		private Condition(String name)
@@ -42,43 +47,54 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 			this.name = name;
 		}
 
+		/** @return This Condition's translated name. */
 		public Text translate()
 		{
 			return new Text("lt_condition." + this.name);
 		}
 	}
 
-	public static LootTableCondition createFrom(Element condition)
+	/** Creates a Loot Table Condition from the input XML element.
+	 * 
+	 * @param condition - The XML element describing the Loot Table Condition.
+	 * @return The created Loot Table Condition. */
+	public static LTCondition createFrom(Element condition)
 	{
-		LootTableCondition c = new LootTableCondition(Condition.get(condition.getChildText("id")));
+		LTCondition c = new LTCondition(Condition.find(condition.getChildText("id")));
 		c.tags = ((TagCompound) NBTParser.parse(condition.getChildText("nbt"), true, false, true)).value();
 		return c;
 	}
 
-	public static LootTableCondition createFrom(TagCompound tag)
+	/** Creates a Loot Table Condition from the input NBT Tag.
+	 * 
+	 * @param condition - The NBT Tag describing the Loot Table Condition.
+	 * @return The created Loot Table Condition. */
+	public static LTCondition createFrom(TagCompound tag)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		Condition c = null;
 
 		for (Tag t : tag.value())
 		{
-			if (t.id().equals(Tags.LOOTTABLE_CONDITION.id())) c = Condition.get(((TagString) t).value());
+			if (t.id().equals(Tags.LOOTTABLE_CONDITION.id())) c = Condition.find(((TagString) t).value());
 			else tags.add(t);
 		}
 
 		if (c == null) return null;
-		return new LootTableCondition(c, tags.toArray(new Tag[tags.size()]));
+		return new LTCondition(c, tags.toArray(new Tag[tags.size()]));
 	}
 
+	/** This Condition's type. */
 	public Condition condition;
+	/** The NBT Tags describing this Condition. */
 	public Tag[] tags;
 
-	public LootTableCondition()
+	public LTCondition()
 	{
 		this(Condition.values()[0]);
 	}
 
-	public LootTableCondition(Condition condition, Tag... tags)
+	public LTCondition(Condition condition, Tag... tags)
 	{
 		this.condition = condition;
 		this.tags = tags;
@@ -123,6 +139,8 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 		return display;
 	}
 
+	/** @param container - The Compound to store this Condition in.
+	 * @return This Condition as an NBT Tag to be generated. */
 	public TagCompound toTag(TemplateCompound container)
 	{
 		Tag[] output = new Tag[this.tags.length + 1];
@@ -134,6 +152,7 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 		return container.create(output);
 	}
 
+	/** @return This Condition as an XML element to be stored. */
 	public Element toXML()
 	{
 		return new Element("condition").addContent(new Element("id").setText(this.condition.name)).addContent(
@@ -141,14 +160,15 @@ public class LootTableCondition implements IObjectList<LootTableCondition>
 	}
 
 	@Override
-	public LootTableCondition update(CGPanel panel) throws CommandGenerationException
+	public LTCondition update(CGPanel panel) throws CommandGenerationException
 	{
-		LootTableCondition c = ((PanelCondition) panel).generate();
+		LTCondition c = ((PanelCondition) panel).generate();
 		this.condition = c.condition;
 		this.tags = c.tags;
 		return this;
 	}
 
+	/** @return <code>true</code> if this Condition is verified. Only RNG is checked. */
 	public boolean verify()
 	{
 		if (this.condition == Condition.RANDOM_CHANCE || this.condition == Condition.RANDOM_CHANCE_WITH_LOOTING)

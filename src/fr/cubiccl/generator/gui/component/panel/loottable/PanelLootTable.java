@@ -6,19 +6,19 @@ import java.awt.GridBagConstraints;
 import javax.swing.SwingConstants;
 
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
-import fr.cubiccl.generator.gameobject.loottable.LootTablePool;
+import fr.cubiccl.generator.gameobject.loottable.LTPool;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.ListListener;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 import fr.cubiccl.generator.utils.Text;
 
-public class PanelLootTable extends CGPanel implements ListListener<LootTablePool>
+public class PanelLootTable extends CGPanel implements ListListener<LTPool>
 {
 	private static final long serialVersionUID = -8542900975171049623L;
 
 	private PanelLTDisplay display;
-	private PanelObjectList<LootTablePool> listPools;
+	private PanelObjectList<LTPool> listPools;
 	public final LootTable lootTable;
 
 	public PanelLootTable(LootTable lootTable)
@@ -35,7 +35,7 @@ public class PanelLootTable extends CGPanel implements ListListener<LootTablePoo
 		++gbc.gridy;
 		this.add(new CGLabel("loottable.pools.description"), gbc);
 		++gbc.gridy;
-		this.add(this.listPools = new PanelObjectList<LootTablePool>("loottable.pools", "loottable.pool", LootTablePool.class), gbc);
+		this.add(this.listPools = new PanelObjectList<LTPool>("loottable.pools", "loottable.pool", LTPool.class), gbc);
 		++gbc.gridy;
 		gbc.fill = GridBagConstraints.NONE;
 		this.add(this.display = new PanelLTDisplay(this.lootTable), gbc);
@@ -45,21 +45,21 @@ public class PanelLootTable extends CGPanel implements ListListener<LootTablePoo
 	}
 
 	@Override
-	public void onAddition(int index, LootTablePool object)
+	public void onAddition(int index, LTPool object)
 	{
 		this.lootTable.add(object);
 		this.display.update();
 	}
 
 	@Override
-	public void onChange(int index, LootTablePool object)
+	public void onChange(int index, LTPool object)
 	{
 		this.lootTable.set(index, object);
 		this.display.update();
 	}
 
 	@Override
-	public void onDeletion(int index, LootTablePool object)
+	public void onDeletion(int index, LTPool object)
 	{
 		this.lootTable.remove(object);
 		this.display.update();

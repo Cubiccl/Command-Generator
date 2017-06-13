@@ -20,40 +20,74 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class LootTableEntry implements IObjectList<LootTableEntry>
+/** Represents an Entry for Loot Tables. */
+public class LTEntry implements IObjectList<LTEntry>
 {
+	/** Identifiers for Entry types.<br />
+	 * <br />
+	 * <table border="1">
+	 * <tr>
+	 * <td>ID</td>
+	 * <td>Variable</td>
+	 * <td>Mode</td>
+	 * </tr>
+	 * <tr>
+	 * <td>0</td>
+	 * <td>ITEM</td>
+	 * <td>Item</td>
+	 * </tr>
+	 * <tr>
+	 * <td>1</td>
+	 * <td>LOOT_TABLE</td>
+	 * <td>Path to another Loot Table</td>
+	 * </tr>
+	 * <tr>
+	 * <td>2</td>
+	 * <td>EMPTY</td>
+	 * <td>Nothing is generated</td>
+	 * </tr>
+	 * </table> */
 	public static final byte ITEM = 0, LOOT_TABLE = 1, EMPTY = 2;
+	/** Names for {@link LTEntry#ITEM Entry types}. */
 	public static final String[] TYPES =
 	{ "item", "loot_table", "empty" };
 
-	public static LootTableEntry createFrom(Element entry)
+	/** Creates a Loot Table Entry from the input XML element.
+	 * 
+	 * @param entry - The XML element describing the Loot Table Entry.
+	 * @return The created Loot Table Entry. */
+	public static LTEntry createFrom(Element entry)
 	{
-		LootTableEntry e = new LootTableEntry();
+		LTEntry e = new LTEntry();
 		e.name = entry.getChildText("name");
 		e.type = Byte.parseByte(entry.getChildText("type"));
 		e.weight = Integer.parseInt(entry.getChildText("weight"));
 		e.quality = Integer.parseInt(entry.getChildText("quality"));
 
-		ArrayList<LootTableCondition> conditions = new ArrayList<LootTableCondition>();
+		ArrayList<LTCondition> conditions = new ArrayList<LTCondition>();
 		for (Element condition : entry.getChild("conditions").getChildren())
-			conditions.add(LootTableCondition.createFrom(condition));
-		e.conditions = conditions.toArray(new LootTableCondition[conditions.size()]);
+			conditions.add(LTCondition.createFrom(condition));
+		e.conditions = conditions.toArray(new LTCondition[conditions.size()]);
 
-		ArrayList<LootTableFunction> functions = new ArrayList<LootTableFunction>();
+		ArrayList<LTFunction> functions = new ArrayList<LTFunction>();
 		for (Element function : entry.getChild("functions").getChildren())
-			functions.add(LootTableFunction.createFrom(function));
-		e.functions = functions.toArray(new LootTableFunction[functions.size()]);
+			functions.add(LTFunction.createFrom(function));
+		e.functions = functions.toArray(new LTFunction[functions.size()]);
 
 		return e;
 	}
 
-	public static LootTableEntry createFrom(TagCompound tag)
+	/** Creates a Loot Table Entry from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Loot Table Entry.
+	 * @return The created Loot Table Entry. */
+	public static LTEntry createFrom(TagCompound tag)
 	{
 		String name = null;
 		int weight = -1, quality = -1;
 		byte type = EMPTY;
-		ArrayList<LootTableCondition> conditions = new ArrayList<LootTableCondition>();
-		ArrayList<LootTableFunction> functions = new ArrayList<LootTableFunction>();
+		ArrayList<LTCondition> conditions = new ArrayList<LTCondition>();
+		ArrayList<LTFunction> functions = new ArrayList<LTFunction>();
 
 		if (tag.hasTag(Tags.LOOTTABLE_ENTRY_TYPE))
 		{
@@ -70,7 +104,7 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 			TagList t = tag.getTag(Tags.LOOTTABLE_CONDITIONS);
 			for (Tag con : t.value())
 			{
-				LootTableCondition c = LootTableCondition.createFrom((TagCompound) con);
+				LTCondition c = LTCondition.createFrom((TagCompound) con);
 				if (c != null) conditions.add(c);
 			}
 		}
@@ -79,28 +113,37 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 			TagList t = tag.getTag(Tags.LOOTTABLE_FUNCTIONS);
 			for (Tag fun : t.value())
 			{
-				LootTableFunction f = LootTableFunction.createFrom((TagCompound) fun);
+				LTFunction f = LTFunction.createFrom((TagCompound) fun);
 				if (f != null) functions.add(f);
 			}
 		}
 
 		if (name == null && type != EMPTY) return null;
-		return new LootTableEntry(conditions.toArray(new LootTableCondition[conditions.size()]), type, name, functions.toArray(new LootTableFunction[functions
-				.size()]), weight, quality);
+		return new LTEntry(conditions.toArray(new LTCondition[conditions.size()]), type, name, functions.toArray(new LTFunction[functions.size()]),
+				weight, quality);
 	}
 
-	public LootTableCondition[] conditions;
-	private LootTableFunction[] functions;
+	/** This Entry's Conditions. */
+	public LTCondition[] conditions;
+	/** This Entry's Functions. */
+	private LTFunction[] functions;
+	/** This Entry's value. */
 	public String name;
+	/** This Entry's quality. */
+	public int quality;
+	/** This Entry's type.
+	 * 
+	 * @see LTEntry#ITEM */
 	public byte type;
-	public int weight, quality;
+	/** This Entry's weight. */
+	public int weight;
 
-	public LootTableEntry()
+	public LTEntry()
 	{
-		this(new LootTableCondition[0], (byte) 0, "", new LootTableFunction[0], 0, 0);
+		this(new LTCondition[0], (byte) 0, "", new LTFunction[0], 0, 0);
 	}
 
-	public LootTableEntry(LootTableCondition[] conditions, byte type, String name, LootTableFunction[] functions, int weight, int quality)
+	public LTEntry(LTCondition[] conditions, byte type, String name, LTFunction[] functions, int weight, int quality)
 	{
 		this.conditions = conditions;
 		this.type = type;
@@ -118,6 +161,7 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		return p;
 	}
 
+	/** @return The Item generated by this Entry. */
 	public ItemStack generateItem()
 	{
 		if (this.type == EMPTY) return null;
@@ -125,7 +169,7 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		ItemStack item = new ItemStack();
 		item.setItem(ObjectRegistry.items.find(this.name));
 
-		for (LootTableFunction function : this.functions)
+		for (LTFunction function : this.functions)
 			if (function.verifyConditions()) function.applyTo(item);
 
 		return item;
@@ -137,11 +181,13 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		return new CGLabel(new Text(this.name, false));
 	}
 
-	public LootTableFunction[] getFunctions()
+	/** Getter for {@link LTEntry#functions}. */
+	public LTFunction[] getFunctions()
 	{
 		return this.functions;
 	}
 
+	/** @return This Entry's Item's texture. If not an Item, returns <code>null</code>. */
 	public BufferedImage getIcon()
 	{
 		if (this.type != ITEM) return null;
@@ -154,29 +200,33 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		return this.name;
 	}
 
+	/** @return This Entry's Item's name. If not an Item, returns this Entry's name. */
 	public String name()
 	{
 		if (this.type != ITEM) return this.name;
 		return ObjectRegistry.items.find(this.name).name().toString();
 	}
 
-	public void setFunctions(LootTableFunction[] functions)
+	/** Setter for {@link LTEntry#functions}. */
+	public void setFunctions(LTFunction[] functions)
 	{
-		ArrayList<LootTableFunction> f = new ArrayList<LootTableFunction>();
-		for (LootTableFunction lootTableFunction : functions)
+		ArrayList<LTFunction> f = new ArrayList<LTFunction>();
+		for (LTFunction lootTableFunction : functions)
 			f.add(lootTableFunction);
-		f.sort(new Comparator<LootTableFunction>()
+		f.sort(new Comparator<LTFunction>()
 		{
 
 			@Override
-			public int compare(LootTableFunction o1, LootTableFunction o2)
+			public int compare(LTFunction o1, LTFunction o2)
 			{
 				return o1.function.compareToFunction(o2.function);
 			}
 		});
-		this.functions = f.toArray(new LootTableFunction[f.size()]);
+		this.functions = f.toArray(new LTFunction[f.size()]);
 	}
 
+	/** @param container - The Compound to store this Entry in.
+	 * @return This Entry as an NBT Tag to be generated. */
 	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
@@ -199,14 +249,15 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
+	/** @return This Entry as an XML element to be stored. */
 	public Element toXML()
 	{
 		Element conditions = new Element("conditions");
-		for (LootTableCondition condition : this.conditions)
+		for (LTCondition condition : this.conditions)
 			conditions.addContent(condition.toXML());
 
 		Element functions = new Element("functions");
-		for (LootTableFunction function : this.functions)
+		for (LTFunction function : this.functions)
 			functions.addContent(function.toXML());
 
 		Element root = new Element("pool");
@@ -220,9 +271,9 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 	}
 
 	@Override
-	public LootTableEntry update(CGPanel panel) throws CommandGenerationException
+	public LTEntry update(CGPanel panel) throws CommandGenerationException
 	{
-		LootTableEntry e = ((PanelEntry) panel).generate();
+		LTEntry e = ((PanelEntry) panel).generate();
 		this.conditions = e.conditions;
 		this.functions = e.functions;
 		this.name = e.name;
@@ -232,9 +283,10 @@ public class LootTableEntry implements IObjectList<LootTableEntry>
 		return this;
 	}
 
+	/** @return <code>true</code> if this Entry's {@link LTEntry#conditions Conditions} are verified. */
 	public boolean verifyConditions()
 	{
-		for (LootTableCondition condition : this.conditions)
+		for (LTCondition condition : this.conditions)
 			if (!condition.verify()) return false;
 		return true;
 	}

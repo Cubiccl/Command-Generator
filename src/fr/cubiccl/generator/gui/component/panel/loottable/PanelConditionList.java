@@ -2,21 +2,21 @@ package fr.cubiccl.generator.gui.component.panel.loottable;
 
 import java.util.ArrayList;
 
-import fr.cubiccl.generator.gameobject.loottable.LootTableCondition;
-import fr.cubiccl.generator.gameobject.loottable.LootTableCondition.Condition;
+import fr.cubiccl.generator.gameobject.loottable.LTCondition;
+import fr.cubiccl.generator.gameobject.loottable.LTCondition.Condition;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 
-public class PanelConditionList extends PanelObjectList<LootTableCondition>
+public class PanelConditionList extends PanelObjectList<LTCondition>
 {
 	private static final long serialVersionUID = -4983985911988135738L;
 
 	public PanelConditionList(String titleID, String popupTitleID, Object... properties)
 	{
-		super(titleID, popupTitleID, LootTableCondition.class, properties);
+		super(titleID, popupTitleID, LTCondition.class, properties);
 	}
 
 	@Override
-	public void add(LootTableCondition object)
+	public void add(LTCondition object)
 	{
 		super.add(object);
 		this.onListChange();
@@ -32,7 +32,7 @@ public class PanelConditionList extends PanelObjectList<LootTableCondition>
 	private void onListChange()
 	{
 		ArrayList<Condition> conditions = new ArrayList<Condition>();
-		for (LootTableCondition c : this.values())
+		for (LTCondition c : this.values())
 			conditions.add(c.condition);
 
 		this.properties.set("conditions", conditions);
@@ -40,7 +40,7 @@ public class PanelConditionList extends PanelObjectList<LootTableCondition>
 	}
 
 	@Override
-	public void set(int index, LootTableCondition object)
+	public void set(int index, LTCondition object)
 	{
 		super.set(index, object);
 		this.onListChange();

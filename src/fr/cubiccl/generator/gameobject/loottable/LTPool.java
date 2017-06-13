@@ -22,22 +22,27 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
-public class LootTablePool implements IObjectList<LootTablePool>
+/** Represents a Pool in a Loot Table. */
+public class LTPool implements IObjectList<LTPool>
 {
 
-	public static LootTablePool createFrom(Element pool)
+	/** Creates a Loot Table Pool from the input XML element.
+	 * 
+	 * @param pool - The XML element describing the Loot Table Pool.
+	 * @return The created Loot Table Pool. */
+	public static LTPool createFrom(Element pool)
 	{
-		LootTablePool p = new LootTablePool();
+		LTPool p = new LTPool();
 
-		ArrayList<LootTableCondition> conditions = new ArrayList<LootTableCondition>();
+		ArrayList<LTCondition> conditions = new ArrayList<LTCondition>();
 		for (Element condition : pool.getChild("conditions").getChildren())
-			conditions.add(LootTableCondition.createFrom(condition));
-		p.conditions = conditions.toArray(new LootTableCondition[conditions.size()]);
+			conditions.add(LTCondition.createFrom(condition));
+		p.conditions = conditions.toArray(new LTCondition[conditions.size()]);
 
-		ArrayList<LootTableEntry> entries = new ArrayList<LootTableEntry>();
+		ArrayList<LTEntry> entries = new ArrayList<LTEntry>();
 		for (Element entry : pool.getChild("entries").getChildren())
-			entries.add(LootTableEntry.createFrom(entry));
-		p.entries = entries.toArray(new LootTableEntry[entries.size()]);
+			entries.add(LTEntry.createFrom(entry));
+		p.entries = entries.toArray(new LTEntry[entries.size()]);
 
 		if (pool.getChild("rolls") != null) p.rollsMin = Integer.parseInt(pool.getChildText("rolls"));
 		else
@@ -55,12 +60,16 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		return p;
 	}
 
-	public static LootTablePool createFrom(TagCompound tag)
+	/** Creates a Loot Table Pool from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Loot Table Pool.
+	 * @return The created Loot Table Pool. */
+	public static LTPool createFrom(TagCompound tag)
 	{
 		float bonusMin = 0, bonusMax = -1;
 		int min = 0, max = -1;
-		ArrayList<LootTableCondition> conditions = new ArrayList<LootTableCondition>();
-		ArrayList<LootTableEntry> entries = new ArrayList<LootTableEntry>();
+		ArrayList<LTCondition> conditions = new ArrayList<LTCondition>();
+		ArrayList<LTEntry> entries = new ArrayList<LTEntry>();
 
 		TestValue v = new TestValue(Tags.LOOTTABLE_ROLLS, Tags.LOOTTABLE_ROLLS_RANGE);
 		v.findValue(tag);
@@ -77,7 +86,7 @@ public class LootTablePool implements IObjectList<LootTablePool>
 			TagList t = tag.getTag(Tags.LOOTTABLE_CONDITIONS);
 			for (Tag con : t.value())
 			{
-				LootTableCondition c = LootTableCondition.createFrom((TagCompound) con);
+				LTCondition c = LTCondition.createFrom((TagCompound) con);
 				if (c != null) conditions.add(c);
 			}
 		}
@@ -86,31 +95,39 @@ public class LootTablePool implements IObjectList<LootTablePool>
 			TagList t = tag.getTag(Tags.LOOTTABLE_ENTRIES);
 			for (Tag ent : t.value())
 			{
-				LootTableEntry e = LootTableEntry.createFrom((TagCompound) ent);
+				LTEntry e = LTEntry.createFrom((TagCompound) ent);
 				if (e != null) entries.add(e);
 			}
 		}
 
-		return new LootTablePool(conditions.toArray(new LootTableCondition[conditions.size()]), min, max, bonusMin, bonusMax,
-				entries.toArray(new LootTableEntry[entries.size()]));
+		return new LTPool(conditions.toArray(new LTCondition[conditions.size()]), min, max, bonusMin, bonusMax,
+				entries.toArray(new LTEntry[entries.size()]));
 	}
 
-	public double bonusRollsMin, bonusRollsMax;
-	public LootTableCondition[] conditions;
-	public LootTableEntry[] entries;
-	public int rollsMin, rollsMax;
+	/** The maximum number of bonus rolls for this Pool. If -1, the value is exact and is equal to {@link LTPool#bonusRollsMin}. */
+	public double bonusRollsMax;
+	/** The minimum number of bonus rolls for this Pool. The exact number if {@link LTPool#bonusRollsMax} is <code>-1</code>. */
+	public double bonusRollsMin;
+	/** This Pool's conditions. */
+	public LTCondition[] conditions;
+	/** This Pool's entries. */
+	public LTEntry[] entries;
+	/** The maximum number of rolls for this Pool. If -1, the value is exact and is equal to {@link LTPool#rollsMin}. */
+	public int rollsMax;
+	/** The minimum number of rolls for this Pool. The exact number if {@link LTPool#rollsMax} is <code>-1</code>. */
+	public int rollsMin;
 
-	public LootTablePool()
+	public LTPool()
 	{
-		this(new LootTableCondition[0], 0, 0, new LootTableEntry[0]);
+		this(new LTCondition[0], 0, 0, new LTEntry[0]);
 	}
 
-	public LootTablePool(LootTableCondition[] conditions, int rolls, double bonusRolls, LootTableEntry[] entries)
+	public LTPool(LTCondition[] conditions, int rolls, double bonusRolls, LTEntry[] entries)
 	{
 		this(conditions, rolls, -1, bonusRolls, -1, entries);
 	}
 
-	public LootTablePool(LootTableCondition[] conditions, int rollsMin, int rollsMax, double bonusRollsMin, double bonusRollsMax, LootTableEntry[] entries)
+	public LTPool(LTCondition[] conditions, int rollsMin, int rollsMax, double bonusRollsMin, double bonusRollsMax, LTEntry[] entries)
 	{
 		this.conditions = conditions;
 		this.rollsMin = rollsMin;
@@ -128,6 +145,7 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		return p;
 	}
 
+	/** @return A list of Items generated by this Pool. */
 	public Set<ItemStack> generateItems()
 	{
 		HashSet<ItemStack> items = new HashSet<ItemStack>();
@@ -135,13 +153,13 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		int rolls = this.rollsMin;
 		if (this.rollsMax != -1) rolls = new Random().nextInt(this.rollsMax - this.rollsMin + 1) + this.rollsMin;
 
-		ArrayList<LootTableEntry> entries = new ArrayList<LootTableEntry>(); // Entries sorted by weight
-		for (LootTableEntry e : this.entries)
+		ArrayList<LTEntry> entries = new ArrayList<LTEntry>(); // Entries sorted by weight
+		for (LTEntry e : this.entries)
 			entries.add(e);
-		entries.sort(new Comparator<LootTableEntry>()
+		entries.sort(new Comparator<LTEntry>()
 		{
 			@Override
-			public int compare(LootTableEntry o1, LootTableEntry o2)
+			public int compare(LTEntry o1, LTEntry o2)
 			{
 				return o1.weight - o2.weight;
 			}
@@ -149,10 +167,10 @@ public class LootTablePool implements IObjectList<LootTablePool>
 
 		for (int i = 0; i < rolls; ++i)
 		{
-			LootTableEntry entry = null;
+			LTEntry entry = null;
 
-			for (LootTableEntry e : entries)
-				if (e.type != LootTableEntry.LOOT_TABLE && e.verifyConditions())
+			for (LTEntry e : entries)
+				if (e.type != LTEntry.LOOT_TABLE && e.verifyConditions())
 				{
 					entry = e;
 					break;
@@ -185,6 +203,8 @@ public class LootTablePool implements IObjectList<LootTablePool>
 				Integer.toString(this.conditions.length)), new Replacement("<rolls>", rolls)).toString();
 	}
 
+	/** @param container - The Compound to store this Pool in.
+	 * @return This Pool as an NBT Tag to be generated. */
 	public TagCompound toTag(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
@@ -214,14 +234,15 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		return container.create(tags.toArray(new Tag[tags.size()]));
 	}
 
+	/** @return This Pool as an XML element to be stored. */
 	public Element toXML()
 	{
 		Element conditions = new Element("conditions");
-		for (LootTableCondition condition : this.conditions)
+		for (LTCondition condition : this.conditions)
 			conditions.addContent(condition.toXML());
 
 		Element entries = new Element("entries");
-		for (LootTableEntry entry : this.entries)
+		for (LTEntry entry : this.entries)
 			entries.addContent(entry.toXML());
 
 		Element root = new Element("pool");
@@ -244,9 +265,9 @@ public class LootTablePool implements IObjectList<LootTablePool>
 	}
 
 	@Override
-	public LootTablePool update(CGPanel panel) throws CommandGenerationException
+	public LTPool update(CGPanel panel) throws CommandGenerationException
 	{
-		LootTablePool pool = ((PanelPool) panel).generatePool();
+		LTPool pool = ((PanelPool) panel).generatePool();
 		this.bonusRollsMin = pool.bonusRollsMin;
 		this.bonusRollsMax = pool.bonusRollsMax;
 		this.conditions = pool.conditions;
@@ -256,9 +277,10 @@ public class LootTablePool implements IObjectList<LootTablePool>
 		return this;
 	}
 
+	/** @return Verifies this Pool's {@link LTPool#conditions conditions} for Item generation. */
 	public boolean verifyConditions()
 	{
-		for (LootTableCondition condition : this.conditions)
+		for (LTCondition condition : this.conditions)
 			if (!condition.verify()) return false;
 		return true;
 	}

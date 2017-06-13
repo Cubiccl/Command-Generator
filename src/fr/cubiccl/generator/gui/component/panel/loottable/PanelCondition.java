@@ -8,8 +8,8 @@ import java.util.ArrayList;
 
 import javax.swing.ButtonGroup;
 
-import fr.cubiccl.generator.gameobject.loottable.LootTableCondition;
-import fr.cubiccl.generator.gameobject.loottable.LootTableCondition.Condition;
+import fr.cubiccl.generator.gameobject.loottable.LTCondition;
+import fr.cubiccl.generator.gameobject.loottable.LTCondition.Condition;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagNumber;
@@ -155,7 +155,7 @@ public class PanelCondition extends CGPanel implements ActionListener
 		this.updateDisplay();
 	}
 
-	public LootTableCondition generate() throws CommandGenerationException
+	public LTCondition generate() throws CommandGenerationException
 	{
 		Condition condition = this.selectedCondition();
 		ArrayList<Tag> tags = new ArrayList<Tag>();
@@ -183,7 +183,7 @@ public class PanelCondition extends CGPanel implements ActionListener
 			}
 		}
 
-		return new LootTableCondition(condition, tags.toArray(new Tag[tags.size()]));
+		return new LTCondition(condition, tags.toArray(new Tag[tags.size()]));
 	}
 
 	private Condition selectedCondition()
@@ -194,7 +194,7 @@ public class PanelCondition extends CGPanel implements ActionListener
 		return condition;
 	}
 
-	public void setupFrom(LootTableCondition condition)
+	public void setupFrom(LTCondition condition)
 	{
 		this.comboboxCondition.setSelectedItem(condition.condition.translate().toString());
 		this.updateDisplay();

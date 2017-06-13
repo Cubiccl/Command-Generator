@@ -6,8 +6,8 @@ import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
 
-import fr.cubiccl.generator.gameobject.loottable.LootTableEntry;
-import fr.cubiccl.generator.gameobject.loottable.LootTableFunction;
+import fr.cubiccl.generator.gameobject.loottable.LTEntry;
+import fr.cubiccl.generator.gameobject.loottable.LTFunction;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.button.CGRadioButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
@@ -26,7 +26,7 @@ public class PanelEntry extends CGPanel implements ActionListener
 	private CGEntry entryTable, entryWeight, entryQuality;
 	private PanelItem item;
 	private PanelConditionList listConditions;
-	private PanelObjectList<LootTableFunction> listFunctions;
+	private PanelObjectList<LTFunction> listFunctions;
 
 	public PanelEntry()
 	{
@@ -51,7 +51,7 @@ public class PanelEntry extends CGPanel implements ActionListener
 		++gbc.gridy;
 		this.add(new CGLabel("loottable.functions.description"), gbc);
 		++gbc.gridy;
-		this.add(this.listFunctions = new PanelObjectList<LootTableFunction>("loottable.functions", "loottable.function", LootTableFunction.class), gbc);
+		this.add(this.listFunctions = new PanelObjectList<LTFunction>("loottable.functions", "loottable.function", LTFunction.class), gbc);
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(this.buttonItem);
@@ -74,7 +74,7 @@ public class PanelEntry extends CGPanel implements ActionListener
 		this.updateDisplay();
 	}
 
-	public LootTableEntry generate() throws CommandGenerationException
+	public LTEntry generate() throws CommandGenerationException
 	{
 		this.entryWeight.checkValue(CGEntry.INTEGER);
 		this.entryQuality.checkValue(CGEntry.INTEGER);
@@ -85,16 +85,16 @@ public class PanelEntry extends CGPanel implements ActionListener
 			this.entryTable.checkValue(CGEntry.STRING);
 			name = this.entryTable.getText();
 		}
-		return new LootTableEntry(this.listConditions.values(), this.buttonItem.isSelected() ? LootTableEntry.ITEM : LootTableEntry.LOOT_TABLE, name,
+		return new LTEntry(this.listConditions.values(), this.buttonItem.isSelected() ? LTEntry.ITEM : LTEntry.LOOT_TABLE, name,
 				this.listFunctions.values(), Integer.parseInt(this.entryWeight.getText()), Integer.parseInt(this.entryQuality.getText()));
 	}
 
-	public void setupFrom(LootTableEntry entry)
+	public void setupFrom(LTEntry entry)
 	{
-		this.buttonItem.setSelected(entry.type == LootTableEntry.ITEM);
-		this.buttonTable.setSelected(entry.type == LootTableEntry.LOOT_TABLE);
+		this.buttonItem.setSelected(entry.type == LTEntry.ITEM);
+		this.buttonTable.setSelected(entry.type == LTEntry.LOOT_TABLE);
 
-		if (entry.type == LootTableEntry.ITEM) this.item.setItem(ObjectRegistry.items.find(entry.name));
+		if (entry.type == LTEntry.ITEM) this.item.setItem(ObjectRegistry.items.find(entry.name));
 		else this.entryTable.setText(entry.name);
 
 		this.entryWeight.setText(Integer.toString(entry.weight));
