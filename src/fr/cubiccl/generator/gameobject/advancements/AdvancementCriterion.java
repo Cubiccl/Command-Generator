@@ -10,6 +10,7 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
+import fr.cubiccl.generator.gameobject.utils.XMLSaveable;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.advancement.PanelAdvancementCriteria;
@@ -17,32 +18,8 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
 /** Represents a Criterion for an Advancement. */
-public class AdvancementCriterion implements IObjectList<AdvancementCriterion>
+public class AdvancementCriterion implements IObjectList<AdvancementCriterion>, XMLSaveable<AdvancementCriterion>
 {
-
-	/** Creates a Criterion from the input XML element.
-	 * 
-	 * @param criterion - The XML element describing the Criterion.
-	 * @return The created Criterion. */
-	public static AdvancementCriterion createFrom(Element criterion)
-	{
-		AdvancementCriterion c = new AdvancementCriterion();
-		c.name = criterion.getAttributeValue("name");
-		c.trigger = CriterionTrigger.find(criterion.getAttributeValue("trigger"));
-
-		ArrayList<Tag> conditions = new ArrayList<Tag>();
-		for (Element condition : criterion.getChildren("condition"))
-			conditions.add(NBTParser.parse(condition.getText(), false, true, true));
-
-		for (Tag t : conditions)
-		{
-			if (c.trigger.conditions.contains(t.template)) c.conditions.add(t);
-			else for (Tag tag : c.trigger.findContainedTags(t))
-				c.conditions.add(tag);
-		}
-
-		return c;
-	}
 
 	/** Creates a Criterion from the input NBT Tag.
 	 * 
@@ -91,6 +68,26 @@ public class AdvancementCriterion implements IObjectList<AdvancementCriterion>
 		return new PanelAdvancementCriteria(this);
 	}
 
+	@Override
+	public AdvancementCriterion fromXML(Element xml)
+	{
+		this.name = xml.getAttributeValue("name");
+		this.trigger = CriterionTrigger.find(xml.getAttributeValue("trigger"));
+
+		ArrayList<Tag> conditions = new ArrayList<Tag>();
+		for (Element condition : xml.getChildren("condition"))
+			conditions.add(NBTParser.parse(condition.getText(), false, true, true));
+
+		for (Tag t : conditions)
+		{
+			if (this.trigger.conditions.contains(t.template)) this.conditions.add(t);
+			else for (Tag tag : this.trigger.findContainedTags(t))
+				this.conditions.add(tag);
+		}
+
+		return this;
+	}
+
 	/** Getter for {@link AdvancementCriterion#conditions}. */
 	public Tag[] getConditions()
 	{
@@ -124,7 +121,7 @@ public class AdvancementCriterion implements IObjectList<AdvancementCriterion>
 				Tags.ADVANCEMENT_CONDITIONS.create(this.getConditions()));
 	}
 
-	/** @return This Criterion as an XML element to be stored. */
+	@Override
 	public Element toXML()
 	{
 		Element root = new Element("criteria");

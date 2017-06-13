@@ -22,7 +22,7 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
 /** Represents an Item in an Inventory. */
-public class ItemStack extends GameObject implements IObjectList<ItemStack>
+public class ItemStack extends GameObject<ItemStack> implements IObjectList<ItemStack>
 {
 
 	/** Creates an Item Stack from the input NBT Tag, for a Recipe (uses different NBT Tags).
@@ -44,22 +44,6 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 		ItemStack is = new ItemStack(i, d, a, Tags.DEFAULT_COMPOUND.create());
 		is.findName(tag);
 		return is;
-	}
-
-	/** Creates an Item Stack from the input XML element.
-	 * 
-	 * @param item - The XML element describing the Item Stack.
-	 * @return The created Item Stack. */
-	public static ItemStack createFrom(Element item)
-	{
-		ItemStack i = new ItemStack();
-		i.item = ObjectRegistry.items.find(item.getChildText("id"));
-		i.amount = Integer.parseInt(item.getChildText("amount"));
-		i.damage = Integer.parseInt(item.getChildText("damage"));
-		i.slot = Integer.parseInt(item.getChildText("slot"));
-		i.nbt = (TagCompound) NBTParser.parse(item.getChildText("nbt"), true, false, true);
-		i.findProperties(item);
-		return i;
 	}
 
 	/** Creates an Item Stack from the input NBT Tag.
@@ -205,6 +189,18 @@ public class ItemStack extends GameObject implements IObjectList<ItemStack>
 			}
 		}
 		return new String[0];
+	}
+
+	@Override
+	public ItemStack fromXML(Element xml)
+	{
+		this.item = ObjectRegistry.items.find(xml.getChildText("id"));
+		this.amount = Integer.parseInt(xml.getChildText("amount"));
+		this.damage = Integer.parseInt(xml.getChildText("damage"));
+		this.slot = Integer.parseInt(xml.getChildText("slot"));
+		this.nbt = (TagCompound) NBTParser.parse(xml.getChildText("nbt"), true, false, true);
+		this.findProperties(xml);
+		return this;
 	}
 
 	/** Getter for {@link ItemStack#damage}. */

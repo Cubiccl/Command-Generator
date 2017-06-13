@@ -22,7 +22,7 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
 /** Represents an AttributeModifier. */
-public class AttributeModifier extends GameObject implements IObjectList<AttributeModifier>
+public class AttributeModifier extends GameObject<AttributeModifier> implements IObjectList<AttributeModifier>
 {
 	/** Identifiers for operation modes.<br />
 	 * <br />
@@ -53,28 +53,6 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 	/** Slot names. */
 	public static final String[] SLOTS =
 	{ "mainhand", "offhand", "feet", "legs", "chest", "head" };
-
-	/** Creates an Attribute Modifier from the input XML element.
-	 * 
-	 * @param modifier - The XML element describing the Attribute Modifier.
-	 * @return The created Attribute Modifier. */
-	public static AttributeModifier createFrom(Element modifier)
-	{
-		ArrayList<String> slots = new ArrayList<String>();
-		for (Element slot : modifier.getChildren("slot"))
-			slots.add(slot.getText());
-
-		AttributeModifier m = new AttributeModifier(null, null, slots.toArray(new String[slots.size()]), OP_ADD, 0, 0, 0);
-		m.name = modifier.getChildText("name");
-		m.attribute = ObjectRegistry.attributes.find(modifier.getChildText("attribute"));
-		m.operation = Byte.parseByte(modifier.getChildText("operation"));
-		m.amount = Double.parseDouble(modifier.getChildText("amount"));
-		m.amountMax = Double.parseDouble(modifier.getChildText("amountmax"));
-		m.UUIDLeast = Long.parseLong(modifier.getChildText("uuidleast"));
-		m.UUIDMost = Long.parseLong(modifier.getChildText("uuidmost"));
-		m.findProperties(modifier);
-		return m;
-	}
 
 	/** Creates an Attribute Modifier from the input NBT Tag.
 	 * 
@@ -167,6 +145,24 @@ public class AttributeModifier extends GameObject implements IObjectList<Attribu
 		PanelAttributeModifier p = new PanelAttributeModifier(properties.isTrue("isApplied"), properties.isTrue("random_slots"), properties.hasCustomObjects());
 		p.setupFrom(this);
 		return p;
+	}
+
+	@Override
+	public AttributeModifier fromXML(Element xml)
+	{
+		ArrayList<String> slots = new ArrayList<String>();
+		for (Element slot : xml.getChildren("slot"))
+			slots.add(slot.getText());
+
+		this.name = xml.getChildText("name");
+		this.attribute = ObjectRegistry.attributes.find(xml.getChildText("attribute"));
+		this.operation = Byte.parseByte(xml.getChildText("operation"));
+		this.amount = Double.parseDouble(xml.getChildText("amount"));
+		this.amountMax = Double.parseDouble(xml.getChildText("amountmax"));
+		this.UUIDLeast = Long.parseLong(xml.getChildText("uuidleast"));
+		this.UUIDMost = Long.parseLong(xml.getChildText("uuidmost"));
+		this.findProperties(xml);
+		return this;
 	}
 
 	/** Getter for {@link AttributeModifier#attribute}. */

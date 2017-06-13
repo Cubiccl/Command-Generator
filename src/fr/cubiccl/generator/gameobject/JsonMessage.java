@@ -22,7 +22,7 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Utils;
 
 /** Represents a Message in Json format. */
-public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
+public class JsonMessage extends GameObject<JsonMessage> implements IObjectList<JsonMessage>
 {
 	/** Colors values for Json colors. */
 	public static final Color[] LABEL_COLOR =
@@ -59,17 +59,6 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 	 * </tr>
 	 * </table> */
 	public static final byte TEXT = 0, TRANSLATE = 1, SCORE = 2, SELECTOR = 3;
-
-	/** Creates a Json Message from the input XLM element.
-	 * 
-	 * @param json - The XML element describing the Json Message.
-	 * @return The created Json Message. */
-	public static JsonMessage createFrom(Element json)
-	{
-		JsonMessage message = createFrom((TagCompound) NBTParser.parse(json.getChildText("message"), true, false, true));
-		message.findProperties(json);
-		return message;
-	}
 
 	/** Creates a Json Message from the input NBT Tag.
 	 * 
@@ -215,6 +204,15 @@ public class JsonMessage extends GameObject implements IObjectList<JsonMessage>
 		label.setOpaque(true);
 
 		return label;
+	}
+
+	@Override
+	public JsonMessage fromXML(Element xml)
+	{
+		// TODO this
+		JsonMessage message = createFrom((TagCompound) NBTParser.parse(xml.getChildText("message"), true, false, true));
+		message.findProperties(xml);
+		return message;
 	}
 
 	@Override

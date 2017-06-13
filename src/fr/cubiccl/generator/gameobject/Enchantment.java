@@ -22,19 +22,8 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
 /** Represents an Enchantment applied to an Item. */
-public class Enchantment extends GameObject implements IObjectList<Enchantment>
+public class Enchantment extends GameObject<Enchantment> implements IObjectList<Enchantment>
 {
-
-	/** Creates an Enchantment from the input XML element.
-	 * 
-	 * @param enchant - The XML element describing the Enchantment.
-	 * @return The created Enchantment. */
-	public static Enchantment createFrom(Element enchant)
-	{
-		Enchantment e = new Enchantment(ObjectRegistry.enchantments.find(enchant.getChildText("id")), Integer.parseInt(enchant.getChildText("level")));
-		e.findProperties(enchant);
-		return e;
-	}
 
 	/** Creates an Enchantment from the input NBT Tag.
 	 * 
@@ -80,6 +69,18 @@ public class Enchantment extends GameObject implements IObjectList<Enchantment>
 		PanelEnchantment p = new PanelEnchantment(false, properties.hasCustomObjects(), properties.isTrue("testing"));
 		p.setupFrom(this);
 		return p;
+	}
+
+	/** Creates an Enchantment from the input XML element.
+	 * 
+	 * @param xml - The XML element describing the Enchantment.
+	 * @return The created Enchantment. */
+	public Enchantment fromXML(Element xml)
+	{
+		this.type = ObjectRegistry.enchantments.find(xml.getChildText("id"));
+		this.setLevel(Integer.parseInt(xml.getChildText("level")));
+		this.findProperties(xml);
+		return this;
 	}
 
 	@Override

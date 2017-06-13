@@ -17,26 +17,8 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
 /** Represents an Attribute applied to an Entity. */
-public class AppliedAttribute extends GameObject implements IObjectList<AppliedAttribute>
+public class AppliedAttribute extends GameObject<AppliedAttribute> implements IObjectList<AppliedAttribute>
 {
-	/** Creates an Applied Attribute from the input XML element.
-	 * 
-	 * @param attribute - The XML element describing the Applied Attribute.
-	 * @return The created Applied Attribute. */
-	public static AppliedAttribute createFrom(Element attribute)
-	{
-		ArrayList<AttributeModifier> modifiers = new ArrayList<AttributeModifier>();
-		for (Element m : attribute.getChild("modifiers").getChildren())
-			modifiers.add(AttributeModifier.createFrom(m));
-
-		AppliedAttribute a = new AppliedAttribute();
-		a.attribute = ObjectRegistry.attributes.find(attribute.getChildText("attribute"));
-		a.base = Double.parseDouble(attribute.getChildText("base"));
-		a.modifiers = modifiers.toArray(new AttributeModifier[modifiers.size()]);
-		a.findProperties(attribute);
-		return a;
-	}
-
 	/** Creates an Applied Attribute from the input NBT Tag.
 	 * 
 	 * @param tag - The NBT Tag describing the Applied Attribute.
@@ -90,6 +72,20 @@ public class AppliedAttribute extends GameObject implements IObjectList<AppliedA
 		PanelAttribute p = new PanelAttribute(properties.hasCustomObjects());
 		p.setupFrom(this);
 		return p;
+	}
+
+	@Override
+	public AppliedAttribute fromXML(Element xml)
+	{
+		ArrayList<AttributeModifier> modifiers = new ArrayList<AttributeModifier>();
+		for (Element m : xml.getChild("modifiers").getChildren())
+			modifiers.add(new AttributeModifier().fromXML(m));
+
+		this.attribute = ObjectRegistry.attributes.find(xml.getChildText("attribute"));
+		this.base = Double.parseDouble(xml.getChildText("base"));
+		this.modifiers = modifiers.toArray(new AttributeModifier[modifiers.size()]);
+		this.findProperties(xml);
+		return this;
 	}
 
 	/** Getter for {@link AppliedAttribute#attribute}. */

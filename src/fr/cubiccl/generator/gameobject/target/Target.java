@@ -17,7 +17,7 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class Target extends GameObject implements IObjectList<Target>
+public class Target extends GameObject<Target> implements IObjectList<Target>
 {
 
 	public static enum TargetType
@@ -42,21 +42,6 @@ public class Target extends GameObject implements IObjectList<Target>
 		{
 			this.id = id;
 		}
-	}
-
-	public static Target createFrom(Element target)
-	{
-		Target t = new Target(TargetType.find(target.getChildText("type")));
-		if (t.type == TargetType.PLAYER) t.playerName = target.getChildText("playername");
-		else
-		{
-			ArrayList<Argument> a = new ArrayList<Argument>();
-			for (Element argument : target.getChildren("argument"))
-				a.add(Argument.createFrom(argument));
-			t.arguments = a.toArray(new Argument[a.size()]);
-		}
-		t.findProperties(target);
-		return t;
 	}
 
 	public static Target createFrom(String value)
@@ -104,6 +89,7 @@ public class Target extends GameObject implements IObjectList<Target>
 	}
 
 	public Argument[] arguments;
+
 	public String playerName;
 	public TargetType type;
 
@@ -133,6 +119,22 @@ public class Target extends GameObject implements IObjectList<Target>
 		p.setupFrom(this);
 		p.setName(new Text("target.title.any"));
 		return p;
+	}
+
+	@Override
+	public Target fromXML(Element xml)
+	{
+		this.type = TargetType.find(xml.getChildText("type"));
+		if (this.type == TargetType.PLAYER) this.playerName = xml.getChildText("playername");
+		else
+		{
+			ArrayList<Argument> a = new ArrayList<Argument>();
+			for (Element argument : xml.getChildren("argument"))
+				a.add(Argument.createFrom(argument));
+			this.arguments = a.toArray(new Argument[a.size()]);
+		}
+		this.findProperties(xml);
+		return this;
 	}
 
 	@Override

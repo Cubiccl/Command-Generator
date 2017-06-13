@@ -7,11 +7,12 @@ import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.utils.XMLSaveable;
 import fr.cubiccl.generator.utils.Settings;
 import fr.cubiccl.generator.utils.Settings.Version;
 
 /** Represents an Object used in the game. */
-public abstract class GameObject
+public abstract class GameObject<T> implements XMLSaveable<T>
 {
 	/** A Custom name for this Object, input by the user. */
 	private String customName = "";

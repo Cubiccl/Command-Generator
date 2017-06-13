@@ -16,6 +16,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TagsMain;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
 import fr.cubiccl.generator.gameobject.utils.TestValue;
+import fr.cubiccl.generator.gameobject.utils.XMLSaveable;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelFunction;
@@ -25,7 +26,7 @@ import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
 /** Represents a Function for Loot Tables. */
-public class LTFunction implements IObjectList<LTFunction>
+public class LTFunction implements IObjectList<LTFunction>, XMLSaveable<LTFunction>
 {
 	/** Function types. */
 	public static enum Function
@@ -70,24 +71,6 @@ public class LTFunction implements IObjectList<LTFunction>
 		{
 			return new Text("lt_function." + this.name);
 		}
-	}
-
-	/** Creates a Loot Table Function from the input XML element.
-	 * 
-	 * @param function - The XML element describing the Loot Table Function.
-	 * @return The created Loot Table Function. */
-	public static LTFunction createFrom(Element function)
-	{
-		LTFunction f = new LTFunction();
-		f.function = Function.find(function.getChildText("id"));
-		f.tags = ((TagCompound) NBTParser.parse(function.getChildText("nbt"), true, false, true)).value();
-
-		ArrayList<LTCondition> conditions = new ArrayList<LTCondition>();
-		for (Element condition : function.getChild("conditions").getChildren())
-			conditions.add(LTCondition.createFrom(condition));
-		f.conditions = conditions.toArray(new LTCondition[conditions.size()]);
-
-		return f;
 	}
 
 	/** Creates a Loot Table Function from the input NBT Tag.
@@ -205,6 +188,20 @@ public class LTFunction implements IObjectList<LTFunction>
 	}
 
 	@Override
+	public LTFunction fromXML(Element xml)
+	{
+		this.function = Function.find(xml.getChildText("id"));
+		this.tags = ((TagCompound) NBTParser.parse(xml.getChildText("nbt"), true, false, true)).value();
+
+		ArrayList<LTCondition> conditions = new ArrayList<LTCondition>();
+		for (Element condition : xml.getChild("conditions").getChildren())
+			conditions.add(new LTCondition().fromXML(condition));
+		this.conditions = conditions.toArray(new LTCondition[conditions.size()]);
+
+		return this;
+	}
+
+	@Override
 	public Component getDisplayComponent()
 	{
 		return new CTextArea(this.toString());
@@ -242,7 +239,7 @@ public class LTFunction implements IObjectList<LTFunction>
 		return container.create(output);
 	}
 
-	/** @return This Function as an XML element to be stored. */
+	@Override
 	public Element toXML()
 	{
 		Element conditions = new Element("conditions");

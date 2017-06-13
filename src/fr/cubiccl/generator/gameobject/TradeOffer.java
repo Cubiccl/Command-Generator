@@ -19,25 +19,8 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
 /** Represents a Villager's Trade Offer. */
-public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
+public class TradeOffer extends GameObject<TradeOffer> implements IObjectList<TradeOffer>
 {
-
-	/** Creates a Trade Offer from the input XML element.
-	 * 
-	 * @param trade - The XML element describing the Trade Offer.
-	 * @return The created Trade Offer. */
-	public static TradeOffer createFrom(Element trade)
-	{
-		TradeOffer t = new TradeOffer();
-		t.buy = ItemStack.createFrom(trade.getChild("buy"));
-		if (trade.getChild("buy2") != null) t.buySecondary = ItemStack.createFrom(trade.getChild("buy2"));
-		t.sell = ItemStack.createFrom(trade.getChild("sell"));
-		t.experienceReward = Boolean.parseBoolean(trade.getChildText("exp"));
-		t.uses = Integer.parseInt(trade.getChildText("uses"));
-		t.maxUses = Integer.parseInt(trade.getChildText("usesmax"));
-		t.findProperties(trade);
-		return t;
-	}
 
 	/** Creates a Trade Offer from the input NBT Tag.
 	 * 
@@ -83,6 +66,19 @@ public class TradeOffer extends GameObject implements IObjectList<TradeOffer>
 		PanelTrade p = new PanelTrade(properties.hasCustomObjects());
 		p.setupFrom(this);
 		return p;
+	}
+
+	@Override
+	public TradeOffer fromXML(Element trade)
+	{
+		this.buy = new ItemStack().fromXML(trade.getChild("buy"));
+		if (trade.getChild("buy2") != null) this.buySecondary = new ItemStack().fromXML(trade.getChild("buy2"));
+		this.sell = new ItemStack().fromXML(trade.getChild("sell"));
+		this.experienceReward = Boolean.parseBoolean(trade.getChildText("exp"));
+		this.uses = Integer.parseInt(trade.getChildText("uses"));
+		this.maxUses = Integer.parseInt(trade.getChildText("usesmax"));
+		this.findProperties(trade);
+		return this;
 	}
 
 	/** Getter for {@link TradeOffer#buy}. */

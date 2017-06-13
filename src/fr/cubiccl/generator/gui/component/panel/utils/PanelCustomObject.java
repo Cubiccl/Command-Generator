@@ -18,7 +18,7 @@ import fr.cubiccl.generator.utils.IStateListener;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
-public class PanelCustomObject<T extends GameObject, Y extends IObjectList<Y>> extends CGPanel implements ActionListener, IStateListener<PanelObjectList<Y>>
+public class PanelCustomObject<T extends GameObject<T>, Y extends IObjectList<Y>> extends CGPanel implements ActionListener, IStateListener<PanelObjectList<Y>>
 {
 	private static final long serialVersionUID = -2533903048070707867L;
 

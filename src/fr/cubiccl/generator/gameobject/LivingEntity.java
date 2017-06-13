@@ -24,20 +24,8 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
 /** Represents an Entity in the world. */
-public class LivingEntity extends GameObject implements IObjectList<LivingEntity>
+public class LivingEntity extends GameObject<LivingEntity> implements IObjectList<LivingEntity>
 {
-
-	/** Creates a Living Entity from the input XML element.
-	 * 
-	 * @param entity - The XML element describing the Living Entity.
-	 * @return The created Living Entity. */
-	public static LivingEntity createFrom(Element entity)
-	{
-		LivingEntity e = new LivingEntity(ObjectRegistry.entities.find(entity.getChildText("id")), null);
-		e.nbt = (TagCompound) NBTParser.parse(entity.getChildText("nbt"), true, false, true);
-		e.findProperties(entity);
-		return e;
-	}
 
 	/** Creates a Living Entity from the input NBT Tag.
 	 * 
@@ -82,6 +70,15 @@ public class LivingEntity extends GameObject implements IObjectList<LivingEntity
 		p.setEntity(this.entity);
 		p.setTags(this.nbt.value());
 		return p;
+	}
+
+	@Override
+	public LivingEntity fromXML(Element xml)
+	{
+		this.entity = ObjectRegistry.entities.find(xml.getChildText("id"));
+		this.nbt = (TagCompound) NBTParser.parse(xml.getChildText("nbt"), true, false, true);
+		this.findProperties(xml);
+		return this;
 	}
 
 	@Override

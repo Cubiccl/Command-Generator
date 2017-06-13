@@ -9,6 +9,7 @@ import fr.cubi.cubigui.CTextArea;
 import fr.cubiccl.generator.gameobject.tags.*;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.utils.XMLSaveable;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelCondition;
@@ -18,7 +19,7 @@ import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
 /** Represents Conditions for Loot Tables. */
-public class LTCondition implements IObjectList<LTCondition>
+public class LTCondition implements IObjectList<LTCondition>, XMLSaveable<LTCondition>
 {
 
 	/** Condition types. */
@@ -54,17 +55,6 @@ public class LTCondition implements IObjectList<LTCondition>
 		}
 	}
 
-	/** Creates a Loot Table Condition from the input XML element.
-	 * 
-	 * @param condition - The XML element describing the Loot Table Condition.
-	 * @return The created Loot Table Condition. */
-	public static LTCondition createFrom(Element condition)
-	{
-		LTCondition c = new LTCondition(Condition.find(condition.getChildText("id")));
-		c.tags = ((TagCompound) NBTParser.parse(condition.getChildText("nbt"), true, false, true)).value();
-		return c;
-	}
-
 	/** Creates a Loot Table Condition from the input NBT Tag.
 	 * 
 	 * @param condition - The NBT Tag describing the Loot Table Condition.
@@ -86,6 +76,7 @@ public class LTCondition implements IObjectList<LTCondition>
 
 	/** This Condition's type. */
 	public Condition condition;
+
 	/** The NBT Tags describing this Condition. */
 	public Tag[] tags;
 
@@ -116,6 +107,14 @@ public class LTCondition implements IObjectList<LTCondition>
 		p.setupFrom(this);
 		p.setName(new Text("loottable.condition", new Replacement("<index>", Integer.toString((int) properties.get("index")))));
 		return p;
+	}
+
+	@Override
+	public LTCondition fromXML(Element xml)
+	{
+		this.condition = Condition.find(xml.getChildText("id"));
+		this.tags = ((TagCompound) NBTParser.parse(xml.getChildText("nbt"), true, false, true)).value();
+		return this;
 	}
 
 	@Override
@@ -152,7 +151,7 @@ public class LTCondition implements IObjectList<LTCondition>
 		return container.create(output);
 	}
 
-	/** @return This Condition as an XML element to be stored. */
+	@Override
 	public Element toXML()
 	{
 		return new Element("condition").addContent(new Element("id").setText(this.condition.name)).addContent(

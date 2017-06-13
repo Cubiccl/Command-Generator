@@ -6,7 +6,7 @@ import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.gameobject.templatetags.*;
 
 /** Represents an instantiated NBT Tag. */
-public abstract class Tag extends GameObject
+public abstract class Tag extends GameObject<Tag>
 {
 	/** Identifiers for Application types. <br />
 	 * <br />
@@ -123,6 +123,13 @@ public abstract class Tag extends GameObject
 	public Tag(TemplateTag template)
 	{
 		this.template = template;
+	}
+
+	@Deprecated
+	@Override
+	public Tag fromXML(Element xml)
+	{
+		return null;
 	}
 
 	/** @return This Tag's ID. */

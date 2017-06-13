@@ -26,57 +26,8 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
 /** Represents an editable Advancement for map making. */
-public class Advancement extends GameObject implements IObjectList<Advancement>
+public class Advancement extends GameObject<Advancement> implements IObjectList<Advancement>
 {
-
-	/** Creates an Advancement from the input XML element.
-	 * 
-	 * @param advancement - The XML element describing the Advancement.
-	 * @return The created Advancement. */
-	public static Advancement createFrom(Element advancement)
-	{
-		Advancement a = new Advancement();
-		a.item = ObjectRegistry.items.find(advancement.getAttributeValue("icon"));
-		if (advancement.getAttribute("icondata") != null) a.data = Integer.parseInt(advancement.getAttributeValue("icondata"));
-		a.frame = advancement.getAttributeValue("frame");
-		if (advancement.getChild("title") != null) a.title = advancement.getChildText("title");
-		else if (advancement.getChild("json_title") != null) a.jsonTitle = JsonMessage.createFrom(advancement.getChild("json_title"));
-		if (advancement.getChild("background") != null) a.background = advancement.getChildText("background");
-		if (advancement.getChild("description") != null) a.description = advancement.getChildText("description");
-		if (advancement.getChild("parent") != null) a.parent = advancement.getChildText("parent");
-		if (advancement.getChild("not_announced") != null) a.announce = false;
-		if (advancement.getChild("no_toast") != null) a.toast = false;
-		if (advancement.getChild("hidden") != null) a.hidden = true;
-
-		for (Element criteria : advancement.getChild("criterias").getChildren())
-			a.criteria.add(AdvancementCriterion.createFrom(criteria));
-
-		for (Element req : advancement.getChild("requirements").getChildren("r"))
-		{
-			ArrayList<AdvancementCriterion> r = new ArrayList<AdvancementCriterion>();
-			for (Element name : req.getChildren("c"))
-				for (AdvancementCriterion c : a.criteria)
-					if (name.getText().equals(c.name))
-					{
-						r.add(c);
-						break;
-					}
-			a.requirements.add(r.toArray(new AdvancementCriterion[r.size()]));
-		}
-
-		if (advancement.getChild("experience") != null) a.rewardExperience = Integer.parseInt(advancement.getChildText("experience"));
-
-		for (Element recipe : advancement.getChild("recipes").getChildren())
-			a.rewardRecipes.add(recipe.getText());
-
-		for (Element loot : advancement.getChild("loot").getChildren())
-			a.rewardLoot.add(loot.getText());
-
-		if (advancement.getChild("function") != null) a.rewardFunction = advancement.getChild("function").getText();
-
-		a.findProperties(advancement);
-		return a;
-	}
 
 	/** Creates an Advancement from the input NBT Tag.
 	 * 
@@ -221,6 +172,51 @@ public class Advancement extends GameObject implements IObjectList<Advancement>
 		}
 		CommandGenerator.stateManager.clear();
 		return new PanelAdvancement(this);
+	}
+
+	@Override
+	public Advancement fromXML(Element xml)
+	{
+		this.item = ObjectRegistry.items.find(xml.getAttributeValue("icon"));
+		if (xml.getAttribute("icondata") != null) this.data = Integer.parseInt(xml.getAttributeValue("icondata"));
+		this.frame = xml.getAttributeValue("frame");
+		if (xml.getChild("title") != null) this.title = xml.getChildText("title");
+		else if (xml.getChild("json_title") != null) this.jsonTitle = new JsonMessage().fromXML(xml.getChild("json_title"));
+		if (xml.getChild("background") != null) this.background = xml.getChildText("background");
+		if (xml.getChild("description") != null) this.description = xml.getChildText("description");
+		if (xml.getChild("parent") != null) this.parent = xml.getChildText("parent");
+		if (xml.getChild("not_announced") != null) this.announce = false;
+		if (xml.getChild("no_toast") != null) this.toast = false;
+		if (xml.getChild("hidden") != null) this.hidden = true;
+
+		for (Element criteria : xml.getChild("criterias").getChildren())
+			this.criteria.add(new AdvancementCriterion().fromXML(criteria));
+
+		for (Element req : xml.getChild("requirements").getChildren("r"))
+		{
+			ArrayList<AdvancementCriterion> r = new ArrayList<AdvancementCriterion>();
+			for (Element name : req.getChildren("c"))
+				for (AdvancementCriterion c : this.criteria)
+					if (name.getText().equals(c.name))
+					{
+						r.add(c);
+						break;
+					}
+			this.requirements.add(r.toArray(new AdvancementCriterion[r.size()]));
+		}
+
+		if (xml.getChild("experience") != null) this.rewardExperience = Integer.parseInt(xml.getChildText("experience"));
+
+		for (Element recipe : xml.getChild("recipes").getChildren())
+			this.rewardRecipes.add(recipe.getText());
+
+		for (Element loot : xml.getChild("loot").getChildren())
+			this.rewardLoot.add(loot.getText());
+
+		if (xml.getChild("function") != null) this.rewardFunction = xml.getChild("function").getText();
+
+		this.findProperties(xml);
+		return this;
 	}
 
 	/** Getter for {@link Advancement#criteria}. */

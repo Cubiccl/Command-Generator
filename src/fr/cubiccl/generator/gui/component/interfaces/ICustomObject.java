@@ -3,7 +3,7 @@ package fr.cubiccl.generator.gui.component.interfaces;
 import fr.cubiccl.generator.gameobject.GameObject;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
-public interface ICustomObject<T extends GameObject>
+public interface ICustomObject<T extends GameObject<T>>
 {
 
 	/** @return The created Custom Object. */

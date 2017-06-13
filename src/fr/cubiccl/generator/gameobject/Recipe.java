@@ -25,7 +25,7 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
 /** Represents an editable Recipe for map making. */
-public class Recipe extends GameObject implements IObjectList<Recipe>
+public class Recipe extends GameObject<Recipe> implements IObjectList<Recipe>
 {
 	/** Keys to generate the pattern. */
 	private static final char[] KEYS =
@@ -50,24 +50,6 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 	 * </tr>
 	 * </table> */
 	public static final byte SHAPED = 0, SHAPELESS = 1;
-
-	/** Creates a Recipe from the input XML element.
-	 * 
-	 * @param recipe - The XML element describing the Recipe.
-	 * @return The created Recipe. */
-	public static Recipe createFrom(Element recipe)
-	{
-		Recipe r = new Recipe(Byte.parseByte(recipe.getAttributeValue("type")));
-		if (recipe.getChild("group") != null) r.group = recipe.getChildText("group");
-		for (Element item : recipe.getChildren("item"))
-		{
-			int pos = Integer.parseInt(item.getAttributeValue("position"));
-			r.recipe[pos] = ItemStack.createFrom(item);
-			r.recipe[pos].slot = pos;
-		}
-		r.findProperties(recipe);
-		return r;
-	}
 
 	/** Creates a Recipe from the input NBT Tag.
 	 * 
@@ -252,6 +234,21 @@ public class Recipe extends GameObject implements IObjectList<Recipe>
 		}
 		CommandGenerator.stateManager.clear();
 		return new PanelRecipe(this);
+	}
+
+	@Override
+	public Recipe fromXML(Element xml)
+	{
+		this.type = Byte.parseByte(xml.getAttributeValue("type"));
+		if (xml.getChild("group") != null) this.group = xml.getChildText("group");
+		for (Element item : xml.getChildren("item"))
+		{
+			int pos = Integer.parseInt(item.getAttributeValue("position"));
+			this.recipe[pos] = new ItemStack().fromXML(item);
+			this.recipe[pos].slot = pos;
+		}
+		this.findProperties(xml);
+		return this;
 	}
 
 	@Override

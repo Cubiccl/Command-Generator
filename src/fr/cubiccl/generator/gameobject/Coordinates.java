@@ -21,25 +21,8 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
 /** Represents Coordinates. */
-public class Coordinates extends GameObject implements IObjectList<Coordinates>
+public class Coordinates extends GameObject<Coordinates> implements IObjectList<Coordinates>
 {
-
-	/** Creates Coordinates from the input XML element.
-	 * 
-	 * @param coord - The XLM element describing the Coordinates.
-	 * @return The created Coordinates. */
-	public static Coordinates createFrom(Element coord)
-	{
-		Coordinates c = new Coordinates();
-		c.x = Float.parseFloat(coord.getChildText("x"));
-		c.y = Float.parseFloat(coord.getChildText("y"));
-		c.z = Float.parseFloat(coord.getChildText("z"));
-		c.xRelative = Boolean.parseBoolean(coord.getChildText("xr"));
-		c.yRelative = Boolean.parseBoolean(coord.getChildText("yr"));
-		c.zRelative = Boolean.parseBoolean(coord.getChildText("zr"));
-		c.findProperties(coord);
-		return c;
-	}
 
 	/** Creates Coordinates from the input values.
 	 * 
@@ -160,6 +143,19 @@ public class Coordinates extends GameObject implements IObjectList<Coordinates>
 		PanelCoordinates p = new PanelCoordinates(null, true, properties.hasCustomObjects());
 		p.setupFrom(this);
 		return p;
+	}
+
+	@Override
+	public Coordinates fromXML(Element xml)
+	{
+		this.x = Float.parseFloat(xml.getChildText("x"));
+		this.y = Float.parseFloat(xml.getChildText("y"));
+		this.z = Float.parseFloat(xml.getChildText("z"));
+		this.xRelative = Boolean.parseBoolean(xml.getChildText("xr"));
+		this.yRelative = Boolean.parseBoolean(xml.getChildText("yr"));
+		this.zRelative = Boolean.parseBoolean(xml.getChildText("zr"));
+		this.findProperties(xml);
+		return this;
 	}
 
 	@Override

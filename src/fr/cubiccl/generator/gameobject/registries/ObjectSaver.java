@@ -19,7 +19,7 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListListener;
 import fr.cubiccl.generator.utils.*;
 import fr.cubiccl.generator.utils.Settings.Version;
 
-public class ObjectSaver<T extends GameObject> implements ListListener<T>
+public class ObjectSaver<T extends GameObject<T>> implements ListListener<T>
 {
 	public static final ObjectSaver<Advancement> advancements = new ObjectSaver<Advancement>("advancements", Advancement.class);
 	public static final ObjectSaver<AttributeModifier> attributeModifiers = new ObjectSaver<AttributeModifier>("modifier", AttributeModifier.class);
@@ -60,65 +60,63 @@ public class ObjectSaver<T extends GameObject> implements ListListener<T>
 		Element objects = FileUtils.readXMLFile("savedObjects");
 
 		for (Element modifier : objects.getChild("attributemodifiers").getChildren())
-			if (shouldLoad(modifier)) attributeModifiers.addObject(AttributeModifier.createFrom(modifier));
+			if (shouldLoad(modifier)) attributeModifiers.addObject(new AttributeModifier().fromXML(modifier));
 			else attributeModifiers.recentObjects.add(modifier);
 
 		for (Element attribute : objects.getChild("attributes").getChildren())
-			if (shouldLoad(attribute)) attributes.addObject(AppliedAttribute.createFrom(attribute));
+			if (shouldLoad(attribute)) attributes.addObject(new AppliedAttribute().fromXML(attribute));
 			else attributes.recentObjects.add(attribute);
 
 		for (Element block : objects.getChild("blocks").getChildren())
-			if (shouldLoad(block)) blocks.addObject(PlacedBlock.createFrom(block));
+			if (shouldLoad(block)) blocks.addObject(new PlacedBlock().fromXML(block));
 			else blocks.recentObjects.add(block);
 
 		for (Element coord : objects.getChild("coords").getChildren())
-			if (shouldLoad(coord)) coordinates.addObject(Coordinates.createFrom(coord));
+			if (shouldLoad(coord)) coordinates.addObject(new Coordinates().fromXML(coord));
 			else coordinates.recentObjects.add(coord);
 
 		for (Element effect : objects.getChild("effects").getChildren())
-			if (shouldLoad(effect)) effects.addObject(Effect.createFrom(effect));
+			if (shouldLoad(effect)) effects.addObject(new Effect().fromXML(effect));
 			else effects.recentObjects.add(effect);
 
 		for (Element enchant : objects.getChild("enchantments").getChildren())
-			if (shouldLoad(enchant)) enchantments.addObject(Enchantment.createFrom(enchant));
+			if (shouldLoad(enchant)) enchantments.addObject(new Enchantment().fromXML(enchant));
 			else enchantments.recentObjects.add(enchant);
 
 		for (Element entity : objects.getChild("entities").getChildren())
-			if (shouldLoad(entity)) entities.addObject(LivingEntity.createFrom(entity));
+			if (shouldLoad(entity)) entities.addObject(new LivingEntity().fromXML(entity));
 			else entities.recentObjects.add(entity);
 
 		for (Element item : objects.getChild("items").getChildren())
-			if (shouldLoad(item)) items.addObject(ItemStack.createFrom(item));
+			if (shouldLoad(item)) items.addObject(new ItemStack().fromXML(item));
 			else items.recentObjects.add(item);
 
 		for (Element json : objects.getChild("jsons").getChildren())
-			if (shouldLoad(json)) jsonMessages.addObject(JsonMessage.createFrom(json));
+			if (shouldLoad(json)) jsonMessages.addObject(new JsonMessage().fromXML(json));
 			else jsonMessages.recentObjects.add(json);
 
 		for (Element target : objects.getChild("targets").getChildren())
-			if (shouldLoad(target)) targets.addObject(Target.createFrom(target));
+			if (shouldLoad(target)) targets.addObject(new Target().fromXML(target));
 			else targets.recentObjects.add(target);
 
 		for (Element trade : objects.getChild("trades").getChildren())
-			if (shouldLoad(trade)) trades.addObject(TradeOffer.createFrom(trade));
+			if (shouldLoad(trade)) trades.addObject(new TradeOffer().fromXML(trade));
 			else trades.recentObjects.add(trade);
 
 		for (Element command : objects.getChild("commands").getChildren())
-			if (shouldLoad(command)) commands.addObject(GeneratedCommand.createFrom(command));
+			if (shouldLoad(command)) commands.addObject(new GeneratedCommand().fromXML(command));
 			else commands.recentObjects.add(command);
 
 		for (Element table : objects.getChild("tables").getChildren())
-			if (shouldLoad(table)) lootTables.addObject(LootTable.createFrom(table));
+			if (shouldLoad(table)) lootTables.addObject(new LootTable().fromXML(table));
 			else lootTables.recentObjects.add(table);
 
-		/* if (objects.getChild("speedruns") != null) for (Element speedrun : objects.getChild("speedruns").getChildren()) if (shouldLoad(speedrun)) speedruns.addObject(Speedrun.createFrom(speedrun)); else speedruns.recentObjects.add(speedrun); */
-
 		if (objects.getChild("recipes") != null) for (Element recipe : objects.getChild("recipes").getChildren())
-			if (shouldLoad(recipe)) recipes.addObject(Recipe.createFrom(recipe));
+			if (shouldLoad(recipe)) recipes.addObject(new Recipe().fromXML(recipe));
 			else recipes.recentObjects.add(recipe);
 
 		if (objects.getChild("advancements") != null) for (Element recipe : objects.getChild("advancements").getChildren())
-			if (shouldLoad(recipe)) advancements.addObject(Advancement.createFrom(recipe));
+			if (shouldLoad(recipe)) advancements.addObject(new Advancement().fromXML(recipe));
 			else advancements.recentObjects.add(recipe);
 	}
 

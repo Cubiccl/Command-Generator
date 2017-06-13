@@ -7,19 +7,8 @@ import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 
 /** Represents a generated Command. */
-public class GeneratedCommand extends GameObject
+public class GeneratedCommand extends GameObject<GeneratedCommand>
 {
-
-	/** Creates a Generated Command from the input XML element.
-	 * 
-	 * @param command - The XLM element describing the Generated Command.
-	 * @return The created Generated Command. */
-	public static GeneratedCommand createFrom(Element command)
-	{
-		GeneratedCommand c = new GeneratedCommand(command.getChildText("value"));
-		c.findProperties(command);
-		return c;
-	}
 
 	/** Creates a Generated Command from the input NBT Tag.
 	 * 
@@ -27,7 +16,7 @@ public class GeneratedCommand extends GameObject
 	 * @return The created Generated Command. */
 	public static GeneratedCommand createFrom(TagCompound tag)
 	{
-		String command = "GLITCHED COMMAND...";
+		String command = "INVALID COMMAND";
 		if (tag.hasTag(Tags.COMMAND)) command = tag.getTag(Tags.COMMAND).value();
 		GeneratedCommand c = new GeneratedCommand(command);
 		c.findName(tag);
@@ -35,11 +24,24 @@ public class GeneratedCommand extends GameObject
 	}
 
 	/** The output. */
-	public final String command;
+	public String command;
+
+	public GeneratedCommand()
+	{
+		this("INVALID COMMAND");
+	}
 
 	public GeneratedCommand(String command)
 	{
 		this.command = command;
+	}
+
+	@Override
+	public GeneratedCommand fromXML(Element xml)
+	{
+		this.command = xml.getChildText("value");
+		this.findProperties(xml);
+		return this;
 	}
 
 	@Override

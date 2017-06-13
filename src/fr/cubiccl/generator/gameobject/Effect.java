@@ -21,23 +21,8 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
 /** Represents an Effect applied to an Entity or stored in a Potion. */
-public class Effect extends GameObject implements IObjectList<Effect>
+public class Effect extends GameObject<Effect> implements IObjectList<Effect>
 {
-
-	/** Creates an Effect from the input XML element.
-	 * 
-	 * @param effect - The XML element describing the Effect.
-	 * @return The created Effect. */
-	public static Effect createFrom(Element effect)
-	{
-		Effect e = new Effect();
-		e.type = ObjectRegistry.effects.find(effect.getChildText("id"));
-		e.amplifier = Integer.parseInt(effect.getChildText("amplifier"));
-		e.duration = Integer.parseInt(effect.getChildText("duration"));
-		e.hideParticles = Boolean.parseBoolean(effect.getChildText("hideparticles"));
-		e.findProperties(effect);
-		return e;
-	}
 
 	/** Creates an Effect from the input XML element.
 	 * 
@@ -88,6 +73,17 @@ public class Effect extends GameObject implements IObjectList<Effect>
 		PanelEffect e = new PanelEffect(properties.hasCustomObjects());
 		e.setupFrom(this);
 		return e;
+	}
+
+	@Override
+	public Effect fromXML(Element xml)
+	{
+		this.type = ObjectRegistry.effects.find(xml.getChildText("id"));
+		this.amplifier = Integer.parseInt(xml.getChildText("amplifier"));
+		this.duration = Integer.parseInt(xml.getChildText("duration"));
+		this.hideParticles = Boolean.parseBoolean(xml.getChildText("hideparticles"));
+		this.findProperties(xml);
+		return this;
 	}
 
 	@Override

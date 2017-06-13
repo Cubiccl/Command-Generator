@@ -19,22 +19,8 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
 /** Represents a Block placed in the world. */
-public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
+public class PlacedBlock extends GameObject<PlacedBlock> implements IObjectList<PlacedBlock>
 {
-
-	/** Creates a Placed Block from the input XML element.
-	 * 
-	 * @param block - The XML element describing the Placed Block.
-	 * @return The created Placed Block. */
-	public static PlacedBlock createFrom(Element block)
-	{
-		PlacedBlock b = new PlacedBlock();
-		b.block = ObjectRegistry.blocks.find(block.getChildText("id"));
-		b.data = Integer.parseInt(block.getChildText("data"));
-		b.nbt = (TagCompound) NBTParser.parse(block.getChildText("nbt"), true, false, true);
-		b.findProperties(block);
-		return b;
-	}
 
 	/** Creates a Placed Block from the input NB Tag.
 	 * 
@@ -90,6 +76,16 @@ public class PlacedBlock extends GameObject implements IObjectList<PlacedBlock>
 		PanelBlock p = new PanelBlock(null, true, true, properties.hasCustomObjects());
 		p.setupFrom(this);
 		return p;
+	}
+
+	@Override
+	public PlacedBlock fromXML(Element xml)
+	{
+		this.block = ObjectRegistry.blocks.find(xml.getChildText("id"));
+		this.data = Integer.parseInt(xml.getChildText("data"));
+		this.nbt = (TagCompound) NBTParser.parse(xml.getChildText("nbt"), true, false, true);
+		this.findProperties(xml);
+		return this;
 	}
 
 	/** Getter for {@link PlacedBlock#block}. */
