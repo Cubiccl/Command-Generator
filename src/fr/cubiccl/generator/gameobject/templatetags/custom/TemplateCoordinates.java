@@ -52,7 +52,7 @@ public class TemplateCoordinates extends TemplateCompound
 				int x = (int) c.x, y = (int) c.y, z = (int) c.z;
 				return this.create(Tags.COORD_X_INT.create(x), Tags.COORD_Y_INT.create(y), Tags.COORD_Z_INT.create(z));
 			}
-			return ((PanelCoordinates) panel).generate().toTag(this);
+			return ((PanelCoordinates) panel).generate().toNBT(this);
 		} catch (CommandGenerationException e)
 		{
 			e.printStackTrace();

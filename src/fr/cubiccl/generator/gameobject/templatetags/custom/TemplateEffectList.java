@@ -22,7 +22,7 @@ public class TemplateEffectList extends TemplateList
 	{
 		PanelObjectList<Effect> p = new PanelObjectList<Effect>(null, (String) null, Effect.class);
 		if (previousValue != null) for (Tag t : ((TagList) previousValue).value())
-			p.add(Effect.createFrom((TagCompound) t));
+			p.add(new Effect().fromNBT((TagCompound) t));
 		p.setName(this.title());
 		return p;
 	}
@@ -34,7 +34,7 @@ public class TemplateEffectList extends TemplateList
 		Effect[] values = ((PanelObjectList<Effect>) panel).values();
 		TagCompound[] tags = new TagCompound[values.length];
 		for (int i = 0; i < tags.length; ++i)
-			tags[i] = values[i].toTag(Tags.DEFAULT_COMPOUND);
+			tags[i] = values[i].toNBT(Tags.DEFAULT_COMPOUND);
 		return this.create(tags);
 	}
 

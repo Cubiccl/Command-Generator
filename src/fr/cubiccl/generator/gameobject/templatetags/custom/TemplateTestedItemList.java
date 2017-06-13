@@ -27,7 +27,7 @@ public class TemplateTestedItemList extends TemplateList
 			TagList t = ((TagList) previousValue);
 			items = new ItemStack[t.size()];
 			for (int i = 0; i < items.length; ++i)
-				items[i] = ItemStack.createFrom((TagCompound) t.getTag(i), true);
+				items[i] = new ItemStack().fromNBT((TagCompound) t.getTag(i), true);
 			p.setValues(items);
 		}
 		p.setName(this.title());

@@ -25,28 +25,6 @@ import fr.cubiccl.generator.utils.Text;
 public class LootTable extends GameObject<LootTable> implements IObjectList<LootTable>
 {
 
-	/** Creates a Loot Table from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Loot Table.
-	 * @return The created Loot Table. */
-	public static LootTable createFrom(TagCompound tag)
-	{
-		ArrayList<LTPool> pools = new ArrayList<LTPool>();
-		if (tag.hasTag(Tags.LOOTTABLE_POOLS))
-		{
-			TagList list = tag.getTag(Tags.LOOTTABLE_POOLS);
-			for (Tag t : list.value())
-			{
-				LTPool p = LTPool.createFrom((TagCompound) t);
-				if (p != null) pools.add(p);
-			}
-		}
-
-		LootTable table = new LootTable(pools.toArray(new LTPool[pools.size()]));
-		table.findName(tag);
-		return table;
-	}
-
 	/** The list of Pools in this Table. */
 	private final ArrayList<LTPool> pools;
 
@@ -83,6 +61,23 @@ public class LootTable extends GameObject<LootTable> implements IObjectList<Loot
 		}
 		CommandGenerator.stateManager.clear();
 		return new PanelLootTable(this);
+	}
+
+	@Override
+	public LootTable fromNBT(TagCompound nbt)
+	{
+		if (nbt.hasTag(Tags.LOOTTABLE_POOLS))
+		{
+			TagList list = nbt.getTag(Tags.LOOTTABLE_POOLS);
+			for (Tag t : list.value())
+			{
+				LTPool p = LTPool.createFrom((TagCompound) t);
+				if (p != null) this.pools.add(p);
+			}
+		}
+
+		this.findName(nbt);
+		return this;
 	}
 
 	@Override
@@ -157,17 +152,11 @@ public class LootTable extends GameObject<LootTable> implements IObjectList<Loot
 	@Override
 	public String toCommand()
 	{
-		return this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand();
+		return this.toNBT(Tags.DEFAULT_COMPOUND).valueForCommand();
 	}
 
 	@Override
-	public String toString()
-	{
-		return this.customName();
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toNBT(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		for (LTPool pool : this.pools)
@@ -176,6 +165,12 @@ public class LootTable extends GameObject<LootTable> implements IObjectList<Loot
 		TagCompound t = container.create(Tags.LOOTTABLE_POOLS.create(tags.toArray(new Tag[tags.size()])));
 		t.setJson(true);
 		return t;
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.customName();
 	}
 
 	@Override

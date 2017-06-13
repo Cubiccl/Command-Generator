@@ -38,7 +38,7 @@ public class TemplateEntityTag extends TemplateCompound
 	@Override
 	public TagCompound generateTag(BaseObject object, CGPanel panel)
 	{
-		return ((PanelEntity) panel).generate().toTag(this);
+		return ((PanelEntity) panel).generate().toNBT(this);
 	}
 
 }

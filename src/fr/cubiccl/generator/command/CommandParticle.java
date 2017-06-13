@@ -134,7 +134,7 @@ public class CommandParticle extends Command
 	{
 		// particle <name> <x> <y> <z> <xd> <yd> <zd> <speed> [count] [mode] [player] [params ...]
 		if (index == 1) this.panelParticle.setParticle(ObjectRegistry.particles.find(argument));
-		if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+		if (index == 2) this.panelCoordinates.setupFrom(new Coordinates().fromString(argument, fullCommand[3], fullCommand[4]));
 		if (index >= 5 && index <= 8) try
 		{
 			if (Float.parseFloat(argument) >= 0) if (index == 5) this.entryXd.setText(argument);
@@ -149,7 +149,7 @@ public class CommandParticle extends Command
 		} catch (Exception e)
 		{}
 		if (index == 10) this.checkboxForce.setSelected(argument.equals("force"));
-		if (index == 11) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 11) this.panelTarget.setupFrom(new Target().fromString(argument));
 		if (index == 12) try
 		{
 			this.panelParticle.setParam1(Integer.parseInt(argument));

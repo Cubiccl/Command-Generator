@@ -87,7 +87,7 @@ public class TemplateSpawnPotentials extends TemplateList
 		{
 			TagString type = Tags.ENTITY_TYPE.create(this.entity.getEntity().id);
 			TagNumber weight = Tags.ENTITY_WEIGHT.create(this.weight);
-			return container.create(type, weight, this.entity.toTag(Tags.ENTITY_PROPERTIES));
+			return container.create(type, weight, this.entity.toNBT(Tags.ENTITY_PROPERTIES));
 		}
 
 		@Override

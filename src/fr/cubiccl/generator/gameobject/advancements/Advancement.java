@@ -29,73 +29,6 @@ import fr.cubiccl.generator.utils.Text;
 public class Advancement extends GameObject<Advancement> implements IObjectList<Advancement>
 {
 
-	/** Creates an Advancement from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Advancement.
-	 * @return The created Advancement. */
-	public static Advancement createFrom(TagCompound tag)
-	{
-		Advancement a = new Advancement();
-
-		if (tag.hasTag(Tags.ADVANCEMENT_DISPLAY))
-		{
-			TagCompound display = tag.getTag(Tags.ADVANCEMENT_DISPLAY);
-			if (display.hasTag(Tags.ADVANCEMENT_ICON))
-			{
-				TagCompound icon = display.getTag(Tags.ADVANCEMENT_ICON);
-				a.item = ObjectRegistry.items.find(icon.getTag(Tags.RECIPE_ITEM_ID).value());
-				if (icon.hasTag(Tags.RECIPE_ITEM_DATA)) a.data = icon.getTag(Tags.RECIPE_ITEM_DATA).valueInt();
-			}
-			if (display.hasTag(Tags.ADVANCEMENT_TITLE)) a.title = display.getTag(Tags.ADVANCEMENT_TITLE).value();
-			else if (display.hasTag(Tags.ADVANCEMENT_TITLE_JSON)) a.jsonTitle = JsonMessage.createFrom(display.getTag(Tags.ADVANCEMENT_TITLE_JSON));
-			if (display.hasTag(Tags.ADVANCEMENT_FRAME)) a.frame = display.getTag(Tags.ADVANCEMENT_FRAME).value();
-			if (display.hasTag(Tags.ADVANCEMENT_BACKGROUND)) a.background = display.getTag(Tags.ADVANCEMENT_BACKGROUND).value();
-			if (display.hasTag(Tags.ADVANCEMENT_DESCRIPTION)) a.description = display.getTag(Tags.ADVANCEMENT_DESCRIPTION).value();
-			if (display.hasTag(Tags.ADVANCEMENT_ANNOUNCE)) a.announce = display.getTag(Tags.ADVANCEMENT_ANNOUNCE).value();
-			if (display.hasTag(Tags.ADVANCEMENT_TOAST)) a.toast = display.getTag(Tags.ADVANCEMENT_TOAST).value();
-			if (display.hasTag(Tags.ADVANCEMENT_HIDDEN)) a.hidden = display.getTag(Tags.ADVANCEMENT_HIDDEN).value();
-		}
-
-		if (tag.hasTag(Tags.ADVANCEMENT_PARENT)) a.parent = tag.getTag(Tags.ADVANCEMENT_PARENT).value();
-
-		if (tag.hasTag(Tags.ADVANCEMENT_CRITERIA)) for (Tag c : tag.getTag(Tags.ADVANCEMENT_CRITERIA).value())
-			a.criteria.add(AdvancementCriterion.createFrom((TagCompound) c));
-
-		if (tag.hasTag(Tags.ADVANCEMENT_REQUIREMENTS)) for (Tag req : tag.getTag(Tags.ADVANCEMENT_REQUIREMENTS).value())
-		{
-			ArrayList<AdvancementCriterion> r = new ArrayList<AdvancementCriterion>();
-			for (Tag t : ((TagList) req).value())
-			{
-				String name = ((TagString) t).value();
-				for (AdvancementCriterion c : a.criteria)
-				{
-					if (c.name.equals(name))
-					{
-						r.add(c);
-						break;
-					}
-				}
-			}
-			a.requirements.add(r.toArray(new AdvancementCriterion[r.size()]));
-		}
-
-		if (tag.hasTag(Tags.ADVANCEMENT_REWARDS))
-		{
-			TagCompound rewards = tag.getTag(Tags.ADVANCEMENT_REWARDS);
-
-			if (rewards.hasTag(Tags.ADVANCEMENT_RECIPES)) for (Tag recipe : rewards.getTag(Tags.ADVANCEMENT_RECIPES).value())
-				a.rewardRecipes.add(((TagString) recipe).value());
-
-			if (rewards.hasTag(Tags.ADVANCEMENT_LOOT)) for (Tag l : rewards.getTag(Tags.ADVANCEMENT_LOOT).value())
-				a.rewardLoot.add(((TagString) l).value());
-
-			if (rewards.hasTag(Tags.ADVANCEMENT_FUNCTION)) a.rewardFunction = rewards.getTag(Tags.ADVANCEMENT_FUNCTION).value();
-			if (rewards.hasTag(Tags.ADVANCEMENT_EXPERIENCE)) a.rewardExperience = rewards.getTag(Tags.ADVANCEMENT_EXPERIENCE).valueInt();
-		}
-
-		return a;
-	}
-
 	/** <code>true</code> if this Advancement should be announced in the chat when granted. */
 	public boolean announce;
 	/** Path to the texture to use for the background of this Advancement's category if root. */
@@ -172,6 +105,68 @@ public class Advancement extends GameObject<Advancement> implements IObjectList<
 		}
 		CommandGenerator.stateManager.clear();
 		return new PanelAdvancement(this);
+	}
+
+	@Override
+	public Advancement fromNBT(TagCompound nbt)
+	{
+		if (nbt.hasTag(Tags.ADVANCEMENT_DISPLAY))
+		{
+			TagCompound display = nbt.getTag(Tags.ADVANCEMENT_DISPLAY);
+			if (display.hasTag(Tags.ADVANCEMENT_ICON))
+			{
+				TagCompound icon = display.getTag(Tags.ADVANCEMENT_ICON);
+				this.item = ObjectRegistry.items.find(icon.getTag(Tags.RECIPE_ITEM_ID).value());
+				if (icon.hasTag(Tags.RECIPE_ITEM_DATA)) this.data = icon.getTag(Tags.RECIPE_ITEM_DATA).valueInt();
+			}
+			if (display.hasTag(Tags.ADVANCEMENT_TITLE)) this.title = display.getTag(Tags.ADVANCEMENT_TITLE).value();
+			else if (display.hasTag(Tags.ADVANCEMENT_TITLE_JSON)) this.jsonTitle = new JsonMessage().fromNBT(display.getTag(Tags.ADVANCEMENT_TITLE_JSON));
+			if (display.hasTag(Tags.ADVANCEMENT_FRAME)) this.frame = display.getTag(Tags.ADVANCEMENT_FRAME).value();
+			if (display.hasTag(Tags.ADVANCEMENT_BACKGROUND)) this.background = display.getTag(Tags.ADVANCEMENT_BACKGROUND).value();
+			if (display.hasTag(Tags.ADVANCEMENT_DESCRIPTION)) this.description = display.getTag(Tags.ADVANCEMENT_DESCRIPTION).value();
+			if (display.hasTag(Tags.ADVANCEMENT_ANNOUNCE)) this.announce = display.getTag(Tags.ADVANCEMENT_ANNOUNCE).value();
+			if (display.hasTag(Tags.ADVANCEMENT_TOAST)) this.toast = display.getTag(Tags.ADVANCEMENT_TOAST).value();
+			if (display.hasTag(Tags.ADVANCEMENT_HIDDEN)) this.hidden = display.getTag(Tags.ADVANCEMENT_HIDDEN).value();
+		}
+
+		if (nbt.hasTag(Tags.ADVANCEMENT_PARENT)) this.parent = nbt.getTag(Tags.ADVANCEMENT_PARENT).value();
+
+		if (nbt.hasTag(Tags.ADVANCEMENT_CRITERIA)) for (Tag c : nbt.getTag(Tags.ADVANCEMENT_CRITERIA).value())
+			this.criteria.add(new AdvancementCriterion().fromNBT((TagCompound) c));
+
+		if (nbt.hasTag(Tags.ADVANCEMENT_REQUIREMENTS)) for (Tag req : nbt.getTag(Tags.ADVANCEMENT_REQUIREMENTS).value())
+		{
+			ArrayList<AdvancementCriterion> r = new ArrayList<AdvancementCriterion>();
+			for (Tag t : ((TagList) req).value())
+			{
+				String name = ((TagString) t).value();
+				for (AdvancementCriterion c : this.criteria)
+				{
+					if (c.name.equals(name))
+					{
+						r.add(c);
+						break;
+					}
+				}
+			}
+			this.requirements.add(r.toArray(new AdvancementCriterion[r.size()]));
+		}
+
+		if (nbt.hasTag(Tags.ADVANCEMENT_REWARDS))
+		{
+			TagCompound rewards = nbt.getTag(Tags.ADVANCEMENT_REWARDS);
+
+			if (rewards.hasTag(Tags.ADVANCEMENT_RECIPES)) for (Tag recipe : rewards.getTag(Tags.ADVANCEMENT_RECIPES).value())
+				this.rewardRecipes.add(((TagString) recipe).value());
+
+			if (rewards.hasTag(Tags.ADVANCEMENT_LOOT)) for (Tag l : rewards.getTag(Tags.ADVANCEMENT_LOOT).value())
+				this.rewardLoot.add(((TagString) l).value());
+
+			if (rewards.hasTag(Tags.ADVANCEMENT_FUNCTION)) this.rewardFunction = rewards.getTag(Tags.ADVANCEMENT_FUNCTION).value();
+			if (rewards.hasTag(Tags.ADVANCEMENT_EXPERIENCE)) this.rewardExperience = rewards.getTag(Tags.ADVANCEMENT_EXPERIENCE).valueInt();
+		}
+
+		return this;
 	}
 
 	@Override
@@ -291,23 +286,17 @@ public class Advancement extends GameObject<Advancement> implements IObjectList<
 	@Override
 	public String toCommand()
 	{
-		return this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand(0);
+		return this.toNBT(Tags.DEFAULT_COMPOUND).valueForCommand(0);
 	}
 
 	@Override
-	public String toString()
-	{
-		return this.customName();
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toNBT(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		if (this.data != 0) tags.add(Tags.ADVANCEMENT_ICON.create(Tags.RECIPE_ITEM_ID.create(this.item.id()), Tags.RECIPE_ITEM_DATA.create(this.data)));
 		tags.add(Tags.ADVANCEMENT_ICON.create(Tags.ITEM_IDITEM.create(this.item.id())));
 		if (this.title != null) tags.add(Tags.ADVANCEMENT_TITLE.create(this.title));
-		else if (this.jsonTitle != null) tags.add(this.jsonTitle.toTag(Tags.ADVANCEMENT_TITLE_JSON));
+		else if (this.jsonTitle != null) tags.add(this.jsonTitle.toNBT(Tags.ADVANCEMENT_TITLE_JSON));
 		tags.add(Tags.ADVANCEMENT_FRAME.create(this.frame));
 		if (this.background != null) tags.add(Tags.ADVANCEMENT_BACKGROUND.create(this.background));
 		if (this.description != null) tags.add(Tags.ADVANCEMENT_DESCRIPTION.create(this.description));
@@ -322,7 +311,7 @@ public class Advancement extends GameObject<Advancement> implements IObjectList<
 
 		ArrayList<Tag> criterias = new ArrayList<Tag>();
 		for (AdvancementCriterion c : this.criteria)
-			criterias.add(c.toTag());
+			criterias.add(c.toNBT(Tags.DEFAULT_COMPOUND));
 		tags.add(Tags.ADVANCEMENT_CRITERIA.create(criterias.toArray(new Tag[criterias.size()])));
 
 		if (this.requirements.size() != 0)
@@ -358,6 +347,12 @@ public class Advancement extends GameObject<Advancement> implements IObjectList<
 		if (rewards.size() != 0) tags.add(Tags.ADVANCEMENT_REWARDS.create(rewards.toArray(new Tag[rewards.size()])));
 
 		return container.create(tags.toArray(new Tag[tags.size()])).setJson(true);
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.customName();
 	}
 
 	@Override

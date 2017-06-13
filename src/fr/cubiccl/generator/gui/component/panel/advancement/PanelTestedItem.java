@@ -220,7 +220,7 @@ public class PanelTestedItem extends CGPanel implements ActionListener, IStateLi
 		{
 			this.panelEnchantments.clear();
 			for (Tag tag : item.getNbt().getTag(Tags.ITEM_ENCHANTMENTS).value())
-				this.panelEnchantments.add(Enchantment.createFrom((TagCompound) tag));
+				this.panelEnchantments.add(new Enchantment().fromNBT((TagCompound) tag));
 			this.checkboxEnchantments.setSelected(true);
 		}
 		if (item.getNbt().hasTag(Tags.CRITERIA_NBT)) this.panelTags.setValues(((TagCompound) NBTParser.parse(item.getNbt().getTag(Tags.CRITERIA_NBT).value(),

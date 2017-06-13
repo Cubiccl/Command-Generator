@@ -78,7 +78,7 @@ public class CommandGamemode extends Command
 						this.comboboxGamemode.setSelectedIndex(i);
 						return;
 					}
-		} else if (index == 2) this.panelTarget.setupFrom(Target.createFrom(argument));
+		} else if (index == 2) this.panelTarget.setupFrom(new Target().fromString(argument));
 
 	}
 

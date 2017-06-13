@@ -24,86 +24,6 @@ import fr.cubiccl.generator.utils.Text;
 public class Coordinates extends GameObject<Coordinates> implements IObjectList<Coordinates>
 {
 
-	/** Creates Coordinates from the input values.
-	 * 
-	 * @param x - The X coordinate.
-	 * @param y - The Y coordinate.
-	 * @param z - The Z coordinate.
-	 * @return The created Coordinates. */
-	public static Coordinates createFrom(String x, String y, String z) throws CommandGenerationException
-	{
-		float X = 0, Y = 0, Z = 0;
-		boolean xr = false, yr = false, zr = false;
-
-		if (x.startsWith("~"))
-		{
-			x = x.substring(1);
-			xr = true;
-		}
-		if (y.startsWith("~"))
-		{
-			y = y.substring(1);
-			yr = true;
-		}
-		if (z.startsWith("~"))
-		{
-			z = z.substring(1);
-			zr = true;
-		}
-
-		try
-		{
-			if (!x.equals("")) X = Float.parseFloat(x);
-			if (!y.equals("")) Y = Float.parseFloat(y);
-			if (!z.equals("")) Z = Float.parseFloat(z);
-		} catch (NumberFormatException e)
-		{
-			throw new CommandGenerationException(new Text("error.coordinates"));
-		}
-
-		return new Coordinates(X, Y, Z, xr, yr, zr);
-	}
-
-	/** Creates Coordinates from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Coordinates.
-	 * @return The created Coordinates. */
-	public static Coordinates createFrom(TagCompound tag)
-	{
-		float x = 0, y = 0, z = 0;
-
-		for (Tag t : tag.value())
-		{
-			if (t.id().equals(Tags.COORD_X.id())) x = (float) (double) ((TagNumber) t).value();
-			if (t.id().equals(Tags.COORD_Y.id())) y = (float) (double) ((TagNumber) t).value();
-			if (t.id().equals(Tags.COORD_Z.id())) z = (float) (double) ((TagNumber) t).value();
-		}
-
-		Coordinates c = new Coordinates(x, y, z);
-		c.findName(tag);
-		return c;
-	}
-
-	/** Creates Coordinates from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Coordinates.
-	 * @return The created Coordinates. */
-	public static Coordinates createFrom(TagList tag)
-	{
-		float x = 0, y = 0, z = 0;
-		try
-		{
-			x = (float) (double) ((TagNumber) tag.getTag(0)).value();
-			y = (float) (double) ((TagNumber) tag.getTag(1)).value();
-			z = (float) (double) ((TagNumber) tag.getTag(2)).value();
-		} catch (Exception e)
-		{
-			e.printStackTrace();
-		}
-
-		return new Coordinates(x, y, z);
-	}
-
 	/** The X Coordinate. */
 	public float x;
 	/** <code>true</code> if the {@link Coordinates#x X Coordinate} is relative. */
@@ -143,6 +63,76 @@ public class Coordinates extends GameObject<Coordinates> implements IObjectList<
 		PanelCoordinates p = new PanelCoordinates(null, true, properties.hasCustomObjects());
 		p.setupFrom(this);
 		return p;
+	}
+
+	@Override
+	public Coordinates fromNBT(TagCompound nbt)
+	{
+		for (Tag t : nbt.value())
+		{
+			if (t.id().equals(Tags.COORD_X.id())) this.x = (float) (double) ((TagNumber) t).value();
+			if (t.id().equals(Tags.COORD_Y.id())) this.y = (float) (double) ((TagNumber) t).value();
+			if (t.id().equals(Tags.COORD_Z.id())) this.z = (float) (double) ((TagNumber) t).value();
+		}
+
+		this.findName(nbt);
+		return this;
+	}
+
+	/** Creates Coordinates from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Coordinates.
+	 * @return The created Coordinates. */
+	public Coordinates fromNBT(TagList tag)
+	{
+		try
+		{
+			this.x = (float) (double) ((TagNumber) tag.getTag(0)).value();
+			this.y = (float) (double) ((TagNumber) tag.getTag(1)).value();
+			this.z = (float) (double) ((TagNumber) tag.getTag(2)).value();
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+
+		return this;
+	}
+
+	/** Creates Coordinates from the input values.
+	 * 
+	 * @param x - The X coordinate.
+	 * @param y - The Y coordinate.
+	 * @param z - The Z coordinate.
+	 * @return The created Coordinates. */
+	public Coordinates fromString(String x, String y, String z) throws CommandGenerationException
+	{
+		if (x.startsWith("~"))
+		{
+			x = x.substring(1);
+			this.xRelative = true;
+		}
+		if (y.startsWith("~"))
+		{
+			y = y.substring(1);
+			this.yRelative = true;
+		}
+		if (z.startsWith("~"))
+		{
+			z = z.substring(1);
+			this.zRelative = true;
+		}
+
+		try
+		{
+			if (!x.equals("")) this.x = Float.parseFloat(x);
+			if (!y.equals("")) this.y = Float.parseFloat(y);
+			if (!z.equals("")) this.z = Float.parseFloat(z);
+		} catch (NumberFormatException e)
+		{
+			throw new CommandGenerationException(new Text("error.coordinates"));
+		}
+
+		return this;
 	}
 
 	@Override
@@ -189,6 +179,12 @@ public class Coordinates extends GameObject<Coordinates> implements IObjectList<
 	}
 
 	@Override
+	public TagCompound toNBT(TemplateCompound container)
+	{
+		return container.create(Tags.COORD_X.create(this.x), Tags.COORD_Y.create(this.y), Tags.COORD_Z.create(this.z));
+	}
+
+	@Override
 	public String toString()
 	{
 		String text = "X=";
@@ -204,12 +200,6 @@ public class Coordinates extends GameObject<Coordinates> implements IObjectList<
 		if (!this.zRelative || this.z != 0) text += this.z;
 
 		return text;
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
-	{
-		return container.create(Tags.COORD_X.create(this.x), Tags.COORD_Y.create(this.y), Tags.COORD_Z.create(this.z));
 	}
 
 	/** Converts this Object to a NBT Tag.

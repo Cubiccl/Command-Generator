@@ -30,7 +30,7 @@ public class TemplateOffers extends TemplateCompound
 			TagList previous = (TagList) ((TagCompound) previousValue).getTagFromId(Tags.OFFER_RECIPES.id());
 			TradeOffer[] trades = new TradeOffer[previous.size()];
 			for (int i = 0; i < trades.length; i++)
-				trades[i] = TradeOffer.createFrom((TagCompound) previous.getTag(i));
+				trades[i] = new TradeOffer().fromNBT((TagCompound) previous.getTag(i));
 			p.setupFrom(trades);
 		}
 
@@ -51,7 +51,7 @@ public class TemplateOffers extends TemplateCompound
 		}
 		TagCompound[] tags = new TagCompound[trades.length];
 		for (int i = 0; i < tags.length; i++)
-			tags[i] = trades[i].toTag(Tags.DEFAULT_COMPOUND);
+			tags[i] = trades[i].toNBT(Tags.DEFAULT_COMPOUND);
 		return this.create(Tags.OFFER_RECIPES.create(tags));
 	}
 

@@ -80,11 +80,11 @@ public class CommandSpawnpoint extends Command implements ActionListener
 	@Override
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
-		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 1) this.panelTarget.setupFrom(new Target().fromString(argument));
 		if (index == 2)
 		{
 			this.checkbox.setSelected(false);
-			this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+			this.panelCoordinates.setupFrom(new Coordinates().fromString(argument, fullCommand[3], fullCommand[4]));
 		}
 	}
 

@@ -35,7 +35,7 @@ public class TemplateText extends TemplateString
 		if (p.getSelected() == 0) return super.createPanel(object, previousValue);
 
 		PanelJsonMessage pj = new PanelJsonMessage();
-		if (previousValue != null) pj.setupFrom(JsonMessage.createFrom((TagCompound) NBTParser.parse((String) previousValue.value(), true, true)));
+		if (previousValue != null) pj.setupFrom(new JsonMessage().fromNBT((TagCompound) NBTParser.parse((String) previousValue.value(), true, true)));
 		pj.setName(this.title());
 		return pj;
 	}
@@ -46,7 +46,7 @@ public class TemplateText extends TemplateString
 		if (panel instanceof EntryPanel) return super.generateTag(object, panel);
 		try
 		{
-			return this.create(((PanelJsonMessage) panel).generate().toTag(Tags.DEFAULT_COMPOUND).valueForCommand());
+			return this.create(((PanelJsonMessage) panel).generate().toNBT(Tags.DEFAULT_COMPOUND).valueForCommand());
 		} catch (CommandGenerationException e)
 		{
 			CommandGenerator.report(e);

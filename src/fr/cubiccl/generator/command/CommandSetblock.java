@@ -76,7 +76,7 @@ public class CommandSetblock extends Command
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
 		// setblock <x> <y> <z> <block> [dataValue] [oldBlockHandling] [dataTag]
-		if (index == 1) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[2], fullCommand[3]));
+		if (index == 1) this.panelCoordinates.setupFrom(new Coordinates().fromString(argument, fullCommand[2], fullCommand[3]));
 		if (index == 4) this.panelBlock.setBlock(ObjectRegistry.blocks.find(argument));
 		if (index == 5 && !argument.equals("-1")) try
 		{

@@ -19,33 +19,6 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 /** Represents an Attribute applied to an Entity. */
 public class AppliedAttribute extends GameObject<AppliedAttribute> implements IObjectList<AppliedAttribute>
 {
-	/** Creates an Applied Attribute from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Applied Attribute.
-	 * @return The created Applied Attribute. */
-	public static AppliedAttribute createFrom(TagCompound tag)
-	{
-		Attribute a = ObjectRegistry.attributes.first();
-		double b = 1;
-		AttributeModifier[] m = new AttributeModifier[0];
-
-		for (Tag t : tag.value())
-		{
-			if (t.id().equals(Tags.ATTRIBUTE_ATTRIBUTE_NAME.id())) a = ObjectRegistry.attributes.find(((TagString) t).value());
-			if (t.id().equals(Tags.ATTRIBUTE_BASE.id())) b = ((TagNumber) t).value();
-			if (t.id().equals(Tags.ATTRIBUTE_MODIFIERS.id()))
-			{
-				TagList list = (TagList) t;
-				m = new AttributeModifier[list.size()];
-				for (int i = 0; i < m.length; i++)
-					m[i] = AttributeModifier.createFrom((TagCompound) list.getTag(i));
-			}
-		}
-
-		AppliedAttribute at = new AppliedAttribute(a, b, m);
-		at.findName(tag);
-		return at;
-	}
 
 	/** The applied {@link Attribute}. */
 	private Attribute attribute;
@@ -72,6 +45,27 @@ public class AppliedAttribute extends GameObject<AppliedAttribute> implements IO
 		PanelAttribute p = new PanelAttribute(properties.hasCustomObjects());
 		p.setupFrom(this);
 		return p;
+	}
+
+	@Override
+	public AppliedAttribute fromNBT(TagCompound nbt)
+	{
+
+		for (Tag t : nbt.value())
+		{
+			if (t.id().equals(Tags.ATTRIBUTE_ATTRIBUTE_NAME.id())) this.attribute = ObjectRegistry.attributes.find(((TagString) t).value());
+			if (t.id().equals(Tags.ATTRIBUTE_BASE.id())) this.base = ((TagNumber) t).value();
+			if (t.id().equals(Tags.ATTRIBUTE_MODIFIERS.id()))
+			{
+				TagList list = (TagList) t;
+				this.modifiers = new AttributeModifier[list.size()];
+				for (int i = 0; i < this.modifiers.length; i++)
+					this.modifiers[i] = new AttributeModifier().fromNBT((TagCompound) list.getTag(i));
+			}
+		}
+
+		this.findName(nbt);
+		return this;
 	}
 
 	@Override
@@ -120,13 +114,7 @@ public class AppliedAttribute extends GameObject<AppliedAttribute> implements IO
 	}
 
 	@Override
-	public String toString()
-	{
-		return this.attribute.name().toString() + ", " + this.modifiers.length + " modifiers";
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toNBT(TemplateCompound container)
 	{
 		TagCompound[] m = new TagCompound[this.modifiers.length];
 		for (int i = 0; i < m.length; i++)
@@ -134,6 +122,12 @@ public class AppliedAttribute extends GameObject<AppliedAttribute> implements IO
 
 		return container.create(Tags.ATTRIBUTE_ATTRIBUTE_NAME.create(this.attribute.id), Tags.ATTRIBUTE_BASE.create(this.base),
 				Tags.ATTRIBUTE_MODIFIERS.create(m));
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.attribute.name().toString() + ", " + this.modifiers.length + " modifiers";
 	}
 
 	@Override

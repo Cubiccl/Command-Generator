@@ -22,7 +22,7 @@ public class TemplateTestedItem extends TemplateCompound
 	protected CGPanel createPanel(BaseObject object, Tag previousValue)
 	{
 		PanelTestedItem p = new PanelTestedItem();
-		if (previousValue != null) p.setupFrom(ItemStack.createFrom((TagCompound) previousValue, true));
+		if (previousValue != null) p.setupFrom(new ItemStack().fromNBT((TagCompound) previousValue, true));
 		return p;
 	}
 

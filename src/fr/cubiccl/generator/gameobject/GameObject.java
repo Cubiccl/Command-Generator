@@ -6,13 +6,13 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
-import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.utils.NBTSaveable;
 import fr.cubiccl.generator.gameobject.utils.XMLSaveable;
 import fr.cubiccl.generator.utils.Settings;
 import fr.cubiccl.generator.utils.Settings.Version;
 
 /** Represents an Object used in the game. */
-public abstract class GameObject<T> implements XMLSaveable<T>
+public abstract class GameObject<T> implements XMLSaveable<T>, NBTSaveable<T>
 {
 	/** A Custom name for this Object, input by the user. */
 	private String customName = "";
@@ -79,12 +79,6 @@ public abstract class GameObject<T> implements XMLSaveable<T>
 
 	@Override
 	public abstract String toString();
-
-	/** Converts this Object to a NBT Tag.
-	 * 
-	 * @param container - The template for the container Tag.
-	 * @return The Compound container tag. */
-	public abstract TagCompound toTag(TemplateCompound container);
 
 	/** @return This Object as an XML element to be saved. */
 	public abstract Element toXML();

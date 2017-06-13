@@ -114,10 +114,10 @@ public class PanelJsonMessage extends CGPanel implements ActionListener, ICustom
 					return this.panelAchievement.getCriteria();
 
 				case "show_entity":
-					return this.panelEntity.generate().toTag(Tags.ENTITY).valueForCommand();
+					return this.panelEntity.generate().toNBT(Tags.ENTITY).valueForCommand();
 
 				case "show_item":
-					return this.panelItem.generate().toTag(Tags.ITEM).valueForCommand();
+					return this.panelItem.generate().toNBT(Tags.ITEM).valueForCommand();
 
 				default:
 					return this.panelJson.generate();
@@ -273,8 +273,8 @@ public class PanelJsonMessage extends CGPanel implements ActionListener, ICustom
 	{
 		this.comboboxMode.setSelectedIndex(message.mode);
 		if (message.mode != JsonMessage.SELECTOR) this.entryMain.setText(message.text);
-		if (message.target != null) this.panelTarget.setupFrom(Target.createFrom(message.target));
-		if (message.mode == JsonMessage.SELECTOR) this.panelTarget.setupFrom(Target.createFrom(message.text));
+		if (message.target != null) this.panelTarget.setupFrom(new Target().fromString(message.target));
+		if (message.mode == JsonMessage.SELECTOR) this.panelTarget.setupFrom(new Target().fromString(message.text));
 
 		this.comboboxColor.setSelectedIndex(message.color);
 		this.checkboxBold.setSelected(message.bold);
@@ -301,11 +301,12 @@ public class PanelJsonMessage extends CGPanel implements ActionListener, ICustom
 					break;
 
 				case "show_entity":
-					this.panelHoverEvent.panelEntity.setupFrom(LivingEntity.createFrom((TagCompound) NBTParser.parse((String) message.hoverValue, true, false)));
+					this.panelHoverEvent.panelEntity.setupFrom(new LivingEntity().fromNBT((TagCompound) NBTParser.parse((String) message.hoverValue, true,
+							false)));
 					break;
 
 				case "show_item":
-					this.panelHoverEvent.panelItem.setupFrom(ItemStack.createFrom((TagCompound) NBTParser.parse((String) message.hoverValue, true, false)));
+					this.panelHoverEvent.panelItem.setupFrom(new ItemStack().fromNBT((TagCompound) NBTParser.parse((String) message.hoverValue, true, false)));
 					break;
 
 				case "show_text":

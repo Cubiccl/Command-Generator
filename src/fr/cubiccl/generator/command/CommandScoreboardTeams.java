@@ -153,7 +153,7 @@ public class CommandScoreboardTeams extends Command implements ActionListener
 		if (index == 1) this.comboboxMode.setValue(argument);
 		if (index == 2) this.entryTeam.setText(argument);
 		if (index == 3) if (mode.equals("add")) this.entryDisplayName.setText(argument);
-		else if (mode.equals("join") || mode.equals("leave")) this.panelTarget.setupFrom(Target.createFrom(argument));
+		else if (mode.equals("join") || mode.equals("leave")) this.panelTarget.setupFrom(new Target().fromString(argument));
 		else
 		{
 			this.comboboxOptionName.setValue(argument);

@@ -22,7 +22,7 @@ public class TemplateAttributeModifiers extends TemplateList
 	{
 		PanelObjectList<AttributeModifier> p = new PanelObjectList<AttributeModifier>(null, (String) null, AttributeModifier.class, "isApplied", false);
 		if (previousValue != null) for (Tag t : ((TagList) previousValue).value())
-			p.add(AttributeModifier.createFrom((TagCompound) t));
+			p.add(new AttributeModifier().fromNBT((TagCompound) t));
 		p.setName(this.title());
 		return p;
 	}

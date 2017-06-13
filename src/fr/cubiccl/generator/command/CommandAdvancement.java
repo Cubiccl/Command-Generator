@@ -193,7 +193,7 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 	{
 		// advancement <grant|revoke|test> <player> <everything|from|only|through|until> [<advancement>] [criterion]
 		if (index == 1) this.comboboxMode.setValue(argument);
-		else if (index == 2) this.panelTarget.setupFrom(Target.createFrom(argument));
+		else if (index == 2) this.panelTarget.setupFrom(new Target().fromString(argument));
 		else if (index == 3) this.comboboxAdvMode.setValue(argument);
 		else if (index == 4)
 		{

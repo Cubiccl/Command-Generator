@@ -47,6 +47,6 @@ public class CommandKill extends Command
 	@Override
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
-		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 1) this.panelTarget.setupFrom(new Target().fromString(argument));
 	}
 }

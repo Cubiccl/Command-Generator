@@ -46,7 +46,7 @@ public class CommandSetworldspawn extends Command
 	@Override
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
-		if (index == 1) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[2], fullCommand[3]));
+		if (index == 1) this.panelCoordinates.setupFrom(new Coordinates().fromString(argument, fullCommand[2], fullCommand[3]));
 	}
 
 }

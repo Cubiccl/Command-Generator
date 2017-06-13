@@ -162,17 +162,17 @@ public class CommandStats extends Command implements ActionListener
 		if (index == 1) this.comboboxSourceMode.setValue(argument);
 		if (this.comboboxSourceMode.getValue().equals("block"))
 		{
-			if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+			if (index == 2) this.panelCoordinates.setupFrom(new Coordinates().fromString(argument, fullCommand[3], fullCommand[4]));
 			if (index == 5) this.comboboxMode.setValue(argument);
 			if (index == 6) this.comboboxStat.setValue(argument);
-			if (index == 7) this.panelTarget.setupFrom(Target.createFrom(argument));
+			if (index == 7) this.panelTarget.setupFrom(new Target().fromString(argument));
 			if (index == 8) this.entryObjective.setText(argument);
 		} else
 		{
-			if (index == 2) this.panelSource.setupFrom(Target.createFrom(argument));
+			if (index == 2) this.panelSource.setupFrom(new Target().fromString(argument));
 			if (index == 3) this.comboboxMode.setValue(argument);
 			if (index == 4) this.comboboxStat.setValue(argument);
-			if (index == 5) this.panelTarget.setupFrom(Target.createFrom(argument));
+			if (index == 5) this.panelTarget.setupFrom(new Target().fromString(argument));
 			if (index == 6) this.entryObjective.setText(argument);
 		}
 	}

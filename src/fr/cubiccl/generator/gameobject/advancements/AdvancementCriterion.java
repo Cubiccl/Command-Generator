@@ -9,7 +9,9 @@ import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
+import fr.cubiccl.generator.gameobject.utils.NBTSaveable;
 import fr.cubiccl.generator.gameobject.utils.XMLSaveable;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -18,22 +20,8 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 
 /** Represents a Criterion for an Advancement. */
-public class AdvancementCriterion implements IObjectList<AdvancementCriterion>, XMLSaveable<AdvancementCriterion>
+public class AdvancementCriterion implements IObjectList<AdvancementCriterion>, NBTSaveable<AdvancementCriterion>, XMLSaveable<AdvancementCriterion>
 {
-
-	/** Creates a Criterion from the input NBT Tag.
-	 * 
-	 * @param criterion - The NBT Tag describing the Criterion.
-	 * @return The created Criterion. */
-	public static AdvancementCriterion createFrom(TagCompound tag)
-	{
-		AdvancementCriterion c = new AdvancementCriterion();
-		c.name = tag.id();
-		if (tag.hasTag(Tags.ADVANCEMENT_TRIGGER)) c.trigger = CriterionTrigger.find(tag.getTag(Tags.ADVANCEMENT_TRIGGER).value());
-		if (tag.hasTag(Tags.ADVANCEMENT_CONDITIONS)) for (Tag t : tag.getTag(Tags.ADVANCEMENT_CONDITIONS).value())
-			c.conditions.add(t);
-		return c;
-	}
 
 	/** The conditions for this Criterion. */
 	private ArrayList<Tag> conditions;
@@ -66,6 +54,16 @@ public class AdvancementCriterion implements IObjectList<AdvancementCriterion>, 
 	public CGPanel createPanel(ListProperties properties)
 	{
 		return new PanelAdvancementCriteria(this);
+	}
+
+	@Override
+	public AdvancementCriterion fromNBT(TagCompound nbt)
+	{
+		this.name = nbt.id();
+		if (nbt.hasTag(Tags.ADVANCEMENT_TRIGGER)) this.trigger = CriterionTrigger.find(nbt.getTag(Tags.ADVANCEMENT_TRIGGER).value());
+		if (nbt.hasTag(Tags.ADVANCEMENT_CONDITIONS)) for (Tag t : nbt.getTag(Tags.ADVANCEMENT_CONDITIONS).value())
+			this.conditions.add(t);
+		return this;
 	}
 
 	@Override
@@ -114,8 +112,8 @@ public class AdvancementCriterion implements IObjectList<AdvancementCriterion>, 
 		this.conditions.remove(condition);
 	}
 
-	/** @return This Criterion as an NBT Tag to be generated. */
-	public TagCompound toTag()
+	@Override
+	public TagCompound toNBT(TemplateCompound container)
 	{
 		return new DefaultCompound(this.name, Tag.UNKNOWN).create(Tags.ADVANCEMENT_TRIGGER.create(this.trigger.id),
 				Tags.ADVANCEMENT_CONDITIONS.create(this.getConditions()));

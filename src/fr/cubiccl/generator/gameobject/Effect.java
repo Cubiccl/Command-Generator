@@ -24,27 +24,6 @@ import fr.cubiccl.generator.utils.Text;
 public class Effect extends GameObject<Effect> implements IObjectList<Effect>
 {
 
-	/** Creates an Effect from the input XML element.
-	 * 
-	 * @param trade - The XML element describing the Effect.
-	 * @return The created Effect. */
-	public static Effect createFrom(TagCompound tag)
-	{
-		int a = 0, d = 0;
-		boolean h = false;
-		EffectType e = ObjectRegistry.effects.first();
-		for (Tag t : tag.value())
-		{
-			if (t.id().equals(Tags.EFFECT_ID.id())) e = ObjectRegistry.effects.find(((TagNumber) t).valueInt());
-			if (t.id().equals(Tags.EFFECT_DURATION.id())) d = ((TagNumber) t).valueInt();
-			if (t.id().equals(Tags.EFFECT_AMPLIFIER.id())) a = ((TagNumber) t).valueInt();
-			if (t.id().equals(Tags.EFFECT_PARTICLES.id())) h = ((TagNumber) t).value() == 1;
-		}
-		Effect effect = new Effect(e, d, a, h);
-		effect.findName(tag);
-		return effect;
-	}
-
 	/** The level of the Effect (0 = Level 1) */
 	public int amplifier;
 	/** The duration of the Effect. Is usually in ticks, except for /effect where it's in seconds. */
@@ -73,6 +52,21 @@ public class Effect extends GameObject<Effect> implements IObjectList<Effect>
 		PanelEffect e = new PanelEffect(properties.hasCustomObjects());
 		e.setupFrom(this);
 		return e;
+	}
+
+	@Override
+	public Effect fromNBT(TagCompound nbt)
+	{
+		for (Tag t : nbt.value())
+		{
+			if (t.id().equals(Tags.EFFECT_ID.id())) this.type = ObjectRegistry.effects.find(((TagNumber) t).valueInt());
+			if (t.id().equals(Tags.EFFECT_DURATION.id())) this.duration = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.EFFECT_AMPLIFIER.id())) this.amplifier = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.EFFECT_PARTICLES.id())) this.hideParticles = ((TagNumber) t).value() == 1;
+		}
+
+		this.findName(nbt);
+		return this;
 	}
 
 	@Override
@@ -121,16 +115,16 @@ public class Effect extends GameObject<Effect> implements IObjectList<Effect>
 	}
 
 	@Override
-	public String toString()
-	{
-		return this.type.name().toString() + " " + this.amplifier + " (" + this.duration + "s" + (this.hideParticles ? ", particles hidden)" : ")");
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toNBT(TemplateCompound container)
 	{
 		return container.create(Tags.EFFECT_ID.create(this.type.idInt), Tags.EFFECT_AMPLIFIER.create(this.amplifier),
 				Tags.EFFECT_DURATION.create(this.duration), Tags.EFFECT_PARTICLES.create(this.hideParticles ? 0 : 1));
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.type.name().toString() + " " + this.amplifier + " (" + this.duration + "s" + (this.hideParticles ? ", particles hidden)" : ")");
 	}
 
 	@Override

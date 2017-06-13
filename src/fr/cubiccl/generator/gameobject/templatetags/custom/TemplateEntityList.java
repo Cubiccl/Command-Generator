@@ -26,7 +26,7 @@ public class TemplateEntityList extends TemplateList
 		{
 			TagList t = (TagList) previousValue;
 			for (int i = 0; i < t.size(); i++)
-				p.add(LivingEntity.createFrom((TagCompound) t.getTag(i)));
+				p.add(new LivingEntity().fromNBT((TagCompound) t.getTag(i)));
 		}
 		p.setName(this.title());
 		return p;
@@ -39,7 +39,7 @@ public class TemplateEntityList extends TemplateList
 		LivingEntity[] entities = ((PanelObjectList<LivingEntity>) panel).values();
 		TagCompound[] t = new TagCompound[entities.length];
 		for (int i = 0; i < t.length; i++)
-			t[i] = entities[i].toTag(Tags.DEFAULT_COMPOUND);
+			t[i] = entities[i].toNBT(Tags.DEFAULT_COMPOUND);
 		return this.create(t);
 	}
 

@@ -22,28 +22,6 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 public class PlacedBlock extends GameObject<PlacedBlock> implements IObjectList<PlacedBlock>
 {
 
-	/** Creates a Placed Block from the input NB Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Placed Block.
-	 * @return The created Placed Block. */
-	public static PlacedBlock createFrom(TagCompound tag)
-	{
-		Block b = ObjectRegistry.blocks.first();
-		int d = 0;
-		TagCompound nbt = Tags.BLOCK_NBT.create();
-
-		for (Tag t : tag.value())
-		{
-			if (t.id().equals(Tags.BLOCK_ID.id())) b = ObjectRegistry.blocks.find(((TagString) t).value);
-			if (t.id().equals(Tags.BLOCK_DATA.id())) d = ((TagNumber) t).valueInt();
-			if (t.id().equals(Tags.BLOCK_NBT.id())) nbt = (TagCompound) t;
-		}
-
-		PlacedBlock bl = new PlacedBlock(b, d, nbt);
-		bl.findName(tag);
-		return bl;
-	}
-
 	/** The {@link Block} type. */
 	private Block block;
 	/** The data of the Block. */
@@ -76,6 +54,20 @@ public class PlacedBlock extends GameObject<PlacedBlock> implements IObjectList<
 		PanelBlock p = new PanelBlock(null, true, true, properties.hasCustomObjects());
 		p.setupFrom(this);
 		return p;
+	}
+
+	@Override
+	public PlacedBlock fromNBT(TagCompound nbt)
+	{
+		for (Tag t : nbt.value())
+		{
+			if (t.id().equals(Tags.BLOCK_ID.id())) this.block = ObjectRegistry.blocks.find(((TagString) t).value);
+			if (t.id().equals(Tags.BLOCK_DATA.id())) this.data = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.BLOCK_NBT.id())) this.nbt = (TagCompound) t;
+		}
+
+		this.findName(nbt);
+		return this;
 	}
 
 	@Override
@@ -152,13 +144,7 @@ public class PlacedBlock extends GameObject<PlacedBlock> implements IObjectList<
 	}
 
 	@Override
-	public String toString()
-	{
-		return this.block.name(this.data).toString();
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toNBT(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
@@ -167,6 +153,12 @@ public class PlacedBlock extends GameObject<PlacedBlock> implements IObjectList<
 		tags.add(this.nbt);
 
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.block.name(this.data).toString();
 	}
 
 	@Override

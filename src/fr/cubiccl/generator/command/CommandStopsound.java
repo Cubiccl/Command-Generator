@@ -102,7 +102,7 @@ public class CommandStopsound extends Command implements ActionListener
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
 		// stopsound <player> <source> [sound]
-		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 1) this.panelTarget.setupFrom(new Target().fromString(argument));
 		if (index == 2) this.comboboxChannel.setValue(argument);
 		if (index == 3)
 		{

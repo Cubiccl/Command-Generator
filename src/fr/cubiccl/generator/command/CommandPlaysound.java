@@ -122,8 +122,8 @@ public class CommandPlaysound extends Command
 		// playsound <sound> <source> <player> [<x> <y> <z>] [volume] [pitch] [minimumVolume]
 		if (index == 1) this.comboboxSound.setSelected(ObjectRegistry.sounds.find(argument));
 		if (index == 2) this.comboboxSource.setValue(argument);
-		if (index == 3) this.panelTarget.setupFrom(Target.createFrom(argument));
-		if (index == 4) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[5], fullCommand[6]));
+		if (index == 3) this.panelTarget.setupFrom(new Target().fromString(argument));
+		if (index == 4) this.panelCoordinates.setupFrom(new Coordinates().fromString(argument, fullCommand[5], fullCommand[6]));
 		if (index >= 7) try
 		{
 			if (Float.parseFloat(argument) >= 0)

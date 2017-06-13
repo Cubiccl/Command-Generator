@@ -269,7 +269,7 @@ public class CommandGenerator
 	public static void parseAdvancement(String text)
 	{
 		TagCompound tag = (TagCompound) NBTParser.parse(text, true, true, true);
-		Advancement advancement = Advancement.createFrom(tag);
+		Advancement advancement = new Advancement().fromNBT(tag);
 
 		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
 		if (name == null) return;
@@ -283,7 +283,7 @@ public class CommandGenerator
 	public static void parseLootTable(String text)
 	{
 		TagCompound tag = (TagCompound) NBTParser.parse(text, true, true, true);
-		LootTable table = LootTable.createFrom(tag);
+		LootTable table = new LootTable().fromNBT(tag);
 
 		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
 		if (name == null) return;
@@ -297,7 +297,7 @@ public class CommandGenerator
 	public static void parseRecipe(String text)
 	{
 		TagCompound tag = (TagCompound) NBTParser.parse(text, true, true, true);
-		Recipe recipe = Recipe.createFrom(tag);
+		Recipe recipe = new Recipe().fromNBT(tag);
 
 		String name = Dialogs.showInputDialog(Lang.translate("objects.name"));
 		if (name == null) return;

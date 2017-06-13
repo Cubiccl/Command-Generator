@@ -10,19 +10,6 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 public class GeneratedCommand extends GameObject<GeneratedCommand>
 {
 
-	/** Creates a Generated Command from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Generated Command.
-	 * @return The created Generated Command. */
-	public static GeneratedCommand createFrom(TagCompound tag)
-	{
-		String command = "INVALID COMMAND";
-		if (tag.hasTag(Tags.COMMAND)) command = tag.getTag(Tags.COMMAND).value();
-		GeneratedCommand c = new GeneratedCommand(command);
-		c.findName(tag);
-		return c;
-	}
-
 	/** The output. */
 	public String command;
 
@@ -34,6 +21,14 @@ public class GeneratedCommand extends GameObject<GeneratedCommand>
 	public GeneratedCommand(String command)
 	{
 		this.command = command;
+	}
+
+	@Override
+	public GeneratedCommand fromNBT(TagCompound nbt)
+	{
+		if (nbt.hasTag(Tags.COMMAND)) this.command = nbt.getTag(Tags.COMMAND).value();
+		this.findName(nbt);
+		return this;
 	}
 
 	@Override
@@ -51,15 +46,15 @@ public class GeneratedCommand extends GameObject<GeneratedCommand>
 	}
 
 	@Override
-	public String toString()
+	public TagCompound toNBT(TemplateCompound container)
 	{
-		return this.command;
+		return container.create(Tags.COMMAND.create(this.command));
 	}
 
 	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public String toString()
 	{
-		return container.create(Tags.COMMAND.create(this.command));
+		return this.command;
 	}
 
 	@Override

@@ -60,7 +60,7 @@ public class CommandEntitydata extends Command
 	{
 		// this.id <entity> <dataTag>
 
-		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 1) this.panelTarget.setupFrom(new Target().fromString(argument));
 		if (index == 2)
 		{
 			TagCompound t = (TagCompound) NBTParser.parse(argument, true, false);

@@ -107,7 +107,7 @@ public class CommandAchievement extends Command implements ActionListener
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
 		if (index == 1) this.comboboxMode.setValue(argument);
-		else if (index == 3) this.panelTarget.setupFrom(Target.createFrom(argument));
+		else if (index == 3) this.panelTarget.setupFrom(new Target().fromString(argument));
 		else if (index == 2)
 		{
 			if (argument.equals("*")) this.comboboxNumber.setValue("all");

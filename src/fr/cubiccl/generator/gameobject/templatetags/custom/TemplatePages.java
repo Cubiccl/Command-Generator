@@ -57,7 +57,7 @@ public class TemplatePages extends TemplateList
 		{
 			TagCompound[] tags = new TagCompound[this.messages.length];
 			for (int i = 0; i < tags.length; ++i)
-				tags[i] = this.messages[i].toTag(Tags.DEFAULT_COMPOUND);
+				tags[i] = this.messages[i].toNBT(Tags.DEFAULT_COMPOUND);
 			TagList list = Tags.DEFAULT_LIST.create(tags);
 			return Tags.DEFAULT_STRING.create(list.valueForCommand());
 		}
@@ -74,10 +74,10 @@ public class TemplatePages extends TemplateList
 	private static Page createPage(String value)
 	{
 		Tag t = NBTParser.parse(value, true, true);
-		if (t instanceof TagCompound) return new Page(JsonMessage.createFrom((TagCompound) t));
+		if (t instanceof TagCompound) return new Page(new JsonMessage().fromNBT((TagCompound) t));
 		JsonMessage[] messages = new JsonMessage[((TagList) t).size()];
 		for (int i = 0; i < messages.length; ++i)
-			messages[i] = JsonMessage.createFrom((TagCompound) ((TagList) t).getTag(i));
+			messages[i] = new JsonMessage().fromNBT((TagCompound) ((TagList) t).getTag(i));
 		return new Page(messages);
 	}
 

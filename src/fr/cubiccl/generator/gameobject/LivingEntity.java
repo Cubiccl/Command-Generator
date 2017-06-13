@@ -27,26 +27,6 @@ import fr.cubiccl.generator.utils.Text;
 public class LivingEntity extends GameObject<LivingEntity> implements IObjectList<LivingEntity>
 {
 
-	/** Creates a Living Entity from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Living Entity.
-	 * @return The created Living Entity. */
-	public static LivingEntity createFrom(TagCompound tag)
-	{
-		Entity e = ObjectRegistry.entities.first();
-		TagCompound nbt = tag;
-		if (tag.hasTag("id")) e = ObjectRegistry.entities.find(((TagString) tag.getTagFromId("id")).value());
-
-		ArrayList<Tag> tags = new ArrayList<Tag>();
-		for (Tag t : nbt.value())
-			if (!t.id().equals(Tags.ENTITY_ID) && !t.id().equals(Tags.OBJECT_NAME)) tags.add(t);
-		nbt = ((TemplateCompound) nbt.template).create(tags.toArray(new Tag[tags.size()]));
-
-		LivingEntity en = new LivingEntity(e, nbt);
-		en.findName(tag);
-		return en;
-	}
-
 	/** The {@link Entity} type. */
 	private Entity entity;
 	/** The NBT Tags of this Entity. */
@@ -70,6 +50,20 @@ public class LivingEntity extends GameObject<LivingEntity> implements IObjectLis
 		p.setEntity(this.entity);
 		p.setTags(this.nbt.value());
 		return p;
+	}
+
+	@Override
+	public LivingEntity fromNBT(TagCompound nbt)
+	{
+		if (nbt.hasTag("id")) this.entity = ObjectRegistry.entities.find(((TagString) nbt.getTagFromId("id")).value());
+
+		ArrayList<Tag> tags = new ArrayList<Tag>();
+		for (Tag t : nbt.value())
+			if (!t.id().equals(Tags.ENTITY_ID) && !t.id().equals(Tags.OBJECT_NAME)) tags.add(t);
+		this.nbt = ((TemplateCompound) nbt.template).create(tags.toArray(new Tag[tags.size()]));
+
+		this.findName(nbt);
+		return this;
 	}
 
 	@Override
@@ -141,19 +135,19 @@ public class LivingEntity extends GameObject<LivingEntity> implements IObjectLis
 	}
 
 	@Override
-	public String toString()
-	{
-		return this.entity.name().toString();
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toNBT(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		tags.add(Tags.ENTITY_ID.create(this.entity.id()));
 		for (Tag t : this.nbt.value())
 			tags.add(t);
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.entity.name().toString();
 	}
 
 	@Override

@@ -27,7 +27,7 @@ public class TemplateAttributes extends TemplateList
 			TagList t = (TagList) previousValue;
 			attributes = new AppliedAttribute[t.size()];
 			for (int i = 0; i < attributes.length; i++)
-				attributes[i] = AppliedAttribute.createFrom((TagCompound) t.getTag(i));
+				attributes[i] = new AppliedAttribute().fromNBT((TagCompound) t.getTag(i));
 		}
 		PanelObjectList<AppliedAttribute> p = new PanelObjectList<AppliedAttribute>(null, (String) null, AppliedAttribute.class);
 		p.setName(this.title());
@@ -41,7 +41,7 @@ public class TemplateAttributes extends TemplateList
 		AppliedAttribute[] list = ((PanelObjectList<AppliedAttribute>) panel).values();
 		TagCompound[] tags = new TagCompound[list.length];
 		for (int i = 0; i < tags.length; i++)
-			tags[i] = list[i].toTag(Tags.DEFAULT_COMPOUND);
+			tags[i] = list[i].toNBT(Tags.DEFAULT_COMPOUND);
 		return this.create(tags);
 	}
 }

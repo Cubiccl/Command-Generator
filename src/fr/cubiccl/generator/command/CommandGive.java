@@ -70,7 +70,7 @@ public class CommandGive extends Command
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
 		// give <player> <item> [amount] [data] [dataTag]
-		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 1) this.panelTarget.setupFrom(new Target().fromString(argument));
 		if (index == 2) this.panelItem.setItem(ObjectRegistry.items.find(argument));
 		if (index == 3) try
 		{

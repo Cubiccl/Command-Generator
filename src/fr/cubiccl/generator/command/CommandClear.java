@@ -137,7 +137,7 @@ public class CommandClear extends Command implements ActionListener
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
 		// clear <player> [item] [data] [maxCount] [dataTag]
-		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 1) this.panelTarget.setupFrom(new Target().fromString(argument));
 		else if (index == 2)
 		{
 			this.checkboxAllItem.setSelected(false);

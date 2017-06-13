@@ -116,7 +116,7 @@ public class CommandXp extends Command
 				this.incorrectStructureError();
 			}
 			this.entryAmount.setText(lvl);
-		} else if (index == 2) this.panelTarget.setupFrom(Target.createFrom(argument));
+		} else if (index == 2) this.panelTarget.setupFrom(new Target().fromString(argument));
 	}
 
 }

@@ -135,55 +135,55 @@ public class ObjectSaver<T extends GameObject<T>> implements ListListener<T>
 			switch (current)
 			{
 				case MODIFIERS:
-					attributeModifiers.addObject(AttributeModifier.createFrom((TagCompound) NBTParser.parse(line, true, false)));
+					attributeModifiers.addObject(new AttributeModifier().fromNBT((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case ATTRIBUTES:
-					attributes.addObject(AppliedAttribute.createFrom((TagCompound) NBTParser.parse(line, true, false)));
+					attributes.addObject(new AppliedAttribute().fromNBT((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case BLOCKS:
-					blocks.addObject(PlacedBlock.createFrom((TagCompound) NBTParser.parse(line, true, false)));
+					blocks.addObject(new PlacedBlock().fromNBT((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case COORDINATES:
-					coordinates.addObject(Coordinates.createFrom((TagCompound) NBTParser.parse(line, true, false)));
+					coordinates.addObject(new Coordinates().fromNBT((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case EFFECTS:
-					effects.addObject(Effect.createFrom((TagCompound) NBTParser.parse(line, true, false)));
+					effects.addObject(new Effect().fromNBT((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case ENCHANTMENTS:
-					enchantments.addObject(Enchantment.createFrom((TagCompound) NBTParser.parse(line, true, false)));
+					enchantments.addObject(new Enchantment().fromNBT((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case ENTITIES:
-					entities.addObject(LivingEntity.createFrom((TagCompound) NBTParser.parse(line, true, false)));
+					entities.addObject(new LivingEntity().fromNBT((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case ITEMS:
-					items.addObject(ItemStack.createFrom((TagCompound) NBTParser.parse(line, true, false)));
+					items.addObject(new ItemStack().fromNBT((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case JSONS:
-					jsonMessages.addObject(JsonMessage.createFrom((TagCompound) NBTParser.parse(line, true, true)));
+					jsonMessages.addObject(new JsonMessage().fromNBT((TagCompound) NBTParser.parse(line, true, true)));
 					break;
 
 				case TRADES:
-					trades.addObject(TradeOffer.createFrom((TagCompound) NBTParser.parse(line, true, false)));
+					trades.addObject(new TradeOffer().fromNBT((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case TARGETS:
-					targets.addObject(Target.createFrom((TagCompound) NBTParser.parse(line, true, false)));
+					targets.addObject(new Target().fromNBT((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case COMMANDS:
-					commands.addObject(GeneratedCommand.createFrom((TagCompound) NBTParser.parse(line, true, false)));
+					commands.addObject(new GeneratedCommand().fromNBT((TagCompound) NBTParser.parse(line, true, false)));
 					break;
 
 				case LOOT_TABLES:
-					lootTables.addObject(LootTable.createFrom((TagCompound) NBTParser.parse(line, true, true, true)));
+					lootTables.addObject(new LootTable().fromNBT((TagCompound) NBTParser.parse(line, true, true, true)));
 					break;
 
 				default:

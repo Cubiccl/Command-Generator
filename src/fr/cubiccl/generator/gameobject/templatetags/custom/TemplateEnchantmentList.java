@@ -22,7 +22,7 @@ public class TemplateEnchantmentList extends TemplateList
 	{
 		PanelObjectList<Enchantment> p = new PanelObjectList<Enchantment>(null, (String) null, Enchantment.class);
 		if (previousValue != null) for (Tag t : ((TagList) previousValue).value())
-			p.add(Enchantment.createFrom((TagCompound) t));
+			p.add(new Enchantment().fromNBT((TagCompound) t));
 		p.setName(this.title());
 		return p;
 	}
@@ -34,7 +34,7 @@ public class TemplateEnchantmentList extends TemplateList
 		Enchantment[] values = ((PanelObjectList<Enchantment>) panel).values();
 		TagCompound[] tags = new TagCompound[values.length];
 		for (int i = 0; i < tags.length; ++i)
-			tags[i] = values[i].toTag(Tags.DEFAULT_COMPOUND);
+			tags[i] = values[i].toNBT(Tags.DEFAULT_COMPOUND);
 		return this.create(tags);
 	}
 

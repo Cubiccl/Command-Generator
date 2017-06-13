@@ -78,7 +78,7 @@ public class CommandSummon extends Command
 	{
 		// summon <entity> [x] [y] [z] [dataTag]
 		if (index == 1) this.panelEntity.setEntity(ObjectRegistry.entities.find(argument));
-		if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+		if (index == 2) this.panelCoordinates.setupFrom(new Coordinates().fromString(argument, fullCommand[3], fullCommand[4]));
 		if (index == 5) this.panelEntity.setTags(((TagCompound) NBTParser.parse(argument, true, false)).value());
 	}
 

@@ -51,83 +51,6 @@ public class Recipe extends GameObject<Recipe> implements IObjectList<Recipe>
 	 * </table> */
 	public static final byte SHAPED = 0, SHAPELESS = 1;
 
-	/** Creates a Recipe from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Recipe.
-	 * @return The created Recipe. */
-	public static Recipe createFrom(TagCompound tag)
-	{
-		if (tag.hasTag(Tags.RECIPE_TYPE) && tag.getTag(Tags.RECIPE_TYPE).value().equals("crafting_shapeless")) return createShapelessFrom(tag);
-		return createShapedFrom(tag);
-	}
-
-	/** Creates a Shaped Recipe from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Recipe.
-	 * @return The created Recipe. */
-	private static Recipe createShapedFrom(TagCompound tag)
-	{
-		Recipe r = new Recipe(SHAPED);
-		if (tag.hasTag(Tags.RECIPE_GROUP)) r.group = tag.getTag(Tags.RECIPE_GROUP).value();
-		if (tag.hasTag(Tags.RECIPE_RESULT))
-		{
-			r.recipe[9] = ItemStack.createForRecipe(tag.getTag(Tags.RECIPE_RESULT));
-			r.recipe[9].slot = 9;
-		}
-
-		HashMap<Character, ItemStack> affectations = new HashMap<Character, ItemStack>();
-		if (tag.hasTag(Tags.RECIPE_KEY)) for (Tag t : tag.getTag(Tags.RECIPE_KEY).value())
-			affectations.put(t.id().charAt(0), ItemStack.createForRecipe((TagCompound) t));
-
-		String pattern = "";
-		if (tag.hasTag(Tags.RECIPE_KEY))
-		{
-			for (Tag t : tag.getTag(Tags.RECIPE_PATTERN).value())
-			{
-				pattern += ((TagString) t).value();
-				while (pattern.length() % 3 != 0)
-					pattern += " ";
-			}
-			while (pattern.length() < 9)
-				pattern += " ";
-		} else pattern = "         ";
-
-		for (int i = 0; i < pattern.length(); ++i)
-			if (affectations.containsKey(pattern.charAt(i))) try
-			{
-				r.recipe[i] = affectations.get(pattern.charAt(i)).clone();
-				r.recipe[i].slot = i;
-			} catch (CloneNotSupportedException e)
-			{
-				e.printStackTrace();
-			}
-
-		return r;
-	}
-
-	/** Creates a Shapeless Recipe from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Recipe.
-	 * @return The created Recipe. */
-	private static Recipe createShapelessFrom(TagCompound tag)
-	{
-		Recipe r = new Recipe(SHAPELESS);
-		if (tag.hasTag(Tags.RECIPE_GROUP)) r.group = tag.getTag(Tags.RECIPE_GROUP).value();
-		if (tag.hasTag(Tags.RECIPE_RESULT))
-		{
-			r.recipe[9] = ItemStack.createForRecipe(tag.getTag(Tags.RECIPE_RESULT));
-			r.recipe[9].slot = 9;
-		}
-		int i = 0;
-		if (tag.hasTag(Tags.RECIPE_INGREDIENTS)) for (Tag t : tag.getTag(Tags.RECIPE_INGREDIENTS).value())
-		{
-			if (i > 8) break;
-			r.recipe[i] = ItemStack.createForRecipe((TagCompound) t);
-			r.recipe[i].slot = i;
-		}
-		return r;
-	}
-
 	/** @param column - The index of the column.
 	 * @param pattern - The pattern to analyze.
 	 * @return <code>true</code> if the column has no Items. */
@@ -234,6 +157,80 @@ public class Recipe extends GameObject<Recipe> implements IObjectList<Recipe>
 		}
 		CommandGenerator.stateManager.clear();
 		return new PanelRecipe(this);
+	}
+
+	@Override
+	public Recipe fromNBT(TagCompound nbt)
+	{
+		if (nbt.hasTag(Tags.RECIPE_TYPE) && nbt.getTag(Tags.RECIPE_TYPE).value().equals("crafting_shapeless")) return this.fromNBTShapeless(nbt);
+		return this.fromNBTShaped(nbt);
+	}
+
+	/** Creates a Shaped Recipe from the input NBT Tag.
+	 * 
+	 * @param nbt - The NBT Tag describing the Recipe.
+	 * @return The created Recipe. */
+	private Recipe fromNBTShaped(TagCompound nbt)
+	{
+		this.type = SHAPED;
+		if (nbt.hasTag(Tags.RECIPE_GROUP)) this.group = nbt.getTag(Tags.RECIPE_GROUP).value();
+		if (nbt.hasTag(Tags.RECIPE_RESULT))
+		{
+			this.recipe[9] = new ItemStack().fromNBTForRecipe(nbt.getTag(Tags.RECIPE_RESULT));
+			this.recipe[9].slot = 9;
+		}
+
+		HashMap<Character, ItemStack> affectations = new HashMap<Character, ItemStack>();
+		if (nbt.hasTag(Tags.RECIPE_KEY)) for (Tag t : nbt.getTag(Tags.RECIPE_KEY).value())
+			affectations.put(t.id().charAt(0), new ItemStack().fromNBTForRecipe((TagCompound) t));
+
+		String pattern = "";
+		if (nbt.hasTag(Tags.RECIPE_KEY))
+		{
+			for (Tag t : nbt.getTag(Tags.RECIPE_PATTERN).value())
+			{
+				pattern += ((TagString) t).value();
+				while (pattern.length() % 3 != 0)
+					pattern += " ";
+			}
+			while (pattern.length() < 9)
+				pattern += " ";
+		} else pattern = "         ";
+
+		for (int i = 0; i < pattern.length(); ++i)
+			if (affectations.containsKey(pattern.charAt(i))) try
+			{
+				this.recipe[i] = affectations.get(pattern.charAt(i)).clone();
+				this.recipe[i].slot = i;
+			} catch (CloneNotSupportedException e)
+			{
+				e.printStackTrace();
+			}
+
+		return this;
+	}
+
+	/** Creates a Shapeless Recipe from the input NBT Tag.
+	 * 
+	 * @param nbt - The NBT Tag describing the Recipe.
+	 * @return The created Recipe. */
+	private Recipe fromNBTShapeless(TagCompound nbt)
+	{
+		this.type = SHAPELESS;
+		if (nbt.hasTag(Tags.RECIPE_GROUP)) this.group = nbt.getTag(Tags.RECIPE_GROUP).value();
+		if (nbt.hasTag(Tags.RECIPE_RESULT))
+		{
+			this.recipe[9] = new ItemStack().fromNBTForRecipe(nbt.getTag(Tags.RECIPE_RESULT));
+			this.recipe[9].slot = 9;
+		}
+		int i = 0;
+		if (nbt.hasTag(Tags.RECIPE_INGREDIENTS)) for (Tag t : nbt.getTag(Tags.RECIPE_INGREDIENTS).value())
+		{
+			if (i > 8) break;
+			this.recipe[i] = new ItemStack().fromNBTForRecipe((TagCompound) t);
+			this.recipe[i].slot = i;
+		}
+		return this;
 	}
 
 	@Override
@@ -365,20 +362,20 @@ public class Recipe extends GameObject<Recipe> implements IObjectList<Recipe>
 	@Override
 	public String toCommand()
 	{
-		return this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand(0);
+		return this.toNBT(Tags.DEFAULT_COMPOUND).valueForCommand(0);
+	}
+
+	@Override
+	public TagCompound toNBT(TemplateCompound container)
+	{
+		if (this.type == SHAPELESS) return this.shapelessToTag(container);
+		return this.shapedToTag(container);
 	}
 
 	@Override
 	public String toString()
 	{
 		return this.customName();
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
-	{
-		if (this.type == SHAPELESS) return this.shapelessToTag(container);
-		return this.shapedToTag(container);
 	}
 
 	@Override

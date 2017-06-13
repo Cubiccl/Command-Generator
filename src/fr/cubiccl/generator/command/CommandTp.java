@@ -143,15 +143,15 @@ public class CommandTp extends Command implements ActionListener
 		// tp <target player> <destination player>
 		// tp <player> <x> <y> <z> [<y-rot> <x-rot>]
 
-		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 1) this.panelTarget.setupFrom(new Target().fromString(argument));
 		if (index == 2)
 		{
 			boolean entity = fullCommand.length == 3;
 			this.panelDestination.setVisible(entity);
 			this.panelCoordinates.setVisible(!entity);
 			this.panelRotation.setVisible(!entity);
-			if (entity) this.panelDestination.setupFrom(Target.createFrom(argument));
-			else this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+			if (entity) this.panelDestination.setupFrom(new Target().fromString(argument));
+			else this.panelCoordinates.setupFrom(new Coordinates().fromString(argument, fullCommand[3], fullCommand[4]));
 		}
 		if (index == 5 || index == 6)
 		{

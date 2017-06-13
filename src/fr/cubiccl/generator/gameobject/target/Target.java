@@ -44,33 +44,6 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 		}
 	}
 
-	public static Target createFrom(String value)
-	{
-		if (!value.startsWith("@")) return new Target(value);
-		TargetType type = TargetType.ALL_ENTITIES;
-		if (value.charAt(1) == 'a') type = TargetType.ALL_PLAYERS;
-		else if (value.charAt(1) == 'p') type = TargetType.CLOSEST_PLAYER;
-		else if (value.charAt(1) == 'r') type = TargetType.RANDOM_PLAYER;
-		else if (value.charAt(1) == 's') type = TargetType.SELF;
-		if (value.length() == 2) return new Target(type);
-
-		String[] args = value.substring(3, value.length() - 1).split(",");
-		ArrayList<Argument> arguments = new ArrayList<Argument>();
-		for (String arg : args)
-		{
-			Argument a = Argument.createFrom(arg.split("=")[0], arg.split("=")[1]);
-			if (a != null) arguments.add(a);
-		}
-
-		return new Target(type, arguments.toArray(new Argument[arguments.size()]));
-	}
-
-	public static Target createFrom(TagCompound tag)
-	{
-		if (!tag.hasTag(Tags.TARGET.id())) return null;
-		return createFrom((String) tag.getTagFromId(Tags.TARGET.id()).value());
-	}
-
 	public static TargetType typeFromID(String id)
 	{
 		TargetType[] types = TargetType.values();
@@ -89,7 +62,6 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 	}
 
 	public Argument[] arguments;
-
 	public String playerName;
 	public TargetType type;
 
@@ -119,6 +91,35 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 		p.setupFrom(this);
 		p.setName(new Text("target.title.any"));
 		return p;
+	}
+
+	@Override
+	public Target fromNBT(TagCompound nbt)
+	{
+		if (!nbt.hasTag(Tags.TARGET.id())) return null;
+		return this.fromString((String) nbt.getTagFromId(Tags.TARGET.id()).value());
+	}
+
+	public Target fromString(String value)
+	{
+		if (!value.startsWith("@")) return new Target(value);
+		this.type = TargetType.ALL_ENTITIES;
+		if (value.charAt(1) == 'a') this.type = TargetType.ALL_PLAYERS;
+		else if (value.charAt(1) == 'p') this.type = TargetType.CLOSEST_PLAYER;
+		else if (value.charAt(1) == 'r') this.type = TargetType.RANDOM_PLAYER;
+		else if (value.charAt(1) == 's') this.type = TargetType.SELF;
+		if (value.length() == 2) return this;
+
+		String[] args = value.substring(3, value.length() - 1).split(",");
+		ArrayList<Argument> arguments = new ArrayList<Argument>();
+		for (String arg : args)
+		{
+			Argument a = Argument.createFrom(arg.split("=")[0], arg.split("=")[1]);
+			if (a != null) arguments.add(a);
+		}
+
+		this.arguments = arguments.toArray(new Argument[arguments.size()]);
+		return this;
 	}
 
 	@Override
@@ -164,6 +165,12 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 	}
 
 	@Override
+	public TagCompound toNBT(TemplateCompound container)
+	{
+		return container.create(Tags.TARGET.create(this.toCommand()));
+	}
+
+	@Override
 	public String toString()
 	{
 		if (this.type == TargetType.PLAYER) return this.playerName;
@@ -179,12 +186,6 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 			s += ")";
 		}
 		return s;
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
-	{
-		return container.create(Tags.TARGET.create(this.toCommand()));
 	}
 
 	@Override

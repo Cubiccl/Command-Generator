@@ -127,6 +127,13 @@ public abstract class Tag extends GameObject<Tag>
 
 	@Deprecated
 	@Override
+	public Tag fromNBT(TagCompound nbt)
+	{
+		return null;
+	}
+
+	@Deprecated
+	@Override
 	public Tag fromXML(Element xml)
 	{
 		return null;
@@ -171,16 +178,16 @@ public abstract class Tag extends GameObject<Tag>
 	}
 
 	@Override
-	public String toString()
+	@Deprecated
+	public TagCompound toNBT(TemplateCompound container)
 	{
-		return this.toCommand();
+		return null;
 	}
 
 	@Override
-	@Deprecated
-	public TagCompound toTag(TemplateCompound container)
+	public String toString()
 	{
-		return null;
+		return this.toCommand();
 	}
 
 	@Override

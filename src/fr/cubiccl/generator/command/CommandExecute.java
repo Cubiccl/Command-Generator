@@ -107,8 +107,8 @@ public class CommandExecute extends Command implements ActionListener
 	{
 		// execute <entity> <x> <y> <z> <command ...>
 		// execute <entity> <x> <y> <z> detect <x2> <y2> <z2> <block> <dataValue> <command ...>
-		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
-		if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+		if (index == 1) this.panelTarget.setupFrom(new Target().fromString(argument));
+		if (index == 2) this.panelCoordinates.setupFrom(new Coordinates().fromString(argument, fullCommand[3], fullCommand[4]));
 		if (index == 5)
 		{
 			boolean block = argument.startsWith("detect ");
@@ -119,7 +119,7 @@ public class CommandExecute extends Command implements ActionListener
 			{
 				String[] args = argument.split(" ");
 				if (args.length < 7) this.incorrectStructureError();
-				this.panelBlockCoordinates.setupFrom(Coordinates.createFrom(args[1], args[2], args[3]));
+				this.panelBlockCoordinates.setupFrom(new Coordinates().fromString(args[1], args[2], args[3]));
 				this.panelBlock.setBlock(ObjectRegistry.blocks.find(args[4]));
 				try
 				{

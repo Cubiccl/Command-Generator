@@ -65,7 +65,7 @@ public class CommandEnchant extends Command
 	{
 		// enchant <player> <enchantment> <level>
 
-		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 1) this.panelTarget.setupFrom(new Target().fromString(argument));
 		if (index == 2) this.panelEnchant.setEnchantment(ObjectRegistry.enchantments.find(argument));
 		if (index == 3) try
 		{

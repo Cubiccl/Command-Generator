@@ -91,7 +91,7 @@ public class CommandEffect extends Command implements ActionListener
 		// effect <player> <effect> [seconds] [amplifier] [hideParticles]
 		// effect <player> clear
 
-		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 1) this.panelTarget.setupFrom(new Target().fromString(argument));
 		if (index == 2) if (argument.equals("clear"))
 		{
 			this.comboboxMode.setValue("clear");

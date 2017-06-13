@@ -64,12 +64,12 @@ public class TemplatePose extends TemplateCompound
 		if (previousValue != null)
 		{
 			TagCompound t = (TagCompound) previousValue;
-			p.body.setupFrom(Coordinates.createFrom((TagList) t.getTagFromId(Tags.POSE_BODY.id())));
-			p.head.setupFrom(Coordinates.createFrom((TagList) t.getTagFromId(Tags.POSE_HEAD.id())));
-			p.leftArm.setupFrom(Coordinates.createFrom((TagList) t.getTagFromId(Tags.POSE_ARM_LEFT.id())));
-			p.rightArm.setupFrom(Coordinates.createFrom((TagList) t.getTagFromId(Tags.POSE_ARM_RIGHT.id())));
-			p.leftLeg.setupFrom(Coordinates.createFrom((TagList) t.getTagFromId(Tags.POSE_LEG_LEFT.id())));
-			p.rightLeg.setupFrom(Coordinates.createFrom((TagList) t.getTagFromId(Tags.POSE_LEG_RIGHT.id())));
+			p.body.setupFrom(new Coordinates().fromNBT((TagList) t.getTagFromId(Tags.POSE_BODY.id())));
+			p.head.setupFrom(new Coordinates().fromNBT((TagList) t.getTagFromId(Tags.POSE_HEAD.id())));
+			p.leftArm.setupFrom(new Coordinates().fromNBT((TagList) t.getTagFromId(Tags.POSE_ARM_LEFT.id())));
+			p.rightArm.setupFrom(new Coordinates().fromNBT((TagList) t.getTagFromId(Tags.POSE_ARM_RIGHT.id())));
+			p.leftLeg.setupFrom(new Coordinates().fromNBT((TagList) t.getTagFromId(Tags.POSE_LEG_LEFT.id())));
+			p.rightLeg.setupFrom(new Coordinates().fromNBT((TagList) t.getTagFromId(Tags.POSE_LEG_RIGHT.id())));
 		}
 
 		p.setName(this.title());

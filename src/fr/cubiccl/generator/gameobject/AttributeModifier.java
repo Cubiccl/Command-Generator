@@ -54,47 +54,6 @@ public class AttributeModifier extends GameObject<AttributeModifier> implements 
 	public static final String[] SLOTS =
 	{ "mainhand", "offhand", "feet", "legs", "chest", "head" };
 
-	/** Creates an Attribute Modifier from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Attribute Modifier.
-	 * @return The created Attribute Modifier. */
-	public static AttributeModifier createFrom(TagCompound tag)
-	{
-		Attribute a = ObjectRegistry.attributes.first();
-		String n = "";
-		ArrayList<String> s = new ArrayList<String>();
-		byte o = OP_ADD;
-		double am = 0, amm = -1;
-		long um = 0, ul = 0;
-
-		if (tag.hasTag(Tags.ATTRIBUTE_ATTRIBUTE_NAME)) a = ObjectRegistry.attributes.find(tag.getTag(Tags.ATTRIBUTE_ATTRIBUTE_NAME).value());
-		if (tag.hasTag(Tags.ATTRIBUTE_attribute_name)) a = ObjectRegistry.attributes.find(tag.getTag(Tags.ATTRIBUTE_attribute_name).value());
-		if (tag.hasTag(Tags.ATTRIBUTE_MODIFIER_NAME)) n = tag.getTag(Tags.ATTRIBUTE_MODIFIER_NAME).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_modifier_name)) n = tag.getTag(Tags.ATTRIBUTE_modifier_name).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_SLOT)) s.add(tag.getTag(Tags.ATTRIBUTE_SLOT).value());
-		if (tag.hasTag(Tags.ATTRIBUTE_slots))
-		{
-			for (Tag slot : tag.getTag(Tags.ATTRIBUTE_slots).value())
-				s.add(((TagString) slot).value());
-		}
-		if (tag.hasTag(Tags.ATTRIBUTE_OPERATION)) o = (byte) tag.getTag(Tags.ATTRIBUTE_OPERATION).valueInt();
-		if (tag.hasTag(Tags.ATTRIBUTE_operation)) o = (byte) tag.getTag(Tags.ATTRIBUTE_operation).valueInt();
-		if (tag.hasTag(Tags.ATTRIBUTE_AMOUNT)) am = tag.getTag(Tags.ATTRIBUTE_AMOUNT).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_amount)) am = tag.getTag(Tags.ATTRIBUTE_amount).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_amount_range))
-		{
-			TagCompound container = tag.getTag(Tags.ATTRIBUTE_amount_range);
-			am = container.getTag(TagsMain.VALUE_MIN_FLOAT).value();
-			amm = container.getTag(TagsMain.VALUE_MAX_FLOAT).value();
-		}
-		if (tag.hasTag(Tags.ATTRIBUTE_UUIDMOST)) um = (long) (double) tag.getTag(Tags.ATTRIBUTE_UUIDMOST).value();
-		if (tag.hasTag(Tags.ATTRIBUTE_UUIDLEAST)) ul = (long) (double) tag.getTag(Tags.ATTRIBUTE_UUIDLEAST).value();
-
-		AttributeModifier m = new AttributeModifier(a, n, s.toArray(new String[s.size()]), o, am, amm, um, ul);
-		m.findName(tag);
-		return m;
-	}
-
 	/** The amount to apply. When {@link AttributeModifier#amountMax} isn't -1, the minimum amount. */
 	public double amount;
 	/** If not -1, the maximum amount to apply. */
@@ -148,6 +107,39 @@ public class AttributeModifier extends GameObject<AttributeModifier> implements 
 	}
 
 	@Override
+	public AttributeModifier fromNBT(TagCompound nbt)
+	{
+		ArrayList<String> s = new ArrayList<String>();
+
+		if (nbt.hasTag(Tags.ATTRIBUTE_ATTRIBUTE_NAME)) this.attribute = ObjectRegistry.attributes.find(nbt.getTag(Tags.ATTRIBUTE_ATTRIBUTE_NAME).value());
+		if (nbt.hasTag(Tags.ATTRIBUTE_attribute_name)) this.attribute = ObjectRegistry.attributes.find(nbt.getTag(Tags.ATTRIBUTE_attribute_name).value());
+		if (nbt.hasTag(Tags.ATTRIBUTE_MODIFIER_NAME)) this.name = nbt.getTag(Tags.ATTRIBUTE_MODIFIER_NAME).value();
+		if (nbt.hasTag(Tags.ATTRIBUTE_modifier_name)) this.name = nbt.getTag(Tags.ATTRIBUTE_modifier_name).value();
+		if (nbt.hasTag(Tags.ATTRIBUTE_SLOT)) s.add(nbt.getTag(Tags.ATTRIBUTE_SLOT).value());
+		if (nbt.hasTag(Tags.ATTRIBUTE_slots))
+		{
+			for (Tag slot : nbt.getTag(Tags.ATTRIBUTE_slots).value())
+				s.add(((TagString) slot).value());
+		}
+		if (nbt.hasTag(Tags.ATTRIBUTE_OPERATION)) this.operation = (byte) nbt.getTag(Tags.ATTRIBUTE_OPERATION).valueInt();
+		if (nbt.hasTag(Tags.ATTRIBUTE_operation)) this.operation = (byte) nbt.getTag(Tags.ATTRIBUTE_operation).valueInt();
+		if (nbt.hasTag(Tags.ATTRIBUTE_AMOUNT)) this.amount = nbt.getTag(Tags.ATTRIBUTE_AMOUNT).value();
+		if (nbt.hasTag(Tags.ATTRIBUTE_amount)) this.amount = nbt.getTag(Tags.ATTRIBUTE_amount).value();
+		if (nbt.hasTag(Tags.ATTRIBUTE_amount_range))
+		{
+			TagCompound container = nbt.getTag(Tags.ATTRIBUTE_amount_range);
+			this.amount = container.getTag(TagsMain.VALUE_MIN_FLOAT).value();
+			this.amountMax = container.getTag(TagsMain.VALUE_MAX_FLOAT).value();
+		}
+		if (nbt.hasTag(Tags.ATTRIBUTE_UUIDMOST)) this.UUIDMost = (long) (double) nbt.getTag(Tags.ATTRIBUTE_UUIDMOST).value();
+		if (nbt.hasTag(Tags.ATTRIBUTE_UUIDLEAST)) this.UUIDLeast = (long) (double) nbt.getTag(Tags.ATTRIBUTE_UUIDLEAST).value();
+
+		this.slots = s.toArray(new String[s.size()]);
+		this.findName(nbt);
+		return this;
+	}
+
+	@Override
 	public AttributeModifier fromXML(Element xml)
 	{
 		ArrayList<String> slots = new ArrayList<String>();
@@ -197,6 +189,13 @@ public class AttributeModifier extends GameObject<AttributeModifier> implements 
 	}
 
 	@Override
+	@Deprecated
+	public TagCompound toNBT(TemplateCompound container)
+	{
+		return this.toTag(container, false);
+	}
+
+	@Override
 	public String toString()
 	{
 		String display = "";
@@ -205,13 +204,6 @@ public class AttributeModifier extends GameObject<AttributeModifier> implements 
 		if (this.operation == OP_MULTIPLY) display += "%";
 		display += " " + this.attribute.name().toString();
 		return display;
-	}
-
-	@Override
-	@Deprecated
-	public TagCompound toTag(TemplateCompound container)
-	{
-		return this.toTag(container, false);
 	}
 
 	/** @param isApplied - True if is applied to an entity. Thus attribute and slot won't be included. */

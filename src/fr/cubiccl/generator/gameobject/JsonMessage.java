@@ -10,7 +10,10 @@ import javax.swing.JLabel;
 
 import org.jdom2.Element;
 
-import fr.cubiccl.generator.gameobject.tags.*;
+import fr.cubiccl.generator.gameobject.tags.NBTParser;
+import fr.cubiccl.generator.gameobject.tags.Tag;
+import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.tags.TagString;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
@@ -59,68 +62,6 @@ public class JsonMessage extends GameObject<JsonMessage> implements IObjectList<
 	 * </tr>
 	 * </table> */
 	public static final byte TEXT = 0, TRANSLATE = 1, SCORE = 2, SELECTOR = 3;
-
-	/** Creates a Json Message from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Json Message.
-	 * @return The created Json Message. */
-	public static JsonMessage createFrom(TagCompound tag)
-	{
-		JsonMessage message = new JsonMessage(TEXT, "", 0);
-		for (Tag t : tag.value())
-		{
-			if (t.id().equals(JSON_TRANSLATE.id()))
-			{
-				message.mode = TRANSLATE;
-				message.text = (String) t.value();
-			}
-
-			if (t.id().equals(JSON_SCORE.id()))
-			{
-				message.mode = SCORE;
-				message.text = (String) ((TagCompound) t).getTagFromId(SCORE_OBJECTIVE.id()).value();
-				message.target = (String) ((TagCompound) t).getTagFromId(SCORE_TARGET.id()).value();
-			}
-
-			if (t.id().equals(JSON_SELECTOR.id()))
-			{}
-
-			if (t.id().equals(JSON_SELECTOR.id()))
-			{
-				message.mode = SELECTOR;
-				message.text = (String) t.value();
-			}
-
-			if (t.id().equals(JSON_TEXT.id()))
-			{
-				message.mode = TEXT;
-				message.text = (String) t.value();
-			}
-
-			if (t.id().equals(TEXT_COLOR.id())) message.color = getColorID((String) t.value());
-			if (t.id().equals(TEXT_BOLD.id())) message.bold = t.value().equals("true");
-			if (t.id().equals(TEXT_UNDERLINED.id())) message.underlined = t.value().equals("true");
-			if (t.id().equals(TEXT_ITALIC.id())) message.italic = t.value().equals("true");
-			if (t.id().equals(TEXT_STRIKETHROUGH.id())) message.strikethrough = t.value().equals("true");
-			if (t.id().equals(TEXT_OBFUSCATED.id())) message.obfuscated = t.value().equals("true");
-			if (t.id().equals(TEXT_INSERTION.id())) message.insertion = (String) t.value();
-
-			if (t.id().equals(EVENT_CLICK.id()))
-			{
-				message.clickAction = (String) ((TagCompound) t).getTagFromId(EVENT_ACTION.id()).value();
-				message.clickValue = (String) ((TagCompound) t).getTagFromId(EVENT_VALUE.id()).value();
-			}
-			if (t.id().equals(EVENT_HOVER.id()))
-			{
-				message.hoverAction = (String) ((TagCompound) t).getTagFromId(EVENT_ACTION.id()).value();
-				Tag value = ((TagCompound) t).getTagFromId(EVENT_VALUE.id());
-				if (value instanceof TagString) message.hoverValue = ((TagString) value).value();
-				else message.hoverValue = JsonMessage.createFrom((TagCompound) value);
-			}
-		}
-		message.findName(tag);
-		return message;
-	}
 
 	/** @param value - A Color as a string.
 	 * @return The numerical ID of the Color. */
@@ -207,12 +148,69 @@ public class JsonMessage extends GameObject<JsonMessage> implements IObjectList<
 	}
 
 	@Override
+	public JsonMessage fromNBT(TagCompound nbt)
+	{
+		for (Tag t : nbt.value())
+		{
+			if (t.id().equals(JSON_TRANSLATE.id()))
+			{
+				this.mode = TRANSLATE;
+				this.text = (String) t.value();
+			}
+
+			if (t.id().equals(JSON_SCORE.id()))
+			{
+				this.mode = SCORE;
+				this.text = (String) ((TagCompound) t).getTagFromId(SCORE_OBJECTIVE.id()).value();
+				this.target = (String) ((TagCompound) t).getTagFromId(SCORE_TARGET.id()).value();
+			}
+
+			if (t.id().equals(JSON_SELECTOR.id()))
+			{}
+
+			if (t.id().equals(JSON_SELECTOR.id()))
+			{
+				this.mode = SELECTOR;
+				this.text = (String) t.value();
+			}
+
+			if (t.id().equals(JSON_TEXT.id()))
+			{
+				this.mode = TEXT;
+				this.text = (String) t.value();
+			}
+
+			if (t.id().equals(TEXT_COLOR.id())) this.color = getColorID((String) t.value());
+			if (t.id().equals(TEXT_BOLD.id())) this.bold = t.value().equals("true");
+			if (t.id().equals(TEXT_UNDERLINED.id())) this.underlined = t.value().equals("true");
+			if (t.id().equals(TEXT_ITALIC.id())) this.italic = t.value().equals("true");
+			if (t.id().equals(TEXT_STRIKETHROUGH.id())) this.strikethrough = t.value().equals("true");
+			if (t.id().equals(TEXT_OBFUSCATED.id())) this.obfuscated = t.value().equals("true");
+			if (t.id().equals(TEXT_INSERTION.id())) this.insertion = (String) t.value();
+
+			if (t.id().equals(EVENT_CLICK.id()))
+			{
+				this.clickAction = (String) ((TagCompound) t).getTagFromId(EVENT_ACTION.id()).value();
+				this.clickValue = (String) ((TagCompound) t).getTagFromId(EVENT_VALUE.id()).value();
+			}
+			if (t.id().equals(EVENT_HOVER.id()))
+			{
+				this.hoverAction = (String) ((TagCompound) t).getTagFromId(EVENT_ACTION.id()).value();
+				Tag value = ((TagCompound) t).getTagFromId(EVENT_VALUE.id());
+				if (value instanceof TagString) this.hoverValue = ((TagString) value).value();
+				else this.hoverValue = new JsonMessage().fromNBT((TagCompound) value);
+			}
+		}
+		this.findName(nbt);
+		return this;
+	}
+
+	@Override
 	public JsonMessage fromXML(Element xml)
 	{
-		// TODO this
-		JsonMessage message = createFrom((TagCompound) NBTParser.parse(xml.getChildText("message"), true, false, true));
-		message.findProperties(xml);
-		return message;
+		this.fromNBT((TagCompound) NBTParser.parse(xml.getChildText("message"), true, false, true));
+		this.findProperties(xml);
+		return this;
 	}
 
 	@Override
@@ -254,13 +252,7 @@ public class JsonMessage extends GameObject<JsonMessage> implements IObjectList<
 	}
 
 	@Override
-	public String toString()
-	{
-		return this.toTag(DEFAULT_COMPOUND).valueForCommand();
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toNBT(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 
@@ -295,7 +287,7 @@ public class JsonMessage extends GameObject<JsonMessage> implements IObjectList<
 		{
 			if (this.hoverValue instanceof String) tags.add(EVENT_HOVER.create(EVENT_ACTION.create(this.hoverAction),
 					EVENT_VALUE.create((String) this.hoverValue)));
-			else tags.add(EVENT_HOVER.create(EVENT_ACTION.create(this.hoverAction), ((JsonMessage) this.hoverValue).toTag(Tags.EVENT_VALUE_JSON)));
+			else tags.add(EVENT_HOVER.create(EVENT_ACTION.create(this.hoverAction), ((JsonMessage) this.hoverValue).toNBT(Tags.EVENT_VALUE_JSON)));
 		}
 
 		TagCompound tag = container.create(tags.toArray(new Tag[tags.size()]));
@@ -304,9 +296,15 @@ public class JsonMessage extends GameObject<JsonMessage> implements IObjectList<
 	}
 
 	@Override
+	public String toString()
+	{
+		return this.toNBT(DEFAULT_COMPOUND).valueForCommand();
+	}
+
+	@Override
 	public Element toXML()
 	{
-		return this.createRoot("json").addContent(new Element("message").setText(this.toTag(Tags.DEFAULT_COMPOUND).valueForCommand()));
+		return this.createRoot("json").addContent(new Element("message").setText(this.toNBT(Tags.DEFAULT_COMPOUND).valueForCommand()));
 	}
 
 	@Override

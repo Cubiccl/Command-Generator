@@ -22,28 +22,6 @@ import fr.cubiccl.generator.utils.Text;
 public class TradeOffer extends GameObject<TradeOffer> implements IObjectList<TradeOffer>
 {
 
-	/** Creates a Trade Offer from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Trade Offer.
-	 * @return The created Trade Offer. */
-	public static TradeOffer createFrom(TagCompound tag)
-	{
-		TradeOffer trade = new TradeOffer();
-
-		for (Tag t : tag.value())
-		{
-			if (t.id().equals(Tags.OFFER_EXP.id())) trade.experienceReward = ((TagNumber) t).value() == 1;
-			else if (t.id().equals(Tags.OFFER_MAX_USES.id())) trade.maxUses = ((TagNumber) t).valueInt();
-			else if (t.id().equals(Tags.OFFER_USES.id())) trade.uses = ((TagNumber) t).valueInt();
-			else if (t.id().equals(Tags.OFFER_BUY.id())) trade.buy = ItemStack.createFrom((TagCompound) t);
-			else if (t.id().equals(Tags.OFFER_BUYB.id())) trade.buySecondary = ItemStack.createFrom((TagCompound) t);
-			else if (t.id().equals(Tags.OFFER_SELL.id())) trade.sell = ItemStack.createFrom((TagCompound) t);
-		}
-
-		trade.findName(tag);
-		return trade;
-	}
-
 	/** The bought Item. */
 	private ItemStack buy = null;
 	/** The secondary bought Item. Can be <code>null</code> if only one Item is bought. */
@@ -69,15 +47,32 @@ public class TradeOffer extends GameObject<TradeOffer> implements IObjectList<Tr
 	}
 
 	@Override
-	public TradeOffer fromXML(Element trade)
+	public TradeOffer fromNBT(TagCompound nbt)
 	{
-		this.buy = new ItemStack().fromXML(trade.getChild("buy"));
-		if (trade.getChild("buy2") != null) this.buySecondary = new ItemStack().fromXML(trade.getChild("buy2"));
-		this.sell = new ItemStack().fromXML(trade.getChild("sell"));
-		this.experienceReward = Boolean.parseBoolean(trade.getChildText("exp"));
-		this.uses = Integer.parseInt(trade.getChildText("uses"));
-		this.maxUses = Integer.parseInt(trade.getChildText("usesmax"));
-		this.findProperties(trade);
+		for (Tag t : nbt.value())
+		{
+			if (t.id().equals(Tags.OFFER_EXP.id())) this.experienceReward = ((TagNumber) t).value() == 1;
+			else if (t.id().equals(Tags.OFFER_MAX_USES.id())) this.maxUses = ((TagNumber) t).valueInt();
+			else if (t.id().equals(Tags.OFFER_USES.id())) this.uses = ((TagNumber) t).valueInt();
+			else if (t.id().equals(Tags.OFFER_BUY.id())) this.buy = new ItemStack().fromNBT((TagCompound) t);
+			else if (t.id().equals(Tags.OFFER_BUYB.id())) this.buySecondary = new ItemStack().fromNBT((TagCompound) t);
+			else if (t.id().equals(Tags.OFFER_SELL.id())) this.sell = new ItemStack().fromNBT((TagCompound) t);
+		}
+
+		this.findName(nbt);
+		return this;
+	}
+
+	@Override
+	public TradeOffer fromXML(Element xml)
+	{
+		this.buy = new ItemStack().fromXML(xml.getChild("buy"));
+		if (xml.getChild("buy2") != null) this.buySecondary = new ItemStack().fromXML(xml.getChild("buy2"));
+		this.sell = new ItemStack().fromXML(xml.getChild("sell"));
+		this.experienceReward = Boolean.parseBoolean(xml.getChildText("exp"));
+		this.uses = Integer.parseInt(xml.getChildText("uses"));
+		this.maxUses = Integer.parseInt(xml.getChildText("usesmax"));
+		this.findProperties(xml);
 		return this;
 	}
 
@@ -145,22 +140,22 @@ public class TradeOffer extends GameObject<TradeOffer> implements IObjectList<Tr
 	}
 
 	@Override
-	public String toString()
-	{
-		return this.buy.toString() + (this.buySecondary != null ? " + " + this.buySecondary.toString() : "") + " -> " + this.sell.toString();
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toNBT(TemplateCompound container)
 	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		tags.add(Tags.OFFER_EXP.create(this.experienceReward ? 1 : 0));
 		tags.add(Tags.OFFER_MAX_USES.create(this.maxUses));
 		tags.add(Tags.OFFER_USES.create(this.uses));
-		tags.add(this.buy.toTag(Tags.OFFER_BUY));
-		if (this.buySecondary != null) tags.add(this.buySecondary.toTag(Tags.OFFER_BUYB));
-		tags.add(this.sell.toTag(Tags.OFFER_SELL));
+		tags.add(this.buy.toNBT(Tags.OFFER_BUY));
+		if (this.buySecondary != null) tags.add(this.buySecondary.toNBT(Tags.OFFER_BUYB));
+		tags.add(this.sell.toNBT(Tags.OFFER_SELL));
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public String toString()
+	{
+		return this.buy.toString() + (this.buySecondary != null ? " + " + this.buySecondary.toString() : "") + " -> " + this.sell.toString();
 	}
 
 	@Override

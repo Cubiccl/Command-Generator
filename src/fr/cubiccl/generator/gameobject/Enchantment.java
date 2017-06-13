@@ -25,26 +25,6 @@ import fr.cubiccl.generator.utils.Text;
 public class Enchantment extends GameObject<Enchantment> implements IObjectList<Enchantment>
 {
 
-	/** Creates an Enchantment from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Enchantment.
-	 * @return The created Enchantment. */
-	public static Enchantment createFrom(TagCompound tag)
-	{
-		EnchantmentType type = ObjectRegistry.enchantments.first();
-		int level = 1;
-		for (Tag t : tag.value())
-		{
-			if (t.id().equals(Tags.ENCHANTMENT_ID.id())) type = ObjectRegistry.enchantments.find(((TagNumber) t).valueInt());
-			if (t.id().equals(Tags.ENCHANTMENT_IDSTRING.id())) type = ObjectRegistry.enchantments.find(((TagString) t).value());
-			if (t.id().equals(Tags.ENCHANTMENT_LVL.id())) level = ((TagNumber) t).valueInt();
-		}
-		Enchantment e = new Enchantment(type, level);
-		e.level.findValue(tag);
-		e.findName(tag);
-		return e;
-	}
-
 	/** This Enchantment's level. */
 	private TestValue level;
 	/** This {@link EnchantmentType Enchantment type}. */
@@ -69,6 +49,20 @@ public class Enchantment extends GameObject<Enchantment> implements IObjectList<
 		PanelEnchantment p = new PanelEnchantment(false, properties.hasCustomObjects(), properties.isTrue("testing"));
 		p.setupFrom(this);
 		return p;
+	}
+
+	@Override
+	public Enchantment fromNBT(TagCompound nbt)
+	{
+		for (Tag t : nbt.value())
+		{
+			if (t.id().equals(Tags.ENCHANTMENT_ID.id())) this.type = ObjectRegistry.enchantments.find(((TagNumber) t).valueInt());
+			if (t.id().equals(Tags.ENCHANTMENT_IDSTRING.id())) this.type = ObjectRegistry.enchantments.find(((TagString) t).value());
+			if (t.id().equals(Tags.ENCHANTMENT_LVL.id())) this.setLevel(((TagNumber) t).valueInt());
+		}
+		this.level.findValue(nbt);
+		this.findName(nbt);
+		return this;
 	}
 
 	/** Creates an Enchantment from the input XML element.
@@ -128,16 +122,16 @@ public class Enchantment extends GameObject<Enchantment> implements IObjectList<
 	}
 
 	@Override
+	public TagCompound toNBT(TemplateCompound container)
+	{
+		return container.create(Tags.ENCHANTMENT_ID.create(this.type.idInt), Tags.ENCHANTMENT_LVL.create(this.getLevel()));
+	}
+
+	@Override
 	public String toString()
 	{
 		if (this.level.isRanged) return this.type.name().toString() + " " + this.getLevel() + "-" + (int) this.level.valueMax;
 		return this.type.name().toString() + " " + this.getLevel();
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
-	{
-		return container.create(Tags.ENCHANTMENT_ID.create(this.type.idInt), Tags.ENCHANTMENT_LVL.create(this.getLevel()));
 	}
 
 	public TagCompound toTagForTest(TemplateCompound container)

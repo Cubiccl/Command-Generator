@@ -153,7 +153,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 		if (index == 1) this.comboboxMode.setValue(argument);
 		if (block)
 		{
-			if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+			if (index == 2) this.panelCoordinates.setupFrom(new Coordinates().fromString(argument, fullCommand[3], fullCommand[4]));
 			if (index == 5) this.selectedBlockSlot = argument;
 			if (index == 6) this.panelItem.setItem(ObjectRegistry.items.find(argument));
 			if (index == 7) try
@@ -169,7 +169,7 @@ public class CommandReplaceitem extends Command implements ActionListener, IStat
 			if (index == 9) this.panelItem.setTags(((TagCompound) NBTParser.parse(argument, true, false)).value());
 		} else
 		{
-			if (index == 2) this.panelTarget.setupFrom(Target.createFrom(argument));
+			if (index == 2) this.panelTarget.setupFrom(new Target().fromString(argument));
 			if (index == 3) this.selectedEntitySlot = argument;
 			if (index == 4) this.panelItem.setItem(ObjectRegistry.items.find(argument));
 			if (index == 5) try

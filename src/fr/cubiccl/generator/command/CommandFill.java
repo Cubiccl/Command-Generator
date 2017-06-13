@@ -132,8 +132,8 @@ public class CommandFill extends Command implements ActionListener
 		// fill <x1> <y1> <z1> <x2> <y2> <z2> <block> [dataValue] [oldBlockHandling] [dataTag]
 		// fill <x1> <y1> <z1> <x2> <y2> <z2> <block> <dataValue> replace <replaceTileName> [replaceDataValue]
 
-		if (index == 1) this.panelCoordinatesStart.setupFrom(Coordinates.createFrom(argument, fullCommand[2], fullCommand[3]));
-		if (index == 4) this.panelCoordinatesEnd.setupFrom(Coordinates.createFrom(argument, fullCommand[5], fullCommand[6]));
+		if (index == 1) this.panelCoordinatesStart.setupFrom(new Coordinates().fromString(argument, fullCommand[2], fullCommand[3]));
+		if (index == 4) this.panelCoordinatesEnd.setupFrom(new Coordinates().fromString(argument, fullCommand[5], fullCommand[6]));
 		if (index == 7) this.panelBlockFill.setBlock(ObjectRegistry.blocks.find(argument));
 		if (index == 8 && !argument.equals("-1")) try
 		{

@@ -81,16 +81,6 @@ public class CommandTitle extends Command implements ActionListener
 	}
 
 	@Override
-	protected void onParsingEnd()
-	{
-		String mode = this.comboboxMode.getValue();
-		this.panelJson.setVisible(mode.equals("title") || mode.equals("subtitle") || mode.equals("actionbar"));
-		this.entryFadeIn.container.setVisible(mode.equals("times"));
-		this.entryStay.container.setVisible(mode.equals("times"));
-		this.entryFadeOut.container.setVisible(mode.equals("times"));
-	}
-
-	@Override
 	public String generate() throws CommandGenerationException
 	{
 		String mode = this.comboboxMode.getValue();
@@ -108,13 +98,23 @@ public class CommandTitle extends Command implements ActionListener
 	}
 
 	@Override
+	protected void onParsingEnd()
+	{
+		String mode = this.comboboxMode.getValue();
+		this.panelJson.setVisible(mode.equals("title") || mode.equals("subtitle") || mode.equals("actionbar"));
+		this.entryFadeIn.container.setVisible(mode.equals("times"));
+		this.entryStay.container.setVisible(mode.equals("times"));
+		this.entryFadeOut.container.setVisible(mode.equals("times"));
+	}
+
+	@Override
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
 		// title <player> <title|subtitle|actionbar> <json>
 		// title <player> times <fadeIn> <stay> <fadeOut>
 		// title <player> <clear|reset>
 
-		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 1) this.panelTarget.setupFrom(new Target().fromString(argument));
 		if (index == 2) this.comboboxMode.setValue(argument);
 		if (index == 3) if (this.comboboxMode.getValue().equals("times")) try
 		{
@@ -125,9 +125,9 @@ public class CommandTitle extends Command implements ActionListener
 		{
 			this.panelJson.clear();
 			Tag t = NBTParser.parse(argument, true, true);
-			if (t instanceof TagCompound) this.panelJson.addMessage(JsonMessage.createFrom((TagCompound) t));
+			if (t instanceof TagCompound) this.panelJson.addMessage(new JsonMessage().fromNBT((TagCompound) t));
 			else for (Tag tag : ((TagList) t).value())
-				this.panelJson.addMessage(JsonMessage.createFrom((TagCompound) tag));
+				this.panelJson.addMessage(new JsonMessage().fromNBT((TagCompound) tag));
 		}
 		if (index == 4) try
 		{

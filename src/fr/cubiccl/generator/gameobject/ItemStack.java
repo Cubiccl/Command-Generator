@@ -25,65 +25,6 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 public class ItemStack extends GameObject<ItemStack> implements IObjectList<ItemStack>
 {
 
-	/** Creates an Item Stack from the input NBT Tag, for a Recipe (uses different NBT Tags).
-	 * 
-	 * @param tag - The NBT Tag describing the Item Stack.
-	 * @return The created Item Stack. */
-	public static ItemStack createForRecipe(TagCompound tag)
-	{
-		Item i = ObjectRegistry.items.first();
-		int a = 1, d = 0;
-
-		for (Tag t : tag.value())
-		{
-			if (t.id().equals(Tags.RECIPE_ITEM_ID.id())) i = ObjectRegistry.items.find(((TagString) t).value);
-			if (t.id().equals(Tags.RECIPE_ITEM_COUNT.id())) a = ((TagNumber) t).valueInt();
-			if (t.id().equals(Tags.RECIPE_ITEM_DATA.id())) d = ((TagNumber) t).valueInt();
-		}
-
-		ItemStack is = new ItemStack(i, d, a, Tags.DEFAULT_COMPOUND.create());
-		is.findName(tag);
-		return is;
-	}
-
-	/** Creates an Item Stack from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Item Stack.
-	 * @return The created Item Stack. */
-	public static ItemStack createFrom(TagCompound tag)
-	{
-		return createFrom(tag, false);
-	}
-
-	/** Creates an Item Stack from the input NBT Tag.
-	 * 
-	 * @param tag - The NBT Tag describing the Item Stack.
-	 * @param allowNull - <code>true</code> if some elements such as Item ID or count can be omitted.
-	 * @return The created Item Stack. */
-	public static ItemStack createFrom(TagCompound tag, boolean allowNull)
-	{
-		Item i = allowNull ? null : ObjectRegistry.items.first();
-		int a = allowNull ? -1 : 1, d = allowNull ? -1 : 0, s = -1;
-		TagCompound nbt = Tags.ITEM_NBT.create();
-
-		for (Tag t : tag.value())
-		{
-			if (t.id().equals(Tags.ITEM_ID.id()) || t.id().equals(Tags.ITEM_IDITEM.id())) i = ObjectRegistry.items.find(((TagString) t).value);
-			if (t.id().equals(Tags.ITEM_COUNT.id()) || t.id().equals(Tags.RECIPE_ITEM_COUNT.id())) a = ((TagNumber) t).valueInt();
-			if (t.id().equals(Tags.ITEM_DAMAGE.id()) || t.id().equals(Tags.RECIPE_ITEM_DATA.id())) d = ((TagNumber) t).valueInt();
-			if (t.id().equals(Tags.ITEM_SLOT.id())) s = ((TagNumber) t).valueInt();
-			if (t.id().equals(Tags.ITEM_NBT.id())) nbt = (TagCompound) t;
-			if (t.id().equals(Tags.CRITERIA_POTION.id())) nbt.addTag(t);
-			if (t.id().equals(Tags.ITEM_ENCHANTMENTS.id())) nbt.addTag(t);
-			if (t.id().equals(Tags.CRITERIA_NBT.id())) nbt.addTag(t);
-		}
-
-		ItemStack is = new ItemStack(i, d, a, nbt);
-		is.slot = s;
-		is.findName(tag);
-		return is;
-	}
-
 	/** The number of Items in this Stack. */
 	public int amount;
 	/** The damage value of the Item. */
@@ -167,7 +108,7 @@ public class ItemStack extends GameObject<ItemStack> implements IObjectList<Item
 			TagList ench = (TagList) this.nbt.getTagFromId("ench");
 			Enchantment[] e = new Enchantment[ench.size()];
 			for (int i = 0; i < e.length; ++i)
-				e[i] = Enchantment.createFrom((TagCompound) ench.getTag(i));
+				e[i] = new Enchantment().fromNBT((TagCompound) ench.getTag(i));
 			return e;
 		}
 		return new Enchantment[0];
@@ -189,6 +130,58 @@ public class ItemStack extends GameObject<ItemStack> implements IObjectList<Item
 			}
 		}
 		return new String[0];
+	}
+
+	@Override
+	public ItemStack fromNBT(TagCompound tag)
+	{
+		return this.fromNBT(tag, false);
+	}
+
+	/** Creates an Item Stack from the input NBT Tag.
+	 * 
+	 * @param tag - The NBT Tag describing the Item Stack.
+	 * @param allowNull - <code>true</code> if some elements such as Item ID or count can be omitted.
+	 * @return The created Item Stack. */
+	public ItemStack fromNBT(TagCompound tag, boolean allowNull)
+	{
+		this.item = allowNull ? null : ObjectRegistry.items.first();
+		this.amount = allowNull ? -1 : 1;
+		this.damage = allowNull ? -1 : 0;
+		this.slot = -1;
+		this.nbt = Tags.ITEM_NBT.create();
+
+		for (Tag t : tag.value())
+		{
+			if (t.id().equals(Tags.ITEM_ID.id()) || t.id().equals(Tags.ITEM_IDITEM.id())) this.item = ObjectRegistry.items.find(((TagString) t).value);
+			if (t.id().equals(Tags.ITEM_COUNT.id()) || t.id().equals(Tags.RECIPE_ITEM_COUNT.id())) this.amount = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.ITEM_DAMAGE.id()) || t.id().equals(Tags.RECIPE_ITEM_DATA.id())) this.damage = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.ITEM_SLOT.id())) this.slot = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.ITEM_NBT.id())) this.nbt = (TagCompound) t;
+			if (t.id().equals(Tags.CRITERIA_POTION.id())) this.nbt.addTag(t);
+			if (t.id().equals(Tags.ITEM_ENCHANTMENTS.id())) this.nbt.addTag(t);
+			if (t.id().equals(Tags.CRITERIA_NBT.id())) this.nbt.addTag(t);
+		}
+
+		this.findName(tag);
+		return this;
+	}
+
+	/** Creates an Item Stack from the input NBT Tag, for a Recipe (uses different NBT Tags).
+	 * 
+	 * @param tag - The NBT Tag describing the Item Stack.
+	 * @return The created Item Stack. */
+	public ItemStack fromNBTForRecipe(TagCompound tag)
+	{
+		for (Tag t : tag.value())
+		{
+			if (t.id().equals(Tags.RECIPE_ITEM_ID.id())) this.item = ObjectRegistry.items.find(((TagString) t).value);
+			if (t.id().equals(Tags.RECIPE_ITEM_COUNT.id())) this.amount = ((TagNumber) t).valueInt();
+			if (t.id().equals(Tags.RECIPE_ITEM_DATA.id())) this.damage = ((TagNumber) t).valueInt();
+		}
+
+		this.findName(tag);
+		return this;
 	}
 
 	@Override
@@ -276,14 +269,7 @@ public class ItemStack extends GameObject<ItemStack> implements IObjectList<Item
 	}
 
 	@Override
-	public String toString()
-	{
-		if (this.amount == -1) return this.item.name(this.damage).toString();
-		return this.amount + " " + this.item.name(this.damage);
-	}
-
-	@Override
-	public TagCompound toTag(TemplateCompound container)
+	public TagCompound toNBT(TemplateCompound container)
 	{
 		// IF YOU CHANGE THIS CHANGE ALSO BELOW FOR RECIPE AND TEST
 		ArrayList<Tag> tags = new ArrayList<Tag>();
@@ -293,6 +279,13 @@ public class ItemStack extends GameObject<ItemStack> implements IObjectList<Item
 		if (this.slot != -1) tags.add(Tags.ITEM_SLOT.create(this.slot));
 		tags.add(this.nbt);
 		return container.create(tags.toArray(new Tag[tags.size()]));
+	}
+
+	@Override
+	public String toString()
+	{
+		if (this.amount == -1) return this.item.name(this.damage).toString();
+		return this.amount + " " + this.item.name(this.damage);
 	}
 
 	/** Converts this Object to a NBT Tag, for a Recipe.

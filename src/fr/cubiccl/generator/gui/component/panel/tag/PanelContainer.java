@@ -188,7 +188,7 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 		ItemStack[] generated = this.generateItems(hasSlot);
 		TagCompound[] tags = new TagCompound[generated.length];
 		for (int i = 0; i < tags.length; i++)
-			tags[i] = generated[i].toTag(Tags.DEFAULT_COMPOUND);
+			tags[i] = generated[i].toNBT(Tags.DEFAULT_COMPOUND);
 		return template.create(tags);
 	}
 
@@ -278,7 +278,7 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 		ItemStack[] items = new ItemStack[previousValue.size()];
 		for (int i = 0; i < items.length; ++i)
 		{
-			ItemStack stack = ItemStack.createFrom((TagCompound) previousValue.getTag(i));
+			ItemStack stack = new ItemStack().fromNBT((TagCompound) previousValue.getTag(i));
 			items[i] = stack;
 		}
 		this.setupFrom(items);

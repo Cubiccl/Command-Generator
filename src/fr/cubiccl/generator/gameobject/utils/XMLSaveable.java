@@ -8,7 +8,7 @@ public interface XMLSaveable<T>
 
 	/** Loads this Object from the input XML element.
 	 * 
-	 * @param coord - The XLM element describing this Objects.
+	 * @param xml - The XLM element describing this Objects.
 	 * @return This loaded Object. */
 	public T fromXML(Element xml);
 

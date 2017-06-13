@@ -32,7 +32,7 @@ public class TemplateItem extends TemplateCompound
 		PanelItem p = new PanelItem(null, items);
 
 		if (this.autoselect != null) p.setupFrom(new ItemStack(ObjectRegistry.items.find(this.autoselect), 0, 1));
-		if (previousValue != null) p.setupFrom(ItemStack.createFrom((TagCompound) previousValue));
+		if (previousValue != null) p.setupFrom(new ItemStack().fromNBT((TagCompound) previousValue));
 		p.setName(this.title());
 		return p;
 	}
@@ -42,7 +42,7 @@ public class TemplateItem extends TemplateCompound
 	{
 		ItemStack i = ((PanelItem) panel).generate();
 		i.slot = -1;
-		return i.toTag(this);
+		return i.toNBT(this);
 	}
 
 	public void setAutoselect(String id)

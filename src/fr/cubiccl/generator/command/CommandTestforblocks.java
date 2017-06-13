@@ -72,9 +72,9 @@ public class CommandTestforblocks extends Command
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
 		// testforblocks <pattern-coordinates-start> <pattern-coordinates-end> <test-coordinates> [mode]
-		if (index == 1) this.panelCoordinatesSourceStart.setupFrom(Coordinates.createFrom(argument, fullCommand[2], fullCommand[3]));
-		if (index == 4) this.panelCoordinatesSourceEnd.setupFrom(Coordinates.createFrom(argument, fullCommand[5], fullCommand[6]));
-		if (index == 7) this.panelCoordinatesDestination.setupFrom(Coordinates.createFrom(argument, fullCommand[8], fullCommand[9]));
+		if (index == 1) this.panelCoordinatesSourceStart.setupFrom(new Coordinates().fromString(argument, fullCommand[2], fullCommand[3]));
+		if (index == 4) this.panelCoordinatesSourceEnd.setupFrom(new Coordinates().fromString(argument, fullCommand[5], fullCommand[6]));
+		if (index == 7) this.panelCoordinatesDestination.setupFrom(new Coordinates().fromString(argument, fullCommand[8], fullCommand[9]));
 		if (index == 10) this.comboboxMode.setValue(argument);
 	}
 

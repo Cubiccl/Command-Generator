@@ -114,7 +114,7 @@ public class CommandSpreadplayers extends Command
 		if (index == 6)
 		{
 			for (String s : argument.split(" "))
-				this.list.add(Target.createFrom(s));
+				this.list.add(new Target().fromString(s));
 		}
 	}
 }

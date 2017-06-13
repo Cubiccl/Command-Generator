@@ -243,7 +243,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener,
 			this.comboboxMode.setValue(argument);
 			this.onModeChange();
 		}
-		if (index == 2) this.panelTarget.setupFrom(Target.createFrom(argument));
+		if (index == 2) this.panelTarget.setupFrom(new Target().fromString(argument));
 		if (index == 3) if (mode.equals("tag")) this.comboboxMode2.setValue(argument);
 		else this.entryObjective.setText(argument);
 		if (index == 4) if (mode.equals("operation")) this.comboboxMode2.setValue(argument.replace("=", "#"));
@@ -267,7 +267,7 @@ public class CommandScoreboardPlayers extends Command implements ActionListener,
 			String[] app = t.findApplications();
 			if (app.length != 0) this.panelEntityTags.setEntity(ObjectRegistry.entities.find(app[0]));
 			this.panelEntityTags.setTags(t.value());
-		} else this.panelTarget.setupFrom(Target.createFrom(argument));
+		} else this.panelTarget.setupFrom(new Target().fromString(argument));
 		if (index == 6) this.entryObjective2.setText(argument);
 	}
 }

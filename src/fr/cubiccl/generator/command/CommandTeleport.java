@@ -114,8 +114,8 @@ public class CommandTeleport extends Command
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
 		// teleport <entity> <x> <y> <z> [<y-rot> <x-rot>]
-		if (index == 1) this.panelTarget.setupFrom(Target.createFrom(argument));
-		if (index == 2) this.panelCoordinates.setupFrom(Coordinates.createFrom(argument, fullCommand[3], fullCommand[4]));
+		if (index == 1) this.panelTarget.setupFrom(new Target().fromString(argument));
+		if (index == 2) this.panelCoordinates.setupFrom(new Coordinates().fromString(argument, fullCommand[3], fullCommand[4]));
 		if (index == 5 || index == 6)
 		{
 			if (argument.startsWith("~"))

@@ -152,7 +152,7 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 	{
 		TagCompound[] values = new TagCompound[this.messages.size()];
 		for (int i = 0; i < values.length; ++i)
-			values[i] = this.messages.get(i).toTag(Tags.DEFAULT_COMPOUND);
+			values[i] = this.messages.get(i).toNBT(Tags.DEFAULT_COMPOUND);
 
 		return container.create(values);
 	}
@@ -165,9 +165,9 @@ public class PanelListJsonMessage extends CGPanel implements ActionListener, ISt
 	public void setupFrom(Tag t)
 	{
 		this.clear();
-		if (t instanceof TagCompound) this.addMessage(JsonMessage.createFrom((TagCompound) t));
+		if (t instanceof TagCompound) this.addMessage(new JsonMessage().fromNBT((TagCompound) t));
 		else for (Tag tag : ((TagList) t).value())
-			this.addMessage(JsonMessage.createFrom((TagCompound) tag));
+			this.addMessage(new JsonMessage().fromNBT((TagCompound) tag));
 	}
 
 	@Override

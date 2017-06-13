@@ -113,9 +113,9 @@ public class CommandClone extends Command implements ActionListener
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
 		// clone <source coordinates start> <source coordinates end> <destination coordinates> [maskMode] [cloneMode] [TileName] [dataValue]
-		if (index == 1) this.panelCoordinatesSourceStart.setupFrom(Coordinates.createFrom(argument, fullCommand[2], fullCommand[3]));
-		if (index == 4) this.panelCoordinatesSourceEnd.setupFrom(Coordinates.createFrom(argument, fullCommand[5], fullCommand[6]));
-		if (index == 7) this.panelCoordinatesDestination.setupFrom(Coordinates.createFrom(argument, fullCommand[8], fullCommand[9]));
+		if (index == 1) this.panelCoordinatesSourceStart.setupFrom(new Coordinates().fromString(argument, fullCommand[2], fullCommand[3]));
+		if (index == 4) this.panelCoordinatesSourceEnd.setupFrom(new Coordinates().fromString(argument, fullCommand[5], fullCommand[6]));
+		if (index == 7) this.panelCoordinatesDestination.setupFrom(new Coordinates().fromString(argument, fullCommand[8], fullCommand[9]));
 		if (index == 10) this.comboboxMaskMode.setValue(argument);
 		if (index == 11) this.comboboxCloneMode.setValue(argument);
 		if (index == 12) this.panelBlock.setBlock(ObjectRegistry.blocks.find(argument));
