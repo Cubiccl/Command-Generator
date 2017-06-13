@@ -1,14 +1,14 @@
 package fr.cubiccl.generator.gui.component.panel.loottable;
 
-import static fr.cubiccl.generator.gameobject.loottable.LootTableFunction.Function.ENCHANT_RANDOMLY;
-import static fr.cubiccl.generator.gameobject.loottable.LootTableFunction.Function.ENCHANT_WITH_LEVELS;
-import static fr.cubiccl.generator.gameobject.loottable.LootTableFunction.Function.FURNACE_SMELT;
-import static fr.cubiccl.generator.gameobject.loottable.LootTableFunction.Function.LOOTING_ENCHANT;
-import static fr.cubiccl.generator.gameobject.loottable.LootTableFunction.Function.SET_ATTRIBUTES;
-import static fr.cubiccl.generator.gameobject.loottable.LootTableFunction.Function.SET_COUNT;
-import static fr.cubiccl.generator.gameobject.loottable.LootTableFunction.Function.SET_DAMAGE;
-import static fr.cubiccl.generator.gameobject.loottable.LootTableFunction.Function.SET_DATA;
-import static fr.cubiccl.generator.gameobject.loottable.LootTableFunction.Function.SET_NBT;
+import static fr.cubiccl.generator.gameobject.loottable.LTFunction.Function.ENCHANT_RANDOMLY;
+import static fr.cubiccl.generator.gameobject.loottable.LTFunction.Function.ENCHANT_WITH_LEVELS;
+import static fr.cubiccl.generator.gameobject.loottable.LTFunction.Function.FURNACE_SMELT;
+import static fr.cubiccl.generator.gameobject.loottable.LTFunction.Function.LOOTING_ENCHANT;
+import static fr.cubiccl.generator.gameobject.loottable.LTFunction.Function.SET_ATTRIBUTES;
+import static fr.cubiccl.generator.gameobject.loottable.LTFunction.Function.SET_COUNT;
+import static fr.cubiccl.generator.gameobject.loottable.LTFunction.Function.SET_DAMAGE;
+import static fr.cubiccl.generator.gameobject.loottable.LTFunction.Function.SET_DATA;
+import static fr.cubiccl.generator.gameobject.loottable.LTFunction.Function.SET_NBT;
 
 import java.awt.GridBagConstraints;
 import java.awt.event.ActionEvent;
@@ -19,8 +19,8 @@ import javax.swing.ButtonGroup;
 
 import fr.cubiccl.generator.gameobject.AttributeModifier;
 import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
-import fr.cubiccl.generator.gameobject.loottable.LootTableFunction;
-import fr.cubiccl.generator.gameobject.loottable.LootTableFunction.Function;
+import fr.cubiccl.generator.gameobject.loottable.LTFunction;
+import fr.cubiccl.generator.gameobject.loottable.LTFunction.Function;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
@@ -116,7 +116,7 @@ public class PanelFunction extends CGPanel implements ActionListener
 		this.updateDisplay();
 	}
 
-	public LootTableFunction generate() throws CommandGenerationException
+	public LTFunction generate() throws CommandGenerationException
 	{
 		Function f = this.selectedFunction();
 		ArrayList<Tag> tags = new ArrayList<Tag>();
@@ -181,7 +181,7 @@ public class PanelFunction extends CGPanel implements ActionListener
 			tags.add(Tags.LT_FUNCTION_LOOTING_LIMIT.create(Integer.parseInt(this.entryLimit.getText())));
 		}
 
-		return new LootTableFunction(f, this.conditions.values(), tags.toArray(new Tag[tags.size()]));
+		return new LTFunction(f, this.conditions.values(), tags.toArray(new Tag[tags.size()]));
 	}
 
 	public Function selectedFunction()
@@ -191,7 +191,7 @@ public class PanelFunction extends CGPanel implements ActionListener
 		return Function.values()[0];
 	}
 
-	public void setupFrom(LootTableFunction function)
+	public void setupFrom(LTFunction function)
 	{
 		Function f = function.function;
 		this.comboboxFunction.setSelectedItem(f.translate().toString());
