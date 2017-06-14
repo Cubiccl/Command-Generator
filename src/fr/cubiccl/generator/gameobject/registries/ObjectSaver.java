@@ -19,6 +19,7 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListListener;
 import fr.cubiccl.generator.utils.*;
 import fr.cubiccl.generator.utils.Settings.Version;
 
+/** Utility class to save custom {@link GameObject Game Objects}. */
 public class ObjectSaver<T extends GameObject<T>> implements ListListener<T>
 {
 	public static final ObjectSaver<Advancement> advancements = new ObjectSaver<Advancement>("advancements", Advancement.class);
@@ -33,15 +34,19 @@ public class ObjectSaver<T extends GameObject<T>> implements ListListener<T>
 	public static final ObjectSaver<ItemStack> items = new ObjectSaver<ItemStack>("item", ItemStack.class);
 	public static final ObjectSaver<JsonMessage> jsonMessages = new ObjectSaver<JsonMessage>("json", JsonMessage.class);
 	public static final ObjectSaver<LootTable> lootTables = new ObjectSaver<LootTable>(new Text("loot_tables", false), LootTable.class);
+	@Deprecated
 	private static final int MODIFIERS = 0, ATTRIBUTES = 1, BLOCKS = 2, COORDINATES = 3, EFFECTS = 4, ENCHANTMENTS = 5, ENTITIES = 6, ITEMS = 7, JSONS = 8,
 			TRADES = 9, TARGETS = 10, COMMANDS = 11, LOOT_TABLES = 12;
 	public static final ObjectSaver<Recipe> recipes = new ObjectSaver<Recipe>(new Text("recipes", false), Recipe.class);
+	/** Stores all Object savers. */
 	@SuppressWarnings("rawtypes")
 	public static ObjectSaver[] savers, hiddenSavers;
 	public static final ObjectSaver<Target> targets = new ObjectSaver<Target>("target", Target.class);
 	public static final ObjectSaver<TradeOffer> trades = new ObjectSaver<TradeOffer>("trade", TradeOffer.class);
+	/** True if this has been loaded. */
 	private static boolean wasLoaded = false;
 
+	/** Loads the Object Savers. */
 	public static void load()
 	{
 		wasLoaded = true;
@@ -120,6 +125,7 @@ public class ObjectSaver<T extends GameObject<T>> implements ListListener<T>
 			else advancements.recentObjects.add(recipe);
 	}
 
+	/** Loads if saved files were before v2.3.2. */
 	private static void loadOld()
 	{
 		CommandGenerator.log("Old files detected from v2.3.2, updating.");
@@ -194,6 +200,7 @@ public class ObjectSaver<T extends GameObject<T>> implements ListListener<T>
 		FileUtils.delete("data/1.11.txt");
 	}
 
+	/** Resets the savers. */
 	@SuppressWarnings("rawtypes")
 	public static void resetAll()
 	{
@@ -203,6 +210,7 @@ public class ObjectSaver<T extends GameObject<T>> implements ListListener<T>
 			saver.reset();
 	}
 
+	/** Saves the Objects. */
 	public static void save()
 	{
 		if (!wasLoaded) return;
@@ -228,16 +236,21 @@ public class ObjectSaver<T extends GameObject<T>> implements ListListener<T>
 		FileUtils.saveXMLFile(root, "savedObjects");
 	}
 
-	private static boolean shouldLoad(Element modifier)
+	/** @param object - An Object to load.
+	 * @return <code>true</code> if the input Object should be loaded. */
+	private static boolean shouldLoad(Element object)
 	{
-		if (modifier.getAttribute("version") == null) return false;
-		return Settings.version().isAfter(Version.get(modifier.getAttributeValue("version")));
+		if (object.getAttribute("version") == null) return false;
+		return Settings.version().isAfter(Version.get(object.getAttributeValue("version")));
 	}
 
+	/** The Class of the Objects stored in this Saver. */
 	public final Class<T> c;
-
+	/** This Saver's namer. */
 	public final Text name;
+	/** Objects created after the current version, thus not loaded. */
 	private ArrayList<Element> recentObjects;
+	/** Objects saved. */
 	private HashMap<String, T> savedObjects;
 
 	protected ObjectSaver(String nameID, Class<T> c)
@@ -253,22 +266,24 @@ public class ObjectSaver<T extends GameObject<T>> implements ListListener<T>
 		this.recentObjects = new ArrayList<Element>();
 	}
 
+	/** Adds an Object to this Saver.
+	 * 
+	 * @param object - The Object to add. */
 	public void addObject(T object)
 	{
 		if (!this.knows(object)) this.savedObjects.put(object.customName(), object);
 	}
 
-	public void delete(T object)
-	{
-		if (this.knows(object)) this.savedObjects.remove(object.customName());
-	}
-
+	/** @param name - The name of an Object.
+	 * @return The Object with the input name. */
 	public T find(String name)
 	{
 		if (this.savedObjects.containsKey(name)) return this.savedObjects.get(name);
 		return null;
 	}
 
+	/** @param object - An Object to test.
+	 * @return <code>true</code> if this Saver knows the input Object. */
 	public boolean knows(T object)
 	{
 		return this.savedObjects.containsKey(object.customName());
@@ -304,14 +319,25 @@ public class ObjectSaver<T extends GameObject<T>> implements ListListener<T>
 	@Override
 	public void onDeletion(int index, T object)
 	{
-		this.delete(object);
+		this.remove(object);
 	}
 
+	/** Removes an Object from this Saver.
+	 * 
+	 * @param object - The Object to remove. */
+	public void remove(T object)
+	{
+		if (this.knows(object)) this.savedObjects.remove(object.customName());
+	}
+
+	/** Deletes all Objects from this saver. */
 	private void reset()
 	{
 		this.savedObjects.clear();
 	}
 
+	/** @param rootID - The ID of the root XML element.
+	 * @return This Saver as an XML element to be saved. */
 	private Element toXML(String rootID)
 	{
 		Element root = new Element(rootID);

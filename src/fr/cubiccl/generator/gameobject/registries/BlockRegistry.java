@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.registries;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 
+/** Specific Registry for Blocks. */
 public class BlockRegistry extends ObjectRegistry<Block>
 {
 

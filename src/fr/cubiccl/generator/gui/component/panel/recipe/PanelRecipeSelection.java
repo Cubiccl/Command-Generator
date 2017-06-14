@@ -106,7 +106,7 @@ public class PanelRecipeSelection extends CGPanel implements ActionListener, Lis
 	@Override
 	public void onDeletion(int index, Recipe object)
 	{
-		ObjectSaver.recipes.delete(object);
+		ObjectSaver.recipes.remove(object);
 	}
 
 	public Recipe selectedRecipe()

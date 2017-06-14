@@ -106,7 +106,7 @@ public class PanelAdvancementSelection extends CGPanel implements ActionListener
 	@Override
 	public void onDeletion(int index, Advancement object)
 	{
-		ObjectSaver.advancements.delete(object);
+		ObjectSaver.advancements.remove(object);
 	}
 
 	public Advancement selectedAdvancement()

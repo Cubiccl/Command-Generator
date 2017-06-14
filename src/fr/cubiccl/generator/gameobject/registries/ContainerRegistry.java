@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.registries;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Container;
 
+/** Specific Registry for Containers. */
 public class ContainerRegistry extends ObjectRegistry<Container>
 {
 

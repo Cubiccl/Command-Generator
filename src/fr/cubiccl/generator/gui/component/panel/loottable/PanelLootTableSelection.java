@@ -108,7 +108,7 @@ public class PanelLootTableSelection extends CGPanel implements ActionListener, 
 	@Override
 	public void onDeletion(int index, LootTable object)
 	{
-		ObjectSaver.lootTables.delete(object);
+		ObjectSaver.lootTables.remove(object);
 	}
 
 	public LootTable selectedLootTable()

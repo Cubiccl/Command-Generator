@@ -9,6 +9,7 @@ import fr.cubiccl.generator.gameobject.baseobjects.BaseObject.ObjectComparatorNa
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
 import fr.cubiccl.generator.utils.Settings;
 
+/** Specific Registry for Entities. */
 public class EntityRegistry extends ObjectRegistry<Entity>
 {
 
@@ -24,6 +25,8 @@ public class EntityRegistry extends ObjectRegistry<Entity>
 		return super.list();
 	}
 
+	/** @param includePlayer - <code>true</code> if the {@link Entity#PLAYER Player} Entity should be included.
+	 * @return The list of all Objects in this Registry, sorted as the user requested in the settings. */
 	public Entity[] list(boolean includePlayer)
 	{
 		return this.list(Integer.parseInt(Settings.getSetting(Settings.SORT_TYPE)), includePlayer);
@@ -35,6 +38,10 @@ public class EntityRegistry extends ObjectRegistry<Entity>
 		return this.list(sortType, true);
 	}
 
+	/** @param sortType - How to sort the Objects.
+	 * @param includePlayer - <code>true</code> if the {@link Entity#PLAYER Player} Entity should be included.
+	 * @return The list of all Objects in this Registry.
+	 * @see ObjectRegistry#SORT_ALPHABETICALLY */
 	public Entity[] list(int sortType, boolean includePlayer)
 	{
 		ArrayList<Entity> a = new ArrayList<Entity>();

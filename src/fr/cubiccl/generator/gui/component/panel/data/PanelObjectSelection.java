@@ -226,7 +226,7 @@ public class PanelObjectSelection extends CGPanel implements ActionListener
 	private void delete()
 	{
 		if (this.mode == LISTS) ObjectRegistry.removeList(this.comboboxList.getValue());
-		else this.selectedRegistry().delete(this.selectedObject());
+		else this.selectedRegistry().remove(this.selectedObject());
 		this.updateData();
 	}
 
