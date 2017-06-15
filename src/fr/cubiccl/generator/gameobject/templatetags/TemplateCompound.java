@@ -2,6 +2,8 @@ package fr.cubiccl.generator.gameobject.templatetags;
 
 import java.util.ArrayList;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.NBTParser;
 import fr.cubiccl.generator.gameobject.tags.Tag;
@@ -24,17 +26,22 @@ public abstract class TemplateCompound extends TemplateTag
 		}
 
 		@Override
-		protected CGPanel createPanel(BaseObject object, Tag previousValue)
+		protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 		{
 			return null;
 		}
 
 		@Override
-		public Tag generateTag(BaseObject object, CGPanel panel)
+		public Tag generateTag(BaseObject<?> object, CGPanel panel)
 		{
 			return null;
 		}
 
+	}
+
+	public TemplateCompound()
+	{
+		this(null, Tag.UNKNOWN);
 	}
 
 	public TemplateCompound(String id, byte applicationType, String... applicable)
@@ -51,6 +58,13 @@ public abstract class TemplateCompound extends TemplateTag
 	public TagCompound create(Tag... value)
 	{
 		return new TagCompound(this, value);
+	}
+
+	@Override
+	public TemplateTag fromXML(Element xml)
+	{
+		this.tagType = Tag.COMPOUND;
+		return super.fromXML(xml);
 	}
 
 	@Override

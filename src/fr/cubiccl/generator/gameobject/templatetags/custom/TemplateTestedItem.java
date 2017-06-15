@@ -19,7 +19,7 @@ public class TemplateTestedItem extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelTestedItem p = new PanelTestedItem();
 		if (previousValue != null) p.setupFrom(new ItemStack().fromNBT((TagCompound) previousValue, true));
@@ -27,7 +27,7 @@ public class TemplateTestedItem extends TemplateCompound
 	}
 
 	@Override
-	protected TagCompound generateTag(BaseObject object, CGPanel panel)
+	protected TagCompound generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		try
 		{
@@ -40,7 +40,7 @@ public class TemplateTestedItem extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		try
 		{

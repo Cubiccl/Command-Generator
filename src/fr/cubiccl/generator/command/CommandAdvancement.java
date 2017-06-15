@@ -124,12 +124,6 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 	}
 
 	@Override
-	protected void resetUI()
-	{
-		this.checkboxCriterion.setSelected(false);
-	}
-
-	@Override
 	protected Text description()
 	{
 		String d = "command." + this.id;
@@ -140,13 +134,6 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 		if (this.isPredefined) return t.addReplacement("<advancement>", ObjectRegistry.advancements.find(this.entryAdvancement.getText()).name())
 				.addReplacement("<criterion>", this.comboboxCriterion.getValue());
 		return t.addReplacement("<advancement>", this.entryAdvancement.getText()).addReplacement("<criterion>", this.textfieldCriterion.getText());
-	}
-
-	@Override
-	protected void onParsingEnd()
-	{
-		this.onCheckbox();
-		this.onModeChange();
 	}
 
 	@Override
@@ -167,7 +154,7 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 		String mode = this.comboboxAdvMode.getValue();
 		this.comboboxCriterion.setVisible(mode.equals("only") && this.isPredefined);
 		this.textfieldCriterion.setVisible(mode.equals("only") && !this.isPredefined);
-		if (this.isPredefined) this.comboboxCriterion.setValues(ObjectRegistry.advancements.find(this.entryAdvancement.getText()).criteria);
+		if (this.isPredefined) this.comboboxCriterion.setValues(ObjectRegistry.advancements.find(this.entryAdvancement.getText()).criteria());
 		this.updateTranslations();
 	}
 
@@ -189,6 +176,13 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 	}
 
 	@Override
+	protected void onParsingEnd()
+	{
+		this.onCheckbox();
+		this.onModeChange();
+	}
+
+	@Override
 	protected void readArgument(int index, String argument, String[] fullCommand) throws CommandGenerationException
 	{
 		// advancement <grant|revoke|test> <player> <everything|from|only|through|until> [<advancement>] [criterion]
@@ -205,6 +199,12 @@ public class CommandAdvancement extends Command implements ActionListener, IStat
 			if (this.isPredefined) this.comboboxCriterion.setSelectedItem(argument);
 			else this.textfieldCriterion.setText(argument);
 		}
+	}
+
+	@Override
+	protected void resetUI()
+	{
+		this.checkboxCriterion.setSelected(false);
 	}
 
 	@Override

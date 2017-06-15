@@ -14,32 +14,25 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class EnchantmentType extends BaseObject implements IObjectList<EnchantmentType>
+public class EnchantmentType extends BaseObject<EnchantmentType> implements IObjectList<EnchantmentType>
 {
 
 	/** This Enchantment's numerical ID. */
-	public final int idInt;
+	private int idInt;
 	/** This Enchantment's text ID. */
-	public final String idString;
+	private String idString;
 	/** This Enchantment's maximum Level in survival. */
-	public int maxLevel;
+	private int maxLevel;
 
 	public EnchantmentType()
 	{
-		this(-1, null);
+		this.idInt = -1;
 	}
 
-	public EnchantmentType(int idInt, String idString)
+	public EnchantmentType(int idNum, String idStr)
 	{
-		this(idInt, idString, 1);
-	}
-
-	public EnchantmentType(int idInt, String idString, int maxLevel)
-	{
-		this.idInt = idInt;
-		this.idString = "minecraft:" + idString;
-		this.maxLevel = maxLevel;
-		if (idInt >= 0) ObjectRegistry.enchantments.register(this);
+		this.idInt = idNum;
+		this.idString = "minecraft:" + idStr;
 	}
 
 	@Override
@@ -49,6 +42,15 @@ public class EnchantmentType extends BaseObject implements IObjectList<Enchantme
 		p.setEnchantment(this);
 		p.setHasLevel(false);
 		return p;
+	}
+
+	@Override
+	public EnchantmentType fromXML(Element xml)
+	{
+		this.idString = "minecraft:" + xml.getAttributeValue("idstr");
+		this.idInt = Integer.parseInt(xml.getAttributeValue("idint"));
+		this.maxLevel = Integer.parseInt(xml.getAttributeValue("maxlevel"));
+		return this;
 	}
 
 	@Override
@@ -75,11 +77,24 @@ public class EnchantmentType extends BaseObject implements IObjectList<Enchantme
 		return this.idInt;
 	}
 
+	/** Getter for {@link EnchantmentType#maxLevel}. */
+	public int maxLevel()
+	{
+		return this.maxLevel;
+	}
+
 	@Override
 	public Text name()
 	{
 		if (this.idString == null) return null;
 		return new Text("enchantment." + this.idString);
+	}
+
+	@Override
+	public EnchantmentType register()
+	{
+		ObjectRegistry.enchantments.register(this);
+		return this;
 	}
 
 	@Override

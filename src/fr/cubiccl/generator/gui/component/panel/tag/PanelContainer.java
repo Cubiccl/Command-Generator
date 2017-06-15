@@ -53,7 +53,7 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 	public PanelContainer(Container container)
 	{
 		super(container);
-		this.items = new ItemStack[this.container().slots.length];
+		this.items = new ItemStack[this.container().slots().length];
 		this.listeners = new HashSet<ItemChangeListener>();
 
 		this.panelAction = new CGPanel();
@@ -223,15 +223,15 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 		g.drawImage(this.img, 0, 0, this.getWidth(), this.getHeight(), null);
 		if (this.selected != -1)
 		{
-			Slot slot = this.container().slots[this.selected];
-			this.drawer.drawSelection(g, slot.x * MULTIPLIER, slot.y * MULTIPLIER, Slot.SIZE * MULTIPLIER);
+			Slot slot = this.container().slots()[this.selected];
+			this.drawer.drawSelection(g, slot.x() * MULTIPLIER, slot.y() * MULTIPLIER, Slot.SIZE * MULTIPLIER);
 		}
 		for (int i = 0; i < this.items.length; ++i)
 		{
 			ItemStack item = this.items[i];
 			if (item != null)
 			{
-				int x = this.container().slots[i].x * MULTIPLIER, y = this.container().slots[i].y * MULTIPLIER, size = Slot.SIZE * MULTIPLIER;
+				int x = this.container().slots()[i].x() * MULTIPLIER, y = this.container().slots()[i].y() * MULTIPLIER, size = Slot.SIZE * MULTIPLIER;
 				g.drawImage(item.texture(), x, y, size, size, null);
 				if (item.amount > 1)
 				{
@@ -244,8 +244,8 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 		}
 		if (this.currentSlot() != -1)
 		{
-			Slot slot = this.container().slots[this.currentSlot()];
-			this.drawer.drawHovering(g, slot.x * MULTIPLIER, slot.y * MULTIPLIER, Slot.SIZE * MULTIPLIER);
+			Slot slot = this.container().slots()[this.currentSlot()];
+			this.drawer.drawHovering(g, slot.x() * MULTIPLIER, slot.y() * MULTIPLIER, Slot.SIZE * MULTIPLIER);
 		}
 	}
 
@@ -267,8 +267,8 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 		for (int i = 0; i < items.length; ++i)
 			if (items[i] != null)
 			{
-				for (int j = 0; j < this.container().slots.length; ++j)
-					if (this.container().slots[j].id == items[i].slot) this.items[j] = items[i];
+				for (int j = 0; j < this.container().slots().length; ++j)
+					if (this.container().slots()[j].id() == items[i].slot) this.items[j] = items[i];
 			}
 		this.repaint();
 	}
@@ -288,7 +288,7 @@ public class PanelContainer extends SlotSelectionPanel implements IStateListener
 	public boolean shouldStateClose(PanelItem panel)
 	{
 		this.items[this.selected] = panel.generate();
-		this.items[this.selected].slot = this.container().slots[this.selected].id;// + this.container().startsAt;
+		this.items[this.selected].slot = this.container().slots()[this.selected].id();// + this.container().startsAt;
 		this.onChange(this.selected, this.items[this.selected]);
 		if (this.items[this.selected] != null) this.panelItemDisplay.display(this.items[this.selected]);
 		return true;

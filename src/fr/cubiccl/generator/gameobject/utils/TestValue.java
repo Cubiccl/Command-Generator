@@ -13,13 +13,13 @@ public class TestValue
 	/** @return The maximum Template Number Tag for the input Number tag (finds the Template with same {@link TemplateTag#tagType tag type}.). */
 	private static TemplateNumber maxFor(TemplateNumber tag)
 	{
-		return TemplateRange.max[tag.tagType];
+		return TemplateRange.max[tag.tagType()];
 	}
 
 	/** @return The minimum Template Number Tag for the input Number tag (finds the Template with same {@link TemplateTag#tagType tag type}.). */
 	private static TemplateNumber minFor(TemplateNumber tag)
 	{
-		return TemplateRange.min[tag.tagType];
+		return TemplateRange.min[tag.tagType()];
 	}
 
 	/** The Template Number Tag to use when the value is fixed. */
@@ -99,7 +99,7 @@ public class TestValue
 	/** @return <code>true</code> if this value is in integer format. */
 	public boolean isInt()
 	{
-		return this.exactTag.tagType != Tag.DOUBLE && this.exactTag.tagType != Tag.FLOAT;
+		return this.exactTag.tagType() != Tag.DOUBLE && this.exactTag.tagType() != Tag.FLOAT;
 	}
 
 	/** @return This value as NBT Tags. */

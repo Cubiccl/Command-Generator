@@ -13,13 +13,8 @@ import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 public class TemplateEntityList extends TemplateList
 {
 
-	public TemplateEntityList(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelObjectList<LivingEntity> p = new PanelObjectList<LivingEntity>(null, (String) null, LivingEntity.class);
 		if (previousValue != null)
@@ -33,7 +28,7 @@ public class TemplateEntityList extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(BaseObject object, CGPanel panel)
+	public TagList generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		@SuppressWarnings("unchecked")
 		LivingEntity[] entities = ((PanelObjectList<LivingEntity>) panel).values();

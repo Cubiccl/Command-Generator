@@ -45,19 +45,19 @@ public class NBTParser
 		TemplateTag[] tags = ObjectRegistry.blockTags.find(new String[]
 		{ id });
 		for (TemplateTag t : tags)
-			if (t.tagType == type) return t;
+			if (t.tagType() == type) return t;
 		tags = ObjectRegistry.itemTags.find(new String[]
 		{ id });
 		for (TemplateTag t : tags)
-			if (t.tagType == type) return t;
+			if (t.tagType() == type) return t;
 		tags = ObjectRegistry.entityTags.find(new String[]
 		{ id });
 		for (TemplateTag t : tags)
-			if (t.tagType == type) return t;
+			if (t.tagType() == type) return t;
 		tags = ObjectRegistry.unavailableTags.find(new String[]
 		{ id });
 		for (TemplateTag t : tags)
-			if (t.tagType == type || (t.tagType == Tag.RANGE && (type == Tag.COMPOUND || ((TemplateRange) t).numberType == type))) return t;
+			if (t.tagType() == type || (t.tagType() == Tag.RANGE && (type == Tag.COMPOUND || ((TemplateRange) t).numberType == type))) return t;
 		return null;
 	}
 

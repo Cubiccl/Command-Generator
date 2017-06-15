@@ -3491,7 +3491,7 @@
       <byteboolean>true</byteboolean>
     </tag>
     <tag id="Base">
-      <customtype>color</customtype>
+      <type>1</type>
       <applicable>
         <app>banner</app>
         <app>standing_banner</app>
@@ -3840,7 +3840,7 @@
       <byteboolean>true</byteboolean>
     </tag>
     <tag id="Primary">
-      <customtype>effect</customtype>
+      <type>3</type>
       <applicable>
         <app>beacon</app>
       </applicable>
@@ -3928,7 +3928,7 @@
       </strvalues>
     </tag>
     <tag id="Secondary">
-      <customtype>effect</customtype>
+      <type>3</type>
       <applicable>
         <app>beacon</app>
       </applicable>
@@ -4481,7 +4481,7 @@
       <byteboolean>true</byteboolean>
     </tag>
     <tag id="CollarColor">
-      <customtype>color</customtype>
+      <type>3</type>
       <applicable>
         <app>wolf</app>
       </applicable>

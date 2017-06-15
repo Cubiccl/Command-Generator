@@ -18,7 +18,7 @@ public class TemplateRecipeId extends TemplateString
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		ObjectCombobox<RecipeType> box = new ObjectCombobox<RecipeType>(ObjectRegistry.recipes.list());
 		if (previousValue != null) box.setSelected(ObjectRegistry.recipes.find(((TagString) previousValue).value()));
@@ -26,7 +26,7 @@ public class TemplateRecipeId extends TemplateString
 	}
 
 	@Override
-	public TagString generateTag(BaseObject object, CGPanel panel)
+	public TagString generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		@SuppressWarnings("unchecked")
 		ObjectCombobox<RecipeType> box = (ObjectCombobox<RecipeType>) panel.getComponent(1);
@@ -34,7 +34,7 @@ public class TemplateRecipeId extends TemplateString
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		return true;
 	}

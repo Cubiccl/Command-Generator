@@ -16,7 +16,7 @@ public class TemplateCriteriaEntity extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelCriteriaEntity p = new PanelCriteriaEntity();
 		if (previousValue != null) p.setupFrom((TagCompound) previousValue);
@@ -24,13 +24,13 @@ public class TemplateCriteriaEntity extends TemplateCompound
 	}
 
 	@Override
-	protected Tag generateTag(BaseObject object, CGPanel panel)
+	protected Tag generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		return this.create(((PanelCriteriaEntity) panel).generateTags());
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		return ((PanelCriteriaEntity) panel).checkInput();
 	}

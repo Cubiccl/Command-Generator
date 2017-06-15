@@ -17,7 +17,7 @@ import fr.cubiccl.generator.utils.Settings;
 import fr.cubiccl.generator.utils.Textures;
 
 /** Registers all basic Game Objects. */
-public class ObjectRegistry<T extends BaseObject>
+public class ObjectRegistry<T extends BaseObject<T>>
 {
 	public static final ObjectRegistry<Achievement> achievements = new ObjectRegistry<Achievement>(false, false, Achievement.class);
 	public static final ObjectRegistry<DefaultAdvancement> advancements = new ObjectRegistry<DefaultAdvancement>(false, false, DefaultAdvancement.class);
@@ -151,7 +151,7 @@ public class ObjectRegistry<T extends BaseObject>
 	/** @param list - A list.
 	 * @param object - An Object to test.
 	 * @return <code>true</code> if the input List contains the input Object. */
-	public static boolean listContains(String list, BaseObject object)
+	public static <T> boolean listContains(String list, BaseObject<T> object)
 	{
 		for (String id : getList(list))
 			if (id.replaceAll("minecraft:", "").equals(object.id().replaceAll("minecraft:", ""))) return true;
@@ -397,7 +397,7 @@ public class ObjectRegistry<T extends BaseObject>
 	/** Removes the input Object from this Registry.
 	 * 
 	 * @param object - The Object to remove. */
-	public void remove(BaseObject object)
+	public void remove(BaseObject<T> object)
 	{
 		this.registry.remove(object.id().replaceAll("minecraft:", ""), object);
 		int quantity = 0;

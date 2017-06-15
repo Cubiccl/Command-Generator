@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags;
 
+import org.jdom2.Element;
+
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagBoolean;
@@ -9,6 +11,11 @@ import fr.cubiccl.generator.utils.Text;
 
 public class TemplateBoolean extends TemplateTag
 {
+
+	public TemplateBoolean()
+	{
+		this(null, Tag.UNKNOWN);
+	}
 
 	public TemplateBoolean(String id, byte applicationType, String... applicable)
 	{
@@ -22,7 +29,7 @@ public class TemplateBoolean extends TemplateTag
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelRadio p = new PanelRadio(this.description(object), "value", "true", "false");
 		if (previousValue != null && (int) previousValue.value() == 0) p.setSelected(1);
@@ -31,7 +38,14 @@ public class TemplateBoolean extends TemplateTag
 	}
 
 	@Override
-	protected TagBoolean generateTag(BaseObject object, CGPanel panel)
+	public TemplateTag fromXML(Element xml)
+	{
+		this.tagType = Tag.BOOLEAN;
+		return super.fromXML(xml);
+	}
+
+	@Override
+	protected TagBoolean generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		return this.create(((PanelRadio) panel).getSelected() == 0);
 	}

@@ -11,13 +11,8 @@ public class TemplatePatterns extends TemplateList
 {
 	public int base;
 
-	public TemplatePatterns(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PatternsPanel p = new PatternsPanel();
 		if (previousValue != null) p.setupFrom((TagList) previousValue);
@@ -27,7 +22,7 @@ public class TemplatePatterns extends TemplateList
 	}
 
 	@Override
-	public Tag generateTag(BaseObject object, CGPanel panel)
+	public Tag generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		this.base = ((PatternsPanel) panel).getBaseColor();
 		return this.create(((PatternsPanel) panel).getPatterns());

@@ -6,6 +6,8 @@ import java.util.function.Predicate;
 
 import org.jdom2.Element;
 
+import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
@@ -15,7 +17,7 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Utils;
 
-public class Block extends BlockItem implements IObjectList<Block>
+public class Block extends BlockItem<Block> implements IObjectList<Block>
 {
 
 	/** The possible {@link BlockState Block states} for this Block. */
@@ -131,6 +133,34 @@ public class Block extends BlockItem implements IObjectList<Block>
 	}
 
 	@Override
+	public Block fromXML(Element xml)
+	{
+		super.fromXML(xml);
+
+		if (xml.getChild("states") != null) for (Element state : xml.getChild("states").getChildren("state"))
+		{
+			ArrayList<String> values = new ArrayList<String>();
+			for (Element v : state.getChildren("v"))
+				values.add(v.getText());
+			if (state.getAttribute("max") != null) for (int i = 0; i <= Integer.parseInt(state.getAttributeValue("max")); ++i)
+				values.add(Integer.toString(i));
+
+			BlockState s;
+			if (state.getAttribute("damagecustom") != null) s = new BlockState(state.getAttributeValue("id"), Byte.parseByte(state.getAttributeValue("type")),
+					ObjectCreator.createDamage(state.getAttributeValue("damagecustom")), values.toArray(new String[values.size()]));
+			else s = new BlockState(state.getAttributeValue("id"), Byte.parseByte(state.getAttributeValue("type")), Integer.parseInt(state
+					.getAttributeValue("damage")), values.toArray(new String[values.size()]));
+			if (state.getAttribute("startsat") != null) s.setStartsAt(Integer.parseInt(state.getAttributeValue("startsat")));
+			this.addState(s);
+		}
+
+		if (xml.getChild("unuseddamage") != null) for (Element d : xml.getChild("unuseddamage").getChildren("d"))
+			this.addUnusedDamage(Integer.parseInt(d.getText()));
+
+		return this;
+	}
+
+	@Override
 	public Component getDisplayComponent()
 	{
 		CGPanel p = new CGPanel();
@@ -149,6 +179,13 @@ public class Block extends BlockItem implements IObjectList<Block>
 	public Collection<BlockState> getStates()
 	{
 		return this.states.values();
+	}
+
+	@Override
+	public Block register()
+	{
+		ObjectRegistry.blocks.register(this);
+		return this;
 	}
 
 	/** @param state - A Block state.

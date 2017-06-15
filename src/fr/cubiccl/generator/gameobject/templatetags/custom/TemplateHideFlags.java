@@ -9,13 +9,8 @@ import fr.cubiccl.generator.gui.component.panel.tag.PanelHideFlags;
 public class TemplateHideFlags extends TemplateNumber
 {
 
-	public TemplateHideFlags(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelHideFlags p = new PanelHideFlags();
 		if (previousValue != null) p.setupFrom((int) previousValue.value());
@@ -24,13 +19,13 @@ public class TemplateHideFlags extends TemplateNumber
 	}
 
 	@Override
-	public Tag generateTag(BaseObject object, CGPanel panel)
+	public Tag generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		return this.create(((PanelHideFlags) panel).getValue());
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		return true;
 	}

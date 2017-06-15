@@ -94,13 +94,8 @@ public class TemplateRecipeBook extends TemplateCompound
 
 	}
 
-	public TemplateRecipeBook(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelRecipeBook panel = new PanelRecipeBook();
 		if (previousValue != null)
@@ -129,7 +124,7 @@ public class TemplateRecipeBook extends TemplateCompound
 	}
 
 	@Override
-	public TagCompound generateTag(BaseObject object, CGPanel panel)
+	public TagCompound generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		PanelRecipeBook p = (PanelRecipeBook) panel;
 		PlayerRecipe[] recipes = p.panelRecipes.values();

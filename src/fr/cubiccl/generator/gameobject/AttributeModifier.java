@@ -224,7 +224,7 @@ public class AttributeModifier extends GameObject<AttributeModifier> implements 
 		if (!lt) tags.add(Tags.ATTRIBUTE_UUIDLEAST.create(this.UUIDLeast));
 		if (!isApplied)
 		{
-			tags.add((lt ? Tags.ATTRIBUTE_attribute_name : Tags.ATTRIBUTE_ATTRIBUTE_NAME).create(this.attribute.id));
+			tags.add((lt ? Tags.ATTRIBUTE_attribute_name : Tags.ATTRIBUTE_ATTRIBUTE_NAME).create(this.attribute.id()));
 			if (!lt) tags.add(Tags.ATTRIBUTE_SLOT.create(this.slots[0]));
 			else
 			{

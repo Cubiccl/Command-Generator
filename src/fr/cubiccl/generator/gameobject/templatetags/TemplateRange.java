@@ -59,7 +59,7 @@ public class TemplateRange extends TemplateNumber
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelRangedValue p = new PanelRangedValue(this.description(object), this.numberType == Tag.INT ? Text.INTEGER : Text.NUMBER);
 		if (previousValue != null)
@@ -79,7 +79,7 @@ public class TemplateRange extends TemplateNumber
 	}
 
 	@Override
-	protected Tag generateTag(BaseObject object, CGPanel panel)
+	protected Tag generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		PanelRangedValue p = (PanelRangedValue) panel;
 		if (p.isRanged()) return this.create(p.min(), p.max());
@@ -87,7 +87,7 @@ public class TemplateRange extends TemplateNumber
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		PanelRangedValue p = (PanelRangedValue) panel;
 		try

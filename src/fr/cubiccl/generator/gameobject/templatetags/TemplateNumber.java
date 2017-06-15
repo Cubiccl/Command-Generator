@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 
 import org.jdom2.Element;
 
@@ -15,11 +16,16 @@ import fr.cubiccl.generator.utils.Text;
 
 public class TemplateNumber extends TemplateTag
 {
-	public boolean isByteBoolean = false;
+	boolean isByteBoolean = false;
 	private double minValue, maxValue;
 	private String[] names;
 	private String prefix;
 	private int[] values;
+
+	public TemplateNumber()
+	{
+		this(null, Tag.UNKNOWN);
+	}
 
 	/** @param numberType see {@link TagNumber#INTEGER} */
 	public TemplateNumber(String id, byte applicationType, byte numberType, String... applicable)
@@ -51,7 +57,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		if (this.isByteBoolean)
 		{
@@ -91,7 +97,28 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	protected Tag generateTag(BaseObject object, CGPanel panel)
+	public TemplateTag fromXML(Element xml)
+	{
+		super.fromXML(xml);
+
+		if (xml.getChild("intnamed") != null)
+		{
+			if (xml.getChild("intnamed") != null)
+			{
+				ArrayList<String> values = new ArrayList<String>();
+				for (Element v : xml.getChild("intnamed").getChildren())
+					values.add(v.getText());
+				this.setNames(xml.getChild("intnamed").getAttributeValue("prefix"), values.toArray(new String[values.size()]));
+			}
+		}
+
+		if (xml.getChild("byteboolean") != null) this.isByteBoolean = Boolean.parseBoolean(xml.getChildText("byteboolean"));
+
+		return super.fromXML(xml);
+	}
+
+	@Override
+	protected Tag generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		if (this.isByteBoolean) return this.create(1 - ((PanelRadio) panel).getSelected());
 
@@ -128,7 +155,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		if (this.isByteBoolean) return true;
 		try

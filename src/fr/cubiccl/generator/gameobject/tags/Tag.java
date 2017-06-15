@@ -200,7 +200,7 @@ public abstract class Tag extends GameObject<Tag>
 	/** @return This Tag's type. */
 	public int type()
 	{
-		return this.template.applicationType;
+		return this.template.applicationType();
 	}
 
 	/** @return This Tag's value. */

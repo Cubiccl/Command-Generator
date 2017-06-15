@@ -81,13 +81,8 @@ public class TemplatePages extends TemplateList
 		return new Page(messages);
 	}
 
-	public TemplatePages(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelObjectList<Page> panel = new PanelObjectList<TemplatePages.Page>(null, (Text) null, Page.class);
 		if (previousValue != null) for (Tag t : ((TagList) previousValue).value())
@@ -100,7 +95,7 @@ public class TemplatePages extends TemplateList
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public TagList generateTag(BaseObject object, CGPanel panel)
+	public TagList generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		TagList list = this.create();
 		for (Page page : ((PanelObjectList<Page>) panel).values())

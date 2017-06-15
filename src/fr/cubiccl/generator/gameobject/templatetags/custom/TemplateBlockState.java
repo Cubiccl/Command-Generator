@@ -24,7 +24,7 @@ public class TemplateBlockState extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		if (this.block == null)
 		{
@@ -43,7 +43,7 @@ public class TemplateBlockState extends TemplateCompound
 	}
 
 	@Override
-	protected TagCompound generateTag(BaseObject object, CGPanel panel)
+	protected TagCompound generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		HashMap<String, String> values = ((PanelStateSelection) panel).values;
 		ArrayList<Tag> tags = new ArrayList<Tag>();

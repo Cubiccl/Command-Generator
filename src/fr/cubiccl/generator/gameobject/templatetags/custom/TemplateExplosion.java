@@ -11,13 +11,8 @@ import fr.cubiccl.generator.gui.component.panel.tag.ExplosionPanel;
 public class TemplateExplosion extends TemplateCompound
 {
 
-	public TemplateExplosion(String id, byte applicationType, String... applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		ExplosionPanel p = new ExplosionPanel();
 		if (previousValue != null) p.setupFrom(Explosion.createFrom((TagCompound) previousValue));
@@ -26,7 +21,7 @@ public class TemplateExplosion extends TemplateCompound
 	}
 
 	@Override
-	public Tag generateTag(BaseObject object, CGPanel panel)
+	public Tag generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		return ((ExplosionPanel) panel).generateExplosion().toTag(this);
 	}

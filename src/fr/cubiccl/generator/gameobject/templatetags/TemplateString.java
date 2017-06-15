@@ -1,5 +1,6 @@
 package fr.cubiccl.generator.gameobject.templatetags;
 
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import org.jdom2.Element;
@@ -17,6 +18,11 @@ public class TemplateString extends TemplateTag
 	protected String[] authorizedValues;
 	public boolean minecraftPrefix = false;
 
+	public TemplateString()
+	{
+		this(null, Tag.UNKNOWN);
+	}
+
 	public TemplateString(String id, byte applicationType, String... applicable)
 	{
 		super(id, Tag.STRING, applicationType, applicable);
@@ -30,7 +36,7 @@ public class TemplateString extends TemplateTag
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		if (this.authorizedValues != null)
 		{// If you change this, change also TemplatePotion.createPanel()
@@ -48,7 +54,24 @@ public class TemplateString extends TemplateTag
 	}
 
 	@Override
-	public TagString generateTag(BaseObject object, CGPanel panel)
+	public TemplateTag fromXML(Element xml)
+	{
+		super.fromXML(xml);
+
+		this.tagType = Tag.STRING;
+		if (xml.getChild("strvalues") != null)
+		{
+			ArrayList<String> values = new ArrayList<String>();
+			for (Element v : xml.getChild("strvalues").getChildren())
+				values.add(v.getText());
+			this.setValues(values.toArray(new String[values.size()]));
+		}
+
+		return this;
+	}
+
+	@Override
+	public TagString generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		if (this.authorizedValues != null) return this.create((this.minecraftPrefix ? "minecraft:" : "") + ((ComboboxPanel) panel).combobox.getValue());
 		return this.create((this.minecraftPrefix ? "minecraft:" : "") + ((EntryPanel) panel).entry.getText());

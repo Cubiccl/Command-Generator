@@ -8,19 +8,29 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
 
-public class EffectType extends BaseObject
+public class EffectType extends BaseObject<EffectType>
 {
 
 	/** This Effect's numerical ID. */
-	public final int idInt;
+	private int idInt;
 	/** This Effect's string ID. */
-	public final String idString;
+	private String idString;
 
-	public EffectType(int idInt, String idString)
+	public EffectType()
+	{}
+
+	public EffectType(int idNum, String idString)
 	{
-		this.idInt = idInt;
 		this.idString = "minecraft:" + idString;
-		ObjectRegistry.effects.register(this);
+		this.idInt = idNum;
+	}
+
+	@Override
+	public EffectType fromXML(Element xml)
+	{
+		this.idString = "minecraft:" + xml.getAttributeValue("idstr");
+		this.idInt = Integer.parseInt(xml.getAttributeValue("idint"));
+		return this;
 	}
 
 	@Override
@@ -39,6 +49,13 @@ public class EffectType extends BaseObject
 	public Text name()
 	{
 		return new Text("effect." + this.idString);
+	}
+
+	@Override
+	public EffectType register()
+	{
+		ObjectRegistry.effects.register(this);
+		return this;
 	}
 
 	@Override

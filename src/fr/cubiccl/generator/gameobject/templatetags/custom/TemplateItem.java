@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags.custom;
 
+import java.util.ArrayList;
+
 import org.jdom2.Element;
 
 import fr.cubiccl.generator.gameobject.ItemStack;
@@ -9,6 +11,7 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.gameobject.PanelItem;
 
@@ -17,15 +20,15 @@ public class TemplateItem extends TemplateCompound
 	private String autoselect;
 	private String[] ids;
 
-	public TemplateItem(String id, byte applicationType, String... applicable)
+	public TemplateItem()
 	{
-		super(id, applicationType, applicable);
+		super();
 		this.ids = null;
 		this.autoselect = null;
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		Item[] items = this.ids != null ? ObjectRegistry.items.find(this.ids) : ObjectRegistry.items.list(ObjectRegistry.SORT_NUMERICALLY);
 
@@ -38,7 +41,21 @@ public class TemplateItem extends TemplateCompound
 	}
 
 	@Override
-	public Tag generateTag(BaseObject object, CGPanel panel)
+	public TemplateTag fromXML(Element xml)
+	{
+		if (xml.getChild("limited") != null)
+		{
+			ArrayList<String> values = new ArrayList<String>();
+			for (Element v : xml.getChild("limited").getChildren())
+				values.add(v.getText());
+			this.setLimited(values.toArray(new String[values.size()]));
+		}
+		if (xml.getChild("itemautoselect") != null) this.setAutoselect(xml.getChildText("itemautoselect"));
+		return super.fromXML(xml);
+	}
+
+	@Override
+	public Tag generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		ItemStack i = ((PanelItem) panel).generate();
 		i.slot = -1;

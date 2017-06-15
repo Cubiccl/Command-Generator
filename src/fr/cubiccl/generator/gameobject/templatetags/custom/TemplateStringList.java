@@ -12,13 +12,9 @@ import fr.cubiccl.generator.utils.Text;
 
 public class TemplateStringList extends TemplateList
 {
-	public TemplateStringList(String id, byte applicationType, String... applicable)
-	{
-		super(id, applicationType, applicable);
-	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		Text[] values = new Text[0];
 		if (previousValue != null)
@@ -35,7 +31,7 @@ public class TemplateStringList extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(BaseObject object, CGPanel panel)
+	public TagList generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		@SuppressWarnings("unchecked")
 		Text[] s = ((PanelObjectList<Text>) panel).values();

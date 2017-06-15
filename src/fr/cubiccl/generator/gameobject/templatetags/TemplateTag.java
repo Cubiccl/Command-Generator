@@ -7,6 +7,7 @@ import org.jdom2.Element;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.BaseObject;
 import fr.cubiccl.generator.gameobject.baseobjects.Entity;
+import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -15,14 +16,14 @@ import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
-public abstract class TemplateTag extends BaseObject implements IStateListener<CGPanel>
+public abstract class TemplateTag extends BaseObject<TemplateTag> implements IStateListener<CGPanel>
 {
 	private static class TagCreation
 	{
 		public final ITagCreationListener listener;
-		public final BaseObject object;
+		public final BaseObject<?> object;
 
-		public TagCreation(ITagCreationListener listener, BaseObject object)
+		public TagCreation(ITagCreationListener listener, BaseObject<?> object)
 		{
 			this.listener = listener;
 			this.object = object;
@@ -33,11 +34,17 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	{ "block", "item", "entity", "other", "other" };
 
 	protected String[] applicable;
-	public final byte applicationType, tagType;
+	private byte applicationType;
 	/** Need several in case of chest-like recursion */
 	private Stack<TagCreation> creationListeners;
-	public String customTagName = null;
-	private final String id;
+	protected String customTagType = null;
+	private String id;
+	protected byte tagType;
+
+	public TemplateTag(byte applicationType)
+	{
+		this(null, Tag.STRING, applicationType);
+	}
 
 	public TemplateTag(String id, byte tagType, byte applicationType, String... applicable)
 	{
@@ -46,17 +53,17 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 		this.applicationType = applicationType;
 		this.applicable = applicable;
 		this.creationListeners = new Stack<TagCreation>();
+	}
 
-		if (this.applicationType == Tag.BLOCK) ObjectRegistry.blockTags.register(this);
-		else if (this.applicationType == Tag.ITEM) ObjectRegistry.itemTags.register(this);
-		else if (this.applicationType == Tag.ENTITY) ObjectRegistry.entityTags.register(this);
-		else if (this.applicationType == Tag.UNAVAILABLE) ObjectRegistry.unavailableTags.register(this);
+	public byte applicationType()
+	{
+		return this.applicationType;
 	}
 
 	/** @param object - The Object this Tag will be applied to.
 	 * @param previousValue - The value this Tag previously had.
 	 * @param listener - Warned when the creation is complete. */
-	public void askValue(BaseObject object, Tag previousValue, ITagCreationListener listener)
+	public void askValue(BaseObject<?> object, Tag previousValue, ITagCreationListener listener)
 	{
 		CGPanel p = this.createPanel(object, previousValue);
 		if (p == null) return;
@@ -65,7 +72,7 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	}
 
 	/** @return True if this tag can be applied to the Object with the input ID. */
-	public boolean canApplyTo(BaseObject object)
+	public boolean canApplyTo(BaseObject<?> object)
 	{
 		if (object == null) return true;
 		for (String app : this.applicable)
@@ -77,11 +84,11 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 		return false;
 	}
 
-	protected abstract CGPanel createPanel(BaseObject object, Tag previousValue);
+	protected abstract CGPanel createPanel(BaseObject<?> object, Tag previousValue);
 
 	/** @param object - The Object this Tag is applied to.
 	 * @return A description of this NBT Tag. */
-	public Text description(BaseObject object)
+	public Text description(BaseObject<?> object)
 	{
 		String d = "tag." + TYPE_NAMES[this.applicationType] + "." + this.id;
 
@@ -104,9 +111,19 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 		return this.tagType == o.tagType && this.id().equals(o.id());
 	}
 
+	@Override
+	public TemplateTag fromXML(Element xml)
+	{
+		this.id = xml.getAttributeValue("id");
+		if (xml.getChild("type") != null) this.tagType = Byte.parseByte(xml.getChildText("type"));
+		this.applicable = ObjectCreator.createApplicable(xml.getChild("applicable"));
+		if (xml.getChild("customtype") != null) this.customTagType = xml.getChildText("customtype");
+		return this;
+	}
+
 	/** @param object - The Object this Tag is applied to.
 	 * @return The generated Tag. */
-	protected abstract Tag generateTag(BaseObject object, CGPanel panel);
+	protected abstract Tag generateTag(BaseObject<?> object, CGPanel panel);
 
 	public String[] getApplicable()
 	{
@@ -121,12 +138,26 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 
 	/** @param object - The Object this Tag is applied to.
 	 * @return True if the user Input is valid. */
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		return true;
 	}
 
 	public abstract Tag readTag(String value, boolean isJson, boolean readUnknown);
+
+	@Override
+	public TemplateTag register()
+	{
+		if (this.applicationType == Tag.BLOCK) ObjectRegistry.blockTags.register(this);
+		else if (this.applicationType == Tag.ITEM) ObjectRegistry.itemTags.register(this);
+		else if (this.applicationType == Tag.ENTITY) ObjectRegistry.entityTags.register(this);
+		return this;
+	}
+
+	public void setApplicationType(byte applicationType)
+	{
+		this.applicationType = applicationType;
+	}
 
 	@Override
 	public boolean shouldStateClose(CGPanel panel)
@@ -141,6 +172,11 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 		return false;
 	}
 
+	public byte tagType()
+	{
+		return this.tagType;
+	}
+
 	public Text title()
 	{
 		return new Text("tag.title." + this.id);
@@ -151,7 +187,7 @@ public abstract class TemplateTag extends BaseObject implements IStateListener<C
 	{
 		Element root = new Element("tag");
 		root.setAttribute("id", this.id);
-		if (this.customTagName != null) root.addContent(new Element("customtype").setText(this.customTagName));
+		if (this.customTagType != null) root.addContent(new Element("customtype").setText(this.customTagType));
 		else root.addContent(new Element("type").setText(Integer.toString(this.tagType)));
 
 		Element applicable = new Element("applicable");

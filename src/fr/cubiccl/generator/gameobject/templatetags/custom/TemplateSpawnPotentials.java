@@ -100,13 +100,8 @@ public class TemplateSpawnPotentials extends TemplateList
 
 	}
 
-	public TemplateSpawnPotentials(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelObjectList<SpawnPotential> p = new PanelObjectList<SpawnPotential>(null, (String) null, SpawnPotential.class);
 		if (previousValue != null)
@@ -120,7 +115,7 @@ public class TemplateSpawnPotentials extends TemplateList
 	}
 
 	@Override
-	public Tag generateTag(BaseObject object, CGPanel panel)
+	public Tag generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		@SuppressWarnings("unchecked")
 		SpawnPotential[] values = ((PanelObjectList<SpawnPotential>) panel).values();

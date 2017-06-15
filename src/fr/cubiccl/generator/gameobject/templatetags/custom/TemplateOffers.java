@@ -15,13 +15,8 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 public class TemplateOffers extends TemplateCompound
 {
 
-	public TemplateOffers(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelTradeOffers p = new PanelTradeOffers();
 
@@ -39,7 +34,7 @@ public class TemplateOffers extends TemplateCompound
 	}
 
 	@Override
-	public TagList generateTag(BaseObject object, CGPanel panel)
+	public TagList generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		TradeOffer[] trades = new TradeOffer[0];
 		try
@@ -56,7 +51,7 @@ public class TemplateOffers extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		try
 		{

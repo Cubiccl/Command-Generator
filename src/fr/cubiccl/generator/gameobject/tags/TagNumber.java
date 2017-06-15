@@ -45,7 +45,7 @@ public class TagNumber extends Tag
 	{
 		if (((TemplateNumber) this.template).isBigNumber())
 		{
-			if (((TemplateNumber) this.template).tagType == Tag.LONG) return Utils.doubleToString(this.value()) + this.suffix();
+			if (((TemplateNumber) this.template).tagType() == Tag.LONG) return Utils.doubleToString(this.value()) + this.suffix();
 			return Utils.doubleToString(this.value()) + this.suffix();
 
 		} else return Integer.toString((int) this.value) + this.suffix();

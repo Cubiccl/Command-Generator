@@ -40,13 +40,8 @@ public class TemplateLeash extends TemplateCompound
 
 	}
 
-	public TemplateLeash(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelRadio p = new PanelRadio(new Text("leash.choose"), "leash", "fence", "entity");
 		Dialogs.showConfirmDialog(p.component, Lang.translate("general.confirm"), null);
@@ -56,7 +51,7 @@ public class TemplateLeash extends TemplateCompound
 	}
 
 	@Override
-	public TagCompound generateTag(BaseObject object, CGPanel panel)
+	public TagCompound generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		if (panel instanceof PanelCoordinates) try
 		{
@@ -70,7 +65,7 @@ public class TemplateLeash extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		if (panel instanceof PanelCoordinates) try
 		{

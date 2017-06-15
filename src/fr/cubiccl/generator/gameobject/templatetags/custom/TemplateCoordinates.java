@@ -16,13 +16,8 @@ public class TemplateCoordinates extends TemplateCompound
 {
 	private boolean isInteger = false;
 
-	public TemplateCoordinates(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		this.isInteger = object != null && object.id().equals("minecraft:ender_crystal");
 		PanelCoordinates p = new PanelCoordinates(null, false);
@@ -42,7 +37,7 @@ public class TemplateCoordinates extends TemplateCompound
 	}
 
 	@Override
-	public TagCompound generateTag(BaseObject object, CGPanel panel)
+	public TagCompound generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		try
 		{
@@ -61,7 +56,7 @@ public class TemplateCoordinates extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		try
 		{

@@ -10,13 +10,8 @@ import fr.cubiccl.generator.gui.component.panel.tag.PanelDisplay;
 public class TemplateDisplay extends TemplateCompound
 {
 
-	public TemplateDisplay(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelDisplay p = new PanelDisplay();
 		p.setName(this.title());
@@ -25,7 +20,7 @@ public class TemplateDisplay extends TemplateCompound
 	}
 
 	@Override
-	public TagCompound generateTag(BaseObject object, CGPanel panel)
+	public TagCompound generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		return ((PanelDisplay) panel).generateDisplay(this);
 	}

@@ -40,7 +40,7 @@ public class TemplateCriteriaEffects extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelObjectList<TestedEffect> p = new PanelObjectList<TestedEffect>(null, (Text) null, TestedEffect.class);
 		if (previousValue != null) for (Tag t : ((TagCompound) previousValue).value())
@@ -50,14 +50,14 @@ public class TemplateCriteriaEffects extends TemplateCompound
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected TagCompound generateTag(BaseObject object, CGPanel panel)
+	protected TagCompound generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		return this.create(((PanelObjectList<TestedEffect>) panel).values());
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		try
 		{

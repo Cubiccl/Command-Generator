@@ -12,13 +12,9 @@ import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 
 public class TemplateEffectList extends TemplateList
 {
-	public TemplateEffectList(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelObjectList<Effect> p = new PanelObjectList<Effect>(null, (String) null, Effect.class);
 		if (previousValue != null) for (Tag t : ((TagList) previousValue).value())
@@ -28,7 +24,7 @@ public class TemplateEffectList extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(BaseObject object, CGPanel panel)
+	public TagList generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		@SuppressWarnings("unchecked")
 		Effect[] values = ((PanelObjectList<Effect>) panel).values();

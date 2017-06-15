@@ -12,13 +12,9 @@ import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 
 public class TemplateEnchantmentList extends TemplateList
 {
-	public TemplateEnchantmentList(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
+	
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelObjectList<Enchantment> p = new PanelObjectList<Enchantment>(null, (String) null, Enchantment.class);
 		if (previousValue != null) for (Tag t : ((TagList) previousValue).value())
@@ -28,7 +24,7 @@ public class TemplateEnchantmentList extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(BaseObject object, CGPanel panel)
+	public TagList generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		@SuppressWarnings("unchecked")
 		Enchantment[] values = ((PanelObjectList<Enchantment>) panel).values();

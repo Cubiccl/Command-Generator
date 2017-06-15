@@ -10,6 +10,7 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
@@ -37,13 +38,8 @@ public class TemplateDropChances extends TemplateList
 
 	private int slotCount = 1;
 
-	public TemplateDropChances(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelDropChances p = new PanelDropChances(this.id(), this.slotCount);
 
@@ -59,7 +55,16 @@ public class TemplateDropChances extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(BaseObject object, CGPanel panel)
+	public TemplateTag fromXML(Element xml)
+	{
+		super.fromXML(xml);
+		this.setSlotCount(Integer.parseInt(this.customTagType.substring("DropChances".length())));
+		this.customTagType = "DropChances";
+		return this;
+	}
+
+	@Override
+	public TagList generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		Tag[] tags = new Tag[this.slotCount];
 		for (int i = 0; i < tags.length; i++)
@@ -68,7 +73,7 @@ public class TemplateDropChances extends TemplateList
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		for (int i = 0; i < this.slotCount; i++)
 			try

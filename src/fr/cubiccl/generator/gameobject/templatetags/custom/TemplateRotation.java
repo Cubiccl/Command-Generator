@@ -33,13 +33,8 @@ public class TemplateRotation extends TemplateList
 
 	}
 
-	public TemplateRotation(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		RotationPanel p = new RotationPanel();
 		if (previousValue != null)
@@ -52,7 +47,7 @@ public class TemplateRotation extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(BaseObject object, CGPanel panel)
+	public TagList generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		RotationPanel p = (RotationPanel) panel;
 		Tag y = Tags.DEFAULT_FLOAT.create(Double.parseDouble(p.entryY.getText()));
@@ -61,7 +56,7 @@ public class TemplateRotation extends TemplateList
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		RotationPanel p = (RotationPanel) panel;
 		try

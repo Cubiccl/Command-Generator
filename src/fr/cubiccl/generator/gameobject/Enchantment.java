@@ -118,13 +118,13 @@ public class Enchantment extends GameObject<Enchantment> implements IObjectList<
 	@Override
 	public String toCommand()
 	{
-		return this.type.idString + " " + this.getLevel();
+		return this.type.id() + " " + this.getLevel();
 	}
 
 	@Override
 	public TagCompound toNBT(TemplateCompound container)
 	{
-		return container.create(Tags.ENCHANTMENT_ID.create(this.type.idInt), Tags.ENCHANTMENT_LVL.create(this.getLevel()));
+		return container.create(Tags.ENCHANTMENT_ID.create(this.type.idNum()), Tags.ENCHANTMENT_LVL.create(this.getLevel()));
 	}
 
 	@Override

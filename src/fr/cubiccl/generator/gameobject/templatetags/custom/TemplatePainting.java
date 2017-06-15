@@ -68,25 +68,20 @@ public class TemplatePainting extends TemplateString
 	{ "Kebab", "Aztec", "Alban", "Aztec2", "Bomb", "Plant", "Wasteland", "Wanderer", "Graham", "Pool", "Courbet", "Sunset", "Sea", "Creebet", "Match", "Bust",
 			"Stage", "Void", "SkullAnRoses", "Wither", "Fighters", "Skeleton", "DonkeyKong", "Pointer", "Pigscene", "BurningSkull" };
 
-	public TemplatePainting(String id, byte applicationType, String... applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		return new PanelPainting(this.description(object), PAINTINGS);
 	}
 
 	@Override
-	public TagString generateTag(BaseObject object, CGPanel panel)
+	public TagString generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		return this.create(((PanelPainting) panel).combobox.getValue());
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		return true;
 	}

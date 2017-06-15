@@ -12,13 +12,8 @@ public class TemplateParticle extends TemplateString
 {
 	public int param1 = 0, param2 = 0;
 
-	public TemplateParticle(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelParticle p = new PanelParticle(null);
 
@@ -34,16 +29,16 @@ public class TemplateParticle extends TemplateString
 	}
 
 	@Override
-	public TagString generateTag(BaseObject object, CGPanel panel)
+	public TagString generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		PanelParticle p = (PanelParticle) panel;
 		this.param1 = p.generateParam1();
 		this.param2 = p.generateParam2();
-		return this.create(p.selectedParticle().id);
+		return this.create(p.selectedParticle().id());
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		return true;
 	}

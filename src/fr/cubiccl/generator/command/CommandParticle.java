@@ -85,15 +85,6 @@ public class CommandParticle extends Command
 	}
 
 	@Override
-	protected void resetUI()
-	{
-		this.entryCount.setText("1");
-		this.checkboxForce.setSelected(false);
-		this.panelParticle.setParam1(0);
-		this.panelParticle.setParam2(0);
-	}
-
-	@Override
 	protected Text description()
 	{
 		return this.defaultDescription().addReplacement("<particle>", this.panelParticle.selectedParticle().name())
@@ -116,14 +107,14 @@ public class CommandParticle extends Command
 		yd = Float.toString(Float.parseFloat(yd) / 8);
 		zd = Float.toString(Float.parseFloat(zd) / 8);
 
-		String command = this.id + " " + particle.id + " " + this.panelCoordinates.generate().toCommand() + " " + xd + " " + yd + " " + zd + " " + speed + " "
-				+ count + " ";
+		String command = this.id + " " + particle.id() + " " + this.panelCoordinates.generate().toCommand() + " " + xd + " " + yd + " " + zd + " " + speed
+				+ " " + count + " ";
 		if (this.checkboxForce.isSelected()) command += "force";
 		else command += "normal";
 		command += " " + this.panelTarget.generate().toCommand();
 
-		if (particle.id.equals("minecraft:iconcrack")) command += " " + this.panelParticle.generateParam1() + " " + this.panelParticle.generateParam2();
-		if (particle.id.equals("minecraft:blockcrack") || particle.id.equals("minecraft:blockdust") || particle.id.equals("minecraft:fallingdust")) command += " "
+		if (particle.id().equals("minecraft:iconcrack")) command += " " + this.panelParticle.generateParam1() + " " + this.panelParticle.generateParam2();
+		if (particle.id().equals("minecraft:blockcrack") || particle.id().equals("minecraft:blockdust") || particle.id().equals("minecraft:fallingdust")) command += " "
 				+ this.panelParticle.generateParam1();
 
 		return command;
@@ -160,6 +151,15 @@ public class CommandParticle extends Command
 			this.panelParticle.setParam2(Integer.parseInt(argument));
 		} catch (Exception e)
 		{}
+	}
+
+	@Override
+	protected void resetUI()
+	{
+		this.entryCount.setText("1");
+		this.checkboxForce.setSelected(false);
+		this.panelParticle.setParam1(0);
+		this.panelParticle.setParam2(0);
 	}
 
 }

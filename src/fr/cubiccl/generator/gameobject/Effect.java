@@ -111,13 +111,13 @@ public class Effect extends GameObject<Effect> implements IObjectList<Effect>
 	@Override
 	public String toCommand()
 	{
-		return this.type.idString + " " + this.duration + " " + this.amplifier + " " + this.hideParticles;
+		return this.type.id() + " " + this.duration + " " + this.amplifier + " " + this.hideParticles;
 	}
 
 	@Override
 	public TagCompound toNBT(TemplateCompound container)
 	{
-		return container.create(Tags.EFFECT_ID.create(this.type.idInt), Tags.EFFECT_AMPLIFIER.create(this.amplifier),
+		return container.create(Tags.EFFECT_ID.create(this.type.idNum()), Tags.EFFECT_AMPLIFIER.create(this.amplifier),
 				Tags.EFFECT_DURATION.create(this.duration), Tags.EFFECT_PARTICLES.create(this.hideParticles ? 0 : 1));
 	}
 

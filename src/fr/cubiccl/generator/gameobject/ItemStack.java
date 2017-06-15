@@ -95,7 +95,7 @@ public class ItemStack extends GameObject<ItemStack> implements IObjectList<Item
 	public void enchant(EnchantmentType enchantment)
 	{
 		TagCompound e = Tags.DEFAULT_COMPOUND.create(Tags.ENCHANTMENT_ID.create(enchantment.idNum()),
-				Tags.ENCHANTMENT_LVL.create(new Random().nextInt(enchantment.maxLevel + 1)));
+				Tags.ENCHANTMENT_LVL.create(new Random().nextInt(enchantment.maxLevel() + 1)));
 		if (this.nbt.hasTag("ench")) ((TagList) this.nbt.getTagFromId("ench")).addTag(e);
 		else this.nbt.addTag(((TemplateList) ObjectRegistry.itemTags.find("ench")).create(e));
 	}

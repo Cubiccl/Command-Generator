@@ -73,8 +73,8 @@ public abstract class SlotSelectionPanel extends CGPanel implements MCInventory
 	{
 		int previous = this.currentSlot;
 		this.currentSlot = -1;
-		for (int i = 0; i < this.container.slots.length; ++i)
-			if (this.container.slots[i].isSelected(x / MULTIPLIER, y / MULTIPLIER))
+		for (int i = 0; i < this.container.slots().length; ++i)
+			if (this.container.slots()[i].isSelected(x / MULTIPLIER, y / MULTIPLIER))
 			{
 				this.currentSlot = i;
 				break;
@@ -91,8 +91,8 @@ public abstract class SlotSelectionPanel extends CGPanel implements MCInventory
 		g.drawImage(this.img, 0, 0, this.getWidth(), this.getHeight(), null);
 		if (this.currentSlot != -1)
 		{
-			Slot slot = this.container.slots[this.currentSlot];
-			this.drawer.drawHovering(g, slot.x * MULTIPLIER, slot.y * MULTIPLIER, Slot.SIZE * MULTIPLIER);
+			Slot slot = this.container.slots()[this.currentSlot];
+			this.drawer.drawHovering(g, slot.x() * MULTIPLIER, slot.y() * MULTIPLIER, Slot.SIZE * MULTIPLIER);
 		}
 	}
 

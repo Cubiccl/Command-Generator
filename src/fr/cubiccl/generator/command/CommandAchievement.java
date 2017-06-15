@@ -86,7 +86,7 @@ public class CommandAchievement extends Command implements ActionListener
 	{
 		String command = this.id + " " + this.comboboxMode.getValue() + " ";
 		if (this.numberMode() == ALL) command += "* ";
-		else command += "achievement." + this.panelAchievement.getAchievement().id.substring("minecraft:".length()) + " ";
+		else command += "achievement." + this.panelAchievement.getAchievement().id().substring("minecraft:".length()) + " ";
 
 		return command + this.panelTarget.generate().toCommand();
 	}

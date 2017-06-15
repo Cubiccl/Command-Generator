@@ -38,7 +38,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	private CTextArea areaValue;
 	private CGButton buttonAdd, buttonRemove;
 	/** The Object the Tags will be applied to. */
-	private BaseObject currentObject;
+	private BaseObject<?> currentObject;
 	private CGList listTags;
 	private ArrayList<TemplateTag> shownTags;
 	private TemplateTag[] tags;
@@ -89,7 +89,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		if (e.getSource() == this.buttonAdd && this.selectedTag() != null)
 		{
 			TemplateTag tag = this.selectedTag();
-			BaseObject objectToGive = this.currentObject;
+			BaseObject<?> objectToGive = this.currentObject;
 			for (TemplateTag t : this.shownTags)
 			{
 				if (t.id().equals("DisplayData") && tag instanceof TemplateItemId && this.valueFor(t) != null) ((TemplateItemId) tag).damage = (int) (double) this
@@ -196,7 +196,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 		this.setTargetObject(this.currentObject);
 	}
 
-	public void setTargetObject(BaseObject object)
+	public void setTargetObject(BaseObject<?> object)
 	{
 		this.currentObject = object;
 		this.shownTags.clear();

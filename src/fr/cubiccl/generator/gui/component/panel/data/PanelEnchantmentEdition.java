@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JLabel;
 
 import fr.cubiccl.generator.gameobject.baseobjects.EnchantmentType;
-import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
@@ -44,13 +43,12 @@ public class PanelEnchantmentEdition extends CGPanel implements ActionListener
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.buttonLevel) this.enchantment.maxLevel = Integer.parseInt(Dialogs.showInputDialog("New max data?",
-				Integer.toString(this.enchantment.maxLevel)));
+		/* if (e.getSource() == this.buttonLevel) this.enchantment.maxLevel = Integer.parseInt(Dialogs.showInputDialog("New max data?", Integer.toString(this.enchantment.maxLevel()))); */
 		this.updateDisplay();
 	}
 
 	private void updateDisplay()
 	{
-		this.labelLevel.setText("Max level: " + this.enchantment.maxLevel);
+		this.labelLevel.setText("Max level: " + this.enchantment.maxLevel());
 	}
 }

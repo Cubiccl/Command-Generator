@@ -10,13 +10,8 @@ import fr.cubiccl.generator.gui.component.panel.tag.PanelDisabledSlots;
 public class TemplateDisabledSlots extends TemplateNumber
 {
 
-	public TemplateDisabledSlots(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, Tag.INT, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelDisabledSlots p = new PanelDisabledSlots();
 		if (previousValue != null) p.setupFrom(((TagNumber) previousValue).valueInt());
@@ -25,13 +20,13 @@ public class TemplateDisabledSlots extends TemplateNumber
 	}
 
 	@Override
-	public TagNumber generateTag(BaseObject object, CGPanel panel)
+	public TagNumber generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		return this.create(((PanelDisabledSlots) panel).generateValue());
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		return true;
 	}

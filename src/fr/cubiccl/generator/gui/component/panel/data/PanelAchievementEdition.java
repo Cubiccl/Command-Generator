@@ -35,13 +35,13 @@ public class PanelAchievementEdition extends CGPanel implements ActionListener
 		++gbc.gridx;
 		this.add((this.comboboxItem = new ObjectCombobox<Item>(ObjectRegistry.items.list())).container, gbc);
 
-		this.comboboxItem.setSelected(this.achievement.textureItem);
+		this.comboboxItem.setSelected(this.achievement.textureItem());
 		this.comboboxItem.addActionListener(this);
 	}
 
 	@Override
 	public void actionPerformed(ActionEvent e)
 	{
-		if (e.getSource() == this.comboboxItem) this.achievement.textureItem = this.comboboxItem.getSelectedObject();
+		// if (e.getSource() == this.comboboxItem) this.achievement.textureItem = this.comboboxItem.getSelectedObject();
 	}
 }

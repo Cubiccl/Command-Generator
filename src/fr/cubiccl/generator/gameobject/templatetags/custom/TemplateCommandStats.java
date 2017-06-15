@@ -17,13 +17,8 @@ import fr.cubiccl.generator.utils.CommandGenerationException;
 public class TemplateCommandStats extends TemplateCompound
 {
 
-	public TemplateCommandStats(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		TagCompound previous = (TagCompound) previousValue;
 		PanelCommandStats p = new PanelCommandStats();
@@ -53,7 +48,7 @@ public class TemplateCommandStats extends TemplateCompound
 	}
 
 	@Override
-	public Tag generateTag(BaseObject object, CGPanel panel)
+	public Tag generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		PanelCommandStats p = (PanelCommandStats) panel;
 		ArrayList<TagString> tags = new ArrayList<TagString>();
@@ -79,7 +74,7 @@ public class TemplateCommandStats extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		try
 		{

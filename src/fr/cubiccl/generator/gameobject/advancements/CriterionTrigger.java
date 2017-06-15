@@ -12,7 +12,7 @@ import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.utils.Text;
 
 /** The available Triggers for Advancements. */
-public class CriterionTrigger extends BaseObject
+public class CriterionTrigger extends BaseObject<CriterionTrigger>
 {
 	// public static final CriteriaTrigger arbitrary_player_tick = new CriteriaTrigger("arbitrary_player_tick"); Deprecated during snapshots.
 	public static final CriterionTrigger bred_animals = new CriterionTrigger("bred_animals", Tags.CRITERIA_ENTITY_CHILD, Tags.CRITERIA_ENTITY_PARENT,
@@ -110,7 +110,7 @@ public class CriterionTrigger extends BaseObject
 
 	@Deprecated
 	public ArrayList<Tag> findContainedTags(Tag t)
-	{//TODO javadoc if not deprecated
+	{// TODO javadoc if not deprecated
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		if (!(t instanceof TagCompound)) return tags;
 		for (Tag tag : ((TagCompound) t).value())
@@ -118,10 +118,24 @@ public class CriterionTrigger extends BaseObject
 		return tags;
 	}
 
+	@Deprecated
+	@Override
+	public CriterionTrigger fromXML(Element xml)
+	{
+		return this;
+	}
+
 	@Override
 	public String id()
 	{
 		return this.id;
+	}
+
+	@Deprecated
+	@Override
+	public CriterionTrigger register()
+	{
+		return this;
 	}
 
 	@Deprecated

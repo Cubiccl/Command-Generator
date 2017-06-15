@@ -8,18 +8,31 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 import fr.cubiccl.generator.utils.Textures;
 
-public class Entity extends BaseObject
+public class Entity extends BaseObject<Entity>
 {
 	/** The Player Entity. */
-	public static final Entity PLAYER = new Entity("player");
+	public static final Entity PLAYER = new Entity();
+	static
+	{
+		PLAYER.id = "minecraft:player";
+	}
 
 	/** This Entity's ID. */
-	public final String id;
+	public String id;
+
+	public Entity()
+	{}
 
 	public Entity(String id)
 	{
 		this.id = "minecraft:" + id;
-		ObjectRegistry.entities.register(this);
+	}
+
+	@Override
+	public Entity fromXML(Element xml)
+	{
+		this.id = "minecraft:" + xml.getAttributeValue("id");
+		return this;
 	}
 
 	@Override
@@ -32,6 +45,13 @@ public class Entity extends BaseObject
 	public Text name()
 	{
 		return new Text("entity." + this.id);
+	}
+
+	@Override
+	public Entity register()
+	{
+		ObjectRegistry.entities.register(this);
+		return this;
 	}
 
 	@Override

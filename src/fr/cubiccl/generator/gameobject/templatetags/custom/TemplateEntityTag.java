@@ -11,13 +11,8 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelEntity;
 public class TemplateEntityTag extends TemplateCompound
 {
 
-	public TemplateEntityTag(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected PanelEntity createPanel(BaseObject object, Tag previousValue)
+	protected PanelEntity createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelEntity p = new PanelEntity(null);
 		if (object != null && object.id().equals("minecraft:armor_stand")) p.setEntity(ObjectRegistry.entities.find("armor_stand"));
@@ -36,7 +31,7 @@ public class TemplateEntityTag extends TemplateCompound
 	}
 
 	@Override
-	public TagCompound generateTag(BaseObject object, CGPanel panel)
+	public TagCompound generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		return ((PanelEntity) panel).generate().toNBT(this);
 	}

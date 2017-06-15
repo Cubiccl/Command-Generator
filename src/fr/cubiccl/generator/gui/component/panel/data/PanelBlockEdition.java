@@ -82,16 +82,16 @@ public class PanelBlockEdition extends CGPanel implements ActionListener
 		{}
 		if (e.getSource() == this.buttonTexture) try
 		{
-			this.block.textureType = Integer.parseInt(Dialogs.showInputDialog("New texture type?", Integer.toString(this.block.textureType)));
+			// this.block.textureType = Integer.parseInt(Dialogs.showInputDialog("New texture type?", Integer.toString(this.block.textureType)));
 		} catch (Exception e2)
 		{}
 		if (e.getSource() == this.buttonCustom) try
 		{
-			String custom = Dialogs.showInputDialog("New custom block type? Effective after restart. null for normal block.", this.block.customObjectName);
+			String custom = Dialogs.showInputDialog("New custom block type? Effective after restart. null for normal block.", this.block.customObjectName());
 			if (custom != null)
 			{
-				if (custom.equals("null")) this.block.customObjectName = null;
-				else this.block.customObjectName = custom;
+				// if (custom.equals("null")) this.block.customObjectName = null;
+				// else this.block.customObjectName = custom;
 			}
 		} catch (Exception e2)
 		{}
@@ -109,7 +109,7 @@ public class PanelBlockEdition extends CGPanel implements ActionListener
 				d += ", " + damage[i];
 			this.labelDamage.setText("Data values: " + d);
 		} else this.labelDamage.setText("Data value max: " + this.block.getMaxDamage());
-		this.labelTexture.setText("Texture type: " + this.block.textureType);
-		this.labelCustom.setText("Custom block type: " + this.block.customObjectName);
+		this.labelTexture.setText("Texture type: " + this.block.textureType());
+		this.labelCustom.setText("Custom block type: " + this.block.customObjectName());
 	}
 }

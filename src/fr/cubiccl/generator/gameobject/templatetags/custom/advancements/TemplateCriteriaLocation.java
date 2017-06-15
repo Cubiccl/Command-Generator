@@ -16,7 +16,7 @@ public class TemplateCriteriaLocation extends TemplateCompound
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelCriteriaLocation p = new PanelCriteriaLocation();
 		if (previousValue != null) p.setupFrom((TagCompound) previousValue);
@@ -24,13 +24,13 @@ public class TemplateCriteriaLocation extends TemplateCompound
 	}
 
 	@Override
-	protected Tag generateTag(BaseObject object, CGPanel panel)
+	protected Tag generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		return ((PanelCriteriaLocation) panel).generateValue(this);
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		return ((PanelCriteriaLocation) panel).checkInput();
 	}

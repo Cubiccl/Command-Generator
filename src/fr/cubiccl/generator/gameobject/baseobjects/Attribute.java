@@ -5,16 +5,25 @@ import org.jdom2.Element;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 
-public class Attribute extends BaseObject
+public class Attribute extends BaseObject<Attribute>
 {
 
 	/** This Attribute's ID. */
-	public final String id;
+	private String id;
+
+	public Attribute()
+	{}
 
 	public Attribute(String id)
 	{
 		this.id = id;
-		ObjectRegistry.attributes.register(this);
+	}
+
+	@Override
+	public Attribute fromXML(Element xml)
+	{
+		this.id = xml.getAttributeValue("id");
+		return this;
 	}
 
 	@Override
@@ -27,6 +36,13 @@ public class Attribute extends BaseObject
 	public Text name()
 	{
 		return new Text("attribute." + this.id);
+	}
+
+	@Override
+	public Attribute register()
+	{
+		ObjectRegistry.attributes.register(this);
+		return this;
 	}
 
 	@Override

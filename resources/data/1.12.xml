@@ -4930,7 +4930,7 @@
       <byteboolean>true</byteboolean>
     </tag>
     <tag id="Base">
-      <customtype>color</customtype>
+      <type>1</type>
       <applicable>
         <app>banner</app>
         <app>standing_banner</app>
@@ -5928,7 +5928,7 @@
       <byteboolean>true</byteboolean>
     </tag>
     <tag id="CollarColor">
-      <customtype>color</customtype>
+      <type>3</type>
       <applicable>
         <app>wolf</app>
       </applicable>

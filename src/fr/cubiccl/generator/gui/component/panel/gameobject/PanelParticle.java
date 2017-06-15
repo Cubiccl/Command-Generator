@@ -29,7 +29,7 @@ public class PanelParticle extends CGPanel implements ActionListener
 		GridBagConstraints gbc = this.createGridBagLayout();
 		this.add((this.comboboxParticle = new ObjectCombobox<Particle>(ObjectRegistry.particles.list())).container, gbc);
 		++gbc.gridy;
-		this.add(this.labelParticle = new CGLabel("particle." + this.comboboxParticle.getSelectedObject().id), gbc);
+		this.add(this.labelParticle = new CGLabel("particle." + this.comboboxParticle.getSelectedObject().id()), gbc);
 		++gbc.gridy;
 		this.add(this.panelBlockParticle = new PanelBlock("particle.block"), gbc);
 		this.add(this.panelItemParticle = new PanelItem("particle.item"), gbc);
@@ -57,24 +57,24 @@ public class PanelParticle extends CGPanel implements ActionListener
 	public int generateParam1()
 	{
 		Particle p = this.selectedParticle();
-		if (p.id.equals("minecraft:iconcrack")) return this.panelItemParticle.selectedItem().idNum();
-		if (p.id.equals("minecraft:blockdust") || p.id.equals("minecraft:blockcrack") || p.id.equals("minecraft:fallingdust")) return this.panelBlockParticle
+		if (p.id().equals("minecraft:iconcrack")) return this.panelItemParticle.selectedItem().idNum();
+		if (p.id().equals("minecraft:blockdust") || p.id().equals("minecraft:blockcrack") || p.id().equals("minecraft:fallingdust")) return this.panelBlockParticle
 				.selectedBlock().idNum() + this.panelBlockParticle.selectedDamage() * 4096;
 		return 0;
 	}
 
 	public int generateParam2()
 	{
-		return this.selectedParticle().id.equals("minecraft:iconcrack") ? this.panelItemParticle.selectedDamage() : 0;
+		return this.selectedParticle().id().equals("minecraft:iconcrack") ? this.panelItemParticle.selectedDamage() : 0;
 	}
 
 	private void onParticleChange()
 	{
 		Particle particle = this.comboboxParticle.getSelectedObject();
-		this.panelBlockParticle.setVisible(particle.id.equals("minecraft:blockcrack") || particle.id.equals("minecraft:blockdust")
-				|| particle.id.equals("minecraft:fallingdust"));
-		this.panelItemParticle.setVisible(particle.id.equals("minecraft:iconcrack"));
-		this.labelParticle.setTextID(new Text("particle." + particle.id));
+		this.panelBlockParticle.setVisible(particle.id().equals("minecraft:blockcrack") || particle.id().equals("minecraft:blockdust")
+				|| particle.id().equals("minecraft:fallingdust"));
+		this.panelItemParticle.setVisible(particle.id().equals("minecraft:iconcrack"));
+		this.labelParticle.setTextID(new Text("particle." + particle.id()));
 
 	}
 
@@ -106,7 +106,7 @@ public class PanelParticle extends CGPanel implements ActionListener
 	public void updateTranslations()
 	{
 		super.updateTranslations();
-		if (this.comboboxParticle != null) this.labelParticle.setTextID(new Text("particle." + this.selectedParticle().id));
+		if (this.comboboxParticle != null) this.labelParticle.setTextID(new Text("particle." + this.selectedParticle().id()));
 	}
 
 }

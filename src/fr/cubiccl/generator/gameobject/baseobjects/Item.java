@@ -4,6 +4,7 @@ import java.awt.Component;
 
 import org.jdom2.Element;
 
+import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gui.component.interfaces.IObjectList;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.label.ImageLabel;
@@ -13,7 +14,7 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
-public class Item extends BlockItem implements IObjectList<Item>
+public class Item extends BlockItem<Item> implements IObjectList<Item>
 {
 	/** ID of the Item this Item cooks to. */
 	public String cooksTo = null;
@@ -51,6 +52,23 @@ public class Item extends BlockItem implements IObjectList<Item>
 	}
 
 	@Override
+	public Item fromXML(Element xml)
+	{
+		super.fromXML(xml);
+
+		if (xml.getChild("durability") != null)
+		{
+			this.setDurability(Integer.parseInt(xml.getChildText("durability")));
+			this.hasDurability = true;
+			this.maxStackSize = 1;
+		}
+		if (xml.getChild("stacksize") != null) this.maxStackSize = Integer.parseInt(xml.getChildText("stacksize"));
+		if (xml.getChild("cooksto") != null) this.cooksTo = xml.getChildText("cooksto");
+
+		return this;
+	}
+
+	@Override
 	public int[] getDamageValues()
 	{
 		if (this.hasDurability) return new int[]
@@ -84,6 +102,13 @@ public class Item extends BlockItem implements IObjectList<Item>
 	{
 		if (this.hasDurability) return this.namePrefix(this.id());
 		return super.name(damage);
+	}
+
+	@Override
+	public Item register()
+	{
+		ObjectRegistry.items.register(this);
+		return this;
 	}
 
 	/** Sets this Item's durability.

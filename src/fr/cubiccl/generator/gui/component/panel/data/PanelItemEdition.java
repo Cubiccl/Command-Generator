@@ -97,7 +97,7 @@ public class PanelItemEdition extends CGPanel implements ActionListener
 		{}
 		if (e.getSource() == this.buttonTexture) try
 		{
-			this.item.textureType = Integer.parseInt(Dialogs.showInputDialog("New texture type?", Integer.toString(this.item.textureType)));
+			// this.item.textureType = Integer.parseInt(Dialogs.showInputDialog("New texture type?", Integer.toString(this.item.textureType)));
 		} catch (Exception e2)
 		{}
 		if (e.getSource() == this.buttonDurability) try
@@ -116,11 +116,11 @@ public class PanelItemEdition extends CGPanel implements ActionListener
 		{}
 		if (e.getSource() == this.buttonCustom)
 		{
-			String custom = Dialogs.showInputDialog("New custom item type? Effective after restart. null for normal item.", this.item.customObjectName);
+			String custom = Dialogs.showInputDialog("New custom item type? Effective after restart. null for normal item.", this.item.customObjectName());
 			if (custom != null)
 			{
-				if (custom.equals("null")) this.item.customObjectName = null;
-				else this.item.customObjectName = custom;
+				// if (custom.equals("null")) this.item.customObjectName = null;
+				// else this.item.customObjectName = custom;
 			}
 		}
 		if (e.getSource() == this.buttonCook)
@@ -148,9 +148,9 @@ public class PanelItemEdition extends CGPanel implements ActionListener
 			this.labelDamage.setText("Data values: " + d);
 		} else this.labelDamage.setText("Data value max: " + (this.item.getMaxDamage()));
 		this.labelDurability.setText(this.item.hasDurability ? "Durability: " + this.item.getDurability() : "No durability");
-		this.labelTexture.setText("Texture type: " + this.item.textureType);
+		this.labelTexture.setText("Texture type: " + this.item.textureType());
 		this.labelStack.setText("Max stack size: " + this.item.maxStackSize);
 		this.labelCook.setText("Cooks to: " + this.item.cooksTo);
-		this.labelCustom.setText("Custom item type: " + this.item.customObjectName);
+		this.labelCustom.setText("Custom item type: " + this.item.customObjectName());
 	}
 }

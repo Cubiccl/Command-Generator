@@ -5,6 +5,7 @@ import java.awt.image.BufferedImage;
 import org.jdom2.Element;
 
 import fr.cubiccl.generator.CommandGenerator;
+import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Text;
@@ -12,28 +13,33 @@ import fr.cubiccl.generator.utils.Textures;
 import fr.cubiccl.generator.utils.Utils;
 
 /** Parent class for {@link Block Blocks} and {@link Item Items}. */
-public abstract class BlockItem extends BaseObject
+public abstract class BlockItem<T> extends BaseObject<T>
 {
 	public static final boolean ITEM = true, BLOCK = false;
 
 	/** Custom Class name, for storage. */
-	public String customObjectName = null;
+	protected String customObjectName = null;
 	/** List of custom available damage values for this Block/Item if {@link BlockItem#damageMax} is <code>-1</code>. */
 	private int[] damageCustom;
 	/** The maximum damage value. */
 	private int damageMax;
 	/** Numerical ID of this Block/Item. */
-	private final int idInt;
+	private int idInt;
 	/** Text ID of this Block/Item. */
-	private final String idString;
+	private String idString;
 	/** Defines how to handle language and texture.<br />
 	 * If <code>0</code>, default.<br />
 	 * If <code>-1</code>, texture is the same for any damage.<br />
 	 * If positive, texture index is the damage modulo this texture type.<br />
 	 * If negative, texture index is the damage divided by this texture type. */
-	public int textureType;
+	protected int textureType;
 	/** <code>true</code> if this is an {@link Item}, <code>false</code> if this is a {@link Block}. */
 	private final boolean type;
+
+	public BlockItem()
+	{
+		this(BLOCK, -1, null);
+	}
 
 	public BlockItem(boolean type, int idInt, String idString)
 	{
@@ -59,6 +65,28 @@ public abstract class BlockItem extends BaseObject
 		this(type, idInt, idString);
 		this.damageMax = -1;
 		this.damageCustom = damage;
+	}
+
+	/** Getter for {@link BlockItem#customObjectName}. */
+	public String customObjectName()
+	{
+		return this.customObjectName;
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public T fromXML(Element xml)
+	{
+		if (xml.getChild("customblock") != null) this.customObjectName = xml.getChildText("customblock");
+
+		this.idString = "minecraft:" + xml.getAttributeValue("idstr");
+		this.idInt = Integer.parseInt(xml.getAttributeValue("idint"));
+
+		if (xml.getChild("customdamage") != null) this.setDamageCustom(ObjectCreator.createDamage(xml.getChildText("customdamage")));
+		else if (xml.getChild("maxdamage") != null) this.setMaxDamage(Integer.parseInt(xml.getChildText("maxdamage")));
+		if (xml.getChild("texture") != null) this.textureType = Integer.parseInt(xml.getChildText("texture"));
+
+		return (T) this;
 	}
 
 	/** @return The list of possible damage values for this Block/Item. */
@@ -197,6 +225,12 @@ public abstract class BlockItem extends BaseObject
 		if (this.textureType == 0) return Textures.getTexture(this.typeName() + "." + this.idString + "_" + damage);
 		if (this.textureType < -1) return Textures.getTexture(this.typeName() + "." + this.idString + "_" + damage / -this.textureType);
 		return Textures.getTexture(this.typeName() + "." + this.idString + "_" + damage % this.textureType);
+	}
+
+	/** Getter for {@link BlockItem#textureType}. */
+	public int textureType()
+	{
+		return this.textureType;
 	}
 
 	@Override

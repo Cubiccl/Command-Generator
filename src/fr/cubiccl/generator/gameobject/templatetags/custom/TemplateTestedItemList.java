@@ -12,13 +12,14 @@ import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 
 public class TemplateTestedItemList extends TemplateList
 {
+
 	public TemplateTestedItemList(String id, byte applicationType, String... applicable)
 	{
 		super(id, applicationType, applicable);
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelObjectList<ItemStack> p = new PanelObjectList<ItemStack>(null, (String) null, ItemStack.class, "testing", true);
 		if (previousValue != null)
@@ -35,7 +36,7 @@ public class TemplateTestedItemList extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(BaseObject object, CGPanel panel)
+	public TagList generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		@SuppressWarnings("unchecked")
 		ItemStack[] values = ((PanelObjectList<ItemStack>) panel).values();

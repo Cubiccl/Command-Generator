@@ -67,7 +67,7 @@ public class PanelCriteria extends CGPanel implements ActionListener
 	public String getCriteria()
 	{
 		String base = this.comboboxBase.getValue();
-		if (base.equals("achievement")) return base + "." + this.panelAchievement.getAchievement().id;
+		if (base.equals("achievement")) return base + "." + this.panelAchievement.getAchievement().id();
 		if (base.contains("Item") || base.equals("stat.drop") || base.equals("stat.pickup")) return base + "." + this.panelItem.selectedItem().id();
 		if (base.toLowerCase().contains("entity")) return base + "." + this.panelEntity.selectedEntity().id;
 		if (base.equals("stat.mineBlock")) return base + "." + this.panelBlock.selectedBlock().id();

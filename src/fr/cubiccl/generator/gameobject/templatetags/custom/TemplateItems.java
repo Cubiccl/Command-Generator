@@ -9,6 +9,7 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList;
+import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.tag.PanelContainer;
 
@@ -17,13 +18,8 @@ public class TemplateItems extends TemplateList
 
 	public boolean hasSlot = true;
 
-	public TemplateItems(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		Container container = (!this.hasSlot || object == Entity.PLAYER || object == null) ? ObjectRegistry.containers.find(this.id())
 				: ObjectRegistry.containers.find(object.id());
@@ -36,7 +32,14 @@ public class TemplateItems extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(BaseObject object, CGPanel panel)
+	public TemplateTag fromXML(Element xml)
+	{
+		if (xml.getChild("noslot") != null) this.hasSlot = !Boolean.parseBoolean(xml.getChildText("noslot"));
+		return super.fromXML(xml);
+	}
+
+	@Override
+	public TagList generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		return ((PanelContainer) panel.getComponent(0)).generateItems(this, this.hasSlot);
 	}

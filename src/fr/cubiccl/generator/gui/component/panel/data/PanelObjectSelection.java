@@ -8,7 +8,6 @@ import java.awt.event.ComponentListener;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.*;
-import fr.cubiccl.generator.gameobject.registries.ObjectCreator;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateBoolean;
@@ -178,20 +177,21 @@ public class PanelObjectSelection extends CGPanel implements ActionListener
 		CGPanel panelToShow = null;
 		if (this.mode == BLOCK) panelToShow = new PanelBlockEdition(new Block(idNum, id));
 		if (this.mode == ITEM) panelToShow = new PanelItemEdition(new Item(idNum, id));
-		if (this.mode == ENTITY) new Entity(id);
-		if (this.mode == EFFECT) new EffectType(idNum, id);
-		if (this.mode == ENCHANTMENT) panelToShow = new PanelEnchantmentEdition(new EnchantmentType(idNum, id));
+		if (this.mode == ENTITY) new Entity(id).register();
+		if (this.mode == EFFECT) new EffectType(idNum, id).register();
+		;
+		if (this.mode == ENCHANTMENT) panelToShow = new PanelEnchantmentEdition(new EnchantmentType(idNum, id).register());
 		if (this.mode == ACHIEVEMENT)
 		{
 			String item = Dialogs.showInputDialog("Item id ?");
 			if (item == null) return;
 			Item i = ObjectRegistry.items.find(item);
 			if (i == null) Dialogs.showMessage("Item " + item + " could not be found.");
-			panelToShow = new PanelAchievementEdition(new Achievement(id, i));
+			panelToShow = new PanelAchievementEdition(new Achievement(id, i).register());
 		}
-		if (this.mode == ATTRIBUTE) new Attribute(id);
-		if (this.mode == PARTICLE) new Particle(id);
-		if (this.mode == SOUND) new Sound(id);
+		if (this.mode == ATTRIBUTE) new Attribute(id).register();
+		if (this.mode == PARTICLE) new Particle(id).register();
+		if (this.mode == SOUND) new Sound(id).register();
 		if (this.mode == LISTS)
 		{
 			ObjectRegistry.createList(id);
@@ -211,7 +211,7 @@ public class PanelObjectSelection extends CGPanel implements ActionListener
 				else if (t <= Tag.DOUBLE) new TemplateNumber(id, applicationType, t);
 			} catch (Exception e)
 			{
-				ObjectCreator.createCustomTag(id, applicationType, new String[0], type, null);
+				//ObjectCreator.createCustomTag(id, applicationType, new String[0], type, null);
 			}
 		}
 
@@ -223,6 +223,7 @@ public class PanelObjectSelection extends CGPanel implements ActionListener
 		this.updateData();
 	}
 
+	@SuppressWarnings("unchecked")
 	private void delete()
 	{
 		if (this.mode == LISTS) ObjectRegistry.removeList(this.comboboxList.getValue());
@@ -265,6 +266,7 @@ public class PanelObjectSelection extends CGPanel implements ActionListener
 		return this.comboboxBlock;
 	}
 
+	@SuppressWarnings("rawtypes")
 	private BaseObject selectedObject()
 	{
 		return this.selectedCombobox().getSelectedObject();

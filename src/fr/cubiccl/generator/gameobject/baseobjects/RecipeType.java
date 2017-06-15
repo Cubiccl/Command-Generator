@@ -16,39 +16,34 @@ import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Text;
 
 /** A default Recipe from Minecraft. */
-public class RecipeType extends BaseObject implements IObjectList<RecipeType>
+public class RecipeType extends BaseObject<RecipeType> implements IObjectList<RecipeType>
 {
 
 	/** The damage of the resulting Item. */
-	public final int damage;
+	private int damage;
 	/** The ID of the Recipe. */
-	public final String id;
+	private String id;
 	/** The resulting Item. */
-	public final Item item;
+	private Item item;
 
 	public RecipeType()
 	{
-		this(null, null);
-	}
-
-	public RecipeType(String id, Item item)
-	{
-		this(id, item, -1);
-	}
-
-	public RecipeType(String id, Item item, int damage)
-	{
-		this.id = id;
-		this.item = item;
-		this.damage = damage;
-		if (id != null) ObjectRegistry.recipes.register(this);
-		if (item == null) System.out.println("Recipe " + this.id + " has null Item !!");
+		this.damage = -1;
 	}
 
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		return new ObjectCombobox<BaseObject>(ObjectRegistry.recipes.list()).container;
+		return new ObjectCombobox<RecipeType>(ObjectRegistry.recipes.list()).container;
+	}
+
+	@Override
+	public RecipeType fromXML(Element xml)
+	{
+		this.id = xml.getAttributeValue("id");
+		this.item = ObjectRegistry.items.find(xml.getChild("item") == null ? this.id : xml.getChildText("item"));
+		if (xml.getChild("damage") != null) this.damage = Integer.parseInt(xml.getChildText("damage"));
+		return this;
 	}
 
 	@Override
@@ -70,12 +65,25 @@ public class RecipeType extends BaseObject implements IObjectList<RecipeType>
 		return "minecraft:" + this.id;
 	}
 
+	/** Getter for {@link RecipeType#item}. */
+	public Item item()
+	{
+		return this.item;
+	}
+
 	@Override
 	public Text name()
 	{
 		if (Lang.keyExists("recipe." + this.id)) return new Text("recipe." + this.id);
 		if (this.damage == -1) return this.item.mainName();
 		return this.item.name(this.damage);
+	}
+
+	@Override
+	public RecipeType register()
+	{
+		ObjectRegistry.recipes.register(this);
+		return this;
 	}
 
 	@Override

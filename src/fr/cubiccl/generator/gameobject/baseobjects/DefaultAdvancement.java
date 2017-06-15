@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject.baseobjects;
 
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 import org.jdom2.Element;
 
@@ -8,26 +9,47 @@ import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 
 /** A default Recipe from Minecraft. */
-public class DefaultAdvancement extends BaseObject
+public class DefaultAdvancement extends BaseObject<DefaultAdvancement>
 {
 	/** This Advancement's category. */
-	public final String category;
+	private String category;
 	/** The list of criterias of this Advancement. */
-	public final String[] criteria;
+	private String[] criteria;
 	/** The damage value of the display Item. -1 for no particular damage value. */
-	public int data = -1;
+	private int data = -1;
 	/** This Advancement's ID. */
-	public final String id;
+	private String id;
 	/** The display Item. */
-	public final Item item;
+	private Item item;
 
-	public DefaultAdvancement(String id, Item item, String category, String... criteria)
+	public DefaultAdvancement()
 	{
-		this.id = id;
-		this.item = item;
-		this.criteria = criteria;
-		this.category = category;
-		if (id != null) ObjectRegistry.advancements.register(this);
+		this.data = -1;
+	}
+
+	/** Getter for {@link DefaultAdvancement#criteria}. */
+	public String[] criteria()
+	{
+		return this.criteria.clone();
+	}
+
+	@Override
+	public DefaultAdvancement fromXML(Element xml)
+	{
+		this.category = xml.getAttributeValue("category");
+		this.id = xml.getAttributeValue("id");
+		this.item = ObjectRegistry.items.find(xml.getAttributeValue("item"));
+		if (xml.getAttribute("data") != null) this.data = Integer.parseInt(xml.getAttributeValue("data"));
+		if (xml.getChildren("criterion").size() == 0) this.criteria = new String[]
+		{ this.id };
+		else
+		{
+			List<Element> c = xml.getChildren("criterion");
+			this.criteria = new String[c.size()];
+			for (int i = 0; i < criteria.length; ++i)
+				this.criteria[i] = c.get(i).getText();
+		}
+		return this;
 	}
 
 	@Override
@@ -40,6 +62,13 @@ public class DefaultAdvancement extends BaseObject
 	public Text name()
 	{
 		return new Text("advancement." + this.category + "." + this.id);
+	}
+
+	@Override
+	public DefaultAdvancement register()
+	{
+		ObjectRegistry.advancements.register(this);
+		return this;
 	}
 
 	@Override

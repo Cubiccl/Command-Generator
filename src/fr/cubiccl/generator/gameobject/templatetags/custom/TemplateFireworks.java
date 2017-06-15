@@ -63,13 +63,8 @@ public class TemplateFireworks extends TemplateCompound
 
 	}
 
-	public TemplateFireworks(String id, byte applicationType, String... applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		FireworksPanel p = new FireworksPanel();
 		if (previousValue != null) p.setupFrom((TagCompound) previousValue);
@@ -78,7 +73,7 @@ public class TemplateFireworks extends TemplateCompound
 	}
 
 	@Override
-	public Tag generateTag(BaseObject object, CGPanel panel)
+	public Tag generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		try
 		{
@@ -90,7 +85,7 @@ public class TemplateFireworks extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		FireworksPanel p = ((FireworksPanel) panel);
 		try

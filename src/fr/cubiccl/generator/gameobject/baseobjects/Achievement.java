@@ -7,19 +7,29 @@ import org.jdom2.Element;
 import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
 import fr.cubiccl.generator.utils.Text;
 
-public class Achievement extends BaseObject
+public class Achievement extends BaseObject<Achievement>
 {
 
 	/** This Achievement's ID. */
-	public final String id;
+	private String id;
 	/** The Item to use for this Achievement's Texture. */
-	public Item textureItem;
+	private Item textureItem;
 
-	public Achievement(String id, Item textureItem)
+	public Achievement()
+	{}
+
+	public Achievement(String id, Item item)
 	{
 		this.id = "minecraft:" + id;
-		this.textureItem = textureItem;
-		ObjectRegistry.achievements.register(this);
+		this.textureItem = item;
+	}
+
+	@Override
+	public Achievement fromXML(Element xml)
+	{
+		this.id = "minecraft:" + xml.getAttributeValue("id");
+		this.textureItem = ObjectRegistry.items.find(xml.getAttributeValue("item"));
+		return this;
 	}
 
 	@Override
@@ -35,9 +45,22 @@ public class Achievement extends BaseObject
 	}
 
 	@Override
+	public Achievement register()
+	{
+		ObjectRegistry.achievements.register(this);
+		return this;
+	}
+
+	@Override
 	public BufferedImage texture()
 	{
 		return this.textureItem.texture();
+	}
+
+	/** Getter for {@link Achievement#textureItem}. */
+	public Item textureItem()
+	{
+		return this.textureItem;
 	}
 
 	@Override

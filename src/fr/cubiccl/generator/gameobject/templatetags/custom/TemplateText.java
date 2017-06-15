@@ -21,13 +21,8 @@ import fr.cubiccl.generator.utils.Text;
 public class TemplateText extends TemplateString
 {
 
-	public TemplateText(String id, byte applicationType, String... applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelRadio p = new PanelRadio(new Text("text.choose"), "text", "string", "json");
 		Dialogs.showConfirmDialog(p.component, Lang.translate("general.confirm"), null);
@@ -41,7 +36,7 @@ public class TemplateText extends TemplateString
 	}
 
 	@Override
-	public TagString generateTag(BaseObject object, CGPanel panel)
+	public TagString generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		if (panel instanceof EntryPanel) return super.generateTag(object, panel);
 		try

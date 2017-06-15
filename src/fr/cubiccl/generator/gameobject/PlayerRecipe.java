@@ -72,7 +72,7 @@ public class PlayerRecipe implements IObjectList<PlayerRecipe>
 	@Override
 	public String getName(int index)
 	{
-		return this.recipe.item.getName(index);
+		return this.recipe.item().getName(index);
 	}
 
 	/** Converts this Player Recipe to a NBT Tag.

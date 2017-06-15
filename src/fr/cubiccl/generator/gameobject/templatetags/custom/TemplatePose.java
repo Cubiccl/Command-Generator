@@ -51,13 +51,8 @@ public class TemplatePose extends TemplateCompound
 
 	}
 
-	public TemplatePose(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelPose p = new PanelPose();
 
@@ -77,7 +72,7 @@ public class TemplatePose extends TemplateCompound
 	}
 
 	@Override
-	public TagCompound generateTag(BaseObject object, CGPanel panel)
+	public TagCompound generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		PanelPose p = (PanelPose) panel;
 		TagList[] tags = new TagList[6];
@@ -97,7 +92,7 @@ public class TemplatePose extends TemplateCompound
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		try
 		{

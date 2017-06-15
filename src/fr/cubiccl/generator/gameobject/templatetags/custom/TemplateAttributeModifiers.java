@@ -12,13 +12,9 @@ import fr.cubiccl.generator.gui.component.panel.utils.PanelObjectList;
 
 public class TemplateAttributeModifiers extends TemplateList
 {
-	public TemplateAttributeModifiers(String id, byte applicationType, String... applicable)
-	{
-		super(id, applicationType, applicable);
-	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelObjectList<AttributeModifier> p = new PanelObjectList<AttributeModifier>(null, (String) null, AttributeModifier.class, "isApplied", false);
 		if (previousValue != null) for (Tag t : ((TagList) previousValue).value())
@@ -28,7 +24,7 @@ public class TemplateAttributeModifiers extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(BaseObject object, CGPanel panel)
+	public TagList generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		@SuppressWarnings("unchecked")
 		AttributeModifier[] values = ((PanelObjectList<AttributeModifier>) panel).values();

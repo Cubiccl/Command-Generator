@@ -15,7 +15,7 @@ public class ContainerRegistry extends ObjectRegistry<Container>
 	public void register(Container object)
 	{
 		super.register(object);
-		for (String applicable : object.applicable)
+		for (String applicable : object.applicable())
 			this.registry.put(applicable, object);
 	}
 

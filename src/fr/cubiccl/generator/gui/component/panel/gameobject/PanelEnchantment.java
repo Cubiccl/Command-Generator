@@ -79,7 +79,7 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 			this.panelRanged.generateValue(e.value());
 			return e;
 		}
-		if (this.checkMaximum) this.entryLevel.checkValueInBounds(CGEntry.INTEGER, 1, this.selectedEnchantment().maxLevel);
+		if (this.checkMaximum) this.entryLevel.checkValueInBounds(CGEntry.INTEGER, 1, this.selectedEnchantment().maxLevel());
 		this.entryLevel.checkValueSuperior(CGEntry.INTEGER, 1);
 		return new Enchantment(this.selectedEnchantment(), Integer.parseInt(this.entryLevel.getText()));
 	}
@@ -101,7 +101,7 @@ public class PanelEnchantment extends CGPanel implements ICustomObject<Enchantme
 
 	public void setLevel(int level)
 	{
-		if (!this.checkMaximum || this.selectedEnchantment().maxLevel >= level) this.entryLevel.setText(Integer.toString(level));
+		if (!this.checkMaximum || this.selectedEnchantment().maxLevel() >= level) this.entryLevel.setText(Integer.toString(level));
 	}
 
 	public void setupFrom(Enchantment enchantment)

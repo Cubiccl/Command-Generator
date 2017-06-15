@@ -90,7 +90,7 @@ public class Lang
 	 * 
 	 * @param object - The object to translate its name.
 	 * @return The Text. */
-	public static Text translateObject(BaseObject object)
+	public static Text translateObject(BaseObject<?> object)
 	{
 		return translateObject(object, -1);
 	}
@@ -100,7 +100,7 @@ public class Lang
 	 * @param object - The object to translate its name.
 	 * @param damage - A damage value to translate the object with.
 	 * @return The Text. */
-	public static Text translateObject(BaseObject object, int damage)
+	public static Text translateObject(BaseObject<?> object, int damage)
 	{
 		return translateObject(object, damage, true);
 	}
@@ -111,7 +111,7 @@ public class Lang
 	 * @param damage - A damage value to translate the object with.
 	 * @param undetermined - <code>true</code> if the object is undetermined.
 	 * @return The Text. */
-	public static Text translateObject(BaseObject object, int damage, boolean undetermined)
+	public static Text translateObject(BaseObject<?> object, int damage, boolean undetermined)
 	{
 		if (object == null)
 		{
@@ -131,7 +131,7 @@ public class Lang
 		}
 
 		if (undetermined) t += ".undetermined";
-		if (damage != -1 && object instanceof BlockItem) return new Text(t).addReplacement("<name>", ((BlockItem) object).name(damage));
+		if (damage != -1 && object instanceof BlockItem) return new Text(t).addReplacement("<name>", ((BlockItem<?>) object).name(damage));
 		return new Text(t).addReplacement("<name>", object.name());
 	}
 

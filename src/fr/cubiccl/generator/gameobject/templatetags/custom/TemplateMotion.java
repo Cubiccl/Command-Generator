@@ -14,13 +14,9 @@ import fr.cubiccl.generator.utils.Text;
 
 public class TemplateMotion extends TemplateList
 {
-	public TemplateMotion(String id, byte applicationType, String[] applicable)
-	{
-		super(id, applicationType, applicable);
-	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelCoordinates p = new PanelCoordinates(null, false);
 		if (previousValue != null)
@@ -36,7 +32,7 @@ public class TemplateMotion extends TemplateList
 	}
 
 	@Override
-	public TagList generateTag(BaseObject object, CGPanel panel)
+	public TagList generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		try
 		{
@@ -49,7 +45,7 @@ public class TemplateMotion extends TemplateList
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		try
 		{

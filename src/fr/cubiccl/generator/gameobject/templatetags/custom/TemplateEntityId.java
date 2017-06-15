@@ -12,13 +12,8 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 public class TemplateEntityId extends TemplateString
 {
 
-	public TemplateEntityId(String id, byte applicationType, String... applicable)
-	{
-		super(id, applicationType, applicable);
-	}
-
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		ObjectCombobox<Entity> box = new ObjectCombobox<Entity>(ObjectRegistry.entities.list(true));
 		if (previousValue != null) box.setSelected(ObjectRegistry.entities.find(((TagString) previousValue).value()));
@@ -26,7 +21,7 @@ public class TemplateEntityId extends TemplateString
 	}
 
 	@Override
-	public TagString generateTag(BaseObject object, CGPanel panel)
+	public TagString generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		@SuppressWarnings("unchecked")
 		ObjectCombobox<Entity> box = (ObjectCombobox<Entity>) panel.getComponent(1);
@@ -34,7 +29,7 @@ public class TemplateEntityId extends TemplateString
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		return true;
 	}

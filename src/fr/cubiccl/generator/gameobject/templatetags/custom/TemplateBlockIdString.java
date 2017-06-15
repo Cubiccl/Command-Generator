@@ -11,16 +11,20 @@ import fr.cubiccl.generator.gui.component.panel.gameobject.PanelBlockSelection;
 
 public class TemplateBlockIdString extends TemplateString
 {
-	public int damage;
+	public int damage = -1;
+
+	public TemplateBlockIdString()
+	{
+		super();
+	}
 
 	public TemplateBlockIdString(String id, byte applicationType, String... applicable)
 	{
 		super(id, applicationType, applicable);
-		this.damage = -1;
 	}
 
 	@Override
-	protected CGPanel createPanel(BaseObject object, Tag previousValue)
+	protected CGPanel createPanel(BaseObject<?> object, Tag previousValue)
 	{
 		PanelBlockSelection p = new PanelBlockSelection(false);
 
@@ -35,14 +39,14 @@ public class TemplateBlockIdString extends TemplateString
 	}
 
 	@Override
-	public TagString generateTag(BaseObject object, CGPanel panel)
+	public TagString generateTag(BaseObject<?> object, CGPanel panel)
 	{
 		this.damage = ((PanelBlockSelection) panel).selectedDamage();
 		return this.create(((PanelBlockSelection) panel).selectedBlock().id());
 	}
 
 	@Override
-	protected boolean isInputValid(BaseObject object, CGPanel panel)
+	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		return true;
 	}
