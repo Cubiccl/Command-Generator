@@ -4354,10 +4354,11 @@
       <byteboolean>true</byteboolean>
     </tag>
     <tag id="ArmorDropChances">
-      <customtype>DropChances4</customtype>
+      <customtype>DropChances</customtype>
       <applicable>
         <app>list=mob</app>
       </applicable>
+      <slotcount>4</slotcount>
     </tag>
     <tag id="ArmorItem">
       <customtype>item</customtype>
@@ -4831,10 +4832,11 @@
       <byteboolean>true</byteboolean>
     </tag>
     <tag id="HandDropChances">
-      <customtype>DropChances2</customtype>
+      <customtype>DropChances</customtype>
       <applicable>
         <app>list=mob</app>
       </applicable>
+      <slotcount>4</slotcount>
     </tag>
     <tag id="HandItems">
       <customtype>Items</customtype>
