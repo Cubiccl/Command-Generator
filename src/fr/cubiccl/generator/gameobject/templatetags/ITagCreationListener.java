@@ -5,6 +5,10 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 public interface ITagCreationListener
 {
 
-	public void createTag(TemplateTag template, Tag value);
+	/** Called when the NBT Tag is successfully created. Should store the created Tag.
+	 * 
+	 * @param template - The NBT Tag template.
+	 * @param value - The created NBT Tag. */
+	public void tagCreated(TemplateTag template, Tag value);
 
 }

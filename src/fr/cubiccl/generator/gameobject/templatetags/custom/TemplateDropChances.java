@@ -58,8 +58,7 @@ public class TemplateDropChances extends TemplateList
 	public TemplateTag fromXML(Element xml)
 	{
 		super.fromXML(xml);
-		this.setSlotCount(Integer.parseInt(this.customTagType.substring("DropChances".length())));
-		this.customTagType = "DropChances";
+		this.setSlotCount(Integer.parseInt(xml.getChildText("slotcount")));
 		return this;
 	}
 
@@ -96,7 +95,7 @@ public class TemplateDropChances extends TemplateList
 	public Element toXML()
 	{
 		Element root = super.toXML();
-		root.getChild("customtype").setText(root.getChildText("customtype") + this.slotCount);
+		root.addContent(new Element("slotcount").setText(Integer.toString(this.slotCount)));
 		return root;
 	}
 

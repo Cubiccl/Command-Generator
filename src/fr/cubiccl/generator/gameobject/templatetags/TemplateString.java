@@ -13,9 +13,12 @@ import fr.cubiccl.generator.gui.component.panel.utils.ComboboxPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
 import fr.cubiccl.generator.utils.Text;
 
+/** NBT Tag with a String value. */
 public class TemplateString extends TemplateTag
 {
+	/** If not <code>null</code>, the list of values that are valid for this NBT Tag. */
 	protected String[] authorizedValues;
+	/** <code>true</code> if the value should start with "<code>minecraft:</code>". */
 	public boolean minecraftPrefix = false;
 
 	public TemplateString()
@@ -29,6 +32,10 @@ public class TemplateString extends TemplateTag
 		this.authorizedValues = null;
 	}
 
+	/** Creates this NBT Tag with the input value.
+	 * 
+	 * @param value - The value to set.
+	 * @return The created NBT Tag. */
 	@SuppressWarnings("deprecation")
 	public TagString create(String value)
 	{
@@ -78,12 +85,13 @@ public class TemplateString extends TemplateTag
 	}
 
 	@Override
-	public TagString readTag(String value, boolean isJson, boolean readUnknown)
+	public TagString parseTag(String value, boolean isJson, boolean readUnknown)
 	{
 		if (value.startsWith("\"") && value.endsWith("\"")) value = value.substring(1, value.length() - 1);
 		return this.create(value.replaceAll(Pattern.quote("\\\""), "\"").replaceAll(Pattern.quote("\\\\"), "\\"));
 	}
 
+	/** Setter for {@link TemplateString#authorizedValues}. */
 	public void setValues(String... authorizedValues)
 	{
 		this.authorizedValues = authorizedValues;

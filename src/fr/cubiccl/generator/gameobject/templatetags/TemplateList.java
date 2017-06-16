@@ -10,8 +10,10 @@ import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagList;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
+/** An NBT Tag containing more NBT Tags, ordered and unnamed. */
 public abstract class TemplateList extends TemplateTag
 {
+	/** Default List, with no behavior. Shouldn't be applicable. */
 	public static class DefaultList extends TemplateList
 	{
 
@@ -49,6 +51,10 @@ public abstract class TemplateList extends TemplateTag
 		super(id, Tag.LIST, applicationType, applicable);
 	}
 
+	/** Creates this NBT Tag with the input values.
+	 * 
+	 * @param value - The list of NBT Tags to set.
+	 * @return The created NBT Tag. */
 	@SuppressWarnings("deprecation")
 	public TagList create(Tag... value)
 	{
@@ -63,7 +69,7 @@ public abstract class TemplateList extends TemplateTag
 	}
 
 	@Override
-	public TagList readTag(String value, boolean isJson, boolean readUnknown)
+	public TagList parseTag(String value, boolean isJson, boolean readUnknown)
 	{
 		if (value.startsWith("[") && value.endsWith("]")) value = value.substring(1, value.length() - 1);
 		String[] values = NBTParser.splitTagValues(value);

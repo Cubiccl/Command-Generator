@@ -14,12 +14,20 @@ import fr.cubiccl.generator.gui.component.panel.utils.EntryPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelRadio;
 import fr.cubiccl.generator.utils.Text;
 
+/** An NBT Tag with numeral value. */
 public class TemplateNumber extends TemplateTag
 {
+	/** <code>true</code> if this is a Byte NBT Tag, but should work as a Boolean NBT Tag. */
 	boolean isByteBoolean = false;
-	private double minValue, maxValue;
+	/** The maximum valid value for this NBT Tag. */
+	private double maxValue;
+	/** The minimum valid value for this NBT Tag. */
+	private double minValue;
+	/** If not <code>null</code>, this NBT Tag will show names for its possible values. This represents the ID of the translations to use for these names. */
 	private String[] names;
+	/** The prefix to use with {@link TemplateNumber#names}. */
 	private String prefix;
+	/** If not <code>null</code>, the custom values to use with {@link TemplateNumber#names}. If <code>null</code>, 0 to <code>names.length-1</code> will be used. */
 	private int[] values;
 
 	public TemplateNumber()
@@ -44,12 +52,20 @@ public class TemplateNumber extends TemplateTag
 		this(id, applicationType, Tag.INT, applicable);
 	}
 
+	/** Creates this NBT Tag with the input value.
+	 * 
+	 * @param value - The value to set.
+	 * @return The created NBT Tag. */
 	@SuppressWarnings("deprecation")
 	public TagNumber create(double value)
 	{
 		return new TagNumber(this, value);
 	}
 
+	/** Creates this NBT Tag with the input value.
+	 * 
+	 * @param value - The value to set.
+	 * @return The created NBT Tag. */
 	@SuppressWarnings("deprecation")
 	public TagNumber create(int value)
 	{
@@ -134,21 +150,25 @@ public class TemplateNumber extends TemplateTag
 		return this.create(this.values[index]);
 	}
 
+	/** Getter for {@link TemplateNumber#maxValue}. */
 	public double getMaxValue()
 	{
 		return this.maxValue;
 	}
 
+	/** Getter for {@link TemplateNumber#minValue}. */
 	public double getMinValue()
 	{
 		return this.minValue;
 	}
 
+	/** Getter for {@link TemplateNumber#values}. */
 	public int[] getValues()
 	{
 		return this.values;
 	}
 
+	/** @return <code>true</code> if this NBT Tag has Long, Float or Double values. */
 	public boolean isBigNumber()
 	{
 		return this.tagType == Tag.LONG || this.tagType == Tag.FLOAT || this.tagType == Tag.DOUBLE;
@@ -174,7 +194,7 @@ public class TemplateNumber extends TemplateTag
 	}
 
 	@Override
-	public Tag readTag(String value, boolean isJson, boolean readUnknown)
+	public Tag parseTag(String value, boolean isJson, boolean readUnknown)
 	{
 		if (this.tagType != Tag.RANGE && this.tagType != Tag.INT) value = value.substring(0, value.length() - 1);
 		else if (this.tagType == Tag.RANGE && ((TemplateRange) this).numberType != Tag.INT) value = value.substring(0, value.length() - 1);
@@ -182,23 +202,27 @@ public class TemplateNumber extends TemplateTag
 		return this.create(Integer.parseInt(value));
 	}
 
+	/** Setter for {@link TemplateNumber#minValue} and {@link TemplateNumber#maxValue}. */
 	public void setBounds(double min, double max)
 	{
 		this.minValue = min;
 		this.maxValue = max;
 	}
 
+	/** Setter for {@link TemplateNumber#prefix} and {@link TemplateNumber#names}. */
 	public void setNames(String prefix, String... names)
 	{
 		this.prefix = prefix;
 		this.names = names;
 	}
 
+	/** Setter for {@link TemplateNumber#values}. */
 	public void setValues(int... values)
 	{
 		this.values = values;
 	}
 
+	/** @return The suffix to add to the value. */
 	public String suffix()
 	{
 		return TagNumber.SUFFIX[this.tagType];

@@ -16,11 +16,15 @@ import fr.cubiccl.generator.utils.Lang;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
+/** Describes an NBT Tag. */
 public abstract class TemplateTag extends BaseObject<TemplateTag> implements IStateListener<CGPanel>
 {
+	/** Utility object to store tags being created. */
 	private static class TagCreation
 	{
+		/** What to call when creation is over. */
 		public final ITagCreationListener listener;
+		/** What Object the Tag is being created for. */
 		public final BaseObject<?> object;
 
 		public TagCreation(ITagCreationListener listener, BaseObject<?> object)
@@ -30,15 +34,25 @@ public abstract class TemplateTag extends BaseObject<TemplateTag> implements ISt
 		}
 	}
 
+	/** Translation IDs for application types. */
 	public static final String[] TYPE_NAMES =
 	{ "block", "item", "entity", "other", "other" };
 
+	/** The Object IDs this Tag can be applied to. */
 	protected String[] applicable;
+	/** The type of Object this Tag can be applied to.
+	 * 
+	 * @see Tag#BLOCK */
 	private byte applicationType;
-	/** Need several in case of chest-like recursion */
+	/** Remembers what to call when this Tag is being created. This has to be a stack, in case there is recursion. */
 	private Stack<TagCreation> creationListeners;
+	/** The custom type of this Tag. */
 	protected String customTagType = null;
+	/** This NBT Tag's ID. */
 	private String id;
+	/** This NBT Tag's type.
+	 * 
+	 * @see Tag#STRING */
 	protected byte tagType;
 
 	public TemplateTag(byte applicationType)
@@ -55,13 +69,16 @@ public abstract class TemplateTag extends BaseObject<TemplateTag> implements ISt
 		this.creationListeners = new Stack<TagCreation>();
 	}
 
+	/** Getter for {@link TemplateTag#applicationType}. */
 	public byte applicationType()
 	{
 		return this.applicationType;
 	}
 
-	/** @param object - The Object this Tag will be applied to.
-	 * @param previousValue - The value this Tag previously had.
+	/** Called when creating this Tag. Creates the appropriate UI and shows it.
+	 * 
+	 * @param object - The Object this Tag will be applied to.
+	 * @param previousValue - The value this Tag previously had. <code>null</code> if this Tag wasn't added before.
 	 * @param listener - Warned when the creation is complete. */
 	public void askValue(BaseObject<?> object, Tag previousValue, ITagCreationListener listener)
 	{
@@ -84,6 +101,11 @@ public abstract class TemplateTag extends BaseObject<TemplateTag> implements ISt
 		return false;
 	}
 
+	/** Creates the UI for this NBT Tag's creation.
+	 * 
+	 * @param object - The Object this Tag will be applied to.
+	 * @param previousValue - The value this Tag previously had. <code>null</code> if this Tag wasn't added before.
+	 * @return The UI to show to the user. */
 	protected abstract CGPanel createPanel(BaseObject<?> object, Tag previousValue);
 
 	/** @param object - The Object this Tag is applied to.
@@ -121,10 +143,14 @@ public abstract class TemplateTag extends BaseObject<TemplateTag> implements ISt
 		return this;
 	}
 
-	/** @param object - The Object this Tag is applied to.
-	 * @return The generated Tag. */
+	/** Generates the NBT Tag after the user validates their choices.
+	 * 
+	 * @param object - The Object this Tag is applied to.
+	 * @param panel - The UI that was interacted with.
+	 * @return The generated NBT Tag. */
 	protected abstract Tag generateTag(BaseObject<?> object, CGPanel panel);
 
+	/** Getter for {@link TemplateTag#applicable}. */
 	public String[] getApplicable()
 	{
 		return this.applicable;
@@ -137,13 +163,20 @@ public abstract class TemplateTag extends BaseObject<TemplateTag> implements ISt
 	}
 
 	/** @param object - The Object this Tag is applied to.
-	 * @return True if the user Input is valid. */
+	 * @param panel - The UI that was interacted with.
+	 * @return <code>true</code> if the user input is valid. */
 	protected boolean isInputValid(BaseObject<?> object, CGPanel panel)
 	{
 		return true;
 	}
 
-	public abstract Tag readTag(String value, boolean isJson, boolean readUnknown);
+	/** Parses the value for this NBT Tag.
+	 * 
+	 * @param value - The value to parse.
+	 * @param isJson - <code>true</code> if the format is strict Json in case more parsing is to be done with the value.
+	 * @param readUnknown - <code>true</code> if unknown NBT Tags should be read in case more parsing is to be done with the value.
+	 * @return The created NBT Tag. */
+	public abstract Tag parseTag(String value, boolean isJson, boolean readUnknown);
 
 	@Override
 	public TemplateTag register()
@@ -154,29 +187,26 @@ public abstract class TemplateTag extends BaseObject<TemplateTag> implements ISt
 		return this;
 	}
 
-	public void setApplicationType(byte applicationType)
-	{
-		this.applicationType = applicationType;
-	}
-
 	@Override
 	public boolean shouldStateClose(CGPanel panel)
 	{
 		TagCreation creation = this.creationListeners.peek();
 		if (this.isInputValid(creation.object, panel))
 		{
-			creation.listener.createTag(this, this.generateTag(creation.object, panel));
+			creation.listener.tagCreated(this, this.generateTag(creation.object, panel));
 			this.creationListeners.pop();
 			return true;
 		}
 		return false;
 	}
 
+	/** Getter for {@link TemplateTag#tagType}. */
 	public byte tagType()
 	{
 		return this.tagType;
 	}
 
+	/** @return The Title to be displayed when creating this NBT Tag. */
 	public Text title()
 	{
 		return new Text("tag.title." + this.id);

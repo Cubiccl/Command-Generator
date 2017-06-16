@@ -16,10 +16,10 @@ import javax.swing.event.ListSelectionListener;
 
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.registries.ObjectSaver;
-import fr.cubiccl.generator.gameobject.target.Argument;
+import fr.cubiccl.generator.gameobject.target.TargetArgument;
 import fr.cubiccl.generator.gameobject.target.Target;
 import fr.cubiccl.generator.gameobject.target.Target.TargetType;
-import fr.cubiccl.generator.gameobject.target.TargetArgument;
+import fr.cubiccl.generator.gameobject.target.ArgumentType;
 import fr.cubiccl.generator.gui.component.CGList;
 import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
@@ -45,7 +45,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 	private static final String[] TITLES =
 	{ "target.title.any", "target.title.player", "target.title.entity" };
 
-	private ArrayList<Argument> arguments;
+	private ArrayList<TargetArgument> arguments;
 	private CGButton buttonAddArgument, buttonRemoveArgument;
 	private OptionCombobox comboboxType, comboboxArgument;
 	private CGEntry entryName;
@@ -70,7 +70,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 	{
 		super(titleID);
 		this.mode = mode;
-		this.arguments = new ArrayList<Argument>();
+		this.arguments = new ArrayList<TargetArgument>();
 		this.listeners = new HashSet<ITranslated>();
 		this.setPreferredSize(new Dimension(450, 300));
 
@@ -81,7 +81,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		this.entryName.container.setVisible(false);
 
 		this.comboboxType = new OptionCombobox("target.type", TARGETS[this.mode]);
-		this.comboboxArgument = new OptionCombobox("argument", TargetArgument.names());
+		this.comboboxArgument = new OptionCombobox("argument", ArgumentType.names());
 		this.comboboxArgument.addActionListener(this);
 
 		this.buttonAddArgument = new CGButton("general.add");
@@ -118,9 +118,9 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		} else if (e.getSource() == this.comboboxArgument) this.buttonAddArgument.setEnabled(this.canAddArgument(this.getSelectedArgument()));
 		else if (e.getSource() == this.buttonAddArgument)
 		{
-			TargetArgument argument = this.getSelectedArgument();
+			ArgumentType argument = this.getSelectedArgument();
 			if (argument == null) return;
-			CommandGenerator.stateManager.setState(argument.createGui(), this);
+			CommandGenerator.stateManager.setState(argument.createUI(), this);
 		} else if (e.getSource() == this.buttonRemoveArgument)
 		{
 			int index = this.listArguments.getSelectedIndex();
@@ -135,10 +135,10 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 		this.listeners.add(listener);
 	}
 
-	private boolean canAddArgument(TargetArgument argument)
+	private boolean canAddArgument(ArgumentType argument)
 	{
 		if (!argument.isUnique) return true;
-		for (Argument a : this.arguments)
+		for (TargetArgument a : this.arguments)
 			if (a.argument == argument) return false;
 		return true;
 	}
@@ -218,20 +218,20 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 			this.entryName.checkValue(CGEntry.STRING);
 			return new Target(this.entryName.getText());
 		}
-		return new Target(Target.typeFromID(this.comboboxType.getValue()), this.arguments.toArray(new Argument[this.arguments.size()]));
+		return new Target(Target.TargetType.find(this.comboboxType.getValue()), this.arguments.toArray(new TargetArgument[this.arguments.size()]));
 	}
 
-	private TargetArgument getSelectedArgument()
+	private ArgumentType getSelectedArgument()
 	{
-		return TargetArgument.getArgumentFromId(this.comboboxArgument.getValue());
+		return ArgumentType.find(this.comboboxArgument.getValue());
 	}
 
 	private void onArgumentChange()
 	{
-		this.arguments.sort(new Comparator<Argument>()
+		this.arguments.sort(new Comparator<TargetArgument>()
 		{
 			@Override
-			public int compare(Argument o1, Argument o2)
+			public int compare(TargetArgument o1, TargetArgument o2)
 			{
 				int idComparison = o1.argument.id.compareTo(o2.argument.id);
 				if (idComparison != 0) return idComparison;
@@ -239,7 +239,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 			}
 		});
 		this.listArguments.clear();
-		for (Argument argument : this.arguments)
+		for (TargetArgument argument : this.arguments)
 			this.listArguments.addValue(argument.toString());
 		this.comboboxArgument.setSelectedIndex(this.comboboxArgument.getSelectedIndex()); // Trigger Add button update
 		for (ITranslated listener : this.listeners)
@@ -276,7 +276,7 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 			return;
 		}
 
-		if (target.arguments != null) for (Argument a : target.arguments)
+		if (target.arguments != null) for (TargetArgument a : target.arguments)
 			this.arguments.add(a);
 
 		this.onArgumentChange();
@@ -287,13 +287,13 @@ public class PanelTarget extends CGPanel implements ActionListener, IStateListen
 	{
 		try
 		{
-			TargetArgument argument = this.getSelectedArgument();
+			ArgumentType argument = this.getSelectedArgument();
 			String value = this.getSelectedArgument().checkValue(panel);
 			boolean reversed = value.startsWith("!");
 			if (reversed) value = value.substring(1);
 
-			Argument a = new Argument(argument, value, reversed);
-			if (argument == TargetArgument.SCORE || argument == TargetArgument.SCORE_MIN) a = new Argument(argument, value.split(" ")[0], value.split(" ")[1],
+			TargetArgument a = new TargetArgument(argument, value, reversed);
+			if (argument == ArgumentType.SCORE || argument == ArgumentType.SCORE_MIN) a = new TargetArgument(argument, value.split(" ")[0], value.split(" ")[1],
 					reversed);
 			this.arguments.add(a);
 			this.onArgumentChange();

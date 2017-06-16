@@ -121,7 +121,7 @@ public class PanelTags extends CGPanel implements ListSelectionListener, ActionL
 	}
 
 	@Override
-	public void createTag(TemplateTag template, Tag value)
+	public void tagCreated(TemplateTag template, Tag value)
 	{
 		this.values.put(template, value);
 		TemplateTag t;

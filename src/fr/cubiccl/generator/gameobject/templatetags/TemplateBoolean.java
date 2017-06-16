@@ -9,6 +9,7 @@ import fr.cubiccl.generator.gui.component.panel.CGPanel;
 import fr.cubiccl.generator.gui.component.panel.utils.PanelRadio;
 import fr.cubiccl.generator.utils.Text;
 
+/** An NBT Tag with boolean values. */
 public class TemplateBoolean extends TemplateTag
 {
 
@@ -22,6 +23,10 @@ public class TemplateBoolean extends TemplateTag
 		super(id, Tag.BOOLEAN, applicationType, applicable);
 	}
 
+	/** Creates this NBT Tag with the input value.
+	 * 
+	 * @param value - The value to set.
+	 * @return The created NBT Tag. */
 	@SuppressWarnings("deprecation")
 	public TagBoolean create(boolean value)
 	{
@@ -51,7 +56,7 @@ public class TemplateBoolean extends TemplateTag
 	}
 
 	@Override
-	public TagBoolean readTag(String value, boolean isJson, boolean readUnknown)
+	public TagBoolean parseTag(String value, boolean isJson, boolean readUnknown)
 	{
 		return this.create(value.equals("true"));
 	}

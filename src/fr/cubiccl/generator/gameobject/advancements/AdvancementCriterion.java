@@ -77,11 +77,8 @@ public class AdvancementCriterion implements IObjectList<AdvancementCriterion>, 
 			conditions.add(NBTParser.parse(condition.getText(), false, true, true));
 
 		for (Tag t : conditions)
-		{
 			if (this.trigger.conditions.contains(t.template)) this.conditions.add(t);
-			else for (Tag tag : this.trigger.findContainedTags(t))
-				this.conditions.add(tag);
-		}
+		/* else for (Tag tag : this.trigger.findContainedTags(t)) this.conditions.add(tag); */
 
 		return this;
 	}

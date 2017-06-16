@@ -132,7 +132,7 @@ public class NBTParser
 		byte type = determineType(value);
 		TemplateTag matching = findMatchingTag(id, type);
 		if (matching == null) return readUnknown ? parseUnknownTag(id, type, value, isJson) : null;
-		return matching.readTag(value, isJson, readUnknown).setJson(isJson);
+		return matching.parseTag(value, isJson, readUnknown).setJson(isJson);
 	}
 
 	/** Parses a nameless Tag (in a List).
@@ -147,27 +147,27 @@ public class NBTParser
 		switch (type)
 		{
 			case Tag.COMPOUND:
-				return Tags.DEFAULT_COMPOUND.readTag(tag, isJson, readUnknown);
+				return Tags.DEFAULT_COMPOUND.parseTag(tag, isJson, readUnknown);
 			case Tag.LIST:
-				return Tags.DEFAULT_LIST.readTag(tag, isJson, readUnknown);
+				return Tags.DEFAULT_LIST.parseTag(tag, isJson, readUnknown);
 			case Tag.STRING:
-				return Tags.DEFAULT_STRING.readTag(tag, isJson, readUnknown);
+				return Tags.DEFAULT_STRING.parseTag(tag, isJson, readUnknown);
 			case Tag.BYTE:
-				return Tags.DEFAULT_BYTE.readTag(tag, isJson, readUnknown);
+				return Tags.DEFAULT_BYTE.parseTag(tag, isJson, readUnknown);
 			case Tag.SHORT:
-				return Tags.DEFAULT_SHORT.readTag(tag, isJson, readUnknown);
+				return Tags.DEFAULT_SHORT.parseTag(tag, isJson, readUnknown);
 			case Tag.INT:
-				return Tags.DEFAULT_INTEGER.readTag(tag, isJson, readUnknown);
+				return Tags.DEFAULT_INTEGER.parseTag(tag, isJson, readUnknown);
 			case Tag.LONG:
-				return Tags.DEFAULT_LONG.readTag(tag, isJson, readUnknown);
+				return Tags.DEFAULT_LONG.parseTag(tag, isJson, readUnknown);
 			case Tag.FLOAT:
-				return Tags.DEFAULT_FLOAT.readTag(tag, isJson, readUnknown);
+				return Tags.DEFAULT_FLOAT.parseTag(tag, isJson, readUnknown);
 			case Tag.DOUBLE:
-				return Tags.DEFAULT_DOUBLE.readTag(tag, isJson, readUnknown);
+				return Tags.DEFAULT_DOUBLE.parseTag(tag, isJson, readUnknown);
 			case Tag.BOOLEAN:
-				return Tags.DEFAULT_BOOLEAN.readTag(tag, isJson, readUnknown);
+				return Tags.DEFAULT_BOOLEAN.parseTag(tag, isJson, readUnknown);
 			default:
-				return Tags.DEFAULT_STRING.readTag(tag, isJson, readUnknown);
+				return Tags.DEFAULT_STRING.parseTag(tag, isJson, readUnknown);
 		}
 	}
 
@@ -183,21 +183,21 @@ public class NBTParser
 		switch (type)
 		{
 			case Tag.COMPOUND:
-				return new DefaultCompound(id, Tag.UNKNOWN).readTag(tag, isJson, true);
+				return new DefaultCompound(id, Tag.UNKNOWN).parseTag(tag, isJson, true);
 			case Tag.LIST:
-				return new DefaultList(id, Tag.UNKNOWN).readTag(tag, isJson, true);
+				return new DefaultList(id, Tag.UNKNOWN).parseTag(tag, isJson, true);
 			case Tag.STRING:
-				return new TemplateString(id, Tag.UNKNOWN).readTag(tag, isJson, true);
+				return new TemplateString(id, Tag.UNKNOWN).parseTag(tag, isJson, true);
 			case Tag.BYTE:
 			case Tag.SHORT:
 			case Tag.INT:
 			case Tag.LONG:
 			case Tag.FLOAT:
 			case Tag.DOUBLE:
-				return new TemplateNumber(id, Tag.UNKNOWN, type).readTag(tag, isJson, true);
+				return new TemplateNumber(id, Tag.UNKNOWN, type).parseTag(tag, isJson, true);
 
 			default:
-				return new TemplateString(id, Tag.UNKNOWN).readTag(tag, isJson, true);
+				return new TemplateString(id, Tag.UNKNOWN).parseTag(tag, isJson, true);
 		}
 	}
 

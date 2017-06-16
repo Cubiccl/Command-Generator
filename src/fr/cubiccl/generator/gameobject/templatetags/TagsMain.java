@@ -3,6 +3,7 @@ package fr.cubiccl.generator.gameobject.templatetags;
 import static fr.cubiccl.generator.gameobject.tags.Tag.UNAVAILABLE;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 
+/** Main NBT Tags to be initialized before {@link Tags}. */
 public class TagsMain
 {
 

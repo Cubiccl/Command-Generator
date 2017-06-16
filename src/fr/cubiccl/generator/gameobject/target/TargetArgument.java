@@ -1,231 +1,121 @@
 package fr.cubiccl.generator.gameobject.target;
 
-import java.awt.GridBagConstraints;
-import java.util.ArrayList;
-import java.util.Comparator;
+import org.jdom2.Element;
 
-import fr.cubi.cubigui.CPanel;
-import fr.cubiccl.generator.gameobject.baseobjects.Entity;
-import fr.cubiccl.generator.gameobject.registries.ObjectRegistry;
-import fr.cubiccl.generator.gui.component.button.CGCheckBox;
-import fr.cubiccl.generator.gui.component.combobox.ObjectCombobox;
-import fr.cubiccl.generator.gui.component.combobox.OptionCombobox;
-import fr.cubiccl.generator.gui.component.label.CGLabel;
-import fr.cubiccl.generator.gui.component.panel.CGPanel;
-import fr.cubiccl.generator.gui.component.textfield.CGEntry;
-import fr.cubiccl.generator.utils.CommandGenerationException;
-import fr.cubiccl.generator.utils.Replacement;
-import fr.cubiccl.generator.utils.Text;
-import fr.cubiccl.generator.utils.WrongValueException;
+import fr.cubiccl.generator.utils.Lang;
 
+/** Represents a single Argument used in a {@link Target}. */
 public class TargetArgument
 {
-	private static ArrayList<TargetArgument> arguments;
-	public static TargetArgument X, Y, Z, R, RM, DX, DY, DZ, C, L, LM, M, RX, RXM, RY, RYM, NAME, TAG, TEAM, TYPE, SCORE, SCORE_MIN;
 
-	public static TargetArgument[] arguments()
+	/** Creates an Argument from the input String.
+	 * 
+	 * @param id - The ID of the Argument.
+	 * @param value - The Argument value.
+	 * @return The created Argument. */
+	public static TargetArgument fromString(String id, String value)
 	{
-		return arguments.toArray(new TargetArgument[arguments.size()]);
-	}
-
-	public static void createArguments()
-	{
-		arguments = new ArrayList<TargetArgument>();
-		X = new TargetArgument("x");
-		Y = new TargetArgument("y");
-		Z = new TargetArgument("z");
-		R = new TargetArgument("r");
-		RM = new TargetArgument("rm");
-		DX = new TargetArgument("dx");
-		DY = new TargetArgument("dy");
-		DZ = new TargetArgument("dz");
-		C = new TargetArgument("c");
-		L = new TargetArgument("l");
-		LM = new TargetArgument("lm");
-		M = new TargetArgument("m", true, true);
-		RX = new TargetArgument("rx");
-		RXM = new TargetArgument("rxm");
-		RY = new TargetArgument("ry");
-		RYM = new TargetArgument("rym");
-		NAME = new TargetArgument("name", true, true);
-		TAG = new TargetArgument("tag", false, true);
-		TEAM = new TargetArgument("team", false, true);
-		TYPE = new TargetArgument("type", true, true);
-		SCORE = new TargetArgument("score", false, false);
-		SCORE_MIN = new TargetArgument("score_min", false, false);
-
-		arguments.sort(new Comparator<TargetArgument>()
+		boolean reversed = false;
+		if (value.startsWith("!"))
 		{
-			@Override
-			public int compare(TargetArgument o1, TargetArgument o2)
+			reversed = true;
+			value = value.substring(1);
+		}
+		ArgumentType a = null;
+		for (ArgumentType arg : ArgumentType.arguments())
+			if (id.equals(arg.id))
 			{
-				return o1.id.compareTo(o2.id);
+				a = arg;
+				break;
 			}
-		});
-	}
 
-	public static TargetArgument getArgumentFromId(String id)
-	{
-		for (TargetArgument targetArgument : arguments)
-			if (targetArgument.id.equals(id)) return targetArgument;
+		if (a != null) return new TargetArgument(a, value, reversed);
+
+		if (id.contains("_min")) return new TargetArgument(ArgumentType.SCORE, id.substring("score_".length(), id.length() - "_min".length()), value, reversed);
+		else if (id.contains("score_")) return new TargetArgument(ArgumentType.SCORE, id.substring("score_".length()), value, reversed);
 		return null;
 	}
 
-	public static String[] names()
+	/** Creates an Argument from the input XML element.
+	 * 
+	 * @param xml - The XML element describing the Argument.
+	 * @return The created Argument. */
+	public static TargetArgument fromXML(Element xml)
 	{
-		TargetArgument[] args = arguments();
-		String[] names = new String[args.length];
-		for (int i = 0; i < names.length; ++i)
-			names[i] = args[i].id;
-		return names;
+		if (xml.getChild("value2") == null) return new TargetArgument(ArgumentType.find(xml.getChildText("id")), xml.getChildText("value"),
+				Boolean.parseBoolean(xml.getChildText("reversed")));
+		return new TargetArgument(ArgumentType.find(xml.getChildText("id")), xml.getChildText("value"), xml.getChildText("value2"),
+				Boolean.parseBoolean(xml.getChildText("reversed")));
 	}
 
-	/** True if the value can be reversed. */
-	public final boolean canReverse;
-	public final String id;
-	/** True if a target can only have one occurrence of this argument. */
-	public final boolean isUnique;
+	/** The Argument type. */
+	public final ArgumentType argument;
+	/** <code>true</code> if the value of the Argument is reversed, thus should start with "<code>!</code>". */
+	public final boolean reversed;
+	/** This Argument's value. */
+	public final String value;
+	/** Sometimes needed as a second value. */
+	public final String value2;
 
-	public TargetArgument(String id)
+	public TargetArgument(ArgumentType argument, String value)
 	{
-		this(id, true, false);
+		this(argument, value, false);
 	}
 
-	private TargetArgument(String id, boolean isUnique, boolean canReverse)
+	public TargetArgument(ArgumentType argument, String value, boolean reversed)
 	{
-		this.id = id;
-		this.isUnique = isUnique;
-		this.canReverse = canReverse;
-		arguments.add(this);
+		this(argument, value, null, reversed);
 	}
 
-	public String checkValue(CGPanel panel) throws CommandGenerationException
+	public TargetArgument(ArgumentType argument, String value, String value2, boolean reversed)
 	{
-		if (this == M)
-		{
-			String value = ((OptionCombobox) panel.getComponent(1)).getValue();
-			if (((CGCheckBox) panel.getComponent(2)).isSelected()) return "!" + (value.equals("all") ? "-1" : value);
-			return value.equals("all") ? "-1" : value;
-		}
-		if (this == TYPE)
-		{
-			@SuppressWarnings("unchecked")
-			Entity value = ((ObjectCombobox<Entity>) panel.getComponent(1)).getSelectedObject();
-			if (((CGCheckBox) panel.getComponent(2)).isSelected()) return "!" + value.id().replaceAll("minecraft:", "");
-			return value.id().replaceAll("minecraft:", "");
-		}
-
-		CGEntry entry = (CGEntry) ((CPanel) panel.getComponent(0)).getComponent(1);
-		String value = entry.getText();
-		Text name = entry.label.getAbsoluteText();
-
-		if (this == SCORE || this == SCORE_MIN)
-		{
-			// Do u like dat code lel | WTF is that srsly
-			String value2 = ((CGEntry) ((CPanel) panel.getComponent(1)).getComponent(1)).getText();
-			if (value.equals("")) throw new CommandGenerationException(new Text("error.value"));
-			if (value.contains(" ")) throw new WrongValueException(name, new Text("error.space"), value);
-			try
-			{
-				Integer.parseInt(value2);
-			} catch (NumberFormatException e)
-			{
-				throw new WrongValueException(name, new Text("error.integer"), value2);
-			}
-			return value + " " + value2;
-		}
-
-		boolean reversed = false;
-		if (this.canReverse) reversed = ((CGCheckBox) panel.getComponent(1)).isSelected();
-
-		if (this.valueInteger()) try
-		{
-			int i = Integer.parseInt(value);
-			if (this == R || this == RM || this == DX || this == DY || this == DZ || this == C || this == L || this == LM)
-			{
-				if (i < 0) throw new WrongValueException(name, new Text("error.integer.positive"), value);
-			}
-			if (this == RX || this == RXM) if (i < -90 || i > 90) throw new WrongValueException(name, new Text("error.number.bounds", new Replacement("<min>",
-					"-90"), new Replacement("<max>", "90"), new Replacement("<max>", "180")), value);
-		} catch (NumberFormatException e)
-		{
-			throw new WrongValueException(name, new Text("error.integer"), value);
-		}
-		else
-		{
-			if (value.equals("") && this != TAG && this != TEAM) throw new CommandGenerationException(new Text("error.value"));
-			if (value.contains(" ")) throw new WrongValueException(name, new Text("error.space"), value);
-		}
-
-		if (reversed) return "!" + value;
-		return value;
+		this.argument = argument;
+		this.value = value;
+		this.value2 = value2;
+		this.reversed = reversed;
 	}
 
-	public CGPanel createGui()
+	/** @return This Argument's value to display to the user. */
+	private String displayValue()
 	{
-
-		if (this == SCORE || this == SCORE_MIN)
-		{
-			CGPanel panel = new CGPanel();
-			GridBagConstraints gbc = panel.createGridBagLayout();
-			gbc.gridx = 0;
-			gbc.gridy = 0;
-			panel.add(new CGEntry(Text.OBJECTIVE, Text.OBJECTIVE).container, gbc);
-			++gbc.gridy;
-			panel.add(new CGEntry(Text.VALUE, "0", Text.INTEGER).container, gbc);
-			panel.setName(this.name().toString());
-			return panel;
-		}
-
-		CGPanel panel = new CGPanel();
-		GridBagConstraints gbc = panel.createGridBagLayout();
-		gbc.gridx = 0;
-		gbc.gridy = 0;
-
-		if (this == M || this == TYPE)
-		{
-			panel.add(new CGLabel(this.description()), gbc);
-			++gbc.gridx;
-			if (this == M)
-			{
-				panel.add(new OptionCombobox("gamemode", "all", "survival", "creative", "adventure", "spectator"), gbc);
-			}
-			if (this == TYPE)
-			{
-				Entity[] entities = ObjectRegistry.entities.list(true);
-				String[] ids = new String[entities.length];
-				for (int i = 0; i < ids.length; ++i)
-					ids[i] = entities[i].id;
-				panel.add(new ObjectCombobox<Entity>(entities), gbc);
-			}
-			--gbc.gridx;
-			++gbc.gridy;
-			++gbc.gridwidth;
-		} else panel.add(new CGEntry(this.description(), this.name()).container, gbc);
-
-		if (this.canReverse)
-		{
-			++gbc.gridy;
-			panel.add(new CGCheckBox("target.argument.reverse"), gbc);
-		}
-		panel.setName(this.name());
-		return panel;
+		return this.value.equals("") ? Lang.translate("general.none") : this.value;
 	}
 
-	public Text description()
+	/** @return The separator between ID and value. */
+	private String separator()
 	{
-		return new Text("argument.description." + this.id);
+		return this.reversed ? ": " + Lang.translate("general.not") + " " : ": ";
 	}
 
-	public Text name()
+	/** @return This Argument in command syntax to be generated. */
+	public String toCommand()
 	{
-		return new Text("argument." + this.id);
+		if (this.argument == ArgumentType.SCORE) return "score_" + this.value + "=" + (this.reversed ? "!" : "") + this.value2;
+		if (this.argument == ArgumentType.SCORE_MIN) return "score_" + this.value + "_min=" + (this.reversed ? "!" : "") + this.value2;
+		return this.argument.id + "=" + (this.reversed ? "!" : "") + value;
 	}
 
-	private boolean valueInteger()
+	@Override
+	public String toString()
 	{
-		return this == X || this == Y || this == Z || this == R || this == RM || this == DX || this == DY || this == DZ || this == C || this == L || this == LM
-				|| this == RX || this == RXM || this == RY || this == RYM;
+		if (this.argument == ArgumentType.M) return this.argument.name() + this.separator()
+				+ Lang.translate("gamemode." + (this.value.equals("-1") ? "all" : this.displayValue()));
+		if (this.argument == ArgumentType.TYPE) return this.argument.name() + this.separator() + Lang.translate("entity." + this.displayValue());
+		if (this.argument == ArgumentType.SCORE || this.argument == ArgumentType.SCORE_MIN) return this.argument.name() + this.separator()
+				+ this.displayValue() + "=" + this.value2;
+
+		return this.argument.name() + this.separator() + this.displayValue();
+	}
+
+	/** @return This Argument as an XML element to be stored. */
+	public Element toXML()
+	{
+		Element root = new Element("argument");
+		root.addContent(new Element("id").setText(this.argument.id));
+		root.addContent(new Element("reversed").setText(Boolean.toString(this.reversed)));
+		root.addContent(new Element("value").setText(this.value));
+		if (this.argument == ArgumentType.SCORE || this.argument == ArgumentType.SCORE_MIN) root.addContent(new Element("value2").setText(this.value2));
+		return root;
 	}
 
 }

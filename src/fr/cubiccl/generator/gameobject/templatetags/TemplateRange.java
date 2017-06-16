@@ -14,14 +14,22 @@ import fr.cubiccl.generator.gui.component.textfield.CGEntry;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
+/** This NBT Tag can be either a {@link TemplateNumber Number NBT Tag} or a {@link TemplateCompound Compound NBT Tag} containing a minimum Tag and a maximum Tag. */
 public class TemplateRange extends TemplateNumber
 {
-	public static final TemplateNumber[] min =
-	{ null, null, null, TagsMain.VALUE_MIN, null, TagsMain.VALUE_MIN_FLOAT, TagsMain.VALUE_MIN_DOUBLE }, max =
+	/** NBT Tags to use for maximum values if ranged, depending on the {@link TemplateRange#numberType number type}. */
+	public static final TemplateNumber[] max =
 	{ null, null, null, TagsMain.VALUE_MAX, null, TagsMain.VALUE_MAX_FLOAT, TagsMain.VALUE_MAX_DOUBLE };
+	/** NBT Tags to use for minimum values if ranged, depending on the {@link TemplateRange#numberType number type}. */
+	public static final TemplateNumber[] min =
+	{ null, null, null, TagsMain.VALUE_MIN, null, TagsMain.VALUE_MIN_FLOAT, TagsMain.VALUE_MIN_DOUBLE };
 
+	/** The number type. */
 	public final byte numberType;
-	private TemplateNumber tagMin, tagMax;
+	/** The NBT Tag to use as maximum if ranged. */
+	private TemplateNumber tagMax;
+	/** The NBT Tag to use as minimum if ranged. */
+	private TemplateNumber tagMin;
 
 	public TemplateRange(String id, byte applicationType, byte numberType, String... applicable)
 	{
@@ -30,30 +38,54 @@ public class TemplateRange extends TemplateNumber
 		this.setRangeTags();
 	}
 
+	/** Creates this NBT Tag as a fixed value with the input value.
+	 * 
+	 * @param value - The value to set.
+	 * @return The created NBT Tag. */
+	@Override
 	@SuppressWarnings("deprecation")
 	public TagNumber create(double value)
 	{
 		return new TagNumber(this, value);
 	}
 
+	/** Creates this NBT Tag as ranged values with the input values.
+	 * 
+	 * @param min - The minimum value.
+	 * @param max - The maximum value.
+	 * @return The created NBT Tag. */
 	public TagCompound create(double min, double max)
 	{
 		return this.create(this.tagMin.create(min), this.tagMax.create(max));
 	}
 
+	/** Creates this NBT Tag as a fixed value with the input value.
+	 * 
+	 * @param value - The value to set.
+	 * @return The created NBT Tag. */
+	@Override
 	@SuppressWarnings("deprecation")
 	public TagNumber create(int value)
 	{
 		return new TagNumber(this, value);
 	}
 
+	/** Creates this NBT Tag as ranged values with the input values.
+	 * 
+	 * @param min - The minimum value.
+	 * @param max - The maximum value.
+	 * @return The created NBT Tag. */
 	public TagCompound create(int min, int max)
 	{
 		return this.create(this.tagMin.create(min), this.tagMax.create(max));
 	}
 
+	/** Creates this NBT Tag with the input values.
+	 * 
+	 * @param value - The list of NBT Tags contained in this Compound.
+	 * @return The created NBT Tag. */
 	@SuppressWarnings("deprecation")
-	public TagCompound create(Tag... value)
+	private TagCompound create(Tag... value)
 	{
 		return new TagCompound(this, value);
 	}
@@ -101,15 +133,16 @@ public class TemplateRange extends TemplateNumber
 		}
 	}
 
+	/** @return <code>true</code> if this NBT Tag has integer values. */
 	private boolean isInt()
 	{
 		return this.numberType == Tag.INT;
 	}
 
 	@Override
-	public Tag readTag(String value, boolean isJson, boolean readUnknown)
+	public Tag parseTag(String value, boolean isJson, boolean readUnknown)
 	{
-		if (!value.startsWith("{") && !value.endsWith("}")) return super.readTag(value, isJson, readUnknown);
+		if (!value.startsWith("{") && !value.endsWith("}")) return super.parseTag(value, isJson, readUnknown);
 		if (value.startsWith("{") && value.endsWith("}")) value = value.substring(1, value.length() - 1);
 		String[] values = NBTParser.splitTagValues(value);
 		ArrayList<Tag> tags = new ArrayList<Tag>();
@@ -122,12 +155,14 @@ public class TemplateRange extends TemplateNumber
 		return this.create(tags.toArray(new Tag[tags.size()]));
 	}
 
+	/** Selects the correct {@link TemplateRange#tagMin minimum NBT Tag} and {@link TemplateRange#tagMax maximum NBT Tag}. */
 	private void setRangeTags()
 	{
 		this.tagMin = min[this.numberType];
 		this.tagMax = max[this.numberType];
 	}
 
+	@Override
 	public String suffix()
 	{
 		return TagNumber.SUFFIX[this.numberType];

@@ -110,7 +110,7 @@ public class CriterionTrigger extends BaseObject<CriterionTrigger>
 
 	@Deprecated
 	public ArrayList<Tag> findContainedTags(Tag t)
-	{// TODO javadoc if not deprecated
+	{
 		ArrayList<Tag> tags = new ArrayList<Tag>();
 		if (!(t instanceof TagCompound)) return tags;
 		for (Tag tag : ((TagCompound) t).value())

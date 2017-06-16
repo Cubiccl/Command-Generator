@@ -17,9 +17,11 @@ import fr.cubiccl.generator.gui.component.panel.utils.ListProperties;
 import fr.cubiccl.generator.utils.CommandGenerationException;
 import fr.cubiccl.generator.utils.Text;
 
+/** Represents a Target in a command. */
 public class Target extends GameObject<Target> implements IObjectList<Target>
 {
 
+	/** Types for Target. */
 	public static enum TargetType
 	{
 		ALL_ENTITIES("@e"),
@@ -29,6 +31,8 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 		RANDOM_PLAYER("@r"),
 		SELF("@s");
 
+		/** @param id - The ID of the type.
+		 * @return The matching Target Type. */
 		public static TargetType find(String id)
 		{
 			for (TargetType type : values())
@@ -36,6 +40,7 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 			return ALL_ENTITIES;
 		}
 
+		/** This type's ID. */
 		public final String id;
 
 		private TargetType(String id)
@@ -44,14 +49,7 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 		}
 	}
 
-	public static TargetType typeFromID(String id)
-	{
-		TargetType[] types = TargetType.values();
-		for (TargetType type : types)
-			if (type.id.equals(id)) return type;
-		return TargetType.ALL_PLAYERS;
-	}
-
+	/** @return The Target types names. */
 	public static String[] types()
 	{
 		TargetType[] types = TargetType.values();
@@ -61,8 +59,11 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 		return names;
 	}
 
-	public Argument[] arguments;
+	/** The {@link TargetArgument Arguments} applied to this Target. */
+	public TargetArgument[] arguments;
+	/** If {@link Target#type type} is {@link TargetType#PLAYER}, the name of the targeted Player. */
 	public String playerName;
+	/** This Target's type. */
 	public TargetType type;
 
 	public Target()
@@ -77,7 +78,7 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 		this.arguments = null;
 	}
 
-	public Target(TargetType type, Argument... arguments)
+	public Target(TargetType type, TargetArgument... arguments)
 	{
 		this.type = type;
 		this.playerName = null;
@@ -100,6 +101,10 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 		return this.fromString((String) nbt.getTagFromId(Tags.TARGET.id()).value());
 	}
 
+	/** Creates a Target from the input String.
+	 * 
+	 * @param value - The value to parse.
+	 * @return The created Target. */
 	public Target fromString(String value)
 	{
 		if (!value.startsWith("@")) return new Target(value);
@@ -111,14 +116,14 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 		if (value.length() == 2) return this;
 
 		String[] args = value.substring(3, value.length() - 1).split(",");
-		ArrayList<Argument> arguments = new ArrayList<Argument>();
+		ArrayList<TargetArgument> arguments = new ArrayList<TargetArgument>();
 		for (String arg : args)
 		{
-			Argument a = Argument.createFrom(arg.split("=")[0], arg.split("=")[1]);
+			TargetArgument a = TargetArgument.fromString(arg.split("=")[0], arg.split("=")[1]);
 			if (a != null) arguments.add(a);
 		}
 
-		this.arguments = arguments.toArray(new Argument[arguments.size()]);
+		this.arguments = arguments.toArray(new TargetArgument[arguments.size()]);
 		return this;
 	}
 
@@ -129,10 +134,10 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 		if (this.type == TargetType.PLAYER) this.playerName = xml.getChildText("playername");
 		else
 		{
-			ArrayList<Argument> a = new ArrayList<Argument>();
+			ArrayList<TargetArgument> a = new ArrayList<TargetArgument>();
 			for (Element argument : xml.getChildren("argument"))
-				a.add(Argument.createFrom(argument));
-			this.arguments = a.toArray(new Argument[a.size()]);
+				a.add(TargetArgument.fromXML(argument));
+			this.arguments = a.toArray(new TargetArgument[a.size()]);
 		}
 		this.findProperties(xml);
 		return this;
@@ -150,6 +155,7 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 		return this.customName() == null || this.customName().equals("") ? this.toString() : this.customName();
 	}
 
+	@Override
 	public String toCommand()
 	{
 		if (this.type == TargetType.PLAYER) return this.playerName;
@@ -196,7 +202,7 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 		if (this.type == TargetType.PLAYER) root.addContent(new Element("playername").setText(this.playerName));
 		else
 		{
-			for (Argument argument : this.arguments)
+			for (TargetArgument argument : this.arguments)
 				root.addContent(argument.toXML());
 		}
 		return root;

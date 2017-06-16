@@ -7,9 +7,8 @@ import org.jdom2.Element;
 import fr.cubiccl.generator.CommandGenerator;
 import fr.cubiccl.generator.gameobject.baseobjects.*;
 import fr.cubiccl.generator.gameobject.tags.Tag;
-import fr.cubiccl.generator.gameobject.target.TargetArgument;
+import fr.cubiccl.generator.gameobject.target.ArgumentType;
 import fr.cubiccl.generator.gameobject.templatetags.*;
-import fr.cubiccl.generator.gameobject.templatetags.custom.TemplateDropChances;
 import fr.cubiccl.generator.gui.LoadingFrame;
 import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Settings;
@@ -46,26 +45,6 @@ public class ObjectCreator
 			return null;
 		}
 		return new Block().fromXML(block);
-	}
-
-	public static TemplateTag createCustomTag(String id, byte applicationType, String customTagType, Element tag)
-	{
-		// TODO DropChances can work on their own now
-		if (customTagType.startsWith("DropChances")) return new TemplateDropChances().fromXML(tag);
-		else try
-		{
-			Class<?> c = Class.forName("fr.cubiccl.generator.gameobject.templatetags.custom.Template" + customTagType);
-			return ((TemplateTag) c.getConstructors()[0].newInstance()).fromXML(tag);
-		} catch (ClassNotFoundException e)
-		{
-			CommandGenerator.log("Couldn't find Tag class: " + customTagType);
-			return null;
-		} catch (Exception e)
-		{
-			CommandGenerator.log("Error creating Tag: " + id);
-			e.printStackTrace();
-			return null;
-		}
 	}
 
 	public static int[] createDamage(String damageList)
@@ -187,27 +166,44 @@ public class ObjectCreator
 		CommandGenerator.log(ObjectRegistry.itemTags.size() + " item NBT Tags.");
 		CommandGenerator.log(ObjectRegistry.entityTags.size() + " entity NBT Tags.");
 		CommandGenerator.log(ObjectRegistry.objectLists.size() + " object lists.");
-		TargetArgument.createArguments();
+		ArgumentType.createArguments();
 
 		ObjectRegistry.checkAllNames();
 		ObjectRegistry.loadAllTextures(frame);
 	}
 
+	/** Creates an NBT Tag from the input XML element.
+	 * 
+	 * @param applicationType - The {@link TemplateTag#applicationType application type} of the NBT Tag.
+	 * @param tag - The XML element describing the NBT tag.
+	 * @return The created tag. */
 	private static TemplateTag createTag(byte applicationType, Element tag)
 	{
-		if (tag.getChild("customtype") != null) return createCustomTag(tag.getAttributeValue("id"), applicationType, tag.getChildText("customtype"), tag);
-		else
+		if (tag.getChild("customtype") != null)
 		{
-			byte type = Byte.parseByte(tag.getChildText("type"));
-			if (type == Tag.STRING) return new TemplateString().fromXML(tag);
-			else if (type <= Tag.DOUBLE) return new TemplateNumber().fromXML(tag);
-			else if (type == Tag.BOOLEAN) return new TemplateBoolean().fromXML(tag);
-			else
+			String customTagType = tag.getChildText("customtype");
+			try
 			{
-				CommandGenerator.log("NBT Tag couldn't be identified: " + tag.getAttributeValue("id"));
+				Class<?> c = Class.forName("fr.cubiccl.generator.gameobject.templatetags.custom.Template" + customTagType);
+				return ((TemplateTag) c.getConstructors()[0].newInstance()).fromXML(tag);
+			} catch (ClassNotFoundException e)
+			{
+				CommandGenerator.log("Couldn't find Tag class: " + customTagType);
+				return null;
+			} catch (Exception e)
+			{
+				CommandGenerator.log("Error creating Tag: " + tag.getAttributeValue("id"));
+				e.printStackTrace();
 				return null;
 			}
 		}
+
+		byte type = Byte.parseByte(tag.getChildText("type"));
+		if (type == Tag.STRING) return new TemplateString().fromXML(tag);
+		else if (type <= Tag.DOUBLE) return new TemplateNumber().fromXML(tag);
+		else if (type == Tag.BOOLEAN) return new TemplateBoolean().fromXML(tag);
+		else CommandGenerator.log("NBT Tag couldn't be identified: " + tag.getAttributeValue("id"));
+		return null;
 	}
 
 	private ObjectCreator()
