@@ -15,11 +15,11 @@ advancement.appears
 advancement.criteria.effects_changed,advancement.criteria.nether_travel,advancement.criteria.used_totem
 advancement.function,advancement.function.help
 advancement.nether.all_effects,advancement.nether.all_potions,advancement.nether.fast_travel,advancement.nether.uneasy_alliance
-command.function
+command.function,command.function.if,command.function.unless
 criteria.entity.location
 effect.amplifier,effect.duration.seconds,effect.duration.test
 error.effects.duplicate
-function.path
+function.*
 gamerule.gameLoopFunction
 general.block,general.entity,general.object
 tag.other.distance.nether_travel,tag.other.effects,tag.other.item.used_totem

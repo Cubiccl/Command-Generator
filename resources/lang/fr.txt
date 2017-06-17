@@ -389,7 +389,10 @@ flags.enchantments=Cacher les Enchantements
 flags.other=Cacher le reste
 flags.unbreakable=Cacher l'indestructibilité
 
+function.if=Éxécuter la fonction si une cible est détéctée
+function.normal=Éxécuter la fonction
 function.path=Chemin d'accès à la fonction
+function.if=Éxécuter la fonction si aucune cible n'est détéctée
 
 gamemode.all=Tous les modes de jeu
 gamemode.adventure=Aventure
@@ -2217,6 +2220,8 @@ command.execute.detect=Force <target> à éxécuter une commande, uniquement <block
 command.fill=Remplit la région de <source_start> à <source_end> avec <block>.
 command.fill.filter=Remplace les <filter> dans la région de <source_start> à <source_end> avec <block>.
 command.function=Éxécute une fonction.
+command.function.if=Éxécute une function, uniquement si "<target>" contient au moins une Entité.
+command.function.unless=Éxécute une function, uniquement si "<target>" ne contient aucune Entité.
 command.gamemode=Change le mode de jeu de <target> pour <mode>.
 command.gamerule=Change la valeur de la règle de jeu "<gamerule>" pour <value>.
 command.gamerule.query=Renvoie la valeur de la règle de jeu "<gamerule>". Peut être utilsé avec /stats.

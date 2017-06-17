@@ -397,7 +397,10 @@ flags.enchantments=Hide Enchantments
 flags.other=Hide other tooltips
 flags.unbreakable=Hide Unbreakable
 
+function.if=Execute function if a target is detected
+function.normal=Execute function
 function.path=Path to the function
+function.unless=Execute function if no target is found
 
 gamemode.all=All game modes
 gamemode.adventure=Adventure
@@ -2222,6 +2225,8 @@ command.execute.detect=Makes <target> execute a command, only if there is <block
 command.fill=Fills the region from <source_start> to <source_end> with <block> Blocks.
 command.fill.filter=Replaces the <filter> Blocks in the region from <source_start> to <source_end> with <block> Blocks.
 command.function=Executes a function.
+command.function.if=Executes a function, only if "<target>" contains one existing Entity.
+command.function.unless=Executes a function, only if "<target>" contains no Entity.
 command.gamemode=Changes the game mode of <target> to <mode>.
 command.gamerule=Changes the value of the gamerule <gamerule> to <value>.
 command.gamerule.query=Returns the value of the gamerule <gamerule>. Can be used with /stats.
