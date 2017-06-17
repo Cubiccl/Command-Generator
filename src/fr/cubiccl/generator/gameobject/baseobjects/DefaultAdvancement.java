@@ -86,7 +86,7 @@ public class DefaultAdvancement extends BaseObject<DefaultAdvancement>
 		root.setAttribute("id", this.id);
 		root.setAttribute("item", this.item.id().substring("minecraft:".length()));
 		if (this.data != -1) root.setAttribute("data", Integer.toString(this.data));
-		if (this.criteria.length != 1 || !("minecraft:" + this.criteria[0]).equals(this.item.id())) for (String criterion : this.criteria)
+		if (this.criteria.length != 1 || !this.criteria[0].equals(this.id)) for (String criterion : this.criteria)
 			root.addContent(new Element("criterion").setText(criterion));
 		return root;
 	}

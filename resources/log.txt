@@ -1,22 +1,23 @@
 Welcome to the Command Generator v2.6.2.3 by Cubi !
----- VERSION : 17w18b ----
+---- VERSION : 1.11 ----
 ---- Creating objects ----
-Successfully created 254 blocks.
-Successfully created 412 items.
-Successfully created 85 entities.
-Successfully created 27 effects.
-Successfully created 30 enchantments.
-Successfully created 33 achievements.
-Successfully created 50 advancements.
-Successfully created 11 attributes.
-Successfully created 48 particles.
-Successfully created 429 recipes.
-Successfully created 509 sounds.
-Successfully created 37 containers.
-Successfully created 69 Block NBT Tags.
-Successfully created 22 Item NBT Tags.
-Successfully created 193 Entity NBT Tags.
-Successfully created 9 object lists.
+Basic Game Objects created:
+236 blocks.
+393 items.
+82 entities.
+27 effects.
+30 enchantments.
+33 achievements.
+0 advancements.
+11 attributes.
+48 particles.
+0 recipes.
+485 sounds.
+37 containers.
+66 block NBT Tags.
+21 item NBT Tags.
+186 entity NBT Tags.
+9 object lists.
 Loading textures...
 ---- Creating window ----
 Exiting Command Generator... Bye bye !

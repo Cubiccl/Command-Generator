@@ -111,64 +111,6 @@
       </pools>
     </table>
   </tables>
-  <speedruns>
-    <speedrun objectname="My Speedrun" version="1.12" ispost19="true">
-      <checkpoint position="0" name="First">
-        <move from="-1" to="0">
-          <item objectname="" version="1.12" importance="0">
-            <id>minecraft:diamond_pickaxe</id>
-            <amount>1</amount>
-            <damage>0</damage>
-            <slot>-1</slot>
-            <nbt>{}</nbt>
-            <name>The pick</name>
-          </item>
-        </move>
-        <move from="-1" to="1">
-          <item objectname="" version="1.12" importance="1">
-            <id>minecraft:golden_apple</id>
-            <amount>1</amount>
-            <damage>0</damage>
-            <slot>-1</slot>
-            <nbt>{}</nbt>
-          </item>
-        </move>
-        <move from="-1" to="0">
-          <item objectname="" version="1.12" importance="1">
-            <id>minecraft:cobblestone</id>
-            <amount>64</amount>
-            <damage>0</damage>
-            <slot>-1</slot>
-            <nbt>{}</nbt>
-            <name>Building Blocks</name>
-          </item>
-        </move>
-      </checkpoint>
-      <checkpoint position="1" name="Second">
-        <move from="1" to="-1">
-          <item objectname="" version="1.12" importance="1">
-            <id>minecraft:golden_apple</id>
-            <amount>1</amount>
-            <damage>0</damage>
-            <slot>-1</slot>
-            <nbt>{}</nbt>
-            <name>Eat da gapple</name>
-          </item>
-        </move>
-      </checkpoint>
-      <checkpoint position="2" name="Last">
-        <move from="0" to="-1">
-          <item objectname="" version="1.12" importance="1">
-            <id>minecraft:cobblestone</id>
-            <amount>32</amount>
-            <damage>0</damage>
-            <slot>-1</slot>
-            <nbt>{}</nbt>
-          </item>
-        </move>
-      </checkpoint>
-    </speedrun>
-  </speedruns>
   <recipes>
     <recipe objectname="My recipe" version="1.12" type="0">
       <group>cheats</group>

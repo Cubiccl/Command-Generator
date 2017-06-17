@@ -2944,9 +2944,7 @@
     <advancement category="husbandry" id="tame_an_animal" item="lead">
       <criterion>tamed_animal</criterion>
     </advancement>
-    <advancement category="nether" id="all_effects" item="bucket">
-      <criterion>all_effects</criterion>
-    </advancement>
+    <advancement category="nether" id="all_effects" item="bucket" />
     <advancement category="nether" id="all_potions" item="milk_bucket">
       <criterion>all_effects</criterion>
     </advancement>
@@ -6441,17 +6439,17 @@
       </applicable>
       <byteboolean>true</byteboolean>
     </tag>
+    <tag id="Life">
+      <type>3</type>
+      <applicable>
+        <app>fireworks_rocket</app>
+      </applicable>
+    </tag>
     <tag id="life">
       <type>2</type>
       <applicable>
         <app>arrow</app>
         <app>spectral_arrow</app>
-      </applicable>
-    </tag>
-    <tag id="Life">
-      <type>3</type>
-      <applicable>
-        <app>fireworks_rocket</app>
       </applicable>
     </tag>
     <tag id="LifeTicks">

@@ -123,7 +123,7 @@ public class AdvancementCriterion implements IObjectList<AdvancementCriterion>, 
 		root.setAttribute("name", this.name);
 		root.setAttribute("trigger", this.trigger.id);
 		for (Tag tag : this.getConditions())
-			root.addContent(new Element("condition").setText(tag.toCommand(-1)));
+			root.addContent(new Element("condition").setText(tag.setJson(true).toCommand(-1)));
 		return root;
 	}
 

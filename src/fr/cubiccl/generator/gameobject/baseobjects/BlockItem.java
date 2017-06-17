@@ -78,6 +78,7 @@ public abstract class BlockItem<T> extends BaseObject<T>
 	public T fromXML(Element xml)
 	{
 		if (xml.getChild("customblock") != null) this.customObjectName = xml.getChildText("customblock");
+		if (xml.getChild("customitem") != null) this.customObjectName = xml.getChildText("customitem");
 
 		this.idString = "minecraft:" + xml.getAttributeValue("idstr");
 		this.idInt = Integer.parseInt(xml.getAttributeValue("idint"));
@@ -243,7 +244,6 @@ public abstract class BlockItem<T> extends BaseObject<T>
 		if (this.shouldSaveTextureType()) root.addContent(new Element("texture").setText(Integer.toString(this.textureType)));
 		if (this.customObjectName == null)
 		{
-
 			if (this.isDamageCustom())
 			{
 				String d = "" + this.damageCustom[0];

@@ -4,4 +4,4 @@ lastversion=2.6.2.3
 slash=true
 sort=0
 lang=en
-mcversion=1.12
+mcversion=1.11
