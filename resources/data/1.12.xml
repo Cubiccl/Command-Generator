@@ -2707,41 +2707,7 @@
     <enchantment idint="70" idstr="mending" maxlevel="1" />
     <enchantment idint="71" idstr="vanishing_curse" maxlevel="1" />
   </enchantments>
-  <achievements>
-    <achievement id="acquireIron" item="iron_ingot" />
-    <achievement id="bakeCake" item="cake" />
-    <achievement id="blazeRod" item="blaze_rod" />
-    <achievement id="bookcase" item="bookshelf" />
-    <achievement id="breedCow" item="wheat" />
-    <achievement id="buildBetterPickaxe" item="stone_pickaxe" />
-    <achievement id="buildHoe" item="wooden_hoe" />
-    <achievement id="buildPickaxe" item="wooden_pickaxe" />
-    <achievement id="buildSword" item="wooden_sword" />
-    <achievement id="buildWorkbench" item="crafting_table" />
-    <achievement id="cookFish" item="cooked_fish" />
-    <achievement id="diamonds" item="diamond_ore" />
-    <achievement id="diamondsToYou" item="diamond" />
-    <achievement id="enchantments" item="enchanting_table" />
-    <achievement id="exploreAllBiomes" item="diamond_boots" />
-    <achievement id="flyPig" item="saddle" />
-    <achievement id="fullBeacon" item="beacon" />
-    <achievement id="ghast" item="ghast_tear" />
-    <achievement id="killCow" item="leather" />
-    <achievement id="killEnemy" item="bone" />
-    <achievement id="killWither" item="nether_star" />
-    <achievement id="makeBread" item="bread" />
-    <achievement id="mineWood" item="log" />
-    <achievement id="onARail" item="rail" />
-    <achievement id="openInventory" item="book" />
-    <achievement id="overkill" item="diamond_sword" />
-    <achievement id="overpowered" item="golden_apple" />
-    <achievement id="portal" item="obsidian" />
-    <achievement id="potion" item="potion" />
-    <achievement id="snipeSkeleton" item="bow" />
-    <achievement id="spawnWither" item="skull" />
-    <achievement id="theEnd" item="eye_of_ender" />
-    <achievement id="theEnd2" item="dragon_egg" />
-  </achievements>
+  <achievements />
   <advancements>
     <advancement category="adventure" id="adventuring_time" item="diamond_boots">
       <criterion>birch_forest_hills</criterion>
@@ -6160,6 +6126,12 @@
     </tag>
     <tag id="EnderItems">
       <customtype>Items</customtype>
+      <applicable>
+        <app>player</app>
+      </applicable>
+    </tag>
+    <tag id="enteredNetherPosition">
+      <customtype>Coordinates</customtype>
       <applicable>
         <app>player</app>
       </applicable>

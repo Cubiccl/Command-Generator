@@ -3125,6 +3125,7 @@ tag.entity.Effects=The Effects this Area applies.
 tag.entity.EggLayTime=The number of ticks until this Chicken lays an egg. Then resets to a random value between 6000 and 12000.
 tag.entity.Enabled=If false, this Hopper Minecart won't pickup any Items.
 tag.entity.EnderItems=The Items in this Player's Enderchest.
+tag.entity.enteredNetherPosition=The Coordinates of the overworld position of the Player before they entered the Nether.
 tag.entity.ExplosionPower=The radius of the Explosion <o> will create. Defaults to 1.
 tag.entity.ExplosionRadius=The radius of the Explosion this Creeper will create. Defaults to 3.
 tag.entity.Facing=The direction <o> is facing.

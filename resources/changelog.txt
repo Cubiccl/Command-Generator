@@ -22,6 +22,7 @@ error.effects.duplicate
 function.*
 gamerule.gameLoopFunction
 general.block,general.entity,general.object
+tag.entity.enteredNetherPosition
 tag.other.distance.nether_travel,tag.other.effects,tag.other.item.used_totem
 
 ------------------------- VERSION 2.6.2.3 -------------------------

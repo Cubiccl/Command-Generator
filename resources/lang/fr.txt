@@ -3120,6 +3120,7 @@ tag.entity.Effects=Les Effets que cette Zone applique.
 tag.entity.EggLayTime=Le nombre de ticks avant que cette Poule ponde un oeuf. Est ensuite fixé à une valeur aléatoire entre 6000 et 12000.
 tag.entity.Enabled=Si faux, ce Wagonnet à Entonnoir ne ramassera pas d'Objets.
 tag.entity.EnderItems=Les Objets dans le Coffre de l'Ender de ce Joueur.
+tag.entity.enteredNetherPosition=Les coordonnées de la position du Joueur avant d'entrer dans le Nether.
 tag.entity.ExplosionPower=Le rayon de l'Explosoin que <o> crée. 1 par défaut.
 tag.entity.ExplosionRadius=Le rayon de l'Explosion que ce Creeper crée. 3 par défaut.
 tag.entity.Facing=La direction vers laquelle <o> est orienté.

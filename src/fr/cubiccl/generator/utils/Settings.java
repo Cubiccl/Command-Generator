@@ -56,8 +56,8 @@ public class Settings
 	/** The available Minecraft Versions. */
 	public static enum Version
 	{
-		v1d11("1.11", "1.11", 0),
-		v1d12("1.12-pre5", "1.12", 1);
+		v1d11("1.11.2", "1.11", 0),
+		v1d12("1.12", "1.12", 1);
 
 		public static Version get(String id)
 		{
@@ -116,7 +116,7 @@ public class Settings
 	}
 
 	/** The Generator's version. */
-	public static final String GENERATOR_VERSION = "2.6.2.3";
+	public static final String GENERATOR_VERSION = "2.6.3";
 	/** The selected Language. */
 	private static Language language;
 	/** The selected Minecraft version. */
