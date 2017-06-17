@@ -15,9 +15,9 @@ public class BlockFurniture extends Block
 		return new Text("block." + id + ".x", new Replacement("<facing>", new Text("utils.facing." + damage)));
 	}
 
-	public BlockFurniture(int idInt, String idString)
+	public BlockFurniture()
 	{
-		super(idInt, idString);
+		super();
 		this.addState(new BlockState("facing", BlockState.STRING, 1, "north", "south", "west", "east").setStartsAt(2));
 		this.textureType = -8;
 	}

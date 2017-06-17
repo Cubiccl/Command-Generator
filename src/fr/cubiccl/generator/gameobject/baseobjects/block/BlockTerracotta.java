@@ -14,9 +14,9 @@ public class BlockTerracotta extends Block
 		return new Text("block." + id + ".x", new Replacement("<terra>", new Text("utils.terra." + damage)));
 	}
 
-	public BlockTerracotta(int idInt, String idString)
+	public BlockTerracotta()
 	{
-		super(idInt, idString);
+		super();
 		this.addState(new BlockState("facing", BlockState.STRING, 1, "south", "west", "north", "east"));
 		this.textureType = -1;
 	}

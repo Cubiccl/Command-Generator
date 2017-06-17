@@ -188,6 +188,15 @@ public class Block extends BlockItem<Block> implements IObjectList<Block>
 		return this;
 	}
 
+	/** Removes a State from this Block.
+	 * 
+	 * @param state - The Block state to remove. */
+	public void removeState(BlockState state)
+	{
+		this.states.remove(state.id);
+		this.updateDamageValues();
+	}
+
 	/** @param state - A Block state.
 	 * @return <code>true</code> if the input Block state should be saved in XML. */
 	protected boolean shouldSaveState(BlockState state)

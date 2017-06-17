@@ -90,7 +90,7 @@ public class Settings
 		/** The position of the Version. */
 		public final int order;
 
-		private Version(String id, String name, int order)
+		private Version(String name, String id, int order)
 		{
 			this.id = id;
 			this.name = name;
@@ -136,7 +136,7 @@ public class Settings
 		switch (id)
 		{
 			case MINECRAFT_VERSION:
-				return Version.v1d11.id;
+				return Version.v1d12.id;
 
 			case LANG:
 				return Language.ENGLISH.id;

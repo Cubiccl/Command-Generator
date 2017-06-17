@@ -14,9 +14,9 @@ public class BlockStairs extends Block
 		return new Text("block." + id + ".x", new Replacement("<orientation>", new Text("utils.stairs." + damage)));
 	}
 
-	public BlockStairs(int idInt, String idString)
+	public BlockStairs()
 	{
-		super(idInt, idString);
+		super();
 		this.addState(new BlockState("facing", BlockState.STRING, 1, "east", "west", "south", "north"));
 		this.addState(new BlockState("half", BlockState.STRING, 4, "bottom", "top"));
 		this.addState(new BlockState("shape", BlockState.STRING, -1, "straight", "inner_left", "inner_right", "outer_left", "outer_right"));

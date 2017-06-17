@@ -175,35 +175,39 @@ public class ObjectCreator
 	/** Creates an NBT Tag from the input XML element.
 	 * 
 	 * @param applicationType - The {@link TemplateTag#applicationType application type} of the NBT Tag.
-	 * @param tag - The XML element describing the NBT tag.
+	 * @param xml - The XML element describing the NBT tag.
 	 * @return The created tag. */
-	private static TemplateTag createTag(byte applicationType, Element tag)
+	private static TemplateTag createTag(byte applicationType, Element xml)
 	{
-		if (tag.getChild("customtype") != null)
+		TemplateTag tag = null;
+		if (xml.getChild("customtype") != null)
 		{
-			String customTagType = tag.getChildText("customtype");
+			String customTagType = xml.getChildText("customtype");
 			try
 			{
 				Class<?> c = Class.forName("fr.cubiccl.generator.gameobject.templatetags.custom.Template" + customTagType);
-				return ((TemplateTag) c.getConstructors()[0].newInstance()).fromXML(tag);
+				tag = ((TemplateTag) c.getConstructor(new Class[0]).newInstance()).fromXML(xml);
 			} catch (ClassNotFoundException e)
 			{
 				CommandGenerator.log("Couldn't find Tag class: " + customTagType);
 				return null;
 			} catch (Exception e)
 			{
-				CommandGenerator.log("Error creating Tag: " + tag.getAttributeValue("id"));
+				CommandGenerator.log("Error creating Tag: " + xml.getAttributeValue("id"));
 				e.printStackTrace();
 				return null;
 			}
+		} else
+		{
+			byte type = Byte.parseByte(xml.getChildText("type"));
+			if (type == Tag.STRING) tag = new TemplateString().fromXML(xml);
+			else if (type <= Tag.DOUBLE) tag = new TemplateNumber().fromXML(xml);
+			else if (type == Tag.BOOLEAN) tag = new TemplateBoolean().fromXML(xml);
 		}
 
-		byte type = Byte.parseByte(tag.getChildText("type"));
-		if (type == Tag.STRING) return new TemplateString().fromXML(tag);
-		else if (type <= Tag.DOUBLE) return new TemplateNumber().fromXML(tag);
-		else if (type == Tag.BOOLEAN) return new TemplateBoolean().fromXML(tag);
-		else CommandGenerator.log("NBT Tag couldn't be identified: " + tag.getAttributeValue("id"));
-		return null;
+		if (tag == null) CommandGenerator.log("NBT Tag couldn't be identified: " + xml.getAttributeValue("id"));
+		else tag.setApplicationType(applicationType);
+		return tag;
 	}
 
 	private ObjectCreator()

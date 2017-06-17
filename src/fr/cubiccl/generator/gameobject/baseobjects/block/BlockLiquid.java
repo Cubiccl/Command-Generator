@@ -14,9 +14,9 @@ public class BlockLiquid extends Block
 		return new Text("block." + id + ".x", new Replacement("<liquid>", new Text("utils.liquid." + damage)));
 	}
 
-	public BlockLiquid(int idInt, String idString)
+	public BlockLiquid()
 	{
-		super(idInt, idString);
+		super();
 		this.addState(new BlockState("level", BlockState.INTEGER, 1, "0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12", "13", "14", "15"));
 		this.textureType = -1;
 	}

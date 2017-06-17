@@ -18,9 +18,9 @@ public class BlockNumbered extends Block
 		return new Text("block." + id + ".x", new Replacement("<count>", Integer.toString(actual)));
 	}
 
-	public BlockNumbered(int idInt, String idString)
+	public BlockNumbered()
 	{
-		super(idInt, idString);
+		super();
 		this.textureType = -1;
 	}
 

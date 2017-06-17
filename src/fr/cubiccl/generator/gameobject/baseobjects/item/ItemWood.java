@@ -8,9 +8,10 @@ import fr.cubiccl.generator.utils.Text;
 public class ItemWood extends Item
 {
 
-	public ItemWood(int idInt, String idString)
+	public ItemWood()
 	{
-		super(idInt, idString, 5);
+		super();
+		this.setMaxDamage(5);
 	}
 
 	@Override

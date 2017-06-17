@@ -15,9 +15,9 @@ public class BlockFacing extends Block
 		return new Text("block." + id + ".x", new Replacement("<facing>", new Text("utils.facing." + damage)));
 	}
 
-	public BlockFacing(int idInt, String idString)
+	public BlockFacing()
 	{
-		super(idInt, idString);
+		super();
 		this.addState(new BlockState("facing", BlockState.STRING, 1, "down", "up", "north", "south", "west", "east"));
 		this.textureType = -8;
 	}

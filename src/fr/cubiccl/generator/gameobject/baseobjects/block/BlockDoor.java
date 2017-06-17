@@ -14,9 +14,9 @@ public class BlockDoor extends Block
 		return new Text("block." + id + ".x", new Replacement("<door_status>", new Text("utils.door_status." + damage)));
 	}
 
-	public BlockDoor(int idInt, String idString)
+	public BlockDoor()
 	{
-		super(idInt, idString);
+		super();
 		this.addState(new BlockState("facing", BlockState.STRING, -1, "north", "south", "west", "east"));
 		this.addState(new BlockState("half", BlockState.STRING, -1, "lower", "upper"));
 		this.addState(new BlockState("hinge", BlockState.STRING, -1, "left", "right"));

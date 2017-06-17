@@ -3660,7 +3660,7 @@
       <byteboolean>true</byteboolean>
     </tag>
     <tag id="Item">
-      <customtype>item_id</customtype>
+      <customtype>ItemId</customtype>
       <applicable>
         <app>flower_pot</app>
       </applicable>
@@ -3881,7 +3881,7 @@
       </applicable>
     </tag>
     <tag id="RecordItem">
-      <customtype>item</customtype>
+      <customtype>Item</customtype>
       <applicable>
         <app>jukebox</app>
       </applicable>
@@ -4323,7 +4323,7 @@
     <tag id="Age">
       <type>2</type>
       <applicable>
-        <app>item</app>
+        <app>Item</app>
         <app>xp_orb</app>
       </applicable>
     </tag>
@@ -4361,7 +4361,7 @@
       <slotcount>4</slotcount>
     </tag>
     <tag id="ArmorItem">
-      <customtype>item</customtype>
+      <customtype>Item</customtype>
       <applicable>
         <app>donkey</app>
         <app>horse</app>
@@ -4414,7 +4414,7 @@
       </applicable>
     </tag>
     <tag id="Block">
-      <customtype>item_id</customtype>
+      <customtype>ItemId</customtype>
       <applicable>
         <app>falling_block</app>
       </applicable>
@@ -4618,7 +4618,7 @@
       </applicable>
     </tag>
     <tag id="DecorItem">
-      <customtype>item</customtype>
+      <customtype>Item</customtype>
       <applicable>
         <app>llama</app>
       </applicable>
@@ -4649,7 +4649,7 @@
       </applicable>
     </tag>
     <tag id="DisplayTile">
-      <customtype>item_id</customtype>
+      <customtype>ItemId</customtype>
       <applicable>
         <app>list=minecart</app>
       </applicable>
@@ -4780,7 +4780,7 @@
       </applicable>
     </tag>
     <tag id="FireworksItem">
-      <customtype>item</customtype>
+      <customtype>Item</customtype>
       <applicable>
         <app>fireworks_rocket</app>
       </applicable>
@@ -4932,9 +4932,9 @@
       <byteboolean>true</byteboolean>
     </tag>
     <tag id="Item">
-      <customtype>item</customtype>
+      <customtype>Item</customtype>
       <applicable>
-        <app>item</app>
+        <app>Item</app>
         <app>item_frame</app>
       </applicable>
     </tag>
@@ -5104,7 +5104,7 @@
     <tag id="Owner">
       <type>0</type>
       <applicable>
-        <app>item</app>
+        <app>Item</app>
       </applicable>
     </tag>
     <tag id="ownerName">
@@ -5183,7 +5183,7 @@
     <tag id="PickupDelay">
       <type>2</type>
       <applicable>
-        <app>item</app>
+        <app>Item</app>
       </applicable>
     </tag>
     <tag id="PlayerCreated">
@@ -5233,7 +5233,7 @@
       </applicable>
     </tag>
     <tag id="Potion">
-      <customtype>item</customtype>
+      <customtype>Item</customtype>
       <applicable>
         <app>area_effect_cloud</app>
         <app>potion</app>
@@ -5341,7 +5341,7 @@
       <byteboolean>true</byteboolean>
     </tag>
     <tag id="SaddleItem">
-      <customtype>item</customtype>
+      <customtype>Item</customtype>
       <applicable>
         <app>donkey</app>
         <app>horse</app>
@@ -5358,7 +5358,7 @@
       </applicable>
     </tag>
     <tag id="SelectedItem">
-      <customtype>item</customtype>
+      <customtype>Item</customtype>
       <applicable>
         <app>player</app>
       </applicable>
@@ -5542,7 +5542,7 @@
     <tag id="Thrower">
       <type>0</type>
       <applicable>
-        <app>item</app>
+        <app>Item</app>
       </applicable>
     </tag>
     <tag id="TileEntityData">

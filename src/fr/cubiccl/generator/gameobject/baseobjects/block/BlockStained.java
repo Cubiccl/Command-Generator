@@ -14,9 +14,9 @@ public class BlockStained extends Block
 		return new Text("block." + id + ".x", new Replacement("<color>", new Text("utils.color." + damage)));
 	}
 
-	public BlockStained(int idInt, String idString)
+	public BlockStained()
 	{
-		super(idInt, idString);
+		super();
 		this.addState(new BlockState("color", BlockState.STRING, 1, "white", "orange", "magenta", "light_blue", "yellow", "lime", "pink", "gray", "silver",
 				"cyan", "purple", "blue", "brown", "green", "red", "black"));
 	}

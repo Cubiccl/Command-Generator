@@ -187,6 +187,12 @@ public abstract class TemplateTag extends BaseObject<TemplateTag> implements ISt
 		return this;
 	}
 
+	/** Setter for {@link TemplateTag#applicationType}. */
+	public void setApplicationType(byte applicationType)
+	{
+		this.applicationType = applicationType;
+	}
+
 	@Override
 	public boolean shouldStateClose(CGPanel panel)
 	{

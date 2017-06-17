@@ -14,9 +14,9 @@ public class BlockFenceGate extends Block
 		return new Text("block." + id + ".x", new Replacement("<gate_status>", new Text("utils.gate_status." + damage)));
 	}
 
-	public BlockFenceGate(int idInt, String idString)
+	public BlockFenceGate()
 	{
-		super(idInt, idString);
+		super();
 		this.addState(new BlockState("facing", BlockState.STRING, 1, "south", "west", "north", "east"));
 		this.addState(new BlockState("open", BlockState.BOOLEAN, 4, "false", " true"));
 		this.addState(new BlockState("powered", BlockState.BOOLEAN, -1, "false", " true"));
