@@ -16,6 +16,12 @@ public class TagBoolean extends Tag
 	}
 
 	@Override
+	public TagBoolean duplicate()
+	{
+		return new TagBoolean((TemplateBoolean) this.template, this.value);
+	}
+
+	@Override
 	public Boolean value()
 	{
 		return this.value;

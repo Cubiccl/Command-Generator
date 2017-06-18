@@ -52,6 +52,12 @@ public class Item extends BlockItem<Item> implements IObjectList<Item>
 	}
 
 	@Override
+	public Item duplicate(Item object)
+	{
+		return this;
+	}
+
+	@Override
 	public Item fromXML(Element xml)
 	{
 		super.fromXML(xml);

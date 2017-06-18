@@ -89,6 +89,17 @@ public class ItemStack extends GameObject<ItemStack> implements IObjectList<Item
 		return (this.amount == 0 ? "" : this.amount + " ") + this.item.name(this.damage).toString();
 	}
 
+	@Override
+	public ItemStack duplicate(ItemStack object)
+	{
+		this.amount = object.amount;
+		this.damage = object.damage;
+		this.item = object.item;
+		this.nbt = object.nbt.duplicate();
+		this.slot = object.slot;
+		return this;
+	}
+
 	/** Adds an Enchantment to this Item, with a random level.
 	 * 
 	 * @param enchantment - The Enchantment to add. */

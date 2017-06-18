@@ -61,6 +61,16 @@ public class PanelCondition extends CGPanel implements ActionListener
 		}
 
 		@Override
+		public ScoreCondition duplicate(ScoreCondition object)
+		{
+			this.isRange = object.isRange;
+			this.min = object.min;
+			this.max = object.max;
+			this.objective = object.objective;
+			return this;
+		}
+
+		@Override
 		public Component getDisplayComponent()
 		{
 			String text = this.objective + " = " + this.min;

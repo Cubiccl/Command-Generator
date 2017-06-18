@@ -45,6 +45,12 @@ public class EnchantmentType extends BaseObject<EnchantmentType> implements IObj
 	}
 
 	@Override
+	public EnchantmentType duplicate(EnchantmentType object)
+	{
+		return this;
+	}
+
+	@Override
 	public EnchantmentType fromXML(Element xml)
 	{
 		this.idString = "minecraft:" + xml.getAttributeValue("idstr");

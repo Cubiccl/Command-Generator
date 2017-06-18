@@ -57,6 +57,17 @@ public class TestedEffect implements IObjectList<TestedEffect>
 	}
 
 	@Override
+	public TestedEffect duplicate(TestedEffect object)
+	{
+		this.amplifier = object.amplifier == null ? null : object.amplifier.duplicate();
+		this.amplifierTested = object.amplifierTested;
+		this.duration = object.duration == null ? null : object.duration.duplicate();
+		this.durationTested = object.durationTested;
+		this.effect = object.effect;
+		return this;
+	}
+
+	@Override
 	public Component getDisplayComponent()
 	{
 		return null;

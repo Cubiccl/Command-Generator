@@ -53,6 +53,14 @@ public class LivingEntity extends GameObject<LivingEntity> implements IObjectLis
 	}
 
 	@Override
+	public LivingEntity duplicate(LivingEntity object)
+	{
+		this.entity = object.entity;
+		this.nbt = object.nbt.duplicate();
+		return this;
+	}
+
+	@Override
 	public LivingEntity fromNBT(TagCompound nbt)
 	{
 		if (nbt.hasTag("id")) this.entity = ObjectRegistry.entities.find(((TagString) nbt.getTagFromId("id")).value());

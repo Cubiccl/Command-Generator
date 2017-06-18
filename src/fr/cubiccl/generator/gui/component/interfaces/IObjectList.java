@@ -14,6 +14,12 @@ public interface IObjectList<T>
 	 * @return A panel to display to the user, so that he or she may create or edit an Object. */
 	public CGPanel createPanel(ListProperties properties);
 
+	/** Clones the input Object.
+	 * 
+	 * @param object - The Object to copy.
+	 * @return This object. Returns <code>null</code> if the duplication fails. */
+	public T duplicate(T object);
+
 	/** @return A Panel that should display the selected Object. */
 	public Component getDisplayComponent();
 

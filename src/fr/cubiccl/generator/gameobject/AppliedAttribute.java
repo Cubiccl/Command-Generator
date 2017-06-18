@@ -48,6 +48,17 @@ public class AppliedAttribute extends GameObject<AppliedAttribute> implements IO
 	}
 
 	@Override
+	public AppliedAttribute duplicate(AppliedAttribute object)
+	{
+		this.attribute = object.attribute;
+		this.base = object.base;
+		this.modifiers = new AttributeModifier[object.modifiers.length];
+		for (int i = 0; i < this.modifiers.length; ++i)
+			this.modifiers[i] = new AttributeModifier().duplicate(object.modifiers[i]);
+		return this;
+	}
+
+	@Override
 	public AppliedAttribute fromNBT(TagCompound nbt)
 	{
 

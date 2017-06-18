@@ -98,6 +98,12 @@ public class Block extends BlockItem<Block> implements IObjectList<Block>
 		return this.getDamageValues()[0];
 	}
 
+	@Override
+	public Block duplicate(Block object)
+	{
+		return this;
+	}
+
 	/** Finds the Block states described by the input damage value.
 	 * 
 	 * @param damage - A damage value.

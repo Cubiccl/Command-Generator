@@ -28,6 +28,12 @@ public class TagNumber extends Tag
 		this.value = value;
 	}
 
+	@Override
+	public TagNumber duplicate()
+	{
+		return new TagNumber((TemplateNumber) this.template, this.value);
+	}
+
 	/** @return The suffix to add at the end of this Tag's value. */
 	private String suffix()
 	{

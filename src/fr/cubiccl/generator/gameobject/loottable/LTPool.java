@@ -112,6 +112,25 @@ public class LTPool implements IObjectList<LTPool>, XMLSaveable<LTPool>
 	}
 
 	@Override
+	public LTPool duplicate(LTPool object)
+	{
+		this.bonusRollsMax = object.bonusRollsMax;
+		this.bonusRollsMin = object.bonusRollsMin;
+		this.rollsMax = object.rollsMax;
+		this.rollsMin = object.rollsMin;
+
+		this.conditions = new LTCondition[object.conditions.length];
+		for (int i = 0; i < this.conditions.length; ++i)
+			this.conditions[i] = new LTCondition().duplicate(object.conditions[i]);
+
+		this.entries = new LTEntry[object.entries.length];
+		for (int i = 0; i < this.entries.length; ++i)
+			this.entries[i] = new LTEntry().duplicate(object.entries[i]);
+
+		return this;
+	}
+
+	@Override
 	public LTPool fromXML(Element xml)
 	{
 		ArrayList<LTCondition> conditions = new ArrayList<LTCondition>();

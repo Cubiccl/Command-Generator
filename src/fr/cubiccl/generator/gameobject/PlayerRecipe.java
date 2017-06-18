@@ -64,6 +64,15 @@ public class PlayerRecipe implements IObjectList<PlayerRecipe>
 	}
 
 	@Override
+	public PlayerRecipe duplicate(PlayerRecipe object)
+	{
+		this.displayed = object.displayed;
+		this.recipe = object.recipe;
+		this.unlocked = object.unlocked;
+		return this;
+	}
+
+	@Override
 	public Component getDisplayComponent()
 	{
 		return this.recipe.getDisplayComponent();

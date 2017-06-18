@@ -148,7 +148,7 @@ public class Recipe extends GameObject<Recipe> implements IObjectList<Recipe>
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		if ((boolean) properties.get("new"))
+		if (properties.isTrue("new"))
 		{
 			String name = Dialogs.showInputDialog(new Text("objects.name").toString());
 			if (name != null) this.setCustomName(name);
@@ -157,6 +157,17 @@ public class Recipe extends GameObject<Recipe> implements IObjectList<Recipe>
 		}
 		CommandGenerator.stateManager.clear();
 		return new PanelRecipe(this);
+	}
+
+	@Override
+	public Recipe duplicate(Recipe object)
+	{
+		this.group = object.group;
+		this.type = object.type;
+		this.recipe = new ItemStack[object.recipe.length];
+		for (int i = 0; i < this.recipe.length; ++i)
+			this.recipe[i] = new ItemStack().duplicate(object.recipe[i]);
+		return this;
 	}
 
 	@Override

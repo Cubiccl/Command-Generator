@@ -95,6 +95,17 @@ public class Target extends GameObject<Target> implements IObjectList<Target>
 	}
 
 	@Override
+	public Target duplicate(Target object)
+	{
+		this.playerName = object.playerName;
+		this.type = object.type;
+		this.arguments = new TargetArgument[object.arguments.length];
+		for (int i = 0; i < this.arguments.length; ++i)
+			this.arguments[i] = object.arguments[i].duplicate();
+		return this;
+	}
+
+	@Override
 	public Target fromNBT(TagCompound nbt)
 	{
 		if (!nbt.hasTag(Tags.TARGET.id())) return null;

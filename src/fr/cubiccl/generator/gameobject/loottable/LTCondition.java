@@ -97,7 +97,7 @@ public class LTCondition implements IObjectList<LTCondition>, XMLSaveable<LTCond
 	{
 		if (!properties.contains("conditions")) properties.set("conditions", new ArrayList<Condition>());
 		PanelCondition p;
-		if ((boolean) properties.get("new")) p = new PanelCondition((ArrayList<Condition>) properties.get("conditions"));
+		if (properties.isTrue("new")) p = new PanelCondition((ArrayList<Condition>) properties.get("conditions"));
 		else
 		{
 			ArrayList<Condition> conditions = (ArrayList<Condition>) properties.get("conditions");
@@ -107,6 +107,16 @@ public class LTCondition implements IObjectList<LTCondition>, XMLSaveable<LTCond
 		p.setupFrom(this);
 		p.setName(new Text("loottable.condition", new Replacement("<index>", Integer.toString((int) properties.get("index")))));
 		return p;
+	}
+
+	@Override
+	public LTCondition duplicate(LTCondition object)
+	{
+		this.condition = object.condition;
+		this.tags = new Tag[object.tags.length];
+		for (int i = 0; i < this.tags.length; ++i)
+			this.tags[i] = object.tags[i].duplicate();
+		return this;
 	}
 
 	@Override

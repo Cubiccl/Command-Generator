@@ -125,6 +125,9 @@ public abstract class Tag extends GameObject<Tag>
 		this.template = template;
 	}
 
+	/** @return A copy of this NBT Tag. */
+	public abstract Tag duplicate();
+
 	@Deprecated
 	@Override
 	public Tag fromNBT(TagCompound nbt)

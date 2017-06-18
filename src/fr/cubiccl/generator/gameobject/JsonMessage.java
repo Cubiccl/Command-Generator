@@ -148,6 +148,26 @@ public class JsonMessage extends GameObject<JsonMessage> implements IObjectList<
 	}
 
 	@Override
+	public JsonMessage duplicate(JsonMessage object)
+	{
+		this.bold = object.bold;
+		this.clickAction = object.clickAction;
+		this.clickValue = object.clickValue;
+		this.color = object.color;
+		this.hoverAction = object.hoverAction;
+		this.hoverValue = object.hoverValue;
+		this.insertion = object.insertion;
+		this.italic = object.italic;
+		this.mode = object.mode;
+		this.obfuscated = object.obfuscated;
+		this.strikethrough = object.strikethrough;
+		this.target = object.target;
+		this.text = object.text;
+		this.underlined = object.underlined;
+		return this;
+	}
+
+	@Override
 	public JsonMessage fromNBT(TagCompound nbt)
 	{
 		for (Tag t : nbt.value())

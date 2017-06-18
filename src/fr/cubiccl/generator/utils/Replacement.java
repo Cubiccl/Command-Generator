@@ -31,4 +31,12 @@ public class Replacement
 		return text.replaceAll(this.pattern, this.replacement.toString());
 	}
 
+	/** @return A copy of this Replacement. */
+	public Replacement duplicate()
+	{
+		Text t = new Text("");
+		t.duplicate(this.replacement);
+		return new Replacement(this.pattern, t);
+	}
+
 }

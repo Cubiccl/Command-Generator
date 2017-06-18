@@ -42,6 +42,15 @@ public class TemplatePages extends TemplateList
 		}
 
 		@Override
+		public Page duplicate(Page object)
+		{
+			this.messages = new JsonMessage[object.messages.length];
+			for (int i = 0; i < this.messages.length; ++i)
+				this.messages[i] = new JsonMessage().duplicate(object.messages[i]);
+			return this;
+		}
+
+		@Override
 		public Component getDisplayComponent()
 		{
 			return null;

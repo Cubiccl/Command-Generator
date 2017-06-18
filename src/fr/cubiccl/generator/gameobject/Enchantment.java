@@ -52,6 +52,14 @@ public class Enchantment extends GameObject<Enchantment> implements IObjectList<
 	}
 
 	@Override
+	public Enchantment duplicate(Enchantment object)
+	{
+		this.type = object.type;
+		this.level = object.level.duplicate();
+		return this;
+	}
+
+	@Override
 	public Enchantment fromNBT(TagCompound nbt)
 	{
 		for (Tag t : nbt.value())

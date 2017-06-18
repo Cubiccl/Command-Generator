@@ -58,6 +58,15 @@ public class TestValue
 		this.valueMax = 0;
 	}
 
+	/** @return A copy of this TestValue. */
+	public TestValue duplicate()
+	{
+		TestValue v = new TestValue(this.exactTag, this.rangeTag, this.minTag, this.maxTag, this.valueMin);
+		v.valueMax = this.valueMin;
+		v.isRanged = this.isRanged;
+		return v;
+	}
+
 	/** Looks for the value of this test in the input list of Tags.
 	 * 
 	 * @param tag - The tags to look for the value into.

@@ -55,6 +55,16 @@ public class Effect extends GameObject<Effect> implements IObjectList<Effect>
 	}
 
 	@Override
+	public Effect duplicate(Effect object)
+	{
+		this.amplifier = object.amplifier;
+		this.duration = object.duration;
+		this.hideParticles = object.hideParticles;
+		this.type = object.type;
+		return this;
+	}
+
+	@Override
 	public Effect fromNBT(TagCompound nbt)
 	{
 		for (Tag t : nbt.value())

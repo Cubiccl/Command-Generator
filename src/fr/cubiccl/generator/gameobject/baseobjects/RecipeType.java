@@ -38,6 +38,12 @@ public class RecipeType extends BaseObject<RecipeType> implements IObjectList<Re
 	}
 
 	@Override
+	public RecipeType duplicate(RecipeType object)
+	{
+		return this;
+	}
+
+	@Override
 	public RecipeType fromXML(Element xml)
 	{
 		this.id = xml.getAttributeValue("id");

@@ -47,6 +47,18 @@ public class TradeOffer extends GameObject<TradeOffer> implements IObjectList<Tr
 	}
 
 	@Override
+	public TradeOffer duplicate(TradeOffer object)
+	{
+		this.buy = object.buy == null ? null : new ItemStack().duplicate(object.buy);
+		this.buySecondary = object.buySecondary == null ? null : new ItemStack().duplicate(object.buySecondary);
+		this.experienceReward = object.experienceReward;
+		this.maxUses = object.maxUses;
+		this.sell = object.sell == null ? null : new ItemStack().duplicate(object.sell);
+		this.uses = object.uses;
+		return this;
+	}
+
+	@Override
 	public TradeOffer fromNBT(TagCompound nbt)
 	{
 		for (Tag t : nbt.value())

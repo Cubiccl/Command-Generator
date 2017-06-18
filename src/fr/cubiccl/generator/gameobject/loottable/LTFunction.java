@@ -188,6 +188,21 @@ public class LTFunction implements IObjectList<LTFunction>, XMLSaveable<LTFuncti
 	}
 
 	@Override
+	public LTFunction duplicate(LTFunction object)
+	{
+		this.function = object.function;
+
+		this.conditions = new LTCondition[object.conditions.length];
+		for (int i = 0; i < this.conditions.length; ++i)
+			this.conditions[i] = new LTCondition().duplicate(object.conditions[i]);
+
+		this.tags = new Tag[object.tags.length];
+		for (int i = 0; i < this.tags.length; ++i)
+			this.tags[i] = object.tags[i].duplicate();
+		return this;
+	}
+
+	@Override
 	public LTFunction fromXML(Element xml)
 	{
 		this.function = Function.find(xml.getChildText("id"));

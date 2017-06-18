@@ -27,6 +27,15 @@ public class TagList extends Tag
 		this.tags = t;
 	}
 
+	@Override
+	public TagList duplicate()
+	{
+		Tag[] v = new Tag[this.tags.length];
+		for (int i = 0; i < v.length; ++i)
+			v[i] = this.tags[i].duplicate();
+		return new TagList(this.template, v);
+	}
+
 	/** @param index - The index of the requested Tag.
 	 * @return The Tag at the input index. */
 	public Tag getTag(int index)

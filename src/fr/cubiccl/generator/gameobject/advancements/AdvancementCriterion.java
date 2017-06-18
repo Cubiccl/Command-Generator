@@ -57,6 +57,17 @@ public class AdvancementCriterion implements IObjectList<AdvancementCriterion>, 
 	}
 
 	@Override
+	public AdvancementCriterion duplicate(AdvancementCriterion object)
+	{
+		this.name = object.name;
+		this.trigger = object.trigger;
+		this.conditions.clear();
+		for (Tag tag : object.conditions)
+			this.conditions.add(tag.duplicate());
+		return this;
+	}
+
+	@Override
 	public AdvancementCriterion fromNBT(TagCompound nbt)
 	{
 		this.name = nbt.id();

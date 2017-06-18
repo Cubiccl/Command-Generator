@@ -57,6 +57,15 @@ public class PlacedBlock extends GameObject<PlacedBlock> implements IObjectList<
 	}
 
 	@Override
+	public PlacedBlock duplicate(PlacedBlock object)
+	{
+		this.block = object.block;
+		this.data = object.data;
+		this.nbt = object.nbt.duplicate();
+		return this;
+	}
+
+	@Override
 	public PlacedBlock fromNBT(TagCompound nbt)
 	{
 		for (Tag t : nbt.value())

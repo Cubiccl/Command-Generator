@@ -138,6 +138,25 @@ public class LTEntry implements IObjectList<LTEntry>, XMLSaveable<LTEntry>
 	}
 
 	@Override
+	public LTEntry duplicate(LTEntry object)
+	{
+		this.name = object.name;
+		this.quality = object.quality;
+		this.type = object.type;
+		this.weight = object.weight;
+
+		this.conditions = new LTCondition[object.conditions.length];
+		for (int i = 0; i < this.conditions.length; ++i)
+			this.conditions[i] = new LTCondition().duplicate(object.conditions[i]);
+
+		this.functions = new LTFunction[object.functions.length];
+		for (int i = 0; i < this.functions.length; ++i)
+			this.functions[i] = new LTFunction().duplicate(object.functions[i]);
+
+		return this;
+	}
+
+	@Override
 	public LTEntry fromXML(Element xml)
 	{
 		this.name = xml.getChildText("name");

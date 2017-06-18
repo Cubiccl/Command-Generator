@@ -14,6 +14,15 @@ public class TagCompound extends TagList
 		super(template, tags);
 	}
 
+	@Override
+	public TagCompound duplicate()
+	{
+		Tag[] v = new Tag[this.tags.length];
+		for (int i = 0; i < v.length; ++i)
+			v[i] = this.tags[i].duplicate();
+		return new TagCompound(this.template, v);
+	}
+
 	/** @return The list of possible Objects this Compound could describe. */
 	public String[] findApplications()
 	{

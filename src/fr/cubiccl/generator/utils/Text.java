@@ -74,6 +74,17 @@ public class Text implements IObjectList<Text>
 	}
 
 	@Override
+	public Text duplicate(Text object)
+	{
+		this.doTranslate = object.doTranslate;
+		this.id = object.id;
+		this.replacements.clear();
+		for (Replacement replacement : object.replacements)
+			this.replacements.add(replacement.duplicate());
+		return this;
+	}
+
+	@Override
 	public Component getDisplayComponent()
 	{
 		Text t;

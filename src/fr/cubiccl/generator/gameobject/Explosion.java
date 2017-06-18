@@ -47,6 +47,13 @@ public class Explosion implements IObjectList<Explosion>
 		}
 
 		@Override
+		public Color duplicate(Color object)
+		{
+			this.value = object.value;
+			return this;
+		}
+
+		@Override
 		public Component getDisplayComponent()
 		{
 			CGPanel p = new CGPanel();
@@ -143,6 +150,32 @@ public class Explosion implements IObjectList<Explosion>
 		ExplosionPanel p = new ExplosionPanel();
 		p.setupFrom(this);
 		return p;
+	}
+
+	@Override
+	public Explosion duplicate(Explosion object)
+	{
+		this.flicker = object.flicker;
+		this.trail = object.trail;
+		this.type = object.type;
+
+		this.primary = new Color[object.primary.length];
+		for (int i = 0; i < this.primary.length; ++i)
+		{
+			Color c = new Color();
+			c.duplicate(object.primary[i]);
+			this.primary[i] = c;
+		}
+
+		this.fade = new Color[object.fade.length];
+		for (int i = 0; i < this.fade.length; ++i)
+		{
+			Color c = new Color();
+			c.duplicate(object.fade[i]);
+			this.fade[i] = c;
+		}
+
+		return this;
 	}
 
 	@Override

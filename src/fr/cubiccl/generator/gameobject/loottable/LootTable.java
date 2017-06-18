@@ -52,7 +52,7 @@ public class LootTable extends GameObject<LootTable> implements IObjectList<Loot
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		if ((boolean) properties.get("new"))
+		if (properties.isTrue("new"))
 		{
 			String name = Dialogs.showInputDialog(new Text("objects.name").toString());
 			if (name != null) this.setCustomName(name);
@@ -61,6 +61,15 @@ public class LootTable extends GameObject<LootTable> implements IObjectList<Loot
 		}
 		CommandGenerator.stateManager.clear();
 		return new PanelLootTable(this);
+	}
+
+	@Override
+	public LootTable duplicate(LootTable object)
+	{
+		this.pools.clear();
+		for (LTPool pool : object.pools)
+			this.pools.add(new LTPool().duplicate(pool));
+		return this;
 	}
 
 	@Override

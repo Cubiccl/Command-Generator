@@ -1,3 +1,15 @@
+------------------------- VERSION 2.6.3.1 -------------------------
+ADDITIONS
+- Changed & added new buttons to lists.
+
+BUGS FIXED
+
+CHANGED TRANSLATIONS
+general.add
+
+ADDED TRANSLATIONS
+general.down,general.duplicate,general.up
+
 ------------------------- VERSION 2.6.3 -------------------------
 ADDITIONS
 - Updated for Minecraft 1.12.

@@ -96,7 +96,7 @@ public class Advancement extends GameObject<Advancement> implements IObjectList<
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{
-		if ((boolean) properties.get("new"))
+		if (properties.isTrue("new"))
 		{
 			String name = Dialogs.showInputDialog(new Text("objects.name").toString());
 			if (name != null) this.setCustomName(name);
@@ -105,6 +105,45 @@ public class Advancement extends GameObject<Advancement> implements IObjectList<
 		}
 		CommandGenerator.stateManager.clear();
 		return new PanelAdvancement(this);
+	}
+
+	@Override
+	public Advancement duplicate(Advancement object)
+	{
+		this.announce = object.announce;
+		this.background = object.background;
+		this.criteria.clear();
+		for (AdvancementCriterion criterion : object.criteria)
+			this.criteria.add(new AdvancementCriterion().duplicate(criterion));
+		this.data = object.data;
+		this.description = object.description;
+		this.frame = object.frame;
+		this.hidden = object.hidden;
+		this.item = object.item;
+		this.jsonTitle = new JsonMessage().duplicate(object.jsonTitle);
+		this.parent = object.parent;
+		this.requirements.clear();
+		for (AdvancementCriterion[] requirement : object.requirements)
+		{
+			AdvancementCriterion[] r = new AdvancementCriterion[requirement.length];
+			for (int i = 0; i < r.length; ++i)
+				for (AdvancementCriterion criterion : this.criteria)
+					if (criterion.name.equals(requirement[i].name))
+					{
+						r[i] = criterion;
+						break;
+					}
+			this.requirements.add(r);
+		}
+		this.rewardExperience = object.rewardExperience;
+		this.rewardFunction = object.rewardFunction;
+		this.rewardLoot.clear();
+		this.rewardLoot.addAll(object.rewardLoot);
+		this.rewardRecipes.clear();
+		this.rewardRecipes.addAll(object.rewardRecipes);
+		this.title = object.title;
+		this.toast = object.toast;
+		return this;
 	}
 
 	@Override

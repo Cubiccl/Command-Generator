@@ -16,6 +16,9 @@ public class Requirement implements IObjectList<Requirement>
 	/** The list of criteria in this Requirement. */
 	public AdvancementCriterion[] criteria = new AdvancementCriterion[0];
 
+	public Requirement()
+	{}
+
 	public Requirement(AdvancementCriterion[] criteria)
 	{
 		this.criteria = criteria;
@@ -27,6 +30,15 @@ public class Requirement implements IObjectList<Requirement>
 		PanelRequirement p = new PanelRequirement((Advancement) properties.get("advancement"));
 		p.setupFrom(this.criteria);
 		return p;
+	}
+
+	@Override
+	public Requirement duplicate(Requirement object)
+	{
+		this.criteria = new AdvancementCriterion[object.criteria.length];
+		for (int i = 0; i < this.criteria.length; ++i)
+			this.criteria[i] = new AdvancementCriterion().duplicate(object.criteria[i]);
+		return this;
 	}
 
 	@Override

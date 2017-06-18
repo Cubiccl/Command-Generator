@@ -44,8 +44,8 @@ public class TargetArgument
 	{
 		if (xml.getChild("value2") == null) return new TargetArgument(ArgumentType.find(xml.getChildText("id")), xml.getChildText("value"),
 				Boolean.parseBoolean(xml.getChildText("reversed")));
-		return new TargetArgument(ArgumentType.find(xml.getChildText("id")), xml.getChildText("value"), xml.getChildText("value2"),
-				Boolean.parseBoolean(xml.getChildText("reversed")));
+		return new TargetArgument(ArgumentType.find(xml.getChildText("id")), xml.getChildText("value"), xml.getChildText("value2"), Boolean.parseBoolean(xml
+				.getChildText("reversed")));
 	}
 
 	/** The Argument type. */
@@ -79,6 +79,11 @@ public class TargetArgument
 	private String displayValue()
 	{
 		return this.value.equals("") ? Lang.translate("general.none") : this.value;
+	}
+
+	public TargetArgument duplicate()
+	{
+		return new TargetArgument(this.argument, this.value, this.value2, this.reversed);
 	}
 
 	/** @return The separator between ID and value. */

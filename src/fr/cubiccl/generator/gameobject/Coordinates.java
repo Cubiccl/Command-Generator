@@ -66,6 +66,18 @@ public class Coordinates extends GameObject<Coordinates> implements IObjectList<
 	}
 
 	@Override
+	public Coordinates duplicate(Coordinates object)
+	{
+		this.x = object.x;
+		this.y = object.y;
+		this.z = object.z;
+		this.xRelative = object.xRelative;
+		this.yRelative = object.yRelative;
+		this.zRelative = object.zRelative;
+		return this;
+	}
+
+	@Override
 	public Coordinates fromNBT(TagCompound nbt)
 	{
 		for (Tag t : nbt.value())

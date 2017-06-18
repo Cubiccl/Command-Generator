@@ -107,6 +107,22 @@ public class AttributeModifier extends GameObject<AttributeModifier> implements 
 	}
 
 	@Override
+	public AttributeModifier duplicate(AttributeModifier object)
+	{
+		this.amount = object.amount;
+		this.amountMax = object.amountMax;
+		this.attribute = object.attribute;
+		this.isInLootTable = object.isInLootTable;
+		this.name = object.name;
+		this.operation = object.operation;
+		this.UUIDMost = object.UUIDMost;
+		this.UUIDLeast = object.UUIDLeast;
+		this.slots = new String[object.slots.length];
+		System.arraycopy(object.slots, 0, this.slots, 0, this.slots.length);
+		return this;
+	}
+
+	@Override
 	public AttributeModifier fromNBT(TagCompound nbt)
 	{
 		ArrayList<String> s = new ArrayList<String>();

@@ -63,6 +63,14 @@ public class TemplateSpawnPotentials extends TemplateList
 		}
 
 		@Override
+		public SpawnPotential duplicate(SpawnPotential object)
+		{
+			this.weight = object.weight;
+			this.entity = new LivingEntity().duplicate(object.entity);
+			return this;
+		}
+
+		@Override
 		public Component getDisplayComponent()
 		{
 			CGPanel p = new CGPanel();
@@ -93,9 +101,10 @@ public class TemplateSpawnPotentials extends TemplateList
 		@Override
 		public SpawnPotential update(CGPanel panel) throws CommandGenerationException
 		{
-			SpawnPotential s= ((SpawnPotentialPanel) panel).createSpawnPotential();
-			this.entity=s.entity;
-			this.weight=s.weight;return this;
+			SpawnPotential s = ((SpawnPotentialPanel) panel).createSpawnPotential();
+			this.entity = s.entity;
+			this.weight = s.weight;
+			return this;
 		}
 
 	}
