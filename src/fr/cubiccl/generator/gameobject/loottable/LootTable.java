@@ -66,6 +66,10 @@ public class LootTable extends GameObject<LootTable> implements IObjectList<Loot
 	@Override
 	public LootTable duplicate(LootTable object)
 	{
+		String name = Dialogs.showInputDialog(new Text("objects.name").toString());
+		if (name != null) this.setCustomName(name);
+		else return null;
+		
 		this.pools.clear();
 		for (LTPool pool : object.pools)
 			this.pools.add(new LTPool().duplicate(pool));

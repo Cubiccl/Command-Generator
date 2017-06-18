@@ -116,7 +116,7 @@ public class Settings
 	}
 
 	/** The Generator's version. */
-	public static final String GENERATOR_VERSION = "2.6.3";
+	public static final String GENERATOR_VERSION = "2.6.3.1";
 	/** The selected Language. */
 	private static Language language;
 	/** The selected Minecraft version. */

@@ -110,6 +110,10 @@ public class Advancement extends GameObject<Advancement> implements IObjectList<
 	@Override
 	public Advancement duplicate(Advancement object)
 	{
+		String name = Dialogs.showInputDialog(new Text("objects.name").toString());
+		if (name != null) this.setCustomName(name);
+		else return null;
+		
 		this.announce = object.announce;
 		this.background = object.background;
 		this.criteria.clear();
@@ -120,7 +124,7 @@ public class Advancement extends GameObject<Advancement> implements IObjectList<
 		this.frame = object.frame;
 		this.hidden = object.hidden;
 		this.item = object.item;
-		this.jsonTitle = new JsonMessage().duplicate(object.jsonTitle);
+		this.jsonTitle = object.jsonTitle == null ? null : new JsonMessage().duplicate(object.jsonTitle);
 		this.parent = object.parent;
 		this.requirements.clear();
 		for (AdvancementCriterion[] requirement : object.requirements)

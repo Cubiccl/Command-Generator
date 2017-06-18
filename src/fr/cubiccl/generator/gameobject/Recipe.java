@@ -162,6 +162,10 @@ public class Recipe extends GameObject<Recipe> implements IObjectList<Recipe>
 	@Override
 	public Recipe duplicate(Recipe object)
 	{
+		String name = Dialogs.showInputDialog(new Text("objects.name").toString());
+		if (name != null) this.setCustomName(name);
+		else return null;
+		
 		this.group = object.group;
 		this.type = object.type;
 		this.recipe = new ItemStack[object.recipe.length];
