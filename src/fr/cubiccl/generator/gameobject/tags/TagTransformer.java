@@ -12,61 +12,61 @@ public class TagTransformer
 
 	/** @param tag - An NBT Tag.
 	 * @return The input Tag in Json format. */
-	private String asJson(org.jnbt.Tag tag)
+	private static String asJson(org.jnbt.Tag tag)
 	{
 		return tag.getName() + ":" + valueAsJson(tag);
 	}
 
-	public TagNumber toCG(ByteTag tag)
+	public static TagNumber toCG(ByteTag tag)
 	{
 		return (TagNumber) toCG(tag);
 	}
 
-	public TagCompound toCG(CompoundTag tag)
+	public static TagCompound toCG(CompoundTag tag)
 	{
 		return (TagCompound) toCG(tag);
 	}
 
-	public TagNumber toCG(DoubleTag tag)
+	public static TagNumber toCG(DoubleTag tag)
 	{
 		return (TagNumber) toCG(tag);
 	}
 
-	public TagNumber toCG(FloatTag tag)
+	public static TagNumber toCG(FloatTag tag)
 	{
 		return (TagNumber) toCG(tag);
 	}
 
-	public TagNumber toCG(IntTag tag)
+	public static TagNumber toCG(IntTag tag)
 	{
 		return (TagNumber) toCG(tag);
 	}
 
-	public TagList toCG(ListTag tag)
+	public static TagList toCG(ListTag tag)
 	{
 		return (TagList) toCG(tag);
 	}
 
-	public TagNumber toCG(LongTag tag)
+	public static TagNumber toCG(LongTag tag)
 	{
 		return (TagNumber) toCG(tag);
 	}
 
 	/** @param tag - A JNBT Tag.
 	 * @return The Command Generator Tag version. */
-	public Tag toCG(org.jnbt.Tag tag)
+	public static Tag toCG(org.jnbt.Tag tag)
 	{
 		return NBTParser.parse(asJson(tag), false, true, true);
 	}
 
-	public TagNumber toCG(ShortTag tag)
+	public static TagNumber toCG(ShortTag tag)
 	{
 		return (TagNumber) toCG(tag);
 	}
 
 	/** @param tag - A Command Generator Tag.
 	 * @return The JNBT Tag version. */
-	public org.jnbt.Tag toJNBT(Tag tag)
+	public static org.jnbt.Tag toJNBT(Tag tag)
 	{
 		int type = tag.type();
 		switch (type)
@@ -93,7 +93,7 @@ public class TagTransformer
 		}
 	}
 
-	public CompoundTag toJNBT(TagCompound tag)
+	public static CompoundTag toJNBT(TagCompound tag)
 	{
 		HashMap<String, org.jnbt.Tag> tags = new HashMap<String, org.jnbt.Tag>();
 		for (Tag t : tag.value())
@@ -101,7 +101,7 @@ public class TagTransformer
 		return new CompoundTag(tag.id(), tags);
 	}
 
-	public ListTag toJNBT(TagList tag)
+	public static ListTag toJNBT(TagList tag)
 	{
 		ArrayList<org.jnbt.Tag> tags = new ArrayList<org.jnbt.Tag>();
 		for (Tag t : tag.value())
@@ -109,7 +109,7 @@ public class TagTransformer
 		return new ListTag(tag.id(), tags.size() == 0 ? StringTag.class : tags.get(0).getClass(), tags);
 	}
 
-	public org.jnbt.Tag toJNBT(TagNumber tag)
+	public static org.jnbt.Tag toJNBT(TagNumber tag)
 	{
 		int type = tag.type();
 		switch (type)
@@ -137,13 +137,13 @@ public class TagTransformer
 		}
 	}
 
-	public StringTag toJNBT(TagString tag)
+	public static StringTag toJNBT(TagString tag)
 	{
 		return new StringTag(tag.id(), tag.value());
 	}
 
 	@SuppressWarnings("unchecked")
-	private String valueAsJson(org.jnbt.Tag tag)
+	private static String valueAsJson(org.jnbt.Tag tag)
 	{
 		int type = NBTUtils.getTypeCode(tag.getClass());
 		switch (type)
