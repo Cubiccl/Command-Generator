@@ -14,5 +14,6 @@
 			<attribute name="javadoc_location" value="jar:file:/C:/Users/Clément/Desktop/Programmation/librairies/jdom-2.0.6-javadoc.jar!/"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="C:/Users/Clément/Desktop/Programmation/librairies/jnbt-1.1/jnbt-1.1.jar" sourcepath="C:/Users/Clément/Desktop/Programmation/librairies/jnbt-1.1/jnbt-code-2.zip"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
