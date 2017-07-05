@@ -6,16 +6,17 @@ import java.util.HashMap;
 
 import org.jnbt.CompoundTag;
 import org.jnbt.NBTInputStream;
-import org.jnbt.Tag;
 
 import fr.cubiccl.generator.gameobject.Recipe;
 import fr.cubiccl.generator.gameobject.advancements.Advancement;
 import fr.cubiccl.generator.gameobject.loottable.LootTable;
-import fr.cubiccl.generator.gameobject.tags.TagCompound;
-import fr.cubiccl.generator.gameobject.tags.TagString;
-import fr.cubiccl.generator.gameobject.tags.TagTransformer;
+import fr.cubiccl.generator.gameobject.tags.*;
+import fr.cubiccl.generator.gui.Dialogs;
 import fr.cubiccl.generator.utils.CommandGenerationException;
+import fr.cubiccl.generator.utils.FileUtils;
 import fr.cubiccl.generator.utils.Text;
+
+import static fr.cubiccl.generator.gameobject.map.MapTags.*;
 
 /** Represents a Map. */
 public class Map
@@ -31,8 +32,10 @@ public class Map
 	 * @param warnings - The warnings to show. */
 	private static void displayWarnings(ArrayList<Text> warnings)
 	{
-		// TODO Map.displayWarnings(warnings)
-
+		String message = "";
+		for (Text text : warnings)
+			message += text.toString() + "\n";
+		Dialogs.showMessage(message);
 	}
 
 	/** This Map's Advancements. */
@@ -60,7 +63,6 @@ public class Map
 	{
 		this.path = path.substring(0, path.length() - "/level.dat".length());
 		this.displaySlots = new String[slotNames.length];
-		// TODO Map(path)
 	}
 
 	/** Loads the Map from the files.
@@ -86,12 +88,33 @@ public class Map
 	 * @throws CommandGenerationException if it didn't load properly. */
 	private ArrayList<Text> loadAdvancements()
 	{
+		this.advancements.clear();
 		ArrayList<Text> warnings = new ArrayList<Text>();
 		File folder = new File(this.path + "/data/advancements");
-		if (!folder.exists()) return warnings;
+		if (!folder.exists() || folder.listFiles() == null) return warnings;
 
-		// TODO Map.loadAdvancements()
+		loadAdvancements(folder, warnings);
+
 		return warnings;
+	}
+
+	/** Loads all Advancements contained in the input folder.
+	 * 
+	 * @param folder - The folder containing the Advancements to load.
+	 * @param warnings - An array to put raised warnings in. */
+	private void loadAdvancements(File folder, ArrayList<Text> warnings)
+	{
+		for (File file : folder.listFiles())
+			if (file.getAbsolutePath().endsWith(".json")) try
+			{
+				Advancement advancement = new Advancement().fromNBT((TagCompound) NBTParser.parse(FileUtils.readFile(file), true, true, true));
+				this.advancements.put(advancement.customName(), advancement);
+			} catch (Exception e)
+			{
+				warnings.add(new Text("error.map.advancement").addReplacement("<adv>",
+						file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf('\\'), file.getAbsolutePath().length() - ".json".length())));
+			}
+			else if (file.listFiles() == null) this.loadAdvancements(file, warnings);
 	}
 
 	/** Loads the Functions.
@@ -99,6 +122,7 @@ public class Map
 	 * @throws CommandGenerationException if it didn't load properly. */
 	private void loadFunctions()
 	{
+		this.functions.clear();
 		File folder = new File(this.path + "/data/functions");
 		if (!folder.exists()) return;
 
@@ -117,10 +141,9 @@ public class Map
 		try
 		{
 			NBTInputStream is = new NBTInputStream(new BufferedInputStream(new FileInputStream(file)));
-			Tag level = is.readTag();
-			TagCompound t = TagTransformer.toCG((CompoundTag) level);
-			TagCompound data = (TagCompound) t.getTagFromId("Data");
-			this.name = ((TagString) data.getTagFromId("LevelName")).value();
+			TagCompound t = TagTransformer.toCG((CompoundTag) is.readTag());
+			TagCompound data = t.getTag(Data);
+			this.name = data.getTag(LevelName).value();
 			is.close();
 		} catch (FileNotFoundException e)
 		{
@@ -142,12 +165,33 @@ public class Map
 	 * @throws CommandGenerationException if it didn't load properly. */
 	private ArrayList<Text> loadLootTables()
 	{
+		this.lootTables.clear();
 		ArrayList<Text> warnings = new ArrayList<Text>();
 		File folder = new File(this.path + "/data/loot_tables");
-		if (!folder.exists()) return warnings;
+		if (!folder.exists() || folder.listFiles() == null) return warnings;
 
-		// TODO Map.loadLootTables()
+		this.loadLootTables(folder, warnings);
+
 		return warnings;
+	}
+
+	/** Loads all Loot Tables contained in the input folder.
+	 * 
+	 * @param folder - The folder containing the Loot Tables to load.
+	 * @param warnings - An array to put raised warnings in. */
+	private void loadLootTables(File folder, ArrayList<Text> warnings)
+	{
+		for (File file : folder.listFiles())
+			if (file.getAbsolutePath().endsWith(".json")) try
+			{
+				LootTable table = new LootTable().fromNBT((TagCompound) NBTParser.parse(FileUtils.readFile(file), true, true, true));
+				this.lootTables.put(table.customName(), table);
+			} catch (Exception e)
+			{
+				warnings.add(new Text("error.map.loottable").addReplacement("<lt>",
+						file.getAbsolutePath().substring(file.getAbsolutePath().lastIndexOf('\\'), file.getAbsolutePath().length() - ".json".length())));
+			}
+			else if (file.listFiles() == null) this.loadAdvancements(file, warnings);
 	}
 
 	/** Loads the Recipes. Currently Recipes are not supported but this method is still ready.
@@ -156,6 +200,7 @@ public class Map
 	 * @throws CommandGenerationException if it didn't load properly. */
 	private ArrayList<Text> loadRecipes()
 	{
+		this.recipes.clear();
 		ArrayList<Text> warnings = new ArrayList<Text>();
 		return warnings;
 	}
@@ -165,8 +210,80 @@ public class Map
 		File file = new File(this.path + "/data/scoreboard.dat");
 		if (!file.exists()) return;
 
-		// Map.loadScoreboard()
+		try
+		{
+			NBTInputStream is = new NBTInputStream(new BufferedInputStream(new FileInputStream(file)));
+			TagCompound t = TagTransformer.toCG((CompoundTag) is.readTag());
+			is.close();
 
+			TagCompound data = t.getTag(MapTags.Data);
+			this.loadScoreboardObjectives(data.getTag(Objectives));
+			this.loadScoreboardTeams(data.getTag(Teams));
+			this.loadScoreboardScores(data.getTag(PlayerScores));
+			this.loadScoreboardSlots(data.getTag(DisplaySlots));
+
+		} catch (FileNotFoundException e)
+		{
+			e.printStackTrace();
+		} catch (IOException e)
+		{
+			e.printStackTrace();
+			// throw new CommandGenerationException(new Text("error.map.scoreboard.read"));
+		} catch (Exception e)
+		{
+			e.printStackTrace();
+		}
+	}
+
+	/** Reads the Objectives from the input List.
+	 * 
+	 * @param objectives - The List containing the Objectives. */
+	private void loadScoreboardObjectives(TagList objectives)
+	{
+		this.objectives.clear();
+		for (Tag objective : objectives.value())
+		{
+			MapObjective o = new MapObjective().fromNBT((TagCompound) objective);
+			this.objectives.put(o.id, o);
+		}
+	}
+
+	/** Reads the Scores from the input List.
+	 * 
+	 * @param objectives - The List containing the Scores. */
+	private void loadScoreboardScores(TagList scores)
+	{
+		this.playerScores.clear();
+		for (Tag score : scores.value())
+		{
+			MapScore s = new MapScore().fromNBT((TagCompound) score);
+			this.playerScores.put(s.name + " " + s.objective.id, s);
+		}
+	}
+
+	/** Reads the Display slots from the input List.
+	 * 
+	 * @param objectives - The List containing the Display slots. */
+	private void loadScoreboardSlots(TagCompound slots)
+	{
+		for (int i = 0; i < 19; ++i)
+		{
+			this.displaySlots[i] = null;
+			if (slots.hasTag("slot_" + i)) this.displaySlots[i] = ((TagString) slots.getTagFromId("slot_" + i)).value();
+		}
+	}
+
+	/** Reads the Teams from the input List.
+	 * 
+	 * @param objectives - The List containing the Teams. */
+	private void loadScoreboardTeams(TagList teams)
+	{
+		this.teams.clear();
+		for (Tag team : teams.value())
+		{
+			MapTeam t = new MapTeam().fromNBT((TagCompound) team);
+			this.teams.put(t.id, t);
+		}
 	}
 
 	/** Reloads the Advancements. */
