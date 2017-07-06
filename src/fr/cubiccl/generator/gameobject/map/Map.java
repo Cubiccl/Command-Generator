@@ -257,7 +257,7 @@ public class Map
 		for (Tag score : scores.value())
 		{
 			MapScore s = new MapScore().fromNBT((TagCompound) score);
-			this.playerScores.put(s.name + " " + s.objective.id, s);
+			this.playerScores.put(s.name + " " + s.objective, s);
 		}
 	}
 

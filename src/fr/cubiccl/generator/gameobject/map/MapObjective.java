@@ -20,14 +20,22 @@ public class MapObjective implements NBTSaveable<MapObjective>
 	@Override
 	public MapObjective fromNBT(TagCompound nbt)
 	{
+		this.criteria = nbt.getTag(MapTags.CriteriaName).value();
+		this.id = nbt.getTag(MapTags.Name).value();
+		this.name = nbt.getTag(MapTags.DisplayName).value();
+		this.renderType = nbt.getTag(MapTags.RenderType).value();
 		return this;
 	}
 
 	@Override
 	public TagCompound toNBT(TemplateCompound container)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		TagCompound tag = container.create();
+		tag.addTag(MapTags.CriteriaName.create(this.criteria));
+		tag.addTag(MapTags.Name.create(this.id));
+		tag.addTag(MapTags.DisplayName.create(this.name));
+		tag.addTag(MapTags.RenderType.create(this.renderType));
+		return tag;
 	}
 
 }

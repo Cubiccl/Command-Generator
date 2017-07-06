@@ -1,8 +1,14 @@
 package fr.cubiccl.generator.gameobject.map;
 
+import static fr.cubiccl.generator.gameobject.map.MapTags.*;
+
 import java.util.ArrayList;
 
+import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.tags.TagCompound;
+import fr.cubiccl.generator.gameobject.tags.TagList;
+import fr.cubiccl.generator.gameobject.tags.TagString;
+import fr.cubiccl.generator.gameobject.templatetags.Tags;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound;
 import fr.cubiccl.generator.gameobject.utils.NBTSaveable;
 
@@ -36,15 +42,45 @@ public class MapTeam implements NBTSaveable<MapTeam>
 	@Override
 	public MapTeam fromNBT(TagCompound nbt)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		this.collisionRule = nbt.getTag(CollisionRule).value();
+		this.color = nbt.getTag(TeamColor).value();
+		this.deathMessageVisibility = nbt.getTag(DeathMessageVisibility).value();
+		this.friendlyFire = nbt.getTag(AllowFriendlyFire).value();
+		this.friendlyInvisibles = nbt.getTag(SeeFriendlyInvisibles).value();
+		this.id = nbt.getTag(Name).value();
+		this.name = nbt.getTag(DisplayName).value();
+		this.nameTagVisibility = nbt.getTag(NameTagVisibility).value();
+		this.prefix = nbt.getTag(Prefix).value();
+		this.suffix = nbt.getTag(Suffix).value();
+
+		this.players.clear();
+		for (Tag player : nbt.getTag(Players).value())
+			this.players.add(((TagString) player).value());
+
+		return this;
 	}
 
 	@Override
 	public TagCompound toNBT(TemplateCompound container)
 	{
-		// TODO Auto-generated method stub
-		return null;
+		TagCompound tag = container.create();
+		tag.addTag(CollisionRule.create(this.collisionRule));
+		tag.addTag(TeamColor.create(this.color));
+		tag.addTag(DeathMessageVisibility.create(this.deathMessageVisibility));
+		tag.addTag(AllowFriendlyFire.create(this.friendlyFire));
+		tag.addTag(SeeFriendlyInvisibles.create(this.friendlyInvisibles));
+		tag.addTag(Name.create(this.id));
+		tag.addTag(DisplayName.create(this.name));
+		tag.addTag(NameTagVisibility.create(this.nameTagVisibility));
+		tag.addTag(Prefix.create(this.prefix));
+		tag.addTag(Suffix.create(this.suffix));
+
+		TagList list = Players.create();
+		for (String player : this.players)
+			list.addTag(Tags.DEFAULT_STRING.create(player));
+		tag.addTag(list);
+
+		return tag;
 	}
 
 }
