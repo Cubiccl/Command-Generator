@@ -92,6 +92,7 @@ public class ItemStack extends GameObject<ItemStack> implements IObjectList<Item
 	@Override
 	public ItemStack duplicate(ItemStack object)
 	{
+		if (object == null) return null;
 		this.amount = object.amount;
 		this.damage = object.damage;
 		this.item = object.item;
