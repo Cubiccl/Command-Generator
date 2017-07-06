@@ -64,7 +64,7 @@ public class PanelRecipe extends CGPanel implements ItemChangeListener
 		});
 
 		this.entryGroup.addStringIdFilter();
-		this.entryGroup.setText(this.recipe.group.replaceAll(" ", ""));
+		this.entryGroup.setText(this.recipe.group == null ? "" : this.recipe.group.replaceAll(" ", ""));
 		this.entryGroup.addKeyListener(new KeyListener()
 		{
 

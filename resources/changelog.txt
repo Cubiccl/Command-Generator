@@ -1,3 +1,13 @@
+------------------------- VERSION 2.6.3.2 -------------------------
+ADDITIONS
+
+BUGS FIXED
+- Recipe creation or duplication didn't work.
+
+CHANGED TRANSLATIONS
+
+ADDED TRANSLATIONS
+
 ------------------------- VERSION 2.6.3.1 -------------------------
 ADDITIONS
 - Changed & added new buttons to lists.
