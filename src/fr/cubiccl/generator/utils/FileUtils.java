@@ -92,6 +92,14 @@ public class FileUtils
 		return file != null && file.exists();
 	}
 
+	/** @param file - The file.
+	 * @param extension - The extension of the file.
+	 * @return The name of the input File, without the extension. */
+	public static String fileName(File file, String extension)
+	{
+		return file.getName().substring(0, file.getName().length() - extension.length());
+	}
+
 	/** Read the changelog of the latest release.
 	 * 
 	 * @return The read changelog. */
