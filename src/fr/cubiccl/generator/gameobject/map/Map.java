@@ -96,7 +96,8 @@ public class Map
 		File folder = new File(this.path + "/data/advancements");
 		if (!folder.exists() || folder.listFiles() == null) return warnings;
 
-		loadAdvancements(folder, warnings);
+		for (File file : folder.listFiles())
+			if (file.listFiles() != null) this.loadAdvancements(file, file.getName() + ":", warnings);
 
 		return warnings;
 	}
@@ -104,20 +105,21 @@ public class Map
 	/** Loads all Advancements contained in the input folder.
 	 * 
 	 * @param folder - The folder containing the Advancements to load.
+	 * @param superpath - The path to the folder.
 	 * @param warnings - An array to put raised warnings in. */
-	private void loadAdvancements(File folder, ArrayList<Text> warnings)
+	private void loadAdvancements(File folder, String superpath, ArrayList<Text> warnings)
 	{
 		for (File file : folder.listFiles())
 			if (file.getAbsolutePath().endsWith(".json")) try
 			{
 				Advancement advancement = new Advancement().fromNBT((TagCompound) NBTParser.parse(FileUtils.readFile(file), true, true, true));
-				advancement.setCustomName(FileUtils.fileName(file, ".json"));
+				advancement.setCustomName(superpath + FileUtils.fileName(file, ".json"));
 				this.advancements.put(advancement.customName(), advancement);
 			} catch (Exception e)
 			{
 				warnings.add(new Text("error.map.advancement").addReplacement("<adv>", FileUtils.fileName(file, ".json")));
 			}
-			else if (file.listFiles() == null) this.loadAdvancements(file, warnings);
+			else if (file.listFiles() == null) this.loadAdvancements(file, superpath + file.getName() + "/", warnings);
 	}
 
 	/** Loads the Functions.
@@ -130,7 +132,7 @@ public class Map
 		if (!folder.exists() || folder.listFiles() == null) return;
 
 		for (File file : folder.listFiles())
-			if (file.listFiles() != null) this.loadFunctions(folder, file.getName() + ":");
+			if (file.listFiles() != null) this.loadFunctions(file, file.getName() + ":");
 	}
 
 	/** Loads functions in the input folder.
@@ -183,7 +185,8 @@ public class Map
 		File folder = new File(this.path + "/data/loot_tables");
 		if (!folder.exists() || folder.listFiles() == null) return warnings;
 
-		this.loadLootTables(folder, warnings);
+		for (File file : folder.listFiles())
+			if (file.listFiles() != null) this.loadLootTables(file, file.getName() + ":", warnings);
 
 		return warnings;
 	}
@@ -191,20 +194,21 @@ public class Map
 	/** Loads all Loot Tables contained in the input folder.
 	 * 
 	 * @param folder - The folder containing the Loot Tables to load.
+	 * @param superpath - The path to the folder.
 	 * @param warnings - An array to put raised warnings in. */
-	private void loadLootTables(File folder, ArrayList<Text> warnings)
+	private void loadLootTables(File folder, String superpath, ArrayList<Text> warnings)
 	{
 		for (File file : folder.listFiles())
 			if (file.getAbsolutePath().endsWith(".json")) try
 			{
 				LootTable table = new LootTable().fromNBT((TagCompound) NBTParser.parse(FileUtils.readFile(file), true, true, true));
-				table.setCustomName(FileUtils.fileName(file, ".json"));
+				table.setCustomName(superpath + FileUtils.fileName(file, ".json"));
 				this.lootTables.put(table.customName(), table);
 			} catch (Exception e)
 			{
 				warnings.add(new Text("error.map.loottable").addReplacement("<lt>", FileUtils.fileName(file, ".json")));
 			}
-			else if (file.listFiles() == null) this.loadAdvancements(file, warnings);
+			else if (file.listFiles() == null) this.loadLootTables(file, superpath + file.getName() + "/", warnings);
 	}
 
 	/** Loads the Recipes. Currently Recipes are not supported but this method is still ready.
@@ -344,8 +348,8 @@ public class Map
 
 	public void saveAdvancements()
 	{
-		// TODO Auto-generated method stub
-
+		for (Advancement advancement : this.advancements.values())
+			FileUtils.writeToFile(advancement.toCommand(), new File(this.path + "/" + advancement.customName().replaceAll(":", "/") + ".json"));
 	}
 
 	public void saveFunctions()
@@ -384,8 +388,8 @@ public class Map
 
 	public void saveLootTables()
 	{
-		// TODO Auto-generated method stub
-
+		for (LootTable lootTable : this.lootTables.values())
+			FileUtils.writeToFile(lootTable.toCommand(), new File(this.path + "/" + lootTable.customName().replaceAll(":", "/") + ".json"));
 	}
 
 	public void saveRecipes()
