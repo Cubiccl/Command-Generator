@@ -1,6 +1,7 @@
 package fr.cubiccl.generator.gameobject.templatetags;
 
 import static fr.cubiccl.generator.gameobject.tags.Tag.UNAVAILABLE;
+import fr.cubiccl.generator.gameobject.map.MapTags;
 import fr.cubiccl.generator.gameobject.tags.Tag;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateCompound.DefaultCompound;
 import fr.cubiccl.generator.gameobject.templatetags.TemplateList.DefaultList;
@@ -327,6 +328,8 @@ public final class Tags
 		CRITERIA_DIMENSION_FROM.setValues(Utils.DIMENSIONS);
 		CRITERIA_DIMENSION_TO.setValues(Utils.DIMENSIONS);
 		CRITERIA_FEATURE.setValues(Utils.STRUCTURES);
+		
+		MapTags.create();
 	}
 
 	private Tags()

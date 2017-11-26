@@ -170,6 +170,76 @@ public class ObjectCreator
 
 		ObjectRegistry.checkAllNames();
 		ObjectRegistry.loadAllTextures(frame);
+
+		String d = "";
+		for (Block o : ObjectRegistry.blocks.list())
+			d += o.id().substring("minecraft:".length()) + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (Item o : ObjectRegistry.items.list())
+			d += o.id().substring("minecraft:".length()) + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (Entity o : ObjectRegistry.entities.list(true))
+			d += o.id().substring("minecraft:".length()) + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (EffectType o : ObjectRegistry.effects.list())
+			d += o.id().substring("minecraft:".length()) + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (EnchantmentType o : ObjectRegistry.enchantments.list())
+			d += o.id().substring("minecraft:".length()) + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (Achievement o : ObjectRegistry.achievements.list())
+			d += o.id().substring("minecraft:".length()) + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (DefaultAdvancement o : ObjectRegistry.advancements.list())
+			d += o.id().substring("minecraft:".length()) + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (Attribute o : ObjectRegistry.attributes.list())
+			d += o.id() + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (Particle o : ObjectRegistry.particles.list())
+			d += o.id().substring("minecraft:".length()) + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (RecipeType o : ObjectRegistry.recipes.list())
+			d += o.id().substring("minecraft:".length()) + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (Sound o : ObjectRegistry.sounds.list())
+			d += o.id().substring("minecraft:".length()) + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (TemplateTag o : ObjectRegistry.blockTags.list())
+			d += o.id() + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (TemplateTag o : ObjectRegistry.itemTags.list())
+			d += o.id() + " ";
+		CommandGenerator.log(d);
+
+		d = "";
+		for (TemplateTag o : ObjectRegistry.entityTags.list())
+			d += o.id() + " ";
+		CommandGenerator.log(d);
 	}
 
 	/** Creates an NBT Tag from the input XML element.
