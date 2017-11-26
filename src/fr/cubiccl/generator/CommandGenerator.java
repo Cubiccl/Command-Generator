@@ -54,8 +54,13 @@ public class CommandGenerator
 	 * <td>ADVANCEMENTS</td>
 	 * <td>Advancement Generator</td>
 	 * </tr>
+	 * <tr>
+	 * <td>6</td>
+	 * <td>MAP</td>
+	 * <td>Map Management</td>
+	 * </tr>
 	 * </table> */
-	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, RECIPES = 4, ADVANCEMENTS = 5;
+	public static final byte COMMANDS = 0, LOOT_TABLES = 1, DATA = 2, RECIPES = 4, ADVANCEMENTS = 5, MAP = 6;
 	/** The current generator mode.
 	 * 
 	 * @see {@link CommandGenerator#COMMANDS} for possible values. */
@@ -70,7 +75,7 @@ public class CommandGenerator
 	private static ArrayList<String> log = new ArrayList<String>();
 	/** Names for the Generator mode. */
 	private static final String[] MODE_NAMES =
-	{ "Commands", "Loot tables", "Data", "Speedruns", "Recipes", "Advancements" };
+	{ "Commands", "Loot tables", "Data", "Speedruns", "Recipes", "Advancements", "Map management" };
 	private static Command selected;
 	/** The State manager instance. */
 	public static StateManager stateManager;

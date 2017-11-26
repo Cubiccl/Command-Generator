@@ -1,5 +1,7 @@
 package fr.cubiccl.generator.gameobject.tags;
 
+import java.util.ArrayList;
+
 import fr.cubiccl.generator.gameobject.templatetags.TemplateTag;
 
 /** Contains a list of tags, ordered and unnamed. */
@@ -42,6 +44,18 @@ public class TagList extends Tag
 	{
 		if (index < 0 || index >= this.tags.length) return null;
 		return this.tags[index];
+	}
+
+	/** Removes a Tag from this List.
+	 * 
+	 * @param tag - The Template of the Tag to remove. */
+	public void removeTag(TemplateTag tag)
+	{
+		ArrayList<Tag> newList = new ArrayList<Tag>();
+		for (Tag t : this.tags)
+			if (!t.template.equals(tag)) newList.add(t);
+
+		this.tags = newList.toArray(new Tag[newList.size()]);
 	}
 
 	@Override
