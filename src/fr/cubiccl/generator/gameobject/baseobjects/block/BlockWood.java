@@ -1,9 +1,8 @@
 package fr.cubiccl.generator.gameobject.baseobjects.block;
 
-import org.jdom2.Element;
-
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
+import fr.cubiccl.generator.gameobject.registries.Blocks112;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
@@ -17,30 +16,11 @@ public class BlockWood extends Block
 		return new Text("block." + id + ".x", new Replacement("<wood>", new Text("utils.wood." + damage)));
 	}
 
-	public BlockWood()
+	public BlockWood(int idInt, String idString)
 	{
-		super();
-		this.addState(new BlockState("type", BlockState.STRING, 1, "oak", "spruce", "birch", "jungle", "acacia", "dark_oak"));
-		this.textureType = 8;
-	}
-
-	@Override
-	public Block fromXML(Element xml)
-	{
-		super.fromXML(xml);
-		if (this.id().contains("planks"))
-		{
-			BlockState s = null;
-			for (BlockState state : this.getStates())
-				if (state.id.equals("type"))
-				{
-					s = state;
-					break;
-				}
-			if (s != null) this.removeState(s);
-			this.addState(new BlockState("variant", BlockState.STRING, 1, "oak", "spruce", "birch", "jungle", "acacia", "dark_oak"));
-		}
-		return this;
+		super(idInt, idString);
+		Blocks112.variant(this, this.id().contains("planks") ? "variant" : "type", 1, "oak", "spruce", "birch", "jungle", "acacia", "dark_oak");
+		this.setTextureType(8);
 	}
 
 	@Override
@@ -58,7 +38,7 @@ public class BlockWood extends Block
 	@Override
 	protected boolean shouldSaveTextureType()
 	{
-		return this.textureType != 8;
+		return this.textureType() != 8;
 	}
 
 }

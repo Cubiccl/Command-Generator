@@ -32,7 +32,7 @@ public abstract class BlockItem<T> extends BaseObject<T>
 	 * If <code>-1</code>, texture is the same for any damage.<br />
 	 * If positive, texture index is the damage modulo this texture type.<br />
 	 * If negative, texture index is the damage divided by this texture type. */
-	protected int textureType;
+	private int textureType;
 	/** <code>true</code> if this is an {@link Item}, <code>false</code> if this is a {@link Block}. */
 	private final boolean type;
 
@@ -204,6 +204,12 @@ public abstract class BlockItem<T> extends BaseObject<T>
 	{
 		this.damageMax = maxDamage;
 		this.damageCustom = null;
+	}
+
+	public BlockItem<T> setTextureType(int textureType)
+	{
+		this.textureType = -1;
+		return this;
 	}
 
 	/** @return <code>true</code> if the texture type should be saved in XML. */

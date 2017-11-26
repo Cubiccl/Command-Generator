@@ -18,10 +18,10 @@ public class BlockNumbered extends Block
 		return new Text("block." + id + ".x", new Replacement("<count>", Integer.toString(actual)));
 	}
 
-	public BlockNumbered()
+	public BlockNumbered(int idInt, String idString)
 	{
-		super();
-		this.textureType = -1;
+		super(idInt, idString);
+		this.setTextureType(-1);
 	}
 
 	@Override
@@ -39,7 +39,7 @@ public class BlockNumbered extends Block
 	@Override
 	protected boolean shouldSaveTextureType()
 	{
-		return this.textureType != -1;
+		return this.textureType() != -1;
 	}
 
 }

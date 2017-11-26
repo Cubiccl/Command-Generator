@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.baseobjects.block;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
+import fr.cubiccl.generator.gameobject.registries.Blocks112;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
@@ -16,10 +17,14 @@ public class BlockRail extends Block
 
 	public BlockRail()
 	{
-		super();
-		this.addState(new BlockState("shape", BlockState.STRING, 1, "north_south", "east_west", "ascending_east", "ascending_west", "ascending_north",
-				"ascending_south"));
-		this.addState(new BlockState("powered", BlockState.BOOLEAN, 8, "true", "false"));
+		this(-1, null);
+	}
+
+	public BlockRail(int idInt, String idString)
+	{
+		super(idInt, idString);
+		Blocks112.variant(this, "shape", 1, "north_south", "east_west", "ascending_east", "ascending_west", "ascending_north", "ascending_south");
+		Blocks112.bool(this, "powered", 8);
 	}
 
 	@Override

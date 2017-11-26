@@ -15,11 +15,11 @@ public class BlockFacing extends Block
 		return new Text("block." + id + ".x", new Replacement("<facing>", new Text("utils.facing." + damage)));
 	}
 
-	public BlockFacing()
+	public BlockFacing(int idInt, String idString)
 	{
-		super();
+		super(idInt, idString);
 		this.addState(new BlockState("facing", BlockState.STRING, 1, "down", "up", "north", "south", "west", "east"));
-		this.textureType = -8;
+		this.setTextureType(-8);
 	}
 
 	@Override
@@ -37,7 +37,7 @@ public class BlockFacing extends Block
 	@Override
 	protected boolean shouldSaveTextureType()
 	{
-		return this.textureType != -8;
+		return this.textureType() != -8;
 	}
 
 }

@@ -101,6 +101,11 @@ public class BlockState implements Comparable<BlockState>
 		this(id, type, -1, customDamage, values);
 	}
 
+	public BlockState(String id, byte type, String... values)
+	{
+		this(id, type, -1, values);
+	}
+
 	@Override
 	public int compareTo(BlockState o)
 	{

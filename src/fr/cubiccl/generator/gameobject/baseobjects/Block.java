@@ -68,6 +68,12 @@ public class Block extends BlockItem<Block> implements IObjectList<Block>
 		this.updateDamageValues();
 	}
 
+	public void addUnusedDamage(int... damage)
+	{
+		for (int d : damage)
+			this.addUnusedDamage(d);
+	}
+
 	@Override
 	public CGPanel createPanel(ListProperties properties)
 	{

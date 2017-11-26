@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.baseobjects.block;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
+import fr.cubiccl.generator.gameobject.registries.Blocks112;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
@@ -14,13 +15,13 @@ public class BlockStairs extends Block
 		return new Text("block." + id + ".x", new Replacement("<orientation>", new Text("utils.stairs." + damage)));
 	}
 
-	public BlockStairs()
+	public BlockStairs(int idInt, String idString)
 	{
-		super();
-		this.addState(new BlockState("facing", BlockState.STRING, 1, "east", "west", "south", "north"));
-		this.addState(new BlockState("half", BlockState.STRING, 4, "bottom", "top"));
-		this.addState(new BlockState("shape", BlockState.STRING, -1, "straight", "inner_left", "inner_right", "outer_left", "outer_right"));
-		this.textureType = -4;
+		super(idInt, idString);
+		Blocks112.variant(this, "facing", 1, "east", "west", "south", "north");
+		Blocks112.variant(this, "half", 4, "bottom", "top");
+		Blocks112.variant(this, "shape", -1, "straight", "inner_left", "inner_right", "outer_left", "outer_right");
+		this.setTextureType(-4);
 	}
 
 	@Override

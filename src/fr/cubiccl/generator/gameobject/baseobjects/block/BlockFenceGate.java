@@ -2,6 +2,7 @@ package fr.cubiccl.generator.gameobject.baseobjects.block;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
+import fr.cubiccl.generator.gameobject.registries.Blocks112;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 
@@ -14,14 +15,14 @@ public class BlockFenceGate extends Block
 		return new Text("block." + id + ".x", new Replacement("<gate_status>", new Text("utils.gate_status." + damage)));
 	}
 
-	public BlockFenceGate()
+	public BlockFenceGate(int idInt, String idString)
 	{
-		super();
-		this.addState(new BlockState("facing", BlockState.STRING, 1, "south", "west", "north", "east"));
-		this.addState(new BlockState("open", BlockState.BOOLEAN, 4, "false", " true"));
-		this.addState(new BlockState("powered", BlockState.BOOLEAN, -1, "false", " true"));
-		this.addState(new BlockState("in_wall", BlockState.BOOLEAN, -1, "false", " true"));
-		this.textureType = -4;
+		super(idInt, idString);
+		Blocks112.variant(this, "facing", 1, "south", "west", "north", "east");
+		Blocks112.bool(this, "open", 4);
+		Blocks112.bool(this, "powered", -1);
+		Blocks112.bool(this, "in_wall", -1);
+		this.setTextureType(-4);
 	}
 
 	@Override
