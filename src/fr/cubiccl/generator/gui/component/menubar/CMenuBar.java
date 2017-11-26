@@ -59,6 +59,7 @@ public class CMenuBar extends JMenuBar implements ITranslated, ActionListener
 		this.modeData.setText("Data mode");
 		this.modeData.setVisible(false);
 		this.modeCommands.setVisible(false);
+		this.modeMap.setVisible(false);
 
 		this.updateTranslations();
 	}
