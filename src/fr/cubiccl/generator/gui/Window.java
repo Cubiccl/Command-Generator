@@ -23,6 +23,7 @@ import fr.cubiccl.generator.gui.component.panel.loottable.PanelJsonOutput;
 import fr.cubiccl.generator.gui.component.panel.loottable.PanelLootTableSelection;
 import fr.cubiccl.generator.gui.component.panel.mainwindow.PanelCommand;
 import fr.cubiccl.generator.gui.component.panel.mainwindow.PanelCommandSelection;
+import fr.cubiccl.generator.gui.component.panel.map.PanelMapManagement;
 import fr.cubiccl.generator.gui.component.panel.recipe.PanelRecipeSelection;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Settings;
@@ -40,6 +41,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 	private CGPanel panelGui;
 	private PanelJsonOutput panelJsonOutput;
 	public PanelLootTableSelection panelLootTableSelection;
+	public PanelMapManagement panelMapManagement;
 	public PanelObjectSelection panelObjectSelection;
 	public PanelRecipeSelection panelRecipeSelection;
 	private JScrollPane scrollpane;
@@ -89,6 +91,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		contentPane.add(this.panelRecipeSelection = new PanelRecipeSelection());
 		contentPane.add(this.panelAdvancementSelection = new PanelAdvancementSelection());
 		contentPane.add(this.panelObjectSelection = new PanelObjectSelection());
+		contentPane.add(this.panelMapManagement = new PanelMapManagement());
 		contentPane.add(this.scrollpane = new CScrollPane(null));
 		this.scrollpane.setBorder(BorderFactory.createLoweredSoftBevelBorder());
 		this.scrollpane.getVerticalScrollBar().setUnitIncrement(20);
@@ -124,6 +127,10 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 			this.panelAdvancementSelection.setBounds(0, 0, contentPane.getWidth() / 2, PanelJsonOutput.HEIGHT);
 			this.panelJsonOutput.setBounds(this.panelLootTableSelection.getWidth(), 0, this.getWidth() / 2, PanelJsonOutput.HEIGHT);
 			this.scrollpane.setBounds(0, PanelJsonOutput.HEIGHT, contentPane.getWidth(), contentPane.getHeight() - this.panelJsonOutput.getHeight());
+		} else if (CommandGenerator.getCurrentMode() == CommandGenerator.MAP)
+		{
+			this.panelMapManagement.setBounds(0, 0, contentPane.getWidth(), PanelJsonOutput.HEIGHT);
+			this.scrollpane.setBounds(0, PanelJsonOutput.HEIGHT, contentPane.getWidth(), contentPane.getHeight() - this.panelMapManagement.getHeight());
 		}
 		this.validate();
 	}
@@ -166,6 +173,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.panelRecipeSelection.setVisible(recipes);
 		this.panelAdvancementSelection.setVisible(advancements);
 		this.panelObjectSelection.setVisible(data);
+		this.panelMapManagement.setVisible(CommandGenerator.getCurrentMode() == CommandGenerator.MAP);
 		this.onResized();
 	}
 
@@ -184,6 +192,7 @@ public class Window extends JFrame implements ComponentListener, ITranslated, Wi
 		this.panelLootTableSelection.updateTranslations();
 		this.panelRecipeSelection.updateTranslations();
 		this.panelAdvancementSelection.updateTranslations();
+		this.panelMapManagement.updateTranslations();
 		this.menubar.updateTranslations();
 		if (this.panelGui != null) this.panelGui.updateTranslations();
 		this.updateTitle();
