@@ -120,10 +120,18 @@ public class Item extends BlockItem<Item> implements IObjectList<Item>
 	/** Sets this Item's durability.
 	 * 
 	 * @param durability - The durability to apply. */
-	public void setDurability(int durability)
+	public Item setDurability(int durability)
 	{
 		this.hasDurability = durability != -1;
 		this.setMaxDamage(durability);
+		this.setTextureType(-1);
+		return this;
+	}
+
+	@Override
+	public Item setTextureType(int textureType)
+	{
+		return (Item) super.setTextureType(textureType);
 	}
 
 	@Override

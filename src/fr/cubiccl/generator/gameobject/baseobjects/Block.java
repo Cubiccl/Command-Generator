@@ -209,6 +209,12 @@ public class Block extends BlockItem<Block> implements IObjectList<Block>
 		this.updateDamageValues();
 	}
 
+	@Override
+	public Block setTextureType(int textureType)
+	{
+		return (Block) super.setTextureType(textureType);
+	}
+
 	/** @param state - A Block state.
 	 * @return <code>true</code> if the input Block state should be saved in XML. */
 	protected boolean shouldSaveState(BlockState state)

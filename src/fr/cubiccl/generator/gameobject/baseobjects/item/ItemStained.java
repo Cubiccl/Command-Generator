@@ -8,10 +8,9 @@ import fr.cubiccl.generator.utils.Text;
 public class ItemStained extends Item
 {
 
-	public ItemStained()
+	public ItemStained(int idInt, String idString)
 	{
-		super();
-		this.setMaxDamage(15);
+		super(idInt, idString, 15);
 	}
 
 	@Override
