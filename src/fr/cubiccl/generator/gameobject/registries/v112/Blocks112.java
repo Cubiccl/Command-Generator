@@ -1,4 +1,4 @@
-package fr.cubiccl.generator.gameobject.registries;
+package fr.cubiccl.generator.gameobject.registries.v112;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.baseobjects.BlockState;

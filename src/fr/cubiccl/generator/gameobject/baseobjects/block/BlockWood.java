@@ -2,7 +2,7 @@ package fr.cubiccl.generator.gameobject.baseobjects.block;
 
 import fr.cubiccl.generator.gameobject.baseobjects.Block;
 import fr.cubiccl.generator.gameobject.baseobjects.BlockState;
-import fr.cubiccl.generator.gameobject.registries.Blocks112;
+import fr.cubiccl.generator.gameobject.registries.v112.Blocks112;
 import fr.cubiccl.generator.utils.Replacement;
 import fr.cubiccl.generator.utils.Text;
 

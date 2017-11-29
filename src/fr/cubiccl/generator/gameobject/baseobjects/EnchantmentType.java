@@ -29,10 +29,11 @@ public class EnchantmentType extends BaseObject<EnchantmentType> implements IObj
 		this.idInt = -1;
 	}
 
-	public EnchantmentType(int idNum, String idStr)
+	public EnchantmentType(int idNum, String idStr, int maxLevel)
 	{
 		this.idInt = idNum;
 		this.idString = "minecraft:" + idStr;
+		this.maxLevel = maxLevel;
 	}
 
 	@Override

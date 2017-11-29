@@ -180,7 +180,7 @@ public class PanelObjectSelection extends CGPanel implements ActionListener
 		if (this.mode == ENTITY) new Entity(id).register();
 		if (this.mode == EFFECT) new EffectType(idNum, id).register();
 		;
-		if (this.mode == ENCHANTMENT) panelToShow = new PanelEnchantmentEdition(new EnchantmentType(idNum, id).register());
+		if (this.mode == ENCHANTMENT) panelToShow = new PanelEnchantmentEdition(new EnchantmentType(idNum, id, 0).register());
 		if (this.mode == ACHIEVEMENT)
 		{
 			String item = Dialogs.showInputDialog("Item id ?");
