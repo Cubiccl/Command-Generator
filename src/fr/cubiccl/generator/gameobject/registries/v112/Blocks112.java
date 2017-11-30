@@ -262,7 +262,7 @@ public final class Blocks112
 	public static final Block ConcretePowder = new BlockStained(252, "concrete_powder");
 	public static final Block Structure = new Block(255, "structure_block");
 
-	public static final void load()
+	static
 	{
 		variant(Stone, "stone", "granite", "smooth_granite", "diorite", "smooth_diorite", "andesite", "smooth_andesite");
 		bool(Grass, "snowy");

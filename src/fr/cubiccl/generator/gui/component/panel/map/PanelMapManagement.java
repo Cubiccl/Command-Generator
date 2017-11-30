@@ -11,6 +11,7 @@ import fr.cubiccl.generator.gui.component.button.CGButton;
 import fr.cubiccl.generator.gui.component.label.CGLabel;
 import fr.cubiccl.generator.gui.component.panel.CGPanel;
 
+@SuppressWarnings("unused")
 public class PanelMapManagement extends CGPanel implements ComponentListener, ActionListener
 {
 	private static final long serialVersionUID = -8583477065140875486L;

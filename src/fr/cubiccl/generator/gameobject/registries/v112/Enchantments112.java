@@ -47,9 +47,6 @@ public final class Enchantments112
 	public static final EnchantmentType Mending = new EnchantmentType(70, "mending", 1);
 	public static final EnchantmentType CurseVanishing = new EnchantmentType(71, "vanishing_curse", 1);
 
-	public static void load()
-	{}
-
 	private Enchantments112()
 	{}
 

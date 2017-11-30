@@ -420,7 +420,7 @@ public final class Items112
 	public static final Item Record11 = new Item(2266, "record_11");
 	public static final Item RecordWait = new Item(2267, "record_wait");
 
-	public static void load()
+	static
 	{
 		Cobblestone.cooksTo = Stone.id();
 		Sand.cooksTo = Glass.id();

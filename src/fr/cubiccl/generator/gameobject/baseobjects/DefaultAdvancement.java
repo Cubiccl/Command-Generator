@@ -24,7 +24,20 @@ public class DefaultAdvancement extends BaseObject<DefaultAdvancement>
 
 	public DefaultAdvancement()
 	{
-		this.data = -1;
+		this(null, null, null);
+	}
+
+	public DefaultAdvancement(String category, String id, String item)
+	{
+		this(category, id, item, -1);
+	}
+
+	public DefaultAdvancement(String category, String id, String item, int data)
+	{
+		this.category = category;
+		this.id = id;
+		this.item = item == null ? null : ObjectRegistry.items.find(item);
+		this.data = data;
 	}
 
 	/** Getter for {@link DefaultAdvancement#criteria}. */
@@ -69,6 +82,11 @@ public class DefaultAdvancement extends BaseObject<DefaultAdvancement>
 	{
 		ObjectRegistry.advancements.register(this);
 		return this;
+	}
+
+	public void setCriteria(String... criteria)
+	{
+		this.criteria = criteria;
 	}
 
 	@Override

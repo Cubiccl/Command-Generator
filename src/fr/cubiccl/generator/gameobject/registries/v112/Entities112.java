@@ -90,9 +90,6 @@ public final class Entities112
 	public static final Entity ZombiePigman = new Entity("zombie_pigman");
 	public static final Entity VillagerZombie = new Entity("zombie_villager");
 
-	public static void load()
-	{}
-
 	private Entities112()
 	{}
 

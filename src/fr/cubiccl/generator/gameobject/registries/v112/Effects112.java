@@ -33,9 +33,6 @@ public final class Effects112
 	public static final EffectType Luck = new EffectType(26, "luck");
 	public static final EffectType LuckInverted = new EffectType(27, "unluck");
 
-	public static void load()
-	{}
-
 	private Effects112()
 	{}
 
